@@ -9,10 +9,14 @@ The project is still in the development phase.
 Issues are managed at the GitHub [project issues page][].
 
 ## Building the code
-The application is coded in Python 2, with no particular dependencies.
+The application is coded in Python 2, dependencies are indicated on requirements.txt.
 
 ### Prerequisites
 Requires Python 2.7.
+
+The dependencies can be acquired using the list on requirements.txt, with the command:
+
+'pip install -r requirements.txt'
 
 ### Getting the code
 The code can be found at the GitHub [project page][].
