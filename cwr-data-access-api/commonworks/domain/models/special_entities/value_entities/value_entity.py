@@ -1,4 +1,12 @@
-__author__ = 'borja'
+# -*- encoding: utf-8 -*-
+
+"""
+Value entity model classes.
+"""
+
+__author__ = 'Borja Garrido Bear'
+__version__ = '0.0.0'
+__status__ = 'Development'
 
 
 class ValueEntity(object):
@@ -8,17 +16,6 @@ class ValueEntity(object):
         self.id = id
         self.name = name
         self.description = description
-
-    def to_mongo_dict(self):
-        value_dict = {}
-
-        value_dict['_id'] = self.id
-        value_dict['name'] = self.name
-
-        if self.description is not None:
-            value_dict['description'] = self.description
-
-        return value_dict
 
 
 class AgreementRole(ValueEntity):

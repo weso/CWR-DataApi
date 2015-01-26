@@ -1,10 +1,20 @@
-from abc import ABCMeta, abstractmethod
+# -*- encoding: utf-8 -*-
+from abc import ABCMeta
 import uuid
 
-__author__ = 'borja'
+"""
+Base entity model classes.
+"""
+
+__author__ = 'Borja Garrido Bear'
+__version__ = '0.0.0'
+__status__ = 'Development'
 
 
 class Entity(object):
+    """
+    Represents a base CWR entity.
+    """
     __metaclass__ = ABCMeta
 
     def __init__(self, submitter_id):
@@ -18,7 +28,3 @@ class Entity(object):
     @property
     def submitter_id(self):
         return self._submitter_id
-
-    @abstractmethod
-    def to_mongo_dict(self):
-        pass
