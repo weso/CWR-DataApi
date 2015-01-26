@@ -33,4 +33,4 @@ The project is released under the {license}
 
 [project page]: https://github.com/Bernardo-MG/CWR-DataApi
 [project issues page]: https://
-[project CI page]: https://
+[project CI page]: https://travis-ci.org/Bernardo-MG/CWR-DataApi
