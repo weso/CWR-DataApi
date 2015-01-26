@@ -12,7 +12,7 @@ Issues are managed at the GitHub [project issues page][].
 The application is coded in Python 2, dependencies are indicated on requirements.txt.
 
 ### Prerequisites
-Requires Python 2.7.
+Requires Python 2.6 or 2.7.
 
 The dependencies can be acquired using the list on requirements.txt, with the command:
 
