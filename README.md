@@ -16,7 +16,7 @@ Requires Python 2.7.
 
 The dependencies can be acquired using the list on requirements.txt, with the command:
 
-'pip install -r requirements.txt'
+`pip install -r requirements.txt`
 
 ### Getting the code
 The code can be found at the GitHub [project page][].
