@@ -13,6 +13,7 @@ Only valid cases are tested here. The used JSON objects should have no errors.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
+__license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 

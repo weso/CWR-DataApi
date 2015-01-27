@@ -8,6 +8,7 @@ Work entity model classes.
 """
 
 __author__ = 'Borja Garrido Bear'
+__license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 

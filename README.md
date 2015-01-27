@@ -26,11 +26,12 @@ To acquire it through Git use the following clone URI:
 `git clone https://github.com/Bernardo-MG/CWR-DataApi.git`
 
 ## Continuous integration
-The continuous integration information can be found at the [project CI page][] on Travis CI.
+The continuous integration information can be found at the [project CI page][] based on Travis CI.
 
 ## License
-The project is released under the {license}
+The project is released under the [MIT License][].
 
-[project page]: https://github.com/Bernardo-MG/CWR-DataApi
-[project issues page]: https://
+[MIT License]: http://www.opensource.org/licenses/mit-license.php
 [project CI page]: https://travis-ci.org/Bernardo-MG/CWR-DataApi
+[project issues page]: https://
+[project page]: https://github.com/Bernardo-MG/CWR-DataApi
