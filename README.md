@@ -1,4 +1,4 @@
-### Data Acess API
+### CWR Data Acess API
 
 Project in conjunction with CWRFormatValidator in order to store all the data retrieved from documents into a database.
 
@@ -23,7 +23,7 @@ The code can be found at the GitHub [project page][].
 
 To acquire it through Git use the following clone URI:
 
-`git clone https://github.com/Bernardo-MG/CWR-DataApi.git`
+`git clone https://github.com/weso/CWR-DataApi.git`
 
 ## Continuous integration
 The continuous integration information can be found at the [project CI page][] based on Travis CI.
@@ -32,6 +32,6 @@ The continuous integration information can be found at the [project CI page][] b
 The project is released under the [MIT License][].
 
 [MIT License]: http://www.opensource.org/licenses/mit-license.php
-[project CI page]: https://travis-ci.org/Bernardo-MG/CWR-DataApi
-[project issues page]: https://
-[project page]: https://github.com/Bernardo-MG/CWR-DataApi
+[project CI page]: https://
+[project issues page]: https://github.com/weso/CWR-DataApi/issues
+[project page]: https://github.com/weso/CWR-DataApi
