@@ -63,6 +63,11 @@ class Work(Entity):
         self._publishers = []
         self._performing_artists = []
         self._writers = []
+        self._additional_info = []
+        self._components = []
+        self._instrumentation_details = []
+        self._instrumentation_summaries = []
+        self._origins = []
 
     @property
     def entire_work_title(self):

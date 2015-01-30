@@ -23,6 +23,7 @@ class InterestedParty(Entity):
         self.ipi_base_number = ipi_base_number
         self.ipa_number = ipa_number
         self.last_name = last_name
+
         self.agreements = []
 
     def add_agreement(self, agreement):
