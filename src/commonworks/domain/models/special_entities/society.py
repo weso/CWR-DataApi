@@ -15,7 +15,7 @@ class Society(object):
     Represents a CWR society.
     """
 
-    def __init__(self, code, name, former_name):
-        self.id = code
+    def __init__(self, id, name, former_name):
+        self.id = id
         self.name = name
         self.former_name = former_name

@@ -16,6 +16,7 @@ class ValueEntity(object):
 
     This is a representation of general values such as musical genres, or the roles a party can take in an agreement.
     """
+
     def __init__(self, id, name, description):
         self.id = id
         self.name = name
@@ -30,6 +31,7 @@ class AgreementRole(ValueEntity):
     Assignor (AS): The entitled party who is assigning the rights to a musical work within an agreement
     Acquirer (AC): The entitled party who is acquiring the rights to a musical work within an agreement
     """
+
     def __init__(self, id, name, description):
         super(AgreementRole, self).__init__(id, name, description)
 
@@ -43,6 +45,7 @@ class AgreementType(ValueEntity):
     Subpublishing Specific (PS): Agreement between two publishers covering a list of specific work(s)
     Subpublishing General (PG): Agreement between two publishers covering all works in a catalogue
     """
+
     def __init__(self, id, name, description):
         super(AgreementType, self).__init__(id, name, description)
 
@@ -55,6 +58,7 @@ class CompositeType(ValueEntity):
     Composite of Samples (COS): A composite work containing new material and one or more samples of pre-existing recorded works
     Potpourri (POT): A composite work with the addition of original material which have been combined to form a new work, that has been published and printed
     """
+
     def __init__(self, id, name, description):
         super(CompositeType, self).__init__(id, name, description)
 
@@ -69,6 +73,7 @@ class DistributionCategory(ValueEntity):
     Jazz (JAZ): Music originating in black America from the early 20th century, incorporating strands of Euro-American and African music and frequently containing improvisation
     Popular (POP): The musical mainstream, usually song-based and melody-orientated, created for mass consumption
     """
+
     def __init__(self, id, name, description):
         super(DistributionCategory, self).__init__(id, name, description)
 
@@ -81,6 +86,7 @@ class ExcerptType(ValueEntity):
     Movement (MOV): A principal division of a musical work
     Unspecified Excerpt (UEX): A work that is known to be an excerpt from another work, however the type of excerpt is unknown
     """
+
     def __init__(self, id, name, description):
         super(ExcerptType, self).__init__(id, name, description)
 
@@ -94,6 +100,7 @@ class LyricAdaptation(ValueEntity):
     Translation (TRA): Lyrics translated into another language
     None (NON): No lyrics have been included in the work
     """
+
     def __init__(self, id, name, description):
         super(LyricAdaptation, self).__init__(id, name, description)
 
@@ -107,6 +114,7 @@ class MusicArrangement(ValueEntity):
     Addition (ADM): Music added to a pre-existing text
     Original (ORI): Music used in its original form
     """
+
     def __init__(self, id, name, description):
         super(MusicArrangement, self).__init__(id, name, description)
 
@@ -120,6 +128,7 @@ class TextMusicRelationship(ValueEntity):
     Music and Text (MTX): Music and text combined
     Text (TXT): Self explanatory
     """
+
     def __init__(self, id, name, description):
         super(TextMusicRelationship, self).__init__(id, name, description)
 
@@ -132,6 +141,7 @@ class VersionType(ValueEntity):
     Modified version of a musical work (MOD): A work resulting from the modification of a musical work
     Original work (ORI): The first established form of a work
     """
+
     def __init__(self, id, name, description):
         super(VersionType, self).__init__(id, name, description)
 
@@ -145,5 +155,6 @@ class WorkType(ValueEntity):
     New Age (NA)
     Opera (OP)
     """
+
     def __init__(self, id, name):
         super(WorkType, self).__init__(id, name, None)

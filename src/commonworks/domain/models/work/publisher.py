@@ -16,5 +16,7 @@ class Publisher(Entity):
     Represents a CWR publisher.
     """
 
-    def __init__(self, submitter_id):
+    def __init__(self, submitter_id, agreement_id, interested_party):
         super(Publisher, self).__init__(submitter_id)
+        self.agreement_id = agreement_id
+        self.interested_party = interested_party
