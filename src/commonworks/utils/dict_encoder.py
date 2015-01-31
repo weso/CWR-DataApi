@@ -283,7 +283,7 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = society.id
+        dict['_id'] = society.society_id
         dict['name'] = society.name
         dict['former_name'] = society.former_name
 
@@ -301,7 +301,7 @@ class CWRDictionaryEncoder(object):
         dict['_id'] = territory.tis
         dict['tis'] = territory.tis
         dict['iso2'] = territory.iso2
-        dict['type'] = territory.type
+        dict['type'] = territory.territory_type
         dict['name'] = territory.name
         dict['official_name'] = territory.official_name
 
@@ -316,8 +316,8 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = entity.id
-        dict['id'] = entity.id
+        dict['_id'] = entity.entity_id
+        dict['id'] = entity.entity_id
         dict['name'] = entity.name
 
         if entity.description is not None:

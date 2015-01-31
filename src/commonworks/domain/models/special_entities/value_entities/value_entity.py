@@ -4,7 +4,7 @@
 Value entity model classes.
 """
 
-__author__ = 'Borja Garrido Bear'
+__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
@@ -17,10 +17,22 @@ class ValueEntity(object):
     This is a representation of general values such as musical genres, or the roles a party can take in an agreement.
     """
 
-    def __init__(self, id, name, description):
-        self.id = id
-        self.name = name
-        self.description = description
+    def __init__(self, entity_id, name, description):
+        self._entity_id = entity_id
+        self._name = name
+        self._description = description
+
+    @property
+    def description(self):
+        return self._description
+
+    @property
+    def entity_id(self):
+        return self._entity_id
+
+    @property
+    def name(self):
+        return self._name
 
 
 class AgreementRole(ValueEntity):
@@ -32,8 +44,8 @@ class AgreementRole(ValueEntity):
     Acquirer (AC): The entitled party who is acquiring the rights to a musical work within an agreement
     """
 
-    def __init__(self, id, name, description):
-        super(AgreementRole, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(AgreementRole, self).__init__(entity_id, name, description)
 
 
 class AgreementType(ValueEntity):
@@ -46,8 +58,8 @@ class AgreementType(ValueEntity):
     Subpublishing General (PG): Agreement between two publishers covering all works in a catalogue
     """
 
-    def __init__(self, id, name, description):
-        super(AgreementType, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(AgreementType, self).__init__(entity_id, name, description)
 
 
 class CompositeType(ValueEntity):
@@ -59,8 +71,8 @@ class CompositeType(ValueEntity):
     Potpourri (POT): A composite work with the addition of original material which have been combined to form a new work, that has been published and printed
     """
 
-    def __init__(self, id, name, description):
-        super(CompositeType, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(CompositeType, self).__init__(entity_id, name, description)
 
 
 class DistributionCategory(ValueEntity):
@@ -74,8 +86,8 @@ class DistributionCategory(ValueEntity):
     Popular (POP): The musical mainstream, usually song-based and melody-orientated, created for mass consumption
     """
 
-    def __init__(self, id, name, description):
-        super(DistributionCategory, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(DistributionCategory, self).__init__(entity_id, name, description)
 
 
 class ExcerptType(ValueEntity):
@@ -87,8 +99,8 @@ class ExcerptType(ValueEntity):
     Unspecified Excerpt (UEX): A work that is known to be an excerpt from another work, however the type of excerpt is unknown
     """
 
-    def __init__(self, id, name, description):
-        super(ExcerptType, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(ExcerptType, self).__init__(entity_id, name, description)
 
 
 class LyricAdaptation(ValueEntity):
@@ -101,8 +113,8 @@ class LyricAdaptation(ValueEntity):
     None (NON): No lyrics have been included in the work
     """
 
-    def __init__(self, id, name, description):
-        super(LyricAdaptation, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(LyricAdaptation, self).__init__(entity_id, name, description)
 
 
 class MusicArrangement(ValueEntity):
@@ -115,8 +127,8 @@ class MusicArrangement(ValueEntity):
     Original (ORI): Music used in its original form
     """
 
-    def __init__(self, id, name, description):
-        super(MusicArrangement, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(MusicArrangement, self).__init__(entity_id, name, description)
 
 
 class TextMusicRelationship(ValueEntity):
@@ -129,8 +141,8 @@ class TextMusicRelationship(ValueEntity):
     Text (TXT): Self explanatory
     """
 
-    def __init__(self, id, name, description):
-        super(TextMusicRelationship, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(TextMusicRelationship, self).__init__(entity_id, name, description)
 
 
 class VersionType(ValueEntity):
@@ -142,8 +154,8 @@ class VersionType(ValueEntity):
     Original work (ORI): The first established form of a work
     """
 
-    def __init__(self, id, name, description):
-        super(VersionType, self).__init__(id, name, description)
+    def __init__(self, entity_id, name, description):
+        super(VersionType, self).__init__(entity_id, name, description)
 
 
 class WorkType(ValueEntity):
@@ -156,5 +168,5 @@ class WorkType(ValueEntity):
     Opera (OP)
     """
 
-    def __init__(self, id, name):
-        super(WorkType, self).__init__(id, name, None)
+    def __init__(self, entity_id, name):
+        super(WorkType, self).__init__(entity_id, name, None)

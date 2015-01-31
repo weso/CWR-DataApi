@@ -5,7 +5,7 @@ from commonworks.domain.models.entity import Entity
 Agreement model classes.
 """
 
-__author__ = 'Borja Garrido Bear'
+__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
@@ -21,7 +21,8 @@ class Agreement(Entity):
                  prior_royalty_status_date, post_term_collection_status,
                  post_term_collection_end_date, signature_date,
                  works_number, sales_manufacture_clause, shares_change,
-                 advance_given, society_assigned_number):
+                 advance_given, society_assigned_number, interested_parties=None,
+                 territories=None):
         super(Agreement, self).__init__(submitter_id)
         self._agreement_number = agreement_number
         self._international_standard_number = international_standard_number
@@ -40,8 +41,15 @@ class Agreement(Entity):
         self._advance_given = advance_given
         self._society_assigned_number = society_assigned_number
 
-        self._interested_parties = []
-        self._territories = []
+        if interested_parties is None:
+            self._interested_parties = []
+        else:
+            self._interested_parties = interested_parties
+
+        if territories is None:
+            self._territories = []
+        else:
+            self._territories = territories
 
     def add_interested_party(self, ipa):
         self._interested_parties.append(ipa)
