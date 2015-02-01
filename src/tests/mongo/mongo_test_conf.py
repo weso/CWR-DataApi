@@ -9,13 +9,13 @@ from commonworks.utils.mongo_encoder import MongoDictionaryEncoder
 Configuration to be used on the Mongo tests.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-host = '156.35.82.103'
-port = 9090
+host = '127.0.0.1'
+port = 27017
 db_name = 'commonworks'
 
 
