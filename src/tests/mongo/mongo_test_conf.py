@@ -37,7 +37,9 @@ class MongoGenericRepository(Repository):
         self._db[self._collection].insert(self.encoder.encode(entity))
 
     def get(self, predicate):
-        return filter(predicate, self.__entities())
+        # In Python 3 filter() returns an iterator
+        # To avoid problems the result is set into a list
+        return list(filter(predicate, self.__entities()))
 
     def remove(self, entity):
         self._db[self._collection].remove(self.encoder.encode(entity))
