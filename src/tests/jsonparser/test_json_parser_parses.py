@@ -3,7 +3,7 @@ import unittest
 import json
 import datetime
 
-from commonworks.util import jsonparser
+from commonworks.utils import jsonparser
 
 
 """
@@ -47,7 +47,7 @@ class TestAgreement(unittest.TestCase):
     def test_data(self):
         # Makes sure the data was parsed correctly
         self.assertEqual(self.agreement.submitter_id, 189)
-        self.assertEqual(self.agreement.submitter_number, 12345)
+        self.assertEqual(self.agreement.agreement_number, 12345)
         self.assertEqual(self.agreement.international_standard_number, 67890)
         self.assertEqual(self.agreement.type, 't12')
         self.assertEqual(self.agreement.start_date, datetime.date(2015, 1, 11).isoformat())
@@ -97,8 +97,8 @@ class TestAlternativeWorkTitle(unittest.TestCase):
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.title.alternate_title, 'title')
-        self.assertEqual(self.title.title_type, 'type')
+        self.assertEqual(self.title.alternative_title, 'title')
+        self.assertEqual(self.title.alternative_title_type, 'type')
 
 
 class TestEntireWorkTitle(unittest.TestCase):
@@ -158,7 +158,7 @@ class TestInterestedParty(unittest.TestCase):
         self.assertEqual(self.party.submitter_id, 189)
         self.assertEqual(self.party.cae_ipi_id, 12345)
         self.assertEqual(self.party.ipi_base_number, 6789)
-        self.assertEqual(self.party.id, 'abc')
+        self.assertEqual(self.party.ipa_number, 'abc')
         self.assertEqual(self.party.last_name, 'surname')
 
 
@@ -215,8 +215,8 @@ class TestOriginalWorkTitle(unittest.TestCase):
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.title.original_title, 'title')
-        self.assertEqual(self.title.original_work_iswc, 12345)
+        self.assertEqual(self.title.entire_title, 'title')
+        self.assertEqual(self.title.entire_work_iswc, 12345)
         self.assertEqual(self.title.language_code, 'ES')
         self.assertEqual(self.title.writer_one_last_name, 'last_1')
         self.assertEqual(self.title.writer_one_first_name, 'first_1')
@@ -228,9 +228,31 @@ class TestOriginalWorkTitle(unittest.TestCase):
         self.assertEqual(self.title.writer_two_ipi_base_number, 'ipi_base_number_2')
 
 
+class TestPerformingArtist(unittest.TestCase):
+    """
+    Tests the JSON to PerformingArtist parsing.
+    """
+
+    def setUp(self):
+        data = {}
+        data['first_name'] = 'name'
+        data['last_name'] = 'surname'
+        data['cae_ipi_name'] = 'ipi'
+        data['ipi_base_number'] = 11
+
+        self.artist = jsonparser.parse_performing_artist(json.loads(json.dumps(data)))
+
+    def test_data(self):
+        # Makes sure the data was parsed correctly
+        self.assertEqual(self.artist.first_name, 'name')
+        self.assertEqual(self.artist.last_name, 'surname')
+        self.assertEqual(self.artist.cae_ipi_name, 'ipi')
+        self.assertEqual(self.artist.ipi_base_number, 11)
+
+
 class TestPublisher(unittest.TestCase):
     """
-    Tests the JSON to IPAAgreement parsing.
+    Tests the JSON to Publisher parsing.
     """
 
     def setUp(self):
@@ -243,8 +265,8 @@ class TestPublisher(unittest.TestCase):
     def test_data(self):
         # Makes sure the data was parsed correctly
         self.assertEqual(self.publisher.submitter_id, 189)
-        self.assertEqual(self.publisher.agreement_number, 1234)
-        self.assertEqual(self.publisher.interested_party_id, 5678)
+        self.assertEqual(self.publisher.agreement_id, 1234)
+        self.assertEqual(self.publisher.interested_party, 5678)
 
 
 class TestRecordingDetails(unittest.TestCase):
@@ -423,7 +445,7 @@ class TestWriter(unittest.TestCase):
     def test_data(self):
         # Makes sure the data was parsed correctly
         self.assertEqual(self.writer.submitter_id, 189)
-        self.assertEqual(self.writer.interested_party_id, 1234)
+        self.assertEqual(self.writer.interested_party, 1234)
         self.assertEqual(self.writer.first_name, 'first')
         self.assertEqual(self.writer.last_name, 'last')
         self.assertEqual(self.writer.designation_code, 5678)
