@@ -62,14 +62,14 @@ class TestAgreement(unittest.TestCase):
         self.assertEqual(self.dict['agreement_number'], 2)
         self.assertEqual(self.dict['international_standard_number'], 3)
         self.assertEqual(self.dict['type'], 4)
-        self.assertEqual(self.dict['start_date'], datetime.date(2015, 1, 11))
-        self.assertEqual(self.dict['end_date'], datetime.date(2015, 2, 11))
-        self.assertEqual(self.dict['retention_end_date'], datetime.date(2015, 3, 11))
+        self.assertEqual(self.dict['start_date'], datetime.date(2015, 1, 11).isoformat())
+        self.assertEqual(self.dict['end_date'], datetime.date(2015, 2, 11).isoformat())
+        self.assertEqual(self.dict['retention_end_date'], datetime.date(2015, 3, 11).isoformat())
         self.assertEqual(self.dict['prior_royalty_status'], 5)
-        self.assertEqual(self.dict['prior_royalty_status_date'], datetime.date(2015, 4, 11))
+        self.assertEqual(self.dict['prior_royalty_status_date'], datetime.date(2015, 4, 11).isoformat())
         self.assertEqual(self.dict['post_term_collection_status'], 6)
-        self.assertEqual(self.dict['post_term_collection_end_date'], datetime.date(2015, 5, 11))
-        self.assertEqual(self.dict['signature_date'], datetime.date(2015, 6, 11))
+        self.assertEqual(self.dict['post_term_collection_end_date'], datetime.date(2015, 5, 11).isoformat())
+        self.assertEqual(self.dict['signature_date'], datetime.date(2015, 6, 11).isoformat())
         self.assertEqual(self.dict['works_number'], 7)
         self.assertEqual(self.dict['sales_manufacture_clause'], 8)
         self.assertEqual(self.dict['shares_change'], 9)
@@ -143,7 +143,7 @@ class TestInterestedParty(unittest.TestCase):
 
 class TestIPAAgreement(unittest.TestCase):
     """
-    Tests the InterestedParty to dictionary encoding.
+    Tests the IPAAgreement to dictionary encoding.
     """
 
     def setUp(self):
@@ -238,7 +238,7 @@ class TestRecordingDetails(unittest.TestCase):
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['first_release_date'], datetime.date(2015, 1, 11))
+        self.assertEqual(self.dict['first_release_date'], datetime.date(2015, 1, 11).isoformat())
         self.assertEqual(self.dict['first_release_duration'], 1)
         self.assertEqual(self.dict['first_album_title'], 'title')
         self.assertEqual(self.dict['first_album_label'], 'label')
@@ -262,7 +262,6 @@ class TestSociety(unittest.TestCase):
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['_id'], 1)
         self.assertEqual(self.dict['name'], 'name')
         self.assertEqual(self.dict['former_name'], 'formerly')
 
@@ -322,7 +321,7 @@ class TestWork(unittest.TestCase):
         self.assertEqual(self.dict['language_code'], 'ES')
         self.assertEqual(self.dict['work_number'], 3)
         self.assertEqual(self.dict['iswc'], 4)
-        self.assertEqual(self.dict['copyright_date'], datetime.date(2015, 1, 11))
+        self.assertEqual(self.dict['copyright_date'], datetime.date(2015, 1, 11).isoformat())
         self.assertEqual(self.dict['copyright_number'], 5)
         self.assertEqual(self.dict['musical_distribution_category'], 6)
         self.assertEqual(self.dict['duration'], 7)
@@ -338,7 +337,7 @@ class TestWork(unittest.TestCase):
         self.assertEqual(self.dict['cwr_work_type'], 15)
         self.assertEqual(self.dict['grand_rights_indicator'], 16)
         self.assertEqual(self.dict['composite_component_count'], 17)
-        self.assertEqual(self.dict['printed_edition_publication_date'], datetime.date(2015, 2, 11))
+        self.assertEqual(self.dict['printed_edition_publication_date'], datetime.date(2015, 2, 11).isoformat())
         self.assertEqual(self.dict['exceptional_clause'], 18)
         self.assertEqual(self.dict['opus_number'], 19)
         self.assertEqual(self.dict['catalogue_number'], 20)

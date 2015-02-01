@@ -89,19 +89,18 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = agreement.creation_id
         dict['submitter_id'] = agreement.submitter_id
         dict['agreement_number'] = agreement.agreement_number
         dict['international_standard_number'] = agreement.international_standard_number
         dict['type'] = agreement.type
-        dict['start_date'] = agreement.start_date
-        dict['end_date'] = agreement.end_date
-        dict['retention_end_date'] = agreement.retention_end_date
+        dict['start_date'] = agreement.start_date.isoformat()
+        dict['end_date'] = agreement.end_date.isoformat()
+        dict['retention_end_date'] = agreement.retention_end_date.isoformat()
         dict['prior_royalty_status'] = agreement.prior_royalty_status
-        dict['prior_royalty_status_date'] = agreement.prior_royalty_status_date
+        dict['prior_royalty_status_date'] = agreement.prior_royalty_status_date.isoformat()
         dict['post_term_collection_status'] = agreement.post_term_collection_status
-        dict['post_term_collection_end_date'] = agreement.post_term_collection_end_date
-        dict['signature_date'] = agreement.signature_date
+        dict['post_term_collection_end_date'] = agreement.post_term_collection_end_date.isoformat()
+        dict['signature_date'] = agreement.signature_date.isoformat()
         dict['works_number'] = agreement.works_number
         dict['sales_manufacture_clause'] = agreement.sales_manufacture_clause
         dict['shares_change'] = agreement.shares_change
@@ -163,7 +162,6 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = interested_party.creation_id
         dict['submitter_id'] = interested_party.submitter_id
 
         dict['cae_ipi_id'] = interested_party.cae_ipi_id
@@ -261,7 +259,7 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['first_release_date'] = details.first_release_date
+        dict['first_release_date'] = details.first_release_date.isoformat()
         dict['first_release_duration'] = details.first_release_duration
         dict['first_album_title'] = details.first_album_title
         dict['first_album_label'] = details.first_album_label
@@ -283,7 +281,6 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = society.society_id
         dict['name'] = society.name
         dict['former_name'] = society.former_name
 
@@ -298,7 +295,6 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = territory.tis
         dict['tis'] = territory.tis
         dict['iso2'] = territory.iso2
         dict['type'] = territory.territory_type
@@ -316,7 +312,6 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = entity.entity_id
         dict['id'] = entity.entity_id
         dict['name'] = entity.name
 
@@ -334,7 +329,6 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['_id'] = work.creation_id
         dict['creation_id'] = work.creation_id
         dict['submitter_id'] = work.submitter_id
 
@@ -342,7 +336,7 @@ class CWRDictionaryEncoder(object):
         dict['language_code'] = work.language_code
         dict['work_number'] = work.work_number
         dict['iswc'] = work.iswc
-        dict['copyright_date'] = work.copyright_date
+        dict['copyright_date'] = work.copyright_date.isoformat()
         dict['copyright_number'] = work.copyright_number
         dict['musical_distribution_category'] = work.musical_distribution_category
         dict['duration'] = work.duration
@@ -358,7 +352,7 @@ class CWRDictionaryEncoder(object):
         dict['cwr_work_type'] = work.cwr_work_type
         dict['grand_rights_indicator'] = work.grand_rights_indicator
         dict['composite_component_count'] = work.composite_component_count
-        dict['printed_edition_publication_date'] = work.printed_edition_publication_date
+        dict['printed_edition_publication_date'] = work.printed_edition_publication_date.isoformat()
         dict['exceptional_clause'] = work.exceptional_clause
         dict['opus_number'] = work.opus_number
         dict['catalogue_number'] = work.catalogue_number

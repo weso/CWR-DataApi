@@ -13,9 +13,9 @@ __status__ = 'Development'
 
 class Repository(object):
     """
-    Interface for the repository pattern.
+    Interface for the mongo pattern.
 
-    A repository works like mix between a DAO and a collection of persistent entities. Offers CRUD methods, and also
+    A mongo works like mix between a DAO and a collection of persistent entities. Offers CRUD methods, and also
     allows to query the existing entities.
 
     Querying is done with the 'get' method. It receives a predicate, and all the entities fulfilling it are returned.
@@ -25,7 +25,7 @@ class Repository(object):
     def add(self, entity):
         pass
 
-    def get(self, **predicate):
+    def get(self, predicate):
         pass
 
     def remove(self, entity):
