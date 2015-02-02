@@ -9,6 +9,7 @@ from commonworks.domain.models.special_entities.society import Society
 from commonworks.domain.models.special_entities.territory import Territory
 from commonworks.domain.models.special_entities.value_entities.value_entity import ValueEntity
 from commonworks.domain.models.work.writer import Writer
+import datetime
 
 """
 Offers classes to create dictionaries from model objects.
@@ -19,6 +20,20 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
+class DictionaryAdapter(object):
+    """
+    Adapts objects to be added into the dictionary so they are parseable for JSON.
+    """
+
+    def __init__(self):
+        pass
+
+    def adapt(self, obj):
+        if isinstance(obj, datetime.time) or isinstance(obj, datetime.date):
+            return obj.isoformat()
+        else:
+            return obj
+
 
 class CWRDictionaryEncoder(object):
     """
@@ -26,7 +41,7 @@ class CWRDictionaryEncoder(object):
     """
 
     def __init__(self):
-        pass
+        self._adapter = DictionaryAdapter()
 
     def encode(self, d):
         if isinstance(d, AgreementTerritory):
@@ -93,14 +108,14 @@ class CWRDictionaryEncoder(object):
         dict['agreement_number'] = agreement.agreement_number
         dict['international_standard_number'] = agreement.international_standard_number
         dict['type'] = agreement.type
-        dict['start_date'] = agreement.start_date.isoformat()
-        dict['end_date'] = agreement.end_date.isoformat()
-        dict['retention_end_date'] = agreement.retention_end_date.isoformat()
+        dict['start_date'] = self._adapter.adapt(agreement.start_date)
+        dict['end_date'] = self._adapter.adapt(agreement.end_date)
+        dict['retention_end_date'] = self._adapter.adapt(agreement.retention_end_date)
         dict['prior_royalty_status'] = agreement.prior_royalty_status
-        dict['prior_royalty_status_date'] = agreement.prior_royalty_status_date.isoformat()
+        dict['prior_royalty_status_date'] = self._adapter.adapt(agreement.prior_royalty_status_date)
         dict['post_term_collection_status'] = agreement.post_term_collection_status
-        dict['post_term_collection_end_date'] = agreement.post_term_collection_end_date.isoformat()
-        dict['signature_date'] = agreement.signature_date.isoformat()
+        dict['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)
+        dict['signature_date'] = self._adapter.adapt(agreement.signature_date)
         dict['works_number'] = agreement.works_number
         dict['sales_manufacture_clause'] = agreement.sales_manufacture_clause
         dict['shares_change'] = agreement.shares_change
@@ -259,7 +274,7 @@ class CWRDictionaryEncoder(object):
         """
         dict = {}
 
-        dict['first_release_date'] = details.first_release_date.isoformat()
+        dict['first_release_date'] = self._adapter.adapt(details.first_release_date)
         dict['first_release_duration'] = details.first_release_duration
         dict['first_album_title'] = details.first_album_title
         dict['first_album_label'] = details.first_album_label
@@ -336,7 +351,7 @@ class CWRDictionaryEncoder(object):
         dict['language_code'] = work.language_code
         dict['work_number'] = work.work_number
         dict['iswc'] = work.iswc
-        dict['copyright_date'] = work.copyright_date.isoformat()
+        dict['copyright_date'] = self._adapter.adapt(work.copyright_date)
         dict['copyright_number'] = work.copyright_number
         dict['musical_distribution_category'] = work.musical_distribution_category
         dict['duration'] = work.duration
@@ -352,7 +367,7 @@ class CWRDictionaryEncoder(object):
         dict['cwr_work_type'] = work.cwr_work_type
         dict['grand_rights_indicator'] = work.grand_rights_indicator
         dict['composite_component_count'] = work.composite_component_count
-        dict['printed_edition_publication_date'] = work.printed_edition_publication_date.isoformat()
+        dict['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
         dict['exceptional_clause'] = work.exceptional_clause
         dict['opus_number'] = work.opus_number
         dict['catalogue_number'] = work.catalogue_number
