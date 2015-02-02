@@ -1,4 +1,4 @@
-### CWR Data Acess API
+# CWR Data Acess API
 
 Project in conjunction with CWRFormatValidator in order to store all the data retrieved from documents into a database.
 
@@ -33,5 +33,5 @@ The project is released under the [MIT License][].
 
 [MIT License]: http://www.opensource.org/licenses/mit-license.php
 [project CI page]: https://travis-ci.org/Bernardo-MG/CWR-DataApi
-[project issues page]: https://
+[project issues page]: https://travis-ci.org/weso/CWR-DataApi/issues
 [project page]: https://github.com/Bernardo-MG/CWR-DataApi
