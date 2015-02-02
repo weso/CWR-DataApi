@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
+*.pyo
 
 # C extensions
 *.so
@@ -54,4 +56,6 @@ docs/_build/
 target/
 
 # Idea PyCharm
-.idea
+.idea/
+.idea_modules/
+out/

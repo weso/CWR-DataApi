@@ -404,3 +404,7 @@ class TestWriter(unittest.TestCase):
         self.assertEqual(self.dict['ipi_base_number'], 15)
         self.assertEqual(self.dict['personal_number'], 16)
         self.assertEqual(self.dict['usa_license_indicator'], 17)
+
+
+if __name__ == '__main__':
+    unittest.main()
