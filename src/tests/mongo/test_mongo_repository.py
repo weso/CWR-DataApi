@@ -58,3 +58,7 @@ class TestQuery(unittest.TestCase):
     def test_name_exact(self):
         entities = self.repo.get(lambda e: e['name'] == 'Popular')
         self.assertEqual(len(entities), 1)
+
+
+if __name__ == '__main__':
+    unittest.main()

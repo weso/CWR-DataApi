@@ -342,3 +342,7 @@ class TestWriter(unittest.TestCase):
         self.assertEqual(len(self.repo.get(lambda e: True)), 0)
         self.repo.add(self.entity)
         self.assertEqual(len(self.repo.get(lambda e: True)), 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
