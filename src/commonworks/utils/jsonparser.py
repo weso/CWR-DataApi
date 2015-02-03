@@ -90,8 +90,7 @@ def parse_entire_work_title(json_item):
                             json_item['writer_two_last_name'],
                             json_item['writer_two_ipi_cae'],
                             json_item['writer_two_ipi_base_number'],
-                            json_item['submitter_id']
-    )
+                            json_item['submitter_id'])
 
     return title
 
@@ -117,7 +116,7 @@ def parse_ipa_agreement(agreement_id, json_item):
     """
     Creates an IPAAgreement from the data stored in a JSON object, and adds to it the specified submitter ID.
 
-    :param submitter_id: submitter id
+    :param agreement_id: agreement id
     :param json_item: JSON object to parse
     :return: an IPAAgreement parsed from the JSON and with the specified id
     """
@@ -147,8 +146,7 @@ def parse_original_work_title(json_item):
                               json_item['writer_two_last_name'],
                               json_item['writer_two_ipi_cae'],
                               json_item['writer_two_ipi_base_number'],
-                              json_item['submitter_id']
-    )
+                              json_item['submitter_id'])
 
     return title
 

@@ -290,26 +290,6 @@ class TestWork(unittest.TestCase):
         self.assertEqual(len(self.repo.get(lambda e: True)), 1)
 
 
-class TestWork(unittest.TestCase):
-    """
-    Tests the Work API against a Mongo database.
-    """
-
-    def setUp(self):
-        self.entity = Work(1, 'title', 'ES', 3, 4, datetime.date(2015, 1, 11),
-                           5, 6, 7, 8, 9, 10, 11, 12, 13, 22, 'name', 14, 15, 16, 17,
-                           datetime.date(2015, 2, 11), 18, 19, 20, 21)
-        self.repo = MongoGenericRepository(host, port, db_name, 'works')
-
-    def tearDown(self):
-        self.repo.clear()
-
-    def test_add(self):
-        self.assertEqual(len(self.repo.get(lambda e: True)), 0)
-        self.repo.add(self.entity)
-        self.assertEqual(len(self.repo.get(lambda e: True)), 1)
-
-
 class TestWorkOrigin(unittest.TestCase):
     """
     Tests the WorkOrigin API against a Mongo database.

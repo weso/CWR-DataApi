@@ -42,7 +42,6 @@ class Writer(Entity):
         self._personal_number = personal_number
         self._usa_license_indicator = usa_license_indicator
 
-
     @property
     def cae_ipi_name_id(self):
         return self._cae_ipi_name_id

@@ -27,22 +27,22 @@ class TestQuery(unittest.TestCase):
     def setUp(self):
         self.repo = MongoGenericRepository(host, port, db_name, 'queries')
 
-        entity = ValueEntity('id', 'name', 'descriptor');
+        entity = ValueEntity('id', 'name', 'descriptor')
         self.repo.add(entity)
 
-        entity = ValueEntity('10', 'entity_1', 'descriptor');
+        entity = ValueEntity('10', 'entity_1', 'descriptor')
         self.repo.add(entity)
-        entity = ValueEntity('11', 'entity_2', 'descriptor');
+        entity = ValueEntity('11', 'entity_2', 'descriptor')
         self.repo.add(entity)
-        entity = ValueEntity('12', 'entity_3', 'descriptor');
+        entity = ValueEntity('12', 'entity_3', 'descriptor')
         self.repo.add(entity)
 
         entity = ValueEntity('AS', 'Assignor',
-                             'The entitled party who is assigning the rights to a musical work within an agreement');
+                             'The entitled party who is assigning the rights to a musical work within an agreement')
         self.repo.add(entity)
 
         entity = ValueEntity('POP', 'Popular',
-                             'The musical mainstream, usually song-based and melody-orientated, created for mass consumption');
+                             'The musical mainstream, usually song-based and melody-orientated, created for mass consumption')
         self.repo.add(entity)
 
     def tearDown(self):

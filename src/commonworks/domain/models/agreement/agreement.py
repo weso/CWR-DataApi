@@ -17,7 +17,7 @@ class Agreement(Entity):
     """
 
     def __init__(self, submitter_id, agreement_number, international_standard_number
-                 , type, start_date, end_date, retention_end_date, prior_royalty_status,
+                 , agreement_type, start_date, end_date, retention_end_date, prior_royalty_status,
                  prior_royalty_status_date, post_term_collection_status,
                  post_term_collection_end_date, signature_date,
                  works_number, sales_manufacture_clause, shares_change,
@@ -26,7 +26,7 @@ class Agreement(Entity):
         super(Agreement, self).__init__(submitter_id)
         self._agreement_number = agreement_number
         self._international_standard_number = international_standard_number
-        self._type = type
+        self._agreement_type = agreement_type
         self._start_date = start_date
         self._end_date = end_date
         self._retention_end_date = retention_end_date
@@ -55,7 +55,7 @@ class Agreement(Entity):
         self._interested_parties.append(ipa)
 
     def add_territory(self, territory):
-        self._territories.append(AgreementTerritory(territory))
+        self._territories.append(territory)
 
     def remove_interested_party(self, ipa):
         self._interested_parties.remove(ipa)
@@ -128,8 +128,8 @@ class Agreement(Entity):
         return self._territories
 
     @property
-    def type(self):
-        return self._type
+    def agreement_type(self):
+        return self._agreement_type
 
     @property
     def works_number(self):

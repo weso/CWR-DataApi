@@ -31,7 +31,7 @@ class MongoGenericRepository(Repository):
 
         self._encoder = MongoDictionaryEncoder()
 
-        self._collection = collection;
+        self._collection = collection
 
     def add(self, entity):
         self._db[self._collection].insert(self.encoder.encode(entity))

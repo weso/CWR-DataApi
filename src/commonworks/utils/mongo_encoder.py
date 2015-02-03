@@ -28,7 +28,8 @@ class MongoDictionaryEncoder(CWRDictionaryEncoder):
 
         return encoded
 
-    def __encode_entity(self, entity, encoded):
+    @staticmethod
+    def __encode_entity(entity, encoded):
         encoded['_id'] = entity.creation_id
 
         return encoded

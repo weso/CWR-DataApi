@@ -1,4 +1,4 @@
-# CWR Data Acess API
+# CWR Data Access API
 
 Project in conjunction with CWRFormatValidator in order to store all the data retrieved from documents into a database.
 

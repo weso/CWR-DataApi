@@ -138,7 +138,6 @@ class Work(Entity):
     def alternative_titles(self):
         return self._alternative_titles
 
-
     @property
     def catalogue_number(self):
         return self._catalogue_number
@@ -223,11 +222,9 @@ class Work(Entity):
     def performing_artists(self):
         return self._performing_artists
 
-
     @property
     def printed_edition_publication_date(self):
         return self._printed_edition_publication_date
-
 
     @property
     def priority_flag(self):
@@ -372,8 +369,7 @@ class OriginalWorkTitle(object):
     def __init__(self, entire_title, entire_work_iswc, language_code, writer_one_first_name, writer_one_last_name,
                  writer_one_ipi_cae, writer_one_ipi_base_number, writer_two_first_name,
                  writer_two_last_name, writer_two_ipi_cae,
-                 writer_two_ipi_base_number, work_number
-    ):
+                 writer_two_ipi_base_number, work_number):
         self._entire_title = entire_title
         self._entire_work_iswc = entire_work_iswc
         self._language_code = language_code
