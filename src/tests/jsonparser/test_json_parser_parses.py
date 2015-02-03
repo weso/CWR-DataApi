@@ -49,7 +49,7 @@ class TestAgreement(unittest.TestCase):
         self.assertEqual(self.agreement.submitter_id, 189)
         self.assertEqual(self.agreement.agreement_number, 12345)
         self.assertEqual(self.agreement.international_standard_number, 67890)
-        self.assertEqual(self.agreement.type, 't12')
+        self.assertEqual(self.agreement.agreement_type, 't12')
         self.assertEqual(self.agreement.start_date, datetime.date(2015, 1, 11).isoformat())
         self.assertEqual(self.agreement.end_date, datetime.date(2015, 12, 11).isoformat())
         self.assertEqual(self.agreement.retention_end_date, datetime.date(2015, 12, 20).isoformat())
