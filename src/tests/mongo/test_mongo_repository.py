@@ -9,6 +9,8 @@ from commonworks.domain.models.special_entities.value_entities.value_entity impo
 
 """
 Unit tests to check if the Repository API can be made to work correctly with Mongo.
+
+Requires a Mongo database running, and set up as mongo_test_conf indicates.
 """
 
 __author__ = 'Bernardo Martínez Garrido'

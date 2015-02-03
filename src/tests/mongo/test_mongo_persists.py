@@ -17,6 +17,8 @@ from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericReposit
 """
 Integration tests to check that it is possible to store the model classes in a Mongo database.
 
+Requires a Mongo database running, and set up as mongo_test_conf indicates.
+
 Right now these are just placeholders to create real tests.
 """
 
