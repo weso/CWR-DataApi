@@ -112,7 +112,7 @@ class CWRDictionaryEncoder(object):
         encoded['submitter_id'] = agreement.submitter_id
         encoded['agreement_number'] = agreement.agreement_number
         encoded['international_standard_number'] = agreement.international_standard_number
-        encoded['type'] = agreement.type
+        encoded['type'] = agreement.agreement_type
         encoded['start_date'] = self._adapter.adapt(agreement.start_date)
         encoded['end_date'] = self._adapter.adapt(agreement.end_date)
         encoded['retention_end_date'] = self._adapter.adapt(agreement.retention_end_date)
