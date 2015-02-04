@@ -1,6 +1,8 @@
 # CWR Data Access API
 
-Project in conjunction with CWRFormatValidator in order to store all the data retrieved from documents into a database.
+This projects offers a domain model for the CISAC CWR standard for Python applications.
+
+CWR stands for Common Works Registration, and it is a is a common or standard format for the registration and revision of musical works, used by publishers and performing rights societies as a way to exchange musical works data.
 
 ### Status
 The project is still in the development phase.

@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
-from commonworks.domain.models.agreement.agreement import Agreement
-from commonworks.domain.models.agreement.agreement import AgreementTerritory
-from commonworks.domain.models.agreement.interested_party import InterestedParty
-from commonworks.domain.models.agreement.interested_party import IPAAgreement
-from commonworks.domain.models.work.publisher import Publisher
-from commonworks.domain.models.work.work import Work, AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.domain.agreement.agreement import Agreement
+from commonworks.domain.agreement.agreement import AgreementTerritory
+from commonworks.domain.agreement.interested_party import InterestedParty
+from commonworks.domain.agreement.interested_party import IPAAgreement
+from commonworks.domain.work.publisher import Publisher
+from commonworks.domain.work.work import Work, AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     RecordingDetails, WorkOrigin, PerformingArtist
-from commonworks.domain.models.work.writer import Writer
+from commonworks.domain.work.writer import Writer
 
 """
 Offers methods to create model objects from JSON objects.
