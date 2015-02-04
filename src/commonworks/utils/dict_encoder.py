@@ -2,15 +2,15 @@
 
 import datetime
 
-from commonworks.domain.models.agreement.agreement import AgreementTerritory, Agreement
-from commonworks.domain.models.work.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.domain.agreement.agreement import AgreementTerritory, Agreement
+from commonworks.domain.work.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.domain.models.agreement.interested_party import InterestedParty, IPAAgreement
-from commonworks.domain.models.work.publisher import Publisher
-from commonworks.domain.models.special_entities.society import Society
+from commonworks.domain.agreement.interested_party import InterestedParty, IPAAgreement
+from commonworks.domain.work.publisher import Publisher
+from commonworks.domain.special_entities.society import Society
 from commonworks.domain.special_entities.territory import Territory
-from commonworks.domain.models.special_entities.value_entities.value_entity import ValueEntity
-from commonworks.domain.models.work.writer import Writer
+from commonworks.domain.special_entities.value_entities.value_entity import ValueEntity
+from commonworks.domain.work.writer import Writer
 
 
 """
