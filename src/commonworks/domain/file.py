@@ -10,17 +10,21 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class FileVersion(object):
+class FileIdentifier(object):
     """
-    Represents a CWR file version data.
+    Represents a CWR file identification data.
 
-    This is indicated by the file name, which use the pattern CWyynnnnsss_rrr.Vxx, where each section means the following:
+    This data identifies a concrete file and, according to the standard, is indicated in the file name, using the
+    pattern CWyynnnnsss_rrr.Vxx,, where each section means the following:
     CW - Header indicating it is a CWR file.
     yy - Year.
     nnnn - Sequence. This was originally 2 numbers, later changed to 4.
     sss - Sender. 2 or 3 digits.
     rrr - Receiver. 2 or 3 digits.
     xx - Version
+
+    So according to this, the files sent between a sender and a receiver each year are numerated following a sequence,
+    and different versions of them can exist.
     """
 
     def __init__(self, year, sequence_n, sender, receiver, version):
