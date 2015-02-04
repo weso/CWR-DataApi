@@ -3,15 +3,15 @@
 import unittest
 import datetime
 
-from commonworks.domain.agreement.agreement import AgreementTerritory, Agreement
-from commonworks.domain.work.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.model.agreement import AgreementTerritory, Agreement
+from commonworks.model.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.domain.agreement.interested_party import InterestedParty, IPAAgreement
-from commonworks.domain.work.publisher import Publisher
-from commonworks.domain.special_entities.society import Society
-from commonworks.domain.special_entities.territory import Territory
-from commonworks.domain.special_entities.value_entities.value_entity import ValueEntity
-from commonworks.domain.work.writer import Writer
+from commonworks.model.interested_party import InterestedParty, IPAAgreement
+from commonworks.model.publisher import Publisher
+from commonworks.model.society import Society
+from commonworks.model.territory import Territory
+from commonworks.model.value_entity import ValueEntity
+from commonworks.model.writer import Writer
 from commonworks.utils.dict_encoder import CWRDictionaryEncoder
 
 

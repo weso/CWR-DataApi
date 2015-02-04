@@ -34,7 +34,6 @@ class FileIdentifier(object):
         self._receiver = receiver
         self._version = version
 
-
     @property
     def year(self):
         return self._year

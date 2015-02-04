@@ -2,15 +2,15 @@
 import unittest
 import datetime
 
-from commonworks.domain.agreement.agreement import AgreementTerritory, Agreement
-from commonworks.domain.work.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.model.agreement import AgreementTerritory, Agreement
+from commonworks.model.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, Work
-from commonworks.domain.agreement.interested_party import InterestedParty, IPAAgreement
-from commonworks.domain.work.publisher import Publisher
-from commonworks.domain.special_entities.society import Society
-from commonworks.domain.special_entities.territory import Territory
-from commonworks.domain.special_entities.value_entities.value_entity import ValueEntity
-from commonworks.domain.work.writer import Writer
+from commonworks.model.interested_party import InterestedParty, IPAAgreement
+from commonworks.model.publisher import Publisher
+from commonworks.model.society import Society
+from commonworks.model.territory import Territory
+from commonworks.model.value_entity import ValueEntity
+from commonworks.model.writer import Writer
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
 
 
@@ -35,11 +35,11 @@ class TestAgreement(unittest.TestCase):
 
     def setUp(self):
         self.entity = Agreement(1, 2, 'Original', datetime.date(2015, 1, 11), datetime.date(2015, 2, 11),
-                           'D', 'D', datetime.date(2015, 6, 11), 122, 'S',
-                           international_standard_code=3, retention_end_date=datetime.date(2015, 3, 11),
-                           prior_royalty_status_date=datetime.date(2015, 4, 11),
-                           post_term_collection_end_date=datetime.date(2015, 5, 11),
-                           shares_change=True, advance_given=True)
+                                'D', 'D', datetime.date(2015, 6, 11), 122, 'S',
+                                international_standard_code=3, retention_end_date=datetime.date(2015, 3, 11),
+                                prior_royalty_status_date=datetime.date(2015, 4, 11),
+                                post_term_collection_end_date=datetime.date(2015, 5, 11),
+                                shares_change=True, advance_given=True)
         self.repo = MongoGenericRepository(host, port, db_name, 'agreements')
 
     def tearDown(self):

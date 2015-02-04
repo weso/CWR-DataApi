@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from commonworks.domain.entity import Entity
+from commonworks.model.entity import Entity
 
 
 """

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from commonworks.domain.file import FileIdentifier
+from commonworks.model.file import FileIdentifier
 
 """
 CWR file utilities.

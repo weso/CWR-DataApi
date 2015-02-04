@@ -2,15 +2,15 @@
 
 import datetime
 
-from commonworks.domain.agreement.agreement import AgreementTerritory, Agreement
-from commonworks.domain.work.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.model.agreement import AgreementTerritory, Agreement
+from commonworks.model.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.domain.agreement.interested_party import InterestedParty, IPAAgreement
-from commonworks.domain.work.publisher import Publisher
-from commonworks.domain.special_entities.society import Society
-from commonworks.domain.special_entities.territory import Territory
-from commonworks.domain.special_entities.value_entities.value_entity import ValueEntity
-from commonworks.domain.work.writer import Writer
+from commonworks.model.interested_party import InterestedParty, IPAAgreement
+from commonworks.model.publisher import Publisher
+from commonworks.model.society import Society
+from commonworks.model.territory import Territory
+from commonworks.model.value_entity import ValueEntity
+from commonworks.model.writer import Writer
 
 
 """
@@ -111,7 +111,7 @@ class CWRDictionaryEncoder(object):
 
         encoded['submitter_agreement_number'] = agreement.submitter_agreement_number
         encoded['society_agreement_number'] = agreement.society_agreement_number
-        encoded['international_standard_number'] = agreement._international_standard_code
+        encoded['international_standard_number'] = agreement.international_standard_code
         encoded['agreement_type'] = agreement.agreement_type
 
         encoded['start_date'] = self._adapter.adapt(agreement.start_date)

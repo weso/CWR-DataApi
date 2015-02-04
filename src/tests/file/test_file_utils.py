@@ -31,7 +31,6 @@ class TestParseFileName(unittest.TestCase):
         # Sender with 3 digits and receiver with 3 digits
         self.fn_s3_r3 = "CW000012AB2_234.V02"
 
-
     def test_s2_r2(self):
         data = cwr_file.parse_filename(self.fn_s2_r2)
 
@@ -87,7 +86,6 @@ class TestParseFileNameOld(unittest.TestCase):
         self.fn_s2_r3 = "CW990022_DEC.V00"
         # Sender with 3 digits and receiver with 3 digits
         self.fn_s3_r3 = "CW0012AB2_234.V02"
-
 
     def test_s2_r2(self):
         data = cwr_file.parse_filename_old(self.fn_s2_r2)
