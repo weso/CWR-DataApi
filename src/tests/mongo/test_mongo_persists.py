@@ -34,7 +34,7 @@ class TestAgreement(unittest.TestCase):
     """
 
     def setUp(self):
-        entity = Agreement(1, 2, 'Original', datetime.date(2015, 1, 11), datetime.date(2015, 2, 11),
+        self.entity = Agreement(1, 2, 'Original', datetime.date(2015, 1, 11), datetime.date(2015, 2, 11),
                            'D', 'D', datetime.date(2015, 6, 11), 122, 'S',
                            international_standard_code=3, retention_end_date=datetime.date(2015, 3, 11),
                            prior_royalty_status_date=datetime.date(2015, 4, 11),
