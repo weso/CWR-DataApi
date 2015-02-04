@@ -25,44 +25,47 @@ class TestAgreement(unittest.TestCase):
 
     def setUp(self):
         data = {}
-        data['submitter_number'] = 12345
-        data['international_standard_number'] = 67890
-        data['type'] = 't12'
+        data['submitter_agreement_number'] = 1
+        data['society_agreement_number'] = 2
+        data['international_standard_code'] = 3
+        data['agreement_type'] = 'Original'
+
         data['start_date'] = datetime.date(2015, 1, 11).isoformat()
         data['end_date'] = datetime.date(2015, 12, 11).isoformat()
-        data['retention_end_date'] = datetime.date(2015, 12, 20).isoformat()
-        data['prior_royalty_status'] = 's34'
-        data['prior_royalty_status_date'] = datetime.date(2013, 12, 11).isoformat()
-        data['post_term_collection_status'] = 's56'
-        data['post_term_collection_end_date'] = datetime.date(2014, 1, 20).isoformat()
-        data['signature_date'] = datetime.date(2014, 12, 20).isoformat()
-        data['works_number'] = 123
-        data['sales_manufacture_clause'] = 'c23'
-        data['shares_change'] = 56
-        data['advance_given'] = 78
-        data['society_assigned_number'] = 135
 
-        self.agreement = jsonparser.parse_agreement(189, json.loads(json.dumps(data)))
+        data['prior_royalty_status'] = 'D'
+        data['prior_royalty_status_date'] = datetime.date(2013, 12, 11).isoformat()
+
+        data['post_term_collection_status'] = 'D'
+        data['post_term_collection_end_date'] = datetime.date(2014, 1, 20).isoformat()
+
+        data['signature_date'] = datetime.date(2014, 12, 20).isoformat()
+        data['retention_end_date'] = datetime.date(2015, 12, 20).isoformat()
+        data['works_number'] = 123
+        data['sales_manufacture_clause'] = 'S'
+        data['shares_change'] = True
+        data['advance_given'] = True
+
+        self.agreement = jsonparser.parse_agreement(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.agreement.submitter_id, 189)
-        self.assertEqual(self.agreement.agreement_number, 12345)
-        self.assertEqual(self.agreement.international_standard_number, 67890)
-        self.assertEqual(self.agreement.agreement_type, 't12')
+        self.assertEqual(self.agreement.submitter_agreement_number, 1)
+        self.assertEqual(self.agreement.society_agreement_number, 2)
+        self.assertEqual(self.agreement.international_standard_code, 3)
+        self.assertEqual(self.agreement.agreement_type, 'Original')
         self.assertEqual(self.agreement.start_date, datetime.date(2015, 1, 11).isoformat())
         self.assertEqual(self.agreement.end_date, datetime.date(2015, 12, 11).isoformat())
         self.assertEqual(self.agreement.retention_end_date, datetime.date(2015, 12, 20).isoformat())
-        self.assertEqual(self.agreement.prior_royalty_status, 's34')
+        self.assertEqual(self.agreement.prior_royalty_status, 'D')
         self.assertEqual(self.agreement.prior_royalty_status_date, datetime.date(2013, 12, 11).isoformat())
-        self.assertEqual(self.agreement.post_term_collection_status, 's56')
+        self.assertEqual(self.agreement.post_term_collection_status, 'D')
         self.assertEqual(self.agreement.post_term_collection_end_date, datetime.date(2014, 1, 20).isoformat())
         self.assertEqual(self.agreement.signature_date, datetime.date(2014, 12, 20).isoformat())
         self.assertEqual(self.agreement.works_number, 123)
-        self.assertEqual(self.agreement.sales_manufacture_clause, 'c23')
-        self.assertEqual(self.agreement.shares_change, 56)
-        self.assertEqual(self.agreement.advance_given, 78)
-        self.assertEqual(self.agreement.society_assigned_number, 135)
+        self.assertEqual(self.agreement.sales_manufacture_clause, 'S')
+        self.assertEqual(self.agreement.shares_change, True)
+        self.assertEqual(self.agreement.advance_given, True)
 
 
 class TestAgreementTerritory(unittest.TestCase):

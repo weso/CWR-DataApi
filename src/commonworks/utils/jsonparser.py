@@ -18,30 +18,30 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-def parse_agreement(submitter_id, json_item):
+def parse_agreement(json_item):
     """
     Creates an Agreement from the data stored in a JSON object, and adds to it the specified submitter ID.
 
-    :param submitter_id: submitter id
     :param json_item: JSON object to parse
     :return: an Agreement parsed from the JSON and with the specified id
     """
-    agreement = Agreement(submitter_id, json_item['submitter_number'],
-                          json_item['international_standard_number'],
-                          json_item['type'],
+    # TODO Optional fields may be missing on the JSON
+    agreement = Agreement(json_item['submitter_agreement_number'],
+                          json_item['society_agreement_number'],
+                          json_item['agreement_type'],
                           json_item['start_date'],
                           json_item['end_date'],
-                          json_item['retention_end_date'],
                           json_item['prior_royalty_status'],
-                          json_item['prior_royalty_status_date'],
                           json_item['post_term_collection_status'],
-                          json_item['post_term_collection_end_date'],
                           json_item['signature_date'],
                           json_item['works_number'],
                           json_item['sales_manufacture_clause'],
+                          json_item['international_standard_code'],
+                          json_item['retention_end_date'],
+                          json_item['prior_royalty_status_date'],
+                          json_item['post_term_collection_end_date'],
                           json_item['shares_change'],
-                          json_item['advance_given'],
-                          json_item['society_assigned_number'])
+                          json_item['advance_given'])
 
     return agreement
 

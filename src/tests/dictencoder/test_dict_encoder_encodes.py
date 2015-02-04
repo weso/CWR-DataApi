@@ -50,31 +50,36 @@ class TestAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Agreement(1, 2, 3, 4, datetime.date(2015, 1, 11), datetime.date(2015, 2, 11),
-                           datetime.date(2015, 3, 11), 5, datetime.date(2015, 4, 11),
-                           6, datetime.date(2015, 5, 11), datetime.date(2015, 6, 11), 7,
-                           8, 9, 10, 11)
+        entity = Agreement(1, 2, 'Original', datetime.date(2015, 1, 11), datetime.date(2015, 2, 11),
+                           'D', 'D', datetime.date(2015, 6, 11), 122, 'S',
+                           international_standard_code=3, retention_end_date=datetime.date(2015, 3, 11),
+                           prior_royalty_status_date=datetime.date(2015, 4, 11),
+                           post_term_collection_end_date=datetime.date(2015, 5, 11),
+                           shares_change=True, advance_given=True)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['submitter_id'], 1)
-        self.assertEqual(self.dict['agreement_number'], 2)
+        self.assertEqual(self.dict['submitter_agreement_number'], 1)
+        self.assertEqual(self.dict['society_agreement_number'], 2)
         self.assertEqual(self.dict['international_standard_number'], 3)
-        self.assertEqual(self.dict['type'], 4)
+        self.assertEqual(self.dict['agreement_type'], 'Original')
+
         self.assertEqual(self.dict['start_date'], datetime.date(2015, 1, 11).isoformat())
         self.assertEqual(self.dict['end_date'], datetime.date(2015, 2, 11).isoformat())
-        self.assertEqual(self.dict['retention_end_date'], datetime.date(2015, 3, 11).isoformat())
-        self.assertEqual(self.dict['prior_royalty_status'], 5)
+
+        self.assertEqual(self.dict['prior_royalty_status'], 'D')
         self.assertEqual(self.dict['prior_royalty_status_date'], datetime.date(2015, 4, 11).isoformat())
-        self.assertEqual(self.dict['post_term_collection_status'], 6)
+
+        self.assertEqual(self.dict['post_term_collection_status'], 'D')
         self.assertEqual(self.dict['post_term_collection_end_date'], datetime.date(2015, 5, 11).isoformat())
+
+        self.assertEqual(self.dict['retention_end_date'], datetime.date(2015, 3, 11).isoformat())
         self.assertEqual(self.dict['signature_date'], datetime.date(2015, 6, 11).isoformat())
-        self.assertEqual(self.dict['works_number'], 7)
-        self.assertEqual(self.dict['sales_manufacture_clause'], 8)
-        self.assertEqual(self.dict['shares_change'], 9)
-        self.assertEqual(self.dict['advance_given'], 10)
-        self.assertEqual(self.dict['society_assigned_number'], 11)
+        self.assertEqual(self.dict['works_number'], 122)
+        self.assertEqual(self.dict['sales_manufacture_clause'], 'S')
+        self.assertEqual(self.dict['shares_change'], True)
+        self.assertEqual(self.dict['advance_given'], True)
 
 
 class TestAlternativeWorkTitle(unittest.TestCase):

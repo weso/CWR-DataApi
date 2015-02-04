@@ -109,29 +109,38 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['submitter_id'] = agreement.submitter_id
-        encoded['agreement_number'] = agreement.agreement_number
-        encoded['international_standard_number'] = agreement.international_standard_number
-        encoded['type'] = agreement.agreement_type
+        encoded['submitter_agreement_number'] = agreement.submitter_agreement_number
+        encoded['society_agreement_number'] = agreement.society_agreement_number
+        encoded['international_standard_number'] = agreement._international_standard_code
+        encoded['agreement_type'] = agreement.agreement_type
+
         encoded['start_date'] = self._adapter.adapt(agreement.start_date)
         encoded['end_date'] = self._adapter.adapt(agreement.end_date)
-        encoded['retention_end_date'] = self._adapter.adapt(agreement.retention_end_date)
+
         encoded['prior_royalty_status'] = agreement.prior_royalty_status
         encoded['prior_royalty_status_date'] = self._adapter.adapt(agreement.prior_royalty_status_date)
+
         encoded['post_term_collection_status'] = agreement.post_term_collection_status
         encoded['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)
+
         encoded['signature_date'] = self._adapter.adapt(agreement.signature_date)
         encoded['works_number'] = agreement.works_number
         encoded['sales_manufacture_clause'] = agreement.sales_manufacture_clause
+
+        encoded['international_standard_code'] = agreement.international_standard_code
+        encoded['agreement_type'] = agreement.agreement_type
+        encoded['retention_end_date'] = self._adapter.adapt(agreement.retention_end_date)
         encoded['shares_change'] = agreement.shares_change
         encoded['advance_given'] = agreement.advance_given
-        encoded['society_assigned_number'] = agreement.society_assigned_number
 
-        encoded['interested_parties'] = agreement.interested_parties
+        encoded['interested_parties'] = []
         encoded['territories'] = []
 
         for territory in agreement.territories:
             encoded['territories'].append(self.__encode_agreement_territory(territory))
+
+        for ipa in agreement.interested_parties:
+            encoded['territories'].append(self.__encode_interested_party(ipa))
 
         return encoded
 
