@@ -4,7 +4,7 @@ import unittest
 import re
 
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
-from commonworks.model.value_entity import ValueEntity
+from commonworks.value_entity import ValueEntity
 
 
 """

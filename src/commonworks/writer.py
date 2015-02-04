@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from commonworks.model.entity import Entity
+from commonworks.entity import Entity
 
 """
 Writer entity model classes.
