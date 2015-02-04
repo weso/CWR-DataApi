@@ -14,7 +14,7 @@ from commonworks.domain.models.work.writer import Writer
 
 
 """
-Offers classes to create encodedionaries from model objects.
+Offers classes to create dictionaries from model objects.
 """
 
 __author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
