@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from abc import ABCMeta
 
 """
 Agreement model classes.
@@ -535,17 +536,72 @@ class IPA(object):
         return self._sr_society
 
 
-class PublisherToPublisherAgreement(object):
+class InterestedPartyAgreement(object):
     """
-    Represents the relationship between two Publishers and an Agreement
+    Represents the relationship between an Interested Party and an Agreement
+    """
+    __metaclass__ = ABCMeta
+
+    def __init__(self, reversionary=False, first_record_refusal=False, usa_license=False):
+        # Flags
+        self._first_record_refusal = first_record_refusal
+        self._reversionary = reversionary
+        self._usa_license = usa_license
+
+    @property
+    def first_record_refusal(self):
+        """
+        First Recording Refusal Indicator field.
+
+        This field indicates that the submitter needs to be asked before the society can authorize a first recording.
+        Note that this field is mandatory for registrations with the UK societies.
+
+        It is a Boolean field, and by default is False.
+
+        :return: True if the submitter needs to be asked to authorize first recording, False otherwise
+        """
+        return self._first_record_refusal
+
+    @property
+    def reversionary(self):
+        """
+        Reversionary Indicator field.
+
+        This indicates that the Interested Party is claiming the work under the reversionary provisions.
+        Only some societies recognize reversionary rights.
+
+        It is a Boolean field, and by default is False.
+
+        :return: True if the work is under reversionary provisions, False otherwise
+        """
+        return self.reversionary
+
+    @property
+    def usa_license(self):
+        """
+        USA License Indicator field.
+
+        This field indicates whether rights for this Interested Party flow through ASCAP, BMI, or SESAC for the U.S.
+
+        It is a Boolean field, and by default is False.
+
+        :return: True if the rights flow to the U.S., False otherwise
+        """
+        return self._usa_license
+
+
+class PublisherAgreement(InterestedPartyAgreement):
+    """
+    Represents the relationship between a Publishers and an Agreement
 
     If the agreement that covers this work was documented in an agreement record (AGR), then the submitter agreement
     number and the society-assigned agreement number will be included.
     """
 
     def __init__(self, agreement, agreement_type, publisher, publisher_type, sequence_n, submitter_agreement_id=None,
-                 society_agreement_id=None,
-                 isa_code=None, territories=None, reversionary=False, first_record_refusal=False, usa_license=False):
+                 society_agreement_id=None, isa_code=None, territories=None,
+                 reversionary=False, first_record_refusal=False, usa_license=False):
+        super(PublisherAgreement, self).__init__(reversionary, first_record_refusal, usa_license)
         # Agreement info
         self._agreement = agreement
         self._agreement_type = agreement_type
@@ -561,11 +617,6 @@ class PublisherToPublisherAgreement(object):
 
         # Other info
         self._isa_code = isa_code
-
-        # Flags
-        self._reversionary = reversionary
-        self._first_record_refusal = first_record_refusal
-        self._usa_license = usa_license
 
         # Territories and shares
         if territories is None:
@@ -594,20 +645,6 @@ class PublisherToPublisherAgreement(object):
         return self.agreement_type
 
     @property
-    def first_record_refusal(self):
-        """
-        First Recording Refusal Indicator field.
-
-        This field indicates that the submitter needs to be asked before the society can authorize a first recording.
-        Note that this field is mandatory for registrations with the UK societies.
-
-        It is a Boolean field, and by default is False.
-
-        :return: True if the submitter needs to be asked to authorize first recording, False otherwise
-        """
-        return self._first_record_refusal
-
-    @property
     def isa_code(self):
         """
         International Standard Agreement Code field.
@@ -617,6 +654,15 @@ class PublisherToPublisherAgreement(object):
         :return: the ISA code
         """
         return self._isa_code
+
+    @property
+    def publisher(self):
+        """
+        The Publisher to which this relationship refers.
+
+        :return: the Publisher
+        """
+        return self._publisher
 
     @property
     def publisher_type(self):
@@ -630,20 +676,6 @@ class PublisherToPublisherAgreement(object):
         :return: the Publisher's role
         """
         return self._publisher_type
-
-    @property
-    def reversionary(self):
-        """
-        Reversionary Indicator field.
-
-        This indicates that the publisher is claiming the work under the reversionary provisions.
-        Only some societies recognize reversionary rights.
-
-        It is a Boolean field, and by default is False.
-
-        :return: True if the work is under reversionary provisions, False otherwise
-        """
-        return self.reversionary
 
     @property
     def sequence_n(self):
@@ -686,26 +718,13 @@ class PublisherToPublisherAgreement(object):
         """
         Publisher Unknown Indicator field.
 
-        It is automatically set to False if the Publisher is not set.
+        It is automatically set to False if the Publisher name is not set.
 
-        This indicates if the publisher is under your control and you have a name on file for it.
+        This indicates if the Publisher is under your control and you have a name on file for it.
 
-        :return: True if the Publisher's is known, False otherwise
+        :return: True if the Publisher's name is known, False otherwise
         """
-        return self.publisher is None
-
-    @property
-    def usa_license(self):
-        """
-        USA License Indicator field.
-
-        This field indicates whether rights for this publisher flow through ASCAP, BMI, or SESAC for the U.S.
-
-        It is a Boolean field, and by default is False.
-
-        :return: True if the rights flow to the U.S., False otherwise
-        """
-        return self._usa_license
+        return len(self.publisher.name) == 0
 
     @property
     def submitter_agreement(self):
@@ -727,3 +746,68 @@ class PublisherToPublisherAgreement(object):
         :return: the Publisher
         """
         return self._publisher
+
+
+class WriterAgreement(InterestedPartyAgreement):
+    """
+    Represents the relationship between a Writer and an Agreement.
+    """
+
+    def __init__(self, agreement, writer, designation=None,
+                 reversionary=False, first_record_refusal=False, usa_license=False, for_hire=False):
+        super(WriterAgreement, self).__init__(reversionary, first_record_refusal, usa_license)
+        self._agreement = agreement
+        self._writer = writer
+        self._designation = designation
+        self._for_hire = for_hire
+
+    def agreement(self):
+        """
+        The Agreement to which this relationship refers.
+
+        :return: the Agreement
+        """
+        return self._agreement
+
+    def designation(self):
+        """
+        Writer Designation Code field.
+
+        This code describes the role of the writer with respect to this work e.g. composer, author, arranger. This field
+        is required for writers which you control.
+
+        :return:
+        """
+        return self._designation
+
+    def for_hire(self):
+        """
+        Work For Hire Indicator flag.
+
+        This field indicates that this Writer was hired to write this work.
+
+        It is a Boolean field, and by default is False.
+
+        :return: True if the Writer was hired, False otherwise
+        """
+        return self._for_hire
+
+    def writer(self):
+        """
+        The Writer to which this relationship refers.
+
+        :return: the Writer
+        """
+        return self._writer
+
+    def unknown(self):
+        """
+        Writer Unknown Indicator field.
+
+        It is automatically set to False if the Writer name is not set.
+
+        This indicates if the Writer is under your control and you have a name on file for it.
+
+        :return: True if the Writer's name is known, False otherwise
+        """
+        return len(self.writer().name) == 0

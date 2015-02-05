@@ -5,12 +5,11 @@ import datetime
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, Work, RecordingDetails
-from commonworks.interested_party import InterestedParty
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
-from commonworks.writer import Writer
+from commonworks.interested_party import Writer
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
 
 
@@ -108,32 +107,14 @@ class TestEntireWorkTitle(unittest.TestCase):
         self.assertEqual(len(self.repo.get(lambda e: True)), 1)
 
 
-class TestInterestedParty(unittest.TestCase):
+class TestIPA(unittest.TestCase):
     """
-    Tests the InterestedParty API against a Mongo database.
-    """
-
-    def setUp(self):
-        self.entity = InterestedParty(1, 2, 3, 4, 'surname')
-        self.repo = MongoGenericRepository(host, port, db_name, 'interested_parties')
-
-    def tearDown(self):
-        self.repo.clear()
-
-    def test_add(self):
-        self.assertEqual(len(self.repo.get(lambda e: True)), 0)
-        self.repo.add(self.entity)
-        self.assertEqual(len(self.repo.get(lambda e: True)), 1)
-
-
-class TestIPAAgreement(unittest.TestCase):
-    """
-    Tests the IPAAgreement API against a Mongo database.
+    Tests the IPA API against a Mongo database.
     """
 
     def setUp(self):
         self.entity = IPA(1, 2, 'party', 'assign', 'writer', 3, 4, 0.1, 5, 0.2, 6, 0.3)
-        self.repo = MongoGenericRepository(host, port, db_name, 'ipa_agreements')
+        self.repo = MongoGenericRepository(host, port, db_name, 'ipas')
 
     def tearDown(self):
         self.repo.clear()
@@ -317,7 +298,7 @@ class TestWriter(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = Writer(1, 2, 'name', 'surname', 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)
+        self.entity = Writer('name', 1, 2, 'ip', 3, 'surname')
         self.repo = MongoGenericRepository(host, port, db_name, 'writers')
 
     def tearDown(self):

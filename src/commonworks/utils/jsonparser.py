@@ -1,12 +1,11 @@
 # -*- encoding: utf-8 -*-
 from commonworks.agreement import Agreement
 from commonworks.agreement import AgreementTerritory
-from commonworks.interested_party import InterestedParty
 from commonworks.agreement import IPA
 from commonworks.interested_party import Publisher
 from commonworks.work import Work, AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     RecordingDetails, WorkOrigin, PerformingArtist
-from commonworks.writer import Writer
+from commonworks.interested_party import Writer
 
 """
 Offers methods to create model objects from JSON objects.
@@ -95,29 +94,12 @@ def parse_entire_work_title(json_item):
     return title
 
 
-def parse_interested_party(submitter_id, json_item):
+def parse_ipa(json_item):
     """
-    Creates an InterestedParty from the data stored in a JSON object, and adds to it the specified submitter ID.
-
-    :param submitter_id: submitter id
-    :param json_item: JSON object to parse
-    :return: an InterestedParty parsed from the JSON and with the specified id
-    """
-    party = InterestedParty(submitter_id,
-                            json_item['cae_ipi_id'],
-                            json_item['ipi_base_number'],
-                            json_item['id'],
-                            json_item['last_name'])
-
-    return party
-
-
-def parse_ipa_agreement(json_item):
-    """
-    Creates an IPAAgreement from the data stored in a JSON object, and adds to it the specified submitter ID.
+    Creates an IPA from the data stored in a JSON object, and adds to it the specified submitter ID.
 
     :param json_item: JSON object to parse
-    :return: an IPAAgreement parsed from the JSON and with the specified id
+    :return: an IPA parsed from the JSON
     """
     agreement = IPA(json_item['agreement_id'], json_item['interested_party_id'], json_item['interested_party_name'],
                     json_item['agreement_role_code'], json_item['interested_party_writer_name'],
@@ -251,25 +233,16 @@ def parse_work_origin(json_item):
     return origin
 
 
-def parse_writer(submitter_id, json_item):
+def parse_writer(json_item):
     """
     Creates a Writer from the data stored in a JSON object, and adds to it the specified submitter ID.
 
-    :param submitter_id: submitter id
     :param json_item: JSON object to parse
     :return: a Writer parsed from the JSON and with the specified id
     """
-    writer = Writer(submitter_id, json_item['interested_party_id'],
-                    json_item['first_name'], json_item['last_name'],
-                    json_item['designation_code'], json_item['tax_id_number'],
-                    json_item['cae_ipi_name_id'], json_item['pr_society'],
-                    json_item['pr_share'], json_item['mr_society'],
-                    json_item['mr_share'], json_item['sr_society'],
-                    json_item['sr_share'], json_item['reversionary_indicator'],
-                    json_item['first_recording_refusal_indicator'],
-                    json_item['work_for_hire_indicator'],
-                    json_item['ipi_base_number'],
-                    json_item['personal_number'],
-                    json_item['usa_license_indicator'])
+    writer = Writer(json_item['first_name'],
+                    json_item['personal_number'], json_item['ip_id'],
+                    json_item['ip_name'], json_item['ip_base_id'],
+                    json_item['last_name'])
 
     return writer

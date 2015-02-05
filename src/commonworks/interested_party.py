@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from commonworks.entity import Entity
+from abc import ABCMeta
 
 """
 Interested party model classes.
@@ -11,76 +11,24 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class InterestedParty(Entity):
+class InterestedParty(object):
     """
     Represents a CWR interested party.
     """
+    __metaclass__ = ABCMeta
 
-    def __init__(self, submitter_id, cae_ipi_id, ipi_base_number, ipa_number, last_name, agreements=None):
-        super(InterestedParty, self).__init__(submitter_id)
-        self._cae_ipi_id = cae_ipi_id
-        self._ipi_base_number = ipi_base_number
-        self._ipa_number = ipa_number
-        self._last_name = last_name
-
-        if agreements is None:
-            self._agreements = []
-        else:
-            self._agreements = agreements
-
-    def add_agreement(self, agreement):
-        self._agreements.append(agreement)
-
-    def remove_agreement(self, agreement):
-        self._agreements.remove(agreement)
-
-    @property
-    def agreements(self):
-        return self._agreements
-
-    @property
-    def cae_ipi_id(self):
-        return self._cae_ipi_id
-
-    @property
-    def ipa_number(self):
-        return self._ipa_number
-
-    @property
-    def ipi_base_number(self):
-        return self._ipi_base_number
-
-    @property
-    def last_name(self):
-        return self._last_name
-
-
-class Publisher(object):
-    """
-    Represents a CWR Publisher.
-
-    This encompasses several types of interested parties, such as sub-publisher, original publisher, acquirer or
-    administrator.
-    """
-
-    def __init__(self, name, ip_id, ip_name, ip_base_id, tax_id):
-        # General info
-        self._name = name
-
+    def __init__(self, ip_id, ip_name, ip_base_id):
         # IP info
         self._ip_id = ip_id
         self._ip_name = ip_name
         self._ip_base_id = ip_base_id
 
-        # Other info
-        self._tax_id = tax_id
-
     @property
     def ip_base_id(self):
         """
-        Publisher IP Base Number field.
+        Interested Party Base Number field.
 
-        This number is the unique identifier associated with this publisher. The IP Base Number is a unique identifier
+        This number is the unique identifier associated with this IP. The IP Base Number is a unique identifier
         allocated automatically by the IPI System to each interested party (IP), being either a natural person or legal
         entity. The number consists of 13 characters: letter i (I), hyphen (-), nine digits, hyphen (-), one
         check-digit. I-999999999-9. (weighted modulus 10, I weight = 2, adapted from ISO 7064). You can find more
@@ -95,7 +43,7 @@ class Publisher(object):
         """
         Interested Party Number field.
 
-        This is your unique numerical code for this publisher. It is important that this number refer only to the
+        This is your unique numerical code for this IP. It is important that this number refer only to the
         publisher named on the registration. Never re-use an interested party number for a different publisher since
         this could cause the societies to merge the catalogue of the first publisher with the catalogue of the second
         publisher with the same interested party.
@@ -107,7 +55,7 @@ class Publisher(object):
     @property
     def ip_name(self):
         """
-        Publisher IP Name field.
+        Interested Party Name field.
 
         The unique identifier associated with this publisher name.
 
@@ -119,6 +67,23 @@ class Publisher(object):
         :return: the Published IP name
         """
         return self._ip_name
+
+
+class Publisher(InterestedParty):
+    """
+    Represents a CWR Publisher.
+
+    This encompasses several types of interested parties, such as sub-publisher, original publisher, acquirer or
+    administrator.
+    """
+
+    def __init__(self, name, ip_id, ip_name, ip_base_id, tax_id):
+        super(Publisher, self).__init__(ip_id, ip_name, ip_base_id)
+        # General info
+        self._name = name
+
+        # Other info
+        self._tax_id = tax_id
 
     @property
     def name(self):
@@ -144,3 +109,50 @@ class Publisher(object):
         """
         return self._tax_id
 
+
+class Writer(InterestedParty):
+    """
+    Represents a CWR writer.
+    """
+
+    def __init__(self, first_name, personal_number, ip_id, ip_name, ip_base_id, last_name=None):
+        super(Writer, self).__init__(ip_id, ip_name, ip_base_id)
+        self._first_name = first_name
+        self._last_name = last_name
+        self._personal_number = personal_number
+
+    @property
+    def first_name(self):
+        """
+        Writer First Name field.
+
+        The first name of the writer.
+
+        :return: the Writer first name
+        """
+        return self._first_name
+
+    @property
+    def last_name(self):
+        """
+        Writer Last Name field.
+
+        The last name of the writer. If you do not have the ability to separate the last name from the first name, then
+        you may include both the last and first name in this field—pr separated by a comma. This field is mandatory for
+        writers that you control.
+
+        :return: the Writer last name
+        """
+        return self._last_name
+
+    @property
+    def personal_number(self):
+        """
+        Personal Number field.
+
+        This field contains the personal number assigned to this individual in the country of residence. For Sweden, it
+        has the format YYMMDD9999.
+
+        :return: the Writer country-based personal number
+        """
+        return self._personal_number

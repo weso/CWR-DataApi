@@ -6,11 +6,11 @@ import datetime
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.interested_party import InterestedParty, Publisher
+from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
-from commonworks.writer import Writer
+from commonworks.interested_party import Writer
 from commonworks.utils.dict_encoder import CWRDictionaryEncoder
 
 
@@ -123,25 +123,6 @@ class TestEntireWorkTitle(unittest.TestCase):
         self.assertEqual(self.dict['writer_two_last_name'], 'surname2')
         self.assertEqual(self.dict['writer_two_ipi_cae'], 4)
         self.assertEqual(self.dict['writer_two_ipi_base_number'], 5)
-
-
-class TestInterestedParty(unittest.TestCase):
-    """
-    Tests the InterestedParty to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = InterestedParty(1, 2, 3, 4, 'surname')
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual(self.dict['submitter_id'], 1)
-        self.assertEqual(self.dict['cae_ipi_id'], 2)
-        self.assertEqual(self.dict['ipi_base_number'], 3)
-        self.assertEqual(self.dict['ipa_number'], 4)
-        self.assertEqual(self.dict['last_name'], 'surname')
 
 
 class TestIPAAgreement(unittest.TestCase):
@@ -389,29 +370,17 @@ class TestWriter(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Writer(1, 2, 'name', 'surname', 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17)
+        entity = Writer('name', 1, 2, 'ip', 3, 'surname')
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['interested_party'], 2)
         self.assertEqual(self.dict['first_name'], 'name')
+        self.assertEqual(self.dict['personal_number'], 1)
+        self.assertEqual(self.dict['ip_id'], 2)
+        self.assertEqual(self.dict['ip_name'], 'ip')
+        self.assertEqual(self.dict['ip_base_id'], 3)
         self.assertEqual(self.dict['last_name'], 'surname')
-        self.assertEqual(self.dict['designation_code'], 3)
-        self.assertEqual(self.dict['tax_id_number'], 4)
-        self.assertEqual(self.dict['cae_ipi_name_id'], 5)
-        self.assertEqual(self.dict['pr_society'], 6)
-        self.assertEqual(self.dict['pr_share'], 7)
-        self.assertEqual(self.dict['mr_society'], 8)
-        self.assertEqual(self.dict['mr_share'], 9)
-        self.assertEqual(self.dict['sr_society'], 10)
-        self.assertEqual(self.dict['sr_share'], 11)
-        self.assertEqual(self.dict['reversionary_indicator'], 12)
-        self.assertEqual(self.dict['first_recording_refusal_indicator'], 13)
-        self.assertEqual(self.dict['work_for_hire_indicator'], 14)
-        self.assertEqual(self.dict['ipi_base_number'], 15)
-        self.assertEqual(self.dict['personal_number'], 16)
-        self.assertEqual(self.dict['usa_license_indicator'], 17)
 
 
 if __name__ == '__main__':

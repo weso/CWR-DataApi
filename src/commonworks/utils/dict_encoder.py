@@ -5,12 +5,11 @@ import datetime
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.interested_party import InterestedParty
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
-from commonworks.writer import Writer
+from commonworks.interested_party import Writer
 
 
 """
@@ -56,8 +55,6 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_alternative_work_title(d)
         elif isinstance(d, EntireWorkTitle):
             encoded = self.__encode_entire_work_title(d)
-        elif isinstance(d, InterestedParty):
-            encoded = self.__encode_interested_party(d)
         elif isinstance(d, IPA):
             encoded = self.__encode_ipa(d)
         elif isinstance(d, OriginalWorkTitle):
@@ -133,15 +130,6 @@ class CWRDictionaryEncoder(object):
         encoded['shares_change'] = agreement.shares_change
         encoded['advance_given'] = agreement.advance_given
 
-        encoded['interested_parties'] = []
-        encoded['territories'] = []
-
-        for territory in agreement.territories:
-            encoded['territories'].append(self.__encode_agreement_territory(territory))
-
-        for ipa in agreement.interested_parties:
-            encoded['territories'].append(self.__encode_interested_party(ipa))
-
         return encoded
 
     @staticmethod
@@ -180,29 +168,6 @@ class CWRDictionaryEncoder(object):
         encoded['writer_two_last_name'] = title.writer_two_last_name
         encoded['writer_two_ipi_cae'] = title.writer_two_ipi_cae
         encoded['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
-
-        return encoded
-
-    def __encode_interested_party(self, interested_party):
-        """
-        Creates a dictionary from an InterestedParty.
-
-        :param interested_party: the InterestedParty to transform into a dictionary
-        :return: a dictionary created from the InterestedParty
-        """
-        encoded = {}
-
-        encoded['submitter_id'] = interested_party.submitter_id
-
-        encoded['cae_ipi_id'] = interested_party.cae_ipi_id
-        encoded['ipi_base_number'] = interested_party.ipi_base_number
-        encoded['ipa_number'] = interested_party.ipa_number
-        encoded['last_name'] = interested_party.last_name
-
-        encoded['agreements'] = []
-
-        for agreement in interested_party.agreements:
-            encoded['agreements'].append(self.__encode_ipa(agreement))
 
         return encoded
 
@@ -439,24 +404,11 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['interested_party'] = writer.interested_party
-
         encoded['first_name'] = writer.first_name
         encoded['last_name'] = writer.last_name
-        encoded['designation_code'] = writer.designation_code
-        encoded['tax_id_number'] = writer.tax_id_number
-        encoded['cae_ipi_name_id'] = writer.cae_ipi_name_id
-        encoded['pr_society'] = writer.pr_society
-        encoded['pr_share'] = writer.pr_share
-        encoded['mr_society'] = writer.mr_society
-        encoded['mr_share'] = writer.mr_share
-        encoded['sr_society'] = writer.sr_society
-        encoded['sr_share'] = writer.sr_share
-        encoded['reversionary_indicator'] = writer.reversionary_indicator
-        encoded['first_recording_refusal_indicator'] = writer.first_recording_refusal_indicator
-        encoded['work_for_hire_indicator'] = writer.work_for_hire_indicator
-        encoded['ipi_base_number'] = writer.ipi_base_number
         encoded['personal_number'] = writer.personal_number
-        encoded['usa_license_indicator'] = writer.usa_license_indicator
+        encoded['ip_id'] = writer.ip_id
+        encoded['ip_name'] = writer.ip_name
+        encoded['ip_base_id'] = writer.ip_base_id
 
         return encoded

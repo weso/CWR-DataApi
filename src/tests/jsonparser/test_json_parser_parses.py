@@ -141,32 +141,9 @@ class TestEntireWorkTitle(unittest.TestCase):
         self.assertEqual(self.title.writer_two_ipi_base_number, 'ipi_base_number_2')
 
 
-class TestInterestedParty(unittest.TestCase):
+class TestIPA(unittest.TestCase):
     """
-    Tests the JSON to InterestedParty parsing.
-    """
-
-    def setUp(self):
-        data = {}
-        data['cae_ipi_id'] = 12345
-        data['ipi_base_number'] = 6789
-        data['id'] = 'abc'
-        data['last_name'] = 'surname'
-
-        self.party = jsonparser.parse_interested_party(189, json.loads(json.dumps(data)))
-
-    def test_data(self):
-        # Makes sure the data was parsed correctly
-        self.assertEqual(self.party.submitter_id, 189)
-        self.assertEqual(self.party.cae_ipi_id, 12345)
-        self.assertEqual(self.party.ipi_base_number, 6789)
-        self.assertEqual(self.party.ipa_number, 'abc')
-        self.assertEqual(self.party.last_name, 'surname')
-
-
-class TestIPAAgreement(unittest.TestCase):
-    """
-    Tests the JSON to IPAAgreement parsing.
+    Tests the JSON to IPA parsing.
     """
 
     def setUp(self):
@@ -184,7 +161,7 @@ class TestIPAAgreement(unittest.TestCase):
         data['pr_society'] = 5
         data['sr_society'] = 6
 
-        self.agreement = jsonparser.parse_ipa_agreement(json.loads(json.dumps(data)))
+        self.agreement = jsonparser.parse_ipa(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
@@ -436,48 +413,23 @@ class TestWriter(unittest.TestCase):
 
     def setUp(self):
         data = {}
-        data['interested_party_id'] = 1234
-        data['first_name'] = 'first'
-        data['last_name'] = 'last'
-        data['designation_code'] = 5678
-        data['tax_id_number'] = 1122
-        data['cae_ipi_name_id'] = 3344
-        data['pr_society'] = 5566
-        data['pr_share'] = 7788
-        data['mr_society'] = 9900
-        data['mr_share'] = 12
-        data['sr_society'] = 23
-        data['sr_share'] = 34
-        data['reversionary_indicator'] = 56
-        data['first_recording_refusal_indicator'] = 78
-        data['work_for_hire_indicator'] = 90
-        data['ipi_base_number'] = 9988
-        data['personal_number'] = 8877
-        data['usa_license_indicator'] = 7766
+        data['first_name'] = 'name'
+        data['personal_number'] = 1
+        data['ip_id'] = 2
+        data['ip_name'] = 'ip'
+        data['ip_base_id'] = 3
+        data['last_name'] = 'surname'
 
-        self.writer = jsonparser.parse_writer(189, json.loads(json.dumps(data)))
+        self.writer = jsonparser.parse_writer(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.writer.submitter_id, 189)
-        self.assertEqual(self.writer.interested_party, 1234)
-        self.assertEqual(self.writer.first_name, 'first')
-        self.assertEqual(self.writer.last_name, 'last')
-        self.assertEqual(self.writer.designation_code, 5678)
-        self.assertEqual(self.writer.tax_id_number, 1122)
-        self.assertEqual(self.writer.cae_ipi_name_id, 3344)
-        self.assertEqual(self.writer.pr_society, 5566)
-        self.assertEqual(self.writer.pr_share, 7788)
-        self.assertEqual(self.writer.mr_society, 9900)
-        self.assertEqual(self.writer.mr_share, 12)
-        self.assertEqual(self.writer.sr_society, 23)
-        self.assertEqual(self.writer.sr_share, 34)
-        self.assertEqual(self.writer.reversionary_indicator, 56)
-        self.assertEqual(self.writer.first_recording_refusal_indicator, 78)
-        self.assertEqual(self.writer.work_for_hire_indicator, 90)
-        self.assertEqual(self.writer.ipi_base_number, 9988)
-        self.assertEqual(self.writer.personal_number, 8877)
-        self.assertEqual(self.writer.usa_license_indicator, 7766)
+        self.assertEqual('name', self.writer.first_name)
+        self.assertEqual(1, self.writer.personal_number)
+        self.assertEqual(2, self.writer.ip_id)
+        self.assertEqual('ip', self.writer.ip_name)
+        self.assertEqual(3, self.writer.ip_base_id)
+        self.assertEqual('surname', self.writer.last_name)
 
 
 if __name__ == '__main__':
