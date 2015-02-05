@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-from commonworks.entity import Entity
 
 """
 Agreement model classes.
@@ -11,7 +10,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class Agreement(Entity):
+class Agreement(object):
     """
     Represents a CWR Agreement entity.
 
@@ -28,8 +27,8 @@ class Agreement(Entity):
                  sales_manufacture_clause, international_standard_code=None, retention_end_date=None,
                  prior_royalty_status_date=None, post_term_collection_end_date=None, shares_change=False,
                  advance_given=False, interested_parties=None, territories=None):
-        super(Agreement, self).__init__(submitter_agreement_number)
         # Agreement identification data
+        self._submitter_agreement_number = submitter_agreement_number
         self._society_agreement_number = society_agreement_number
         self._international_standard_code = international_standard_code
         self._agreement_type = agreement_type
@@ -294,7 +293,7 @@ class Agreement(Entity):
 
         :return: the Submitter Agreement Number field
         """
-        return self.submitter_id
+        return self._submitter_agreement_number
 
     @property
     def territories(self):

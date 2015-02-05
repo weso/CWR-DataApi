@@ -201,25 +201,23 @@ def parse_recording_details(json_item):
     return details
 
 
-def parse_work(submitter_id, json_item):
+def parse_work(json_item):
     """
     Creates a Work from the data stored in a JSON object, and adds to it the specified submitter ID.
 
-    :param submitter_id: submitter id
     :param json_item: JSON object to parse
     :return: a Work parsed from the JSON and with the specified id
     """
-    work = Work(submitter_id, json_item['title']
-                , json_item['language_code'], json_item['submitter_id'],
-                json_item['iswc'], json_item['copyright_date'], json_item['copyright_number'],
-                json_item['musical_distribution_category'], json_item['duration'],
-                json_item['recorded_indicator'], json_item['text_music_relationship'],
-                json_item['composite_type'], json_item['version_type'], json_item['excerpt_type'],
-                json_item['music_arrangement'], json_item['lyric_adaptation'], json_item['contact_name'],
-                json_item['contact_id'], json_item['cwr_work_type'], json_item['grand_rights_indicator'],
-                json_item['composite_component_count'], json_item['printed_edition_publication_date'],
-                json_item['exceptional_clause'], json_item['opus_number'], json_item['catalogue_number'],
-                json_item['priority_flag'])
+    work = Work(json_item['work_id'], json_item['title'], json_item['language_code'],
+                json_item['printed_edition_publication_date'], json_item['copyright_number'],
+                json_item['copyright_date'], json_item['text_music_relationship'], json_item['version_type'],
+                json_item['music_arrangement'], json_item['lyric_adaptation'], json_item['excerpt_type'],
+                json_item['composite_type'], json_item['composite_component_count'], json_item['iswc'],
+                json_item['cwr_work_type'], json_item['musical_distribution_category'],
+                json_item['duration'], json_item['catalogue_number'], json_item['opus_number'],
+                json_item['contact_id'], json_item['contact_name'], json_item['recorded_indicator'],
+                json_item['priority_flag'], json_item['exceptional_clause'],
+                json_item['grand_rights_indicator'])
 
     return work
 

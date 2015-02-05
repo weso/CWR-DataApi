@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from commonworks.entity import Entity
-
 
 """
 Work entity model classes.
@@ -13,258 +11,370 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class Work(Entity):
+class Work(object):
     """
-    Represents a CWR work.
+    Represents a CWR Work Title and Core Information.
+
+    This record contains core information about the work itself, such as title and the unique codes that have been
+    assigned to it.
     """
 
-    def __init__(self, submitter_id, title, language_code, work_number, iswc, copyright_date,
-                 copyright_number, musical_distribution_category, duration,
-                 recorded_indicator, text_music_relationship,
-                 composite_type, version_type, excerpt_type, music_arrangement,
-                 lyric_adaptation, contact_name,
-                 contact_id, cwr_work_type, grand_rights_indicator,
-                 composite_component_count, printed_edition_publication_date,
-                 exceptional_clause, opus_number, catalogue_number, priority_flag,
-                 entire_work_title=None, recording_details=None,
-                 original_work_title=None,
-                 work_origin=None, alternative_titles=None, publishers=None,
-                 performing_artists=None, writers=None, additional_info=None,
-                 components=None, instrumentation_details=None,
-                 instrumentation_summaries=None, origins=None):
-        super(Work, self).__init__(submitter_id)
-
+    def __init__(self, work_id, title, language_code, printed_edition_publication_date, copyright_number,
+                 copyright_date, text_music_relationship, version_type,
+                 music_arrangement=None, lyric_adaptation=None, excerpt_type=None, composite_type=None,
+                 composite_component_count=1, iswc=None, cwr_work_type=None, musical_distribution_category=None,
+                 duration=None, catalogue_number=None, opus_number=None, contact_id=None, contact_name=None,
+                 recorded_indicator=False, priority_flag=False, exceptional_clause=False, grand_rights_indicator=False):
+        # Work identifying info
+        self._work_id = work_id
         self._title = title
+        self._printed_edition_publication_date = printed_edition_publication_date
         self._language_code = language_code
-        self._work_number = work_number
-        self._iswc = iswc
+
+        # Copyright
         self._copyright_date = copyright_date
         self._copyright_number = copyright_number
-        self._musical_distribution_category = musical_distribution_category
-        self._duration = duration
-        self._recorded_indicator = recorded_indicator
+
+        # Musical info
         self._text_music_relationship = text_music_relationship
-        self._composite_type = composite_type
-        self._version_type = version_type
-        self._excerpt_type = excerpt_type
         self._music_arrangement = music_arrangement
         self._lyric_adaptation = lyric_adaptation
-        self._contact_name = contact_name
-        self._contact_id = contact_id
-        self._cwr_work_type = cwr_work_type
-        self._grand_rights_indicator = grand_rights_indicator
+        self._composite_type = composite_type
         self._composite_component_count = composite_component_count
-        self._printed_edition_publication_date = printed_edition_publication_date
-        self._exceptional_clause = exceptional_clause
+        self._duration = duration
+        self._version_type = version_type
+        self._excerpt_type = excerpt_type
         self._opus_number = opus_number
+
+        # Distribution and publication info
+        self._musical_distribution_category = musical_distribution_category
+        self._grand_rights_indicator = grand_rights_indicator
+        self._recorded_indicator = recorded_indicator
+        self._exceptional_clause = exceptional_clause
         self._catalogue_number = catalogue_number
+
+        # International info
+        self._iswc = iswc
+        self._cwr_work_type = cwr_work_type
+
+        # Contact info
+        self._contact_id = contact_id
+        self._contact_name = contact_name
+
+        # Other info
         self._priority_flag = priority_flag
-
-        self._entire_work_title = entire_work_title
-        self._recording_details = recording_details
-        self._original_work_title = original_work_title
-        self._work_origin = work_origin
-
-        if alternative_titles is None:
-            self._alternative_titles = []
-        else:
-            self._alternative_titles = alternative_titles
-
-        if publishers is None:
-            self._publishers = []
-        else:
-            self._publishers = publishers
-
-        if performing_artists is None:
-            self._performing_artists = []
-        else:
-            self._performing_artists = performing_artists
-
-        if writers is None:
-            self._writers = []
-        else:
-            self._writers = writers
-
-        if additional_info is None:
-            self._additional_info = []
-        else:
-            self._additional_info = additional_info
-
-        if components is None:
-            self._components = []
-        else:
-            self._components = components
-
-        if instrumentation_details is None:
-            self._instrumentation_details = []
-        else:
-            self._instrumentation_details = instrumentation_details
-
-        if instrumentation_summaries is None:
-            self._instrumentation_summaries = []
-        else:
-            self._instrumentation_summaries = instrumentation_summaries
-
-        if origins is None:
-            self._origins = []
-        else:
-            self._origins = origins
-
-    def add_alternative_title(self, alternative_title):
-        self._alternative_titles.append(alternative_title)
-
-    def add_publisher(self, publisher):
-        self._publishers.append(publisher)
-
-    def add_performer(self, performer):
-        self._performing_artists.append(performer)
-
-    def add_writer(self, writer):
-        self._writers.append(writer)
-
-    def remove_alternative_title(self, alternative_title):
-        self._alternative_titles.remove(alternative_title)
-
-    def remove_publisher(self, publisher):
-        self._publishers.remove(publisher)
-
-    def remove_performer(self, performer):
-        self._performing_artists.remove(performer)
-
-    def remove_writer(self, writer):
-        self._writers.remove(writer)
-
-    @property
-    def alternative_titles(self):
-        return self._alternative_titles
 
     @property
     def catalogue_number(self):
+        """
+        Catalogue Number for serious music field.
+
+        The work catalogue number. The abbreviated name of the catalogue is to be added (like BWV, KV), without dots.
+        Part numbers are to be added with a # e.g. KV 297#1 (meaning Köchel Verzeichnis Nr.297 part 1).
+
+        :return: the catalogue number for serious music
+        """
         return self._catalogue_number
 
     @property
     def composite_component_count(self):
+        """
+        Composite Component Count field.
+
+        If a Work consists of one original work and one sample, then the component count is two.
+
+        :return: the composite count
+        """
         return self._composite_component_count
 
     @property
     def composite_type(self):
+        """
+        Composite Type field.
+
+        Certain works incorporate other works. If this work is such a case, choose the type of composite from the CWR
+        values.
+
+        :return: the Work composite type
+        """
         return self._composite_type
 
     @property
     def contact_id(self):
+        """
+        Contact ID field.
+
+        This is an identifier associated with the contact person.
+
+        :return: the ID of the transaction's originator
+        """
         return self._contact_id
 
     @property
     def contact_name(self):
+        """
+        Contact Name field.
+
+        In the event of the need for a follow-up communication to you on the matter of this registration, it is useful
+        to have the name of the person who originated the transaction.
+
+        :return: the name of the transaction's originator
+        """
         return self._contact_name
 
     @property
     def copyright_date(self):
+        """
+        Copyright Date field.
+
+        This is the date that your national copyright office has registered this Work.
+
+        :return: the date in which the Work was registered
+        """
         return self._copyright_date
 
     @property
     def copyright_number(self):
+        """
+        Copyright Number field.
+
+        This is the number that your national copyright office has assigned to this Work upon registration.
+
+        :return: the Work Copyright number
+        """
         return self._copyright_number
 
     @property
     def cwr_work_type(self):
+        """
+        CWR Work Type field.
+
+        Indicates a genre found in the CWR Work Type table.
+
+        :return: a genre found in the CWR Work Type table
+        """
         return self._cwr_work_type
 
     @property
     def duration(self):
+        """
+        Duration field.
+
+        Duration of the work.
+
+        Duration is required only in the following cases:
+        - By all societies if the Musical Work Distribution Category is Serious (e.g., music intended for symphonic,
+        recital and chamber settings);
+        - if there is a BMI interested party in this work and the Musical Work Distribution Category is Jazz.
+
+        :return: duration of the work
+        """
         return self._duration
 
     @property
-    def entire_work_title(self):
-        return self._entire_work_title
-
-    @property
     def exceptional_clause(self):
+        """
+        Exceptional Clause field.
+
+        This is for registrations with GEMA.
+
+        If it is True, the submitting GEMA-sub publisher has declared that the exceptional clause of the GEMA
+        distribution rules with regard to printed editions applies (GEMA-Verteilungsplan A Anhang III).
+
+        :return: True if GEMA-Verteilungsplan A Anhang III applies, False otherwise
+        """
         return self._exceptional_clause
 
     @property
     def grand_rights_indicator(self):
+        """
+        Grand Rights Indicator field.
+
+        Indicates whether or not this work is originally intended for live theatrical performance.
+
+        :return: True if this work was originally intended for live theatrical performance, False otherwise
+        """
         return self._grand_rights_indicator
 
     @property
     def excerpt_type(self):
+        """
+        Excerpt Type field.
+
+        If this work is part of a larger work, indicates whether this is a movement or another, unspecified type of
+        excerpt.
+
+        :return: this Work's type of excerpt
+        """
         return self._excerpt_type
 
     @property
     def iswc(self):
+        """
+        ISWC field.
+
+        If the International Standard Work Code has been notified to you, you may include it in your registration
+        or revision.
+
+        :return: the International Standard Work Code
+        """
         return self._iswc
 
     @property
     def language_code(self):
+        """
+        Language Code field.
+
+        Indicate the language of the Work title.
+
+        If the title crosses languages (e.g., Maria), indicate the language of the lyrics.
+
+        This information will assist societies in identifying the Work.
+
+        :return: the language of the work title or lyrics
+        """
         return self._language_code
 
     @property
     def lyric_adaptation(self):
+        """
+        Lyric Adaptation field.
+
+        If it is indicated that this is a modified version of another work, this field indicates what changes,
+        if any, have occurred to the original lyric.
+
+        :return: the changes to the original lyric
+        """
         return self._lyric_adaptation
 
     @property
     def music_arrangement(self):
+        """
+        Music Arrangement field.
+
+        If it is indicated that this is a modified version of another work, this field indicates what changes,
+        if any, have occurred to the original music.
+
+        :return: the changes to the original music
+        """
         return self._music_arrangement
 
     @property
     def musical_distribution_category(self):
+        """
+        Musical Work Distribution Category field.
+
+        Certain rights organizations have special distribution rules that apply to certain genres of music.
+
+        All such genres for participating societies can be found in the Musical Work Distribution Category Table in
+        the layout document.
+
+        :return:
+        """
         return self._musical_distribution_category
 
     @property
     def opus_number(self):
+        """
+        Opus Number for serious music field.
+
+        The number assigned to this work, usually by the composer. Part numbers are to be added with a # e.g. 28#3
+        (meaning Opus 28 part 3).
+
+        :return: opus number for the work
+        """
         return self._opus_number
 
     @property
-    def original_work_title(self):
-        return self._original_work_title
-
-    @property
-    def performing_artists(self):
-        return self._performing_artists
-
-    @property
     def printed_edition_publication_date(self):
+        """
+        Date of Publication of Printed Edition field.
+
+        The date that the printed, new edition published by the submitting Publisher appeared.
+
+        This information is especially relevant for the notification of sub published works by GEMA-sub publishers.
+
+        :return: the date of the new edition
+        """
         return self._printed_edition_publication_date
 
     @property
     def priority_flag(self):
+        """
+        Priority Flag field.
+
+        Use this flag to indicate that the registration of this work should be expedited. This flag should be used
+        sparingly – only when the work is high on the charts, etc.
+
+        :return:
+        """
         return self._priority_flag
 
     @property
-    def publishers(self):
-        return self._publishers
-
-    @property
     def recorded_indicator(self):
+        """
+        Recorded Indicator field.
+
+        Indicates whether a recording of this work exists that has been made available to the public.
+
+        :return: True if there is a public recording of this work, False otherwise
+        """
         return self._recorded_indicator
 
     @property
-    def recording_details(self):
-        return self._recording_details
-
-    @property
     def text_music_relationship(self):
+        """
+        Text-Music Relationship field.
+
+        Indicates whether this Work contains text only, music only, or a combination of both. (It is understood that a
+        Work with lyrics may be performed instrumentally, and that a work with music may be performed spoken-only.)
+
+        :return: the lyrical and musical composition of the Work
+        """
         return self._text_music_relationship
 
     @property
     def title(self):
+        """
+        Work Title field.
+
+        The title by which the work is best known.
+
+        Alternative titles should be indicated using the AlternativeWorkTitle class.
+
+        Do not store additional information in the title field e.g. “instrumental” or “background”.
+        Such information should be stored in the designated field.
+
+        :return: the title by which the work is best known
+        """
         return self._title
 
     @property
     def version_type(self):
+        """
+        Version Type field.
+
+        Indicate whether this work is entirely original, or based on another work. If the work is based on another work,
+        values must be given for the Music Arrangement and Lyric Adaptation fields. If the work is a modified version of
+        a copyrighted work, it is necessary for it to be authorized.
+
+        :return: the Work's version type
+        """
         return self._version_type
 
     @property
-    def work_number(self):
-        return self._work_number
+    def work_id(self):
+        """
+        Submitter Work Number field.
 
-    @property
-    def work_origin(self):
-        return self._work_origin
+        This is your unique numerical code for this work.
 
-    @property
-    def writers(self):
-        return self._writers
+        It is important that this number refer only to the work named on the registration, since further electronic
+        communication (ACK, ISW, EXC) that includes this number will point to this work and its interested parties.
+
+        :return: your unique numerical code for this work
+        """
+        return self._work_id
 
 
 class AlternativeWorkTitle(object):

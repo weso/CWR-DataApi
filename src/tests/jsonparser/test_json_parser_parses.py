@@ -139,7 +139,6 @@ class TestEntireWorkTitle(unittest.TestCase):
         self.assertEqual(self.title.writer_two_first_name, 'first_2')
         self.assertEqual(self.title.writer_two_ipi_cae, 'ipi_cae_2')
         self.assertEqual(self.title.writer_two_ipi_base_number, 'ipi_base_number_2')
-        self.assertEqual(self.title.work_number, 1122)
 
 
 class TestInterestedParty(unittest.TestCase):
@@ -322,62 +321,61 @@ class TestWork(unittest.TestCase):
 
     def setUp(self):
         data = {}
+        data['work_id'] = 1
         data['title'] = 'The Title'
         data['language_code'] = 'ES'
-        data['submitter_id'] = 189
-        data['iswc'] = 12345
-        data['copyright_date'] = datetime.date(2015, 1, 11).isoformat()
-        data['copyright_number'] = 6789
-        data['musical_distribution_category'] = 'c123'
-        data['duration'] = 120
-        data['recorded_indicator'] = 111
-        data['text_music_relationship'] = 222
-        data['composite_type'] = 333
-        data['version_type'] = 444
-        data['excerpt_type'] = 555
-        data['music_arrangement'] = 666
-        data['lyric_adaptation'] = 777
-        data['contact_name'] = 'name'
-        data['contact_id'] = 888
-        data['cwr_work_type'] = 999
-        data['grand_rights_indicator'] = 000
-        data['composite_component_count'] = 1122
-        data['printed_edition_publication_date'] = datetime.date(2012, 1, 11).isoformat()
-        data['exceptional_clause'] = 'c333'
-        data['opus_number'] = 3344
-        data['catalogue_number'] = 5566
-        data['priority_flag'] = 7788
+        data['printed_edition_publication_date'] = datetime.date(2015, 1, 11).isoformat()
+        data['copyright_number'] = 2
+        data['copyright_date'] = datetime.date(2015, 1, 12).isoformat()
+        data['text_music_relationship'] = 'text_only'
+        data['version_type'] = 'original'
+        data['music_arrangement'] = 'none'
+        data['lyric_adaptation'] = 'none'
+        data['excerpt_type'] = 'movement'
+        data['composite_type'] = 'composite'
+        data['composite_component_count'] = 12
+        data['iswc'] = 3
+        data['cwr_work_type'] = 'jazz'
+        data['musical_distribution_category'] = 'category'
+        data['duration'] = 60
+        data['catalogue_number'] = 4
+        data['opus_number'] = '28#3'
+        data['contact_id'] = 'name_id'
+        data['contact_name'] = 'Person'
+        data['recorded_indicator'] = True
+        data['priority_flag'] = True
+        data['exceptional_clause'] = True
+        data['grand_rights_indicator'] = True
 
-        self.work = jsonparser.parse_work(189, json.loads(json.dumps(data)))
+        self.work = jsonparser.parse_work(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.work.submitter_id, 189)
+        self.assertEqual(self.work.work_id, 1)
         self.assertEqual(self.work.title, 'The Title')
         self.assertEqual(self.work.language_code, 'ES')
-        self.assertEqual(self.work.submitter_id, 189)
-        self.assertEqual(self.work.iswc, 12345)
-        self.assertEqual(self.work.copyright_date, datetime.date(2015, 1, 11).isoformat())
-        self.assertEqual(self.work.copyright_number, 6789)
-        self.assertEqual(self.work.musical_distribution_category, 'c123')
-        self.assertEqual(self.work.duration, 120)
-        self.assertEqual(self.work.recorded_indicator, 111)
-        self.assertEqual(self.work.text_music_relationship, 222)
-        self.assertEqual(self.work.composite_type, 333)
-        self.assertEqual(self.work.version_type, 444)
-        self.assertEqual(self.work.excerpt_type, 555)
-        self.assertEqual(self.work.music_arrangement, 666)
-        self.assertEqual(self.work.lyric_adaptation, 777)
-        self.assertEqual(self.work.contact_name, 'name')
-        self.assertEqual(self.work.contact_id, 888)
-        self.assertEqual(self.work.cwr_work_type, 999)
-        self.assertEqual(self.work.grand_rights_indicator, 000)
-        self.assertEqual(self.work.composite_component_count, 1122)
-        self.assertEqual(self.work.printed_edition_publication_date, datetime.date(2012, 1, 11).isoformat())
-        self.assertEqual(self.work.exceptional_clause, 'c333')
-        self.assertEqual(self.work.opus_number, 3344)
-        self.assertEqual(self.work.catalogue_number, 5566)
-        self.assertEqual(self.work.priority_flag, 7788)
+        self.assertEqual(self.work.printed_edition_publication_date, datetime.date(2015, 1, 11).isoformat())
+        self.assertEqual(self.work.copyright_number, 2)
+        self.assertEqual(self.work.copyright_date, datetime.date(2015, 1, 12).isoformat())
+        self.assertEqual(self.work.text_music_relationship, 'text_only')
+        self.assertEqual(self.work.version_type, 'original')
+        self.assertEqual(self.work.music_arrangement, 'none')
+        self.assertEqual(self.work.lyric_adaptation, 'none')
+        self.assertEqual(self.work.excerpt_type, 'movement')
+        self.assertEqual(self.work.composite_type, 'composite')
+        self.assertEqual(self.work.composite_component_count, 12)
+        self.assertEqual(self.work.iswc, 3)
+        self.assertEqual(self.work.cwr_work_type, 'jazz')
+        self.assertEqual(self.work.musical_distribution_category, 'category')
+        self.assertEqual(self.work.duration, 60)
+        self.assertEqual(self.work.catalogue_number, 4)
+        self.assertEqual(self.work.opus_number, '28#3')
+        self.assertEqual(self.work.contact_id, 'name_id')
+        self.assertEqual(self.work.contact_name, 'Person')
+        self.assertEqual(self.work.recorded_indicator, True)
+        self.assertEqual(self.work.priority_flag, True)
+        self.assertEqual(self.work.exceptional_clause, True)
+        self.assertEqual(self.work.grand_rights_indicator, True)
 
 
 class TestWorkOrigin(unittest.TestCase):

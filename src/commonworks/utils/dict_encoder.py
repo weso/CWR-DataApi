@@ -180,7 +180,6 @@ class CWRDictionaryEncoder(object):
         encoded['writer_two_last_name'] = title.writer_two_last_name
         encoded['writer_two_ipi_cae'] = title.writer_two_ipi_cae
         encoded['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
-        encoded['work_number'] = title.work_number
 
         return encoded
 
@@ -253,7 +252,6 @@ class CWRDictionaryEncoder(object):
         encoded['writer_two_last_name'] = title.writer_two_last_name
         encoded['writer_two_ipi_cae'] = title.writer_two_ipi_cae
         encoded['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
-        encoded['work_number'] = title.work_number
 
         return encoded
 
@@ -371,62 +369,31 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['creation_id'] = work.creation_id
-        encoded['submitter_id'] = work.submitter_id
-
+        encoded['work_id'] = work.work_id
         encoded['title'] = work.title
         encoded['language_code'] = work.language_code
-        encoded['work_number'] = work.work_number
-        encoded['iswc'] = work.iswc
-        encoded['copyright_date'] = self._adapter.adapt(work.copyright_date)
+        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
         encoded['copyright_number'] = work.copyright_number
-        encoded['musical_distribution_category'] = work.musical_distribution_category
-        encoded['duration'] = work.duration
-        encoded['recorded_indicator'] = work.recorded_indicator
+        encoded['copyright_date'] = self._adapter.adapt(work.copyright_date)
         encoded['text_music_relationship'] = work.text_music_relationship
-        encoded['composite_type'] = work.composite_type
         encoded['version_type'] = work.version_type
-        encoded['excerpt_type'] = work.excerpt_type
         encoded['music_arrangement'] = work.music_arrangement
         encoded['lyric_adaptation'] = work.lyric_adaptation
-        encoded['contact_name'] = work.contact_name
-        encoded['contact_id'] = work.contact_id
-        encoded['cwr_work_type'] = work.cwr_work_type
-        encoded['grand_rights_indicator'] = work.grand_rights_indicator
+        encoded['excerpt_type'] = work.excerpt_type
+        encoded['composite_type'] = work.composite_type
         encoded['composite_component_count'] = work.composite_component_count
-        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
-        encoded['exceptional_clause'] = work.exceptional_clause
-        encoded['opus_number'] = work.opus_number
+        encoded['iswc'] = work.iswc
+        encoded['cwr_work_type'] = work.cwr_work_type
+        encoded['musical_distribution_category'] = work.musical_distribution_category
+        encoded['duration'] = work.duration
         encoded['catalogue_number'] = work.catalogue_number
+        encoded['opus_number'] = work.opus_number
+        encoded['contact_id'] = work.contact_id
+        encoded['contact_name'] = work.contact_name
+        encoded['recorded_indicator'] = work.recorded_indicator
         encoded['priority_flag'] = work.priority_flag
-
-        if work.entire_work_title is not None:
-            encoded['entire_work_title'] = self.__encode_entire_work_title(work.entire_work_title)
-
-        if work.recording_details is not None:
-            encoded['recording_details'] = self.__encode_recording_details(work.recording_details)
-
-        if work.original_work_title is not None:
-            encoded['original_work_title'] = self.__encode_original_work_title(work.original_work_title)
-
-        if work.work_origin is not None:
-            encoded['work_origin'] = self.__encode_work_origin(work.work_origin)
-
-        encoded['publishers'] = []
-        for publisher in work.publishers:
-            encoded['publishers'].append(self.__encode_publisher(publisher))
-
-        encoded['performers'] = []
-        for performer in work.performing_artists:
-            encoded['performers'].append(self.__encode_performing_artist(performer))
-
-        encoded['writers'] = []
-        for writer in work.writers:
-            encoded['writers'].append(self.__encode_writer(writer))
-
-        encoded['alternative_titles'] = []
-        for alt_title in work.alternative_titles:
-            encoded['alternative_titles'].append(self.__encode_alternative_work_title(alt_title))
+        encoded['exceptional_clause'] = work.exceptional_clause
+        encoded['grand_rights_indicator'] = work.grand_rights_indicator
 
         return encoded
 

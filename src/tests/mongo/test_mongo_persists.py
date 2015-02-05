@@ -278,9 +278,9 @@ class TestWork(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = Work(1, 'title', 'ES', 3, 4, datetime.date(2015, 1, 11),
-                           5, 6, 7, 8, 9, 10, 11, 12, 13, 22, 'name', 14, 15, 16, 17,
-                           datetime.date(2015, 2, 11), 18, 19, 20, 21)
+        self.entity = Work(1, 'The Title', 'ES', datetime.date(2015, 1, 11), 2, datetime.date(2015, 1, 12),
+                      'text_only', 'original', 'none', 'none', 'movement', 'composite', 3, 4, 'jazz',
+                      'category', 60, 5, '28#3', 'name_id', 'Person', True, True, True, True)
         self.repo = MongoGenericRepository(host, port, db_name, 'works')
 
     def tearDown(self):

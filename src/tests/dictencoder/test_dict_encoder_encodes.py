@@ -124,7 +124,6 @@ class TestEntireWorkTitle(unittest.TestCase):
         self.assertEqual(self.dict['writer_two_last_name'], 'surname2')
         self.assertEqual(self.dict['writer_two_ipi_cae'], 4)
         self.assertEqual(self.dict['writer_two_ipi_base_number'], 5)
-        self.assertEqual(self.dict['work_number'], 6)
 
 
 class TestInterestedParty(unittest.TestCase):
@@ -197,7 +196,6 @@ class TestOriginalWorkTitle(unittest.TestCase):
         self.assertEqual(self.dict['writer_two_last_name'], 'surname2')
         self.assertEqual(self.dict['writer_two_ipi_cae'], 5)
         self.assertEqual(self.dict['writer_two_ipi_base_number'], 6)
-        self.assertEqual(self.dict['work_number'], 7)
 
 
 class TestPerformingArtist(unittest.TestCase):
@@ -318,39 +316,38 @@ class TestWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Work(1, 'title', 'ES', 3, 4, datetime.date(2015, 1, 11),
-                      5, 6, 7, 8, 9, 10, 11, 12, 13, 22, 'name', 14, 15, 16, 17,
-                      datetime.date(2015, 2, 11), 18, 19, 20, 21)
+        entity = Work(1, 'The Title', 'ES', datetime.date(2015, 1, 11), 2, datetime.date(2015, 1, 12),
+                      'text_only', 'original', 'none', 'none', 'movement', 'composite', 3, 4, 'jazz',
+                      'category', 60, 5, '28#3', 'name_id', 'Person', True, True, True, True)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['submitter_id'], 1)
-        self.assertEqual(self.dict['title'], 'title')
-        self.assertEqual(self.dict['language_code'], 'ES')
-        self.assertEqual(self.dict['work_number'], 3)
-        self.assertEqual(self.dict['iswc'], 4)
-        self.assertEqual(self.dict['copyright_date'], datetime.date(2015, 1, 11).isoformat())
-        self.assertEqual(self.dict['copyright_number'], 5)
-        self.assertEqual(self.dict['musical_distribution_category'], 6)
-        self.assertEqual(self.dict['duration'], 7)
-        self.assertEqual(self.dict['recorded_indicator'], 8)
-        self.assertEqual(self.dict['text_music_relationship'], 9)
-        self.assertEqual(self.dict['composite_type'], 10)
-        self.assertEqual(self.dict['version_type'], 11)
-        self.assertEqual(self.dict['excerpt_type'], 12)
-        self.assertEqual(self.dict['music_arrangement'], 13)
-        self.assertEqual(self.dict['lyric_adaptation'], 22)
-        self.assertEqual(self.dict['contact_name'], 'name')
-        self.assertEqual(self.dict['contact_id'], 14)
-        self.assertEqual(self.dict['cwr_work_type'], 15)
-        self.assertEqual(self.dict['grand_rights_indicator'], 16)
-        self.assertEqual(self.dict['composite_component_count'], 17)
-        self.assertEqual(self.dict['printed_edition_publication_date'], datetime.date(2015, 2, 11).isoformat())
-        self.assertEqual(self.dict['exceptional_clause'], 18)
-        self.assertEqual(self.dict['opus_number'], 19)
-        self.assertEqual(self.dict['catalogue_number'], 20)
-        self.assertEqual(self.dict['priority_flag'], 21)
+        self.assertEqual(1, self.dict['work_id'])
+        self.assertEqual('The Title', self.dict['title'])
+        self.assertEqual('ES', self.dict['language_code'])
+        self.assertEqual(datetime.date(2015, 1, 11).isoformat(), self.dict['printed_edition_publication_date'])
+        self.assertEqual(2, self.dict['copyright_number'])
+        self.assertEqual(datetime.date(2015, 1, 12).isoformat(), self.dict['copyright_date'])
+        self.assertEqual('text_only', self.dict['text_music_relationship'])
+        self.assertEqual('original', self.dict['version_type'])
+        self.assertEqual('none', self.dict['music_arrangement'])
+        self.assertEqual('none', self.dict['lyric_adaptation'])
+        self.assertEqual('movement', self.dict['excerpt_type'])
+        self.assertEqual('composite', self.dict['composite_type'])
+        self.assertEqual(3, self.dict['composite_component_count'])
+        self.assertEqual(4, self.dict['iswc'])
+        self.assertEqual('jazz', self.dict['cwr_work_type'])
+        self.assertEqual('category', self.dict['musical_distribution_category'])
+        self.assertEqual(60, self.dict['duration'])
+        self.assertEqual(5, self.dict['catalogue_number'])
+        self.assertEqual('28#3', self.dict['opus_number'])
+        self.assertEqual('name_id', self.dict['contact_id'])
+        self.assertEqual('Person', self.dict['contact_name'])
+        self.assertEqual(True, self.dict['recorded_indicator'])
+        self.assertEqual(True, self.dict['priority_flag'])
+        self.assertEqual(True, self.dict['exceptional_clause'])
+        self.assertEqual(True, self.dict['grand_rights_indicator'])
 
 
 class TestWorkOrigin(unittest.TestCase):
