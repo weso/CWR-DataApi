@@ -75,15 +75,15 @@ class TestAgreementTerritory(unittest.TestCase):
 
     def setUp(self):
         data = {}
-        data['inclusion_exclusion_indicator'] = 12345
-        data['tis_numeric_code'] = 6789
+        data['included'] = True
+        data['tis_numeric_code'] = 123
 
         self.territory = jsonparser.parse_agreement_territory(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.territory.inclusion_exclusion_indicator, 12345)
-        self.assertEqual(self.territory.tis_numeric_code, 6789)
+        self.assertEqual(self.territory.included, True)
+        self.assertEqual(self.territory.tis_numeric_code, 123)
 
 
 class TestAlternativeWorkTitle(unittest.TestCase):
@@ -172,26 +172,35 @@ class TestIPAAgreement(unittest.TestCase):
 
     def setUp(self):
         data = {}
-        data['agreement_role_code'] = 1234
-        data['pr_society'] = 5678
-        data['pr_share'] = 905
-        data['mr_society'] = 111
-        data['mr_share'] = 222
-        data['sr_society'] = 333
-        data['sr_share'] = 444
+        data['agreement_id'] = 1
+        data['agreement_role_code'] = 'assign'
+        data['interested_party_id'] = 2
+        data['interested_party_name'] = 'party'
+        data['interested_party_ipi'] = 3
+        data['interested_party_writer_name'] = 'writer'
+        data['mr_share'] = 0.1
+        data['pr_share'] = 0.2
+        data['sr_share'] = 0.3
+        data['mr_society'] = 4
+        data['pr_society'] = 5
+        data['sr_society'] = 6
 
-        self.agreement = jsonparser.parse_ipa_agreement(189, json.loads(json.dumps(data)))
+        self.agreement = jsonparser.parse_ipa_agreement(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.agreement.agreement_id, 189)
-        self.assertEqual(self.agreement.agreement_role_code, 1234)
-        self.assertEqual(self.agreement.pr_society, 5678)
-        self.assertEqual(self.agreement.pr_share, 905)
-        self.assertEqual(self.agreement.mr_society, 111)
-        self.assertEqual(self.agreement.mr_share, 222)
-        self.assertEqual(self.agreement.sr_society, 333)
-        self.assertEqual(self.agreement.sr_share, 444)
+        self.assertEqual(1, self.agreement.agreement_id)
+        self.assertEqual('assign', self.agreement.agreement_role_code)
+        self.assertEqual(2, self.agreement.interested_party_id)
+        self.assertEqual('party', self.agreement.interested_party_name)
+        self.assertEqual(3, self.agreement.interested_party_ipi)
+        self.assertEqual('writer', self.agreement.interested_party_writer_name)
+        self.assertEqual(0.1, self.agreement.mr_share)
+        self.assertEqual(0.2, self.agreement.pr_share)
+        self.assertEqual(0.3, self.agreement.sr_share)
+        self.assertEqual(4, self.agreement.mr_society)
+        self.assertEqual(5, self.agreement.pr_society)
+        self.assertEqual(6, self.agreement.sr_society)
 
 
 class TestOriginalWorkTitle(unittest.TestCase):

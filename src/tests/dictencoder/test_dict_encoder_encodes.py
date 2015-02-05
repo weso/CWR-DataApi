@@ -3,10 +3,10 @@
 import unittest
 import datetime
 
-from commonworks.agreement import AgreementTerritory, Agreement
+from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.interested_party import InterestedParty, IPAAgreement
+from commonworks.interested_party import InterestedParty
 from commonworks.publisher import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
@@ -34,12 +34,12 @@ class TestAgreementTerritory(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AgreementTerritory(1, 2)
+        entity = AgreementTerritory(True, 2)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['inclusion_exclusion_indicator'], 1)
+        self.assertEqual(self.dict['included'], True)
         self.assertEqual(self.dict['tis_numeric_code'], 2)
 
 
@@ -153,19 +153,23 @@ class TestIPAAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = IPAAgreement(1, 2, 3, 4, 5, 6, 7, 8)
+        entity = IPA(1, 2, 'party', 'assign', 'writer', 3, 4, 0.1, 5, 0.2, 6, 0.3)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['agreement_id'], 1)
-        self.assertEqual(self.dict['agreement_role_code'], 2)
-        self.assertEqual(self.dict['pr_society'], 3)
-        self.assertEqual(self.dict['pr_share'], 4)
-        self.assertEqual(self.dict['mr_society'], 5)
-        self.assertEqual(self.dict['mr_share'], 6)
-        self.assertEqual(self.dict['sr_society'], 7)
-        self.assertEqual(self.dict['sr_share'], 8)
+        self.assertEqual(1, self.dict['agreement_id'])
+        self.assertEqual(2, self.dict['interested_party_id'])
+        self.assertEqual('party', self.dict['interested_party_name'])
+        self.assertEqual('assign', self.dict['agreement_role_code'])
+        self.assertEqual('writer', self.dict['interested_party_writer_name'])
+        self.assertEqual(3, self.dict['interested_party_ipi'])
+        self.assertEqual(4, self.dict['pr_society'])
+        self.assertEqual(0.1, self.dict['pr_share'])
+        self.assertEqual(5, self.dict['mr_society'])
+        self.assertEqual(0.2, self.dict['mr_share'])
+        self.assertEqual(6, self.dict['sr_society'])
+        self.assertEqual(0.3, self.dict['sr_share'])
 
 
 class TestOriginalWorkTitle(unittest.TestCase):

@@ -2,10 +2,10 @@
 
 import datetime
 
-from commonworks.agreement import AgreementTerritory, Agreement
+from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.interested_party import InterestedParty, IPAAgreement
+from commonworks.interested_party import InterestedParty
 from commonworks.publisher import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
@@ -58,8 +58,8 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_entire_work_title(d)
         elif isinstance(d, InterestedParty):
             encoded = self.__encode_interested_party(d)
-        elif isinstance(d, IPAAgreement):
-            encoded = self.__encode_ipa_agreement(d)
+        elif isinstance(d, IPA):
+            encoded = self.__encode_ipa(d)
         elif isinstance(d, OriginalWorkTitle):
             encoded = self.__encode_original_work_title(d)
         elif isinstance(d, PerformingArtist):
@@ -95,7 +95,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['inclusion_exclusion_indicator'] = territory.inclusion_exclusion_indicator
+        encoded['included'] = territory.included
         encoded['tis_numeric_code'] = territory.tis_numeric_code
 
         return encoded
@@ -203,12 +203,12 @@ class CWRDictionaryEncoder(object):
         encoded['agreements'] = []
 
         for agreement in interested_party.agreements:
-            encoded['agreements'].append(self.__encode_ipa_agreement(agreement))
+            encoded['agreements'].append(self.__encode_ipa(agreement))
 
         return encoded
 
     @staticmethod
-    def __encode_ipa_agreement(agreement):
+    def __encode_ipa(agreement):
         """
         Creates a dictionary from an IPAAgreement.
 
@@ -219,6 +219,10 @@ class CWRDictionaryEncoder(object):
 
         encoded['agreement_id'] = agreement.agreement_id
         encoded['agreement_role_code'] = agreement.agreement_role_code
+        encoded['interested_party_id'] = agreement.interested_party_id
+        encoded['interested_party_name'] = agreement.interested_party_name
+        encoded['interested_party_ipi'] = agreement.interested_party_ipi
+        encoded['interested_party_writer_name'] = agreement.interested_party_writer_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share
         encoded['mr_society'] = agreement.mr_society

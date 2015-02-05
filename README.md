@@ -1,8 +1,12 @@
 # CWR Data Access API
 
-This projects offers a domain model for the CISAC CWR standard for Python applications.
+This projects offers a domain model for the CISAC CWR standard v2.1 for Python applications.
 
 CWR stands for Common Works Registration, and it is a common or standard format for the registration and revision of musical works, used by publishers and performing rights societies as a way to exchange musical works data.
+
+The CWR standard has been created by [CISAC][].
+
+But this API library is not related to them in any way and has been developed by [WESO][].
 
 ### Status
 The project is still in the development phase.
@@ -33,7 +37,9 @@ The continuous integration information can be found at the [project CI page][] b
 ## License
 The project is released under the [MIT License][].
 
+[CISAC]: http://www.cisac.org/
 [MIT License]: http://www.opensource.org/licenses/mit-license.php
 [project CI page]: https://travis-ci.org/Bernardo-MG/CWR-DataApi
 [project issues page]: https://travis-ci.org/weso/CWR-DataApi/issues
 [project page]: https://github.com/Bernardo-MG/CWR-DataApi
+[WESO]: http://www.weso.es/

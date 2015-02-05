@@ -2,10 +2,10 @@
 import unittest
 import datetime
 
-from commonworks.agreement import AgreementTerritory, Agreement
+from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, Work
-from commonworks.interested_party import InterestedParty, IPAAgreement
+from commonworks.interested_party import InterestedParty
 from commonworks.publisher import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
@@ -132,7 +132,7 @@ class TestIPAAgreement(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = IPAAgreement(1, 2, 3, 4, 5, 6, 7, 8)
+        self.entity = IPA(1, 2, 'party', 'assign', 'writer', 3, 4, 0.1, 5, 0.2, 6, 0.3)
         self.repo = MongoGenericRepository(host, port, db_name, 'ipa_agreements')
 
     def tearDown(self):

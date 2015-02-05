@@ -13,7 +13,7 @@ __status__ = 'Development'
 
 class Agreement(Entity):
     """
-    Represents a CWR agreement.
+    Represents a CWR Agreement entity.
 
     This is an agreement between two interested parties, affecting any number of works.
 
@@ -29,32 +29,43 @@ class Agreement(Entity):
                  prior_royalty_status_date=None, post_term_collection_end_date=None, shares_change=False,
                  advance_given=False, interested_parties=None, territories=None):
         super(Agreement, self).__init__(submitter_agreement_number)
+        # Agreement identification data
         self._society_agreement_number = society_agreement_number
+        self._international_standard_code = international_standard_code
         self._agreement_type = agreement_type
 
+        # Agreement dates
         self._start_date = start_date
         self._end_date = end_date
 
+        # Royalty info
         self._prior_royalty_status = prior_royalty_status
         self._prior_royalty_status_date = prior_royalty_status_date
 
+        # Post-term collection info
         self._post_term_collection_status = post_term_collection_status
         self._post_term_collection_end_date = post_term_collection_end_date
 
-        self._signature_date = signature_date
-        self._works_number = works_number
+        # Enumeration fields
         self._sales_manufacture_clause = sales_manufacture_clause
 
-        self._international_standard_code = international_standard_code
-        self._retention_end_date = retention_end_date
+        # Boolean flags
         self._shares_change = shares_change
         self._advance_given = advance_given
+
+        # Other dates
+        self._signature_date = signature_date
+        self._retention_end_date = retention_end_date
+
+        # Other info
+        self._works_number = works_number
 
         if interested_parties is None:
             self._interested_parties = []
         else:
             self._interested_parties = interested_parties
 
+        # The list of AgreementTerritory entities applied to the Agreement
         if territories is None:
             self._territories = []
         else:
@@ -64,12 +75,22 @@ class Agreement(Entity):
         self._interested_parties.append(ipa)
 
     def add_territory(self, territory):
+        """
+        Adds an AgreementTerritory which is to be applied to this Agreement.
+
+        :param territory: the AgreementTerritory being applied
+        """
         self._territories.append(territory)
 
     def remove_interested_party(self, ipa):
         self._interested_parties.remove(ipa)
 
     def remove_territory(self, territory):
+        """
+        Removes an AgreementTerritory which is being applied to this Agreement.
+
+        :param territory: the AgreementTerritory being applied
+        """
         self._interested_parties.remove(territory)
 
     @property
@@ -277,6 +298,11 @@ class Agreement(Entity):
 
     @property
     def territories(self):
+        """
+        Collection of AgreementTerritory entities being applied to this Agreement.
+
+        :return: the AgreementTerritory entities being applied to this Agreement
+        """
         return self._territories
 
     @property
@@ -293,17 +319,218 @@ class Agreement(Entity):
 
 class AgreementTerritory(object):
     """
-    Represents a CWR agreement territory
+    Represents a CWR Territory of Agreement entity.
+
+    This indicates the relationship between an Agreement and a Territory. More specifically, it indicates if a territory
+    is included or excluded from the Agreement.
+
+    For example, if the Agreement covers all the world except for Europe, two AgreementTerritory entities would be used,
+    one indicating that the world is included, and another indicating that Europe is excluded.
+
+    It should be noted that a Territory can only be excluded if it is part of another Territory which is already
+    included in the Agreement.
+
+    Territories are identified by a four digit numeric codes. These can be found at http://www.cisac.org/.
     """
 
-    def __init__(self, inclusion_exclusion_indicator, tis_numeric_code):
-        self._inclusion_exclusion_indicator = inclusion_exclusion_indicator
+    def __init__(self, included, tis_numeric_code):
+        self._included = included
         self._tis_numeric_code = tis_numeric_code
 
     @property
-    def inclusion_exclusion_indicator(self):
-        return self._inclusion_exclusion_indicator
+    def included(self):
+        """
+        Inclusion/ Exclusion Indicator field.
+
+        A True value indicates this Territory is included. A False value indicates it is excluded.
+
+        :return: True if the Territory is included, False if it is excluded
+        """
+        return self._included
 
     @property
     def tis_numeric_code(self):
+        """
+        TIS Numeric Code field.
+
+        This is the ID for the Territory.
+
+        :return: the Territory TIS code
+        """
         return self._tis_numeric_code
+
+
+class IPA(object):
+    """
+    Represents a CWR Interested Party for the Agreement (IPA).
+
+    This indicates the relationship between an Interested Party and an Agreement.
+
+    On an Agreement there it at least two Interested Parties: one assignor and one acquirer.
+    """
+
+    def __init__(self, agreement_id, interested_party_id, interested_party_name, agreement_role_code,
+                 interested_party_writer_name=None, ipi=None,
+                 pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
+        # Agreement and Interested Party relationship
+        self._agreement_id = agreement_id
+        self._interested_party_id = interested_party_id
+        self._agreement_role_code = agreement_role_code
+
+        # Interested Party info
+        self._ipi = ipi
+        self._interested_party_name = interested_party_name
+        self._interested_party_writer_name = interested_party_writer_name
+
+        # Performing Rights info
+        self._pr_society = pr_society
+        self._pr_share = pr_share
+
+        # Mechanical Rights info
+        self._mr_society = mr_society
+        self._mr_share = mr_share
+
+        # Synchronization Rights info
+        self._sr_society = sr_society
+        self._sr_share = sr_share
+
+    @property
+    def agreement_id(self):
+        """
+        Agreement to which this Interested Party is related.
+
+        :return: the Agreement ID
+        """
+        return self._agreement_id
+
+    @property
+    def agreement_role_code(self):
+        """
+        Agreement Role Code field.
+
+        This code is used to indicate whether the interested party is assigning or acquiring the rights.
+
+        :return: the role of the Interested Party on the Agreement
+        """
+        return self._agreement_role_code
+
+    @property
+    def interested_party_id(self):
+        """
+        Interested Party # field.
+
+        This number is your unique identifier for this Interested Party. The same one which, for example, you would
+        use to identify it on your database.
+
+        :return: your Interested Party ID
+        """
+        return self._interested_party_id
+
+    @property
+    def interested_party_name(self):
+        """
+        Interested Party Name field.
+
+        The last name of the writer, or the name of the publisher.
+
+        Note that if the submitter does not have the ability to split first and last names of writers, the entire name
+        should be entered in this field in the format “Last Name, First Name” including the comma after the last name.
+
+        :return: the Interested Party Name
+        """
+        return self._interested_party_name
+
+    @property
+    def interested_party_ipi(self):
+        """
+        Interested Party Number (IPI) field.
+
+        The unique identifier associated with this interested party. IPI numbering is a sub-system of the CISAC
+        Common Information System.
+
+        :return: the Interested Party IPI
+        """
+        return self._ipi
+
+    @property
+    def interested_party_writer_name(self):
+        """
+        Interested Party Writer First Name field.
+
+        If the interested party is a writer, provide his/her first and middle names.
+
+        :return: the Writer's first and middle names
+        """
+        return self._interested_party_writer_name
+
+    @property
+    def mr_share(self):
+        """
+        MR Share field.
+
+        The percentage of the mechanical rights acquired or retained by this Interested Party under this Agreement.
+
+        This value is a float which can range from 0 (0%) to 1 (100%).
+
+        :return: the mechanical of the performing rights for the Interested Party
+        """
+        return self._mr_share
+
+    @property
+    def pr_share(self):
+        """
+        PR Share field.
+
+        The percentage of the performing rights acquired or retained by this Interested Party under this Agreement.
+
+        This value is a float which can range from 0 (0%) to 1 (100%).
+
+        :return: the percentage of the performing rights for the Interested Party
+        """
+        return self._pr_share
+
+    @property
+    def sr_share(self):
+        """
+        PR Share field.
+
+        The percentage of the synchronization rights acquired or retained by this Interested Party under this Agreement.
+
+        This value is a float which can range from 0 (0%) to 1 (100%).
+
+        :return: the percentage of the synchronization rights for the Interested Party
+        """
+        return self._sr_share
+
+    @property
+    def mr_society(self):
+        """
+        MR Affiliation Society field.
+
+        The mechanical rights society to which this Interested Party belongs.
+
+        :return: the Interested Party's mechanical rights society
+        """
+        return self._mr_society
+
+    @property
+    def pr_society(self):
+        """
+        PR Affiliation Society field.
+
+        The performing rights society to which this Interested Party belongs.
+
+        :return: the Interested Party's performing rights society
+        """
+        return self._pr_society
+
+    @property
+    def sr_society(self):
+        """
+        SR Affiliation Society field.
+
+        The synchronization rights society to which this Interested Party belongs.
+
+        :return: the Interested Party's synchronization rights society
+        """
+        return self._sr_society
