@@ -720,5 +720,3 @@ class PerformingArtist(object):
     @property
     def last_name(self):
         return self._last_name
-
-

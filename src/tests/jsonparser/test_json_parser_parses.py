@@ -268,16 +268,21 @@ class TestPublisher(unittest.TestCase):
 
     def setUp(self):
         data = {}
-        data['agreement_number'] = 1234
-        data['interested_party_id'] = 5678
+        data['name'] = 'Publisher'
+        data['ip_id'] = 1
+        data['ip_name'] = 'name_ip'
+        data['ip_base_id'] = 2
+        data['tax_id'] = 3
 
-        self.publisher = jsonparser.parse_publisher(189, json.loads(json.dumps(data)))
+        self.publisher = jsonparser.parse_publisher(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.publisher.submitter_id, 189)
-        self.assertEqual(self.publisher.agreement_id, 1234)
-        self.assertEqual(self.publisher.interested_party, 5678)
+        self.assertEqual(self.publisher.name, 'Publisher')
+        self.assertEqual(self.publisher.ip_id, 1)
+        self.assertEqual(self.publisher.ip_name, 'name_ip')
+        self.assertEqual(self.publisher.ip_base_id, 2)
+        self.assertEqual(self.publisher.tax_id, 3)
 
 
 class TestRecordingDetails(unittest.TestCase):

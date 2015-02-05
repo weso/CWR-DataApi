@@ -3,7 +3,7 @@ from commonworks.agreement import Agreement
 from commonworks.agreement import AgreementTerritory
 from commonworks.interested_party import InterestedParty
 from commonworks.agreement import IPA
-from commonworks.publisher import Publisher
+from commonworks.interested_party import Publisher
 from commonworks.work import Work, AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     RecordingDetails, WorkOrigin, PerformingArtist
 from commonworks.writer import Writer
@@ -166,16 +166,18 @@ def parse_performing_artist(json_item):
     return artist
 
 
-def parse_publisher(submitter_id, json_item):
+def parse_publisher(json_item):
     """
     Creates an InterestedParty from the data stored in a JSON object, and adds to it the specified submitter ID.
 
-    :param submitter_id: submitter id
     :param json_item: JSON object to parse
     :return: an InterestedParty parsed from the JSON and with the specified id
     """
-    publisher = Publisher(submitter_id, json_item['agreement_number'],
-                          json_item['interested_party_id'])
+    publisher = Publisher(json_item['name'],
+                          json_item['ip_id'],
+                          json_item['ip_name'],
+                          json_item['ip_base_id'],
+                          json_item['tax_id'])
 
     return publisher
 

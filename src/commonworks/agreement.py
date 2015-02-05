@@ -533,3 +533,197 @@ class IPA(object):
         :return: the Interested Party's synchronization rights society
         """
         return self._sr_society
+
+
+class PublisherToPublisherAgreement(object):
+    """
+    Represents the relationship between two Publishers and an Agreement
+
+    If the agreement that covers this work was documented in an agreement record (AGR), then the submitter agreement
+    number and the society-assigned agreement number will be included.
+    """
+
+    def __init__(self, agreement, agreement_type, publisher, publisher_type, sequence_n, submitter_agreement_id=None,
+                 society_agreement_id=None,
+                 isa_code=None, territories=None, reversionary=False, first_record_refusal=False, usa_license=False):
+        # Agreement info
+        self._agreement = agreement
+        self._agreement_type = agreement_type
+
+        # Interested Parties
+        self._publisher = publisher
+        self._publisher_type = publisher_type
+        self._sequence_n = sequence_n
+
+        # Interested Parties Agreement info
+        self._submitter_agreement_id = submitter_agreement_id
+        self._society_agreement_id = society_agreement_id
+
+        # Other info
+        self._isa_code = isa_code
+
+        # Flags
+        self._reversionary = reversionary
+        self._first_record_refusal = first_record_refusal
+        self._usa_license = usa_license
+
+        # Territories and shares
+        if territories is None:
+            self._territories = []
+        else:
+            self._territories = territories
+
+    @property
+    def agreement(self):
+        """
+        The Agreement to which this relationship refers.
+
+        :return: the agreement
+        """
+        return self._agreement
+
+    @property
+    def agreement_type(self):
+        """
+        Agreement Type field.
+
+        The type of Agreement for which the publisher is the assignor.
+
+        :return: the type of Agreement
+        """
+        return self.agreement_type
+
+    @property
+    def first_record_refusal(self):
+        """
+        First Recording Refusal Indicator field.
+
+        This field indicates that the submitter needs to be asked before the society can authorize a first recording.
+        Note that this field is mandatory for registrations with the UK societies.
+
+        It is a Boolean field, and by default is False.
+
+        :return: True if the submitter needs to be asked to authorize first recording, False otherwise
+        """
+        return self._first_record_refusal
+
+    @property
+    def isa_code(self):
+        """
+        International Standard Agreement Code field.
+
+        A unique number assigned to this agreement. This number is not yet available.
+
+        :return: the ISA code
+        """
+        return self._isa_code
+
+    @property
+    def publisher_type(self):
+        """
+        Publisher Type field.
+
+        Role played by this publisher in this work. Choose among original publisher, administrator, subpublisher, and
+        income participant. In a co-publishing administration situation, the administering publisher may be listed
+        twice, as an original publisher and as an administrator.
+
+        :return: the Publisher's role
+        """
+        return self._publisher_type
+
+    @property
+    def reversionary(self):
+        """
+        Reversionary Indicator field.
+
+        This indicates that the publisher is claiming the work under the reversionary provisions.
+        Only some societies recognize reversionary rights.
+
+        It is a Boolean field, and by default is False.
+
+        :return: True if the work is under reversionary provisions, False otherwise
+        """
+        return self.reversionary
+
+    @property
+    def sequence_n(self):
+        """
+        Publisher Sequence Number field.
+
+        This enables a rights organization to link subpublishers and administrators to the proper original publisher.
+        Each original publisher will start a new chain. An income participant may start a chain, or be included in a
+        chain begun by the original publisher which has allocated rights to the income participant.
+
+        :return: the Publisher sequence number in a chain
+        """
+        return self._sequence_n
+
+    @property
+    def society_agreement(self):
+        """
+        Society-assigned Agreement Number field.
+
+        If you have previously notified the society of this agreement, you may have the number assigned by the society
+        to this agreement. You can then provide this number when registering the works.
+
+        :return: the society-assigned Agreement number
+        """
+        return self._society_agreement_id
+
+    @property
+    def territories(self):
+        """
+        A collection of TerritoryShare instances.
+
+        This indicates the territories to which the Agreement applies and the share applied to each.
+
+        :return: a collection of TerritoryShare instances applied to the Agreement
+        """
+        return self._territories
+
+    @property
+    def unknown(self):
+        """
+        Publisher Unknown Indicator field.
+
+        It is automatically set to False if the Publisher is not set.
+
+        This indicates if the publisher is under your control and you have a name on file for it.
+
+        :return: True if the Publisher's is known, False otherwise
+        """
+        return self.publisher is None
+
+    @property
+    def usa_license(self):
+        """
+        USA License Indicator field.
+
+        This field indicates whether rights for this publisher flow through ASCAP, BMI, or SESAC for the U.S.
+
+        It is a Boolean field, and by default is False.
+
+        :return: True if the rights flow to the U.S., False otherwise
+        """
+        return self._usa_license
+
+    @property
+    def submitter_agreement(self):
+        """
+        Submitter Agreement Number field.
+
+        This points to an agreement between this publisher and another publisher acting as a domestic or foreign
+        administrator and it is your internal number.
+
+        :return: the Submitter Agreement number
+        """
+        return self._submitter_agreement_id
+
+    @property
+    def publisher(self):
+        """
+        The Publisher of the relationship
+
+        :return: the Publisher
+        """
+        return self._publisher

@@ -4,9 +4,9 @@ import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
-    PerformingArtist, WorkOrigin, Work
+    PerformingArtist, WorkOrigin, Work, RecordingDetails
 from commonworks.interested_party import InterestedParty
-from commonworks.publisher import Publisher
+from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
@@ -188,7 +188,7 @@ class TestPublisher(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = Publisher(1, 2, 3)
+        self.entity = Publisher('publisher1', 1, 'name_ip', 2, 3)
         self.repo = MongoGenericRepository(host, port, db_name, 'publishers')
 
     def tearDown(self):
@@ -206,7 +206,8 @@ class TestRecordingDetails(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = Publisher(1, 2, 3)
+        self.entity = RecordingDetails(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+                                       3, 4, 5, 6, 7)
         self.repo = MongoGenericRepository(host, port, db_name, 'recording_details')
 
     def tearDown(self):
@@ -279,8 +280,8 @@ class TestWork(unittest.TestCase):
 
     def setUp(self):
         self.entity = Work(1, 'The Title', 'ES', datetime.date(2015, 1, 11), 2, datetime.date(2015, 1, 12),
-                      'text_only', 'original', 'none', 'none', 'movement', 'composite', 3, 4, 'jazz',
-                      'category', 60, 5, '28#3', 'name_id', 'Person', True, True, True, True)
+                           'text_only', 'original', 'none', 'none', 'movement', 'composite', 3, 4, 'jazz',
+                           'category', 60, 5, '28#3', 'name_id', 'Person', True, True, True, True)
         self.repo = MongoGenericRepository(host, port, db_name, 'works')
 
     def tearDown(self):

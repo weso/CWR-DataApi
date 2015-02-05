@@ -6,8 +6,7 @@ import datetime
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.interested_party import InterestedParty
-from commonworks.publisher import Publisher
+from commonworks.interested_party import InterestedParty, Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
@@ -223,13 +222,16 @@ class TestPublisher(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Publisher(1, 2, 3)
+        entity = Publisher('publisher1', 1, 'name_ip', 2, 3)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['agreement_id'], 2)
-        self.assertEqual(self.dict['interested_party'], 3)
+        self.assertEqual(self.dict['name'], 'publisher1')
+        self.assertEqual(self.dict['ip_id'], 1)
+        self.assertEqual(self.dict['ip_name'], 'name_ip')
+        self.assertEqual(self.dict['ip_base_id'], 2)
+        self.assertEqual(self.dict['tax_id'], 3)
 
 
 class TestRecordingDetails(unittest.TestCase):

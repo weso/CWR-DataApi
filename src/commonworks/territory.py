@@ -41,3 +41,34 @@ class Territory(object):
     @property
     def tis(self):
         return self._tis
+
+
+class TerritoryShare(object):
+    """
+    Represents a Territory and an Interested Party share on it.
+    """
+
+    def __init__(self, territory, share):
+        self._territory = territory
+        self._share = share
+
+    @property
+    def share(self):
+        """
+        The share applied to the territory.
+
+        This is a percentage represented as a float. So it ranges from 0 (0%) to 1 (100%).
+
+        :return: the share
+        """
+        return self._share
+
+    @property
+    def territory(self):
+        """
+        The Territory to which the share applies.
+
+        :return: the Territory
+        """
+        return self._territory
+

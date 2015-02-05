@@ -6,7 +6,7 @@ from commonworks.agreement import AgreementTerritory, Agreement, IPA
 from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
 from commonworks.interested_party import InterestedParty
-from commonworks.publisher import Publisher
+from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
@@ -282,8 +282,11 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['agreement_id'] = publisher.agreement_id
-        encoded['interested_party'] = publisher.interested_party
+        encoded['name'] = publisher.name
+        encoded['ip_id'] = publisher.ip_id
+        encoded['ip_name'] = publisher.ip_name
+        encoded['ip_base_id'] = publisher.ip_base_id
+        encoded['tax_id'] = publisher.tax_id
 
         return encoded
 
