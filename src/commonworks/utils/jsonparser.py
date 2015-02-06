@@ -3,7 +3,7 @@ from commonworks.agreement import Agreement
 from commonworks.agreement import AgreementTerritory
 from commonworks.agreement import IPA
 from commonworks.interested_party import Publisher
-from commonworks.work import Work, AlternateTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.work import Work, AlternateTitle, AuthoredWork, \
     RecordingDetails, WorkOrigin, PerformingArtist
 from commonworks.interested_party import Writer
 
@@ -66,31 +66,32 @@ def parse_alternative_work_title(json_item):
     :return: an AlternativeWorkTitle parsed from the JSON
     """
     title = AlternateTitle(json_item['alternate_title'],
-                                 json_item['title_type'],
-                                 json_item['language'])
+                           json_item['title_type'],
+                           json_item['language'])
 
     return title
 
 
-def parse_entire_work_title(json_item):
+def parse_authored_work(json_item):
     """
-    Creates an EntireWorkTitle from the data stored in a JSON object.
+    Creates an AuthoredWork from the data stored in a JSON object.
 
     :param json_item: JSON object to parse
-    :return: an EntireWorkTitle parsed from the JSON
+    :return: an AuthoredWork parsed from the JSON
     """
-    title = EntireWorkTitle(json_item['entire_title'],
-                            json_item['entire_work_iswc'],
-                            json_item['language_code'],
-                            json_item['writer_one_first_name'],
-                            json_item['writer_one_last_name'],
-                            json_item['writer_one_ipi_cae'],
-                            json_item['writer_one_ipi_base_number'],
-                            json_item['writer_two_first_name'],
-                            json_item['writer_two_last_name'],
-                            json_item['writer_two_ipi_cae'],
-                            json_item['writer_two_ipi_base_number'],
-                            json_item['submitter_id'])
+    title = AuthoredWork(json_item['work_id'],
+                         json_item['title'],
+                         json_item['language_code'],
+                         json_item['source'],
+                         json_item['first_name_1'],
+                         json_item['ip_base_1'],
+                         json_item['ip_name_1'],
+                         json_item['first_name_2'],
+                         json_item['ip_base_2'],
+                         json_item['ip_name_2'],
+                         json_item['last_name_1'],
+                         json_item['last_name_2'],
+                         json_item['iswc'])
 
     return title
 
@@ -109,29 +110,6 @@ def parse_ipa(json_item):
                     json_item['sr_share'])
 
     return agreement
-
-
-def parse_original_work_title(json_item):
-    """
-    Creates an OriginalWorkTitle from the data stored in a JSON object.
-
-    :param json_item: JSON object to parse
-    :return: an OriginalWorkTitle parsed from the JSON
-    """
-    title = OriginalWorkTitle(json_item['entire_title'],
-                              json_item['entire_work_iswc'],
-                              json_item['language_code'],
-                              json_item['writer_one_first_name'],
-                              json_item['writer_one_last_name'],
-                              json_item['writer_one_ipi_cae'],
-                              json_item['writer_one_ipi_base_number'],
-                              json_item['writer_two_first_name'],
-                              json_item['writer_two_last_name'],
-                              json_item['writer_two_ipi_cae'],
-                              json_item['writer_two_ipi_base_number'],
-                              json_item['submitter_id'])
-
-    return title
 
 
 def parse_performing_artist(json_item):

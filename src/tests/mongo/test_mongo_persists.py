@@ -3,7 +3,7 @@ import unittest
 import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.work import AlternateTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.work import AlternateTitle, AuthoredWork, \
     PerformingArtist, WorkOrigin, Work, RecordingDetails
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
@@ -86,17 +86,17 @@ class TestAlternativeWorkTitle(unittest.TestCase):
         self.assertEqual(len(self.repo.get(lambda e: True)), 1)
 
 
-class TestEntireWorkTitle(unittest.TestCase):
+class TestAuthoredWork(unittest.TestCase):
     """
     Tests the EntireWorkTitle API against a Mongo database.
     """
 
     def setUp(self):
-        self.entity = EntireWorkTitle('title', 1, 'ES',
-                                      'name1', 'surname1', 2, 3,
-                                      'name2', 'surname2', 4, 5,
-                                      6)
-        self.repo = MongoGenericRepository(host, port, db_name, 'entire_work_titles')
+        self.entity = AuthoredWork(1, 'title', 'ES', 'Broadway show',
+                                   'name1', 1, 'ip_1',
+                                   'name2', 2, 'ip_2', 'surname1', 'surname2',
+                                   3)
+        self.repo = MongoGenericRepository(host, port, db_name, 'authored_works')
 
     def tearDown(self):
         self.repo.clear()
@@ -115,26 +115,6 @@ class TestIPA(unittest.TestCase):
     def setUp(self):
         self.entity = IPA(1, 2, 'party', 'assign', 'writer', 3, 4, 0.1, 5, 0.2, 6, 0.3)
         self.repo = MongoGenericRepository(host, port, db_name, 'ipas')
-
-    def tearDown(self):
-        self.repo.clear()
-
-    def test_add(self):
-        self.assertEqual(len(self.repo.get(lambda e: True)), 0)
-        self.repo.add(self.entity)
-        self.assertEqual(len(self.repo.get(lambda e: True)), 1)
-
-
-class TestOriginalWorkTitle(unittest.TestCase):
-    """
-    Tests the OriginalWorkTitle API against a Mongo database.
-    """
-
-    def setUp(self):
-        self.entity = OriginalWorkTitle('title', 2, 'ES',
-                                        'name1', 'surname1', 3, 4,
-                                        'name2', 'surname2', 5, 6, 7)
-        self.repo = MongoGenericRepository(host, port, db_name, 'original_work_titles')
 
     def tearDown(self):
         self.repo.clear()

@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from abc import ABCMeta
 
 
 """
@@ -11,7 +12,60 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class Work(object):
+class BaseWork(object):
+    """
+    Base class representing a Work's info.
+    """
+    __metaclass__ = ABCMeta
+
+    def __init__(self, title, language_code, iswc=None):
+        self._title = title
+        self._language_code = language_code
+        self._iswc = iswc
+
+    @property
+    def iswc(self):
+        """
+        ISWC field.
+
+        If the International Standard Work Code has been notified to you, you may include it in your registration
+        or revision.
+
+        :return: the International Standard Work Code
+        """
+        return self._iswc
+
+    @property
+    def language_code(self):
+        """
+        Language Code field.
+
+        Indicate the language of the Work title.
+
+        If the title crosses languages (e.g., Maria), indicate the language of the lyrics.
+
+        This information will assist societies in identifying the Work.
+
+        :return: the language of the work title or lyrics
+        """
+        return self._language_code
+
+    @property
+    def title(self):
+        """
+        Work Title field.
+
+        The title by which the work is best known.
+
+        Do not store additional information in the title field e.g. “instrumental” or “background”.
+        Such information should be stored in the designated field.
+
+        :return: the title by which the work is best known
+        """
+        return self._title
+
+
+class Work(BaseWork):
     """
     Represents a CWR Work Title and Core Information.
 
@@ -25,11 +79,11 @@ class Work(object):
                  composite_component_count=1, iswc=None, cwr_work_type=None, musical_distribution_category=None,
                  duration=None, catalogue_number=None, opus_number=None, contact_id=None, contact_name=None,
                  recorded_indicator=False, priority_flag=False, exceptional_clause=False, grand_rights_indicator=False):
+        super(Work, self).__init__(title, language_code, iswc)
         # Work identifying info
         self._work_id = work_id
         self._title = title
         self._printed_edition_publication_date = printed_edition_publication_date
-        self._language_code = language_code
 
         # Copyright
         self._copyright_date = copyright_date
@@ -54,7 +108,6 @@ class Work(object):
         self._catalogue_number = catalogue_number
 
         # International info
-        self._iswc = iswc
         self._cwr_work_type = cwr_work_type
 
         # Contact info
@@ -209,33 +262,6 @@ class Work(object):
         return self._excerpt_type
 
     @property
-    def iswc(self):
-        """
-        ISWC field.
-
-        If the International Standard Work Code has been notified to you, you may include it in your registration
-        or revision.
-
-        :return: the International Standard Work Code
-        """
-        return self._iswc
-
-    @property
-    def language_code(self):
-        """
-        Language Code field.
-
-        Indicate the language of the Work title.
-
-        If the title crosses languages (e.g., Maria), indicate the language of the lyrics.
-
-        This information will assist societies in identifying the Work.
-
-        :return: the language of the work title or lyrics
-        """
-        return self._language_code
-
-    @property
     def lyric_adaptation(self):
         """
         Lyric Adaptation field.
@@ -334,22 +360,6 @@ class Work(object):
         return self._text_music_relationship
 
     @property
-    def title(self):
-        """
-        Work Title field.
-
-        The title by which the work is best known.
-
-        Alternative titles should be indicated using the AlternativeWorkTitle class.
-
-        Do not store additional information in the title field e.g. “instrumental” or “background”.
-        Such information should be stored in the designated field.
-
-        :return: the title by which the work is best known
-        """
-        return self._title
-
-    @property
     def version_type(self):
         """
         Version Type field.
@@ -377,12 +387,162 @@ class Work(object):
         return self._work_id
 
 
+class AuthoredWork(BaseWork):
+    """
+    Represents a Work with authors. This is for the Entire Work and Original Work entities.
+    """
+
+    def __init__(self, work_id, title, language_code, source,
+                 first_name_1, ip_base_1, ip_name_1,
+                 first_name_2, ip_base_2, ip_name_2,
+                 last_name_1=None, last_name_2=None, iswc=None):
+        super(AuthoredWork, self).__init__(title, language_code, iswc)
+
+        # Work's info
+        self._work_id = work_id
+        self._source = source
+
+        # First writer's info
+        self._first_name_1 = first_name_1
+        self._last_name_1 = last_name_1
+        self._ip_base_1 = ip_base_1
+        self._ip_name_1 = ip_name_1
+
+        # Second writer's info
+        self._first_name_2 = first_name_2
+        self._last_name_2 = last_name_2
+        self._ip_base_2 = ip_base_2
+        self._ip_name_2 = ip_name_2
+
+    @property
+    def first_name_1(self):
+        """
+        Writer 1 First Name field.
+
+        The first name of the first writer.
+
+        :return: the first name of the first Writer
+        """
+        return self._first_name_1
+
+    @property
+    def first_name_2(self):
+        """
+        Writer 2 First Name field.
+
+        The first name of the second writer.
+
+        :return: the first name of the second Writer
+        """
+        return self._first_name_2
+
+    @property
+    def ip_base_1(self):
+        """
+        Writer 1 IP Base Number field.
+
+        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
+        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
+        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
+        adapted from ISO 7064). You can find more information on the CISAC web site.
+
+        :return: the first Writer's IP base number
+        """
+        return self._ip_base_1
+
+    @property
+    def ip_base_2(self):
+        """
+        Writer 2 IP Base Number field.
+
+        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
+        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
+        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
+        adapted from ISO 7064). You can find more information on the CISAC web site.
+
+        :return: the second Writer's IP base number
+        """
+        return self._ip_base_2
+
+    @property
+    def ip_name_1(self):
+        """
+        Writer 1 IP Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the first Writer's IP name field
+        """
+        return self._ip_name_1
+
+    @property
+    def ip_name_2(self):
+        """
+        Writer 2 IP Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the second Writer's IP name field
+        """
+        return self._ip_name_2
+
+    @property
+    def last_name_1(self):
+        """
+        Writer 1 Last Name field.
+
+        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+
+        :return: the first Writer's last name
+        """
+        return self._last_name_1
+
+    @property
+    def last_name_2(self):
+        """
+        Writer 2 Last Name field.
+
+        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+
+        :return: the second Writer's last name
+        """
+        return self._last_name_2
+
+    @property
+    def source(self):
+        """
+        Source field.
+
+        This field contains a free form description of the source of the entire work e.g. symphony.
+
+        :return: the source
+        """
+        return self._source
+
+    @property
+    def work_id(self):
+        """
+        Submitter Work # field.
+
+        The unique number that you have assigned to the entire work.
+
+        :return: the Work's ID
+        """
+        return self._work_id
+
+
 class AlternateTitle(object):
     """
     Represents a CWR Alternate Title.
     """
 
-    def __init__(self, alternate_title, title_type, language = None):
+    def __init__(self, alternate_title, title_type, language=None):
         self._alternate_title = alternate_title
         self._title_type = title_type
         self._language = language
@@ -417,153 +577,6 @@ class AlternateTitle(object):
         :return:
         """
         return self._title_type
-
-
-class EntireWorkTitle(object):
-    """
-    Represents a CWR entire work title.
-
-    If the work is an excerpt this object reflects the entire work from where it comes.
-    """
-
-    def __init__(self, entire_title, entire_work_iswc, language_code
-                 , writer_one_first_name, writer_one_last_name,
-                 writer_one_ipi_cae, writer_one_ipi_base_number,
-                 writer_two_first_name, writer_two_last_name, writer_two_ipi_cae, writer_two_ipi_base_number,
-                 work_number):
-        self._entire_title = entire_title
-        self._entire_work_iswc = entire_work_iswc
-        self._language_code = language_code
-        self._writer_one_first_name = writer_one_first_name
-        self._writer_one_last_name = writer_one_last_name
-        self._writer_one_ipi_cae = writer_one_ipi_cae
-        self._writer_one_ipi_base_number = writer_one_ipi_base_number
-        self._writer_two_first_name = writer_two_first_name
-        self._writer_two_last_name = writer_two_last_name
-        self._writer_two_ipi_cae = writer_two_ipi_cae
-        self._writer_two_ipi_base_number = writer_two_ipi_base_number
-        self._work_number = work_number
-
-    @property
-    def entire_title(self):
-        return self._entire_title
-
-    @property
-    def entire_work_iswc(self):
-        return self._entire_work_iswc
-
-    @property
-    def language_code(self):
-        return self._language_code
-
-    @property
-    def work_number(self):
-        return self._work_number
-
-    @property
-    def writer_one_first_name(self):
-        return self._writer_one_first_name
-
-    @property
-    def writer_one_ipi_base_number(self):
-        return self._writer_one_ipi_base_number
-
-    @property
-    def writer_one_ipi_cae(self):
-        return self._writer_one_ipi_cae
-
-    @property
-    def writer_one_last_name(self):
-        return self._writer_one_last_name
-
-    @property
-    def writer_two_first_name(self):
-        return self._writer_two_first_name
-
-    @property
-    def writer_two_ipi_base_number(self):
-        return self._writer_two_ipi_base_number
-
-    @property
-    def writer_two_ipi_cae(self):
-        return self._writer_two_ipi_cae
-
-    @property
-    def writer_two_last_name(self):
-        return self._writer_two_last_name
-
-
-class OriginalWorkTitle(object):
-    """
-    Represents a CWR original work title.
-
-    If the work is a version this reflect the original one which is versioned.
-    """
-
-    def __init__(self, entire_title, entire_work_iswc, language_code, writer_one_first_name, writer_one_last_name,
-                 writer_one_ipi_cae, writer_one_ipi_base_number, writer_two_first_name,
-                 writer_two_last_name, writer_two_ipi_cae,
-                 writer_two_ipi_base_number, work_number):
-        self._entire_title = entire_title
-        self._entire_work_iswc = entire_work_iswc
-        self._language_code = language_code
-        self._writer_one_first_name = writer_one_first_name
-        self._writer_one_last_name = writer_one_last_name
-        self._writer_one_ipi_cae = writer_one_ipi_cae
-        self._writer_one_ipi_base_number = writer_one_ipi_base_number
-        self._writer_two_first_name = writer_two_first_name
-        self._writer_two_last_name = writer_two_last_name
-        self._writer_two_ipi_cae = writer_two_ipi_cae
-        self._writer_two_ipi_base_number = writer_two_ipi_base_number
-        self._work_number = work_number
-
-    @property
-    def entire_title(self):
-        return self._entire_title
-
-    @property
-    def entire_work_iswc(self):
-        return self._entire_work_iswc
-
-    @property
-    def language_code(self):
-        return self._language_code
-
-    @property
-    def work_number(self):
-        return self._work_number
-
-    @property
-    def writer_one_first_name(self):
-        return self._writer_one_first_name
-
-    @property
-    def writer_one_ipi_base_number(self):
-        return self._writer_one_ipi_base_number
-
-    @property
-    def writer_one_ipi_cae(self):
-        return self._writer_one_ipi_cae
-
-    @property
-    def writer_one_last_name(self):
-        return self._writer_one_last_name
-
-    @property
-    def writer_two_first_name(self):
-        return self._writer_two_first_name
-
-    @property
-    def writer_two_ipi_base_number(self):
-        return self._writer_two_ipi_base_number
-
-    @property
-    def writer_two_ipi_cae(self):
-        return self._writer_two_ipi_cae
-
-    @property
-    def writer_two_last_name(self):
-        return self._writer_two_last_name
 
 
 class RecordingDetails(object):

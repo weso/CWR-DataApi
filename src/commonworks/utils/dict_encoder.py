@@ -3,7 +3,7 @@
 import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.work import AlternateTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.work import AlternateTitle, AuthoredWork, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
@@ -53,12 +53,10 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_agreement(d)
         elif isinstance(d, AlternateTitle):
             encoded = self.__encode_alternative_work_title(d)
-        elif isinstance(d, EntireWorkTitle):
-            encoded = self.__encode_entire_work_title(d)
+        elif isinstance(d, AuthoredWork):
+            encoded = self.__encode_authored_work(d)
         elif isinstance(d, IPA):
             encoded = self.__encode_ipa(d)
-        elif isinstance(d, OriginalWorkTitle):
-            encoded = self.__encode_original_work_title(d)
         elif isinstance(d, PerformingArtist):
             encoded = self.__encode_performing_artist(d)
         elif isinstance(d, Publisher):
@@ -149,26 +147,28 @@ class CWRDictionaryEncoder(object):
         return encoded
 
     @staticmethod
-    def __encode_entire_work_title(title):
+    def __encode_authored_work(work):
         """
-        Creates a dictionary from an EntireWorkTitle.
+        Creates a dictionary from an AuthoredWork.
 
-        :param title: the EntireWorkTitle to transform into a dictionary
-        :return: a dictionary created from the EntireWorkTitle
+        :param work: the AuthoredWork to transform into a dictionary
+        :return: a dictionary created from the AuthoredWork
         """
         encoded = {}
 
-        encoded['entire_title'] = title.entire_title
-        encoded['entire_work_iswc'] = title.entire_work_iswc
-        encoded['language_code'] = title.language_code
-        encoded['writer_one_first_name'] = title.writer_one_first_name
-        encoded['writer_one_last_name'] = title.writer_one_last_name
-        encoded['writer_one_ipi_cae'] = title.writer_one_ipi_cae
-        encoded['writer_one_ipi_base_number'] = title.writer_one_ipi_base_number
-        encoded['writer_two_first_name'] = title.writer_two_first_name
-        encoded['writer_two_last_name'] = title.writer_two_last_name
-        encoded['writer_two_ipi_cae'] = title.writer_two_ipi_cae
-        encoded['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
+        encoded['work_id'] = work.work_id
+        encoded['title'] = work.title
+        encoded['language_code'] = work.language_code
+        encoded['source'] = work.source
+        encoded['first_name_1'] = work.first_name_1
+        encoded['ip_base_1'] = work.ip_base_1
+        encoded['ip_name_1'] = work.ip_name_1
+        encoded['first_name_2'] = work.first_name_2
+        encoded['ip_base_2'] = work.ip_base_2
+        encoded['ip_name_2'] = work.ip_name_2
+        encoded['last_name_1'] = work.last_name_1
+        encoded['last_name_2'] = work.last_name_2
+        encoded['iswc'] = work.iswc
 
         return encoded
 
@@ -194,30 +194,6 @@ class CWRDictionaryEncoder(object):
         encoded['mr_share'] = agreement.mr_share
         encoded['sr_society'] = agreement.sr_society
         encoded['sr_share'] = agreement.sr_share
-
-        return encoded
-
-    @staticmethod
-    def __encode_original_work_title(title):
-        """
-        Creates a dictionary from an OriginalWorkTitle.
-
-        :param title: the OriginalWorkTitle to transform into a dictionary
-        :return: a dictionary created from the OriginalWorkTitle
-        """
-        encoded = {}
-
-        encoded['entire_title'] = title.entire_title
-        encoded['entire_work_iswc'] = title.entire_work_iswc
-        encoded['language_code'] = title.language_code
-        encoded['writer_one_first_name'] = title.writer_one_first_name
-        encoded['writer_one_last_name'] = title.writer_one_last_name
-        encoded['writer_one_ipi_cae'] = title.writer_one_ipi_cae
-        encoded['writer_one_ipi_base_number'] = title.writer_one_ipi_base_number
-        encoded['writer_two_first_name'] = title.writer_two_first_name
-        encoded['writer_two_last_name'] = title.writer_two_last_name
-        encoded['writer_two_ipi_cae'] = title.writer_two_ipi_cae
-        encoded['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
 
         return encoded
 

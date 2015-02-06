@@ -157,6 +157,7 @@ class Writer(InterestedParty):
         """
         return self._personal_number
 
+
 class WriterPublisher(object):
     """
     Represents a relationship between a Writer and a Publisher.

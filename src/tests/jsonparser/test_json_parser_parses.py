@@ -106,41 +106,44 @@ class TestAlternativeWorkTitle(unittest.TestCase):
         self.assertEqual(self.title.language, 'ES')
 
 
-class TestEntireWorkTitle(unittest.TestCase):
+class TestAuthoredWork(unittest.TestCase):
     """
-    Tests the JSON to EntireWorkTitle parsing.
+    Tests the JSON to AuthoredWork parsing.
     """
 
     def setUp(self):
         data = {}
-        data['entire_title'] = 'title'
-        data['entire_work_iswc'] = 123456
+        data['work_id'] = 1
+        data['title'] = 'Title'
         data['language_code'] = 'ES'
-        data['writer_one_last_name'] = 'last_1'
-        data['writer_one_first_name'] = 'first_1'
-        data['writer_one_ipi_cae'] = 'ipi_cae_1'
-        data['writer_one_ipi_base_number'] = 'ipi_base_number_1'
-        data['writer_two_last_name'] = 'last_2'
-        data['writer_two_first_name'] = 'first_2'
-        data['writer_two_ipi_cae'] = 'ipi_cae_2'
-        data['writer_two_ipi_base_number'] = 'ipi_base_number_2'
-        data['submitter_id'] = 1122
+        data['source'] = 'Broadway show'
+        data['first_name_1'] = 'first_1'
+        data['ip_base_1'] = 1
+        data['ip_name_1'] = 'ip_1'
+        data['first_name_2'] = 'first_2'
+        data['ip_base_2'] = 2
+        data['ip_name_2'] = 'ip_2'
+        data['last_name_1'] = 'last_1'
+        data['last_name_2'] = 'last_2'
+        data['iswc'] = 3
 
-        self.title = jsonparser.parse_entire_work_title(json.loads(json.dumps(data)))
+        self.title = jsonparser.parse_authored_work(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.title.entire_title, 'title')
-        self.assertEqual(self.title.entire_work_iswc, 123456)
+        self.assertEqual(self.title.work_id, 1)
+        self.assertEqual(self.title.title, 'Title')
         self.assertEqual(self.title.language_code, 'ES')
-        self.assertEqual(self.title.writer_one_last_name, 'last_1')
-        self.assertEqual(self.title.writer_one_first_name, 'first_1')
-        self.assertEqual(self.title.writer_one_ipi_cae, 'ipi_cae_1')
-        self.assertEqual(self.title.writer_one_ipi_base_number, 'ipi_base_number_1')
-        self.assertEqual(self.title.writer_two_last_name, 'last_2')
-        self.assertEqual(self.title.writer_two_first_name, 'first_2')
-        self.assertEqual(self.title.writer_two_ipi_cae, 'ipi_cae_2')
-        self.assertEqual(self.title.writer_two_ipi_base_number, 'ipi_base_number_2')
+        self.assertEqual(self.title.source, 'Broadway show')
+        self.assertEqual(self.title.first_name_1, 'first_1')
+        self.assertEqual(self.title.ip_base_1, 1)
+        self.assertEqual(self.title.ip_name_1, 'ip_1')
+        self.assertEqual(self.title.first_name_2, 'first_2')
+        self.assertEqual(self.title.ip_base_2, 2)
+        self.assertEqual(self.title.ip_name_2, 'ip_2')
+        self.assertEqual(self.title.last_name_1, 'last_1')
+        self.assertEqual(self.title.last_name_2, 'last_2')
+        self.assertEqual(self.title.iswc, 3)
 
 
 class TestIPA(unittest.TestCase):
@@ -179,43 +182,6 @@ class TestIPA(unittest.TestCase):
         self.assertEqual(4, self.agreement.mr_society)
         self.assertEqual(5, self.agreement.pr_society)
         self.assertEqual(6, self.agreement.sr_society)
-
-
-class TestOriginalWorkTitle(unittest.TestCase):
-    """
-    Tests the JSON to OriginalWorkTitle parsing.
-    """
-
-    def setUp(self):
-        data = {}
-        data['entire_title'] = 'title'
-        data['entire_work_iswc'] = 12345
-        data['language_code'] = 'ES'
-        data['writer_one_last_name'] = 'last_1'
-        data['writer_one_first_name'] = 'first_1'
-        data['writer_one_ipi_cae'] = 'ipi_cae_1'
-        data['writer_one_ipi_base_number'] = 'ipi_base_number_1'
-        data['writer_two_last_name'] = 'last_2'
-        data['writer_two_first_name'] = 'first_2'
-        data['writer_two_ipi_cae'] = 'ipi_cae_2'
-        data['writer_two_ipi_base_number'] = 'ipi_base_number_2'
-        data['submitter_id'] = 1122
-
-        self.title = jsonparser.parse_original_work_title(json.loads(json.dumps(data)))
-
-    def test_data(self):
-        # Makes sure the data was parsed correctly
-        self.assertEqual(self.title.entire_title, 'title')
-        self.assertEqual(self.title.entire_work_iswc, 12345)
-        self.assertEqual(self.title.language_code, 'ES')
-        self.assertEqual(self.title.writer_one_last_name, 'last_1')
-        self.assertEqual(self.title.writer_one_first_name, 'first_1')
-        self.assertEqual(self.title.writer_one_ipi_cae, 'ipi_cae_1')
-        self.assertEqual(self.title.writer_one_ipi_base_number, 'ipi_base_number_1')
-        self.assertEqual(self.title.writer_two_last_name, 'last_2')
-        self.assertEqual(self.title.writer_two_first_name, 'first_2')
-        self.assertEqual(self.title.writer_two_ipi_cae, 'ipi_cae_2')
-        self.assertEqual(self.title.writer_two_ipi_base_number, 'ipi_base_number_2')
 
 
 class TestPerformingArtist(unittest.TestCase):
