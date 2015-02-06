@@ -10,12 +10,12 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class FileIdentifier(object):
+class FileTag(object):
     """
-    Represents a CWR file identification data.
+    Represents a CWR file tagging data.
 
-    This data identifies a concrete file and, according to the standard, is indicated in the file name, using the
-    pattern CWyynnnnsss_rrr.Vxx,, where each section means the following:
+    This data identifies a concrete file in the file system and, according to the standard, is indicated in the file
+    name, using the pattern CWyynnnnsss_rrr.Vxx,, where each section means the following:
     CW - Header indicating it is a CWR file.
     yy - Year.
     nnnn - Sequence. This was originally 2 numbers, later changed to 4.

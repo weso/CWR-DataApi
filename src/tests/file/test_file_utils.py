@@ -2,7 +2,7 @@
 import unittest
 
 from commonworks.utils import cwr_file
-from commonworks.file import FileIdentifier
+from commonworks.file import FileTag
 
 
 """
@@ -15,7 +15,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestDecodeFileName(unittest.TestCase):
+class TestDecodeFileTag(unittest.TestCase):
     """
     Tests the CWR file name decoding.
 
@@ -69,7 +69,7 @@ class TestDecodeFileName(unittest.TestCase):
         self.assertEqual(0.2, data.version)
 
 
-class TestDecodeFileNameOld(unittest.TestCase):
+class TestDecodeFileTagOld(unittest.TestCase):
     """
     Tests the CWR file name decoding.
 
@@ -125,7 +125,7 @@ class TestDecodeFileNameOld(unittest.TestCase):
         self.assertEqual(0.2, data.version)
 
 
-class TestEncodeFileName(unittest.TestCase):
+class TestEncodeFileTag(unittest.TestCase):
     """
     Tests the CWR file name encoding.
 
@@ -134,13 +134,13 @@ class TestEncodeFileName(unittest.TestCase):
 
     def setUp(self):
         # Sender with 2 digits and receiver with 2 digits
-        self.fn_s2_r2 = FileIdentifier(2012, 123, '11', '22', 2.1)
+        self.fn_s2_r2 = FileTag(2012, 123, '11', '22', 2.1)
         # Sender with 3 digits and receiver with 2 digits
-        self.fn_s3_r2 = FileIdentifier(2013, 123, 'ABC', '23', 2.2)
+        self.fn_s3_r2 = FileTag(2013, 123, 'ABC', '23', 2.2)
         # Sender with 2 digits and receiver with 3 digits
-        self.fn_s2_r3 = FileIdentifier(2099, 0, '22', 'DEC', 0)
+        self.fn_s2_r3 = FileTag(2099, 0, '22', 'DEC', 0)
         # Sender with 3 digits and receiver with 3 digits
-        self.fn_s3_r3 = FileIdentifier(2000, 12, 'AB2', '234', 0.2)
+        self.fn_s3_r3 = FileTag(2000, 12, 'AB2', '234', 0.2)
 
     def test_s2_r2(self):
         data = cwr_file.encode_filename_updated(self.fn_s2_r2)
@@ -163,7 +163,7 @@ class TestEncodeFileName(unittest.TestCase):
         self.assertEqual("CW000012AB2_234.V02", data)
 
 
-class TestEncodeFileNameOld(unittest.TestCase):
+class TestEncodeFileTagOld(unittest.TestCase):
     """
     Tests the CWR file name encoding.
 
@@ -174,13 +174,13 @@ class TestEncodeFileNameOld(unittest.TestCase):
 
     def setUp(self):
         # Sender with 2 digits and receiver with 2 digits
-        self.fn_s2_r2 = FileIdentifier(2012, 23, '11', '22', 2.1)
+        self.fn_s2_r2 = FileTag(2012, 23, '11', '22', 2.1)
         # Sender with 3 digits and receiver with 2 digits
-        self.fn_s3_r2 = FileIdentifier(2013, 1, 'ABC', '23', 2.2)
+        self.fn_s3_r2 = FileTag(2013, 1, 'ABC', '23', 2.2)
         # Sender with 2 digits and receiver with 3 digits
-        self.fn_s2_r3 = FileIdentifier(2099, 0, '22', 'DEC', 0)
+        self.fn_s2_r3 = FileTag(2099, 0, '22', 'DEC', 0)
         # Sender with 3 digits and receiver with 3 digits
-        self.fn_s3_r3 = FileIdentifier(2000, 12, 'AB2', '234', 0.2)
+        self.fn_s3_r3 = FileTag(2000, 12, 'AB2', '234', 0.2)
 
     def test_s2_r2(self):
         data = cwr_file.encode_filename(self.fn_s2_r2)

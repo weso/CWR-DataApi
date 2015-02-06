@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from commonworks.file import FileIdentifier
+from commonworks.file import FileTag
 
 """
 CWR file utilities.
@@ -33,7 +33,7 @@ _sequence_l_old = 2
 
 def encode_filename_updated(identifier):
     """
-    Parses a CWR file name from a FileIdentifier object.
+    Parses a CWR file name from a FileTag object.
 
     This method follows the CWR naming convention update done by the CWR Management Committee, which increased the
     sequence length from two digits to four.
@@ -41,7 +41,7 @@ def encode_filename_updated(identifier):
     After this change file names no longer follow the CISAC CWR standard, but allows for higher number of CWR file
     transmissions.
 
-    :param identifier: FileIdentifier to parse
+    :param identifier: FileTag to parse
     :return: a string file name parsed from the identifier info
     """
     return _encode_filename(identifier, _sequence_l_current)
@@ -49,7 +49,7 @@ def encode_filename_updated(identifier):
 
 def encode_filename(identifier):
     """
-    Parses a CWR file name from a FileIdentifier object.
+    Parses a CWR file name from a FileTag object.
 
     This method follows the CISAC CWR standard, where the sequence number is only two digits longs.
 
@@ -58,7 +58,7 @@ def encode_filename(identifier):
 
     These old files names follow the pattern CWyynnsss_rrr.Vxx.
 
-    :param identifier: FileIdentifier to parse
+    :param identifier: FileTag to parse
     :return: a string file name parsed from the identifier info
     """
     return _encode_filename(identifier, _sequence_l_old)
@@ -66,7 +66,7 @@ def encode_filename(identifier):
 
 def decode_filename_updated(filename):
     """
-    Parses a CWR file name into a FileIdentifier object.
+    Parses a CWR file name into a FileTag object.
 
     This method follows the CWR naming convention update done by the CWR Management Committee, which increased the
     sequence length from two digits to four.
@@ -75,14 +75,14 @@ def decode_filename_updated(filename):
     transmissions.
 
     :param filename: file name to parse
-    :return: a FileIdentifier object parsed from the file name
+    :return: a FileTag object parsed from the file name
     """
     return _decode_filename(filename, _sequence_l_current)
 
 
 def decode_filename(filename):
     """
-    Parses a CWR file name into a FileIdentifier object.
+    Parses a CWR file name into a FileTag object.
 
     This method follows the CISAC CWR standard, where the sequence number is only two digits longs.
 
@@ -92,20 +92,20 @@ def decode_filename(filename):
     These old files names follow the pattern CWyynnsss_rrr.Vxx.
 
     :param filename: file name to parse
-    :return: a FileIdentifier object parsed from the file name
+    :return: a FileTag object parsed from the file name
     """
     return _decode_filename(filename, _sequence_l_old)
 
 
 def _decode_filename(filename, sequence_l):
     """
-    Parses a CWR file name into a FileIdentifier object.
+    Parses a CWR file name into a FileTag object.
 
     As the sequence length was changed from the original specification, this method receives it's length.
 
     :param filename: file name to parse
     :param sequence_l: the sequence length
-    :return: a FileIdentifier object parsed from the file name
+    :return: a FileTag object parsed from the file name
     """
 
     year = int('20' + filename[_header_l:_header_l + _year_l])
@@ -123,16 +123,16 @@ def _decode_filename(filename, sequence_l):
     sender = leftover[:pos]
     receiver = leftover[pos + 1:]
 
-    return FileIdentifier(year, sequence, sender, receiver, version)
+    return FileTag(year, sequence, sender, receiver, version)
 
 
 def _encode_filename(identifier, sequence_l):
     """
-    Parses a CWR file name from a FileIdentifier object.
+    Parses a CWR file name from a FileTag object.
 
     As the sequence length was changed from the original specification, this method receives it's length.
 
-    :param identifier: FileIdentifier to parse
+    :param identifier: FileTag to parse
     :param sequence_l: the sequence length
     :return: a string file name parsed from the identifier info
     """
