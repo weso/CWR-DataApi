@@ -6,10 +6,10 @@ CWR stands for Common Works Registration, and it is a common or standard format 
 
 While CWR standard has been created by [CISAC][] this library has been developed by [WESO][] independently.
 
-### Status
+## Status
 The project is still in the development phase.
 
-#### Issues management
+### Issues management
 Issues are managed at the GitHub [project issues page][].
 
 ## Building the code
