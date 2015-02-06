@@ -4,9 +4,7 @@ This projects offers a domain model for the CISAC CWR standard v2.1 for Python a
 
 CWR stands for Common Works Registration, and it is a common or standard format for the registration and revision of musical works, used by publishers and performing rights societies as a way to exchange musical works data.
 
-The CWR standard has been created by [CISAC][].
-
-But this API library is not related to them in any way and has been developed by [WESO][].
+While CWR standard has been created by [CISAC][] this library has been developed by [WESO][] independently.
 
 ### Status
 The project is still in the development phase.
@@ -15,7 +13,9 @@ The project is still in the development phase.
 Issues are managed at the GitHub [project issues page][].
 
 ## Building the code
-The application is coded in Python and tested for Python 2 and 3. Dependencies are indicated on requirements.txt.
+The application has been coded in Python, and tested for various versions of the Python 2 and 3 interpreter.
+
+Dependencies are indicated on requirements.txt.
 
 ### Prerequisites
 Requires Python 2.6, 2.7, 3.2, 3.3 or 3.4.
