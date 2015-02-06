@@ -3,7 +3,7 @@
 import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.work import AlternateTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
@@ -51,7 +51,7 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_agreement_territory(d)
         elif isinstance(d, Agreement):
             encoded = self.__encode_agreement(d)
-        elif isinstance(d, AlternativeWorkTitle):
+        elif isinstance(d, AlternateTitle):
             encoded = self.__encode_alternative_work_title(d)
         elif isinstance(d, EntireWorkTitle):
             encoded = self.__encode_entire_work_title(d)
@@ -142,8 +142,9 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['alternative_title'] = title.alternative_title
-        encoded['alternative_title_type'] = title.alternative_title_type
+        encoded['alternate_title'] = title.alternate_title
+        encoded['title_type'] = title.title_type
+        encoded['language'] = title.language
 
         return encoded
 

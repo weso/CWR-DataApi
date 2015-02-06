@@ -377,22 +377,46 @@ class Work(object):
         return self._work_id
 
 
-class AlternativeWorkTitle(object):
+class AlternateTitle(object):
     """
-    Represents a CWR alternative work title.
+    Represents a CWR Alternate Title.
     """
 
-    def __init__(self, alternative_title, alternative_title_type):
-        self._alternative_title = alternative_title
-        self._alternative_title_type = alternative_title_type
+    def __init__(self, alternate_title, title_type, language = None):
+        self._alternate_title = alternate_title
+        self._title_type = title_type
+        self._language = language
 
     @property
-    def alternative_title(self):
-        return self._alternative_title
+    def alternate_title(self):
+        """
+        Alternate Title field.
+
+        :return: the alternate title
+        """
+        return self._alternate_title
 
     @property
-    def alternative_title_type(self):
-        return self._alternative_title_type
+    def language(self):
+        """
+        Language Code field.
+
+        This field contains the code used to describe the language of the Alternate Title, if it is known.
+
+        :return: the Alternate Title language
+        """
+        return self._language
+
+    @property
+    def title_type(self):
+        """
+        Title Type field.
+
+        This field describes the type of title.
+
+        :return:
+        """
+        return self._title_type
 
 
 class EntireWorkTitle(object):

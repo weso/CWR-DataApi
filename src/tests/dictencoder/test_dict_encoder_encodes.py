@@ -4,7 +4,7 @@ import unittest
 import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.work import AlternateTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, RecordingDetails, Work
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
@@ -88,13 +88,14 @@ class TestAlternativeWorkTitle(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AlternativeWorkTitle('title', 1)
+        entity = AlternateTitle('title', 1, 'ES')
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(self.dict['alternative_title'], 'title')
-        self.assertEqual(self.dict['alternative_title_type'], 1)
+        self.assertEqual(self.dict['alternate_title'], 'title')
+        self.assertEqual(self.dict['title_type'], 1)
+        self.assertEqual(self.dict['language'], 'ES')
 
 
 class TestEntireWorkTitle(unittest.TestCase):

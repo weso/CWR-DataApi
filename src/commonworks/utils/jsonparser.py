@@ -3,7 +3,7 @@ from commonworks.agreement import Agreement
 from commonworks.agreement import AgreementTerritory
 from commonworks.agreement import IPA
 from commonworks.interested_party import Publisher
-from commonworks.work import Work, AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.work import Work, AlternateTitle, EntireWorkTitle, OriginalWorkTitle, \
     RecordingDetails, WorkOrigin, PerformingArtist
 from commonworks.interested_party import Writer
 
@@ -65,8 +65,9 @@ def parse_alternative_work_title(json_item):
     :param json_item: JSON object to parse
     :return: an AlternativeWorkTitle parsed from the JSON
     """
-    title = AlternativeWorkTitle(json_item['alternate_title'],
-                                 json_item['title_type'])
+    title = AlternateTitle(json_item['alternate_title'],
+                                 json_item['title_type'],
+                                 json_item['language'])
 
     return title
 

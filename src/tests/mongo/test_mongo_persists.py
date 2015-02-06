@@ -3,7 +3,7 @@ import unittest
 import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
+from commonworks.work import AlternateTitle, EntireWorkTitle, OriginalWorkTitle, \
     PerformingArtist, WorkOrigin, Work, RecordingDetails
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
@@ -74,8 +74,8 @@ class TestAlternativeWorkTitle(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = AlternativeWorkTitle('title', 2)
-        self.repo = MongoGenericRepository(host, port, db_name, 'alternative_work_titles')
+        self.entity = AlternateTitle('title', 1, 'ES')
+        self.repo = MongoGenericRepository(host, port, db_name, 'alternate_titles')
 
     def tearDown(self):
         self.repo.clear()

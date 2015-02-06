@@ -95,13 +95,15 @@ class TestAlternativeWorkTitle(unittest.TestCase):
         data = {}
         data['alternate_title'] = 'title'
         data['title_type'] = 'type'
+        data['language'] = 'ES'
 
         self.title = jsonparser.parse_alternative_work_title(json.loads(json.dumps(data)))
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.title.alternative_title, 'title')
-        self.assertEqual(self.title.alternative_title_type, 'type')
+        self.assertEqual(self.title.alternate_title, 'title')
+        self.assertEqual(self.title.title_type, 'type')
+        self.assertEqual(self.title.language, 'ES')
 
 
 class TestEntireWorkTitle(unittest.TestCase):
