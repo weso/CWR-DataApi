@@ -1,14 +1,15 @@
 # -*- encoding: utf-8 -*-
 
-from commonworks.domain.models.agreement.agreement import AgreementTerritory, Agreement
-from commonworks.domain.models.work.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
-    PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.domain.models.agreement.interested_party import InterestedParty, IPAAgreement
-from commonworks.domain.models.work.publisher import Publisher
-from commonworks.domain.models.special_entities.society import Society
-from commonworks.domain.models.special_entities.territory import Territory
-from commonworks.domain.models.special_entities.value_entities.value_entity import ValueEntity
-from commonworks.domain.models.work.writer import Writer
+import datetime
+
+from commonworks.agreement import Agreement, AgreementTerritory, IPA
+from commonworks.interested_party import Publisher, Writer
+from commonworks.society import Society
+from commonworks.territory import Territory
+from commonworks.value_entity import ValueEntity
+from commonworks.work import AlternateTitle, AuthoredWork, \
+    PerformingArtist, RecordingDetails, Work, WorkOrigin
+
 
 """
 Offers classes to create dictionaries from model objects.
@@ -20,29 +21,41 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class CWRDictionaryEncoder(object):
+class DictionaryAdapter(object):
     """
-    Encodes CWR model classes into dictionaries.
+    Adapts objects to be added into the dictionary so they are parseable for JSON.
     """
 
     def __init__(self):
         pass
+
+    @staticmethod
+    def adapt(obj):
+        if isinstance(obj, datetime.time) or isinstance(obj, datetime.date):
+            return obj.isoformat()
+        else:
+            return obj
+
+
+class CWRDictionaryEncoder(object):
+    """
+    Encodes CWR model classes into encodedionaries.
+    """
+
+    def __init__(self):
+        self._adapter = DictionaryAdapter()
 
     def encode(self, d):
         if isinstance(d, AgreementTerritory):
             encoded = self.__encode_agreement_territory(d)
         elif isinstance(d, Agreement):
             encoded = self.__encode_agreement(d)
-        elif isinstance(d, AlternativeWorkTitle):
+        elif isinstance(d, AlternateTitle):
             encoded = self.__encode_alternative_work_title(d)
-        elif isinstance(d, EntireWorkTitle):
-            encoded = self.__encode_entire_work_title(d)
-        elif isinstance(d, InterestedParty):
-            encoded = self.__encode_interested_party(d)
-        elif isinstance(d, IPAAgreement):
-            encoded = self.__encode_ipa_agreement(d)
-        elif isinstance(d, OriginalWorkTitle):
-            encoded = self.__encode_original_work_title(d)
+        elif isinstance(d, AuthoredWork):
+            encoded = self.__encode_authored_work(d)
+        elif isinstance(d, IPA):
+            encoded = self.__encode_ipa(d)
         elif isinstance(d, PerformingArtist):
             encoded = self.__encode_performing_artist(d)
         elif isinstance(d, Publisher):
@@ -66,19 +79,20 @@ class CWRDictionaryEncoder(object):
 
         return encoded
 
-    def __encode_agreement_territory(self, territory):
+    @staticmethod
+    def __encode_agreement_territory(territory):
         """
         Creates a dictionary from an Agreement Territory.
 
         :param territory: the Agreement Territory to transform into a dictionary
         :return: a dictionary created from the Agreement Territory
         """
-        dict = {}
+        encoded = {}
 
-        dict['inclusion_exclusion_indicator'] = territory.inclusion_exclusion_indicator
-        dict['tis_numeric_code'] = territory.tis_numeric_code
+        encoded['included'] = territory.included
+        encoded['tis_numeric_code'] = territory.tis_numeric_code
 
-        return dict
+        return encoded
 
     def __encode_agreement(self, agreement):
         """
@@ -87,168 +101,135 @@ class CWRDictionaryEncoder(object):
         :param agreement: the Agreement to transform into a dictionary
         :return: a dictionary created from the Agreement
         """
-        dict = {}
+        encoded = {}
 
-        dict['submitter_id'] = agreement.submitter_id
-        dict['agreement_number'] = agreement.agreement_number
-        dict['international_standard_number'] = agreement.international_standard_number
-        dict['type'] = agreement.type
-        dict['start_date'] = agreement.start_date.isoformat()
-        dict['end_date'] = agreement.end_date.isoformat()
-        dict['retention_end_date'] = agreement.retention_end_date.isoformat()
-        dict['prior_royalty_status'] = agreement.prior_royalty_status
-        dict['prior_royalty_status_date'] = agreement.prior_royalty_status_date.isoformat()
-        dict['post_term_collection_status'] = agreement.post_term_collection_status
-        dict['post_term_collection_end_date'] = agreement.post_term_collection_end_date.isoformat()
-        dict['signature_date'] = agreement.signature_date.isoformat()
-        dict['works_number'] = agreement.works_number
-        dict['sales_manufacture_clause'] = agreement.sales_manufacture_clause
-        dict['shares_change'] = agreement.shares_change
-        dict['advance_given'] = agreement.advance_given
-        dict['society_assigned_number'] = agreement.society_assigned_number
+        encoded['submitter_agreement_number'] = agreement.submitter_agreement_number
+        encoded['society_agreement_number'] = agreement.society_agreement_number
+        encoded['international_standard_number'] = agreement.international_standard_code
+        encoded['agreement_type'] = agreement.agreement_type
 
-        dict['interested_parties'] = agreement.interested_parties
-        dict['territories'] = []
+        encoded['start_date'] = self._adapter.adapt(agreement.start_date)
+        encoded['end_date'] = self._adapter.adapt(agreement.end_date)
 
-        for territory in agreement.territories:
-            dict['territories'].append(self.__encode_agreement_territory(territory))
+        encoded['prior_royalty_status'] = agreement.prior_royalty_status
+        encoded['prior_royalty_status_date'] = self._adapter.adapt(agreement.prior_royalty_status_date)
 
-        return dict
+        encoded['post_term_collection_status'] = agreement.post_term_collection_status
+        encoded['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)
 
-    def __encode_alternative_work_title(self, title):
+        encoded['signature_date'] = self._adapter.adapt(agreement.signature_date)
+        encoded['works_number'] = agreement.works_number
+        encoded['sales_manufacture_clause'] = agreement.sales_manufacture_clause
+
+        encoded['international_standard_code'] = agreement.international_standard_code
+        encoded['agreement_type'] = agreement.agreement_type
+        encoded['retention_end_date'] = self._adapter.adapt(agreement.retention_end_date)
+        encoded['shares_change'] = agreement.shares_change
+        encoded['advance_given'] = agreement.advance_given
+
+        return encoded
+
+    @staticmethod
+    def __encode_alternative_work_title(title):
         """
         Creates a dictionary from an AlternativeWorkTitle.
 
         :param title: the AlternativeWorkTitle to transform into a dictionary
         :return: a dictionary created from the AlternativeWorkTitle
         """
-        dict = {}
+        encoded = {}
 
-        dict['alternative_title'] = title.alternative_title
-        dict['alternative_title_type'] = title.alternative_title_type
+        encoded['alternate_title'] = title.alternate_title
+        encoded['title_type'] = title.title_type
+        encoded['language'] = title.language
 
-        return dict
+        return encoded
 
-    def __encode_entire_work_title(self, title):
+    @staticmethod
+    def __encode_authored_work(work):
         """
-        Creates a dictionary from an EntireWorkTitle.
+        Creates a dictionary from an AuthoredWork.
 
-        :param title: the EntireWorkTitle to transform into a dictionary
-        :return: a dictionary created from the EntireWorkTitle
+        :param work: the AuthoredWork to transform into a dictionary
+        :return: a dictionary created from the AuthoredWork
         """
-        dict = {}
+        encoded = {}
 
-        dict['entire_title'] = title.entire_title
-        dict['entire_work_iswc'] = title.entire_work_iswc
-        dict['language_code'] = title.language_code
-        dict['writer_one_first_name'] = title.writer_one_first_name
-        dict['writer_one_last_name'] = title.writer_one_last_name
-        dict['writer_one_ipi_cae'] = title.writer_one_ipi_cae
-        dict['writer_one_ipi_base_number'] = title.writer_one_ipi_base_number
-        dict['writer_two_first_name'] = title.writer_two_first_name
-        dict['writer_two_last_name'] = title.writer_two_last_name
-        dict['writer_two_ipi_cae'] = title.writer_two_ipi_cae
-        dict['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
-        dict['work_number'] = title.work_number
+        encoded['work_id'] = work.work_id
+        encoded['title'] = work.title
+        encoded['language_code'] = work.language_code
+        encoded['source'] = work.source
+        encoded['first_name_1'] = work.first_name_1
+        encoded['ip_base_1'] = work.ip_base_1
+        encoded['ip_name_1'] = work.ip_name_1
+        encoded['first_name_2'] = work.first_name_2
+        encoded['ip_base_2'] = work.ip_base_2
+        encoded['ip_name_2'] = work.ip_name_2
+        encoded['last_name_1'] = work.last_name_1
+        encoded['last_name_2'] = work.last_name_2
+        encoded['iswc'] = work.iswc
 
-        return dict
+        return encoded
 
-    def __encode_interested_party(self, interested_party):
-        """
-        Creates a dictionary from an InterestedParty.
-
-        :param interested_party: the InterestedParty to transform into a dictionary
-        :return: a dictionary created from the InterestedParty
-        """
-        dict = {}
-
-        dict['submitter_id'] = interested_party.submitter_id
-
-        dict['cae_ipi_id'] = interested_party.cae_ipi_id
-        dict['ipi_base_number'] = interested_party.ipi_base_number
-        dict['ipa_number'] = interested_party.ipa_number
-        dict['last_name'] = interested_party.last_name
-
-        dict['agreements'] = []
-
-        for agreement in interested_party.agreements:
-            dict['agreements'].append(self.__encode_ipa_agreement(agreement))
-
-        return dict
-
-    def __encode_ipa_agreement(self, agreement):
+    @staticmethod
+    def __encode_ipa(agreement):
         """
         Creates a dictionary from an IPAAgreement.
 
         :param agreement: the IPAAgreement to transform into a dictionary
         :return: a dictionary created from the IPAAgreement
         """
-        dict = {}
+        encoded = {}
 
-        dict['agreement_id'] = agreement.agreement_id
-        dict['agreement_role_code'] = agreement.agreement_role_code
-        dict['pr_society'] = agreement.pr_society
-        dict['pr_share'] = agreement.pr_share
-        dict['mr_society'] = agreement.mr_society
-        dict['mr_share'] = agreement.mr_share
-        dict['sr_society'] = agreement.sr_society
-        dict['sr_share'] = agreement.sr_share
+        encoded['agreement_id'] = agreement.agreement_id
+        encoded['agreement_role_code'] = agreement.agreement_role_code
+        encoded['interested_party_id'] = agreement.interested_party_id
+        encoded['interested_party_name'] = agreement.interested_party_name
+        encoded['interested_party_ipi'] = agreement.interested_party_ipi
+        encoded['interested_party_writer_name'] = agreement.interested_party_writer_name
+        encoded['pr_society'] = agreement.pr_society
+        encoded['pr_share'] = agreement.pr_share
+        encoded['mr_society'] = agreement.mr_society
+        encoded['mr_share'] = agreement.mr_share
+        encoded['sr_society'] = agreement.sr_society
+        encoded['sr_share'] = agreement.sr_share
 
-        return dict
+        return encoded
 
-    def __encode_original_work_title(self, title):
-        """
-        Creates a dictionary from an OriginalWorkTitle.
-
-        :param title: the OriginalWorkTitle to transform into a dictionary
-        :return: a dictionary created from the OriginalWorkTitle
-        """
-        dict = {}
-
-        dict['entire_title'] = title.entire_title
-        dict['entire_work_iswc'] = title.entire_work_iswc
-        dict['language_code'] = title.language_code
-        dict['writer_one_first_name'] = title.writer_one_first_name
-        dict['writer_one_last_name'] = title.writer_one_last_name
-        dict['writer_one_ipi_cae'] = title.writer_one_ipi_cae
-        dict['writer_one_ipi_base_number'] = title.writer_one_ipi_base_number
-        dict['writer_two_first_name'] = title.writer_two_first_name
-        dict['writer_two_last_name'] = title.writer_two_last_name
-        dict['writer_two_ipi_cae'] = title.writer_two_ipi_cae
-        dict['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
-        dict['work_number'] = title.work_number
-
-        return dict
-
-    def __encode_performing_artist(self, artist):
+    @staticmethod
+    def __encode_performing_artist(artist):
         """
         Creates a dictionary from a PerformingArtist.
 
         :param artist: the PerformingArtist to transform into a dictionary
         :return: a dictionary created from the PerformingArtist
         """
-        dict = {}
+        encoded = {}
 
-        dict['first_name'] = artist.first_name
-        dict['last_name'] = artist.last_name
-        dict['cae_ipi_name'] = artist.cae_ipi_name
-        dict['ipi_base_number'] = artist.ipi_base_number
+        encoded['first_name'] = artist.first_name
+        encoded['last_name'] = artist.last_name
+        encoded['cae_ipi_name'] = artist.cae_ipi_name
+        encoded['ipi_base_number'] = artist.ipi_base_number
 
-        return dict
+        return encoded
 
-    def __encode_publisher(self, publisher):
+    @staticmethod
+    def __encode_publisher(publisher):
         """
         Creates a dictionary from a Publisher.
 
         :param publisher: the Publisher to transform into a dictionary
         :return: a dictionary created from the Publisher
         """
-        dict = {}
+        encoded = {}
 
-        dict['agreement_id'] = publisher.agreement_id
-        dict['interested_party'] = publisher.interested_party
+        encoded['name'] = publisher.name
+        encoded['ip_id'] = publisher.ip_id
+        encoded['ip_name'] = publisher.ip_name
+        encoded['ip_base_id'] = publisher.ip_base_id
+        encoded['tax_id'] = publisher.tax_id
 
-        return dict
+        return encoded
 
     def __encode_recording_details(self, details):
         """
@@ -257,68 +238,71 @@ class CWRDictionaryEncoder(object):
         :param details: the RecordingDetails to transform into a dictionary
         :return: a dictionary created from the RecordingDetails
         """
-        dict = {}
+        encoded = {}
 
-        dict['first_release_date'] = details.first_release_date.isoformat()
-        dict['first_release_duration'] = details.first_release_duration
-        dict['first_album_title'] = details.first_album_title
-        dict['first_album_label'] = details.first_album_label
-        dict['first_release_catalog_id'] = details.first_release_catalog_id
-        dict['ean'] = details.ean
-        dict['isrc'] = details.isrc
-        dict['recording_format'] = details.recording_format
-        dict['recording_technique'] = details.recording_technique
-        dict['media_type'] = details.media_type
+        encoded['first_release_date'] = self._adapter.adapt(details.first_release_date)
+        encoded['first_release_duration'] = details.first_release_duration
+        encoded['first_album_title'] = details.first_album_title
+        encoded['first_album_label'] = details.first_album_label
+        encoded['first_release_catalog_id'] = details.first_release_catalog_id
+        encoded['ean'] = details.ean
+        encoded['isrc'] = details.isrc
+        encoded['recording_format'] = details.recording_format
+        encoded['recording_technique'] = details.recording_technique
+        encoded['media_type'] = details.media_type
 
-        return dict
+        return encoded
 
-    def __encode_society(self, society):
+    @staticmethod
+    def __encode_society(society):
         """
         Creates a dictionary from a Society.
 
         :param society: the Society to transform into a dictionary
         :return: a dictionary created from the Society
         """
-        dict = {}
+        encoded = {}
 
-        dict['name'] = society.name
-        dict['former_name'] = society.former_name
+        encoded['name'] = society.name
+        encoded['former_name'] = society.former_name
 
-        return dict
+        return encoded
 
-    def __encode_territory(self, territory):
+    @staticmethod
+    def __encode_territory(territory):
         """
         Creates a dictionary from a Territory.
 
         :param territory: the Territory to transform into a dictionary
         :return: a dictionary created from the Territory
         """
-        dict = {}
+        encoded = {}
 
-        dict['tis'] = territory.tis
-        dict['iso2'] = territory.iso2
-        dict['type'] = territory.territory_type
-        dict['name'] = territory.name
-        dict['official_name'] = territory.official_name
+        encoded['tis'] = territory.tis
+        encoded['iso2'] = territory.iso2
+        encoded['type'] = territory.territory_type
+        encoded['name'] = territory.name
+        encoded['official_name'] = territory.official_name
 
-        return dict
+        return encoded
 
-    def __encode_value_entity(self, entity):
+    @staticmethod
+    def __encode_value_entity(entity):
         """
         Creates a dictionary from a ValueEntity.
 
         :param entity: the ValueEntity to transform into a dictionary
         :return: a dictionary created from the ValueEntity
         """
-        dict = {}
+        encoded = {}
 
-        dict['id'] = entity.entity_id
-        dict['name'] = entity.name
+        encoded['id'] = entity.entity_id
+        encoded['name'] = entity.name
 
         if entity.description is not None:
-            dict['description'] = entity.description
+            encoded['description'] = entity.description
 
-        return dict
+        return encoded
 
     def __encode_work(self, work):
         """
@@ -327,122 +311,80 @@ class CWRDictionaryEncoder(object):
         :param work: the Work to transform into a dictionary
         :return: a dictionary created from the Work
         """
-        dict = {}
+        encoded = {}
 
-        dict['creation_id'] = work.creation_id
-        dict['submitter_id'] = work.submitter_id
+        encoded['work_id'] = work.work_id
+        encoded['title'] = work.title
+        encoded['language_code'] = work.language_code
+        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
+        encoded['copyright_number'] = work.copyright_number
+        encoded['copyright_date'] = self._adapter.adapt(work.copyright_date)
+        encoded['text_music_relationship'] = work.text_music_relationship
+        encoded['version_type'] = work.version_type
+        encoded['music_arrangement'] = work.music_arrangement
+        encoded['lyric_adaptation'] = work.lyric_adaptation
+        encoded['excerpt_type'] = work.excerpt_type
+        encoded['composite_type'] = work.composite_type
+        encoded['composite_component_count'] = work.composite_component_count
+        encoded['iswc'] = work.iswc
+        encoded['cwr_work_type'] = work.cwr_work_type
+        encoded['musical_distribution_category'] = work.musical_distribution_category
+        encoded['duration'] = work.duration
+        encoded['catalogue_number'] = work.catalogue_number
+        encoded['opus_number'] = work.opus_number
+        encoded['contact_id'] = work.contact_id
+        encoded['contact_name'] = work.contact_name
+        encoded['recorded_indicator'] = work.recorded_indicator
+        encoded['priority_flag'] = work.priority_flag
+        encoded['exceptional_clause'] = work.exceptional_clause
+        encoded['grand_rights_indicator'] = work.grand_rights_indicator
 
-        dict['title'] = work.title
-        dict['language_code'] = work.language_code
-        dict['work_number'] = work.work_number
-        dict['iswc'] = work.iswc
-        dict['copyright_date'] = work.copyright_date.isoformat()
-        dict['copyright_number'] = work.copyright_number
-        dict['musical_distribution_category'] = work.musical_distribution_category
-        dict['duration'] = work.duration
-        dict['recorded_indicator'] = work.recorded_indicator
-        dict['text_music_relationship'] = work.text_music_relationship
-        dict['composite_type'] = work.composite_type
-        dict['version_type'] = work.version_type
-        dict['excerpt_type'] = work.excerpt_type
-        dict['music_arrangement'] = work.music_arrangement
-        dict['lyric_adaptation'] = work.lyric_adaptation
-        dict['contact_name'] = work.contact_name
-        dict['contact_id'] = work.contact_id
-        dict['cwr_work_type'] = work.cwr_work_type
-        dict['grand_rights_indicator'] = work.grand_rights_indicator
-        dict['composite_component_count'] = work.composite_component_count
-        dict['printed_edition_publication_date'] = work.printed_edition_publication_date.isoformat()
-        dict['exceptional_clause'] = work.exceptional_clause
-        dict['opus_number'] = work.opus_number
-        dict['catalogue_number'] = work.catalogue_number
-        dict['priority_flag'] = work.priority_flag
+        return encoded
 
-        if work.entire_work_title is not None:
-            dict['entire_work_title'] = self.__encode_entire_work_title(work.entire_work_title)
-
-        if work.recording_details is not None:
-            dict['recording_details'] = self.__encode_recording_details(work.recording_details)
-
-        if work.original_work_title is not None:
-            dict['original_work_title'] = self.__encode_original_work_title(work.original_work_title)
-
-        if work.work_origin is not None:
-            dict['work_origin'] = self.__encode_work_origin(work.work_origin)
-
-        dict['publishers'] = []
-        for publisher in work.publishers:
-            dict['publishers'].append(self.__encode_publisher(publisher))
-
-        dict['performers'] = []
-        for performer in work.performing_artists:
-            dict['performers'].append(self.__encode_performing_artist(performer))
-
-        dict['writers'] = []
-        for writer in work.writers:
-            dict['writers'].append(self.__encode_writer(writer))
-
-        dict['alternative_titles'] = []
-        for alt_title in work.alternative_titles:
-            dict['alternative_titles'].append(self.__encode_alternative_work_title(alt_title))
-
-        return dict
-
-    def __encode_work_origin(self, origin):
+    @staticmethod
+    def __encode_work_origin(origin):
         """
         Creates a dictionary from a WorkOrigin.
 
         :param origin: the WorkOrigin to transform into a dictionary
         :return: a dictionary created from the WorkOrigin
         """
-        dict = {}
+        encoded = {}
 
-        dict['intended_purpose'] = origin.intended_purpose
-        dict['production_title'] = origin.production_title
-        dict['cd_identifier'] = origin.cd_identifier
-        dict['cut_number'] = origin.cut_number
-        dict['library'] = origin.library
-        dict['blt'] = origin.blt
-        dict['visan_version'] = origin.visan_version
-        dict['visan_isan'] = origin.visan_isan
-        dict['visan_episode'] = origin.visan_episode
-        dict['visan_check_digit'] = origin.visan_check_digit
-        dict['production_id'] = origin.production_id
-        dict['episode_title'] = origin.episode_title
-        dict['episode_id'] = origin.episode_id
-        dict['production_year'] = origin.production_year
-        dict['avi_key_society'] = origin.avi_key_society
-        dict['avi_key_number'] = origin.avi_key_number
+        encoded['intended_purpose'] = origin.intended_purpose
+        encoded['production_title'] = origin.production_title
+        encoded['cd_identifier'] = origin.cd_identifier
+        encoded['cut_number'] = origin.cut_number
+        encoded['library'] = origin.library
+        encoded['blt'] = origin.blt
+        encoded['visan_version'] = origin.visan_version
+        encoded['visan_isan'] = origin.visan_isan
+        encoded['visan_episode'] = origin.visan_episode
+        encoded['visan_check_digit'] = origin.visan_check_digit
+        encoded['production_id'] = origin.production_id
+        encoded['episode_title'] = origin.episode_title
+        encoded['episode_id'] = origin.episode_id
+        encoded['production_year'] = origin.production_year
+        encoded['avi_key_society'] = origin.avi_key_society
+        encoded['avi_key_number'] = origin.avi_key_number
 
-        return dict
+        return encoded
 
-    def __encode_writer(self, writer):
+    @staticmethod
+    def __encode_writer(writer):
         """
         Creates a dictionary from a Writer.
 
         :param writer: the Writer to transform into a dictionary
         :return: a dictionary created from the Writer
         """
-        dict = {}
+        encoded = {}
 
-        dict['interested_party'] = writer.interested_party
+        encoded['first_name'] = writer.first_name
+        encoded['last_name'] = writer.last_name
+        encoded['personal_number'] = writer.personal_number
+        encoded['ip_id'] = writer.ip_id
+        encoded['ip_name'] = writer.ip_name
+        encoded['ip_base_id'] = writer.ip_base_id
 
-        dict['first_name'] = writer.first_name
-        dict['last_name'] = writer.last_name
-        dict['designation_code'] = writer.designation_code
-        dict['tax_id_number'] = writer.tax_id_number
-        dict['cae_ipi_name_id'] = writer.cae_ipi_name_id
-        dict['pr_society'] = writer.pr_society
-        dict['pr_share'] = writer.pr_share
-        dict['mr_society'] = writer.mr_society
-        dict['mr_share'] = writer.mr_share
-        dict['sr_society'] = writer.sr_society
-        dict['sr_share'] = writer.sr_share
-        dict['reversionary_indicator'] = writer.reversionary_indicator
-        dict['first_recording_refusal_indicator'] = writer.first_recording_refusal_indicator
-        dict['work_for_hire_indicator'] = writer.work_for_hire_indicator
-        dict['ipi_base_number'] = writer.ipi_base_number
-        dict['personal_number'] = writer.personal_number
-        dict['usa_license_indicator'] = writer.usa_license_indicator
-
-        return dict
+        return encoded
