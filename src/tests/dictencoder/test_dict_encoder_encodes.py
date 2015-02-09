@@ -106,9 +106,9 @@ class TestAuthoredWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AuthoredWork(1, 'title', 'ES', 'Broadway show',
+        entity = AuthoredWork(1, 'title', 'Broadway show',
                               'name1', 1, 'ip_1',
-                              'name2', 2, 'ip_2', 'surname1', 'surname2',
+                              'name2', 2, 'ip_2', 'ES', 'surname1', 'surname2',
                               3)
 
         self.dict = encoder.encode(entity)
@@ -276,9 +276,17 @@ class TestWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Work(1, 'The Title', 'ES', datetime.date(2015, 1, 11), 2, datetime.date(2015, 1, 12),
-                      'text_only', 'original', 'none', 'none', 'movement', 'composite', 3, 4, 'jazz',
-                      'category', 60, 5, '28#3', 'name_id', 'Person', True, True, True, True)
+        entity = Work(1, 'The Title', 'original', 'category',
+                      language_code='ES', printed_edition_publication_date=datetime.date(2015, 1, 11),
+                      copyright_number=2, copyright_date=datetime.date(2015, 1, 12),
+                      text_music_relationship='text_only',
+                      music_arrangement='none', lyric_adaptation='none', excerpt_type='movement',
+                      composite_type='composite', composite_component_count=3,
+                      iswc=4, cwr_work_type='jazz',
+                      duration=60, catalogue_number=5, opus_number='28#3',
+                      contact_id='name_id', contact_name='Person',
+                      recorded_indicator=True, priority_flag=True, exceptional_clause=True,
+                      grand_rights_indicator=True)
 
         self.dict = encoder.encode(entity)
 

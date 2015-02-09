@@ -3,8 +3,6 @@ from abc import ABCMeta
 
 """
 Agreement model classes.
-
-These classes represent Agreement Transactions.
 """
 
 __author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'

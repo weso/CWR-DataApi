@@ -18,7 +18,7 @@ class BaseWork(object):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, title, language_code, iswc=None):
+    def __init__(self, title, language_code=None, iswc=None):
         self._title = title
         self._language_code = language_code
         self._iswc = iswc
@@ -73,10 +73,10 @@ class Work(BaseWork):
     assigned to it.
     """
 
-    def __init__(self, work_id, title, language_code, printed_edition_publication_date, copyright_number,
-                 copyright_date, text_music_relationship, version_type,
-                 music_arrangement=None, lyric_adaptation=None, excerpt_type=None, composite_type=None,
-                 composite_component_count=1, iswc=None, cwr_work_type=None, musical_distribution_category=None,
+    def __init__(self, work_id, title, version_type, musical_distribution_category,
+                 printed_edition_publication_date=None, text_music_relationship=None, language_code=None,
+                 copyright_number=None, copyright_date=None, music_arrangement=None, lyric_adaptation=None,
+                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, cwr_work_type=None,
                  duration=None, catalogue_number=None, opus_number=None, contact_id=None, contact_name=None,
                  recorded_indicator=False, priority_flag=False, exceptional_clause=False, grand_rights_indicator=False):
         super(Work, self).__init__(title, language_code, iswc)
@@ -392,9 +392,9 @@ class AuthoredWork(BaseWork):
     Represents a Work with authors. This is for the Entire Work and Original Work entities.
     """
 
-    def __init__(self, work_id, title, language_code, source,
+    def __init__(self, work_id, title, source,
                  first_name_1, ip_base_1, ip_name_1,
-                 first_name_2, ip_base_2, ip_name_2,
+                 first_name_2, ip_base_2, ip_name_2, language_code=None,
                  last_name_1=None, last_name_2=None, iswc=None):
         super(AuthoredWork, self).__init__(title, language_code, iswc)
 

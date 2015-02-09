@@ -76,19 +76,19 @@ def parse_authored_work(json_item):
     :param json_item: JSON object to parse
     :return: an AuthoredWork parsed from the JSON
     """
-    title = AuthoredWork(json_item['work_id'],
-                         json_item['title'],
-                         json_item['language_code'],
-                         json_item['source'],
-                         json_item['first_name_1'],
-                         json_item['ip_base_1'],
-                         json_item['ip_name_1'],
-                         json_item['first_name_2'],
-                         json_item['ip_base_2'],
-                         json_item['ip_name_2'],
-                         json_item['last_name_1'],
-                         json_item['last_name_2'],
-                         json_item['iswc'])
+    title = AuthoredWork(work_id=json_item['work_id'],
+                         title=json_item['title'],
+                         language_code=json_item['language_code'],
+                         source=json_item['source'],
+                         first_name_1=json_item['first_name_1'],
+                         ip_base_1=json_item['ip_base_1'],
+                         ip_name_1=json_item['ip_name_1'],
+                         first_name_2=json_item['first_name_2'],
+                         ip_base_2=json_item['ip_base_2'],
+                         ip_name_2=json_item['ip_name_2'],
+                         last_name_1=json_item['last_name_1'],
+                         last_name_2=json_item['last_name_2'],
+                         iswc=json_item['iswc'])
 
     return title
 
@@ -168,16 +168,24 @@ def parse_work(json_item):
     :param json_item: JSON object to parse
     :return: a Work parsed from the JSON and with the specified id
     """
-    work = Work(json_item['work_id'], json_item['title'], json_item['language_code'],
-                json_item['printed_edition_publication_date'], json_item['copyright_number'],
-                json_item['copyright_date'], json_item['text_music_relationship'], json_item['version_type'],
-                json_item['music_arrangement'], json_item['lyric_adaptation'], json_item['excerpt_type'],
-                json_item['composite_type'], json_item['composite_component_count'], json_item['iswc'],
-                json_item['cwr_work_type'], json_item['musical_distribution_category'],
-                json_item['duration'], json_item['catalogue_number'], json_item['opus_number'],
-                json_item['contact_id'], json_item['contact_name'], json_item['recorded_indicator'],
-                json_item['priority_flag'], json_item['exceptional_clause'],
-                json_item['grand_rights_indicator'])
+    work = Work(work_id=json_item['work_id'], title=json_item['title'], language_code=json_item['language_code'],
+                printed_edition_publication_date=json_item['printed_edition_publication_date'],
+                copyright_number=json_item['copyright_number'],
+                copyright_date=json_item['copyright_date'],
+                text_music_relationship=json_item['text_music_relationship'],
+                version_type=json_item['version_type'],
+                music_arrangement=json_item['music_arrangement'], lyric_adaptation=json_item['lyric_adaptation'],
+                excerpt_type=json_item['excerpt_type'],
+                composite_type=json_item['composite_type'],
+                composite_component_count=json_item['composite_component_count'], iswc=json_item['iswc'],
+                cwr_work_type=json_item['cwr_work_type'],
+                musical_distribution_category=json_item['musical_distribution_category'],
+                duration=json_item['duration'], catalogue_number=json_item['catalogue_number'],
+                opus_number=json_item['opus_number'],
+                contact_id=json_item['contact_id'], contact_name=json_item['contact_name'],
+                recorded_indicator=json_item['recorded_indicator'],
+                priority_flag=json_item['priority_flag'], exceptional_clause=json_item['exceptional_clause'],
+                grand_rights_indicator=json_item['grand_rights_indicator'])
 
     return work
 

@@ -33,13 +33,13 @@ class TestAgreement(unittest.TestCase):
 
     def setUp(self):
         self.entity = Agreement(1, 'Original', datetime.date(2015, 1, 11), 'D', 'D', datetime.date(2015, 6, 11),
-                           122, society_agreement_number=2, international_standard_code=3,
-                           sales_manufacture_clause='S',
-                           end_date=datetime.date(2015, 2, 11),
-                           retention_end_date=datetime.date(2015, 3, 11),
-                           prior_royalty_status_date=datetime.date(2015, 4, 11),
-                           post_term_collection_end_date=datetime.date(2015, 5, 11),
-                           shares_change=True, advance_given=True)
+                                122, society_agreement_number=2, international_standard_code=3,
+                                sales_manufacture_clause='S',
+                                end_date=datetime.date(2015, 2, 11),
+                                retention_end_date=datetime.date(2015, 3, 11),
+                                prior_royalty_status_date=datetime.date(2015, 4, 11),
+                                post_term_collection_end_date=datetime.date(2015, 5, 11),
+                                shares_change=True, advance_given=True)
         self.repo = MongoGenericRepository(host, port, db_name, 'agreements')
 
     def tearDown(self):
@@ -241,10 +241,17 @@ class TestWork(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = Work(1, 'The Title', 'ES', datetime.date(2015, 1, 11), 2, datetime.date(2015, 1, 12),
-                           'text_only', 'original', 'none', 'none', 'movement', 'composite', 3, 4, 'jazz',
-                           'category', 60, 5, '28#3', 'name_id', 'Person', True, True, True, True)
-        self.repo = MongoGenericRepository(host, port, db_name, 'works')
+        self.entity = Work(1, 'The Title', 'original', 'category',
+                           language_code='ES', printed_edition_publication_date=datetime.date(2015, 1, 11),
+                           copyright_number=2, copyright_date=datetime.date(2015, 1, 12),
+                           text_music_relationship='text_only',
+                           music_arrangement='none', lyric_adaptation='none', excerpt_type='movement',
+                           composite_type='composite', composite_component_count=3,
+                           iswc=4, cwr_work_type='jazz',
+                           duration=60, catalogue_number=5, opus_number='28#3',
+                           contact_id='name_id', contact_name='Person',
+                           recorded_indicator=True, priority_flag=True, exceptional_clause=True,
+                           grand_rights_indicator=True)
 
     def tearDown(self):
         self.repo.clear()
