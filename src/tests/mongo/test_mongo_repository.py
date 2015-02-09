@@ -4,11 +4,13 @@ import unittest
 import re
 
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
-from commonworks.domain.models.special_entities.value_entities.value_entity import ValueEntity
+from commonworks.value_entity import ValueEntity
 
 
 """
 Unit tests to check if the Repository API can be made to work correctly with Mongo.
+
+Requires a Mongo database running, and set up as mongo_test_conf indicates.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -25,22 +27,23 @@ class TestQuery(unittest.TestCase):
     def setUp(self):
         self.repo = MongoGenericRepository(host, port, db_name, 'queries')
 
-        entity = ValueEntity('id', 'name', 'descriptor');
+        entity = ValueEntity('id', 'name', 'descriptor')
         self.repo.add(entity)
 
-        entity = ValueEntity('10', 'entity_1', 'descriptor');
+        entity = ValueEntity('10', 'entity_1', 'descriptor')
         self.repo.add(entity)
-        entity = ValueEntity('11', 'entity_2', 'descriptor');
+        entity = ValueEntity('11', 'entity_2', 'descriptor')
         self.repo.add(entity)
-        entity = ValueEntity('12', 'entity_3', 'descriptor');
+        entity = ValueEntity('12', 'entity_3', 'descriptor')
         self.repo.add(entity)
 
         entity = ValueEntity('AS', 'Assignor',
-                             'The entitled party who is assigning the rights to a musical work within an agreement');
+                             'The entitled party who is assigning the rights to a musical work within an agreement')
         self.repo.add(entity)
 
         entity = ValueEntity('POP', 'Popular',
-                             'The musical mainstream, usually song-based and melody-orientated, created for mass consumption');
+                             'The musical mainstream, usually song-based and melody-orientated, created for mass '
+                             'consumption')
         self.repo.add(entity)
 
     def tearDown(self):
@@ -58,3 +61,7 @@ class TestQuery(unittest.TestCase):
     def test_name_exact(self):
         entities = self.repo.get(lambda e: e['name'] == 'Popular')
         self.assertEqual(len(entities), 1)
+
+
+if __name__ == '__main__':
+    unittest.main()
