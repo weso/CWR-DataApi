@@ -3,6 +3,8 @@ from abc import ABCMeta
 
 """
 Agreement model classes.
+
+These classes represent Agreement Transactions.
 """
 
 __author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
@@ -23,11 +25,11 @@ class Agreement(object):
     It is identified by the submitter agreement number, and it is used to link the agreement to a work registration.
     """
 
-    def __init__(self, submitter_agreement_number, society_agreement_number, agreement_type, start_date, end_date,
-                 prior_royalty_status, post_term_collection_status, signature_date, works_number,
-                 sales_manufacture_clause, international_standard_code=None, retention_end_date=None,
-                 prior_royalty_status_date=None, post_term_collection_end_date=None, shares_change=False,
-                 advance_given=False, interested_parties=None, territories=None):
+    def __init__(self, submitter_agreement_number, agreement_type, start_date, prior_royalty_status,
+                 post_term_collection_status, signature_date, works_number, society_agreement_number=None,
+                 end_date=None, international_standard_code=None, sales_manufacture_clause=None,
+                 retention_end_date=None, prior_royalty_status_date=None, post_term_collection_end_date=None,
+                 shares_change=False, advance_given=False, interested_parties=None, territories=None):
         # Agreement identification data
         self._submitter_agreement_number = submitter_agreement_number
         self._society_agreement_number = society_agreement_number

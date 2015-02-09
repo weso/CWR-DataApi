@@ -87,74 +87,6 @@ class FileTag(object):
         return self._version
 
 
-class HDR(object):
-    """
-    Represents a CWR file Transmission Header (HDR).
-
-    This is a required “cover sheet” for transmissions submitted by a participant.  It will contain the file control
-    information as well as the name of the submitter.
-    """
-
-    def __init__(self, sender_id, sender_name, sender_type, creation_date, transmission_date):
-        # Sender info
-        self._sender_id = sender_id
-        self._sender_name = sender_name
-        self._sender_type = sender_type
-
-        # Dates
-        self._creation_date = creation_date
-        self._transmission_date = transmission_date
-
-    @property
-    def sender_id(self):
-        """
-        Sender ID field.
-
-        If Sender Type is equal to PB, AA, or WR, the sender  must enter their assigned CWR CAE # in this field.
-
-        These values reside in the CWR Sender ID and Codes Table. If Sender Type is equal to SO, the sending society
-        must enter their Society Code.  These values reside in the Society Code Table.
-
-        :return: the sender ID
-        """
-        return self._sender_id
-
-    @property
-    def sender_name(self):
-        """
-        Sender Name field.
-
-        The name of the sender (publisher, society, agency).
-
-        :return: name of the sender
-        """
-        return self._sender_name
-
-    @property
-    def sender_type(self):
-        """
-        Sender Type field.
-
-        Indicates if the sender of the file is a society or a publisher.
-
-        Values are PB = Publisher, SO = Society, AA = Administrative Agency, WR = Writer
-
-        :return: the sender type
-        """
-        return self._sender_type
-
-    @property
-    def transmission_date(self):
-        """
-        Transmission Date field.
-
-        The date that this file was transmitted to all receiving entities.
-
-        :return: the transmission date
-        """
-        return self._transmission_date
-
-
 class GRH(object):
     """
     Represents a CWR file Group Header (GRH).
@@ -232,6 +164,137 @@ class GRT(object):
         :return: the number of transactions
         """
         return self._transaction_count
+
+
+class HDR(object):
+    """
+    Represents a CWR file Transmission Header (HDR).
+
+    This is a required “cover sheet” for transmissions submitted by a participant.  It will contain the file control
+    information as well as the name of the submitter.
+    """
+
+    def __init__(self, sender_id, sender_name, sender_type, creation_date, transmission_date, edi_standard="01.10",
+                 character_set="U0000"):
+        # Sender info
+        self._sender_id = sender_id
+        self._sender_name = sender_name
+        self._sender_type = sender_type
+
+        # Dates
+        self._creation_date = creation_date
+        self._transmission_date = transmission_date
+
+        # Other info
+        self._edi_standard = edi_standard
+        self._character_set = character_set
+
+    def character_set(self):
+        """
+        Character Set field.
+
+        To be used if this file contains data in a character set other than ASCII.
+
+        :return: the character set used on the file
+        """
+        return self._character_set
+
+    def edi_standard(self):
+        """
+        EDI Standard Version Number field.
+
+        Indicates which version of the header and trailer records was used to create the data in this file.  This field
+        must be set to 01.10 for this version of the standard.
+
+        :return: the EDI standard version number
+        """
+        return self._edi_standard
+
+    @property
+    def sender_id(self):
+        """
+        Sender ID field.
+
+        If Sender Type is equal to PB, AA, or WR, the sender  must enter their assigned CWR CAE # in this field.
+
+        These values reside in the CWR Sender ID and Codes Table. If Sender Type is equal to SO, the sending society
+        must enter their Society Code.  These values reside in the Society Code Table.
+
+        :return: the sender ID
+        """
+        return self._sender_id
+
+    @property
+    def sender_name(self):
+        """
+        Sender Name field.
+
+        The name of the sender (publisher, society, agency).
+
+        :return: name of the sender
+        """
+        return self._sender_name
+
+    @property
+    def sender_type(self):
+        """
+        Sender Type field.
+
+        Indicates if the sender of the file is a society or a publisher.
+
+        Values are PB = Publisher, SO = Society, AA = Administrative Agency, WR = Writer
+
+        :return: the sender type
+        """
+        return self._sender_type
+
+    @property
+    def transmission_date(self):
+        """
+        Transmission Date field.
+
+        The date that this file was transmitted to all receiving entities.
+
+        :return: the transmission date
+        """
+        return self._transmission_date
+
+
+class RecordPrefix(object):
+    """
+    Represents a CWR file Record Prefix.
+
+    Each Transaction Header and Detail Record contains a prefix that identifies both the record and the transaction that
+    is being delivered.
+    """
+
+    def __init__(self, transaction_sequence, record_sequence):
+        self._transaction_sequence = transaction_sequence
+        self._record_sequence = record_sequence
+
+    def record_sequence(self):
+        """
+        Record Sequence # field.
+
+        For transaction headers, always set to 00000000.  For detail records, set this field to the Record Sequence #
+        of the previous record written to the file incremented by 1.
+
+        :return: the record sequence number
+        """
+        return self._record_sequence
+
+    def transaction_sequence(self):
+        """
+        Transaction Sequence # field.
+
+        If this is the first transaction within a group, the Transaction Sequence # must be equal to 00000000.
+        Otherwise, for transaction headers, the Transaction Sequence # must be equal to the previous transaction
+        header’s Transaction Sequence # incremented by 1.  For detail records, the Transaction Sequence # must be equal
+        to the Transaction Sequence # of the previous transaction header.
+
+        :return: the transaction sequence number
+        """
+        return self._transaction_sequence
 
 
 class TRL(object):
