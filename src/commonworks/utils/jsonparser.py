@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from commonworks.agreement import Agreement, AgreementTerritory, IPA
+from commonworks.agreement import Agreement, IPA
 from commonworks.interested_party import Publisher, Writer
 from commonworks.work import Work, AlternateTitle, AuthoredWork, \
     RecordingDetails, WorkOrigin, PerformingArtist
@@ -40,19 +40,6 @@ def parse_agreement(json_item):
                           advance_given=json_item['advance_given'])
 
     return agreement
-
-
-def parse_agreement_territory(json_item):
-    """
-    Creates a Territory from the data stored in a JSON object.
-
-    :param json_item: JSON object to parse
-    :return: a Territory parsed from the JSON
-    """
-    territory = AgreementTerritory(json_item['included'],
-                                   json_item['tis_numeric_code'])
-
-    return territory
 
 
 def parse_alternative_work_title(json_item):

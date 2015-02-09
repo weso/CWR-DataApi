@@ -17,11 +17,26 @@ class InterestedParty(object):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, ip_id, ip_name, ip_base_id):
+    def __init__(self, ip_id, ip_name, ip_base_id, tax_id, cae_ipi_name):
         # IP info
         self._ip_id = ip_id
         self._ip_name = ip_name
         self._ip_base_id = ip_base_id
+
+        # Other info
+        self._tax_id = tax_id
+        self._cae_ipi_name = cae_ipi_name
+
+    @property
+    def cae_ipi_name(self):
+        """
+        Publisher CAE/IPI Name # field.
+
+        The CAE number assigned to this publisher with 2 leading zero’s or the IPI Name #.
+
+        :return: the Publisher CAE/IPI name number
+        """
+        return self._cae_ipi_name
 
     @property
     def ip_base_id(self):
@@ -68,6 +83,17 @@ class InterestedParty(object):
         """
         return self._ip_name
 
+    @property
+    def tax_id(self):
+        """
+        Tax ID number field.
+
+        A number used to identify this publisher for tax reporting.
+
+        :return: the Publisher's Tax ID
+        """
+        return self._tax_id
+
 
 class Publisher(InterestedParty):
     """
@@ -77,13 +103,10 @@ class Publisher(InterestedParty):
     administrator.
     """
 
-    def __init__(self, name, ip_id, ip_name, ip_base_id, tax_id):
-        super(Publisher, self).__init__(ip_id, ip_name, ip_base_id)
+    def __init__(self, name, ip_id, ip_name, ip_base_id=None, tax_id=None, cae_ipi_name=None):
+        super(Publisher, self).__init__(ip_id, ip_name, ip_base_id, tax_id, cae_ipi_name)
         # General info
         self._name = name
-
-        # Other info
-        self._tax_id = tax_id
 
     @property
     def name(self):
@@ -98,28 +121,30 @@ class Publisher(InterestedParty):
         """
         return self._name
 
-    @property
-    def tax_id(self):
-        """
-        Tax ID number field.
-
-        A number used to identify this publisher for tax reporting.
-
-        :return: the Publisher's Tax ID
-        """
-        return self._tax_id
-
 
 class Writer(InterestedParty):
     """
     Represents a CWR writer.
+
+    This can be a Writer Controlled by Submitter (SWR) or Other Writer (OWR).
     """
 
-    def __init__(self, first_name, personal_number, ip_id, ip_name, ip_base_id, last_name=None):
-        super(Writer, self).__init__(ip_id, ip_name, ip_base_id)
+    def __init__(self, ip_id, last_name, personal_number, ip_name, ip_base_id=None, first_name=None, tax_id=None,
+                 cae_ipi_name=None, pr_affiliation=None, pr_ownership_share=None,
+                 mr_affiliation=None, mr_ownership_share=None,
+                 sr_affiliation=None, sr_ownership_share=None):
+        super(Writer, self).__init__(ip_id, ip_name, ip_base_id, tax_id, cae_ipi_name)
         self._first_name = first_name
         self._last_name = last_name
         self._personal_number = personal_number
+
+        # Shares
+        self._pr_affiliation = pr_affiliation
+        self._pr_ownership_share = pr_ownership_share
+        self._mr_affiliation = mr_affiliation
+        self._mr_ownership_share = mr_ownership_share
+        self._sr_affiliation = sr_affiliation
+        self._sr_ownership_share = sr_ownership_share
 
     @property
     def first_name(self):
@@ -157,6 +182,83 @@ class Writer(InterestedParty):
         """
         return self._personal_number
 
+    @property
+    def mr_affiliation(self):
+        """
+        MR Affiliation Society # field.
+
+        Number assigned to the Mechanical Rights Society with which the writer is affiliated.
+
+        These values reside on the Society Code Table.
+
+        :return: the MR affiliation number
+        """
+        return self._mr_affiliation
+
+    @property
+    def mr_ownership_share(self):
+        """
+        MR Ownership Share field.
+
+        Defines the percentage of the writer’s ownership of the mechanical rights to the work.
+        Within an individual SPU record, this value can range from 0 to 100.0.
+
+        :return: the MR ownership share
+        """
+        return self._mr_ownership_share
+
+    @property
+    def pr_affiliation(self):
+        """
+        PR Affiliation Society # field.
+
+        Number assigned to the Performing Rights Society with which the writer is affiliated.
+
+        These values reside on the Society Code Table.
+
+        :return: the PR affiliation number
+        """
+        return self._pr_affiliation
+
+    @property
+    def pr_ownership_share(self):
+        """
+        PR Ownership Share field.
+
+        Defines the percentage of the writer’s ownership of the performance rights to the work.  Within an individual
+        SWR record, this value can range from 0 to 100.0.  Note that writers both own and collect the performing right
+        interest.
+
+        :return: the PR ownership share
+        """
+        return self._pr_ownership_share
+
+    @property
+    def sr_affiliation(self):
+        """
+        SR Affiliation Society # field.
+
+        Number assigned to the Mechanical Rights Society with which the publisher is affiliated.
+
+        These values reside on the Society Code Table.
+
+        :return: the SR affiliation number
+        """
+        return self._pr_affiliation
+
+    @property
+    def sr_ownership_share(self):
+        """
+        SR Ownership Share field.
+
+        Defines the percentage of the writer’s ownership of the synchronization rights to the work.
+
+        Within an individual SPU record, this value can range from 0 to 100.0.
+
+        :return: the SR ownership share
+        """
+        return self._sr_ownership_share
+
 
 class WriterPublisher(object):
     """
@@ -175,7 +277,7 @@ class WriterPublisher(object):
     agreement number is included in an agreement transaction (AGR) if it exists.
     """
 
-    def __init__(self, publisher, writer, submitter_agreement, society_agreement=None):
+    def __init__(self, publisher, writer, submitter_agreement=None, society_agreement=None):
         self._publisher = publisher
         self._writer = writer
         self._submitter_agreement = submitter_agreement

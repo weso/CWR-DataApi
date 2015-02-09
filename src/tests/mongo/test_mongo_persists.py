@@ -3,7 +3,7 @@ import unittest
 import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.interested_party import Publisher, Writer
+from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
@@ -271,24 +271,6 @@ class TestWorkOrigin(unittest.TestCase):
     def setUp(self):
         self.entity = WorkOrigin(1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
         self.repo = MongoGenericRepository(host, port, db_name, 'work_origins')
-
-    def tearDown(self):
-        self.repo.clear()
-
-    def test_add(self):
-        self.assertEqual(len(self.repo.get(lambda e: True)), 0)
-        self.repo.add(self.entity)
-        self.assertEqual(len(self.repo.get(lambda e: True)), 1)
-
-
-class TestWriter(unittest.TestCase):
-    """
-    Tests the Writer API against a Mongo database.
-    """
-
-    def setUp(self):
-        self.entity = Writer('name', 1, 2, 'ip', 3, 'surname')
-        self.repo = MongoGenericRepository(host, port, db_name, 'writers')
 
     def tearDown(self):
         self.repo.clear()

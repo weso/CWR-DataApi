@@ -317,49 +317,6 @@ class Agreement(object):
         return self._works_number
 
 
-class AgreementTerritory(object):
-    """
-    Represents a CWR Territory of Agreement entity.
-
-    This indicates the relationship between an Agreement and a Territory. More specifically, it indicates if a territory
-    is included or excluded from the Agreement.
-
-    For example, if the Agreement covers all the world except for Europe, two AgreementTerritory entities would be used,
-    one indicating that the world is included, and another indicating that Europe is excluded.
-
-    It should be noted that a Territory can only be excluded if it is part of another Territory which is already
-    included in the Agreement.
-
-    Territories are identified by a four digit numeric codes. These can be found at http://www.cisac.org/.
-    """
-
-    def __init__(self, included, tis_numeric_code):
-        self._included = included
-        self._tis_numeric_code = tis_numeric_code
-
-    @property
-    def included(self):
-        """
-        Inclusion/ Exclusion Indicator field.
-
-        A True value indicates this Territory is included. A False value indicates it is excluded.
-
-        :return: True if the Territory is included, False if it is excluded
-        """
-        return self._included
-
-    @property
-    def tis_numeric_code(self):
-        """
-        TIS Numeric Code field.
-
-        This is the ID for the Territory.
-
-        :return: the Territory TIS code
-        """
-        return self._tis_numeric_code
-
-
 class IPA(object):
     """
     Represents a CWR Interested Party for the Agreement (IPA).
@@ -480,6 +437,17 @@ class IPA(object):
         return self._mr_share
 
     @property
+    def mr_society(self):
+        """
+        MR Affiliation Society field.
+
+        The mechanical rights society to which this Interested Party belongs.
+
+        :return: the Interested Party's mechanical rights society
+        """
+        return self._mr_society
+
+    @property
     def pr_share(self):
         """
         PR Share field.
@@ -493,30 +461,6 @@ class IPA(object):
         return self._pr_share
 
     @property
-    def sr_share(self):
-        """
-        PR Share field.
-
-        The percentage of the synchronization rights acquired or retained by this Interested Party under this Agreement.
-
-        This value is a float which can range from 0 (0%) to 1 (100%).
-
-        :return: the percentage of the synchronization rights for the Interested Party
-        """
-        return self._sr_share
-
-    @property
-    def mr_society(self):
-        """
-        MR Affiliation Society field.
-
-        The mechanical rights society to which this Interested Party belongs.
-
-        :return: the Interested Party's mechanical rights society
-        """
-        return self._mr_society
-
-    @property
     def pr_society(self):
         """
         PR Affiliation Society field.
@@ -526,6 +470,19 @@ class IPA(object):
         :return: the Interested Party's performing rights society
         """
         return self._pr_society
+
+    @property
+    def sr_share(self):
+        """
+        SR Share field.
+
+        The percentage of the synchronization rights acquired or retained by this Interested Party under this Agreement.
+
+        This value is a float which can range from 0 (0%) to 1 (100%).
+
+        :return: the percentage of the synchronization rights for the Interested Party
+        """
+        return self._sr_share
 
     @property
     def sr_society(self):
@@ -591,164 +548,6 @@ class InterestedPartyAgreement(object):
         :return: True if the rights flow to the U.S., False otherwise
         """
         return self._usa_license
-
-
-class PublisherAgreement(InterestedPartyAgreement):
-    """
-    Represents the relationship between a Publishers and an Agreement
-
-    If the agreement that covers this work was documented in an agreement record (AGR), then the submitter agreement
-    number and the society-assigned agreement number will be included.
-    """
-
-    def __init__(self, agreement, agreement_type, publisher, publisher_type, sequence_n, submitter_agreement_id=None,
-                 society_agreement_id=None, isa_code=None, territories=None,
-                 reversionary=False, first_record_refusal=False, usa_license=False):
-        super(PublisherAgreement, self).__init__(reversionary, first_record_refusal, usa_license)
-        # Agreement info
-        self._agreement = agreement
-        self._agreement_type = agreement_type
-
-        # Interested Parties
-        self._publisher = publisher
-        self._publisher_type = publisher_type
-        self._sequence_n = sequence_n
-
-        # Interested Parties Agreement info
-        self._submitter_agreement_id = submitter_agreement_id
-        self._society_agreement_id = society_agreement_id
-
-        # Other info
-        self._isa_code = isa_code
-
-        # Territories and shares
-        if territories is None:
-            self._territories = []
-        else:
-            self._territories = territories
-
-    @property
-    def agreement(self):
-        """
-        The Agreement to which this relationship refers.
-
-        :return: the agreement
-        """
-        return self._agreement
-
-    @property
-    def agreement_type(self):
-        """
-        Agreement Type field.
-
-        The type of Agreement for which the publisher is the assignor.
-
-        :return: the type of Agreement
-        """
-        return self.agreement_type
-
-    @property
-    def isa_code(self):
-        """
-        International Standard Agreement Code field.
-
-        A unique number assigned to this agreement. This number is not yet available.
-
-        :return: the ISA code
-        """
-        return self._isa_code
-
-    @property
-    def publisher(self):
-        """
-        The Publisher to which this relationship refers.
-
-        :return: the Publisher
-        """
-        return self._publisher
-
-    @property
-    def publisher_type(self):
-        """
-        Publisher Type field.
-
-        Role played by this publisher in this work. Choose among original publisher, administrator, subpublisher, and
-        income participant. In a co-publishing administration situation, the administering publisher may be listed
-        twice, as an original publisher and as an administrator.
-
-        :return: the Publisher's role
-        """
-        return self._publisher_type
-
-    @property
-    def sequence_n(self):
-        """
-        Publisher Sequence Number field.
-
-        This enables a rights organization to link subpublishers and administrators to the proper original publisher.
-        Each original publisher will start a new chain. An income participant may start a chain, or be included in a
-        chain begun by the original publisher which has allocated rights to the income participant.
-
-        :return: the Publisher sequence number in a chain
-        """
-        return self._sequence_n
-
-    @property
-    def society_agreement(self):
-        """
-        Society-assigned Agreement Number field.
-
-        If you have previously notified the society of this agreement, you may have the number assigned by the society
-        to this agreement. You can then provide this number when registering the works.
-
-        :return: the society-assigned Agreement number
-        """
-        return self._society_agreement_id
-
-    @property
-    def territories(self):
-        """
-        A collection of TerritoryShare instances.
-
-        This indicates the territories to which the Agreement applies and the share applied to each.
-
-        :return: a collection of TerritoryShare instances applied to the Agreement
-        """
-        return self._territories
-
-    @property
-    def unknown(self):
-        """
-        Publisher Unknown Indicator field.
-
-        It is automatically set to False if the Publisher name is not set.
-
-        This indicates if the Publisher is under your control and you have a name on file for it.
-
-        :return: True if the Publisher's name is known, False otherwise
-        """
-        return len(self.publisher.name) == 0
-
-    @property
-    def submitter_agreement(self):
-        """
-        Submitter Agreement Number field.
-
-        This points to an agreement between this publisher and another publisher acting as a domestic or foreign
-        administrator and it is your internal number.
-
-        :return: the Submitter Agreement number
-        """
-        return self._submitter_agreement_id
-
-    @property
-    def publisher(self):
-        """
-        The Publisher of the relationship
-
-        :return: the Publisher
-        """
-        return self._publisher
 
 
 class WriterAgreement(InterestedPartyAgreement):

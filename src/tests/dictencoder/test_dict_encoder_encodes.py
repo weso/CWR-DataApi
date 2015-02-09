@@ -3,8 +3,8 @@
 import unittest
 import datetime
 
-from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.interested_party import Publisher, Writer
+from commonworks.agreement import Agreement, IPA
+from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
@@ -23,22 +23,6 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
-
-
-class TestAgreementTerritory(unittest.TestCase):
-    """
-    Tests the AgreementTerritory to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = AgreementTerritory(True, 2)
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual(True, self.dict['included'])
-        self.assertEqual(2, self.dict['tis_numeric_code'])
 
 
 class TestAgreement(unittest.TestCase):
@@ -346,26 +330,6 @@ class TestWorkOrigin(unittest.TestCase):
         self.assertEqual(1995, self.dict['production_year'])
         self.assertEqual(12, self.dict['avi_key_society'])
         self.assertEqual(13, self.dict['avi_key_number'])
-
-
-class TestWriter(unittest.TestCase):
-    """
-    Tests the Writer to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = Writer('name', 1, 2, 'ip', 3, 'surname')
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual('name', self.dict['first_name'])
-        self.assertEqual(1, self.dict['personal_number'])
-        self.assertEqual(2, self.dict['ip_id'])
-        self.assertEqual('ip', self.dict['ip_name'])
-        self.assertEqual(3, self.dict['ip_base_id'])
-        self.assertEqual('surname', self.dict['last_name'])
 
 
 if __name__ == '__main__':

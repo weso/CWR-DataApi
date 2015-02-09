@@ -68,24 +68,6 @@ class TestAgreement(unittest.TestCase):
         self.assertEqual(self.agreement.advance_given, True)
 
 
-class TestAgreementTerritory(unittest.TestCase):
-    """
-    Tests the JSON to Agreement Territory parsing.
-    """
-
-    def setUp(self):
-        data = {}
-        data['included'] = True
-        data['tis_numeric_code'] = 123
-
-        self.territory = jsonparser.parse_agreement_territory(json.loads(json.dumps(data)))
-
-    def test_data(self):
-        # Makes sure the data was parsed correctly
-        self.assertEqual(self.territory.included, True)
-        self.assertEqual(self.territory.tis_numeric_code, 123)
-
-
 class TestAlternativeWorkTitle(unittest.TestCase):
     """
     Tests the JSON to AlternativeWorkTitle parsing.
@@ -373,32 +355,6 @@ class TestWorkOrigin(unittest.TestCase):
         self.assertEqual(self.origin.production_year, 1995)
         self.assertEqual(self.origin.avi_key_society, 5544)
         self.assertEqual(self.origin.avi_key_number, 6655)
-
-
-class TestWriter(unittest.TestCase):
-    """
-    Tests the JSON to Writer parsing.
-    """
-
-    def setUp(self):
-        data = {}
-        data['first_name'] = 'name'
-        data['personal_number'] = 1
-        data['ip_id'] = 2
-        data['ip_name'] = 'ip'
-        data['ip_base_id'] = 3
-        data['last_name'] = 'surname'
-
-        self.writer = jsonparser.parse_writer(json.loads(json.dumps(data)))
-
-    def test_data(self):
-        # Makes sure the data was parsed correctly
-        self.assertEqual('name', self.writer.first_name)
-        self.assertEqual(1, self.writer.personal_number)
-        self.assertEqual(2, self.writer.ip_id)
-        self.assertEqual('ip', self.writer.ip_name)
-        self.assertEqual(3, self.writer.ip_base_id)
-        self.assertEqual('surname', self.writer.last_name)
 
 
 if __name__ == '__main__':

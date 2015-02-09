@@ -2,7 +2,7 @@
 
 import datetime
 
-from commonworks.agreement import Agreement, AgreementTerritory, IPA
+from commonworks.agreement import Agreement, IPA
 from commonworks.interested_party import Publisher, Writer
 from commonworks.society import Society
 from commonworks.territory import Territory
@@ -46,9 +46,7 @@ class CWRDictionaryEncoder(object):
         self._adapter = DictionaryAdapter()
 
     def encode(self, d):
-        if isinstance(d, AgreementTerritory):
-            encoded = self.__encode_agreement_territory(d)
-        elif isinstance(d, Agreement):
+        if isinstance(d, Agreement):
             encoded = self.__encode_agreement(d)
         elif isinstance(d, AlternateTitle):
             encoded = self.__encode_alternative_work_title(d)
@@ -76,21 +74,6 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_writer(d)
         else:
             encoded = None
-
-        return encoded
-
-    @staticmethod
-    def __encode_agreement_territory(territory):
-        """
-        Creates a dictionary from an Agreement Territory.
-
-        :param territory: the Agreement Territory to transform into a dictionary
-        :return: a dictionary created from the Agreement Territory
-        """
-        encoded = {}
-
-        encoded['included'] = territory.included
-        encoded['tis_numeric_code'] = territory.tis_numeric_code
 
         return encoded
 
