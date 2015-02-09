@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 from commonworks.utils.dict_encoder import CWRDictionaryEncoder
-from commonworks.entity import Entity
 
 """
 Offers classes to create Mongo dictionaries from model objects.
@@ -22,9 +21,6 @@ class MongoDictionaryEncoder(CWRDictionaryEncoder):
 
     def encode(self, d):
         encoded = super(MongoDictionaryEncoder, self).encode(d)
-
-        if isinstance(d, Entity):
-            encoded = self.__encode_entity(d, encoded)
 
         return encoded
 
