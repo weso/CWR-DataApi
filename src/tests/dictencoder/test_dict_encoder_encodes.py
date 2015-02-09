@@ -9,7 +9,7 @@ from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkOrigin, RecordingDetails, Work
+    PerformingArtist, WorkOrigin, Work, RecordingDetail
 from commonworks.utils.dict_encoder import CWRDictionaryEncoder
 
 
@@ -90,10 +90,10 @@ class TestAuthoredWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AuthoredWork(1, 'title', 'Broadway show',
-                              'name1', 1, 'ip_1',
-                              'name2', 2, 'ip_2', 'ES', 'surname1', 'surname2',
-                              3)
+        entity = AuthoredWork('title', 1,
+                              'name1', 'surname1', 'name2', 'surname2', 1, 'ip_1',
+                              2, 'ip_2',
+                              'Broadway show', 'ES', 3)
 
         self.dict = encoder.encode(entity)
 
@@ -146,7 +146,7 @@ class TestPerformingArtist(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = PerformingArtist('name', 'surname', 1, 2)
+        entity = PerformingArtist('surname', 'name', 1, 2)
 
         self.dict = encoder.encode(entity)
 
@@ -183,8 +183,8 @@ class TestRecordingDetails(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = RecordingDetails(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
-                                  3, 4, 5, 6, 7)
+        entity = RecordingDetail(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+                                 3, 4, 5, 6, 7)
 
         self.dict = encoder.encode(entity)
 

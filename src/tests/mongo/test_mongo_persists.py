@@ -2,13 +2,13 @@
 import unittest
 import datetime
 
-from commonworks.agreement import AgreementTerritory, Agreement, IPA
+from commonworks.agreement import Agreement, IPA
 from commonworks.interested_party import Publisher
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkOrigin, Work, RecordingDetails
+    PerformingArtist, WorkOrigin, Work, RecordingDetail
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
 
 
@@ -41,24 +41,6 @@ class TestAgreement(unittest.TestCase):
                                 post_term_collection_end_date=datetime.date(2015, 5, 11),
                                 shares_change=True, advance_given=True)
         self.repo = MongoGenericRepository(host, port, db_name, 'agreements')
-
-    def tearDown(self):
-        self.repo.clear()
-
-    def test_add(self):
-        self.assertEqual(len(self.repo.get(lambda e: True)), 0)
-        self.repo.add(self.entity)
-        self.assertEqual(len(self.repo.get(lambda e: True)), 1)
-
-
-class TestAgreementTerritory(unittest.TestCase):
-    """
-    Tests the AgreementTerritory API against a Mongo database.
-    """
-
-    def setUp(self):
-        self.entity = AgreementTerritory(1, 2)
-        self.repo = MongoGenericRepository(host, port, db_name, 'agreement_territories')
 
     def tearDown(self):
         self.repo.clear()
@@ -168,8 +150,8 @@ class TestRecordingDetails(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = RecordingDetails(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
-                                       3, 4, 5, 6, 7)
+        self.entity = RecordingDetail(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+                                      3, 4, 5, 6, 7)
         self.repo = MongoGenericRepository(host, port, db_name, 'recording_details')
 
     def tearDown(self):

@@ -392,10 +392,10 @@ class AuthoredWork(BaseWork):
     Represents a Work with authors. This is for the Entire Work and Original Work entities.
     """
 
-    def __init__(self, work_id, title, source,
-                 first_name_1, ip_base_1, ip_name_1,
-                 first_name_2, ip_base_2, ip_name_2, language_code=None,
-                 last_name_1=None, last_name_2=None, iswc=None):
+    def __init__(self, title, work_id=None,
+                 first_name_1=None, last_name_1=None, first_name_2=None, last_name_2=None,
+                 ip_base_1=None, ip_name_1=None, ip_base_2=None, ip_name_2=None,
+                 source=None, language_code=None, iswc=None):
         super(AuthoredWork, self).__init__(title, language_code, iswc)
 
         # Work's info
@@ -579,14 +579,14 @@ class AlternateTitle(object):
         return self._title_type
 
 
-class RecordingDetails(object):
+class RecordingDetail(object):
     """
     Represents a CWR recording details.
     """
 
-    def __init__(self, first_release_date, first_release_duration, first_album_title,
-                 first_album_label, first_release_catalog_id, ean,
-                 isrc, recording_format, recording_technique, media_type):
+    def __init__(self, first_release_date=None, first_release_duration=None, first_album_title=None,
+                 first_album_label=None, first_release_catalog_id=None, ean=None,
+                 isrc=None, recording_format=None, recording_technique=None, media_type=None):
         self._first_release_date = first_release_date
         self._first_release_duration = first_release_duration
         self._first_album_title = first_album_title
@@ -600,42 +600,116 @@ class RecordingDetails(object):
 
     @property
     def ean(self):
+        """
+        EAN field.
+
+        European Article Number of release (EAN-13).
+
+        :return: the EAN
+        """
         return self._ean
 
     @property
     def first_album_label(self):
+        """
+        First Album Label field.
+
+        Name of the organization that produced and released the album in which the first release of the work was
+        included.
+
+        :return: the label of the first album
+        """
         return self._first_album_label
 
     @property
     def first_album_title(self):
+        """
+        First Album Title field.
+
+        The name of the album in which the work was included if the work was first released as part of an album.
+
+        :return: the title of the first album
+        """
         return self._first_album_title
 
     @property
     def first_release_catalog_id(self):
+        """
+        First Release Catalog # field.
+
+        Number assigned by the organization releasing the album for internal purposes such as sales and distribution
+        tracking.
+
+        :return: the first release catalog id
+        """
         return self._first_release_catalog_id
 
     @property
     def first_release_date(self):
+        """
+        First Release Date field.
+
+        Date the work was or will be first released for public consumption.
+
+        This date can be a past, present, or future date.
+
+        :return: the date of the first release
+        """
         return self._first_release_date
 
     @property
     def first_release_duration(self):
+        """
+        First Release Duration field.
+
+        Duration of the first release of the work.
+
+        :return: the duration of the first release of the work
+        """
         return self._first_release_duration
 
     @property
     def isrc(self):
+        """
+        ISRC field.
+
+        International Standard Recording Code of the recording of the work on the release (according to ISO 3901).
+
+        :return: the ISRC
+        """
         return self._isrc
 
     @property
     def media_type(self):
+        """
+        Media Type field.
+
+        BIEM/CISAC code for media type.
+
+        :return: the media type
+        """
         return self._media_type
 
     @property
     def recording_format(self):
+        """
+        Recording Format field.
+
+        Code that identifies the content of the recording: “A” (audio), “V” (video)..
+
+        :return: the recording format
+        """
         return self._recording_format
 
     @property
     def recording_technique(self):
+        """
+        Recording Technique field.
+
+        Identifies the recording procedure: “A” (Analogue), “D” (Digital), “U” (Unknown).
+
+        :return: the recording technique
+        """
         return self._recording_technique
 
 
@@ -644,11 +718,11 @@ class WorkOrigin(object):
     Represents a CWR work origin.
     """
 
-    def __init__(self, intended_purpose, production_title, cd_identifier, cut_number,
-                 library, blt, visan_version, visan_isan, visan_episode,
-                 visan_check_digit, production_id, episode_title,
-                 episode_id, production_year, avi_key_society,
-                 avi_key_number):
+    def __init__(self, intended_purpose, production_title=None, cd_identifier=None, cut_number=None,
+                 library=None, blt=None, visan_version=None, visan_isan=None, visan_episode=None,
+                 visan_check_digit=None, production_id=None, episode_title=None,
+                 episode_id=None, production_year=None, avi_key_society=None,
+                 avi_key_number=None):
         self._intended_purpose = intended_purpose
         self._production_title = production_title
         self._cd_identifier = cd_identifier
@@ -668,75 +742,202 @@ class WorkOrigin(object):
 
     @property
     def avi_key_number(self):
+        """
+        Audio-Visual Number field.
+
+        Unique number  used internally by the ‘owning’ society  to identify the audio-visual work as referenced in the
+        AV Index.
+
+        :return: the audio-visual number field
+        """
         return self._avi_key_number
 
     @property
     def avi_key_society(self):
+        """
+        AVI Society Code field.
+
+        The CAE code of the society whose audio visual work detail entry is referenced in the AV Index.
+
+        :return: the AVI society code
+        """
         return self._avi_key_society
 
     @property
     def blt(self):
+        """
+        BLT field.
+
+        An indication of the primary use of the work within the AV production.
+
+        The definitive source for cue usage is the cue sheet.
+
+        :return: the BLT
+        """
         return self._blt
 
     @property
     def cd_identifier(self):
+        """
+        CD Identifier field.
+
+        If Intended Purpose is equal to LIB (Library Work), enter the identifier associated with the CD upon which
+        the work appears.
+
+        :return: CD identifier
+        """
         return self._cd_identifier
 
     @property
     def cut_number(self):
+        """
+        Cut Number field.
+
+        If Intended Purpose is equal to LIB (Library Work), enter the track number on the CD Identifier where the work
+        appears.  This field is required when CD Identifier is entered.
+
+        :return: the cut number
+        """
         return self._cut_number
 
     @property
     def episode_id(self):
+        """
+        Episode # field.
+
+        Number assigned to the episode by the producer.
+
+        :return: the episode number
+        """
         return self._episode_id
 
     @property
     def episode_title(self):
+        """
+        Episode Title field.
+
+        Title of the episode from which this work originated.
+
+        :return: the episode title
+        """
         return self._episode_title
 
     @property
     def intended_purpose(self):
+        """
+        Intended Purpose field.
+
+        Indicates the type of production from which this work originated.
+
+        These values reside in the Intended Purpose Table.
+
+        :return: the inteded purpose
+        """
         return self._intended_purpose
 
     @property
     def library(self):
+        """
+        Library field.
+
+        The library from which this work originated.
+
+        :return: the library
+        """
         return self._library
 
     @property
     def production_id(self):
+        """
+        Production # field.
+
+        The number generated by the production company to identify the work.
+
+        :return: the production number field
+        """
         return self._production_id
 
     @property
     def production_title(self):
+        """
+        Production Title field.
+
+        Name of the production from which this work originated.
+
+        :return: the production title
+        """
         return self._production_title
 
     @property
     def production_year(self):
+        """
+        Year of Production field.
+
+        The year in which the production of the film or episode was completed.
+
+        :return: the year of production
+        """
         return self._production_year
 
     @property
     def visan_check_digit(self):
+        """
+        V-ISAN Check Digit field.
+
+        Unique identifier for audio-visual production in which this work is first used.
+
+        Check digit to verify accuracy of ISAN.
+
+        :return: the check digit
+        """
         return self._visan_check_digit
 
     @property
     def visan_episode(self):
+        """
+        V-ISAN Episode field.
+
+        Unique identifier for audio-visual production in which this work is first used.
+
+        Unique identifier for episode.
+
+        :return: the episode id
+        """
         return self._visan_episode
 
     @property
     def visan_isan(self):
+        """
+        V-ISAN ISAN field.
+
+        Unique identifier for audio-visual production in which this work is first used.
+
+        ISAN portion of the V-ISAN.
+
+        :return: the V-ISAN ISAN
+        """
         return self._visan_isan
 
     @property
     def visan_version(self):
+        """
+        V-ISAN Version field.
+
+        Unique identifier for audio-visual production in which this work is first used.
+
+        Version portion of the V-ISAN.
+
+        :return: the V-ISAN version
+        """
         return self._visan_version
 
 
 class PerformingArtist(object):
     """
-    Represents a CWR performing artist.
+    Represents a CWR Performing Artist (PER).
     """
 
-    def __init__(self, first_name, last_name, cae_ipi_name, ipi_base_number):
+    def __init__(self, last_name, first_name=None, cae_ipi_name=None, ipi_base_number=None):
         self._first_name = first_name
         self._last_name = last_name
         self._cae_ipi_name = cae_ipi_name
@@ -744,16 +945,48 @@ class PerformingArtist(object):
 
     @property
     def cae_ipi_name(self):
+        """
+        Performing Artist CAE /IPI Name # field.
+
+        The CAE # corresponding to this performing artist with 2 leading zero’s or the IPI Name #.
+
+        Values reside in the IPI database.
+
+        :return: the Performing Artist CAE/IPI name number
+        """
         return self._cae_ipi_name
 
     @property
     def first_name(self):
+        """
+        Performing Artist First Name field.
+
+        First name associated with the performing artist identified in the previous field.
+
+        :return: the Performing Artist first name
+        """
         return self._first_name
 
     @property
     def ipi_base_number(self):
+        """
+        Performing Artist IPI Base Number field.
+
+        The IPI base number assigned to this performing artist.
+
+        :return: the IPI base number
+        """
         return self._ipi_base_number
 
     @property
     def last_name(self):
+        """
+        Performing Artist Last Name field.
+
+        Last name of a person or full name of a group that has performed the work on a recording or in public.
+
+        Note that if the performer is known by a single name, it should be entered in this field.
+
+        :return: the Performing Artist last name
+        """
         return self._last_name

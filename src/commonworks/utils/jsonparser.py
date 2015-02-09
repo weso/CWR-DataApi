@@ -2,7 +2,7 @@
 from commonworks.agreement import Agreement, IPA
 from commonworks.interested_party import Publisher, Writer
 from commonworks.work import Work, AlternateTitle, AuthoredWork, \
-    RecordingDetails, WorkOrigin, PerformingArtist
+    RecordingDetail, WorkOrigin, PerformingArtist
 
 """
 Offers methods to create model objects from JSON objects.
@@ -103,8 +103,8 @@ def parse_performing_artist(json_item):
     :param json_item: JSON object to parse
     :return: a PerformingArtist parsed from the JSON
     """
-    artist = PerformingArtist(json_item['first_name'],
-                              json_item['last_name'],
+    artist = PerformingArtist(json_item['last_name'],
+                              json_item['first_name'],
                               json_item['cae_ipi_name'],
                               json_item['ipi_base_number'])
 
@@ -134,16 +134,16 @@ def parse_recording_details(json_item):
     :param json_item: JSON object to parse
     :return: a RecordingDetails parsed from the JSON
     """
-    details = RecordingDetails(json_item['first_release_date'],
-                               json_item['first_release_duration'],
-                               json_item['first_album_title'],
-                               json_item['first_album_label'],
-                               json_item['first_release_catalog_id'],
-                               json_item['ean'],
-                               json_item['isrc'],
-                               json_item['recording_format'],
-                               json_item['recording_technique'],
-                               json_item['media_type'])
+    details = RecordingDetail(json_item['first_release_date'],
+                              json_item['first_release_duration'],
+                              json_item['first_album_title'],
+                              json_item['first_album_label'],
+                              json_item['first_release_catalog_id'],
+                              json_item['ean'],
+                              json_item['isrc'],
+                              json_item['recording_format'],
+                              json_item['recording_technique'],
+                              json_item['media_type'])
 
     return details
 

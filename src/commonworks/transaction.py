@@ -337,7 +337,9 @@ class TransactionWriter(TransactionInterestedParty):
 
     def __init__(self, writer_id=None, designation=None, writer_unknown=False, work_for_hire=False,
                  reversionary=False, first_record_refusal=False, usa_license=False):
-        super(TransactionPublisher, self).__init__(reversionary, first_record_refusal, usa_license)
+        super(TransactionWriter, self).__init__(reversionary, first_record_refusal, usa_license)
+        self._writer_id = writer_id
+        self._work_for_hire = work_for_hire
         self._designation = designation
         self._writer_unknown = writer_unknown
 
@@ -374,6 +376,15 @@ class TransactionWriter(TransactionInterestedParty):
         :return: True if thi work was written for hire, False otherwise
         """
         return self._work_for_hire
+
+    @property
+    def writer_id(self):
+        """
+        The Writer's id
+
+        :return: the writer id
+        """
+        return self._writer_id
 
 
 class TransactionPublisher(TransactionInterestedParty):
@@ -593,19 +604,6 @@ class TransactionPublisher(TransactionInterestedParty):
         :return: a collection of TerritoryShare instances applied to the Agreement
         """
         return self._territories
-
-    @property
-    def unknown(self):
-        """
-        Publisher Unknown Indicator field.
-
-        It is automatically set to False if the Publisher name is not set.
-
-        This indicates if the Publisher is under your control and you have a name on file for it.
-
-        :return: True if the Publisher's name is known, False otherwise
-        """
-        return len(self.publisher.name) == 0
 
     @property
     def submitter_agreement(self):

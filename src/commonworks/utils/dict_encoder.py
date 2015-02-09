@@ -8,7 +8,7 @@ from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, RecordingDetails, Work, WorkOrigin
+    PerformingArtist, Work, WorkOrigin, RecordingDetail
 
 
 """
@@ -58,7 +58,7 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_performing_artist(d)
         elif isinstance(d, Publisher):
             encoded = self.__encode_publisher(d)
-        elif isinstance(d, RecordingDetails):
+        elif isinstance(d, RecordingDetail):
             encoded = self.__encode_recording_details(d)
         elif isinstance(d, Society):
             encoded = self.__encode_society(d)
