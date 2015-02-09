@@ -369,18 +369,18 @@ class IPA(object):
     On an Agreement there it at least two Interested Parties: one assignor and one acquirer.
     """
 
-    def __init__(self, agreement_id, interested_party_id, interested_party_name, agreement_role_code,
-                 interested_party_writer_name=None, ipi=None,
+    def __init__(self, ip_id, ip_last_name, agreement_role_code,
+                 ip_writer_name=None, ipi=None, cae_ipi_name=None,
                  pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
         # Agreement and Interested Party relationship
-        self._agreement_id = agreement_id
-        self._interested_party_id = interested_party_id
+        self._ip_id = ip_id
         self._agreement_role_code = agreement_role_code
+        self._cae_ipi_name = cae_ipi_name
 
         # Interested Party info
         self._ipi = ipi
-        self._interested_party_name = interested_party_name
-        self._interested_party_writer_name = interested_party_writer_name
+        self._ip_last_name = ip_last_name
+        self._ip_writer_name = ip_writer_name
 
         # Performing Rights info
         self._pr_society = pr_society
@@ -395,15 +395,6 @@ class IPA(object):
         self._sr_share = sr_share
 
     @property
-    def agreement_id(self):
-        """
-        Agreement to which this Interested Party is related.
-
-        :return: the Agreement ID
-        """
-        return self._agreement_id
-
-    @property
     def agreement_role_code(self):
         """
         Agreement Role Code field.
@@ -415,7 +406,19 @@ class IPA(object):
         return self._agreement_role_code
 
     @property
-    def interested_party_id(self):
+    def cae_ipi_name(self):
+        """
+        Interested Party CAE/IPI Name # field.
+
+        The CAE number (IP name number) assigned to this interested party. The CAE number assigned to this interested
+        party with 2 leading zero’s or the IPI Name #.These values reside in the IPI Database.
+
+        :return: the Interested Party CAE/IPI name number
+        """
+        return self._cae_ipi_name
+
+    @property
+    def ip_id(self):
         """
         Interested Party # field.
 
@@ -424,12 +427,12 @@ class IPA(object):
 
         :return: your Interested Party ID
         """
-        return self._interested_party_id
+        return self._ip_id
 
     @property
-    def interested_party_name(self):
+    def ip_last_name(self):
         """
-        Interested Party Name field.
+        Interested Party Last Name field.
 
         The last name of the writer, or the name of the publisher.
 
@@ -438,10 +441,10 @@ class IPA(object):
 
         :return: the Interested Party Name
         """
-        return self._interested_party_name
+        return self._ip_last_name
 
     @property
-    def interested_party_ipi(self):
+    def ip_ipi(self):
         """
         Interested Party Number (IPI) field.
 
@@ -453,7 +456,7 @@ class IPA(object):
         return self._ipi
 
     @property
-    def interested_party_writer_name(self):
+    def ip_writer_name(self):
         """
         Interested Party Writer First Name field.
 
@@ -461,7 +464,7 @@ class IPA(object):
 
         :return: the Writer's first and middle names
         """
-        return self._interested_party_writer_name
+        return self._ip_writer_name
 
     @property
     def mr_share(self):

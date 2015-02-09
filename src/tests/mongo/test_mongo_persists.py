@@ -114,7 +114,7 @@ class TestIPA(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = IPA(1, 2, 'party', 'assign', 'writer', 3, 4, 0.1, 5, 0.2, 6, 0.3)
+        self.entity = IPA(2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
         self.repo = MongoGenericRepository(host, port, db_name, 'ipas')
 
     def tearDown(self):
@@ -252,6 +252,7 @@ class TestWork(unittest.TestCase):
                            contact_id='name_id', contact_name='Person',
                            recorded_indicator=True, priority_flag=True, exceptional_clause=True,
                            grand_rights_indicator=True)
+        self.repo = MongoGenericRepository(host, port, db_name, 'works')
 
     def tearDown(self):
         self.repo.clear()

@@ -153,12 +153,12 @@ class TestIPA(unittest.TestCase):
 
     def setUp(self):
         data = {}
-        data['agreement_id'] = 1
+        data['ip_id'] = 1
+        data['ip_last_name'] = 'surname'
         data['agreement_role_code'] = 'assign'
-        data['interested_party_id'] = 2
-        data['interested_party_name'] = 'party'
-        data['interested_party_ipi'] = 3
-        data['interested_party_writer_name'] = 'writer'
+        data['ip_ipi'] = 3
+        data['cae_ipi_name'] = 'cae_name'
+        data['ip_writer_name'] = 'writer'
         data['mr_share'] = 0.1
         data['pr_share'] = 0.2
         data['sr_share'] = 0.3
@@ -170,12 +170,13 @@ class TestIPA(unittest.TestCase):
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(1, self.agreement.agreement_id)
+        self.assertEqual(1, self.agreement.ip_id)
+        self.assertEqual('surname', self.agreement.ip_last_name)
         self.assertEqual('assign', self.agreement.agreement_role_code)
-        self.assertEqual(2, self.agreement.interested_party_id)
-        self.assertEqual('party', self.agreement.interested_party_name)
-        self.assertEqual(3, self.agreement.interested_party_ipi)
-        self.assertEqual('writer', self.agreement.interested_party_writer_name)
+        self.assertEqual('writer', self.agreement.ip_writer_name)
+        self.assertEqual(3, self.agreement.ip_ipi)
+        self.assertEqual('cae_name', self.agreement.cae_ipi_name)
+        self.assertEqual('writer', self.agreement.ip_writer_name)
         self.assertEqual(0.1, self.agreement.mr_share)
         self.assertEqual(0.2, self.agreement.pr_share)
         self.assertEqual(0.3, self.agreement.sr_share)

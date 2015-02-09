@@ -181,12 +181,12 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['agreement_id'] = agreement.agreement_id
         encoded['agreement_role_code'] = agreement.agreement_role_code
-        encoded['interested_party_id'] = agreement.interested_party_id
-        encoded['interested_party_name'] = agreement.interested_party_name
-        encoded['interested_party_ipi'] = agreement.interested_party_ipi
-        encoded['interested_party_writer_name'] = agreement.interested_party_writer_name
+        encoded['ip_id'] = agreement.ip_id
+        encoded['ip_last_name'] = agreement.ip_last_name
+        encoded['ip_ipi'] = agreement.ip_ipi
+        encoded['cae_ipi_name'] = agreement.cae_ipi_name
+        encoded['ip_writer_name'] = agreement.ip_writer_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share
         encoded['mr_society'] = agreement.mr_society

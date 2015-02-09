@@ -136,17 +136,17 @@ class TestIPAAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = IPA(1, 2, 'party', 'assign', 'writer', 3, 4, 0.1, 5, 0.2, 6, 0.3)
+        entity = IPA(2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(1, self.dict['agreement_id'])
-        self.assertEqual(2, self.dict['interested_party_id'])
-        self.assertEqual('party', self.dict['interested_party_name'])
+        self.assertEqual(2, self.dict['ip_id'])
+        self.assertEqual('party', self.dict['ip_last_name'])
         self.assertEqual('assign', self.dict['agreement_role_code'])
-        self.assertEqual('writer', self.dict['interested_party_writer_name'])
-        self.assertEqual(3, self.dict['interested_party_ipi'])
+        self.assertEqual('writer', self.dict['ip_writer_name'])
+        self.assertEqual(3, self.dict['ip_ipi'])
+        self.assertEqual('cae_name', self.dict['cae_ipi_name'])
         self.assertEqual(4, self.dict['pr_society'])
         self.assertEqual(0.1, self.dict['pr_share'])
         self.assertEqual(5, self.dict['mr_society'])

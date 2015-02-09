@@ -100,9 +100,9 @@ def parse_ipa(json_item):
     :param json_item: JSON object to parse
     :return: an IPA parsed from the JSON
     """
-    agreement = IPA(json_item['agreement_id'], json_item['interested_party_id'], json_item['interested_party_name'],
-                    json_item['agreement_role_code'], json_item['interested_party_writer_name'],
-                    json_item['interested_party_ipi'], json_item['pr_society'], json_item['pr_share'],
+    agreement = IPA(json_item['ip_id'], json_item['ip_last_name'],
+                    json_item['agreement_role_code'], json_item['ip_writer_name'],
+                    json_item['ip_ipi'], json_item['cae_ipi_name'], json_item['pr_society'], json_item['pr_share'],
                     json_item['mr_society'], json_item['mr_share'], json_item['sr_society'],
                     json_item['sr_share'])
 
