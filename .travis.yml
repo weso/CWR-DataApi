@@ -8,6 +8,10 @@ python:
 services:
   - mongodb
 install:
-  - "pip install -r requirements.txt"
+  - pip install -r requirements.txt
+before_script:
+# To avoid the connection error with MongoDB
+# At random, the DB takes too long to start and the app can't connect to it
+  - sleep 15
 script:
   - nosetests

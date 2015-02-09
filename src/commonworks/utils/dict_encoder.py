@@ -2,19 +2,17 @@
 
 import datetime
 
-from commonworks.domain.models.agreement.agreement import AgreementTerritory, Agreement
-from commonworks.domain.models.work.work import AlternativeWorkTitle, EntireWorkTitle, OriginalWorkTitle, \
-    PerformingArtist, WorkOrigin, RecordingDetails, Work
-from commonworks.domain.models.agreement.interested_party import InterestedParty, IPAAgreement
-from commonworks.domain.models.work.publisher import Publisher
-from commonworks.domain.models.special_entities.society import Society
-from commonworks.domain.models.special_entities.territory import Territory
-from commonworks.domain.models.special_entities.value_entities.value_entity import ValueEntity
-from commonworks.domain.models.work.writer import Writer
+from commonworks.agreement import Agreement, AgreementTerritory, IPA
+from commonworks.interested_party import Publisher, Writer
+from commonworks.society import Society
+from commonworks.territory import Territory
+from commonworks.value_entity import ValueEntity
+from commonworks.work import AlternateTitle, AuthoredWork, \
+    PerformingArtist, RecordingDetails, Work, WorkOrigin
 
 
 """
-Offers classes to create encodedionaries from model objects.
+Offers classes to create dictionaries from model objects.
 """
 
 __author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
@@ -52,16 +50,12 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_agreement_territory(d)
         elif isinstance(d, Agreement):
             encoded = self.__encode_agreement(d)
-        elif isinstance(d, AlternativeWorkTitle):
+        elif isinstance(d, AlternateTitle):
             encoded = self.__encode_alternative_work_title(d)
-        elif isinstance(d, EntireWorkTitle):
-            encoded = self.__encode_entire_work_title(d)
-        elif isinstance(d, InterestedParty):
-            encoded = self.__encode_interested_party(d)
-        elif isinstance(d, IPAAgreement):
-            encoded = self.__encode_ipa_agreement(d)
-        elif isinstance(d, OriginalWorkTitle):
-            encoded = self.__encode_original_work_title(d)
+        elif isinstance(d, AuthoredWork):
+            encoded = self.__encode_authored_work(d)
+        elif isinstance(d, IPA):
+            encoded = self.__encode_ipa(d)
         elif isinstance(d, PerformingArtist):
             encoded = self.__encode_performing_artist(d)
         elif isinstance(d, Publisher):
@@ -95,7 +89,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['inclusion_exclusion_indicator'] = territory.inclusion_exclusion_indicator
+        encoded['included'] = territory.included
         encoded['tis_numeric_code'] = territory.tis_numeric_code
 
         return encoded
@@ -109,29 +103,29 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['submitter_id'] = agreement.submitter_id
-        encoded['agreement_number'] = agreement.agreement_number
-        encoded['international_standard_number'] = agreement.international_standard_number
-        encoded['type'] = agreement.agreement_type
+        encoded['submitter_agreement_number'] = agreement.submitter_agreement_number
+        encoded['society_agreement_number'] = agreement.society_agreement_number
+        encoded['international_standard_number'] = agreement.international_standard_code
+        encoded['agreement_type'] = agreement.agreement_type
+
         encoded['start_date'] = self._adapter.adapt(agreement.start_date)
         encoded['end_date'] = self._adapter.adapt(agreement.end_date)
-        encoded['retention_end_date'] = self._adapter.adapt(agreement.retention_end_date)
+
         encoded['prior_royalty_status'] = agreement.prior_royalty_status
         encoded['prior_royalty_status_date'] = self._adapter.adapt(agreement.prior_royalty_status_date)
+
         encoded['post_term_collection_status'] = agreement.post_term_collection_status
         encoded['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)
+
         encoded['signature_date'] = self._adapter.adapt(agreement.signature_date)
         encoded['works_number'] = agreement.works_number
         encoded['sales_manufacture_clause'] = agreement.sales_manufacture_clause
+
+        encoded['international_standard_code'] = agreement.international_standard_code
+        encoded['agreement_type'] = agreement.agreement_type
+        encoded['retention_end_date'] = self._adapter.adapt(agreement.retention_end_date)
         encoded['shares_change'] = agreement.shares_change
         encoded['advance_given'] = agreement.advance_given
-        encoded['society_assigned_number'] = agreement.society_assigned_number
-
-        encoded['interested_parties'] = agreement.interested_parties
-        encoded['territories'] = []
-
-        for territory in agreement.territories:
-            encoded['territories'].append(self.__encode_agreement_territory(territory))
 
         return encoded
 
@@ -145,61 +139,40 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['alternative_title'] = title.alternative_title
-        encoded['alternative_title_type'] = title.alternative_title_type
+        encoded['alternate_title'] = title.alternate_title
+        encoded['title_type'] = title.title_type
+        encoded['language'] = title.language
 
         return encoded
 
     @staticmethod
-    def __encode_entire_work_title(title):
+    def __encode_authored_work(work):
         """
-        Creates a dictionary from an EntireWorkTitle.
+        Creates a dictionary from an AuthoredWork.
 
-        :param title: the EntireWorkTitle to transform into a dictionary
-        :return: a dictionary created from the EntireWorkTitle
-        """
-        encoded = {}
-
-        encoded['entire_title'] = title.entire_title
-        encoded['entire_work_iswc'] = title.entire_work_iswc
-        encoded['language_code'] = title.language_code
-        encoded['writer_one_first_name'] = title.writer_one_first_name
-        encoded['writer_one_last_name'] = title.writer_one_last_name
-        encoded['writer_one_ipi_cae'] = title.writer_one_ipi_cae
-        encoded['writer_one_ipi_base_number'] = title.writer_one_ipi_base_number
-        encoded['writer_two_first_name'] = title.writer_two_first_name
-        encoded['writer_two_last_name'] = title.writer_two_last_name
-        encoded['writer_two_ipi_cae'] = title.writer_two_ipi_cae
-        encoded['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
-        encoded['work_number'] = title.work_number
-
-        return encoded
-
-    def __encode_interested_party(self, interested_party):
-        """
-        Creates a dictionary from an InterestedParty.
-
-        :param interested_party: the InterestedParty to transform into a dictionary
-        :return: a dictionary created from the InterestedParty
+        :param work: the AuthoredWork to transform into a dictionary
+        :return: a dictionary created from the AuthoredWork
         """
         encoded = {}
 
-        encoded['submitter_id'] = interested_party.submitter_id
-
-        encoded['cae_ipi_id'] = interested_party.cae_ipi_id
-        encoded['ipi_base_number'] = interested_party.ipi_base_number
-        encoded['ipa_number'] = interested_party.ipa_number
-        encoded['last_name'] = interested_party.last_name
-
-        encoded['agreements'] = []
-
-        for agreement in interested_party.agreements:
-            encoded['agreements'].append(self.__encode_ipa_agreement(agreement))
+        encoded['work_id'] = work.work_id
+        encoded['title'] = work.title
+        encoded['language_code'] = work.language_code
+        encoded['source'] = work.source
+        encoded['first_name_1'] = work.first_name_1
+        encoded['ip_base_1'] = work.ip_base_1
+        encoded['ip_name_1'] = work.ip_name_1
+        encoded['first_name_2'] = work.first_name_2
+        encoded['ip_base_2'] = work.ip_base_2
+        encoded['ip_name_2'] = work.ip_name_2
+        encoded['last_name_1'] = work.last_name_1
+        encoded['last_name_2'] = work.last_name_2
+        encoded['iswc'] = work.iswc
 
         return encoded
 
     @staticmethod
-    def __encode_ipa_agreement(agreement):
+    def __encode_ipa(agreement):
         """
         Creates a dictionary from an IPAAgreement.
 
@@ -210,37 +183,16 @@ class CWRDictionaryEncoder(object):
 
         encoded['agreement_id'] = agreement.agreement_id
         encoded['agreement_role_code'] = agreement.agreement_role_code
+        encoded['interested_party_id'] = agreement.interested_party_id
+        encoded['interested_party_name'] = agreement.interested_party_name
+        encoded['interested_party_ipi'] = agreement.interested_party_ipi
+        encoded['interested_party_writer_name'] = agreement.interested_party_writer_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share
         encoded['mr_society'] = agreement.mr_society
         encoded['mr_share'] = agreement.mr_share
         encoded['sr_society'] = agreement.sr_society
         encoded['sr_share'] = agreement.sr_share
-
-        return encoded
-
-    @staticmethod
-    def __encode_original_work_title(title):
-        """
-        Creates a dictionary from an OriginalWorkTitle.
-
-        :param title: the OriginalWorkTitle to transform into a dictionary
-        :return: a dictionary created from the OriginalWorkTitle
-        """
-        encoded = {}
-
-        encoded['entire_title'] = title.entire_title
-        encoded['entire_work_iswc'] = title.entire_work_iswc
-        encoded['language_code'] = title.language_code
-        encoded['writer_one_first_name'] = title.writer_one_first_name
-        encoded['writer_one_last_name'] = title.writer_one_last_name
-        encoded['writer_one_ipi_cae'] = title.writer_one_ipi_cae
-        encoded['writer_one_ipi_base_number'] = title.writer_one_ipi_base_number
-        encoded['writer_two_first_name'] = title.writer_two_first_name
-        encoded['writer_two_last_name'] = title.writer_two_last_name
-        encoded['writer_two_ipi_cae'] = title.writer_two_ipi_cae
-        encoded['writer_two_ipi_base_number'] = title.writer_two_ipi_base_number
-        encoded['work_number'] = title.work_number
 
         return encoded
 
@@ -271,8 +223,11 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['agreement_id'] = publisher.agreement_id
-        encoded['interested_party'] = publisher.interested_party
+        encoded['name'] = publisher.name
+        encoded['ip_id'] = publisher.ip_id
+        encoded['ip_name'] = publisher.ip_name
+        encoded['ip_base_id'] = publisher.ip_base_id
+        encoded['tax_id'] = publisher.tax_id
 
         return encoded
 
@@ -358,62 +313,31 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['creation_id'] = work.creation_id
-        encoded['submitter_id'] = work.submitter_id
-
+        encoded['work_id'] = work.work_id
         encoded['title'] = work.title
         encoded['language_code'] = work.language_code
-        encoded['work_number'] = work.work_number
-        encoded['iswc'] = work.iswc
-        encoded['copyright_date'] = self._adapter.adapt(work.copyright_date)
+        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
         encoded['copyright_number'] = work.copyright_number
-        encoded['musical_distribution_category'] = work.musical_distribution_category
-        encoded['duration'] = work.duration
-        encoded['recorded_indicator'] = work.recorded_indicator
+        encoded['copyright_date'] = self._adapter.adapt(work.copyright_date)
         encoded['text_music_relationship'] = work.text_music_relationship
-        encoded['composite_type'] = work.composite_type
         encoded['version_type'] = work.version_type
-        encoded['excerpt_type'] = work.excerpt_type
         encoded['music_arrangement'] = work.music_arrangement
         encoded['lyric_adaptation'] = work.lyric_adaptation
-        encoded['contact_name'] = work.contact_name
-        encoded['contact_id'] = work.contact_id
-        encoded['cwr_work_type'] = work.cwr_work_type
-        encoded['grand_rights_indicator'] = work.grand_rights_indicator
+        encoded['excerpt_type'] = work.excerpt_type
+        encoded['composite_type'] = work.composite_type
         encoded['composite_component_count'] = work.composite_component_count
-        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
-        encoded['exceptional_clause'] = work.exceptional_clause
-        encoded['opus_number'] = work.opus_number
+        encoded['iswc'] = work.iswc
+        encoded['cwr_work_type'] = work.cwr_work_type
+        encoded['musical_distribution_category'] = work.musical_distribution_category
+        encoded['duration'] = work.duration
         encoded['catalogue_number'] = work.catalogue_number
+        encoded['opus_number'] = work.opus_number
+        encoded['contact_id'] = work.contact_id
+        encoded['contact_name'] = work.contact_name
+        encoded['recorded_indicator'] = work.recorded_indicator
         encoded['priority_flag'] = work.priority_flag
-
-        if work.entire_work_title is not None:
-            encoded['entire_work_title'] = self.__encode_entire_work_title(work.entire_work_title)
-
-        if work.recording_details is not None:
-            encoded['recording_details'] = self.__encode_recording_details(work.recording_details)
-
-        if work.original_work_title is not None:
-            encoded['original_work_title'] = self.__encode_original_work_title(work.original_work_title)
-
-        if work.work_origin is not None:
-            encoded['work_origin'] = self.__encode_work_origin(work.work_origin)
-
-        encoded['publishers'] = []
-        for publisher in work.publishers:
-            encoded['publishers'].append(self.__encode_publisher(publisher))
-
-        encoded['performers'] = []
-        for performer in work.performing_artists:
-            encoded['performers'].append(self.__encode_performing_artist(performer))
-
-        encoded['writers'] = []
-        for writer in work.writers:
-            encoded['writers'].append(self.__encode_writer(writer))
-
-        encoded['alternative_titles'] = []
-        for alt_title in work.alternative_titles:
-            encoded['alternative_titles'].append(self.__encode_alternative_work_title(alt_title))
+        encoded['exceptional_clause'] = work.exceptional_clause
+        encoded['grand_rights_indicator'] = work.grand_rights_indicator
 
         return encoded
 
@@ -456,24 +380,11 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['interested_party'] = writer.interested_party
-
         encoded['first_name'] = writer.first_name
         encoded['last_name'] = writer.last_name
-        encoded['designation_code'] = writer.designation_code
-        encoded['tax_id_number'] = writer.tax_id_number
-        encoded['cae_ipi_name_id'] = writer.cae_ipi_name_id
-        encoded['pr_society'] = writer.pr_society
-        encoded['pr_share'] = writer.pr_share
-        encoded['mr_society'] = writer.mr_society
-        encoded['mr_share'] = writer.mr_share
-        encoded['sr_society'] = writer.sr_society
-        encoded['sr_share'] = writer.sr_share
-        encoded['reversionary_indicator'] = writer.reversionary_indicator
-        encoded['first_recording_refusal_indicator'] = writer.first_recording_refusal_indicator
-        encoded['work_for_hire_indicator'] = writer.work_for_hire_indicator
-        encoded['ipi_base_number'] = writer.ipi_base_number
         encoded['personal_number'] = writer.personal_number
-        encoded['usa_license_indicator'] = writer.usa_license_indicator
+        encoded['ip_id'] = writer.ip_id
+        encoded['ip_name'] = writer.ip_name
+        encoded['ip_base_id'] = writer.ip_base_id
 
         return encoded

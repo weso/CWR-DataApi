@@ -4,7 +4,7 @@ import unittest
 import re
 
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
-from commonworks.domain.models.special_entities.value_entities.value_entity import ValueEntity
+from commonworks.value_entity import ValueEntity
 
 
 """
@@ -42,7 +42,8 @@ class TestQuery(unittest.TestCase):
         self.repo.add(entity)
 
         entity = ValueEntity('POP', 'Popular',
-                             'The musical mainstream, usually song-based and melody-orientated, created for mass consumption')
+                             'The musical mainstream, usually song-based and melody-orientated, created for mass '
+                             'consumption')
         self.repo.add(entity)
 
     def tearDown(self):
