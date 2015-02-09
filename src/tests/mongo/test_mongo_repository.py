@@ -42,7 +42,8 @@ class TestQuery(unittest.TestCase):
         self.repo.add(entity)
 
         entity = ValueEntity('POP', 'Popular',
-                             'The musical mainstream, usually song-based and melody-orientated, created for mass consumption')
+                             'The musical mainstream, usually song-based and melody-orientated, created for mass '
+                             'consumption')
         self.repo.add(entity)
 
     def tearDown(self):

@@ -1,11 +1,8 @@
 # -*- encoding: utf-8 -*-
-from commonworks.agreement import Agreement
-from commonworks.agreement import AgreementTerritory
-from commonworks.agreement import IPA
-from commonworks.interested_party import Publisher
+from commonworks.agreement import Agreement, AgreementTerritory, IPA
+from commonworks.interested_party import Publisher, Writer
 from commonworks.work import Work, AlternateTitle, AuthoredWork, \
     RecordingDetails, WorkOrigin, PerformingArtist
-from commonworks.interested_party import Writer
 
 """
 Offers methods to create model objects from JSON objects.

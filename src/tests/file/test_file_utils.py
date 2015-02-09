@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from commonworks.utils import cwr_file
 from commonworks.file import FileTag
+from commonworks.utils import cwr_file
 
 
 """

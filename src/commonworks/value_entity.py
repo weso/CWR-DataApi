@@ -67,8 +67,10 @@ class CompositeType(ValueEntity):
     Represents a composite work made from several other works.
 
     Some examples of it are:
-    Composite of Samples (COS): A composite work containing new material and one or more samples of pre-existing recorded works
-    Potpourri (POT): A composite work with the addition of original material which have been combined to form a new work, that has been published and printed
+    Composite of Samples (COS): A composite work containing new material and one or more samples of pre-existing
+    recorded works
+    Potpourri (POT): A composite work with the addition of original material which have been combined to form a new
+    work, that has been published and printed
     """
 
     def __init__(self, entity_id, name, description):
@@ -82,7 +84,8 @@ class DistributionCategory(ValueEntity):
     This is the genre under which the music is sold.
 
     Some examples of it are:
-    Jazz (JAZ): Music originating in black America from the early 20th century, incorporating strands of Euro-American and African music and frequently containing improvisation
+    Jazz (JAZ): Music originating in black America from the early 20th century, incorporating strands of Euro-American
+    and African music and frequently containing improvisation
     Popular (POP): The musical mainstream, usually song-based and melody-orientated, created for mass consumption
     """
 
@@ -96,7 +99,8 @@ class ExcerptType(ValueEntity):
 
     Some examples of it are:
     Movement (MOV): A principal division of a musical work
-    Unspecified Excerpt (UEX): A work that is known to be an excerpt from another work, however the type of excerpt is unknown
+    Unspecified Excerpt (UEX): A work that is known to be an excerpt from another work, however the type of excerpt is
+    unknown
     """
 
     def __init__(self, entity_id, name, description):

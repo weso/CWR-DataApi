@@ -25,9 +25,9 @@ class MongoGenericRepository(Repository):
     """
     ELEMENTS_PER_PAGE = 15
 
-    def __init__(self, host, port, db_name, collection):
-        connection = Connection(host, port)
-        self._db = connection[db_name]
+    def __init__(self, repo_host, repo_port, repo_db_name, collection):
+        connection = Connection(repo_host, repo_port)
+        self._db = connection[repo_db_name]
 
         self._encoder = MongoDictionaryEncoder()
 

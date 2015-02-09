@@ -163,11 +163,11 @@ class GRH(object):
     only contain one type of transaction and this is indicated in the Transaction Type field.
     """
 
-    def __init__(self, id, transaction_type):
-        self._id = id
+    def __init__(self, group_id, transaction_type):
+        self._group_id = group_id
         self._transaction_type = transaction_type
 
-    def id(self):
+    def group_id(self):
         """
         Group ID field.
 
@@ -175,7 +175,7 @@ class GRH(object):
 
         :return: the group id
         """
-        return self._id
+        return self._group_id
 
     def transaction_type(self):
         """
@@ -196,12 +196,12 @@ class GRT(object):
     The Group Trailer Record indicates the end of a group and provides both transaction and record counts for the group.
     """
 
-    def __init__(self, id, transaction_count, record_count):
-        self._id = id
+    def __init__(self, group_id, transaction_count, record_count):
+        self._group_id = group_id
         self._transaction_count = transaction_count
         self._record_count = record_count
 
-    def id(self):
+    def group_id(self):
         """
         Group ID field.
 
@@ -211,7 +211,7 @@ class GRT(object):
 
         :return: the group id
         """
-        return self._id
+        return self._group_id
 
     def record_count(self):
         """

@@ -3,13 +3,12 @@ import unittest
 import datetime
 
 from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkOrigin, Work, RecordingDetails
-from commonworks.interested_party import Publisher
+from commonworks.interested_party import Publisher, Writer
 from commonworks.society import Society
 from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
-from commonworks.interested_party import Writer
+from commonworks.work import AlternateTitle, AuthoredWork, \
+    PerformingArtist, WorkOrigin, Work, RecordingDetails
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
 
 
