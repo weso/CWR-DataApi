@@ -2,7 +2,15 @@
 from abc import ABCMeta
 
 """
-Transaction model classes.
+CWR transaction classes.
+
+These files are not meant to store all the data of the transaction, that is done with the other model files,
+but to indicate the relationships contained in these transactions.
+
+For example, an Agreement Transaction would indicate an Agreement, the Territories it applies to and the
+Interested Parties for each Territory. While the concrete information of that Agreement, Territories and
+Interested Parties are stored in their own model classes.
+
 """
 
 __author__ = 'Bernardo Martínez Garrido'
