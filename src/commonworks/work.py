@@ -387,6 +387,183 @@ class Work(BaseWork):
         return self._work_id
 
 
+class Component(object):
+    """
+    Represents a CWR Component (COM).
+    """
+
+    def __init__(self, title, first_name_1, submitter_id=None,
+                 last_name_1=None, first_name_2=None, last_name_2=None,
+                 ip_base_1=None, ip_name_1=None, ip_base_2=None, ip_name_2=None,
+                 iswc=None):
+        super(AuthoredWork, self).__init__()
+
+        # Work's info
+        self._submitter_id = submitter_id
+        self._title = title
+        self._iswc = iswc
+
+        # First writer's info
+        self._first_name_1 = first_name_1
+        self._last_name_1 = last_name_1
+        self._ip_base_1 = ip_base_1
+        self._ip_name_1 = ip_name_1
+
+        # Second writer's info
+        self._first_name_2 = first_name_2
+        self._last_name_2 = last_name_2
+        self._ip_base_2 = ip_base_2
+        self._ip_name_2 = ip_name_2
+
+    @property
+    def first_name_1(self):
+        """
+        Writer 1 First Name field.
+
+        The first name of the first writer.
+
+        :return: the first name of the first Writer
+        """
+        return self._first_name_1
+
+    @property
+    def first_name_2(self):
+        """
+        Writer 2 First Name field.
+
+        The first name of the second writer.
+
+        :return: the first name of the second Writer
+        """
+        return self._first_name_2
+
+    @property
+    def ip_base_1(self):
+        """
+        Writer 1 IP Base Number field.
+
+        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
+        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
+        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
+        adapted from ISO 7064). You can find more information on the CISAC web site.
+
+        :return: the first Writer's IP base number
+        """
+        return self._ip_base_1
+
+    @property
+    def ip_base_2(self):
+        """
+        Writer 2 IP Base Number field.
+
+        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
+        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
+        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
+        adapted from ISO 7064). You can find more information on the CISAC web site.
+
+        :return: the second Writer's IP base number
+        """
+        return self._ip_base_2
+
+    @property
+    def ip_name_1(self):
+        """
+        Writer 1 IP Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the first Writer's IP name field
+        """
+        return self._ip_name_1
+
+    @property
+    def ip_name_2(self):
+        """
+        Writer 2 IP Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the second Writer's IP name field
+        """
+        return self._ip_name_2
+
+    @property
+    def iswc(self):
+        """
+        ISWC field.
+
+        If the International Standard Work Code has been notified to you, you may include it in your registration
+        or revision.
+
+        :return: the International Standard Work Code
+        """
+        return self._iswc
+
+    @property
+    def last_name_1(self):
+        """
+        Writer 1 Last Name field.
+
+        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+
+        :return: the first Writer's last name
+        """
+        return self._last_name_1
+
+    @property
+    def last_name_2(self):
+        """
+        Writer 2 Last Name field.
+
+        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+
+        :return: the second Writer's last name
+        """
+        return self._last_name_2
+
+    @property
+    def source(self):
+        """
+        Source field.
+
+        This field contains a free form description of the source of the entire work e.g. symphony.
+
+        :return: the source
+        """
+        return self._source
+
+    @property
+    def submitter_id(self):
+        """
+        Submitter entity # field.
+
+        The unique number that you have assigned to the entire work.
+
+        :return: the entity's ID
+        """
+        return self._submitter_id
+
+    @property
+    def title(self):
+        """
+        Work Title field.
+
+        The title by which the work is best known.
+
+        Do not store additional information in the title field e.g. “instrumental” or “background”.
+        Such information should be stored in the designated field.
+
+        :return: the title by which the work is best known
+        """
+        return self._title
+
+
 class AuthoredWork(BaseWork):
     """
     Represents a Work with authors. This is for the Entire Work and Original Work entities.
@@ -711,6 +888,84 @@ class RecordingDetail(object):
         :return: the recording technique
         """
         return self._recording_technique
+
+
+class Instrumentation(object):
+    """
+    Represents a CWR Instrumentation (INS).
+    """
+
+    def __init__(self, number_voices=None, instr_type=None, description=None):
+        self._number_voices = number_voices
+        self._instr_type = instr_type
+        self._description = description
+
+    @property
+    def description(self):
+        """
+        Instrumentation Description field.
+
+        Describes instrumentation if non-standard instrumentation is used on this work. Note that this field is required
+        if IND records are not entered and if Standard Instrumentation Type is blank.
+
+        :return: the description
+        """
+        return self._description
+
+    @property
+    def instr_type(self):
+        """
+        Standard Instrumentation Type field.
+
+        Describes instrumentation if standard instrumentation is used on this work.  Note that this field is required if
+        IND records are not entered and if Instrumentation Description is blank.  These values reside in the Standard
+        Instrumentation Table.
+
+        :return: the standard instrumentation type
+        """
+        return self._instr_type
+
+    @property
+    def number_voices(self):
+        """
+        Number of Voices field.
+
+        Indicates the number of independent parts included in this work.
+
+        :return: the number of voices
+        """
+        return self._number_voices
+
+
+class InstrumentationDetail(object):
+    """
+    Represents a CWR Instrumentation Detail (IND)
+    """
+
+    def __init__(self, code, players):
+        self._code = code
+        self._players = players
+
+    def code(self):
+        """
+        Instrument Code field.
+
+        Indicates the use of a specific instrument in this version of instrumentation.  These values reside in the
+        Instrument Table.
+
+        :return: the instrument code
+        """
+        return self._code
+
+    def players(self):
+        """
+        Number of Players field.
+
+        Indicates the number of players for the above instrument.
+
+        :return: the number of players
+        """
+        return self._players
 
 
 class WorkOrigin(object):
