@@ -99,6 +99,7 @@ class GroupHeader(object):
         self._group_id = group_id
         self._transaction_type = transaction_type
 
+    @property
     def group_id(self):
         """
         Group ID field.
@@ -109,6 +110,7 @@ class GroupHeader(object):
         """
         return self._group_id
 
+    @property
     def transaction_type(self):
         """
         Transaction Type field.
@@ -133,6 +135,7 @@ class GroupTrailer(object):
         self._transaction_count = transaction_count
         self._record_count = record_count
 
+    @property
     def group_id(self):
         """
         Group ID field.
@@ -145,6 +148,7 @@ class GroupTrailer(object):
         """
         return self._group_id
 
+    @property
     def record_count(self):
         """
         Record Count field.
@@ -155,6 +159,7 @@ class GroupTrailer(object):
         """
         return self._record_count
 
+    @property
     def transaction_count(self):
         """
         Transaction Count field.
@@ -189,6 +194,7 @@ class TransmissionHeader(object):
         self._edi_standard = edi_standard
         self._character_set = character_set
 
+    @property
     def character_set(self):
         """
         Character Set field.
@@ -199,6 +205,7 @@ class TransmissionHeader(object):
         """
         return self._character_set
 
+    @property
     def edi_standard(self):
         """
         EDI Standard Version Number field.
@@ -272,6 +279,7 @@ class RecordPrefix(object):
         self._transaction_sequence = transaction_sequence
         self._record_sequence = record_sequence
 
+    @property
     def record_sequence(self):
         """
         Record Sequence # field.
@@ -283,6 +291,7 @@ class RecordPrefix(object):
         """
         return self._record_sequence
 
+    @property
     def transaction_sequence(self):
         """
         Transaction Sequence # field.
@@ -310,6 +319,7 @@ class TransmissionTrailer(object):
         self._transaction_count = transaction_count
         self._record_count = record_count
 
+    @property
     def group_count(self):
         """
         Group Count field.
@@ -320,6 +330,7 @@ class TransmissionTrailer(object):
         """
         return self._group_count
 
+    @property
     def record_count(self):
         """
         Record Count field.
@@ -330,6 +341,7 @@ class TransmissionTrailer(object):
         """
         return self._record_count
 
+    @property
     def transaction_count(self):
         """
         Transaction Count field.

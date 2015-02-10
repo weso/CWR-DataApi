@@ -933,6 +933,7 @@ class InstrumentationDetail(object):
         self._code = code
         self._players = players
 
+    @property
     def code(self):
         """
         Instrument Code field.
@@ -944,6 +945,7 @@ class InstrumentationDetail(object):
         """
         return self._code
 
+    @property
     def players(self):
         """
         Number of Players field.
