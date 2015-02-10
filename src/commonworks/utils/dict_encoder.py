@@ -2,10 +2,8 @@
 
 import datetime
 
-from commonworks.agreement import Agreement, IPA
+from commonworks.agreement import Agreement, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
-from commonworks.society import Society
-from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
     PerformingArtist, Work, WorkOrigin, RecordingDetail
@@ -52,7 +50,7 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_alternative_work_title(d)
         elif isinstance(d, AuthoredWork):
             encoded = self.__encode_authored_work(d)
-        elif isinstance(d, IPA):
+        elif isinstance(d, AgreementInterestedParty):
             encoded = self.__encode_ipa(d)
         elif isinstance(d, PerformingArtist):
             encoded = self.__encode_performing_artist(d)
@@ -60,10 +58,6 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_publisher(d)
         elif isinstance(d, RecordingDetail):
             encoded = self.__encode_recording_details(d)
-        elif isinstance(d, Society):
-            encoded = self.__encode_society(d)
-        elif isinstance(d, Territory):
-            encoded = self.__encode_territory(d)
         elif isinstance(d, ValueEntity):
             encoded = self.__encode_value_entity(d)
         elif isinstance(d, Work):
@@ -233,39 +227,6 @@ class CWRDictionaryEncoder(object):
         encoded['recording_format'] = details.recording_format
         encoded['recording_technique'] = details.recording_technique
         encoded['media_type'] = details.media_type
-
-        return encoded
-
-    @staticmethod
-    def __encode_society(society):
-        """
-        Creates a dictionary from a Society.
-
-        :param society: the Society to transform into a dictionary
-        :return: a dictionary created from the Society
-        """
-        encoded = {}
-
-        encoded['name'] = society.name
-        encoded['former_name'] = society.former_name
-
-        return encoded
-
-    @staticmethod
-    def __encode_territory(territory):
-        """
-        Creates a dictionary from a Territory.
-
-        :param territory: the Territory to transform into a dictionary
-        :return: a dictionary created from the Territory
-        """
-        encoded = {}
-
-        encoded['tis'] = territory.tis
-        encoded['iso2'] = territory.iso2
-        encoded['type'] = territory.territory_type
-        encoded['name'] = territory.name
-        encoded['official_name'] = territory.official_name
 
         return encoded
 

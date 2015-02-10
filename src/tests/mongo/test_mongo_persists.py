@@ -2,10 +2,8 @@
 import unittest
 import datetime
 
-from commonworks.agreement import Agreement, IPA
+from commonworks.agreement import Agreement, AgreementInterestedParty
 from commonworks.interested_party import Publisher
-from commonworks.society import Society
-from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
     PerformingArtist, WorkOrigin, Work, RecordingDetail
@@ -96,7 +94,7 @@ class TestIPA(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = IPA(2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
+        self.entity = AgreementInterestedParty(2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
         self.repo = MongoGenericRepository(host, port, db_name, 'ipas')
 
     def tearDown(self):
@@ -153,42 +151,6 @@ class TestRecordingDetails(unittest.TestCase):
         self.entity = RecordingDetail(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
                                       3, 4, 5, 6, 7)
         self.repo = MongoGenericRepository(host, port, db_name, 'recording_details')
-
-    def tearDown(self):
-        self.repo.clear()
-
-    def test_add(self):
-        self.assertEqual(len(self.repo.get(lambda e: True)), 0)
-        self.repo.add(self.entity)
-        self.assertEqual(len(self.repo.get(lambda e: True)), 1)
-
-
-class TestSociety(unittest.TestCase):
-    """
-    Tests the Society API against a Mongo database.
-    """
-
-    def setUp(self):
-        self.entity = Society(1, 'name', 'formerly')
-        self.repo = MongoGenericRepository(host, port, db_name, 'societies')
-
-    def tearDown(self):
-        self.repo.clear()
-
-    def test_add(self):
-        self.assertEqual(len(self.repo.get(lambda e: True)), 0)
-        self.repo.add(self.entity)
-        self.assertEqual(len(self.repo.get(lambda e: True)), 1)
-
-
-class TestTerritory(unittest.TestCase):
-    """
-    Tests the Territory API against a Mongo database.
-    """
-
-    def setUp(self):
-        self.entity = Territory(1, 2, 3, 'name', 'official')
-        self.repo = MongoGenericRepository(host, port, db_name, 'territories')
 
     def tearDown(self):
         self.repo.clear()

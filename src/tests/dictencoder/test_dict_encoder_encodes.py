@@ -3,10 +3,8 @@
 import unittest
 import datetime
 
-from commonworks.agreement import Agreement, IPA
+from commonworks.agreement import Agreement, AgreementInterestedParty
 from commonworks.interested_party import Publisher
-from commonworks.society import Society
-from commonworks.territory import Territory
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
     PerformingArtist, WorkOrigin, Work, RecordingDetail
@@ -120,7 +118,7 @@ class TestIPAAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = IPA(2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
+        entity = AgreementInterestedParty(2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
 
         self.dict = encoder.encode(entity)
 
@@ -199,41 +197,6 @@ class TestRecordingDetails(unittest.TestCase):
         self.assertEqual(5, self.dict['recording_format'])
         self.assertEqual(6, self.dict['recording_technique'])
         self.assertEqual(7, self.dict['media_type'])
-
-
-class TestSociety(unittest.TestCase):
-    """
-    Tests the Society to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = Society(1, 'name', 'formerly')
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual('name', self.dict['name'])
-        self.assertEqual('formerly', self.dict['former_name'])
-
-
-class TestTerritory(unittest.TestCase):
-    """
-    Tests the Territory to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = Territory(1, 2, 3, 'name', 'official')
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual(1, self.dict['tis'])
-        self.assertEqual(2, self.dict['iso2'])
-        self.assertEqual(3, self.dict['type'])
-        self.assertEqual('name', self.dict['name'])
-        self.assertEqual('official', self.dict['official_name'])
 
 
 class TestValueEntity(unittest.TestCase):

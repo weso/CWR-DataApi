@@ -396,8 +396,6 @@ class Component(object):
                  last_name_1=None, first_name_2=None, last_name_2=None,
                  ip_base_1=None, ip_name_1=None, ip_base_2=None, ip_name_2=None,
                  iswc=None):
-        super(AuthoredWork, self).__init__()
-
         # Work's info
         self._submitter_id = submitter_id
         self._title = title
@@ -526,17 +524,6 @@ class Component(object):
         :return: the second Writer's last name
         """
         return self._last_name_2
-
-    @property
-    def source(self):
-        """
-        Source field.
-
-        This field contains a free form description of the source of the entire work e.g. symphony.
-
-        :return: the source
-        """
-        return self._source
 
     @property
     def submitter_id(self):

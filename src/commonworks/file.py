@@ -87,7 +87,7 @@ class FileTag(object):
         return self._version
 
 
-class GRH(object):
+class GroupHeader(object):
     """
     Represents a CWR file Group Header (GRH).
 
@@ -121,7 +121,7 @@ class GRH(object):
         return self._transaction_type
 
 
-class GRT(object):
+class GroupTrailer(object):
     """
     Represents a CWR file Group Trailer (GRT).
 
@@ -166,7 +166,7 @@ class GRT(object):
         return self._transaction_count
 
 
-class HDR(object):
+class TransmissionHeader(object):
     """
     Represents a CWR file Transmission Header (HDR).
 
@@ -297,7 +297,7 @@ class RecordPrefix(object):
         return self._transaction_sequence
 
 
-class TRL(object):
+class TransmissionTrailer(object):
     """
     Represents a CWR file Transmission Trailer (TRL).
 

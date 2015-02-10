@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-from abc import ABCMeta
 
 """
 Agreement model classes.
@@ -27,7 +26,7 @@ class Agreement(object):
                  post_term_collection_status, signature_date, works_number, society_agreement_number=None,
                  end_date=None, international_standard_code=None, sales_manufacture_clause=None,
                  retention_end_date=None, prior_royalty_status_date=None, post_term_collection_end_date=None,
-                 shares_change=False, advance_given=False, interested_parties=None, territories=None):
+                 shares_change=False, advance_given=False):
         # Agreement identification data
         self._submitter_agreement_number = submitter_agreement_number
         self._society_agreement_number = society_agreement_number
@@ -59,39 +58,6 @@ class Agreement(object):
 
         # Other info
         self._works_number = works_number
-
-        if interested_parties is None:
-            self._interested_parties = []
-        else:
-            self._interested_parties = interested_parties
-
-        # The list of AgreementTerritory entities applied to the Agreement
-        if territories is None:
-            self._territories = []
-        else:
-            self._territories = territories
-
-    def add_interested_party(self, ipa):
-        self._interested_parties.append(ipa)
-
-    def add_territory(self, territory):
-        """
-        Adds an AgreementTerritory which is to be applied to this Agreement.
-
-        :param territory: the AgreementTerritory being applied
-        """
-        self._territories.append(territory)
-
-    def remove_interested_party(self, ipa):
-        self._interested_parties.remove(ipa)
-
-    def remove_territory(self, territory):
-        """
-        Removes an AgreementTerritory which is being applied to this Agreement.
-
-        :param territory: the AgreementTerritory being applied
-        """
-        self._interested_parties.remove(territory)
 
     @property
     def advance_given(self):
@@ -133,10 +99,6 @@ class Agreement(object):
         :return: the Agreement End Date field
         """
         return self._end_date
-
-    @property
-    def interested_parties(self):
-        return self._interested_parties
 
     @property
     def international_standard_code(self):
@@ -297,15 +259,6 @@ class Agreement(object):
         return self._submitter_agreement_number
 
     @property
-    def territories(self):
-        """
-        Collection of AgreementTerritory entities being applied to this Agreement.
-
-        :return: the AgreementTerritory entities being applied to this Agreement
-        """
-        return self._territories
-
-    @property
     def works_number(self):
         """
         Number of Works field.
@@ -317,7 +270,7 @@ class Agreement(object):
         return self._works_number
 
 
-class IPA(object):
+class AgreementInterestedParty(object):
     """
     Represents a CWR Interested Party for the Agreement (IPA).
 
@@ -494,122 +447,3 @@ class IPA(object):
         :return: the Interested Party's synchronization rights society
         """
         return self._sr_society
-
-
-class InterestedPartyAgreement(object):
-    """
-    Represents the relationship between an Interested Party and an Agreement
-    """
-    __metaclass__ = ABCMeta
-
-    def __init__(self, reversionary=False, first_record_refusal=False, usa_license=False):
-        # Flags
-        self._first_record_refusal = first_record_refusal
-        self._reversionary = reversionary
-        self._usa_license = usa_license
-
-    @property
-    def first_record_refusal(self):
-        """
-        First Recording Refusal Indicator field.
-
-        This field indicates that the submitter needs to be asked before the society can authorize a first recording.
-        Note that this field is mandatory for registrations with the UK societies.
-
-        It is a Boolean field, and by default is False.
-
-        :return: True if the submitter needs to be asked to authorize first recording, False otherwise
-        """
-        return self._first_record_refusal
-
-    @property
-    def reversionary(self):
-        """
-        Reversionary Indicator field.
-
-        This indicates that the Interested Party is claiming the work under the reversionary provisions.
-        Only some societies recognize reversionary rights.
-
-        It is a Boolean field, and by default is False.
-
-        :return: True if the work is under reversionary provisions, False otherwise
-        """
-        return self.reversionary
-
-    @property
-    def usa_license(self):
-        """
-        USA License Indicator field.
-
-        This field indicates whether rights for this Interested Party flow through ASCAP, BMI, or SESAC for the U.S.
-
-        It is a Boolean field, and by default is False.
-
-        :return: True if the rights flow to the U.S., False otherwise
-        """
-        return self._usa_license
-
-
-class WriterAgreement(InterestedPartyAgreement):
-    """
-    Represents the relationship between a Writer and an Agreement.
-    """
-
-    def __init__(self, agreement, writer, designation=None,
-                 reversionary=False, first_record_refusal=False, usa_license=False, for_hire=False):
-        super(WriterAgreement, self).__init__(reversionary, first_record_refusal, usa_license)
-        self._agreement = agreement
-        self._writer = writer
-        self._designation = designation
-        self._for_hire = for_hire
-
-    def agreement(self):
-        """
-        The Agreement to which this relationship refers.
-
-        :return: the Agreement
-        """
-        return self._agreement
-
-    def designation(self):
-        """
-        Writer Designation Code field.
-
-        This code describes the role of the writer with respect to this work e.g. composer, author, arranger. This field
-        is required for writers which you control.
-
-        :return:
-        """
-        return self._designation
-
-    def for_hire(self):
-        """
-        Work For Hire Indicator flag.
-
-        This field indicates that this Writer was hired to write this work.
-
-        It is a Boolean field, and by default is False.
-
-        :return: True if the Writer was hired, False otherwise
-        """
-        return self._for_hire
-
-    def writer(self):
-        """
-        The Writer to which this relationship refers.
-
-        :return: the Writer
-        """
-        return self._writer
-
-    def unknown(self):
-        """
-        Writer Unknown Indicator field.
-
-        It is automatically set to False if the Writer name is not set.
-
-        This indicates if the Writer is under your control and you have a name on file for it.
-
-        :return: True if the Writer's name is known, False otherwise
-        """
-        return len(self.writer().name) == 0
