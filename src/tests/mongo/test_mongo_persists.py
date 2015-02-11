@@ -95,7 +95,8 @@ class TestIPA(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = AgreementInterestedParty(2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
+        self.entity = AgreementInterestedParty(None, 2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6,
+                                               0.3)
         self.repo = MongoGenericRepository(host, port, db_name, 'ipas')
 
     def tearDown(self):

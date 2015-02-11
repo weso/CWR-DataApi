@@ -153,12 +153,12 @@ class TestIPA(unittest.TestCase):
     def test_data(self):
         # Makes sure the data was parsed correctly
         self.assertEqual(1, self.agreement.ip_id)
-        self.assertEqual('surname', self.agreement.ip_last_name)
+        self.assertEqual('surname', self.agreement.last_name)
         self.assertEqual('assign', self.agreement.agreement_role_code)
-        self.assertEqual('writer', self.agreement.ip_writer_name)
-        self.assertEqual(3, self.agreement.ip_ipi)
+        self.assertEqual('writer', self.agreement.writer_name)
+        self.assertEqual(3, self.agreement.ipi)
         self.assertEqual('cae_name', self.agreement.cae_ipi_name)
-        self.assertEqual('writer', self.agreement.ip_writer_name)
+        self.assertEqual('writer', self.agreement.writer_name)
         self.assertEqual(0.1, self.agreement.mr_share)
         self.assertEqual(0.2, self.agreement.pr_share)
         self.assertEqual(0.3, self.agreement.sr_share)

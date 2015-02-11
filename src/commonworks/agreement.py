@@ -4,12 +4,221 @@ from commonworks.file import Record
 
 """
 Agreement model classes.
+
+These classes are used to represent an Agreement Transaction (AGR), which consists on an Agreement Record with the
+details of this Agreement, and a collection of Territories and their Interested parties.
 """
 
 __author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
+
+
+class AgreementInterestedParty(Record):
+    """
+    Represents a CWR Interested Party for the Agreement (IPA).
+
+    This contains information on the interested parties that concluded the agreement and on the shares they have agreed
+    to assign through the agreement.
+    """
+
+    def __init__(self, prefix, ip_id, last_name, agreement_role_code,
+                 writer_name='', ipi=None, cae_ipi_name=None,
+                 pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
+        """
+        Constructs an AgreementInterestedParty.
+
+        :param prefix: the record prefix
+        :param ip_id: the interested party ID
+        :param last_name: the writer last name or the publisher name
+        :param agreement_role_code: the role in the agreement
+        :param writer_name: the writer name
+        :param ipi: IPI code
+        :param cae_ipi_name: CAE/IPI Name number
+        :param pr_society: performing rights society
+        :param pr_share: performing rights share
+        :param mr_society: mechanization rights society
+        :param mr_share: mechanization rights share
+        :param sr_society: synchronization rights society
+        :param sr_share: synchronization rights share
+        """
+        super(AgreementInterestedParty, self).__init__(prefix)
+        # Agreement and Interested Party relationship
+        self._ip_id = ip_id
+        self._agreement_role_code = agreement_role_code
+        self._cae_ipi_name = cae_ipi_name
+
+        # Interested Party info
+        self._ipi = ipi
+        self._last_name = last_name
+        self._writer_name = writer_name
+
+        # Performing Rights info
+        self._pr_society = pr_society
+        self._pr_share = pr_share
+
+        # Mechanical Rights info
+        self._mr_society = mr_society
+        self._mr_share = mr_share
+
+        # Synchronization Rights info
+        self._sr_society = sr_society
+        self._sr_share = sr_share
+
+    @property
+    def agreement_role_code(self):
+        """
+        Agreement Role Code field. Table Lookup (Agreement Role Code).
+
+        This code is used to indicate the party's role in the Agreement.
+
+        In CWR v2.1 the two available roles are assignor or acquirer.
+
+        :return: the role of the Interested Party on the Agreement
+        """
+        return self._agreement_role_code
+
+    @property
+    def cae_ipi_name(self):
+        """
+        Interested Party CAE/IPI Name number field. Table Lookup (IPI Database).
+
+        The CAE number (IP name number) assigned to this interested party with 2 leading zero’s or the IPI Name number.
+
+        These values reside in the IPI Database.
+
+        :return: the CAE or IPI name number for this interested party
+        """
+        return self._cae_ipi_name
+
+    @property
+    def ip_id(self):
+        """
+        Interested Party Number field. Alphanumeric.
+
+        This is the unique ID given by the submitter to the Interested Party.
+
+        :return: ID for the interested party
+        """
+        return self._ip_id
+
+    @property
+    def ipi(self):
+        """
+        IPI Base Number field. Table Lookup (CISAC CIS).
+
+        The unique identifier associated with this interested party. IPI numbering is a sub-system of the CISAC
+        Common Information System.
+
+        :return: IPI base number for the interested party
+        """
+        return self._ipi
+
+    @property
+    def last_name(self):
+        """
+        Interested Party Last Name field. Alphanumeric.
+
+        The last name of the writer, or the name of the publisher.
+
+        Note that if the submitter does not have the ability to split first and last names of writers, the entire name
+        should be entered in this field in the format “Last Name, First Name” including the comma after the last name.
+
+        :return: the writer last name or the publisher name
+        """
+        return self._last_name
+
+    @property
+    def mr_share(self):
+        """
+        MR Share field. Numeric.
+
+        The percentage of the mechanical rights acquired or retained by this Interested Party under this Agreement.
+
+        This value is a float which can range from 0 (0%) to 1 (100%).
+
+        By default this value is 0.
+
+        :return: the mechanical of the performing rights for the Interested Party
+        """
+        return self._mr_share
+
+    @property
+    def mr_society(self):
+        """
+        MR Affiliation Society field. Table Lookup (Society Code Table).
+
+        The mechanical rights society to which this Interested Party belongs.
+
+        :return: the Interested Party's mechanical rights society
+        """
+        return self._mr_society
+
+    @property
+    def pr_share(self):
+        """
+        PR Share field. Numeric.
+
+        The percentage of the performing rights acquired or retained by this Interested Party under this Agreement.
+
+        This value is a float which can range from 0 (0%) to 1 (100%).
+
+        By default this value is 0.
+
+        :return: the percentage of the performing rights for the Interested Party
+        """
+        return self._pr_share
+
+    @property
+    def pr_society(self):
+        """
+        PR Affiliation Society field. Table Lookup (Society Code Table).
+
+        The performing rights society to which this Interested Party belongs.
+
+        This is only required if the PR Share is greater than zero.
+
+        :return: the Interested Party's performing rights society
+        """
+        return self._pr_society
+
+    @property
+    def sr_share(self):
+        """
+        SR Share field. Numeric.
+
+        The percentage of the synchronization rights acquired or retained by this Interested Party under this Agreement.
+
+        This value is a float which can range from 0 (0%) to 1 (100%).
+
+        By default this value is 0.
+
+        :return: the percentage of the synchronization rights for the Interested Party
+        """
+        return self._sr_share
+
+    @property
+    def sr_society(self):
+        """
+        SR Affiliation Society field. Table Lookup (Society Code Table).
+
+        The synchronization rights society to which this Interested Party belongs.
+
+        :return: the Interested Party's synchronization rights society
+        """
+        return self._sr_society
+
+    @property
+    def writer_name(self):
+        """
+        Interested Party Writer First Name field. Alphanumeric.
+
+        If the interested party is a writer, provide his/her first and middle names.
+
+        :return: the Writer's first and middle names
+        """
+        return self._writer_name
 
 
 class AgreementRecord(Record):
@@ -310,180 +519,110 @@ class AgreementRecord(Record):
         return self._works_number
 
 
-class AgreementInterestedParty(object):
+class AgreementTerritory(Record):
     """
-    Represents a CWR Interested Party for the Agreement (IPA).
+    Represents a CWR Territory in Agreement (TER).
 
-    This indicates the relationship between an Interested Party and an Agreement.
+    This record specifies a territory either within the territorial scope of an agreement or excluded from it.
 
-    On an Agreement there it at least two Interested Parties: one assignor and one acquirer.
+    For example, if  an agreement applied to all of Europe except Switzerland, you can provide a TER record to include
+    Europe, and one to exclude Switzerland.
+
+    This is to be used in a Transaction class.
     """
 
-    def __init__(self, ip_id, ip_last_name, agreement_role_code,
-                 ip_writer_name=None, ipi=None, cae_ipi_name=None,
-                 pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
-        # Agreement and Interested Party relationship
-        self._ip_id = ip_id
-        self._agreement_role_code = agreement_role_code
-        self._cae_ipi_name = cae_ipi_name
+    def __init__(self, prefix, tis_code, included):
+        """
+        Constructs an AgreementTerritory.
 
-        # Interested Party info
-        self._ipi = ipi
-        self._ip_last_name = ip_last_name
-        self._ip_writer_name = ip_writer_name
-
-        # Performing Rights info
-        self._pr_society = pr_society
-        self._pr_share = pr_share
-
-        # Mechanical Rights info
-        self._mr_society = mr_society
-        self._mr_share = mr_share
-
-        # Synchronization Rights info
-        self._sr_society = sr_society
-        self._sr_share = sr_share
+        :param prefix: the record prefix
+        :param tis_code: the TIS code
+        :param included: indicates if it is included or not
+        """
+        super(AgreementTerritory, self).__init__(prefix)
+        self._tis_code = tis_code
+        self._included = included
 
     @property
-    def agreement_role_code(self):
+    def included(self):
         """
-        Agreement Role Code field.
+        Inclusion/Exclusion Indicator field. Boolean.
 
-        This code is used to indicate whether the interested party is assigning or acquiring the rights.
+        This is a marker which shows whether the territory specified in this record is part of the territorial scope of
+        the agreement or not.
 
-        :return: the role of the Interested Party on the Agreement
+        :return: True if the Territory is included, False otherwise
         """
-        return self._agreement_role_code
+        return self._included
 
     @property
-    def cae_ipi_name(self):
+    def tis_code(self):
         """
-        Interested Party CAE/IPI Name # field.
+        TIS Numeric Code field. Table Lookup (TIS Numeric Code).
 
-        The CAE number (IP name number) assigned to this interested party. The CAE number assigned to this interested
-        party with 2 leading zero’s or the IPI Name #.These values reside in the IPI Database.
+        Numeric identifier of a territory according to the new CISAC Territory Standard.
 
-        :return: the Interested Party CAE/IPI name number
+        :return: the TIS code
         """
-        return self._cae_ipi_name
+        return self._tis_code
+
+
+class AgreementTransaction(object):
+    """
+    Represents a CWR Agreement Supporting Work Registration Transaction (AGR).
+
+    These transactions document agreements between interested parties, not general agreements, where at least
+    two IPAs (one assignor and one acquirer) form an Agreement for at least one Territory.
+
+    The transaction contains only details of the Agreement itself, and the Territories-IPAs relationships, but
+    not about the works covered by it, which are stored elsewhere in the same file, and connected to this Agreement
+    based on the Submitter Agreement Number that is included in the header record.
+
+    So an Agreement record is composed of three pieces:
+    - The Agreement details (AGR)
+    - The Territories covered (TER)
+    - The IPAs of each territory (IPA)
+
+    Or, in a more visual way an Agreement Transaction is: [AGR, [TER, IPA*]*].
+
+    It must be noted that the total sum of all the shares of the Interested Parties should be 100% for each type of
+    share.
+    """
+
+    def __init__(self, agreement, territories):
+        """
+        Constructs an AgreementTransaction.
+
+        :param agreement: the Agreement record
+        :param territories: the Territories and their IPAs
+        """
+        self._agreement = agreement
+        self._territories = territories
 
     @property
-    def ip_id(self):
+    def agreement(self):
         """
-        Interested Party # field.
+        Agreement record field. This is an AgreementRecord.
 
-        This number is your unique identifier for this Interested Party. The same one which, for example, you would
-        use to identify it on your database.
+        The details of the Agreement Transaction.
 
-        :return: your Interested Party ID
+        :return: the agreement details
         """
-        return self._ip_id
+        return self._agreement
 
     @property
-    def ip_last_name(self):
+    def territories(self):
         """
-        Interested Party Last Name field.
+        The territories affected by this Agreement and their IPAs.
 
-        The last name of the writer, or the name of the publisher.
+        This is a matrix of two columns, one containing a single Territory and another containing a collection
+        with all the Interested Parties affecting this territory.
 
-        Note that if the submitter does not have the ability to split first and last names of writers, the entire name
-        should be entered in this field in the format “Last Name, First Name” including the comma after the last name.
+        Graphically this is: [territory_1, IPA*]*.
 
-        :return: the Interested Party Name
+        These territories are instances of AgreementTerritory and the Interested Parties are instances of
+        AgreementInterestedParty.
+
+        :return: the territories affected by this Agreement and their IPAs as a dictionary
         """
-        return self._ip_last_name
-
-    @property
-    def ip_ipi(self):
-        """
-        Interested Party Number (IPI) field.
-
-        The unique identifier associated with this interested party. IPI numbering is a sub-system of the CISAC
-        Common Information System.
-
-        :return: the Interested Party IPI
-        """
-        return self._ipi
-
-    @property
-    def ip_writer_name(self):
-        """
-        Interested Party Writer First Name field.
-
-        If the interested party is a writer, provide his/her first and middle names.
-
-        :return: the Writer's first and middle names
-        """
-        return self._ip_writer_name
-
-    @property
-    def mr_share(self):
-        """
-        MR Share field.
-
-        The percentage of the mechanical rights acquired or retained by this Interested Party under this Agreement.
-
-        This value is a float which can range from 0 (0%) to 1 (100%).
-
-        :return: the mechanical of the performing rights for the Interested Party
-        """
-        return self._mr_share
-
-    @property
-    def mr_society(self):
-        """
-        MR Affiliation Society field.
-
-        The mechanical rights society to which this Interested Party belongs.
-
-        :return: the Interested Party's mechanical rights society
-        """
-        return self._mr_society
-
-    @property
-    def pr_share(self):
-        """
-        PR Share field.
-
-        The percentage of the performing rights acquired or retained by this Interested Party under this Agreement.
-
-        This value is a float which can range from 0 (0%) to 1 (100%).
-
-        :return: the percentage of the performing rights for the Interested Party
-        """
-        return self._pr_share
-
-    @property
-    def pr_society(self):
-        """
-        PR Affiliation Society field.
-
-        The performing rights society to which this Interested Party belongs.
-
-        :return: the Interested Party's performing rights society
-        """
-        return self._pr_society
-
-    @property
-    def sr_share(self):
-        """
-        SR Share field.
-
-        The percentage of the synchronization rights acquired or retained by this Interested Party under this Agreement.
-
-        This value is a float which can range from 0 (0%) to 1 (100%).
-
-        :return: the percentage of the synchronization rights for the Interested Party
-        """
-        return self._sr_share
-
-    @property
-    def sr_society(self):
-        """
-        SR Affiliation Society field.
-
-        The synchronization rights society to which this Interested Party belongs.
-
-        :return: the Interested Party's synchronization rights society
-        """
-        return self._sr_society
+        return self._territories
