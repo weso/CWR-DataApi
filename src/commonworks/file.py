@@ -521,7 +521,6 @@ class TransmissionHeader(object):
         :param transmission_date: date in which the file was transmitted
         :param edi_standard: EDI standard version (01.10 by default)
         :param character_set: file encoding set (ASCII by default)
-        :return:
         """
         # Sender info
         self._sender_id = sender_id

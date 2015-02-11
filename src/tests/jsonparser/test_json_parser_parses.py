@@ -34,7 +34,7 @@ class TestAgreement(unittest.TestCase):
         data['end_date'] = datetime.date(2015, 12, 11).isoformat()
 
         data['prior_royalty_status'] = 'D'
-        data['prior_royalty_status_date'] = datetime.date(2013, 12, 11).isoformat()
+        data['prior_royalty_start_date'] = datetime.date(2013, 12, 11).isoformat()
 
         data['post_term_collection_status'] = 'D'
         data['post_term_collection_end_date'] = datetime.date(2014, 1, 20).isoformat()
@@ -50,7 +50,7 @@ class TestAgreement(unittest.TestCase):
 
     def test_data(self):
         # Makes sure the data was parsed correctly
-        self.assertEqual(self.agreement.submitter_agreement_number, 1)
+        self.assertEqual(self.agreement.agreement_id, 1)
         self.assertEqual(self.agreement.society_agreement_number, 2)
         self.assertEqual(self.agreement.international_standard_code, 3)
         self.assertEqual(self.agreement.agreement_type, 'Original')
@@ -58,7 +58,7 @@ class TestAgreement(unittest.TestCase):
         self.assertEqual(self.agreement.end_date, datetime.date(2015, 12, 11).isoformat())
         self.assertEqual(self.agreement.retention_end_date, datetime.date(2015, 12, 20).isoformat())
         self.assertEqual(self.agreement.prior_royalty_status, 'D')
-        self.assertEqual(self.agreement.prior_royalty_status_date, datetime.date(2013, 12, 11).isoformat())
+        self.assertEqual(self.agreement.prior_royalty_start_date, datetime.date(2013, 12, 11).isoformat())
         self.assertEqual(self.agreement.post_term_collection_status, 'D')
         self.assertEqual(self.agreement.post_term_collection_end_date, datetime.date(2014, 1, 20).isoformat())
         self.assertEqual(self.agreement.signature_date, datetime.date(2014, 12, 20).isoformat())

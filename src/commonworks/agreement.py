@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+from commonworks.file import Record
+
 """
 Agreement model classes.
 """
@@ -10,26 +12,51 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class Agreement(object):
+class AgreementRecord(Record):
     """
-    Represents a CWR Agreement entity.
+    Represents a CWR Agreement Record (AGR).
 
-    This is an agreement between two interested parties, affecting any number of works.
+    This is the header record of an Agreement Transaction, containing the specific information which defines the
+    agreement, such as it's unique codes, but missing any information defining relationships, such as the works
+    covered, or the interested parties.
 
-    The interested parties may be of any kind, so the agreement may be between a publisher and subpublisher, or between
-    a writer and a publisher.
+    The relationships of the Agreement should be on a Transaction class.
 
-    It is identified by the submitter agreement number, and it is used to link the agreement to a work registration.
+    The Agreement Record contains a Submitter Agreement Number that is used to link the agreement to a work
+    registration. If a society has assigned an agreement number, then it too can be used as the link.
     """
 
-    def __init__(self, submitter_agreement_number, agreement_type, start_date, prior_royalty_status,
-                 post_term_collection_status, signature_date, works_number, society_agreement_number=None,
-                 end_date=None, international_standard_code=None, sales_manufacture_clause=None,
-                 retention_end_date=None, prior_royalty_status_date=None, post_term_collection_end_date=None,
+    def __init__(self, prefix, agreement_id, agreement_type, start_date, prior_royalty_status,
+                 post_term_collection_status, works_number, society_agreement_id='',
+                 international_standard_code='', sales_manufacture_clause='S',
+                 end_date=None, signature_date=None, retention_end_date=None, prior_royalty_start_date=None,
+                 post_term_collection_end_date=None,
                  shares_change=False, advance_given=False):
+        """
+        Constructs an Agreement Record.
+
+        :param prefix: the record prefix
+        :param agreement_id: the submitter's ID for the agreement
+        :param agreement_type: the type of agreement
+        :param start_date: starting date for the agreement
+        :param prior_royalty_status: the status of the royalties before the agreement
+        :param post_term_collection_status: if and how the the acquirer can get royalties after the retention end
+        :param works_number: number of works in the agreement
+        :param society_agreement_id: ID given by a society for the agreement
+        :param international_standard_code: ISA ID for the agreement
+        :param sales_manufacture_clause: indicates if the rights are for sale or manufacture
+        :param end_date: end date for the agreement
+        :param signature_date: date of signature of the agreement
+        :param retention_end_date: end date of the rights retention
+        :param prior_royalty_start_date: royalties acquisition date previous to the start of the agreement
+        :param post_term_collection_end_date: end of royalties after the agreement end
+        :param shares_change: indicates if the writer's shares can change
+        :param advance_given: indicates if an advancement has been paid
+        """
+        super(AgreementRecord, self).__init__(prefix)
         # Agreement identification data
-        self._submitter_agreement_number = submitter_agreement_number
-        self._society_agreement_number = society_agreement_number
+        self._agreement_id = agreement_id
+        self._society_agreement_id = society_agreement_id
         self._international_standard_code = international_standard_code
         self._agreement_type = agreement_type
 
@@ -39,7 +66,7 @@ class Agreement(object):
 
         # Royalty info
         self._prior_royalty_status = prior_royalty_status
-        self._prior_royalty_status_date = prior_royalty_status_date
+        self._prior_royalty_start_date = prior_royalty_start_date
 
         # Post-term collection info
         self._post_term_collection_status = post_term_collection_status
@@ -62,210 +89,223 @@ class Agreement(object):
     @property
     def advance_given(self):
         """
-        Advance Given field.
+        Advance Given field. Boolean.
 
-        Indicates if there is an advance paid for this agreement.
+        Indicates if an advance has been paid for this agreement.
 
-        If that is the case, this field should be True. Otherwise, the default value is False.
-
-        :return: the Advance Given field
+        :return: True if an advance has been given, False otherwise
         """
         return self._advance_given
 
     @property
+    def agreement_id(self):
+        """
+        Submitter Agreement Number field. Alphanumeric.
+
+        This is the unique ID given by the submitter to the Agreement.
+
+        :return: the submitter's ID for this Agreement
+        """
+        return self._agreement_id
+
+    @property
     def agreement_type(self):
         """
-        Agreement Type field.
+        Agreement Type field. Table lookup (Agreement Type Table).
 
-        Specifies the type of agreement.
+        Defines the category of the agreement.
 
-        The Agreement Types specified by the CWR format are Original (songwriter to publisher) or Sub publisher
-        (publisher to publisher), and Specific (defined list of songs) or General (entire catalogue).
-
-        :return: the Agreement Type field
+        :return: the Agreement's type
         """
         return self._agreement_type
 
     @property
     def end_date(self):
         """
-        Agreement End Date field.
+        Agreement End Date field. Date.
 
         This is the date when the transfer of rights to the acquiring party ends.
 
-        There may be provisions within the contract (as described in other fields such as collection end date)
+        There may be provisions within the contract (as described in other attributes such as collection end date)
         which have impact on entitlements.
 
-        :return: the Agreement End Date field
+        This attribute is optional, and by default is None.
+
+        :return: the end date for the Agreement
         """
         return self._end_date
 
     @property
     def international_standard_code(self):
         """
-        International Standard Agreement Code field.
+        International Standard Agreement Code field. Alphanumeric.
 
         If an International Standard Agreement Code exists, it is indicated here.
 
-        :return: the International Standard Agreement Code
+        As the ISA code may not exist when making the Agreement, this attribute is by default an empty string.
+
+        :return: the ISA code for this Agreement
         """
         return self._international_standard_code
 
     @property
     def post_term_collection_end_date(self):
         """
-        Post-term Collection End Date field.
+        Post-term Collection End Date field. Date.
 
         Indicates up to which date the acquiring party has right to collect money after the Retention End Date, if it
         exists, or the Agreement End Date, if the first does not exist.
 
-        For this date to be valid the the Post-Term Collection Status must then be set to "D" for date.
+        For this date to be valid, one of those two dates should exist and be previous to this one.
 
-        :return: the Post-term Collection End Date field
+        Also, if the Post-Term Collection Status is not set to 'D' for date this attribute should be ignored.
+
+        :return: the collection ending date after the retention or agreement end
         """
         return self._post_term_collection_end_date
 
     @property
     def post_term_collection_status(self):
         """
-        Post-term Collection Status field.
+        Post-term Collection Status field. Alphanumeric.
 
-        Indicates if the acquiring party has right to collect money after the Retention End Date, if it exists, or
+        Indicates if the acquiring party has rights to collect money after the Retention End Date, if it exists, or
         the Agreement End Date, if the first does not exist.
 
-        If the acquiring party has no rights, this field should be "N"o. If the acquiring party can collect until
-        further notification, this field should be "O" for open-ended. If they can collect until a specific date,
-        this field should be "D" for date, and the date must be specified in Post-term Collection End Date.
+        There are three possible values:
+        - 'N' for no, if the acquiring party has no rights.
+        - 'O' for open-ended, if the acquiring party can collect until further notification.
+        - 'D' for date, if the acquiring party an collect until a specific date. In this case the date should be
+        specified in the Post-term Collection End Date attribute.
 
-        :return: the Post-term Collection Status field
+        :return: if and which type of collection is allowed after the end of the agreement or the retention
         """
         return self._post_term_collection_status
 
     @property
     def prior_royalty_status(self):
         """
-        Prior Royalty Status field.
-        This field indicates whether or not the acquiring party is entitled to collect monies that were accrued before
-        the start date of this agreement but not yet distributed by the societies.
+        Prior Royalty Status field. Alphanumeric.
 
-        Possible values are: "N"one, or "A"ll , or "D"ate. If the acquiring party is entitled to collect monies as of a
-        certain date (as indicated by "D"), then provide the relevant date in Prior Royalty Start Date.
+        Indicates if the acquiring party has rights to collection money before the Agreement Start Date.
 
-        :return: the Prior Royalty Status field
+        There are three possible values:
+        - 'N' for none. If the acquiring party has no rights.
+        - 'A' for all. If the acquiring party has all the rights.
+        - 'D' for date. If the acquiring party can start collection from a specific date. In this case the date
+        should be specified in the Prior Royalty Start Date field.
+
+        :return: if and which collection rights has the acquirer before the start of the agreement
         """
         return self._prior_royalty_status
 
     @property
-    def prior_royalty_status_date(self):
+    def prior_royalty_start_date(self):
         """
-        Prior Royalty Start Date field.
+        Prior Royalty Start Date field. Date.
+
+        Indicates from which date the acquiring party has right to collect money before the Agreement Start Date.
 
         This date field indicates from what earning dates the acquiring party can begin collecting monies if the
         acquiring party can begin collecting before the agreement start date of this agreement.
 
-        This date must be entered if and only if the Prior Royalty Status is 'D'ate.
+        If the Prior Royalty Status is not set to 'D' this attribute should be ignored.
 
-        return the Prior Royalty Start Date field
+        return the collection start date before the start of the Agreement
         """
-        return self._prior_royalty_status_date
+        return self._prior_royalty_start_date
 
     @property
     def retention_end_date(self):
         """
-        Retention End Date field.
+        Retention End Date field. Date.
 
         If the agreement specifies that the collection rights for some or all of the works are retained beyond the end
-        of the agreement, then the end date of this retention period is indicated here.
+        of the agreement, then the end date of this retention period is indicated here. It is not necessary to specify
+        any Retention End Date if it doesn't exist on the Agreement.
 
-        :return: the Retention End Date field
+        This date supercedes the function of the Agreement End Date when a retention period is part of the agreement.
+
+        For this attribute to be valid the Retention End Date must be equal to or later than the Agreement End Date.
+
+        :return: the collection end date after the end of the Agreement
         """
         return self._retention_end_date
 
     @property
     def sales_manufacture_clause(self):
         """
-        Sales/ Manufacture Clause field.
+        Sales/ Manufacture Clause field. Table Lookup ('S'/'M').
 
         A marker which shows whether the acquiring party has acquired rights either for products manufactured or for
         products sold in the territories in agreement.
 
         Only two values are allowed according to BIEM/CISAC-rules:
-        S = Sales Clause: A stipulation which lays down that the acquiring party has acquired rights for products sold
+        - 'S' for Sales Clause. A stipulation which lays down that the acquiring party has acquired rights for products sold
         in the territories in agreement irrespective of the country of manufacture.
-        M = Manufacture Clause: A stipulation which lays down that the acquiring party has acquired rights for products
+        - 'M' for Manufacture Clause. A stipulation which lays down that the acquiring party has acquired rights for products
         manufactured in the territories in agreement irrespective of the country of sale.
 
-        :return: the Sales/ Manufacture Clause field
+        This attribute is by default set to 'S'.
+
+        :return: a marker indicating if the acquiring party has rights for manufacturing or for sales
         """
         return self._sales_manufacture_clause
 
     @property
     def shares_change(self):
         """
-        Shares Change field.
+        Shares Change field. Boolean.
 
-        Indicates if the shares assigned to the writers can change when the work(s) covered under this agreement are
-        sub published.
+        Indicates if the shares assigned to the writers can change as a result of sub-publication or similar.
 
-        If that is the case, this field should be True. Otherwise, the default value is False.
-
-        :return: the Shares Change field
+        :return: True if the writer shares can change, False otherwise
         """
         return self._shares_change
 
     @property
     def signature_date(self):
         """
-        Date of Signature of Agreement field.
+        Date of Signature of Agreement field. Date.
 
         The date when the written form of the agreement (the contract) was signed.
 
-        :return the Date of Signature of Agreement field
+        :return the date when the agreement contract was signed
         """
         return self._signature_date
 
     @property
     def society_agreement_number(self):
         """
-        Society-assigned Agreement Number field.
+        Society-assigned Agreement Number field. Alphanumeric.
 
-        The agreement number assigned by the society of the subpublisher is generally not known when the agreement is
-        submitted but can be supplied by the societies in the acknowledgment transaction.
+        Identificator given by a Society to the Agreement.
 
-        :return: the Society-assigned Agreement Number field
+        As this value is generally not known when the agreement is submitted, by default this is an empty string.
+
+        :return: the society given ID
         """
-        return self._society_agreement_number
+        return self._society_agreement_id
 
     @property
     def start_date(self):
         """
-        Agreement Start Date field.
+        Agreement Start Date field. Date.
 
-        The transfer of rights to the acquiring party becomes effective on this date.
+        The date on which the transfer of rights to the acquiring party becomes effective.
 
-        :return: the Agreement Start Date field
+        :return: date on which the Agreement starts
         """
         return self._start_date
 
     @property
-    def submitter_agreement_number(self):
-        """
-        Submitter Agreement Number field.
-
-        This is the number that you use to uniquely identify this agreement.
-
-        :return: the Submitter Agreement Number field
-        """
-        return self._submitter_agreement_number
-
-    @property
     def works_number(self):
         """
-        Number of Works field.
+        Number of Works field. Numeric.
 
-        The number of works for which work registrations are included in the agreement.
+        Number of works registered subject to this agreement specific to this file.
 
-        :return: the Number of Works field
+        :return: number of works under this Agreement
         """
         return self._works_number
 

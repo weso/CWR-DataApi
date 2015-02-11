@@ -11,6 +11,22 @@ For example, an Agreement Transaction would indicate an Agreement, the Territori
 Interested Parties for each Territory. While the concrete information of that Agreement, Territories and
 Interested Parties are stored in their own model classes.
 
+When representing a full CWR file these transmissions should be stored on the Transmission classes from the file
+module. More precisely, they should be contained in a TransactionGroup.
+
+A transaction is a composition of records, the first of which is called the transaction header. This is the record
+giving the name for the transaction, so for example an Agreement Transaction means that the header record
+is an Agreement Record.
+
+This header will describe the Transaction.
+
+The possible transactions in CWR v2.1 are:
+- Acknowledgment of Transaction (ACK)
+- Agreement supporting Work Registration (AGR)
+- Existing Work which is in conflict with a Work registration (EXC)
+- New Works Registration (NWR)
+- Notification of ISWC assigned to a Work (ISW)
+- Revised Registration (REV)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -85,7 +101,21 @@ class AcknowledgementTransaction(object):
 
 class AgreementTransaction(object):
     """
-    Represents a CWR Agreement Transaction (AGR).
+    Represents a CWR Agreement Supporting Work Registration Transaction (AGR).
+
+    These transactions document agreements between interested parties, not general agreements, where at least
+    two IPAs form an Agreement for at least one Territory.
+
+    The transaction contains only details of the Agreement itself, and the Territories-IPAs relationships, but
+    not about the works covered by it, which are stored elsewhere in the same file, and connected to this Agreement
+    based on the Submitter Agreement Number that is included in the header record.
+
+    So an Agreement record is composed of three pieces:
+    - The Agreement details (AGR)
+    - The Territories covered (TER)
+    - The IPAs of each territory (IPA)
+
+    Or, in a more visual way an Agreement Transaction is: [AGR, [TER, IPA*]*].
     """
 
     def __init__(self, agreement, territories):
@@ -95,11 +125,11 @@ class AgreementTransaction(object):
     @property
     def agreement(self):
         """
-        Agreement Supporting Work Registration field.
+        Agreement record field. This is an AgreementRecord.
 
-        The Agreement record in the transaction.
+        The details of the Agreement Transaction.
 
-        :return:
+        :return: the agreement details
         """
         return self._agreement
 
@@ -108,9 +138,11 @@ class AgreementTransaction(object):
         """
         The territories affected by this Agreement and their IPAs.
 
-        This is a collection if TerritoryWithIPAs.
+        This is a dictionary, where the territories are the keys, and the IPAs the values.
 
-        :return: the territories affected by this Agreement and their IPAs
+        {territory_1: [IPA_1, IPA_2]}
+
+        :return: the territories affected by this Agreement and their IPAs as a dictionary
         """
         return self._territories
 
@@ -834,34 +866,6 @@ class PublisherWithTerritories(object):
         :return: the territories of the Publisher
         """
         return self._territories
-
-
-class TerritoryWithIPAs(object):
-    """
-    Represents a Territory and its IPAs
-    """
-
-    def __init__(self, territory, ipas):
-        self._territory = territory
-        self._ipas = ipas
-
-    @property
-    def ipas(self):
-        """
-        The Interested Parties of the Agreement which affect this Territory.
-
-        :return: the Territory IPAs
-        """
-        return self._ipas
-
-    @property
-    def territory(self):
-        """
-        The Territory.
-
-        :return: the Territory
-        """
-        return self._territory
 
 
 class WriterWithTerritoryPublisher(object):

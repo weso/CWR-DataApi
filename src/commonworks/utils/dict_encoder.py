@@ -2,7 +2,7 @@
 
 import datetime
 
-from commonworks.agreement import Agreement, AgreementInterestedParty
+from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
@@ -44,7 +44,7 @@ class CWRDictionaryEncoder(object):
         self._adapter = DictionaryAdapter()
 
     def encode(self, d):
-        if isinstance(d, Agreement):
+        if isinstance(d, AgreementRecord):
             encoded = self.__encode_agreement(d)
         elif isinstance(d, AlternateTitle):
             encoded = self.__encode_alternative_work_title(d)
@@ -80,7 +80,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['submitter_agreement_number'] = agreement.submitter_agreement_number
+        encoded['agreement_id'] = agreement.agreement_id
         encoded['society_agreement_number'] = agreement.society_agreement_number
         encoded['international_standard_number'] = agreement.international_standard_code
         encoded['agreement_type'] = agreement.agreement_type
@@ -89,7 +89,7 @@ class CWRDictionaryEncoder(object):
         encoded['end_date'] = self._adapter.adapt(agreement.end_date)
 
         encoded['prior_royalty_status'] = agreement.prior_royalty_status
-        encoded['prior_royalty_status_date'] = self._adapter.adapt(agreement.prior_royalty_status_date)
+        encoded['prior_royalty_start_date'] = self._adapter.adapt(agreement.prior_royalty_start_date)
 
         encoded['post_term_collection_status'] = agreement.post_term_collection_status
         encoded['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)

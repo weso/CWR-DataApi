@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from commonworks.agreement import Agreement, AgreementInterestedParty
+from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
 from commonworks.work import Work, AlternateTitle, AuthoredWork, \
     RecordingDetail, WorkOrigin, PerformingArtist
@@ -22,22 +22,22 @@ def parse_agreement(json_item):
     :return: an Agreement parsed from the JSON and with the specified id
     """
     # TODO Optional fields may be missing on the JSON
-    agreement = Agreement(submitter_agreement_number=json_item['submitter_agreement_number'],
-                          society_agreement_number=json_item['society_agreement_number'],
-                          agreement_type=json_item['agreement_type'],
-                          start_date=json_item['start_date'],
-                          end_date=json_item['end_date'],
-                          prior_royalty_status=json_item['prior_royalty_status'],
-                          post_term_collection_status=json_item['post_term_collection_status'],
-                          signature_date=json_item['signature_date'],
-                          works_number=json_item['works_number'],
-                          sales_manufacture_clause=json_item['sales_manufacture_clause'],
-                          international_standard_code=json_item['international_standard_code'],
-                          retention_end_date=json_item['retention_end_date'],
-                          prior_royalty_status_date=json_item['prior_royalty_status_date'],
-                          post_term_collection_end_date=json_item['post_term_collection_end_date'],
-                          shares_change=json_item['shares_change'],
-                          advance_given=json_item['advance_given'])
+    agreement = AgreementRecord(prefix=None, agreement_id=json_item['submitter_agreement_number'],
+                                society_agreement_id=json_item['society_agreement_number'],
+                                agreement_type=json_item['agreement_type'],
+                                start_date=json_item['start_date'],
+                                end_date=json_item['end_date'],
+                                prior_royalty_status=json_item['prior_royalty_status'],
+                                post_term_collection_status=json_item['post_term_collection_status'],
+                                signature_date=json_item['signature_date'],
+                                works_number=json_item['works_number'],
+                                sales_manufacture_clause=json_item['sales_manufacture_clause'],
+                                international_standard_code=json_item['international_standard_code'],
+                                retention_end_date=json_item['retention_end_date'],
+                                prior_royalty_start_date=json_item['prior_royalty_start_date'],
+                                post_term_collection_end_date=json_item['post_term_collection_end_date'],
+                                shares_change=json_item['shares_change'],
+                                advance_given=json_item['advance_given'])
 
     return agreement
 
