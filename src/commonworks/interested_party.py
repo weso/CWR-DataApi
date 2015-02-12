@@ -89,7 +89,8 @@ class InterestedPartyRecord(Record):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, prefix, reversionary='U', first_record_refusal='U', usa_license=False):
+    def __init__(self, prefix, reversionary='U', first_record_refusal='U', usa_license='',
+                 pr_society=None, mr_society=None, sr_society=None):
         """
         Constructs an InterestedPartyRecord.
         :param prefix: the record prefix
@@ -102,6 +103,11 @@ class InterestedPartyRecord(Record):
         self._first_record_refusal = first_record_refusal
         self._reversionary = reversionary
         self._usa_license = usa_license
+
+        # Shares
+        self._pr_society = pr_society
+        self._mr_society = mr_society
+        self._sr_society = sr_society
 
     @property
     def first_record_refusal(self):
@@ -117,6 +123,28 @@ class InterestedPartyRecord(Record):
         return self._first_record_refusal
 
     @property
+    def mr_society(self):
+        """
+        Mechanical Rights Affiliation Society field. Table Lookup (Society Code Table).
+
+        Number assigned to the Mechanical Rights Society with which the Interested Party is affiliated.
+
+        :return: the Interested Party mechanical rights society
+        """
+        return self._mr_society
+
+    @property
+    def pr_society(self):
+        """
+        Performing Rights Affiliation Society field. Table Lookup (Society Code Table).
+
+        Number assigned to the Performing Rights Society with which the Interested Party is affiliated.
+
+        :return: the Interested Party performing rights society
+        """
+        return self._pr_society
+
+    @property
     def reversionary(self):
         """
         Reversionary Indicator field. Flag (Yes/No/Unknown).
@@ -128,6 +156,18 @@ class InterestedPartyRecord(Record):
         :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
         """
         return self.reversionary
+
+    @property
+    def sr_society(self):
+        """
+        Synchronization Rights Affiliation Society field. Table Lookup (Society Code Table).
+
+        Number assigned to the Society with which the publisher is affiliated for administration of synchronization
+        rights.
+
+        :return: the Publisher's synchronization rights society
+        """
+        return self._sr_society
 
     @property
     def usa_license(self):
@@ -311,7 +351,7 @@ class PublisherRecord(InterestedPartyRecord):
     def __init__(self, prefix, publisher, sequence_n, agreement_id='', publisher_type=None, publisher_unknown='F',
                  agreement_type=None, isac='', society_agreement_id='',
                  pr_society=None, pr_owner_share=0, mr_society=None, mr_owner_share=0, sr_society=None,
-                 sr_owner_share=0):
+                 sr_owner_share=0, reversionary='U', first_record_refusal='U', usa_license=''):
         """
         Constructs a PublisherRecord.
 
@@ -331,7 +371,8 @@ class PublisherRecord(InterestedPartyRecord):
         :param sr_society: Synchronization Rights society
         :param sr_owner_share: Synchronization Rights share
         """
-        super(PublisherRecord, self).__init__(prefix)
+        super(PublisherRecord, self).__init__(prefix, reversionary, first_record_refusal, usa_license,
+                                              pr_society, mr_society, sr_society)
 
         # Publisher info
         self._publisher = publisher
@@ -345,11 +386,8 @@ class PublisherRecord(InterestedPartyRecord):
         self._isac = isac
 
         # Shares
-        self._pr_society = pr_society
         self._pr_owner_share = pr_owner_share
-        self._mr_society = mr_society
         self._mr_owner_share = mr_owner_share
-        self._sr_society = sr_society
         self._sr_owner_share = sr_owner_share
 
         # Other info
@@ -406,17 +444,6 @@ class PublisherRecord(InterestedPartyRecord):
         return self._mr_owner_share
 
     @property
-    def mr_society(self):
-        """
-        Mechanical Rights Affiliation Society field. Table Lookup (Society Code Table).
-
-        Number assigned to the Mechanical Rights Society with which the publisher is affiliated.
-
-        :return: the Publisher's mechanical rights society
-        """
-        return self._mr_society
-
-    @property
     def pr_owner_share(self):
         """
         Performing Rights Ownership Share field. Numeric decimal.
@@ -431,17 +458,6 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the percentage of the performing rights for the Publisher
         """
         return self._pr_owner_share
-
-    @property
-    def pr_society(self):
-        """
-        Performing Rights Affiliation Society field. Table Lookup (Society Code Table).
-
-        Number assigned to the Performing Rights Society with which the publisher is affiliated.
-
-        :return: the Publisher's performing rights society
-        """
-        return self._pr_society
 
     @property
     def publisher(self):
@@ -506,18 +522,6 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the percentage of the synchronization rights for the Publisher
         """
         return self._sr_owner_share
-
-    @property
-    def sr_society(self):
-        """
-        Synchronization Rights Affiliation Society field. Table Lookup (Society Code Table).
-
-        Number assigned to the Society with which the publisher is affiliated for administration of synchronization
-        rights.
-
-        :return: the Publisher's synchronization rights society
-        """
-        return self._sr_society
 
     @property
     def society_agreement_id(self):
@@ -641,27 +645,20 @@ class Writer(InterestedParty):
     This can be a Writer Controlled by Submitter (SWR) or Other Writer (OWR).
     """
 
-    def __init__(self, ip_id, last_name, personal_number, ip_base_id=None, first_name=None, tax_id=None,
-                 cae_ipi_name=None, pr_affiliation=None, pr_ownership_share=None,
-                 mr_affiliation=None, mr_ownership_share=None,
-                 sr_affiliation=None, sr_ownership_share=None):
-        super(Writer, self).__init__(ip_id, ip_base_id, tax_id, cae_ipi_name)
+    def __init__(self, writer_id, personal_number, ipi_base_id=None, first_name='', last_name='', tax_id=None,
+                 cae_ipi_name=None):
+        super(Writer, self).__init__(writer_id, ipi_base_id, tax_id, cae_ipi_name)
+
+        # Writer information
         self._first_name = first_name
         self._last_name = last_name
         self._personal_number = personal_number
-
-        # Shares
-        self._pr_affiliation = pr_affiliation
-        self._pr_ownership_share = pr_ownership_share
-        self._mr_affiliation = mr_affiliation
-        self._mr_ownership_share = mr_ownership_share
-        self._sr_affiliation = sr_affiliation
-        self._sr_ownership_share = sr_ownership_share
+        self._tax_id = tax_id
 
     @property
     def first_name(self):
         """
-        Writer First Name field.
+        Writer First Name field. Alphanumeric.
 
         The first name of the writer.
 
@@ -672,11 +669,10 @@ class Writer(InterestedParty):
     @property
     def last_name(self):
         """
-        Writer Last Name field.
+        Writer Last Name field. Alphanumeric.
 
         The last name of the writer. If you do not have the ability to separate the last name from the first name, then
-        you may include both the last and first name in this field—pr separated by a comma. This field is mandatory for
-        writers that you control.
+        you may include both the last and first name in this field—pr separated by a comma.
 
         :return: the Writer last name
         """
@@ -685,7 +681,7 @@ class Writer(InterestedParty):
     @property
     def personal_number(self):
         """
-        Personal Number field.
+        Personal Number field. Numeric.
 
         This field contains the personal number assigned to this individual in the country of residence. For Sweden, it
         has the format YYMMDD9999.
@@ -694,78 +690,117 @@ class Writer(InterestedParty):
         """
         return self._personal_number
 
+
+class WriterRecord(InterestedPartyRecord):
+    """
+    Represents a CWR Writer Record (SWR/OWR)
+
+    This is for Writer Controlled By Submitter (SWR) and Other Writer (OWR) records.
+
+    These contain all the information available to the submitter for a Writer.
+    """
+
+    def __init__(self, prefix, writer, designation=None, work_for_hire=False, writer_unknown='F',
+                 reversionary='U', first_record_refusal='U', usa_license='',
+                 pr_society=None, pr_ownership_share=0,
+                 mr_society=None, mr_ownership_share=0,
+                 sr_society=None, sr_ownership_share=0):
+        super(WriterRecord, self).__init__(prefix, reversionary, first_record_refusal, usa_license,
+                                           pr_society, mr_society, sr_society)
+        # Writer info
+        self._writer = writer
+
+        # Writer role
+        self._designation = designation
+        self._writer_unknown = writer_unknown
+        self._work_for_hire = work_for_hire
+
+        # Shares
+        self._pr_ownership_share = pr_ownership_share
+        self._mr_ownership_share = mr_ownership_share
+        self._sr_ownership_share = sr_ownership_share
+
+    def designation(self):
+        """
+        Writer Designation Code field. Table Lookup (Writer Designation Table).
+
+        Code defining the role the writer played in the composition of the work.
+
+        This attribute is required for record type SWR and optional for record type OWR.
+
+        :return: the Writer designation code
+        """
+        return self._designation
+
     @property
-    def mr_affiliation(self):
+    def work_for_hire(self):
         """
-        MR Affiliation Society # field.
+        Work For Hire Indicator field. Boolean.
 
-        Number assigned to the Mechanical Rights Society with which the writer is affiliated.
+        Indicates whether or not this work was written for hire.
 
-        These values reside on the Society Code Table.
-
-        :return: the MR affiliation number
+        :return: True if this work was written for hire, False otherwise
         """
-        return self._mr_affiliation
+        return self._work_for_hire
+
+    def writer(self):
+        """
+        The Writer information.
+
+        This is a Writer instance.
+
+        :return: the Writer available information
+        """
+        return self._writer
+
+    def writer_unknown(self):
+        """
+        Writer Unknown Indicator field. Flag (Yes/No/Unknown).
+
+        Indicates if the name of this writer is unknown. Note that this field must be left blank for SWR records.
+
+        For OWR records, this field must be set to 'Y' if the Writer Last Name is blank.
+
+        :return: 'Y' if the Writer is unknown, 'F' otherwise, 'U' in special cases
+        """
+        return self._writer_unknown
 
     @property
     def mr_ownership_share(self):
         """
-        MR Ownership Share field.
+        MR Ownership Share field. Numeric Decimal.
 
         Defines the percentage of the writer’s ownership of the mechanical rights to the work.
-        Within an individual SPU record, this value can range from 0 to 100.0.
+
+        This value can range from 0 (0%) to 1 (100%).
 
         :return: the MR ownership share
         """
         return self._mr_ownership_share
 
     @property
-    def pr_affiliation(self):
-        """
-        PR Affiliation Society # field.
-
-        Number assigned to the Performing Rights Society with which the writer is affiliated.
-
-        These values reside on the Society Code Table.
-
-        :return: the PR affiliation number
-        """
-        return self._pr_affiliation
-
-    @property
     def pr_ownership_share(self):
         """
-        PR Ownership Share field.
+        PR Ownership Share field. Numeric Decimal.
 
-        Defines the percentage of the writer’s ownership of the performance rights to the work.  Within an individual
-        SWR record, this value can range from 0 to 100.0.  Note that writers both own and collect the performing right
-        interest.
+        Defines the percentage of the writer’s ownership of the performance rights to the work.
+
+        This value can range from 0 (0%) to 1 (100%).
+
+        Note that writers both own and collect the performing right interest.
 
         :return: the PR ownership share
         """
         return self._pr_ownership_share
 
     @property
-    def sr_affiliation(self):
-        """
-        SR Affiliation Society # field.
-
-        Number assigned to the Mechanical Rights Society with which the publisher is affiliated.
-
-        These values reside on the Society Code Table.
-
-        :return: the SR affiliation number
-        """
-        return self._pr_affiliation
-
-    @property
     def sr_ownership_share(self):
         """
-        SR Ownership Share field.
+        SR Ownership Share field. Numeric Decimal.
 
         Defines the percentage of the writer’s ownership of the synchronization rights to the work.
 
-        Within an individual SPU record, this value can range from 0 to 100.0.
+        This value can range from 0 (0%) to 1 (100%).
 
         :return: the SR ownership share
         """
