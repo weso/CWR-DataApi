@@ -181,11 +181,11 @@ class InterestedPartyRecord(Record):
         return self._usa_license
 
 
-class PublisherTerritory(Record):
+class IPTerritory(Record):
     """
-    Represents a CWR Publisher Territory of Control (SPT).
+    Represents a CWR Publisher or Writer Territory of Control (SPT/SWT).
 
-    This indicates if a Publisher has control or not over a Territory, and the shares it has on it.
+    This indicates if a Publisher or Writer has control or not over a Territory, and the shares it has on it.
 
     The control is indicated with the exclusion marker.
 
@@ -198,7 +198,7 @@ class PublisherTerritory(Record):
 
     def __init__(self, prefix, ip_id, ie_indicator, tis_numeric_code, sequence_n,
                  pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
-        super(PublisherTerritory, self).__init__(prefix)
+        super(IPTerritory, self).__init__(prefix)
         # Territory information
         self._tis_numeric_code = tis_numeric_code
 
@@ -631,7 +631,7 @@ class PublisherChainNode(object):
         """
         Publisher territories.
 
-        This is a collection PublisherTerritory instances.
+        This is a collection IPTerritory instances.
 
         :return: territories under control of the Publisher
         """
@@ -689,6 +689,78 @@ class Writer(InterestedParty):
         :return: the Writer country-based personal number
         """
         return self._personal_number
+
+
+class WriterPublisherRecord(Record):
+    """
+    Represents a CWR Publisher For Writer (PWR) record.
+
+    This record is used to indicate the publisher that represents the writer designated on the previous SWR record for
+    writers that are published (total writer ownership shares for each right are less than 100%).
+
+    Only Writers under control of the Publisher use these records.
+
+    The record serves in case that two or more writers for a work have an agreement with the same original publisher,
+    so it is possible to record each Society-Assigned Agreement Number / Submitter Agreement Number in the PWR record
+    that links that writer to the original publisher.
+
+    It is the society of the original publisher that assigns the society-assigned agreement number to the writer to
+    publisher agreement.
+    """
+
+    def __init__(self, publisher_id, writer_id, agreement_id=None, society_agreement_id=None):
+        # Parties IDs
+        self._publisher_id = publisher_id
+        self._writer_id = writer_id
+
+        # Agreement IDs
+        self._agreement_id = agreement_id
+        self._society_agreement_id = society_agreement_id
+
+    @property
+    def agreement_id(self):
+        """
+        Submitter Agreement Number field. Alphanumeric.
+
+        The Agreement's ID.
+
+        :return: the agreement ID
+        """
+        return self._agreement_id
+
+    @property
+    def publisher_id(self):
+        """
+        Publisher IP Number field. Alphanumeric.
+
+        The publisher interested party number pointing back to the SPU record for the original publisher/income
+        participant representing this writer.
+
+        :return: the Publisher id
+        """
+        return self._publisher_id
+
+    @property
+    def society_agreement_id(self):
+        """
+        Society-Assigned Agreement Number field. Alphanumeric.
+
+        The unique number assigned to this agreement by the society.
+
+        :return: the society-given agreement ID
+        """
+        return self._society_agreement_id
+
+    @property
+    def writer_id(self):
+        """
+        Writer IP Number field. Alphanumeric.
+
+        The writer interested party number pointing back to the SWR record in an explicit link.
+
+        :return: the writer ID
+        """
+        return self._writer_id
 
 
 class WriterRecord(InterestedPartyRecord):
