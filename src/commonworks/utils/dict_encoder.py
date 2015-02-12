@@ -137,11 +137,11 @@ class CWRDictionaryEncoder(object):
         encoded['language_code'] = work.language_code
         encoded['source'] = work.source
         encoded['first_name_1'] = work.first_name_1
-        encoded['ip_base_1'] = work.ip_base_1
-        encoded['ip_name_1'] = work.ip_name_1
+        encoded['ip_base_1'] = work.ipi_base_1
+        encoded['ip_name_1'] = work.cae_ipi_name_1
         encoded['first_name_2'] = work.first_name_2
-        encoded['ip_base_2'] = work.ip_base_2
-        encoded['ip_name_2'] = work.ip_name_2
+        encoded['ip_base_2'] = work.ipi_base_2
+        encoded['ip_name_2'] = work.cae_ipi_name_2
         encoded['last_name_1'] = work.last_name_1
         encoded['last_name_2'] = work.last_name_2
         encoded['iswc'] = work.iswc

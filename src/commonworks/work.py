@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from abc import ABCMeta
+import datetime
 
 from commonworks.file import Record
 
@@ -673,15 +674,19 @@ class WorkTransaction(object):
         return self._writers_other
 
 
-class Component(object):
+class Component(Record):
     """
     Represents a CWR Component (COM).
+
+    If the work being registered is a composite work, the COM record will identify an individual component of the
+    composite.
     """
 
-    def __init__(self, title, first_name_1, submitter_id=None,
-                 last_name_1=None, first_name_2=None, last_name_2=None,
-                 ip_base_1=None, ip_name_1=None, ip_base_2=None, ip_name_2=None,
-                 iswc=None):
+    def __init__(self, prefix, title, last_name_1, submitter_id='',
+                 first_name_1='', first_name_2='', last_name_2='',
+                 ipi_base_1=None, ipi_name_1=None, cae_ipi_base_2=None, cae_ipi_name_2=None,
+                 iswc=''):
+        super(Component, self).__init__(prefix)
         # Work's info
         self._submitter_id = submitter_id
         self._title = title
@@ -690,19 +695,47 @@ class Component(object):
         # First writer's info
         self._first_name_1 = first_name_1
         self._last_name_1 = last_name_1
-        self._ip_base_1 = ip_base_1
-        self._ip_name_1 = ip_name_1
+        self._ipi_base_1 = ipi_base_1
+        self._ipi_name_1 = ipi_name_1
 
         # Second writer's info
         self._first_name_2 = first_name_2
         self._last_name_2 = last_name_2
-        self._ip_base_2 = ip_base_2
-        self._ip_name_2 = ip_name_2
+        self._cae_ipi_base_2 = cae_ipi_base_2
+        self._cae_ipi_name_2 = cae_ipi_name_2
+
+    @property
+    def cae_ipi_name_1(self):
+        """
+        Writer 1 IPI Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the first Writer's IP name field
+        """
+        return self._cae_ipi_name_1
+
+    @property
+    def cae_ipi_name_2(self):
+        """
+        Writer 2 IPI Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the second Writer's IP name field
+        """
+        return self._cae_ipi_name_2
 
     @property
     def first_name_1(self):
         """
-        Writer 1 First Name field.
+        Writer 1 First Name field. Alphanumeric.
 
         The first name of the first writer.
 
@@ -713,7 +746,7 @@ class Component(object):
     @property
     def first_name_2(self):
         """
-        Writer 2 First Name field.
+        Writer 2 First Name field. Alphanumeric.
 
         The first name of the second writer.
 
@@ -722,9 +755,9 @@ class Component(object):
         return self._first_name_2
 
     @property
-    def ip_base_1(self):
+    def ipi_base_1(self):
         """
-        Writer 1 IP Base Number field.
+        Writer 1 IPI Base Number field. Table Lookup (IPI DB).
 
         The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
         (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
@@ -733,12 +766,12 @@ class Component(object):
 
         :return: the first Writer's IP base number
         """
-        return self._ip_base_1
+        return self._ipi_base_1
 
     @property
-    def ip_base_2(self):
+    def ipi_base_2(self):
         """
-        Writer 2 IP Base Number field.
+        Writer 2 IP Base Number field. Table Lookup (IPI DB).
 
         The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
         (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
@@ -747,40 +780,12 @@ class Component(object):
 
         :return: the second Writer's IP base number
         """
-        return self._ip_base_2
-
-    @property
-    def ip_name_1(self):
-        """
-        Writer 1 IP Name # field.
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the first Writer's IP name field
-        """
-        return self._ip_name_1
-
-    @property
-    def ip_name_2(self):
-        """
-        Writer 2 IP Name # field.
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the second Writer's IP name field
-        """
-        return self._ip_name_2
+        return self._ipi_base_2
 
     @property
     def iswc(self):
         """
-        ISWC field.
+        ISWC field. Alphanumeric.
 
         If the International Standard Work Code has been notified to you, you may include it in your registration
         or revision.
@@ -792,7 +797,7 @@ class Component(object):
     @property
     def last_name_1(self):
         """
-        Writer 1 Last Name field.
+        Writer 1 Last Name field. Alphanumeric.
 
         If the ISWC is not known, then the last name of a writer is helpful to identify the work.
 
@@ -803,7 +808,7 @@ class Component(object):
     @property
     def last_name_2(self):
         """
-        Writer 2 Last Name field.
+        Writer 2 Last Name field. Alphanumeric.
 
         If the ISWC is not known, then the last name of a writer is helpful to identify the work.
 
@@ -814,7 +819,7 @@ class Component(object):
     @property
     def submitter_id(self):
         """
-        Submitter entity # field.
+        Submitter entity Number field. Alphanumeric.
 
         The unique number that you have assigned to the entire work.
 
@@ -825,7 +830,7 @@ class Component(object):
     @property
     def title(self):
         """
-        Work Title field.
+        Work Title field. Alphanumeric.
 
         The title by which the work is best known.
 
@@ -839,12 +844,14 @@ class Component(object):
 
 class AuthoredWork(BaseWork):
     """
-    Represents a Work with authors. This is for the Entire Work and Original Work entities.
+    Represents a Work with authors. This is for the Entire Work (EWT) and Original Work for Versions (VER) entities.
+
+    It also indicates the original source of the work.
     """
 
-    def __init__(self, prefix, title, work_id=None,
-                 first_name_1=None, last_name_1=None, first_name_2=None, last_name_2=None,
-                 ip_base_1=None, ip_name_1=None, ip_base_2=None, ip_name_2=None,
+    def __init__(self, prefix, title, work_id='',
+                 first_name_1='', last_name_1='', first_name_2='', last_name_2='',
+                 ipi_base_1=None, cae_ipi_name_1=None, ipi_base_2=None, cae_ipi_name_2=None,
                  source=None, language_code=None, iswc=None):
         super(AuthoredWork, self).__init__(prefix, title, language_code, iswc)
 
@@ -855,19 +862,47 @@ class AuthoredWork(BaseWork):
         # First writer's info
         self._first_name_1 = first_name_1
         self._last_name_1 = last_name_1
-        self._ip_base_1 = ip_base_1
-        self._ip_name_1 = ip_name_1
+        self._ipi_base_1 = ipi_base_1
+        self._cae_ipi_name_1 = cae_ipi_name_1
 
         # Second writer's info
         self._first_name_2 = first_name_2
         self._last_name_2 = last_name_2
-        self._ip_base_2 = ip_base_2
-        self._ip_name_2 = ip_name_2
+        self._ipi_base_2 = ipi_base_2
+        self._cae_ipi_name_2 = cae_ipi_name_2
+
+    @property
+    def cae_ipi_name_1(self):
+        """
+        Writer 1 IP Name # field. Table Lookup (CISAC)
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the first Writer's IP name field
+        """
+        return self._cae_ipi_name_1
+
+    @property
+    def cae_ipi_name_2(self):
+        """
+        Writer 2 IP Name # field. Table Lookup (CISAC)
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the second Writer's IP name field
+        """
+        return self._cae_ipi_name_2
 
     @property
     def first_name_1(self):
         """
-        Writer 1 First Name field.
+        Writer 1 First Name field. Alphanumeric.
 
         The first name of the first writer.
 
@@ -878,7 +913,7 @@ class AuthoredWork(BaseWork):
     @property
     def first_name_2(self):
         """
-        Writer 2 First Name field.
+        Writer 2 First Name field. Alphanumeric.
 
         The first name of the second writer.
 
@@ -889,63 +924,35 @@ class AuthoredWork(BaseWork):
     @property
     def ip_base_1(self):
         """
-        Writer 1 IP Base Number field.
+        Writer 1 IPI Base Number field. Table Lookup (CISAC)
 
         The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
         (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
         hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
         adapted from ISO 7064). You can find more information on the CISAC web site.
 
-        :return: the first Writer's IP base number
+        :return: the first Writer's IPI base number
         """
-        return self._ip_base_1
+        return self._ipi_base_1
 
     @property
     def ip_base_2(self):
         """
-        Writer 2 IP Base Number field.
+        Writer 2 IPI Base Number field. Table Lookup (CISAC)
 
         The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
         (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
         hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
         adapted from ISO 7064). You can find more information on the CISAC web site.
 
-        :return: the second Writer's IP base number
+        :return: the second Writer's IPI base number
         """
-        return self._ip_base_2
-
-    @property
-    def ip_name_1(self):
-        """
-        Writer 1 IP Name # field.
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the first Writer's IP name field
-        """
-        return self._ip_name_1
-
-    @property
-    def ip_name_2(self):
-        """
-        Writer 2 IP Name # field.
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the second Writer's IP name field
-        """
-        return self._ip_name_2
+        return self._ipi_base_2
 
     @property
     def last_name_1(self):
         """
-        Writer 1 Last Name field.
+        Writer 1 Last Name field. Alphanumeric.
 
         If the ISWC is not known, then the last name of a writer is helpful to identify the work.
 
@@ -956,7 +963,7 @@ class AuthoredWork(BaseWork):
     @property
     def last_name_2(self):
         """
-        Writer 2 Last Name field.
+        Writer 2 Last Name field. Alphanumeric.
 
         If the ISWC is not known, then the last name of a writer is helpful to identify the work.
 
@@ -967,32 +974,40 @@ class AuthoredWork(BaseWork):
     @property
     def source(self):
         """
-        Source field.
+        Source field. Alphanumeric.
 
         This field contains a free form description of the source of the entire work e.g. symphony.
 
-        :return: the source
+        :return: the work source
         """
         return self._source
 
     @property
     def work_id(self):
         """
-        Submitter Work # field.
+        Submitter Work Number field. Alphanumeric.
 
         The unique number that you have assigned to the entire work.
 
-        :return: the Work's ID
+        :return: the Work ID
         """
         return self._work_id
 
 
-class AlternateTitle(object):
+class AlternateTitle(Record):
     """
-    Represents a CWR Alternate Title.
+    Represents a CWR Alternate Title (ALT) record.
+
+    This identifies alternate titles for this work.
+
+    The language code is used to identify titles that have been translated into a language other than the original.
+
+    Note that this applies to translation of the title only - not a  translation of the work. Including record type VER
+    would indicate a work translation.
     """
 
-    def __init__(self, alternate_title, title_type, language=None):
+    def __init__(self, prefix, alternate_title, title_type, language=None):
+        super(AlternateTitle, self).__init__(prefix)
         self._alternate_title = alternate_title
         self._title_type = title_type
         self._language = language
@@ -1000,7 +1015,9 @@ class AlternateTitle(object):
     @property
     def alternate_title(self):
         """
-        Alternate Title field.
+        Alternate Title field. Alphanumeric.
+
+        AKA or pseudonym of the work title.
 
         :return: the alternate title
         """
@@ -1009,7 +1026,7 @@ class AlternateTitle(object):
     @property
     def language(self):
         """
-        Language Code field.
+        Language Code field. Table Lookup (Language Code Table).
 
         This field contains the code used to describe the language of the Alternate Title, if it is known.
 
@@ -1020,25 +1037,33 @@ class AlternateTitle(object):
     @property
     def title_type(self):
         """
-        Title Type field.
+        Title Type field. Table Lookup (Title Type Table).
 
-        This field describes the type of title.
+        Indicates the type of alternate title presented on this record.
 
-        :return:
+        :return: the type of alternate title
         """
         return self._title_type
 
 
-class RecordingDetail(object):
+class RecordingDetail(Record):
     """
-    Represents a CWR recording details.
+    Represents a CWR Recording Detail (REC).
+
+    This record contains information on the first commercial release of the work.
     """
 
-    def __init__(self, first_release_date=None, first_release_duration=None, first_album_title=None,
-                 first_album_label=None, first_release_catalog_id=None, ean=None,
+    def __init__(self, prefix, first_release_date=None, first_release_duration=None, first_album_title='',
+                 first_album_label='', first_release_catalog_id='', ean=None,
                  isrc=None, recording_format=None, recording_technique=None, media_type=None):
+        super(RecordingDetail, self).__init__(prefix)
         self._first_release_date = first_release_date
-        self._first_release_duration = first_release_duration
+
+        if first_release_duration is None:
+            self._first_release_duration = datetime.timedelta(seconds=0)
+        else:
+            self._first_release_duration = first_release_duration
+
         self._first_album_title = first_album_title
         self._first_album_label = first_album_label
         self._first_release_catalog_id = first_release_catalog_id
@@ -1051,7 +1076,7 @@ class RecordingDetail(object):
     @property
     def ean(self):
         """
-        EAN field.
+        EAN field. Table Lookup (EAN).
 
         European Article Number of release (EAN-13).
 
@@ -1062,7 +1087,7 @@ class RecordingDetail(object):
     @property
     def first_album_label(self):
         """
-        First Album Label field.
+        First Album Label field. Alphanumeric.
 
         Name of the organization that produced and released the album in which the first release of the work was
         included.
@@ -1074,7 +1099,7 @@ class RecordingDetail(object):
     @property
     def first_album_title(self):
         """
-        First Album Title field.
+        First Album Title field. Alphanumeric.
 
         The name of the album in which the work was included if the work was first released as part of an album.
 
@@ -1085,7 +1110,7 @@ class RecordingDetail(object):
     @property
     def first_release_catalog_id(self):
         """
-        First Release Catalog # field.
+        First Release Catalog Number field. Alphanumeric.
 
         Number assigned by the organization releasing the album for internal purposes such as sales and distribution
         tracking.
@@ -1097,7 +1122,7 @@ class RecordingDetail(object):
     @property
     def first_release_date(self):
         """
-        First Release Date field.
+        First Release Date field. Date.
 
         Date the work was or will be first released for public consumption.
 
@@ -1110,7 +1135,7 @@ class RecordingDetail(object):
     @property
     def first_release_duration(self):
         """
-        First Release Duration field.
+        First Release Duration field. Time (Hours, minutes, seconds).
 
         Duration of the first release of the work.
 
@@ -1121,7 +1146,7 @@ class RecordingDetail(object):
     @property
     def isrc(self):
         """
-        ISRC field.
+        ISRC field. Table Lookup (ISRC).
 
         International Standard Recording Code of the recording of the work on the release (according to ISO 3901).
 
@@ -1132,7 +1157,7 @@ class RecordingDetail(object):
     @property
     def media_type(self):
         """
-        Media Type field.
+        Media Type field. Table Lookup (BIEM/CISAC Media Type table).
 
         BIEM/CISAC code for media type.
 
@@ -1143,7 +1168,7 @@ class RecordingDetail(object):
     @property
     def recording_format(self):
         """
-        Recording Format field.
+        Recording Format field. Table Lookup (?).
 
         Code that identifies the content of the recording: “A” (audio), “V” (video)..
 
@@ -1154,7 +1179,7 @@ class RecordingDetail(object):
     @property
     def recording_technique(self):
         """
-        Recording Technique field.
+        Recording Technique field. Table Lookup (Recording Technique table).
 
         Identifies the recording procedure: “A” (Analogue), “D” (Digital), “U” (Unknown).
 
@@ -1163,12 +1188,24 @@ class RecordingDetail(object):
         return self._recording_technique
 
 
-class Instrumentation(object):
+class Instrumentation(Record):
     """
-    Represents a CWR Instrumentation (INS).
+    Represents a CWR Instrumentation (INS) record.
+
+    This record provides information on standard and non-standard instrumentation for serious works. If the Musical
+    Work Distribution Category is SER then instrumentation detail is required using one or more Standard Instrumentation
+    Type, one or more IND records, or one Instrumentation Description.
+
+    The Instrumentation Description is the least desirable, and should be used only if the other fields are not
+    available.
+
+    It is possible to use both a Standard Instrumentation Type and one or more IND records to describe, for example, a
+    wind quintet and a piano.  It is also possible to use both one or more Standard Instrumentation Type and one or more
+    IND records to describe, for example, a work written for two wind quintets and two pianos.
     """
 
-    def __init__(self, number_voices=None, instr_type=None, description=None):
+    def __init__(self, prefix, number_voices=0, instr_type=None, description=''):
+        super(Instrumentation, self).__init__(prefix)
         self._number_voices = number_voices
         self._instr_type = instr_type
         self._description = description
@@ -1176,7 +1213,7 @@ class Instrumentation(object):
     @property
     def description(self):
         """
-        Instrumentation Description field.
+        Instrumentation Description field. Alphanumeric.
 
         Describes instrumentation if non-standard instrumentation is used on this work. Note that this field is required
         if IND records are not entered and if Standard Instrumentation Type is blank.
@@ -1188,11 +1225,10 @@ class Instrumentation(object):
     @property
     def instr_type(self):
         """
-        Standard Instrumentation Type field.
+        Standard Instrumentation Type field. Table Lookup (Standard Instrumentation table).
 
         Describes instrumentation if standard instrumentation is used on this work.  Note that this field is required if
-        IND records are not entered and if Instrumentation Description is blank.  These values reside in the Standard
-        Instrumentation Table.
+        IND records are not entered and if Instrumentation Description is blank.
 
         :return: the standard instrumentation type
         """
@@ -1201,7 +1237,7 @@ class Instrumentation(object):
     @property
     def number_voices(self):
         """
-        Number of Voices field.
+        Number of Voices field. Numeric.
 
         Indicates the number of independent parts included in this work.
 
@@ -1210,22 +1246,27 @@ class Instrumentation(object):
         return self._number_voices
 
 
-class InstrumentationDetail(object):
+class InstrumentationDetail(Record):
     """
-    Represents a CWR Instrumentation Detail (IND)
+    Represents a CWR Instrumentation Detail (IND) record.
+
+    The IND record provides information on standard instruments or voices for serious works.
+
+    If the Musical Work  Distribution Category is SER then instrumentation detail is required using one or more INS
+    records as well as IND records to describe the individual instruments (if any).
     """
 
-    def __init__(self, code, players):
+    def __init__(self, prefix, code, players=0):
+        super(Instrumentation, self).__init__(prefix)
         self._code = code
         self._players = players
 
     @property
     def code(self):
         """
-        Instrument Code field.
+        Instrument Code field. Table Lookup (Instrument table).
 
-        Indicates the use of a specific instrument in this version of instrumentation.  These values reside in the
-        Instrument Table.
+        Indicates the use of a specific instrument in this version of instrumentation.
 
         :return: the instrument code
         """
@@ -1234,7 +1275,7 @@ class InstrumentationDetail(object):
     @property
     def players(self):
         """
-        Number of Players field.
+        Number of Players field. Numeric.
 
         Indicates the number of players for the above instrument.
 
@@ -1245,14 +1286,25 @@ class InstrumentationDetail(object):
 
 class WorkOrigin(object):
     """
-    Represents a CWR work origin.
+    Represents a CWR Work Origin (ORN) record.
+
+    This record serves to describe the origin of the work.
+
+    The origin may be a library, or an audio-visual production or both. If the work originated in an AV production,
+    additional information regarding the usage of the work within the production can be helpful.
+
+    Note that the cue sheet is always the final authority for usage data.
+
+    Many identifiers for the audio-visual production have been added with version 2.1 including the reference as used in
+    the CIS tool, AV Index.
     """
 
-    def __init__(self, intended_purpose, production_title=None, cd_identifier=None, cut_number=None,
-                 library=None, blt=None, visan_version=None, visan_isan=None, visan_episode=None,
-                 visan_check_digit=None, production_id=None, episode_title=None,
-                 episode_id=None, production_year=None, avi_key_society=None,
-                 avi_key_number=None):
+    def __init__(self, prefix, intended_purpose, production_title='', cd_identifier='', cut_number=0,
+                 library='', blt='', visan_version=0, visan_isan=0, visan_episode=0,
+                 visan_check_digit=0, production_id='', episode_title='',
+                 episode_id='', production_year=0, avi_key_society=0,
+                 avi_key_number=''):
+        super(WorkOrigin, self).__init__(prefix)
         self._intended_purpose = intended_purpose
         self._production_title = production_title
         self._cd_identifier = cd_identifier
@@ -1273,9 +1325,9 @@ class WorkOrigin(object):
     @property
     def avi_key_number(self):
         """
-        Audio-Visual Number field.
+        Audio-Visual Number field. Alphanumeric.
 
-        Unique number  used internally by the ‘owning’ society  to identify the audio-visual work as referenced in the
+        Unique number  used internally by the 'owning' society  to identify the audio-visual work as referenced in the
         AV Index.
 
         :return: the audio-visual number field
@@ -1285,7 +1337,7 @@ class WorkOrigin(object):
     @property
     def avi_key_society(self):
         """
-        AVI Society Code field.
+        AVI Society Code field. Numeric.
 
         The CAE code of the society whose audio visual work detail entry is referenced in the AV Index.
 
@@ -1296,7 +1348,7 @@ class WorkOrigin(object):
     @property
     def blt(self):
         """
-        BLT field.
+        BLT field. Alphanumeric.
 
         An indication of the primary use of the work within the AV production.
 
@@ -1309,7 +1361,7 @@ class WorkOrigin(object):
     @property
     def cd_identifier(self):
         """
-        CD Identifier field.
+        CD Identifier field. Alphanumeric.
 
         If Intended Purpose is equal to LIB (Library Work), enter the identifier associated with the CD upon which
         the work appears.
@@ -1321,7 +1373,7 @@ class WorkOrigin(object):
     @property
     def cut_number(self):
         """
-        Cut Number field.
+        Cut Number field. Numeric.
 
         If Intended Purpose is equal to LIB (Library Work), enter the track number on the CD Identifier where the work
         appears.  This field is required when CD Identifier is entered.
@@ -1333,7 +1385,7 @@ class WorkOrigin(object):
     @property
     def episode_id(self):
         """
-        Episode # field.
+        Episode Number field. Alphanumeric.
 
         Number assigned to the episode by the producer.
 
@@ -1344,7 +1396,7 @@ class WorkOrigin(object):
     @property
     def episode_title(self):
         """
-        Episode Title field.
+        Episode Title field. Alphanumeric.
 
         Title of the episode from which this work originated.
 
@@ -1355,11 +1407,9 @@ class WorkOrigin(object):
     @property
     def intended_purpose(self):
         """
-        Intended Purpose field.
+        Intended Purpose field. Table Lookup (Intended Purpose Table).
 
         Indicates the type of production from which this work originated.
-
-        These values reside in the Intended Purpose Table.
 
         :return: the inteded purpose
         """
@@ -1368,7 +1418,7 @@ class WorkOrigin(object):
     @property
     def library(self):
         """
-        Library field.
+        Library field. Alphanumeric.
 
         The library from which this work originated.
 
@@ -1379,7 +1429,7 @@ class WorkOrigin(object):
     @property
     def production_id(self):
         """
-        Production # field.
+        Production Number field. Alphanumeric.
 
         The number generated by the production company to identify the work.
 
@@ -1390,7 +1440,7 @@ class WorkOrigin(object):
     @property
     def production_title(self):
         """
-        Production Title field.
+        Production Title field. Alphanumeric.
 
         Name of the production from which this work originated.
 
@@ -1401,7 +1451,7 @@ class WorkOrigin(object):
     @property
     def production_year(self):
         """
-        Year of Production field.
+        Year of Production field. Numeric.
 
         The year in which the production of the film or episode was completed.
 
@@ -1412,7 +1462,7 @@ class WorkOrigin(object):
     @property
     def visan_check_digit(self):
         """
-        V-ISAN Check Digit field.
+        V-ISAN Check Digit field. Numeric.
 
         Unique identifier for audio-visual production in which this work is first used.
 
@@ -1425,7 +1475,7 @@ class WorkOrigin(object):
     @property
     def visan_episode(self):
         """
-        V-ISAN Episode field.
+        V-ISAN Episode field. Numeric.
 
         Unique identifier for audio-visual production in which this work is first used.
 
@@ -1438,7 +1488,7 @@ class WorkOrigin(object):
     @property
     def visan_isan(self):
         """
-        V-ISAN ISAN field.
+        V-ISAN ISAN field. Numeric.
 
         Unique identifier for audio-visual production in which this work is first used.
 
@@ -1451,7 +1501,7 @@ class WorkOrigin(object):
     @property
     def visan_version(self):
         """
-        V-ISAN Version field.
+        V-ISAN Version field. Numeric.
 
         Unique identifier for audio-visual production in which this work is first used.
 
@@ -1462,12 +1512,15 @@ class WorkOrigin(object):
         return self._visan_version
 
 
-class PerformingArtist(object):
+class PerformingArtist(Record):
     """
     Represents a CWR Performing Artist (PER).
+
+    Contains the info of a person or group performing this work either in public or on a recording.
     """
 
-    def __init__(self, last_name, first_name=None, cae_ipi_name=None, ipi_base_number=None):
+    def __init__(self, prefix, last_name, first_name='', cae_ipi_name=None, ipi_base_number=None):
+        super(PerformingArtist, self).__init__(prefix)
         self._first_name = first_name
         self._last_name = last_name
         self._cae_ipi_name = cae_ipi_name
@@ -1476,7 +1529,7 @@ class PerformingArtist(object):
     @property
     def cae_ipi_name(self):
         """
-        Performing Artist CAE /IPI Name # field.
+        Performing Artist CAE /IPI Name Number field. Table Lookup (IPI DB).
 
         The CAE # corresponding to this performing artist with 2 leading zero’s or the IPI Name #.
 
@@ -1489,7 +1542,7 @@ class PerformingArtist(object):
     @property
     def first_name(self):
         """
-        Performing Artist First Name field.
+        Performing Artist First Name field. Alphanumeric.
 
         First name associated with the performing artist identified in the previous field.
 
@@ -1500,7 +1553,7 @@ class PerformingArtist(object):
     @property
     def ipi_base_number(self):
         """
-        Performing Artist IPI Base Number field.
+        Performing Artist IPI Base Number field. Table Lookup (IPI DB).
 
         The IPI base number assigned to this performing artist.
 
@@ -1511,7 +1564,7 @@ class PerformingArtist(object):
     @property
     def last_name(self):
         """
-        Performing Artist Last Name field.
+        Performing Artist Last Name field. Alphanumeric.
 
         Last name of a person or full name of a group that has performed the work on a recording or in public.
 
