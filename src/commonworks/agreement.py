@@ -528,32 +528,35 @@ class AgreementTerritory(Record):
     For example, if  an agreement applied to all of Europe except Switzerland, you can provide a TER record to include
     Europe, and one to exclude Switzerland.
 
-    This is to be used in a Transaction class.
+    This is to be used in an Agreement Transaction.
     """
 
-    def __init__(self, prefix, tis_code, included):
+    def __init__(self, prefix, tis_code, ie_indicator):
         """
         Constructs an AgreementTerritory.
 
         :param prefix: the record prefix
         :param tis_code: the TIS code
-        :param included: indicates if it is included or not
+        :param ie_indicator: indicates if it is included or not
         """
         super(AgreementTerritory, self).__init__(prefix)
         self._tis_code = tis_code
-        self._included = included
+        self._ie_indicator = ie_indicator
 
     @property
-    def included(self):
+    def inclusion_exclusion_indicator(self):
         """
-        Inclusion/Exclusion Indicator field. Boolean.
+        Inclusion/Exclusion Indicator field. Table Lookup ('E'/'I').
 
-        This is a marker which shows whether the territory specified in this record is part of the territorial scope of
-        the agreement or not.
+        Indicates if the territory is included or excluded from the Agreement.
 
-        :return: True if the Territory is included, False otherwise
+        The possible values are:
+        - 'E' for excluded.
+        - 'I' for included.
+
+        :return: a code indicating if the territory is included or excluded
         """
-        return self._included
+        return self._ie_indicator
 
     @property
     def tis_code(self):
