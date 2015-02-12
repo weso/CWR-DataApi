@@ -7,7 +7,7 @@ from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkOrigin, Work, RecordingDetail
+    PerformingArtist, WorkOrigin, WorkRecord, RecordingDetail
 from commonworks.utils.dict_encoder import CWRDictionaryEncoder
 
 
@@ -89,7 +89,7 @@ class TestAuthoredWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AuthoredWork('title', 1,
+        entity = AuthoredWork(None, 'title', 1,
                               'name1', 'surname1', 'name2', 'surname2', 1, 'ip_1',
                               2, 'ip_2',
                               'Broadway show', 'ES', 3)
@@ -224,17 +224,17 @@ class TestWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Work(1, 'The Title', 'original', 'category',
-                      language_code='ES', printed_edition_publication_date=datetime.date(2015, 1, 11),
-                      copyright_number=2, copyright_date=datetime.date(2015, 1, 12),
-                      text_music_relationship='text_only',
-                      music_arrangement='none', lyric_adaptation='none', excerpt_type='movement',
-                      composite_type='composite', composite_component_count=3,
-                      iswc=4, cwr_work_type='jazz',
-                      duration=60, catalogue_number=5, opus_number='28#3',
-                      contact_id='name_id', contact_name='Person',
-                      recorded_indicator=True, priority_flag=True, exceptional_clause=True,
-                      grand_rights_indicator=True)
+        entity = WorkRecord(None, 1, 'The Title', 'original', 'category',
+                            language_code='ES', printed_edition_publication_date=datetime.date(2015, 1, 11),
+                            copyright_number=2, copyright_date=datetime.date(2015, 1, 12),
+                            text_music_relationship='text_only',
+                            music_arrangement='none', lyric_adaptation='none', excerpt_type='movement',
+                            composite_type='composite', composite_component_count=3,
+                            iswc=4, cwr_work_type='jazz',
+                            duration=60, catalogue_number=5, opus_number='28#3',
+                            contact_id='name_id', contact_name='Person',
+                            recorded_indicator=True, priority_flag=True, exceptional_clause=True,
+                            grand_rights_indicator=True)
 
         self.dict = encoder.encode(entity)
 

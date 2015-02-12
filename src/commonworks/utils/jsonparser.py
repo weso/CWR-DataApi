@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
-from commonworks.work import Work, AlternateTitle, AuthoredWork, \
+from commonworks.work import WorkRecord, AlternateTitle, AuthoredWork, \
     RecordingDetail, WorkOrigin, PerformingArtist
 
 """
@@ -63,7 +63,7 @@ def parse_authored_work(json_item):
     :param json_item: JSON object to parse
     :return: an AuthoredWork parsed from the JSON
     """
-    title = AuthoredWork(work_id=json_item['work_id'],
+    title = AuthoredWork(None, work_id=json_item['work_id'],
                          title=json_item['title'],
                          language_code=json_item['language_code'],
                          source=json_item['source'],
@@ -156,24 +156,25 @@ def parse_work(json_item):
     :param json_item: JSON object to parse
     :return: a Work parsed from the JSON and with the specified id
     """
-    work = Work(work_id=json_item['work_id'], title=json_item['title'], language_code=json_item['language_code'],
-                printed_edition_publication_date=json_item['printed_edition_publication_date'],
-                copyright_number=json_item['copyright_number'],
-                copyright_date=json_item['copyright_date'],
-                text_music_relationship=json_item['text_music_relationship'],
-                version_type=json_item['version_type'],
-                music_arrangement=json_item['music_arrangement'], lyric_adaptation=json_item['lyric_adaptation'],
-                excerpt_type=json_item['excerpt_type'],
-                composite_type=json_item['composite_type'],
-                composite_component_count=json_item['composite_component_count'], iswc=json_item['iswc'],
-                cwr_work_type=json_item['cwr_work_type'],
-                musical_distribution_category=json_item['musical_distribution_category'],
-                duration=json_item['duration'], catalogue_number=json_item['catalogue_number'],
-                opus_number=json_item['opus_number'],
-                contact_id=json_item['contact_id'], contact_name=json_item['contact_name'],
-                recorded_indicator=json_item['recorded_indicator'],
-                priority_flag=json_item['priority_flag'], exceptional_clause=json_item['exceptional_clause'],
-                grand_rights_indicator=json_item['grand_rights_indicator'])
+    work = WorkRecord(None, work_id=json_item['work_id'], title=json_item['title'],
+                      language_code=json_item['language_code'],
+                      printed_edition_publication_date=json_item['printed_edition_publication_date'],
+                      copyright_number=json_item['copyright_number'],
+                      copyright_date=json_item['copyright_date'],
+                      text_music_relationship=json_item['text_music_relationship'],
+                      version_type=json_item['version_type'],
+                      music_arrangement=json_item['music_arrangement'], lyric_adaptation=json_item['lyric_adaptation'],
+                      excerpt_type=json_item['excerpt_type'],
+                      composite_type=json_item['composite_type'],
+                      composite_component_count=json_item['composite_component_count'], iswc=json_item['iswc'],
+                      cwr_work_type=json_item['cwr_work_type'],
+                      musical_distribution_category=json_item['musical_distribution_category'],
+                      duration=json_item['duration'], catalogue_number=json_item['catalogue_number'],
+                      opus_number=json_item['opus_number'],
+                      contact_id=json_item['contact_id'], contact_name=json_item['contact_name'],
+                      recorded_indicator=json_item['recorded_indicator'],
+                      priority_flag=json_item['priority_flag'], exceptional_clause=json_item['exceptional_clause'],
+                      grand_rights_indicator=json_item['grand_rights_indicator'])
 
     return work
 

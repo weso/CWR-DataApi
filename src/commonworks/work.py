@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 from abc import ABCMeta
 
+from commonworks.file import Record
+
 
 """
 Work entity model classes.
@@ -12,13 +14,14 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class BaseWork(object):
+class BaseWork(Record):
     """
     Base class representing a Work's info.
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, title, language_code=None, iswc=None):
+    def __init__(self, prefix, title, language_code=None, iswc=None):
+        super(BaseWork, self).__init__(prefix)
         self._title = title
         self._language_code = language_code
         self._iswc = iswc
@@ -65,21 +68,27 @@ class BaseWork(object):
         return self._title
 
 
-class Work(BaseWork):
+class WorkRecord(BaseWork):
     """
-    Represents a CWR Work Title and Core Information.
+    Represents a CWR Work Title and Core Information Record.
 
-    This record contains core information about the work itself, such as title and the unique codes that have been
-    assigned to it.
+    This can be one of the following CWR v2.1 records:
+    - Existing work which is in Conflict with a Work Registration (EXC)
+    - New Work Registration (NWR)
+    - Notification of ISWC assign to a work (ISW)
+    - Revised Registration (REV)
+
+    While the intentions of each type of record differ, these distinctions mean little to the class
+    structure, because they are all meant to hold a Work's information for a Work Transaction.
     """
 
-    def __init__(self, work_id, title, version_type, musical_distribution_category,
+    def __init__(self, prefix, work_id, title, version_type, musical_distribution_category,
                  printed_edition_publication_date=None, text_music_relationship=None, language_code=None,
-                 copyright_number=None, copyright_date=None, music_arrangement=None, lyric_adaptation=None,
-                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, cwr_work_type=None,
-                 duration=None, catalogue_number=None, opus_number=None, contact_id=None, contact_name=None,
+                 copyright_number='', copyright_date=None, music_arrangement=None, lyric_adaptation=None,
+                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc='', cwr_work_type=None,
+                 duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
                  recorded_indicator=False, priority_flag=False, exceptional_clause=False, grand_rights_indicator=False):
-        super(Work, self).__init__(title, language_code, iswc)
+        super(WorkRecord, self).__init__(prefix, title, language_code, iswc)
         # Work identifying info
         self._work_id = work_id
         self._title = title
@@ -120,7 +129,7 @@ class Work(BaseWork):
     @property
     def catalogue_number(self):
         """
-        Catalogue Number for serious music field.
+        Catalogue Number for serious music field. Alphanumeric.
 
         The work catalogue number. The abbreviated name of the catalogue is to be added (like BWV, KV), without dots.
         Part numbers are to be added with a # e.g. KV 297#1 (meaning Köchel Verzeichnis Nr.297 part 1).
@@ -132,9 +141,12 @@ class Work(BaseWork):
     @property
     def composite_component_count(self):
         """
-        Composite Component Count field.
+        Composite Component Count field. Numeric.
 
-        If a Work consists of one original work and one sample, then the component count is two.
+        If a type of composition has been indicated on the Work, this returns the number of components contained
+        in the composite.
+
+        By default this value is 1.
 
         :return: the composite count
         """
@@ -143,10 +155,9 @@ class Work(BaseWork):
     @property
     def composite_type(self):
         """
-        Composite Type field.
+        Composite Type field. Table Lookup (Composite Type Table).
 
-        Certain works incorporate other works. If this work is such a case, choose the type of composite from the CWR
-        values.
+        If this is a composite work, this attribute will indicate the type of composite.
 
         :return: the Work composite type
         """
@@ -155,21 +166,23 @@ class Work(BaseWork):
     @property
     def contact_id(self):
         """
-        Contact ID field.
+        Contact ID field. Alphanumeric.
 
-        This is an identifier associated with the contact person.
+        An identifier associated with the contact person at the organization that originated this transaction.
 
-        :return: the ID of the transaction's originator
+        :return: the ID of a contact persion in the transaction's originator
         """
         return self._contact_id
 
     @property
     def contact_name(self):
         """
-        Contact Name field.
+        Contact Name field. Alphanumeric.
 
-        In the event of the need for a follow-up communication to you on the matter of this registration, it is useful
-        to have the name of the person who originated the transaction.
+        The name of a business contact person at the organization that originated this transaction.
+
+        In the event of the need for a follow-up communication with the submitter on the matter of this registration,
+        it is useful to have the name of the person who originated the transaction.
 
         :return: the name of the transaction's originator
         """
@@ -178,7 +191,9 @@ class Work(BaseWork):
     @property
     def copyright_date(self):
         """
-        Copyright Date field.
+        Copyright Date field. Date.
+
+        Original copyright date of the work.
 
         This is the date that your national copyright office has registered this Work.
 
@@ -189,7 +204,9 @@ class Work(BaseWork):
     @property
     def copyright_number(self):
         """
-        Copyright Number field.
+        Copyright Number field. Alphanumeric.
+
+        Original copyright number of the work.
 
         This is the number that your national copyright office has assigned to this Work upon registration.
 
@@ -200,59 +217,49 @@ class Work(BaseWork):
     @property
     def cwr_work_type(self):
         """
-        CWR Work Type field.
+        CWR Work Type field. Table Lookup (CWR Work Type).
 
         Indicates a genre found in the CWR Work Type table.
 
-        :return: a genre found in the CWR Work Type table
+        :return: a CWR work type
         """
         return self._cwr_work_type
 
     @property
     def duration(self):
         """
-        Duration field.
+        Duration field. Time (hours, minute, seconds).
 
-        Duration of the work.
+        Duration of the work in hours, minutes, and seconds.
 
         Duration is required only in the following cases:
-        - By all societies if the Musical Work Distribution Category is Serious (e.g., music intended for symphonic,
-        recital and chamber settings);
-        - if there is a BMI interested party in this work and the Musical Work Distribution Category is Jazz.
+        - By all societies if the Musical Work Distribution Category is Serious (SER) (e.g., music intended for
+        symphonic, recital and chamber settings)
+        - By some societies, such as BMI, if the Musical Work Distribution Category is Jazz
 
-        :return: duration of the work
+        :return: duration of the work in hours, minutes and seconds
         """
         return self._duration
 
     @property
     def exceptional_clause(self):
         """
-        Exceptional Clause field.
+        Exceptional Clause field. Flag (Yes/No/Unknown).
 
         This is for registrations with GEMA.
 
         If it is True, the submitting GEMA-sub publisher has declared that the exceptional clause of the GEMA
         distribution rules with regard to printed editions applies (GEMA-Verteilungsplan A Anhang III).
 
-        :return: True if GEMA-Verteilungsplan A Anhang III applies, False otherwise
+        :return: 'Y' if the exceptional clause of the GEMA distribution rules applies, 'F' otherwise, 'U' if there is
+        no information
         """
         return self._exceptional_clause
 
     @property
-    def grand_rights_indicator(self):
-        """
-        Grand Rights Indicator field.
-
-        Indicates whether or not this work is originally intended for live theatrical performance.
-
-        :return: True if this work was originally intended for live theatrical performance, False otherwise
-        """
-        return self._grand_rights_indicator
-
-    @property
     def excerpt_type(self):
         """
-        Excerpt Type field.
+        Excerpt Type field. Table Lookup (Excerpt Type Table).
 
         If this work is part of a larger work, indicates whether this is a movement or another, unspecified type of
         excerpt.
@@ -262,12 +269,26 @@ class Work(BaseWork):
         return self._excerpt_type
 
     @property
+    def grand_rights_indicator(self):
+        """
+        Grand Rights Indicator field. Boolean.
+
+        Indicates whether this work is originally intended for performance on stage, such as a live theatrical
+        performance.
+
+        Note that this field is mandatory for registrations with the UK societies.
+
+        :return: True if this work was originally intended for performance on stage, False otherwise
+        """
+        return self._grand_rights_indicator
+
+    @property
     def lyric_adaptation(self):
         """
-        Lyric Adaptation field.
+        Lyric Adaptation field. Table Lookup (Lyric Adaptation Table).
 
-        If it is indicated that this is a modified version of another work, this field indicates what changes,
-        if any, have occurred to the original lyric.
+        If it is indicated that this is a modified version of another work (Version Type as 'MOD'), this field
+        indicates what changes, if any, have occurred to the original lyric.
 
         :return: the changes to the original lyric
         """
@@ -276,10 +297,10 @@ class Work(BaseWork):
     @property
     def music_arrangement(self):
         """
-        Music Arrangement field.
+        Music Arrangement field. Table Lookup (Music Arrangement Table).
 
-        If it is indicated that this is a modified version of another work, this field indicates what changes,
-        if any, have occurred to the original music.
+        If it is indicated that this is a modified version of another work (Version Type as 'MOD'), this field
+        indicates what changes, if any, have occurred to the original music.
 
         :return: the changes to the original music
         """
@@ -288,21 +309,19 @@ class Work(BaseWork):
     @property
     def musical_distribution_category(self):
         """
-        Musical Work Distribution Category field.
+        Musical Work Distribution Category field. Table Lookup (Musical Work Distribution Category Table).
 
-        Certain rights organizations have special distribution rules that apply to certain genres of music.
+        Certain rights organizations have special distribution rules that apply to certain very specific genres of
+        music. If this Work is in one of them, it should be indicated by this attribute.
 
-        All such genres for participating societies can be found in the Musical Work Distribution Category Table in
-        the layout document.
-
-        :return:
+        :return: the distribution category for this work
         """
         return self._musical_distribution_category
 
     @property
     def opus_number(self):
         """
-        Opus Number for serious music field.
+        Opus Number for serious music field. Alphanumeric.
 
         The number assigned to this work, usually by the composer. Part numbers are to be added with a # e.g. 28#3
         (meaning Opus 28 part 3).
@@ -314,11 +333,12 @@ class Work(BaseWork):
     @property
     def printed_edition_publication_date(self):
         """
-        Date of Publication of Printed Edition field.
+        Date of Publication of Printed Edition field. Date.
 
         The date that the printed, new edition published by the submitting Publisher appeared.
 
-        This information is especially relevant for the notification of sub published works by GEMA-sub publishers.
+        This is meant for registrations with GEMA, and is especially relevant for the notification of sub published
+        works.
 
         :return: the date of the new edition
         """
@@ -327,30 +347,30 @@ class Work(BaseWork):
     @property
     def priority_flag(self):
         """
-        Priority Flag field.
+        Priority Flag field. Flag (Yes/No/Unknown).
 
-        Use this flag to indicate that the registration of this work should be expedited. This flag should be used
-        sparingly – only when the work is high on the charts, etc.
+        This is meant to be used sparingly, just to speed up the registration of those works that are high on the charts
+        or similar.
 
-        :return:
+        :return: 'Y' if this work is prioritary, 'F' otherwise, 'U' if there is no information
         """
         return self._priority_flag
 
     @property
     def recorded_indicator(self):
         """
-        Recorded Indicator field.
+        Recorded Indicator field. Flag (Yes/No/Unknown).
 
         Indicates whether a recording of this work exists that has been made available to the public.
 
-        :return: True if there is a public recording of this work, False otherwise
+        :return: 'Y' if there is a public recording of this work, 'F' otherwise, 'U' if there is no information
         """
         return self._recorded_indicator
 
     @property
     def text_music_relationship(self):
         """
-        Text-Music Relationship field.
+        Text-Music Relationship field. Table Lookup (Text Music Relationship Table).
 
         Indicates whether this Work contains text only, music only, or a combination of both. (It is understood that a
         Work with lyrics may be performed instrumentally, and that a work with music may be performed spoken-only.)
@@ -362,11 +382,12 @@ class Work(BaseWork):
     @property
     def version_type(self):
         """
-        Version Type field.
+        Version Type field. Table Lookup (Version Type Table).
 
-        Indicate whether this work is entirely original, or based on another work. If the work is based on another work,
-        values must be given for the Music Arrangement and Lyric Adaptation fields. If the work is a modified version of
-        a copyrighted work, it is necessary for it to be authorized.
+        Indicates whether this work is entirely original, or based on another work.
+
+        If the work is based on another work, values must be given for the Music Arrangement and Lyric Adaptation
+        fields. If the work is a modified version of a copyrighted work, it is necessary for it to be authorized.
 
         :return: the Work's version type
         """
@@ -377,14 +398,279 @@ class Work(BaseWork):
         """
         Submitter Work Number field.
 
-        This is your unique numerical code for this work.
+        This is the unique ID given by the submitter to the Work.
 
-        It is important that this number refer only to the work named on the registration, since further electronic
-        communication (ACK, ISW, EXC) that includes this number will point to this work and its interested parties.
-
-        :return: your unique numerical code for this work
+        :return: the submitter's ID for this Work
         """
         return self._work_id
+
+
+class WorkTransaction(object):
+    """
+    Represents a CWR Work Transaction.
+
+    This can be one of the following CWR v2.1 transactions:
+    - Existing work which is in Conflict with a Work Registration (EXC)
+    - New Work Registration (NWR)
+    - Notification of ISWC assign to a work (ISW)
+    - Revised Registration (REV)
+
+    While the actual use and intentions of each of these transactions differ, all of them indicate a relationship
+    between a Work, Publishers and Writers. Along several details of the work.
+
+    This is a very complex Transaction, composed by more than twenty types of records. Most of them are optional,
+    making the possible number of variations huge.
+
+    But all these records can be grouped into four types:
+    - Work information record, which is only one, containing the most important information about the record
+    - Publishers, divided between those controlled by the submitter and those out of his control
+    - Writers, divided between those controlled by the submitter and those out of his control
+    - Work details, containing such information as alternate titles or instrument composition
+
+    All, except the first, can appear multiple times in different forms.
+
+    Publishers controlled by the submitter appear along the territories they control, while those out of his
+    control appear alone.
+
+    So this section can be described as [[SPU, SPT*]*, OPU*].
+
+    Writers controlled by the submitter appear along their territories and publishers, while those out of his
+    control appear alone.
+
+    This section can be described as [[SWR, SWT*, PWR*]*, OWR*].
+
+    The work details are various kinds of data with little relation between them, some of which can appear multiple
+    times.
+
+    This section can be described as [ALT*, EWT, VER, PER*, REC, ORN*, INS*, IND*, COM*, ARI*]
+
+    And so, in the end a Work Transaction can be seen as (missing the header record):
+    [[SPU, SPT*]*, OPU*, [SWR, SWT*, PWR*]*, OWR*, ALT*, EWT, VER, PER*, REC, ORN*, INS*, IND*, COM*, ARI*]
+    """
+
+    def __init__(self, entire_work_title=None, original_work_title=None, recording=None, alternate_titles=None,
+                 publishers_controlled=None, publishers_other=None, writers_controlled=None,
+                 writers_other=None, performers=None, origins=None, inst_summaries=None,
+                 inst_details=None, components=None, info=None):
+        self._entire_work_title = entire_work_title
+        self._original_work_title = original_work_title
+        self._recording = recording
+        self._info = info
+
+        if alternate_titles is None:
+            self._alternate_titles = []
+        else:
+            self._alternate_titles = alternate_titles
+
+        if publishers_controlled is None:
+            self._publishers_controlled = []
+        else:
+            self._publishers_controlled = publishers_controlled
+
+        if publishers_other is None:
+            self._publishers_other = []
+        else:
+            self._publishers_other = publishers_controlled
+
+        if writers_controlled is None:
+            self._writers_controlled = []
+        else:
+            self._writers_controlled = writers_controlled
+
+        if writers_other is None:
+            self._writers_other = []
+        else:
+            self._writers_other = writers_other
+
+        if performers is None:
+            self._performers = []
+        else:
+            self._performers = performers
+
+        if origins is None:
+            self._origins = []
+        else:
+            self._origins = origins
+
+        if inst_summaries is None:
+            self._inst_summaries = []
+        else:
+            self._inst_summaries = inst_summaries
+
+        if inst_details is None:
+            self._inst_details = []
+        else:
+            self._inst_details = inst_details
+
+        if components is None:
+            self._components = []
+        else:
+            self._components = components
+
+    @property
+    def alternate_titles(self):
+        """
+        Alternate Titles field.
+
+        Returns the Alternate Titles for the Work.
+
+        :return: the Alternate Title for the Work
+        """
+        return self._alternate_titles
+
+    @property
+    def components(self):
+        """
+        Components field.
+
+        Returns the Work Components.
+
+        :return: the Work Components
+        """
+        return self._components
+
+    @property
+    def entire_work_title(self):
+        """
+        Entire Work Title field.
+
+        Returns an Entire Work Title for the Work.
+
+        :return: an Entire Work Title for the Work
+        """
+        return self._entire_work_title
+
+    @property
+    def info(self):
+        """
+        Additional Info field.
+
+        Contains information such as comments or the Society number.
+
+        This is a collection of strings.
+
+        :return: additional info for the work
+        """
+        return self._info
+
+    @property
+    def inst_details(self):
+        """
+        Instrumentation Details field.
+
+        Returns the Work Instrumentation Details.
+
+        :return: the Work Instrumentation Details
+        """
+        return self._inst_details
+
+    @property
+    def inst_summaries(self):
+        """
+        Instrumentation Summaries field.
+
+        Returns the Work Instrumentation Summaries.
+
+        :return: the Work Instrumentation Summaries
+        """
+        return self._inst_summaries
+
+    @property
+    def original_work_title(self):
+        """
+        Original Work Title field.
+
+        Returns an Original Work Title for the Work.
+
+        :return: an Original Work Title for the Work
+        """
+        return self._original_work_title
+
+    @property
+    def origins(self):
+        """
+        Work Origins field.
+
+        Returns the Work Origins.
+
+        :return: the Work Origins
+        """
+        return self._origins
+
+    @property
+    def performers(self):
+        """
+        Performing Artists field.
+
+        The Performing Artists.
+
+        :return: the Performing Artists
+        """
+        return self._performers
+
+    @property
+    def publishers_controlled(self):
+        """
+        Publisher Controlled by Submitter field.
+
+        List all publishers controlled by the submitter.  This record is mandatory if writer ownership shares are less
+        than 100%.
+
+        This is a collection of PublisherWithTerritories.
+
+        :return: the publishers controlled by the submitter
+        """
+        return self._publishers_controlled
+
+    @property
+    def publishers_other(self):
+        """
+        Other Publishers field.
+
+        Lists all the publishers not controlled by the submitter.
+
+        This is just a collection of Publishers.
+
+        :return: the Publishers not controlled by the submitter
+        """
+        return self._publishers_other
+
+    @property
+    def recording(self):
+        """
+        Recording field.
+
+        Recording status.
+
+        :return: the Recording status
+        """
+        return self._recording
+
+    @property
+    def writers_controlled(self):
+        """
+        Writers Controlled by Submitter field.
+
+        Lists all the Writers controlled by the submitter.
+
+        This is a collection of WriterWithTerritoryPublishers.
+
+        :return: all the Writers controlled by the submitter along his Territories and Publishers
+        """
+        return self._writers_controlled
+
+    @property
+    def writers_other(self):
+        """
+        Other Writers field.
+
+        List all the Writers not controlled by the submitter.
+
+        This is just a collection of Writers.
+
+        :return: the Writers not controlled by the submitter
+        """
+        return self._writers_other
 
 
 class Component(object):
@@ -556,11 +842,11 @@ class AuthoredWork(BaseWork):
     Represents a Work with authors. This is for the Entire Work and Original Work entities.
     """
 
-    def __init__(self, title, work_id=None,
+    def __init__(self, prefix, title, work_id=None,
                  first_name_1=None, last_name_1=None, first_name_2=None, last_name_2=None,
                  ip_base_1=None, ip_name_1=None, ip_base_2=None, ip_name_2=None,
                  source=None, language_code=None, iswc=None):
-        super(AuthoredWork, self).__init__(title, language_code, iswc)
+        super(AuthoredWork, self).__init__(prefix, title, language_code, iswc)
 
         # Work's info
         self._work_id = work_id

@@ -6,7 +6,7 @@ from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
 from commonworks.value_entity import ValueEntity
 from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, Work, WorkOrigin, RecordingDetail
+    PerformingArtist, WorkRecord, WorkOrigin, RecordingDetail
 
 
 """
@@ -60,7 +60,7 @@ class CWRDictionaryEncoder(object):
             encoded = self.__encode_recording_details(d)
         elif isinstance(d, ValueEntity):
             encoded = self.__encode_value_entity(d)
-        elif isinstance(d, Work):
+        elif isinstance(d, WorkRecord):
             encoded = self.__encode_work(d)
         elif isinstance(d, WorkOrigin):
             encoded = self.__encode_work_origin(d)
