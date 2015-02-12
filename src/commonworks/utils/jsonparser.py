@@ -119,11 +119,11 @@ def parse_publisher(json_item):
     :param json_item: JSON object to parse
     :return: an InterestedParty parsed from the JSON and with the specified id
     """
-    publisher = Publisher(json_item['name'],
-                          json_item['ip_id'],
-                          json_item['ip_name'],
-                          json_item['ip_base_id'],
-                          json_item['tax_id'])
+    publisher = Publisher(json_item['publisher_id'],
+                          json_item['name'],
+                          json_item['ipi_base_id'],
+                          json_item['tax_id'],
+                          json_item['cae_ipi_name'])
 
     return publisher
 

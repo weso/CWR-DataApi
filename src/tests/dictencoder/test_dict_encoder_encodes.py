@@ -163,16 +163,16 @@ class TestPublisher(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Publisher('publisher1', 1, 'name_ip', 2, 3)
+        entity = Publisher(1, 'publisher1', 'name_ip', 2, 'cae')
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
         self.assertEqual('publisher1', self.dict['name'])
         self.assertEqual(1, self.dict['ip_id'])
-        self.assertEqual('name_ip', self.dict['ip_name'])
-        self.assertEqual(2, self.dict['ip_base_id'])
-        self.assertEqual(3, self.dict['tax_id'])
+        self.assertEqual('cae', self.dict['cae_ipi_name'])
+        self.assertEqual('name_ip', self.dict['ipi_base_id'])
+        self.assertEqual(2, self.dict['tax_id'])
 
 
 class TestRecordingDetails(unittest.TestCase):

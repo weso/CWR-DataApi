@@ -196,11 +196,11 @@ class TestPublisher(unittest.TestCase):
 
     def setUp(self):
         data = {}
+        data['publisher_id'] = 1
         data['name'] = 'Publisher'
-        data['ip_id'] = 1
-        data['ip_name'] = 'name_ip'
-        data['ip_base_id'] = 2
+        data['ipi_base_id'] = 2
         data['tax_id'] = 3
+        data['cae_ipi_name'] = 'cae'
 
         self.publisher = jsonparser.parse_publisher(json.loads(json.dumps(data)))
 
@@ -208,8 +208,8 @@ class TestPublisher(unittest.TestCase):
         # Makes sure the data was parsed correctly
         self.assertEqual(self.publisher.name, 'Publisher')
         self.assertEqual(self.publisher.ip_id, 1)
-        self.assertEqual(self.publisher.ip_name, 'name_ip')
-        self.assertEqual(self.publisher.ip_base_id, 2)
+        self.assertEqual(self.publisher.cae_ipi_name, 'cae')
+        self.assertEqual(self.publisher.ipi_base_id, 2)
         self.assertEqual(self.publisher.tax_id, 3)
 
 
