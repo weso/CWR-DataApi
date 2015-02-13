@@ -11,7 +11,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class AdditionalRelatedInfo(Record):
+class AdditionalRelatedInfoRecord(Record):
     """
     Represents a CWR Additional Related Info (ARI).
 
@@ -29,7 +29,7 @@ class AdditionalRelatedInfo(Record):
     """
 
     def __init__(self, prefix, society_id, right_type, work_id='', subject=None, note=''):
-        super(AdditionalRelatedInfo, self).__init__(prefix)
+        super(AdditionalRelatedInfoRecord, self).__init__(prefix)
         self._society_id = society_id
         self._right_type = right_type
         self._work_id = work_id

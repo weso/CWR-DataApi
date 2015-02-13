@@ -245,7 +245,7 @@ class AcknowledgementTransaction(object):
         return self._rev
 
 
-class Message(Record):
+class MessageRecord(Record):
     """
     Represents a CWR Message (MSG).
 
@@ -270,7 +270,7 @@ class Message(Record):
     """
 
     def __init__(self, prefix, message_type, text, sequence_n, record_type, message_level, validation_n):
-        super(Message, self).__init__(prefix)
+        super(MessageRecord, self).__init__(prefix)
         self._message_type = message_type
         self._sequence_n = sequence_n
         self._record_type = record_type

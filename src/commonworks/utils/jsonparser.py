@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
-from commonworks.work import WorkRecord, AlternateTitle, AuthoredWork, \
-    RecordingDetail, WorkOrigin, PerformingArtist
+from commonworks.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
+    RecordingDetailRecord, WorkOriginRecord, PerformingArtistRecord
 
 """
 Offers methods to create model objects from JSON objects.
@@ -49,9 +49,9 @@ def parse_alternative_work_title(json_item):
     :param json_item: JSON object to parse
     :return: an AlternativeWorkTitle parsed from the JSON
     """
-    title = AlternateTitle(None, json_item['alternate_title'],
-                           json_item['title_type'],
-                           json_item['language'])
+    title = AlternateTitleRecord(None, json_item['alternate_title'],
+                                 json_item['title_type'],
+                                 json_item['language'])
 
     return title
 
@@ -63,19 +63,19 @@ def parse_authored_work(json_item):
     :param json_item: JSON object to parse
     :return: an AuthoredWork parsed from the JSON
     """
-    title = AuthoredWork(None, work_id=json_item['work_id'],
-                         title=json_item['title'],
-                         language_code=json_item['language_code'],
-                         source=json_item['source'],
-                         first_name_1=json_item['first_name_1'],
-                         ipi_base_1=json_item['ipi_base_1'],
-                         cae_ipi_name_1=json_item['cae_ipi_name_1'],
-                         first_name_2=json_item['first_name_2'],
-                         ipi_base_2=json_item['ipi_base_2'],
-                         cae_ipi_name_2=json_item['cae_ipi_name_2'],
-                         last_name_1=json_item['last_name_1'],
-                         last_name_2=json_item['last_name_2'],
-                         iswc=json_item['iswc'])
+    title = AuthoredWorkRecord(None, work_id=json_item['work_id'],
+                               title=json_item['title'],
+                               language_code=json_item['language_code'],
+                               source=json_item['source'],
+                               first_name_1=json_item['first_name_1'],
+                               ipi_base_1=json_item['ipi_base_1'],
+                               cae_ipi_name_1=json_item['cae_ipi_name_1'],
+                               first_name_2=json_item['first_name_2'],
+                               ipi_base_2=json_item['ipi_base_2'],
+                               cae_ipi_name_2=json_item['cae_ipi_name_2'],
+                               last_name_1=json_item['last_name_1'],
+                               last_name_2=json_item['last_name_2'],
+                               iswc=json_item['iswc'])
 
     return title
 
@@ -104,10 +104,10 @@ def parse_performing_artist(json_item):
     :param json_item: JSON object to parse
     :return: a PerformingArtist parsed from the JSON
     """
-    artist = PerformingArtist(None, json_item['last_name'],
-                              json_item['first_name'],
-                              json_item['cae_ipi_name'],
-                              json_item['ipi_base_number'])
+    artist = PerformingArtistRecord(None, json_item['last_name'],
+                                    json_item['first_name'],
+                                    json_item['cae_ipi_name'],
+                                    json_item['ipi_base_number'])
 
     return artist
 
@@ -135,16 +135,16 @@ def parse_recording_details(json_item):
     :param json_item: JSON object to parse
     :return: a RecordingDetails parsed from the JSON
     """
-    details = RecordingDetail(None, json_item['first_release_date'],
-                              json_item['first_release_duration'],
-                              json_item['first_album_title'],
-                              json_item['first_album_label'],
-                              json_item['first_release_catalog_id'],
-                              json_item['ean'],
-                              json_item['isrc'],
-                              json_item['recording_format'],
-                              json_item['recording_technique'],
-                              json_item['media_type'])
+    details = RecordingDetailRecord(None, json_item['first_release_date'],
+                                    json_item['first_release_duration'],
+                                    json_item['first_album_title'],
+                                    json_item['first_album_label'],
+                                    json_item['first_release_catalog_id'],
+                                    json_item['ean'],
+                                    json_item['isrc'],
+                                    json_item['recording_format'],
+                                    json_item['recording_technique'],
+                                    json_item['media_type'])
 
     return details
 
@@ -186,22 +186,22 @@ def parse_work_origin(json_item):
     :param json_item: JSON object to parse
     :return: a WorkOrigin parsed from the JSON
     """
-    origin = WorkOrigin(None, json_item['intended_purpose'],
-                        json_item['production_title'],
-                        json_item['cd_identifier'],
-                        json_item['cut_number'],
-                        json_item['library'],
-                        json_item['blt'],
-                        json_item['visan_version'],
-                        json_item['visan_isan'],
-                        json_item['visan_episode'],
-                        json_item['visan_check_digit'],
-                        json_item['production_id'],
-                        json_item['episode_title'],
-                        json_item['episode_id'],
-                        json_item['production_year'],
-                        json_item['avi_key_society'],
-                        json_item['avi_key_number'])
+    origin = WorkOriginRecord(None, json_item['intended_purpose'],
+                              json_item['production_title'],
+                              json_item['cd_identifier'],
+                              json_item['cut_number'],
+                              json_item['library'],
+                              json_item['blt'],
+                              json_item['visan_version'],
+                              json_item['visan_isan'],
+                              json_item['visan_episode'],
+                              json_item['visan_check_digit'],
+                              json_item['production_id'],
+                              json_item['episode_title'],
+                              json_item['episode_id'],
+                              json_item['production_year'],
+                              json_item['avi_key_society'],
+                              json_item['avi_key_number'])
 
     return origin
 

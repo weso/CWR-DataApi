@@ -4,7 +4,7 @@ import unittest
 import re
 
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
-from commonworks.value_entity import ValueEntity
+from commonworks.value import TableValue
 
 
 """
@@ -27,23 +27,23 @@ class TestQuery(unittest.TestCase):
     def setUp(self):
         self.repo = MongoGenericRepository(host, port, db_name, 'queries')
 
-        entity = ValueEntity('id', 'name', 'descriptor')
+        entity = TableValue('id', 'name', 'descriptor')
         self.repo.add(entity)
 
-        entity = ValueEntity('10', 'entity_1', 'descriptor')
+        entity = TableValue('10', 'entity_1', 'descriptor')
         self.repo.add(entity)
-        entity = ValueEntity('11', 'entity_2', 'descriptor')
+        entity = TableValue('11', 'entity_2', 'descriptor')
         self.repo.add(entity)
-        entity = ValueEntity('12', 'entity_3', 'descriptor')
-        self.repo.add(entity)
-
-        entity = ValueEntity('AS', 'Assignor',
-                             'The entitled party who is assigning the rights to a musical work within an agreement')
+        entity = TableValue('12', 'entity_3', 'descriptor')
         self.repo.add(entity)
 
-        entity = ValueEntity('POP', 'Popular',
-                             'The musical mainstream, usually song-based and melody-orientated, created for mass '
-                             'consumption')
+        entity = TableValue('AS', 'Assignor',
+                            'The entitled party who is assigning the rights to a musical work within an agreement')
+        self.repo.add(entity)
+
+        entity = TableValue('POP', 'Popular',
+                            'The musical mainstream, usually song-based and melody-orientated, created for mass '
+                            'consumption')
         self.repo.add(entity)
 
     def tearDown(self):

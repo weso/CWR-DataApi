@@ -4,9 +4,9 @@ import datetime
 
 from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher
-from commonworks.value_entity import ValueEntity
-from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkOrigin, WorkRecord, RecordingDetail
+from commonworks.value import TableValue
+from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
+    PerformingArtistRecord, WorkOriginRecord, WorkRecord, RecordingDetailRecord
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
 
 
@@ -56,7 +56,7 @@ class TestAlternativeWorkTitle(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = AlternateTitle(None, 'title', 1, 'ES')
+        self.entity = AlternateTitleRecord(None, 'title', 1, 'ES')
         self.repo = MongoGenericRepository(host, port, db_name, 'alternate_titles')
 
     def tearDown(self):
@@ -74,10 +74,10 @@ class TestAuthoredWork(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = AuthoredWork(None, 1, 'title', 'ES', 'Broadway show',
-                                   'name1', 1, 'ip_1',
-                                   'name2', 2, 'ip_2', 'surname1', 'surname2',
-                                   3)
+        self.entity = AuthoredWorkRecord(None, 1, 'title', 'ES', 'Broadway show',
+                                         'name1', 1, 'ip_1',
+                                         'name2', 2, 'ip_2', 'surname1', 'surname2',
+                                         3)
         self.repo = MongoGenericRepository(host, port, db_name, 'authored_works')
 
     def tearDown(self):
@@ -114,7 +114,7 @@ class TestPerformingArtist(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = PerformingArtist(None, 'name', 'surname', 1, 2)
+        self.entity = PerformingArtistRecord(None, 'name', 'surname', 1, 2)
         self.repo = MongoGenericRepository(host, port, db_name, 'performing_artists')
 
     def tearDown(self):
@@ -150,8 +150,8 @@ class TestRecordingDetails(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = RecordingDetail(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
-                                      3, 4, 5, 6, 7)
+        self.entity = RecordingDetailRecord(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+                                            3, 4, 5, 6, 7)
         self.repo = MongoGenericRepository(host, port, db_name, 'recording_details')
 
     def tearDown(self):
@@ -169,7 +169,7 @@ class TestValueEntity(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = ValueEntity(1, 'name', 'desc')
+        self.entity = TableValue(1, 'name', 'desc')
         self.repo = MongoGenericRepository(host, port, db_name, 'value_entities')
 
     def tearDown(self):
@@ -215,7 +215,7 @@ class TestWorkOrigin(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = WorkOrigin(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
+        self.entity = WorkOriginRecord(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
         self.repo = MongoGenericRepository(host, port, db_name, 'work_origins')
 
     def tearDown(self):

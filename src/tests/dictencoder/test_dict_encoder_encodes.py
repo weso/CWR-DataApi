@@ -5,9 +5,9 @@ import datetime
 
 from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher
-from commonworks.value_entity import ValueEntity
-from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkOrigin, WorkRecord, RecordingDetail
+from commonworks.value import TableValue
+from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
+    PerformingArtistRecord, WorkOriginRecord, WorkRecord, RecordingDetailRecord
 from commonworks.utils.dict_encoder import CWRDictionaryEncoder
 
 
@@ -72,7 +72,7 @@ class TestAlternativeWorkTitle(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AlternateTitle(None, 'title', 1, 'ES')
+        entity = AlternateTitleRecord(None, 'title', 1, 'ES')
 
         self.dict = encoder.encode(entity)
 
@@ -89,10 +89,10 @@ class TestAuthoredWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AuthoredWork(None, 'title', 1,
-                              'name1', 'surname1', 'name2', 'surname2', 1, 'ip_1',
-                              2, 'ip_2',
-                              'Broadway show', 'ES', 3)
+        entity = AuthoredWorkRecord(None, 'title', 1,
+                                    'name1', 'surname1', 'name2', 'surname2', 1, 'ip_1',
+                                    2, 'ip_2',
+                                    'Broadway show', 'ES', 3)
 
         self.dict = encoder.encode(entity)
 
@@ -145,7 +145,7 @@ class TestPerformingArtist(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = PerformingArtist(None, 'surname', 'name', 1, 2)
+        entity = PerformingArtistRecord(None, 'surname', 'name', 1, 2)
 
         self.dict = encoder.encode(entity)
 
@@ -182,8 +182,8 @@ class TestRecordingDetails(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = RecordingDetail(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
-                                 3, 4, 5, 6, 7)
+        entity = RecordingDetailRecord(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+                                       3, 4, 5, 6, 7)
 
         self.dict = encoder.encode(entity)
 
@@ -207,7 +207,7 @@ class TestValueEntity(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = ValueEntity(1, 'name', 'desc')
+        entity = TableValue(1, 'name', 'desc')
 
         self.dict = encoder.encode(entity)
 
@@ -273,7 +273,7 @@ class TestWorkOrigin(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = WorkOrigin(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
+        entity = WorkOriginRecord(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
 
         self.dict = encoder.encode(entity)
 

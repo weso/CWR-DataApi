@@ -519,7 +519,7 @@ class AgreementRecord(Record):
         return self._works_number
 
 
-class AgreementTerritory(Record):
+class AgreementTerritoryRecord(Record):
     """
     Represents a CWR Territory in Agreement (TER).
 
@@ -539,7 +539,7 @@ class AgreementTerritory(Record):
         :param tis_code: the TIS code
         :param ie_indicator: indicates if it is included or not
         """
-        super(AgreementTerritory, self).__init__(prefix)
+        super(AgreementTerritoryRecord, self).__init__(prefix)
         self._tis_code = tis_code
         self._ie_indicator = ie_indicator
 

@@ -4,9 +4,9 @@ import datetime
 
 from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
-from commonworks.value_entity import ValueEntity
-from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkRecord, WorkOrigin, RecordingDetail
+from commonworks.value import TableValue
+from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
+    PerformingArtistRecord, WorkRecord, WorkOriginRecord, RecordingDetailRecord
 
 
 """
@@ -46,23 +46,23 @@ class CWRDictionaryEncoder(object):
     def encode(self, d):
         if isinstance(d, AgreementRecord):
             encoded = self.__encode_agreement(d)
-        elif isinstance(d, AlternateTitle):
+        elif isinstance(d, AlternateTitleRecord):
             encoded = self.__encode_alternative_work_title(d)
-        elif isinstance(d, AuthoredWork):
+        elif isinstance(d, AuthoredWorkRecord):
             encoded = self.__encode_authored_work(d)
         elif isinstance(d, AgreementInterestedParty):
             encoded = self.__encode_ipa(d)
-        elif isinstance(d, PerformingArtist):
+        elif isinstance(d, PerformingArtistRecord):
             encoded = self.__encode_performing_artist(d)
         elif isinstance(d, Publisher):
             encoded = self.__encode_publisher(d)
-        elif isinstance(d, RecordingDetail):
+        elif isinstance(d, RecordingDetailRecord):
             encoded = self.__encode_recording_details(d)
-        elif isinstance(d, ValueEntity):
+        elif isinstance(d, TableValue):
             encoded = self.__encode_value_entity(d)
         elif isinstance(d, WorkRecord):
             encoded = self.__encode_work(d)
-        elif isinstance(d, WorkOrigin):
+        elif isinstance(d, WorkOriginRecord):
             encoded = self.__encode_work_origin(d)
         elif isinstance(d, Writer):
             encoded = self.__encode_writer(d)
@@ -240,7 +240,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['id'] = entity.entity_id
+        encoded['id'] = entity.value_id
         encoded['name'] = entity.name
 
         if entity.description is not None:

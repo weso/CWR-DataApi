@@ -10,9 +10,11 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class ValueEntity(object):
+class TableValue(object):
     """
-    Represents a CWR value entity.
+    Represents a CWR table value.
+
+    Most of the values of the Table Lookup type use this object.
 
     This is a representation of general values such as musical genres, or the roles a party can take in an agreement.
 
@@ -40,12 +42,27 @@ class ValueEntity(object):
 
     @property
     def description(self):
+        """
+        Value description. Alphanumeric.
+
+        :return: the value description
+        """
         return self._description
 
     @property
-    def entity_id(self):
+    def value_id(self):
+        """
+        The value ID.
+
+        :return: ID for the value
+        """
         return self._entity_id
 
     @property
     def name(self):
+        """
+        The value name.
+
+        :return: value name
+        """
         return self._name

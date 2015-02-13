@@ -181,7 +181,7 @@ class InterestedPartyRecord(Record):
         return self._usa_license
 
 
-class IPTerritory(Record):
+class IPTerritoryRecord(Record):
     """
     Represents a CWR Publisher or Writer Territory of Control (SPT/SWT).
 
@@ -198,7 +198,7 @@ class IPTerritory(Record):
 
     def __init__(self, prefix, ip_id, ie_indicator, tis_numeric_code, sequence_n,
                  pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
-        super(IPTerritory, self).__init__(prefix)
+        super(IPTerritoryRecord, self).__init__(prefix)
         # Territory information
         self._tis_numeric_code = tis_numeric_code
 

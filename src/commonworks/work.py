@@ -15,14 +15,14 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class BaseWork(Record):
+class BaseWorkRecord(Record):
     """
     Base class representing a Work's info.
     """
     __metaclass__ = ABCMeta
 
     def __init__(self, prefix, title, language_code=None, iswc=None):
-        super(BaseWork, self).__init__(prefix)
+        super(BaseWorkRecord, self).__init__(prefix)
         self._title = title
         self._language_code = language_code
         self._iswc = iswc
@@ -69,7 +69,7 @@ class BaseWork(Record):
         return self._title
 
 
-class WorkRecord(BaseWork):
+class WorkRecord(BaseWorkRecord):
     """
     Represents a CWR Work Title and Core Information Record.
 
@@ -674,7 +674,7 @@ class WorkTransaction(object):
         return self._writers_other
 
 
-class Component(Record):
+class ComponentRecord(Record):
     """
     Represents a CWR Component (COM).
 
@@ -686,7 +686,7 @@ class Component(Record):
                  first_name_1='', first_name_2='', last_name_2='',
                  ipi_base_1=None, cae_ipi_name_1=None, ipi_base_2=None, cae_ipi_name_2=None,
                  iswc=''):
-        super(Component, self).__init__(prefix)
+        super(ComponentRecord, self).__init__(prefix)
         # Work's info
         self._submitter_id = submitter_id
         self._title = title
@@ -842,7 +842,7 @@ class Component(Record):
         return self._title
 
 
-class AuthoredWork(BaseWork):
+class AuthoredWorkRecord(BaseWorkRecord):
     """
     Represents a Work with authors. This is for the Entire Work (EWT) and Original Work for Versions (VER) entities.
 
@@ -853,7 +853,7 @@ class AuthoredWork(BaseWork):
                  first_name_1='', last_name_1='', first_name_2='', last_name_2='',
                  ipi_base_1=None, cae_ipi_name_1=None, ipi_base_2=None, cae_ipi_name_2=None,
                  source=None, language_code=None, iswc=None):
-        super(AuthoredWork, self).__init__(prefix, title, language_code, iswc)
+        super(AuthoredWorkRecord, self).__init__(prefix, title, language_code, iswc)
 
         # Work's info
         self._work_id = work_id
@@ -994,7 +994,7 @@ class AuthoredWork(BaseWork):
         return self._work_id
 
 
-class AlternateTitle(Record):
+class AlternateTitleRecord(Record):
     """
     Represents a CWR Alternate Title (ALT) record.
 
@@ -1007,7 +1007,7 @@ class AlternateTitle(Record):
     """
 
     def __init__(self, prefix, alternate_title, title_type, language=None):
-        super(AlternateTitle, self).__init__(prefix)
+        super(AlternateTitleRecord, self).__init__(prefix)
         self._alternate_title = alternate_title
         self._title_type = title_type
         self._language = language
@@ -1046,7 +1046,7 @@ class AlternateTitle(Record):
         return self._title_type
 
 
-class RecordingDetail(Record):
+class RecordingDetailRecord(Record):
     """
     Represents a CWR Recording Detail (REC).
 
@@ -1056,7 +1056,7 @@ class RecordingDetail(Record):
     def __init__(self, prefix, first_release_date=None, first_release_duration=None, first_album_title='',
                  first_album_label='', first_release_catalog_id='', ean=None,
                  isrc=None, recording_format=None, recording_technique=None, media_type=None):
-        super(RecordingDetail, self).__init__(prefix)
+        super(RecordingDetailRecord, self).__init__(prefix)
         self._first_release_date = first_release_date
 
         if first_release_duration is None:
@@ -1188,7 +1188,7 @@ class RecordingDetail(Record):
         return self._recording_technique
 
 
-class Instrumentation(Record):
+class InstrumentationRecord(Record):
     """
     Represents a CWR Instrumentation (INS) record.
 
@@ -1205,7 +1205,7 @@ class Instrumentation(Record):
     """
 
     def __init__(self, prefix, number_voices=0, instr_type=None, description=''):
-        super(Instrumentation, self).__init__(prefix)
+        super(InstrumentationRecord, self).__init__(prefix)
         self._number_voices = number_voices
         self._instr_type = instr_type
         self._description = description
@@ -1246,7 +1246,7 @@ class Instrumentation(Record):
         return self._number_voices
 
 
-class InstrumentationDetail(Record):
+class InstrumentationDetailRecord(Record):
     """
     Represents a CWR Instrumentation Detail (IND) record.
 
@@ -1257,7 +1257,7 @@ class InstrumentationDetail(Record):
     """
 
     def __init__(self, prefix, code, players=0):
-        super(InstrumentationDetail, self).__init__(prefix)
+        super(InstrumentationDetailRecord, self).__init__(prefix)
         self._code = code
         self._players = players
 
@@ -1284,7 +1284,7 @@ class InstrumentationDetail(Record):
         return self._players
 
 
-class WorkOrigin(Record):
+class WorkOriginRecord(Record):
     """
     Represents a CWR Work Origin (ORN) record.
 
@@ -1304,7 +1304,7 @@ class WorkOrigin(Record):
                  visan_check_digit=0, production_id='', episode_title='',
                  episode_id='', production_year=0, avi_key_society=0,
                  avi_key_number=''):
-        super(WorkOrigin, self).__init__(prefix)
+        super(WorkOriginRecord, self).__init__(prefix)
         self._intended_purpose = intended_purpose
         self._production_title = production_title
         self._cd_identifier = cd_identifier
@@ -1512,7 +1512,7 @@ class WorkOrigin(Record):
         return self._visan_version
 
 
-class PerformingArtist(Record):
+class PerformingArtistRecord(Record):
     """
     Represents a CWR Performing Artist (PER).
 
@@ -1520,7 +1520,7 @@ class PerformingArtist(Record):
     """
 
     def __init__(self, prefix, last_name, first_name='', cae_ipi_name=None, ipi_base_number=None):
-        super(PerformingArtist, self).__init__(prefix)
+        super(PerformingArtistRecord, self).__init__(prefix)
         self._first_name = first_name
         self._last_name = last_name
         self._cae_ipi_name = cae_ipi_name
