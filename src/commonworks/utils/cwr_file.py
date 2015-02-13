@@ -11,7 +11,7 @@ yy - Year.
 nnnn - Sequence. This was originally 2 numbers, later changed to 4.
 sss - Sender. 2 or 3 digits.
 rrr - Receiver. 2 or 3 digits.
-xx - Version of the CWR standard
+xx - Version of the CWR standard (version x.x).
 
 It should be noted that the CISAC CWR standard specification indicates that the sequence should be two digits long.
 But the CWR Management Committee increased it to four.
