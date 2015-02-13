@@ -4,7 +4,7 @@ import unittest
 import re
 
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository
-from commonworks.value import TableValue
+from commonworks.table_value import TableValue
 
 
 """

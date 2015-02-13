@@ -4,7 +4,7 @@ import datetime
 
 from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher
-from commonworks.value import TableValue
+from commonworks.table_value import TableValue
 from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
     PerformingArtistRecord, WorkOriginRecord, WorkRecord, RecordingDetailRecord
 from tests.mongo.mongo_test_conf import host, port, db_name, MongoGenericRepository

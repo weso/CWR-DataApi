@@ -4,7 +4,7 @@ import datetime
 
 from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
-from commonworks.value import TableValue
+from commonworks.table_value import TableValue
 from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
     PerformingArtistRecord, WorkRecord, WorkOriginRecord, RecordingDetailRecord
 
@@ -240,7 +240,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['id'] = entity.value_id
+        encoded['id'] = entity.code
         encoded['name'] = entity.name
 
         if entity.description is not None:
