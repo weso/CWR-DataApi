@@ -607,7 +607,11 @@ class TransmissionHeader(object):
 
         Indicates if the sender of the file is a society or a publisher.
 
-        Values are 'PB' = Publisher, 'SO' = Society, 'AA' = Administrative Agency, 'WR' = Writer
+        Possible values are:
+        - 'AA': Administrative Agency
+        - 'PB': Publisher
+        - 'SO': Society
+        - 'WR': Writer
 
         :return: the sender type
         """
