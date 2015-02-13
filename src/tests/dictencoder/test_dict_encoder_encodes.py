@@ -72,7 +72,7 @@ class TestAlternativeWorkTitle(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AlternateTitle('title', 1, 'ES')
+        entity = AlternateTitle(None, 'title', 1, 'ES')
 
         self.dict = encoder.encode(entity)
 
@@ -102,11 +102,11 @@ class TestAuthoredWork(unittest.TestCase):
         self.assertEqual('ES', self.dict['language_code'])
         self.assertEqual('Broadway show', self.dict['source'])
         self.assertEqual('name1', self.dict['first_name_1'])
-        self.assertEqual(1, self.dict['ip_base_1'])
-        self.assertEqual('ip_1', self.dict['ip_name_1'])
+        self.assertEqual(1, self.dict['ipi_base_1'])
+        self.assertEqual('ip_1', self.dict['cae_ipi_name_1'])
         self.assertEqual('name2', self.dict['first_name_2'])
-        self.assertEqual(2, self.dict['ip_base_2'])
-        self.assertEqual('ip_2', self.dict['ip_name_2'])
+        self.assertEqual(2, self.dict['ipi_base_2'])
+        self.assertEqual('ip_2', self.dict['cae_ipi_name_2'])
         self.assertEqual('surname1', self.dict['last_name_1'])
         self.assertEqual('surname2', self.dict['last_name_2'])
         self.assertEqual(3, self.dict['iswc'])
@@ -145,7 +145,7 @@ class TestPerformingArtist(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = PerformingArtist('surname', 'name', 1, 2)
+        entity = PerformingArtist(None, 'surname', 'name', 1, 2)
 
         self.dict = encoder.encode(entity)
 
@@ -182,7 +182,7 @@ class TestRecordingDetails(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = RecordingDetail(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+        entity = RecordingDetail(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
                                  3, 4, 5, 6, 7)
 
         self.dict = encoder.encode(entity)
@@ -273,7 +273,7 @@ class TestWorkOrigin(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = WorkOrigin(1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
+        entity = WorkOrigin(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
 
         self.dict = encoder.encode(entity)
 

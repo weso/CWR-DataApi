@@ -49,7 +49,7 @@ def parse_alternative_work_title(json_item):
     :param json_item: JSON object to parse
     :return: an AlternativeWorkTitle parsed from the JSON
     """
-    title = AlternateTitle(json_item['alternate_title'],
+    title = AlternateTitle(None, json_item['alternate_title'],
                            json_item['title_type'],
                            json_item['language'])
 
@@ -68,11 +68,11 @@ def parse_authored_work(json_item):
                          language_code=json_item['language_code'],
                          source=json_item['source'],
                          first_name_1=json_item['first_name_1'],
-                         ip_base_1=json_item['ip_base_1'],
-                         ip_name_1=json_item['ip_name_1'],
+                         ipi_base_1=json_item['ipi_base_1'],
+                         cae_ipi_name_1=json_item['cae_ipi_name_1'],
                          first_name_2=json_item['first_name_2'],
-                         ip_base_2=json_item['ip_base_2'],
-                         ip_name_2=json_item['ip_name_2'],
+                         ipi_base_2=json_item['ipi_base_2'],
+                         cae_ipi_name_2=json_item['cae_ipi_name_2'],
                          last_name_1=json_item['last_name_1'],
                          last_name_2=json_item['last_name_2'],
                          iswc=json_item['iswc'])
@@ -104,7 +104,7 @@ def parse_performing_artist(json_item):
     :param json_item: JSON object to parse
     :return: a PerformingArtist parsed from the JSON
     """
-    artist = PerformingArtist(json_item['last_name'],
+    artist = PerformingArtist(None, json_item['last_name'],
                               json_item['first_name'],
                               json_item['cae_ipi_name'],
                               json_item['ipi_base_number'])
@@ -135,7 +135,7 @@ def parse_recording_details(json_item):
     :param json_item: JSON object to parse
     :return: a RecordingDetails parsed from the JSON
     """
-    details = RecordingDetail(json_item['first_release_date'],
+    details = RecordingDetail(None, json_item['first_release_date'],
                               json_item['first_release_duration'],
                               json_item['first_album_title'],
                               json_item['first_album_label'],
@@ -186,7 +186,7 @@ def parse_work_origin(json_item):
     :param json_item: JSON object to parse
     :return: a WorkOrigin parsed from the JSON
     """
-    origin = WorkOrigin(json_item['intended_purpose'],
+    origin = WorkOrigin(None, json_item['intended_purpose'],
                         json_item['production_title'],
                         json_item['cd_identifier'],
                         json_item['cut_number'],
@@ -213,7 +213,7 @@ def parse_writer(json_item):
     :param json_item: JSON object to parse
     :return: a Writer parsed from the JSON and with the specified id
     """
-    writer = Writer(json_item['first_name'],
+    writer = Writer(None, json_item['first_name'],
                     json_item['personal_number'], json_item['ip_id'],
                     json_item['ip_name'], json_item['ip_base_id'],
                     json_item['last_name'])

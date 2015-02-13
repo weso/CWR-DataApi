@@ -2,7 +2,7 @@
 from abc import ABCMeta
 
 """
-CWR file structured and information model.
+CWR file structure and information model.
 
 Classes inside this module represent the control records of a CWR file, which are used to partition and control the
 structure of these files.

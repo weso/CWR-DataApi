@@ -100,11 +100,11 @@ class TestAuthoredWork(unittest.TestCase):
         data['language_code'] = 'ES'
         data['source'] = 'Broadway show'
         data['first_name_1'] = 'first_1'
-        data['ip_base_1'] = 1
-        data['ip_name_1'] = 'ip_1'
+        data['ipi_base_1'] = 1
+        data['cae_ipi_name_1'] = 'ip_1'
         data['first_name_2'] = 'first_2'
-        data['ip_base_2'] = 2
-        data['ip_name_2'] = 'ip_2'
+        data['ipi_base_2'] = 2
+        data['cae_ipi_name_2'] = 'ip_2'
         data['last_name_1'] = 'last_1'
         data['last_name_2'] = 'last_2'
         data['iswc'] = 3

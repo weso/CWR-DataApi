@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from commonworks.file import Record
 
 """
 CWR information model.
@@ -10,12 +11,25 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class AdditionalRelatedInfo(object):
+class AdditionalRelatedInfo(Record):
     """
     Represents a CWR Additional Related Info (ARI).
+
+    This record may contain specific information or general information.
+
+    The Work number is used to relate the work being registered to an entry in an unidentified performance/use list, or
+    to correct a work referenced in a cue sheet, web site, etc.
+
+    The free-text note contains general information addressed to one or all societies. It may be used for important
+    information concerning the work registration.
+
+    Societies are not obliged to process ARI records, even if the note is addressed to them.
+
+    The note field should be used sparingly.
     """
 
-    def __init__(self, society_id, right_type, work_id=None, subject=None, note=None):
+    def __init__(self, prefix, society_id, right_type, work_id='', subject=None, note=''):
+        super(AdditionalRelatedInfo, self).__init__(prefix)
         self._society_id = society_id
         self._right_type = right_type
         self._work_id = work_id
@@ -25,42 +39,42 @@ class AdditionalRelatedInfo(object):
     @property
     def note(self):
         """
-        Note field.
+        Note field. Alphanumeric.
 
         Free text field pertaining to the type of right and subject specified above.
 
-        :return: the note
+        :return: an informative note
         """
         return self._note
 
     @property
     def right_type(self):
         """
-        Type of Right field.
+        Type of Right field. Table Lookup (Type of Right).
 
-        Indicates that this information relates to performing rights, mechanical rights, sync. rights or all rights
-        (ALL)
+        Indicates to which type of right does this information relate.
 
-        :return: the type of right
+        :return: the type of right the information is for
         """
         return self._right_type
 
     @property
     def society_id(self):
         """
-        Society # field.
+        Society Number field. Table Lookup (Society Code Table).
 
-        Number assigned to the Society to which the Note is addressed.  These values reside Society Code Table. If the
-        note is addressed to all societies that use the ARI record, use '000'.
+        Number assigned to the Society to which the Note is addressed.
 
-        :return: the society number id
+        If the note is addressed to all societies that use the ARI record this should be '000'.
+
+        :return: the society number ID
         """
         return self._society_id
 
     @property
     def subject(self):
         """
-        Subject Code field.
+        Subject Code field. Table Lookup (Subject Code).
 
         Subject of the ARI.
 
@@ -71,95 +85,12 @@ class AdditionalRelatedInfo(object):
     @property
     def work_id(self):
         """
-        Work # field.
+        Work Number field. Alphanumeric.
 
-        The Society work # that relates to this registration.  It may have been found on an unidentified list, or a
-        website, …
+        The Society work ID that relates to this registration.
+
+        It may have been found on an unidentified list, or a website, …
 
         :return: the work id
         """
         return self._work_id
-
-
-class Message(object):
-    """
-    Represents a CWR Message (MSG).
-    """
-
-    def __init__(self, message_type, text, sequence_n, record_type, message_level, validation_n):
-        self._message_type = message_type
-        self._sequence_n = sequence_n
-        self._record_type = record_type
-        self._message_level = message_level
-        self._validation_n = validation_n
-        self._text = text
-
-    @property
-    def message_level(self):
-        """
-        Message Level field.
-
-        The level of editing that was responsible for generation of this message.  Values are E = Entire File,
-        G = Group, T = Transaction, R = Record, F = Field.
-
-        :return: the message level
-        """
-        return self._message_level
-
-    @property
-    def message_type(self):
-        """
-        Message Type field.
-
-        Indicates whether this information is a warning, error, or for information only.  Values are F = Field Rejected,
-        R = Record Rejected, T = Transaction Rejected, G = Group Rejected, E = Entire File Rejected
-
-        :return: the message type
-        """
-        return self._message_type
-
-    @property
-    def record_type(self):
-        """
-        Record Type field.
-
-        The record type within the original transaction that caused generation of this message.
-
-        :return: the record type
-        """
-        return self._record_type
-
-    @property
-    def sequence_n(self):
-        """
-        Original Record Sequence # field.
-
-        The Record Sequence Number within the transaction associated with this acknowledgment that caused the generation
-        of this message.
-
-        :return: the original record sequence number
-        """
-        return self._sequence_n
-
-    @property
-    def text(self):
-        """
-        Message Text field.
-
-        The text associated with this message.
-
-        :return: the message text
-        """
-        return self._text
-
-    @property
-    def validation_n(self):
-        """
-        Validation Number field.
-
-        Identifies the specific edit condition that generated this message.  Note that the combination of Record Type,
-        Message Level, and Validation Number points back to a condition within this document.
-
-        :return: the validation number field
-        """
-        return self._validation_n

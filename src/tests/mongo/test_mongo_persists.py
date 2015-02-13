@@ -56,7 +56,7 @@ class TestAlternativeWorkTitle(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = AlternateTitle('title', 1, 'ES')
+        self.entity = AlternateTitle(None, 'title', 1, 'ES')
         self.repo = MongoGenericRepository(host, port, db_name, 'alternate_titles')
 
     def tearDown(self):
@@ -114,7 +114,7 @@ class TestPerformingArtist(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = PerformingArtist('name', 'surname', 1, 2)
+        self.entity = PerformingArtist(None, 'name', 'surname', 1, 2)
         self.repo = MongoGenericRepository(host, port, db_name, 'performing_artists')
 
     def tearDown(self):
@@ -150,7 +150,7 @@ class TestRecordingDetails(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = RecordingDetail(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+        self.entity = RecordingDetail(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
                                       3, 4, 5, 6, 7)
         self.repo = MongoGenericRepository(host, port, db_name, 'recording_details')
 
@@ -215,7 +215,7 @@ class TestWorkOrigin(unittest.TestCase):
     """
 
     def setUp(self):
-        self.entity = WorkOrigin(1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
+        self.entity = WorkOrigin(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
         self.repo = MongoGenericRepository(host, port, db_name, 'work_origins')
 
     def tearDown(self):

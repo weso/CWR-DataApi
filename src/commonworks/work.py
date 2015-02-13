@@ -684,7 +684,7 @@ class Component(Record):
 
     def __init__(self, prefix, title, last_name_1, submitter_id='',
                  first_name_1='', first_name_2='', last_name_2='',
-                 ipi_base_1=None, ipi_name_1=None, cae_ipi_base_2=None, cae_ipi_name_2=None,
+                 ipi_base_1=None, cae_ipi_name_1=None, ipi_base_2=None, cae_ipi_name_2=None,
                  iswc=''):
         super(Component, self).__init__(prefix)
         # Work's info
@@ -696,12 +696,12 @@ class Component(Record):
         self._first_name_1 = first_name_1
         self._last_name_1 = last_name_1
         self._ipi_base_1 = ipi_base_1
-        self._ipi_name_1 = ipi_name_1
+        self._cae_ipi_name_1 = cae_ipi_name_1
 
         # Second writer's info
         self._first_name_2 = first_name_2
         self._last_name_2 = last_name_2
-        self._cae_ipi_base_2 = cae_ipi_base_2
+        self._ipi_base_2 = ipi_base_2
         self._cae_ipi_name_2 = cae_ipi_name_2
 
     @property
@@ -922,7 +922,7 @@ class AuthoredWork(BaseWork):
         return self._first_name_2
 
     @property
-    def ip_base_1(self):
+    def ipi_base_1(self):
         """
         Writer 1 IPI Base Number field. Table Lookup (CISAC)
 
@@ -936,7 +936,7 @@ class AuthoredWork(BaseWork):
         return self._ipi_base_1
 
     @property
-    def ip_base_2(self):
+    def ipi_base_2(self):
         """
         Writer 2 IPI Base Number field. Table Lookup (CISAC)
 
@@ -1257,7 +1257,7 @@ class InstrumentationDetail(Record):
     """
 
     def __init__(self, prefix, code, players=0):
-        super(Instrumentation, self).__init__(prefix)
+        super(InstrumentationDetail, self).__init__(prefix)
         self._code = code
         self._players = players
 
@@ -1284,7 +1284,7 @@ class InstrumentationDetail(Record):
         return self._players
 
 
-class WorkOrigin(object):
+class WorkOrigin(Record):
     """
     Represents a CWR Work Origin (ORN) record.
 

@@ -708,7 +708,8 @@ class WriterPublisherRecord(Record):
     publisher agreement.
     """
 
-    def __init__(self, publisher_id, writer_id, agreement_id=None, society_agreement_id=None):
+    def __init__(self, prefix, publisher_id, writer_id, agreement_id=None, society_agreement_id=None):
+        super(WriterPublisherRecord, self).__init__(prefix)
         # Parties IDs
         self._publisher_id = publisher_id
         self._writer_id = writer_id
