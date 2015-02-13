@@ -3,13 +3,11 @@
 import unittest
 import datetime
 
-from commonworks.agreement import AgreementTerritory, Agreement, IPA
-from commonworks.interested_party import Publisher, Writer
-from commonworks.society import Society
-from commonworks.territory import Territory
-from commonworks.value_entity import ValueEntity
-from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, WorkOrigin, RecordingDetails, Work
+from commonworks.agreement import AgreementRecord, AgreementInterestedParty
+from commonworks.interested_party import Publisher
+from commonworks.table_value import TableValue
+from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
+    PerformingArtistRecord, WorkOriginRecord, WorkRecord, RecordingDetailRecord
 from commonworks.utils.dict_encoder import CWRDictionaryEncoder
 
 
@@ -25,22 +23,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestAgreementTerritory(unittest.TestCase):
-    """
-    Tests the AgreementTerritory to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = AgreementTerritory(True, 2)
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual(True, self.dict['included'])
-        self.assertEqual(2, self.dict['tis_numeric_code'])
-
-
 class TestAgreement(unittest.TestCase):
     """
     Tests the Agreement to dictionary encoding.
@@ -48,17 +30,20 @@ class TestAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Agreement(1, 2, 'Original', datetime.date(2015, 1, 11), datetime.date(2015, 2, 11),
-                           'D', 'D', datetime.date(2015, 6, 11), 122, 'S',
-                           international_standard_code=3, retention_end_date=datetime.date(2015, 3, 11),
-                           prior_royalty_status_date=datetime.date(2015, 4, 11),
-                           post_term_collection_end_date=datetime.date(2015, 5, 11),
-                           shares_change=True, advance_given=True)
+        entity = AgreementRecord(None, 1, 'Original', datetime.date(2015, 1, 11), 'D', 'D',
+                                 122, society_agreement_id=2, international_standard_code=3,
+                                 sales_manufacture_clause='S',
+                                 end_date=datetime.date(2015, 2, 11),
+                                 signature_date=datetime.date(2015, 6, 11),
+                                 retention_end_date=datetime.date(2015, 3, 11),
+                                 prior_royalty_start_date=datetime.date(2015, 4, 11),
+                                 post_term_collection_end_date=datetime.date(2015, 5, 11),
+                                 shares_change=True, advance_given=True)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(1, self.dict['submitter_agreement_number'])
+        self.assertEqual(1, self.dict['agreement_id'])
         self.assertEqual(2, self.dict['society_agreement_number'])
         self.assertEqual(3, self.dict['international_standard_number'])
         self.assertEqual('Original', self.dict['agreement_type'])
@@ -67,7 +52,7 @@ class TestAgreement(unittest.TestCase):
         self.assertEqual(datetime.date(2015, 2, 11).isoformat(), self.dict['end_date'])
 
         self.assertEqual('D', self.dict['prior_royalty_status'])
-        self.assertEqual(datetime.date(2015, 4, 11).isoformat(), self.dict['prior_royalty_status_date'])
+        self.assertEqual(datetime.date(2015, 4, 11).isoformat(), self.dict['prior_royalty_start_date'])
 
         self.assertEqual('D', self.dict['post_term_collection_status'])
         self.assertEqual(datetime.date(2015, 5, 11).isoformat(), self.dict['post_term_collection_end_date'])
@@ -87,7 +72,7 @@ class TestAlternativeWorkTitle(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AlternateTitle('title', 1, 'ES')
+        entity = AlternateTitleRecord(None, 'title', 1, 'ES')
 
         self.dict = encoder.encode(entity)
 
@@ -104,10 +89,10 @@ class TestAuthoredWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AuthoredWork(1, 'title', 'ES', 'Broadway show',
-                              'name1', 1, 'ip_1',
-                              'name2', 2, 'ip_2', 'surname1', 'surname2',
-                              3)
+        entity = AuthoredWorkRecord(None, 'title', 1,
+                                    'name1', 'surname1', 'name2', 'surname2', 1, 'ip_1',
+                                    2, 'ip_2',
+                                    'Broadway show', 'ES', 3)
 
         self.dict = encoder.encode(entity)
 
@@ -117,11 +102,11 @@ class TestAuthoredWork(unittest.TestCase):
         self.assertEqual('ES', self.dict['language_code'])
         self.assertEqual('Broadway show', self.dict['source'])
         self.assertEqual('name1', self.dict['first_name_1'])
-        self.assertEqual(1, self.dict['ip_base_1'])
-        self.assertEqual('ip_1', self.dict['ip_name_1'])
+        self.assertEqual(1, self.dict['ipi_base_1'])
+        self.assertEqual('ip_1', self.dict['cae_ipi_name_1'])
         self.assertEqual('name2', self.dict['first_name_2'])
-        self.assertEqual(2, self.dict['ip_base_2'])
-        self.assertEqual('ip_2', self.dict['ip_name_2'])
+        self.assertEqual(2, self.dict['ipi_base_2'])
+        self.assertEqual('ip_2', self.dict['cae_ipi_name_2'])
         self.assertEqual('surname1', self.dict['last_name_1'])
         self.assertEqual('surname2', self.dict['last_name_2'])
         self.assertEqual(3, self.dict['iswc'])
@@ -134,17 +119,17 @@ class TestIPAAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = IPA(1, 2, 'party', 'assign', 'writer', 3, 4, 0.1, 5, 0.2, 6, 0.3)
+        entity = AgreementInterestedParty(None, 2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
-        self.assertEqual(1, self.dict['agreement_id'])
-        self.assertEqual(2, self.dict['interested_party_id'])
-        self.assertEqual('party', self.dict['interested_party_name'])
+        self.assertEqual(2, self.dict['ip_id'])
+        self.assertEqual('party', self.dict['ip_last_name'])
         self.assertEqual('assign', self.dict['agreement_role_code'])
-        self.assertEqual('writer', self.dict['interested_party_writer_name'])
-        self.assertEqual(3, self.dict['interested_party_ipi'])
+        self.assertEqual('writer', self.dict['ip_writer_name'])
+        self.assertEqual(3, self.dict['ip_ipi'])
+        self.assertEqual('cae_name', self.dict['cae_ipi_name'])
         self.assertEqual(4, self.dict['pr_society'])
         self.assertEqual(0.1, self.dict['pr_share'])
         self.assertEqual(5, self.dict['mr_society'])
@@ -160,7 +145,7 @@ class TestPerformingArtist(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = PerformingArtist('name', 'surname', 1, 2)
+        entity = PerformingArtistRecord(None, 'surname', 'name', 1, 2)
 
         self.dict = encoder.encode(entity)
 
@@ -178,16 +163,16 @@ class TestPublisher(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Publisher('publisher1', 1, 'name_ip', 2, 3)
+        entity = Publisher(1, 'publisher1', 'name_ip', 2, 'cae')
 
         self.dict = encoder.encode(entity)
 
     def test_dictionary(self):
         self.assertEqual('publisher1', self.dict['name'])
         self.assertEqual(1, self.dict['ip_id'])
-        self.assertEqual('name_ip', self.dict['ip_name'])
-        self.assertEqual(2, self.dict['ip_base_id'])
-        self.assertEqual(3, self.dict['tax_id'])
+        self.assertEqual('cae', self.dict['cae_ipi_name'])
+        self.assertEqual('name_ip', self.dict['ipi_base_id'])
+        self.assertEqual(2, self.dict['tax_id'])
 
 
 class TestRecordingDetails(unittest.TestCase):
@@ -197,8 +182,8 @@ class TestRecordingDetails(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = RecordingDetails(datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
-                                  3, 4, 5, 6, 7)
+        entity = RecordingDetailRecord(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+                                       3, 4, 5, 6, 7)
 
         self.dict = encoder.encode(entity)
 
@@ -215,41 +200,6 @@ class TestRecordingDetails(unittest.TestCase):
         self.assertEqual(7, self.dict['media_type'])
 
 
-class TestSociety(unittest.TestCase):
-    """
-    Tests the Society to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = Society(1, 'name', 'formerly')
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual('name', self.dict['name'])
-        self.assertEqual('formerly', self.dict['former_name'])
-
-
-class TestTerritory(unittest.TestCase):
-    """
-    Tests the Territory to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = Territory(1, 2, 3, 'name', 'official')
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual(1, self.dict['tis'])
-        self.assertEqual(2, self.dict['iso2'])
-        self.assertEqual(3, self.dict['type'])
-        self.assertEqual('name', self.dict['name'])
-        self.assertEqual('official', self.dict['official_name'])
-
-
 class TestValueEntity(unittest.TestCase):
     """
     Tests the ValueEntity to dictionary encoding.
@@ -257,7 +207,7 @@ class TestValueEntity(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = ValueEntity(1, 'name', 'desc')
+        entity = TableValue(1, 'name', 'desc')
 
         self.dict = encoder.encode(entity)
 
@@ -274,9 +224,17 @@ class TestWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = Work(1, 'The Title', 'ES', datetime.date(2015, 1, 11), 2, datetime.date(2015, 1, 12),
-                      'text_only', 'original', 'none', 'none', 'movement', 'composite', 3, 4, 'jazz',
-                      'category', 60, 5, '28#3', 'name_id', 'Person', True, True, True, True)
+        entity = WorkRecord(None, 1, 'The Title', 'original', 'category',
+                            language_code='ES', printed_edition_publication_date=datetime.date(2015, 1, 11),
+                            copyright_number=2, copyright_date=datetime.date(2015, 1, 12),
+                            text_music_relationship='text_only',
+                            music_arrangement='none', lyric_adaptation='none', excerpt_type='movement',
+                            composite_type='composite', composite_component_count=3,
+                            iswc=4, cwr_work_type='jazz',
+                            duration=60, catalogue_number=5, opus_number='28#3',
+                            contact_id='name_id', contact_name='Person',
+                            recorded_indicator=True, priority_flag=True, exceptional_clause=True,
+                            grand_rights_indicator=True)
 
         self.dict = encoder.encode(entity)
 
@@ -315,7 +273,7 @@ class TestWorkOrigin(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = WorkOrigin(1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
+        entity = WorkOriginRecord(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
 
         self.dict = encoder.encode(entity)
 
@@ -336,26 +294,6 @@ class TestWorkOrigin(unittest.TestCase):
         self.assertEqual(1995, self.dict['production_year'])
         self.assertEqual(12, self.dict['avi_key_society'])
         self.assertEqual(13, self.dict['avi_key_number'])
-
-
-class TestWriter(unittest.TestCase):
-    """
-    Tests the Writer to dictionary encoding.
-    """
-
-    def setUp(self):
-        encoder = CWRDictionaryEncoder()
-        entity = Writer('name', 1, 2, 'ip', 3, 'surname')
-
-        self.dict = encoder.encode(entity)
-
-    def test_dictionary(self):
-        self.assertEqual('name', self.dict['first_name'])
-        self.assertEqual(1, self.dict['personal_number'])
-        self.assertEqual(2, self.dict['ip_id'])
-        self.assertEqual('ip', self.dict['ip_name'])
-        self.assertEqual(3, self.dict['ip_base_id'])
-        self.assertEqual('surname', self.dict['last_name'])
 
 
 if __name__ == '__main__':

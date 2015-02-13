@@ -2,13 +2,11 @@
 
 import datetime
 
-from commonworks.agreement import Agreement, AgreementTerritory, IPA
+from commonworks.agreement import AgreementRecord, AgreementInterestedParty
 from commonworks.interested_party import Publisher, Writer
-from commonworks.society import Society
-from commonworks.territory import Territory
-from commonworks.value_entity import ValueEntity
-from commonworks.work import AlternateTitle, AuthoredWork, \
-    PerformingArtist, RecordingDetails, Work, WorkOrigin
+from commonworks.table_value import TableValue
+from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
+    PerformingArtistRecord, WorkRecord, WorkOriginRecord, RecordingDetailRecord
 
 
 """
@@ -46,51 +44,30 @@ class CWRDictionaryEncoder(object):
         self._adapter = DictionaryAdapter()
 
     def encode(self, d):
-        if isinstance(d, AgreementTerritory):
-            encoded = self.__encode_agreement_territory(d)
-        elif isinstance(d, Agreement):
+        if isinstance(d, AgreementRecord):
             encoded = self.__encode_agreement(d)
-        elif isinstance(d, AlternateTitle):
+        elif isinstance(d, AlternateTitleRecord):
             encoded = self.__encode_alternative_work_title(d)
-        elif isinstance(d, AuthoredWork):
+        elif isinstance(d, AuthoredWorkRecord):
             encoded = self.__encode_authored_work(d)
-        elif isinstance(d, IPA):
+        elif isinstance(d, AgreementInterestedParty):
             encoded = self.__encode_ipa(d)
-        elif isinstance(d, PerformingArtist):
+        elif isinstance(d, PerformingArtistRecord):
             encoded = self.__encode_performing_artist(d)
         elif isinstance(d, Publisher):
             encoded = self.__encode_publisher(d)
-        elif isinstance(d, RecordingDetails):
+        elif isinstance(d, RecordingDetailRecord):
             encoded = self.__encode_recording_details(d)
-        elif isinstance(d, Society):
-            encoded = self.__encode_society(d)
-        elif isinstance(d, Territory):
-            encoded = self.__encode_territory(d)
-        elif isinstance(d, ValueEntity):
+        elif isinstance(d, TableValue):
             encoded = self.__encode_value_entity(d)
-        elif isinstance(d, Work):
+        elif isinstance(d, WorkRecord):
             encoded = self.__encode_work(d)
-        elif isinstance(d, WorkOrigin):
+        elif isinstance(d, WorkOriginRecord):
             encoded = self.__encode_work_origin(d)
         elif isinstance(d, Writer):
             encoded = self.__encode_writer(d)
         else:
             encoded = None
-
-        return encoded
-
-    @staticmethod
-    def __encode_agreement_territory(territory):
-        """
-        Creates a dictionary from an Agreement Territory.
-
-        :param territory: the Agreement Territory to transform into a dictionary
-        :return: a dictionary created from the Agreement Territory
-        """
-        encoded = {}
-
-        encoded['included'] = territory.included
-        encoded['tis_numeric_code'] = territory.tis_numeric_code
 
         return encoded
 
@@ -103,7 +80,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['submitter_agreement_number'] = agreement.submitter_agreement_number
+        encoded['agreement_id'] = agreement.agreement_id
         encoded['society_agreement_number'] = agreement.society_agreement_number
         encoded['international_standard_number'] = agreement.international_standard_code
         encoded['agreement_type'] = agreement.agreement_type
@@ -112,7 +89,7 @@ class CWRDictionaryEncoder(object):
         encoded['end_date'] = self._adapter.adapt(agreement.end_date)
 
         encoded['prior_royalty_status'] = agreement.prior_royalty_status
-        encoded['prior_royalty_status_date'] = self._adapter.adapt(agreement.prior_royalty_status_date)
+        encoded['prior_royalty_start_date'] = self._adapter.adapt(agreement.prior_royalty_start_date)
 
         encoded['post_term_collection_status'] = agreement.post_term_collection_status
         encoded['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)
@@ -160,11 +137,11 @@ class CWRDictionaryEncoder(object):
         encoded['language_code'] = work.language_code
         encoded['source'] = work.source
         encoded['first_name_1'] = work.first_name_1
-        encoded['ip_base_1'] = work.ip_base_1
-        encoded['ip_name_1'] = work.ip_name_1
+        encoded['ipi_base_1'] = work.ipi_base_1
+        encoded['cae_ipi_name_1'] = work.cae_ipi_name_1
         encoded['first_name_2'] = work.first_name_2
-        encoded['ip_base_2'] = work.ip_base_2
-        encoded['ip_name_2'] = work.ip_name_2
+        encoded['ipi_base_2'] = work.ipi_base_2
+        encoded['cae_ipi_name_2'] = work.cae_ipi_name_2
         encoded['last_name_1'] = work.last_name_1
         encoded['last_name_2'] = work.last_name_2
         encoded['iswc'] = work.iswc
@@ -181,12 +158,12 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['agreement_id'] = agreement.agreement_id
         encoded['agreement_role_code'] = agreement.agreement_role_code
-        encoded['interested_party_id'] = agreement.interested_party_id
-        encoded['interested_party_name'] = agreement.interested_party_name
-        encoded['interested_party_ipi'] = agreement.interested_party_ipi
-        encoded['interested_party_writer_name'] = agreement.interested_party_writer_name
+        encoded['ip_id'] = agreement.ip_id
+        encoded['ip_last_name'] = agreement.last_name
+        encoded['ip_ipi'] = agreement.ipi
+        encoded['cae_ipi_name'] = agreement.cae_ipi_name
+        encoded['ip_writer_name'] = agreement.writer_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share
         encoded['mr_society'] = agreement.mr_society
@@ -225,8 +202,8 @@ class CWRDictionaryEncoder(object):
 
         encoded['name'] = publisher.name
         encoded['ip_id'] = publisher.ip_id
-        encoded['ip_name'] = publisher.ip_name
-        encoded['ip_base_id'] = publisher.ip_base_id
+        encoded['ipi_base_id'] = publisher.ipi_base_id
+        encoded['cae_ipi_name'] = publisher.cae_ipi_name
         encoded['tax_id'] = publisher.tax_id
 
         return encoded
@@ -254,39 +231,6 @@ class CWRDictionaryEncoder(object):
         return encoded
 
     @staticmethod
-    def __encode_society(society):
-        """
-        Creates a dictionary from a Society.
-
-        :param society: the Society to transform into a dictionary
-        :return: a dictionary created from the Society
-        """
-        encoded = {}
-
-        encoded['name'] = society.name
-        encoded['former_name'] = society.former_name
-
-        return encoded
-
-    @staticmethod
-    def __encode_territory(territory):
-        """
-        Creates a dictionary from a Territory.
-
-        :param territory: the Territory to transform into a dictionary
-        :return: a dictionary created from the Territory
-        """
-        encoded = {}
-
-        encoded['tis'] = territory.tis
-        encoded['iso2'] = territory.iso2
-        encoded['type'] = territory.territory_type
-        encoded['name'] = territory.name
-        encoded['official_name'] = territory.official_name
-
-        return encoded
-
-    @staticmethod
     def __encode_value_entity(entity):
         """
         Creates a dictionary from a ValueEntity.
@@ -296,7 +240,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['id'] = entity.entity_id
+        encoded['id'] = entity.code
         encoded['name'] = entity.name
 
         if entity.description is not None:
