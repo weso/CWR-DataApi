@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from commonworks.file import FileTag
+from cwr.file import FileTag
 
 """
 CWR file utilities.

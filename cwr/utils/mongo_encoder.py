@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from commonworks.utils.dict_encoder import CWRDictionaryEncoder
+from cwr.utils.dict_encoder import CWRDictionaryEncoder
 
 """
 Offers classes to create Mongo dictionaries from model objects.

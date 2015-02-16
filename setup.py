@@ -18,7 +18,7 @@ setup(
     author_email='',
     url='https://github.com/weso/CWR-DataApi',
     download_url='https://github.com/weso/CWR-DataApi',
-    keywords=['CWR', 'commonworks', 'api'],
+    keywords=['CWR', 'cwr', 'api'],
     classifiers=[],
     license='MIT',
     long_description=open("README.rst").read(),
