@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from commonworks.file import Record
+from cwr.file import Record
 
 
 """
