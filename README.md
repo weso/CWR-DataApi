@@ -12,6 +12,9 @@ The project is still in the development phase.
 ### Issues management
 Issues are managed at the GitHub [project issues page][].
 
+## Documentation
+Documentation for the project can be found at the GitHub [project wiki][].
+
 ## Building the code
 The application has been coded in Python, and tested for various versions of the Python 2 and 3 interpreter.
 
@@ -42,4 +45,5 @@ The project is released under the [MIT License][].
 [project CI page]: https://travis-ci.org/Bernardo-MG/CWR-DataApi
 [project issues page]: https://travis-ci.org/weso/CWR-DataApi/issues
 [project page]: https://github.com/Bernardo-MG/CWR-DataApi
+[project wiki]: https://github.com/weso/CWR-DataApi/wiki
 [WESO]: http://www.weso.es/
