@@ -2,7 +2,7 @@
 from abc import ABCMeta
 import datetime
 
-from commonworks.file import Record
+from cwr.file import Record
 
 
 """

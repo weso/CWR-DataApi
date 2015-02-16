@@ -3,7 +3,7 @@ import unittest
 import json
 import datetime
 
-from commonworks.utils import jsonparser
+from cwr.utils import jsonparser
 
 
 """

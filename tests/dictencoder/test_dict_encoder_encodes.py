@@ -3,12 +3,12 @@
 import unittest
 import datetime
 
-from commonworks.agreement import AgreementRecord, AgreementInterestedParty
-from commonworks.interested_party import Publisher
-from commonworks.table_value import TableValue
-from commonworks.work import AlternateTitleRecord, AuthoredWorkRecord, \
+from cwr.agreement import AgreementRecord, AgreementInterestedParty
+from cwr.interested_party import Publisher
+from cwr.table_value import TableValue
+from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, \
     PerformingArtistRecord, WorkOriginRecord, WorkRecord, RecordingDetailRecord
-from commonworks.utils.dict_encoder import CWRDictionaryEncoder
+from cwr.utils.dict_encoder import CWRDictionaryEncoder
 
 
 """

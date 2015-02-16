@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-from commonworks.agreement import AgreementRecord, AgreementInterestedParty
-from commonworks.interested_party import Publisher, Writer
-from commonworks.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
+from cwr.agreement import AgreementRecord, AgreementInterestedParty
+from cwr.interested_party import Publisher, Writer
+from cwr.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
     RecordingDetailRecord, WorkOriginRecord, PerformingArtistRecord
 
 """
