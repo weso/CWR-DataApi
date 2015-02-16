@@ -68,8 +68,8 @@ The project is released under the `MIT License`_.
 
 .. _CISAC: http://www.cisac.org/
 .. _WESO: http://www.weso.es/
-.. _project issues page: https://travis-ci.org/weso/CWR-DataApi/issues
+.. _project issues page: https://
 .. _project wiki: https://github.com/weso/CWR-DataApi/wiki
-.. _project page: https://github.com/Bernardo-MG/CWR-DataApi
+.. _project page: https://github.com/weso/CWR-DataApi
 .. _project CI page: https://travis-ci.org/Bernardo-MG/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php

@@ -32,7 +32,7 @@ The code can be found at the GitHub [project page][].
 
 To acquire it through Git use the following clone URI:
 
-`git clone https://github.com/Bernardo-MG/CWR-DataApi.git`
+`git clone https://github.com/weso/CWR-DataApi.git`
 
 ## Continuous integration
 The continuous integration information can be found at the [project CI page][] based on Travis CI.
@@ -42,8 +42,8 @@ The project is released under the [MIT License][].
 
 [CISAC]: http://www.cisac.org/
 [MIT License]: http://www.opensource.org/licenses/mit-license.php
-[project CI page]: https://travis-ci.org/Bernardo-MG/CWR-DataApi
+[project CI page]: https://
 [project issues page]: https://travis-ci.org/weso/CWR-DataApi/issues
-[project page]: https://github.com/Bernardo-MG/CWR-DataApi
+[project page]: https://github.com/weso/CWR-DataApi
 [project wiki]: https://github.com/weso/CWR-DataApi/wiki
 [WESO]: http://www.weso.es/
