@@ -103,10 +103,10 @@ class TestAuthoredWork(unittest.TestCase):
         self.assertEqual('Broadway show', self.dict['source'])
         self.assertEqual('name1', self.dict['first_name_1'])
         self.assertEqual(1, self.dict['ipi_base_1'])
-        self.assertEqual('ip_1', self.dict['cae_ipi_name_1'])
+        self.assertEqual('ip_1', self.dict['ipi_name_1'])
         self.assertEqual('name2', self.dict['first_name_2'])
         self.assertEqual(2, self.dict['ipi_base_2'])
-        self.assertEqual('ip_2', self.dict['cae_ipi_name_2'])
+        self.assertEqual('ip_2', self.dict['ipi_name_2'])
         self.assertEqual('surname1', self.dict['last_name_1'])
         self.assertEqual('surname2', self.dict['last_name_2'])
         self.assertEqual(3, self.dict['iswc'])
@@ -129,7 +129,7 @@ class TestIPAAgreement(unittest.TestCase):
         self.assertEqual('assign', self.dict['agreement_role_code'])
         self.assertEqual('writer', self.dict['ip_writer_name'])
         self.assertEqual(3, self.dict['ip_ipi'])
-        self.assertEqual('cae_name', self.dict['cae_ipi_name'])
+        self.assertEqual('cae_name', self.dict['ipi_name'])
         self.assertEqual(4, self.dict['pr_society'])
         self.assertEqual(0.1, self.dict['pr_share'])
         self.assertEqual(5, self.dict['mr_society'])
@@ -152,7 +152,7 @@ class TestPerformingArtist(unittest.TestCase):
     def test_dictionary(self):
         self.assertEqual('name', self.dict['first_name'])
         self.assertEqual('surname', self.dict['last_name'])
-        self.assertEqual(1, self.dict['cae_ipi_name'])
+        self.assertEqual(1, self.dict['ipi_name'])
         self.assertEqual(2, self.dict['ipi_base_number'])
 
 
@@ -170,7 +170,7 @@ class TestPublisher(unittest.TestCase):
     def test_dictionary(self):
         self.assertEqual('publisher1', self.dict['name'])
         self.assertEqual(1, self.dict['ip_id'])
-        self.assertEqual('cae', self.dict['cae_ipi_name'])
+        self.assertEqual('cae', self.dict['ipi_name'])
         self.assertEqual('name_ip', self.dict['ipi_base_id'])
         self.assertEqual(2, self.dict['tax_id'])
 
@@ -283,7 +283,7 @@ class TestWorkOrigin(unittest.TestCase):
         self.assertEqual(2, self.dict['cd_identifier'])
         self.assertEqual(3, self.dict['cut_number'])
         self.assertEqual(4, self.dict['library'])
-        self.assertEqual(5, self.dict['blt'])
+        self.assertEqual(5, self.dict['bltvr'])
         self.assertEqual(6, self.dict['visan_version'])
         self.assertEqual(7, self.dict['visan_isan'])
         self.assertEqual(8, self.dict['visan_episode'])

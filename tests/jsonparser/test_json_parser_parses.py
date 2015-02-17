@@ -101,10 +101,10 @@ class TestAuthoredWork(unittest.TestCase):
         data['source'] = 'Broadway show'
         data['first_name_1'] = 'first_1'
         data['ipi_base_1'] = 1
-        data['cae_ipi_name_1'] = 'ip_1'
+        data['ipi_name_1'] = 'ip_1'
         data['first_name_2'] = 'first_2'
         data['ipi_base_2'] = 2
-        data['cae_ipi_name_2'] = 'ip_2'
+        data['ipi_name_2'] = 'ip_2'
         data['last_name_1'] = 'last_1'
         data['last_name_2'] = 'last_2'
         data['iswc'] = 3
@@ -119,10 +119,10 @@ class TestAuthoredWork(unittest.TestCase):
         self.assertEqual(self.title.source, 'Broadway show')
         self.assertEqual(self.title.first_name_1, 'first_1')
         self.assertEqual(self.title.ipi_base_1, 1)
-        self.assertEqual(self.title.cae_ipi_name_1, 'ip_1')
+        self.assertEqual(self.title.ipi_name_1, 'ip_1')
         self.assertEqual(self.title.first_name_2, 'first_2')
         self.assertEqual(self.title.ipi_base_2, 2)
-        self.assertEqual(self.title.cae_ipi_name_2, 'ip_2')
+        self.assertEqual(self.title.ipi_name_2, 'ip_2')
         self.assertEqual(self.title.last_name_1, 'last_1')
         self.assertEqual(self.title.last_name_2, 'last_2')
         self.assertEqual(self.title.iswc, 3)
@@ -139,7 +139,7 @@ class TestIPA(unittest.TestCase):
         data['ip_last_name'] = 'surname'
         data['agreement_role_code'] = 'assign'
         data['ip_ipi'] = 3
-        data['cae_ipi_name'] = 'cae_name'
+        data['ipi_name'] = 'cae_name'
         data['ip_writer_name'] = 'writer'
         data['mr_share'] = 0.1
         data['pr_share'] = 0.2
@@ -157,7 +157,7 @@ class TestIPA(unittest.TestCase):
         self.assertEqual('assign', self.agreement.agreement_role_code)
         self.assertEqual('writer', self.agreement.writer_name)
         self.assertEqual(3, self.agreement.ipi)
-        self.assertEqual('cae_name', self.agreement.cae_ipi_name)
+        self.assertEqual('cae_name', self.agreement.ipi_name)
         self.assertEqual('writer', self.agreement.writer_name)
         self.assertEqual(0.1, self.agreement.mr_share)
         self.assertEqual(0.2, self.agreement.pr_share)
@@ -176,7 +176,7 @@ class TestPerformingArtist(unittest.TestCase):
         data = {}
         data['first_name'] = 'name'
         data['last_name'] = 'surname'
-        data['cae_ipi_name'] = 'ipi'
+        data['ipi_name'] = 'ipi'
         data['ipi_base_number'] = 11
 
         self.artist = jsonparser.parse_performing_artist(json.loads(json.dumps(data)))
@@ -185,7 +185,7 @@ class TestPerformingArtist(unittest.TestCase):
         # Makes sure the data was parsed correctly
         self.assertEqual(self.artist.first_name, 'name')
         self.assertEqual(self.artist.last_name, 'surname')
-        self.assertEqual(self.artist.cae_ipi_name, 'ipi')
+        self.assertEqual(self.artist.ipi_name, 'ipi')
         self.assertEqual(self.artist.ipi_base_number, 11)
 
 
@@ -200,7 +200,7 @@ class TestPublisher(unittest.TestCase):
         data['name'] = 'Publisher'
         data['ipi_base_id'] = 2
         data['tax_id'] = 3
-        data['cae_ipi_name'] = 'cae'
+        data['ipi_name'] = 'cae'
 
         self.publisher = jsonparser.parse_publisher(json.loads(json.dumps(data)))
 
@@ -208,7 +208,7 @@ class TestPublisher(unittest.TestCase):
         # Makes sure the data was parsed correctly
         self.assertEqual(self.publisher.name, 'Publisher')
         self.assertEqual(self.publisher.ip_id, 1)
-        self.assertEqual(self.publisher.cae_ipi_name, 'cae')
+        self.assertEqual(self.publisher.ipi_name, 'cae')
         self.assertEqual(self.publisher.ipi_base_id, 2)
         self.assertEqual(self.publisher.tax_id, 3)
 
@@ -344,7 +344,7 @@ class TestWorkOrigin(unittest.TestCase):
         self.assertEqual(self.origin.cd_identifier, 1234)
         self.assertEqual(self.origin.cut_number, 5678)
         self.assertEqual(self.origin.library, 11122)
-        self.assertEqual(self.origin.blt, 3344)
+        self.assertEqual(self.origin.bltvr, 3344)
         self.assertEqual(self.origin.visan_version, 5566)
         self.assertEqual(self.origin.visan_isan, 7788)
         self.assertEqual(self.origin.visan_episode, 9900)

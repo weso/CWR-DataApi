@@ -138,10 +138,10 @@ class CWRDictionaryEncoder(object):
         encoded['source'] = work.source
         encoded['first_name_1'] = work.first_name_1
         encoded['ipi_base_1'] = work.ipi_base_1
-        encoded['cae_ipi_name_1'] = work.cae_ipi_name_1
+        encoded['ipi_name_1'] = work.ipi_name_1
         encoded['first_name_2'] = work.first_name_2
         encoded['ipi_base_2'] = work.ipi_base_2
-        encoded['cae_ipi_name_2'] = work.cae_ipi_name_2
+        encoded['ipi_name_2'] = work.ipi_name_2
         encoded['last_name_1'] = work.last_name_1
         encoded['last_name_2'] = work.last_name_2
         encoded['iswc'] = work.iswc
@@ -162,7 +162,7 @@ class CWRDictionaryEncoder(object):
         encoded['ip_id'] = agreement.ip_id
         encoded['ip_last_name'] = agreement.last_name
         encoded['ip_ipi'] = agreement.ipi
-        encoded['cae_ipi_name'] = agreement.cae_ipi_name
+        encoded['ipi_name'] = agreement.ipi_name
         encoded['ip_writer_name'] = agreement.writer_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share
@@ -185,7 +185,7 @@ class CWRDictionaryEncoder(object):
 
         encoded['first_name'] = artist.first_name
         encoded['last_name'] = artist.last_name
-        encoded['cae_ipi_name'] = artist.cae_ipi_name
+        encoded['ipi_name'] = artist.ipi_name
         encoded['ipi_base_number'] = artist.ipi_base_number
 
         return encoded
@@ -203,7 +203,7 @@ class CWRDictionaryEncoder(object):
         encoded['name'] = publisher.name
         encoded['ip_id'] = publisher.ip_id
         encoded['ipi_base_id'] = publisher.ipi_base_id
-        encoded['cae_ipi_name'] = publisher.cae_ipi_name
+        encoded['ipi_name'] = publisher.ipi_name
         encoded['tax_id'] = publisher.tax_id
 
         return encoded
@@ -300,7 +300,7 @@ class CWRDictionaryEncoder(object):
         encoded['cd_identifier'] = origin.cd_identifier
         encoded['cut_number'] = origin.cut_number
         encoded['library'] = origin.library
-        encoded['blt'] = origin.blt
+        encoded['bltvr'] = origin.bltvr
         encoded['visan_version'] = origin.visan_version
         encoded['visan_isan'] = origin.visan_isan
         encoded['visan_episode'] = origin.visan_episode

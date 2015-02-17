@@ -69,10 +69,10 @@ def parse_authored_work(json_item):
                                source=json_item['source'],
                                first_name_1=json_item['first_name_1'],
                                ipi_base_1=json_item['ipi_base_1'],
-                               cae_ipi_name_1=json_item['cae_ipi_name_1'],
+                               ipi_name_1=json_item['ipi_name_1'],
                                first_name_2=json_item['first_name_2'],
                                ipi_base_2=json_item['ipi_base_2'],
-                               cae_ipi_name_2=json_item['cae_ipi_name_2'],
+                               ipi_name_2=json_item['ipi_name_2'],
                                last_name_1=json_item['last_name_1'],
                                last_name_2=json_item['last_name_2'],
                                iswc=json_item['iswc'])
@@ -89,7 +89,7 @@ def parse_ipa(json_item):
     """
     agreement = AgreementInterestedParty(None, json_item['ip_id'], json_item['ip_last_name'],
                                          json_item['agreement_role_code'], json_item['ip_writer_name'],
-                                         json_item['ip_ipi'], json_item['cae_ipi_name'], json_item['pr_society'],
+                                         json_item['ip_ipi'], json_item['ipi_name'], json_item['pr_society'],
                                          json_item['pr_share'],
                                          json_item['mr_society'], json_item['mr_share'], json_item['sr_society'],
                                          json_item['sr_share'])
@@ -106,7 +106,7 @@ def parse_performing_artist(json_item):
     """
     artist = PerformingArtistRecord(None, json_item['last_name'],
                                     json_item['first_name'],
-                                    json_item['cae_ipi_name'],
+                                    json_item['ipi_name'],
                                     json_item['ipi_base_number'])
 
     return artist
@@ -123,7 +123,7 @@ def parse_publisher(json_item):
                           json_item['name'],
                           json_item['ipi_base_id'],
                           json_item['tax_id'],
-                          json_item['cae_ipi_name'])
+                          json_item['ipi_name'])
 
     return publisher
 
