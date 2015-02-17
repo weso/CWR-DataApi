@@ -163,7 +163,7 @@ class AcknowledgementTransaction(object):
     control.
 
     The exception are NWR and REV transactions will be as the submitter sent, but supplemented with additional
-    information such as CAE/IPI name numbers where possible. In particular, the use of controlled/non-controlled
+    information such as IPI name numbers where possible. In particular, the use of controlled/non-controlled
     record types will be as for the submitter.  For example, if a submitter sent a publisher on an SPU, the ACK will
     contain an SPU for that publisher.
 

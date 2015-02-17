@@ -20,25 +20,14 @@ class InterestedParty(object):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, ip_id, ipi_base_id, tax_id, cae_ipi_name):
+    def __init__(self, ip_id, ipi_base_id, tax_id, ipi_name):
         # IP info
         self._ip_id = ip_id
         self._ipi_base_id = ipi_base_id
 
         # Other info
         self._tax_id = tax_id
-        self._cae_ipi_name = cae_ipi_name
-
-    @property
-    def cae_ipi_name(self):
-        """
-        Interested Party CAE/IPI Name # field. Table Lookup (CAE).
-
-        The CAE number assigned to this publisher with 2 leading zero’s or the IPI Name #.
-
-        :return: the Interested Party CAE/IPI name number
-        """
-        return self._cae_ipi_name
+        self._ipi_name = ipi_name
 
     @property
     def ip_id(self):
@@ -70,6 +59,17 @@ class InterestedParty(object):
         return self._ipi_base_id
 
     @property
+    def ipi_name(self):
+        """
+        Interested Party IPI Name # field. Table Lookup (IPI).
+
+        The IPI number assigned to this publisher with 2 leading zero’s or the IPI Name #.
+
+        :return: the Interested Party IPI name number
+        """
+        return self._ipi_name
+
+    @property
     def tax_id(self):
         """
         Tax ID number field. Alphanumeric.
@@ -89,7 +89,7 @@ class InterestedPartyRecord(Record):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, prefix, reversionary='U', first_record_refusal='U', usa_license='',
+    def __init__(self, prefix, first_record_refusal='U', usa_license='',
                  pr_society=None, mr_society=None, sr_society=None):
         """
         Constructs an InterestedPartyRecord.
@@ -101,7 +101,6 @@ class InterestedPartyRecord(Record):
         super(InterestedPartyRecord, self).__init__(prefix)
         # Flags
         self._first_record_refusal = first_record_refusal
-        self._reversionary = reversionary
         self._usa_license = usa_license
 
         # Shares
@@ -143,19 +142,6 @@ class InterestedPartyRecord(Record):
         :return: the Interested Party performing rights society
         """
         return self._pr_society
-
-    @property
-    def reversionary(self):
-        """
-        Reversionary Indicator field. Flag (Yes/No/Unknown).
-
-        Indicates publisher claiming reversionary rights.
-
-        Note that only some societies, such as SOCAN, recognize reversionary rights.
-
-        :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
-        """
-        return self.reversionary
 
     @property
     def sr_society(self):
@@ -324,8 +310,8 @@ class Publisher(InterestedParty):
     administrator.
     """
 
-    def __init__(self, publisher_id, name, ipi_base_id=None, tax_id=None, cae_ipi_name=None):
-        super(Publisher, self).__init__(publisher_id, ipi_base_id, tax_id, cae_ipi_name)
+    def __init__(self, publisher_id, name, ipi_base_id=None, tax_id=None, ipi_name=None):
+        super(Publisher, self).__init__(publisher_id, ipi_base_id, tax_id, ipi_name)
         self._name = name
 
     @property
@@ -351,7 +337,7 @@ class PublisherRecord(InterestedPartyRecord):
     def __init__(self, prefix, publisher, sequence_n, agreement_id='', publisher_type=None, publisher_unknown='F',
                  agreement_type=None, isac='', society_agreement_id='',
                  pr_society=None, pr_owner_share=0, mr_society=None, mr_owner_share=0, sr_society=None,
-                 sr_owner_share=0, reversionary='U', first_record_refusal='U', usa_license=''):
+                 sr_owner_share=0, special_agreements=None, first_record_refusal='U', usa_license=''):
         """
         Constructs a PublisherRecord.
 
@@ -371,7 +357,7 @@ class PublisherRecord(InterestedPartyRecord):
         :param sr_society: Synchronization Rights society
         :param sr_owner_share: Synchronization Rights share
         """
-        super(PublisherRecord, self).__init__(prefix, reversionary, first_record_refusal, usa_license,
+        super(PublisherRecord, self).__init__(prefix, first_record_refusal, usa_license,
                                               pr_society, mr_society, sr_society)
 
         # Publisher info
@@ -384,6 +370,7 @@ class PublisherRecord(InterestedPartyRecord):
         self._society_agreement_id = society_agreement_id
         self._agreement_type = agreement_type
         self._isac = isac
+        self._special_agreements = special_agreements
 
         # Shares
         self._pr_owner_share = pr_owner_share
@@ -497,6 +484,19 @@ class PublisherRecord(InterestedPartyRecord):
         return self._publisher_unknown
 
     @property
+    def reversionary(self):
+        """
+        Reversionary Indicator field. Flag (Yes/No/Unknown).
+
+        Indicates publisher claiming reversionary rights.
+
+        Note that only some societies, such as SOCAN, recognize reversionary rights.
+
+        :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
+        """
+        return self.reversionary
+
+    @property
     def sequence_n(self):
         """
         Publisher Sequence Number field. Numeric.
@@ -506,6 +506,19 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the Publisher sequence number in the chain
         """
         return self._sequence_n
+
+    @property
+    def special_agreements(self):
+        """
+        Special Agreements Indicator. Table Lookup (?).
+
+        Indicates publisher claiming reversionary rights.
+
+        Note that this flag only applies to societies that recognize reversionary rights (for example, SOCAN).
+
+        :return: the Special Agreements indicator
+        """
+        return self._special_agreements
 
     @property
     def sr_owner_share(self):
@@ -646,8 +659,8 @@ class Writer(InterestedParty):
     """
 
     def __init__(self, writer_id, personal_number, ipi_base_id=None, first_name='', last_name='', tax_id=None,
-                 cae_ipi_name=None):
-        super(Writer, self).__init__(writer_id, ipi_base_id, tax_id, cae_ipi_name)
+                 ipi_name=None):
+        super(Writer, self).__init__(writer_id, ipi_base_id, tax_id, ipi_name)
 
         # Writer information
         self._first_name = first_name
@@ -778,7 +791,7 @@ class WriterRecord(InterestedPartyRecord):
                  pr_society=None, pr_ownership_share=0,
                  mr_society=None, mr_ownership_share=0,
                  sr_society=None, sr_ownership_share=0):
-        super(WriterRecord, self).__init__(prefix, reversionary, first_record_refusal, usa_license,
+        super(WriterRecord, self).__init__(prefix, first_record_refusal, usa_license,
                                            pr_society, mr_society, sr_society)
         # Writer info
         self._writer = writer
@@ -792,6 +805,9 @@ class WriterRecord(InterestedPartyRecord):
         self._pr_ownership_share = pr_ownership_share
         self._mr_ownership_share = mr_ownership_share
         self._sr_ownership_share = sr_ownership_share
+
+        # Other info
+        self._reversionary = reversionary
 
     def designation(self):
         """

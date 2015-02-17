@@ -24,7 +24,7 @@ class AgreementInterestedParty(Record):
     """
 
     def __init__(self, prefix, ip_id, last_name, agreement_role_code,
-                 writer_name='', ipi=None, cae_ipi_name=None,
+                 writer_name='', ipi=None, ipi_name=None,
                  pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
         """
         Constructs an AgreementInterestedParty.
@@ -35,7 +35,7 @@ class AgreementInterestedParty(Record):
         :param agreement_role_code: the role in the agreement
         :param writer_name: the writer name
         :param ipi: IPI code
-        :param cae_ipi_name: CAE/IPI Name number
+        :param ipi_name: IPI Name number
         :param pr_society: performing rights society
         :param pr_share: performing rights share
         :param mr_society: mechanization rights society
@@ -47,7 +47,7 @@ class AgreementInterestedParty(Record):
         # Agreement and Interested Party relationship
         self._ip_id = ip_id
         self._agreement_role_code = agreement_role_code
-        self._cae_ipi_name = cae_ipi_name
+        self._ipi_name = ipi_name
 
         # Interested Party info
         self._ipi = ipi
@@ -80,19 +80,6 @@ class AgreementInterestedParty(Record):
         return self._agreement_role_code
 
     @property
-    def cae_ipi_name(self):
-        """
-        Interested Party CAE/IPI Name number field. Table Lookup (IPI Database).
-
-        The CAE number (IP name number) assigned to this interested party with 2 leading zero’s or the IPI Name number.
-
-        These values reside in the IPI Database.
-
-        :return: the CAE or IPI name number for this interested party
-        """
-        return self._cae_ipi_name
-
-    @property
     def ip_id(self):
         """
         Interested Party Number field. Alphanumeric.
@@ -114,6 +101,19 @@ class AgreementInterestedParty(Record):
         :return: IPI base number for the interested party
         """
         return self._ipi
+
+    @property
+    def ipi_name(self):
+        """
+        Interested Party IPI Name number field. Table Lookup (IPI Database).
+
+        The IPI number assigned to this interested party with 2 leading zero’s or the IPI Name number.
+
+        These values reside in the IPI Database.
+
+        :return: the IPI name number for this interested party
+        """
+        return self._ipi_name
 
     @property
     def last_name(self):

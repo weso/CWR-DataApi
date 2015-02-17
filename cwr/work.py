@@ -684,7 +684,7 @@ class ComponentRecord(Record):
 
     def __init__(self, prefix, title, last_name_1, submitter_id='',
                  first_name_1='', first_name_2='', last_name_2='',
-                 ipi_base_1=None, cae_ipi_name_1=None, ipi_base_2=None, cae_ipi_name_2=None,
+                 ipi_base_1=None, ipi_name_1=None, ipi_base_2=None, ipi_name_2=None,
                  iswc=''):
         super(ComponentRecord, self).__init__(prefix)
         # Work's info
@@ -696,41 +696,13 @@ class ComponentRecord(Record):
         self._first_name_1 = first_name_1
         self._last_name_1 = last_name_1
         self._ipi_base_1 = ipi_base_1
-        self._cae_ipi_name_1 = cae_ipi_name_1
+        self._ipi_name_1 = ipi_name_1
 
         # Second writer's info
         self._first_name_2 = first_name_2
         self._last_name_2 = last_name_2
         self._ipi_base_2 = ipi_base_2
-        self._cae_ipi_name_2 = cae_ipi_name_2
-
-    @property
-    def cae_ipi_name_1(self):
-        """
-        Writer 1 IPI Name # field.
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the first Writer's IP name field
-        """
-        return self._cae_ipi_name_1
-
-    @property
-    def cae_ipi_name_2(self):
-        """
-        Writer 2 IPI Name # field.
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the second Writer's IP name field
-        """
-        return self._cae_ipi_name_2
+        self._ipi_name_2 = ipi_name_2
 
     @property
     def first_name_1(self):
@@ -781,6 +753,34 @@ class ComponentRecord(Record):
         :return: the second Writer's IP base number
         """
         return self._ipi_base_2
+
+    @property
+    def ipi_name_1(self):
+        """
+        Writer 1 IPI Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the first Writer's IP name field
+        """
+        return self._ipi_name_1
+
+    @property
+    def ipi_name_2(self):
+        """
+        Writer 2 IPI Name # field.
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the second Writer's IP name field
+        """
+        return self._ipi_name_2
 
     @property
     def iswc(self):
@@ -851,7 +851,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
     def __init__(self, prefix, title, work_id='',
                  first_name_1='', last_name_1='', first_name_2='', last_name_2='',
-                 ipi_base_1=None, cae_ipi_name_1=None, ipi_base_2=None, cae_ipi_name_2=None,
+                 ipi_base_1=None, ipi_name_1=None, ipi_base_2=None, ipi_name_2=None,
                  source=None, language_code=None, iswc=None):
         super(AuthoredWorkRecord, self).__init__(prefix, title, language_code, iswc)
 
@@ -863,41 +863,13 @@ class AuthoredWorkRecord(BaseWorkRecord):
         self._first_name_1 = first_name_1
         self._last_name_1 = last_name_1
         self._ipi_base_1 = ipi_base_1
-        self._cae_ipi_name_1 = cae_ipi_name_1
+        self._ipi_name_1 = ipi_name_1
 
         # Second writer's info
         self._first_name_2 = first_name_2
         self._last_name_2 = last_name_2
         self._ipi_base_2 = ipi_base_2
-        self._cae_ipi_name_2 = cae_ipi_name_2
-
-    @property
-    def cae_ipi_name_1(self):
-        """
-        Writer 1 IP Name # field. Table Lookup (CISAC)
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the first Writer's IP name field
-        """
-        return self._cae_ipi_name_1
-
-    @property
-    def cae_ipi_name_2(self):
-        """
-        Writer 2 IP Name # field. Table Lookup (CISAC)
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the CAE number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the second Writer's IP name field
-        """
-        return self._cae_ipi_name_2
+        self._ipi_name_2 = ipi_name_2
 
     @property
     def first_name_1(self):
@@ -948,6 +920,34 @@ class AuthoredWorkRecord(BaseWorkRecord):
         :return: the second Writer's IPI base number
         """
         return self._ipi_base_2
+
+    @property
+    def ipi_name_1(self):
+        """
+        Writer 1 IP Name # field. Table Lookup (CISAC)
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the first Writer's IP name field
+        """
+        return self._ipi_name_1
+
+    @property
+    def ipi_name_2(self):
+        """
+        Writer 2 IP Name # field. Table Lookup (CISAC)
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the second Writer's IP name field
+        """
+        return self._ipi_name_2
 
     @property
     def last_name_1(self):
@@ -1300,7 +1300,7 @@ class WorkOriginRecord(Record):
     """
 
     def __init__(self, prefix, intended_purpose, production_title='', cd_identifier='', cut_number=0,
-                 library='', blt='', visan_version=0, visan_isan=0, visan_episode=0,
+                 library='', bltvr='', visan_version=0, visan_isan=0, visan_episode=0,
                  visan_check_digit=0, production_id='', episode_title='',
                  episode_id='', production_year=0, avi_key_society=0,
                  avi_key_number=''):
@@ -1310,7 +1310,7 @@ class WorkOriginRecord(Record):
         self._cd_identifier = cd_identifier
         self._cut_number = cut_number
         self._library = library
-        self._blt = blt
+        self._bltvr = bltvr
         self._visan_version = visan_version
         self._visan_isan = visan_isan
         self._visan_episode = visan_episode
@@ -1339,24 +1339,24 @@ class WorkOriginRecord(Record):
         """
         AVI Society Code field. Numeric.
 
-        The CAE code of the society whose audio visual work detail entry is referenced in the AV Index.
+        The IPI code of the society whose audio visual work detail entry is referenced in the AV Index.
 
         :return: the AVI society code
         """
         return self._avi_key_society
 
     @property
-    def blt(self):
+    def bltvr(self):
         """
-        BLT field. Alphanumeric.
+        BLTVR field. Alphanumeric.
 
         An indication of the primary use of the work within the AV production.
 
         The definitive source for cue usage is the cue sheet.
 
-        :return: the BLT
+        :return: the BLTVR
         """
-        return self._blt
+        return self._bltvr
 
     @property
     def cd_identifier(self):
@@ -1519,25 +1519,12 @@ class PerformingArtistRecord(Record):
     Contains the info of a person or group performing this work either in public or on a recording.
     """
 
-    def __init__(self, prefix, last_name, first_name='', cae_ipi_name=None, ipi_base_number=None):
+    def __init__(self, prefix, last_name, first_name='', ipi_name=None, ipi_base_number=None):
         super(PerformingArtistRecord, self).__init__(prefix)
         self._first_name = first_name
         self._last_name = last_name
-        self._cae_ipi_name = cae_ipi_name
+        self._ipi_name = ipi_name
         self._ipi_base_number = ipi_base_number
-
-    @property
-    def cae_ipi_name(self):
-        """
-        Performing Artist CAE /IPI Name Number field. Table Lookup (IPI DB).
-
-        The CAE # corresponding to this performing artist with 2 leading zero’s or the IPI Name #.
-
-        Values reside in the IPI database.
-
-        :return: the Performing Artist CAE/IPI name number
-        """
-        return self._cae_ipi_name
 
     @property
     def first_name(self):
@@ -1560,6 +1547,19 @@ class PerformingArtistRecord(Record):
         :return: the IPI base number
         """
         return self._ipi_base_number
+
+    @property
+    def ipi_name(self):
+        """
+        Performing Artist IPI Name Number field. Table Lookup (IPI).
+
+        The IPI # corresponding to this performing artist with 2 leading zero’s or the IPI Name #.
+
+        Values reside in the IPI database.
+
+        :return: the Performing Artist IPI name number
+        """
+        return self._ipi_name
 
     @property
     def last_name(self):
