@@ -17,10 +17,10 @@ class MediaTypeValue(object):
     Represents a BIEM/CISAC Media Type table value.
     """
 
-    def __init__(self, code, name, type, duration_max, works_max, fragments_max):
+    def __init__(self, code, name, media_type, duration_max, works_max, fragments_max):
         self._code = code
         self._name = name
-        self._type = type
+        self._media_type = media_type
         self._duration_max = duration_max
         self._works_max = works_max
         self._fragments_max = fragments_max
@@ -53,16 +53,7 @@ class MediaTypeValue(object):
         return self._fragments_max
 
     @property
-    def name(self):
-        """
-        The value name. String.
-
-        :return: value name
-        """
-        return self._name
-
-    @property
-    def type(self):
+    def media_type(self):
         """
         Type of media.
 
@@ -70,7 +61,16 @@ class MediaTypeValue(object):
 
         :return: the type of the media
         """
-        return self._type
+        return self._media_type
+
+    @property
+    def name(self):
+        """
+        The value name. String.
+
+        :return: value name
+        """
+        return self._name
 
     @property
     def works_max(self):
