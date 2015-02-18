@@ -103,9 +103,9 @@ class CWRFileNameDecoder(object):
 
     # Old and new formats
     _header_pattern_old = _header + _year + _sequence_old + _sender + _delimiter_ip + _receiver + _delimiter_version \
-        + _version_num
+                          + _version_num
     _header_pattern = _header + _year + _sequence_new + _sender + _delimiter_ip + _receiver + _delimiter_version \
-        + _version_num
+                      + _version_num
 
     # Parsing actions
     _version_num.setParseAction(_to_version)

@@ -11,7 +11,7 @@ __version__ = '0.0.0'
 
 setup(
     name='cwr_api',
-    packages=['cwr', 'cwr.utils'],
+    packages=['cwr', 'cwr.utils', 'cwr.parsing', 'cwr.parsing.data'],
     version='0.7',
     description='API library for the CWR standard format',
     author='WESO',
@@ -22,7 +22,7 @@ setup(
     classifiers=['License :: OSI Approved :: MIT License', 'Development Status :: 3 - Alpha',
                  'Intended Audience :: Developers',
                  'Programming Language :: Python :: 2.6', 'Programming Language :: Python :: 2.7',
-                 'Programming Language :: Python :: 3.2',
-                 'Programming Language :: Python :: 3.3', 'Programming Language :: Python :: 3.4'],
+                 'Programming Language :: Python :: 3.2', 'Programming Language :: Python :: 3.3',
+                 'Programming Language :: Python :: 3.4'],
     long_description=open("README.rst").read(),
 )

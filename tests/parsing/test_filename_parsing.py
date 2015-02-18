@@ -5,7 +5,7 @@ from cwr.parsing.file import CWRFileNameDecoder, CWRFileNameEncoder
 from cwr.file import FileTag
 
 """
-CWR file parsing tests.
+CWR file name parsing tests.
 
 The following cases are tested:
 - CWRFileNameDecoder decodes correctly formatted strings (using both the old and new format)
@@ -24,11 +24,11 @@ class TestFileNameDecodeValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.parser = CWRFileNameDecoder()
+        self._parser = CWRFileNameDecoder()
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.parser.decode('CW12012311_22.V21')
+        data = self._parser.decode('CW12012311_22.V21')
 
         self.assertEqual(2012, data.year)
         self.assertEqual(123, data.sequence_n)
@@ -38,7 +38,7 @@ class TestFileNameDecodeValid(unittest.TestCase):
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.parser.decode('CW130123ABC_23.V22')
+        data = self._parser.decode('CW130123ABC_23.V22')
 
         self.assertEqual(2013, data.year)
         self.assertEqual(123, data.sequence_n)
@@ -48,7 +48,7 @@ class TestFileNameDecodeValid(unittest.TestCase):
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.parser.decode('CW99000022_DEC.V00')
+        data = self._parser.decode('CW99000022_DEC.V00')
 
         self.assertEqual(2099, data.year)
         self.assertEqual(0, data.sequence_n)
@@ -58,7 +58,7 @@ class TestFileNameDecodeValid(unittest.TestCase):
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.parser.decode('CW000012AB2_234.V02')
+        data = self._parser.decode('CW000012AB2_234.V02')
 
         self.assertEqual(2000, data.year)
         self.assertEqual(12, data.sequence_n)
@@ -73,11 +73,11 @@ class TestFileNameDecodeValidOld(unittest.TestCase):
     """
 
     def setUp(self):
-        self.parser = CWRFileNameDecoder()
+        self._parser = CWRFileNameDecoder()
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.parser.decode_old('CW122311_22.V21')
+        data = self._parser.decode_old('CW122311_22.V21')
 
         self.assertEqual(2012, data.year)
         self.assertEqual(23, data.sequence_n)
@@ -87,7 +87,7 @@ class TestFileNameDecodeValidOld(unittest.TestCase):
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.parser.decode_old('CW1301ABC_23.V22')
+        data = self._parser.decode_old('CW1301ABC_23.V22')
 
         self.assertEqual(2013, data.year)
         self.assertEqual(1, data.sequence_n)
@@ -97,7 +97,7 @@ class TestFileNameDecodeValidOld(unittest.TestCase):
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.parser.decode_old('CW990022_DEC.V00')
+        data = self._parser.decode_old('CW990022_DEC.V00')
 
         self.assertEqual(2099, data.year)
         self.assertEqual(0, data.sequence_n)
@@ -107,7 +107,7 @@ class TestFileNameDecodeValidOld(unittest.TestCase):
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.parser.decode_old('CW0012AB2_234.V02')
+        data = self._parser.decode_old('CW0012AB2_234.V02')
 
         self.assertEqual(2000, data.year)
         self.assertEqual(12, data.sequence_n)
@@ -122,29 +122,29 @@ class TestFileNameEncodeValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.parser = CWRFileNameEncoder()
+        self._parser = CWRFileNameEncoder()
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.parser.encode(FileTag(2012, 123, '11', '22', 2.1))
+        data = self._parser.encode(FileTag(2012, 123, '11', '22', 2.1))
 
         self.assertEqual("CW12012311_22.V21", data)
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.parser.encode(FileTag(2013, 123, 'ABC', '23', 2.2))
+        data = self._parser.encode(FileTag(2013, 123, 'ABC', '23', 2.2))
 
         self.assertEqual("CW130123ABC_23.V22", data)
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.parser.encode(FileTag(2099, 0, '22', 'DEC', 0))
+        data = self._parser.encode(FileTag(2099, 0, '22', 'DEC', 0))
 
         self.assertEqual("CW99000022_DEC.V00", data)
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.parser.encode(FileTag(2000, 12, 'AB2', '234', 0.2))
+        data = self._parser.encode(FileTag(2000, 12, 'AB2', '234', 0.2))
 
         self.assertEqual("CW000012AB2_234.V02", data)
 
@@ -155,28 +155,28 @@ class TestFileNameEncodeValidOld(unittest.TestCase):
     """
 
     def setUp(self):
-        self.parser = CWRFileNameEncoder()
+        self._parser = CWRFileNameEncoder()
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.parser.encode_old(FileTag(2012, 23, '11', '22', 2.1))
+        data = self._parser.encode_old(FileTag(2012, 23, '11', '22', 2.1))
 
         self.assertEqual("CW122311_22.V21", data)
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.parser.encode_old(FileTag(2013, 1, 'ABC', '23', 2.2))
+        data = self._parser.encode_old(FileTag(2013, 1, 'ABC', '23', 2.2))
 
         self.assertEqual("CW1301ABC_23.V22", data)
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.parser.encode_old(FileTag(2099, 0, '22', 'DEC', 0))
+        data = self._parser.encode_old(FileTag(2099, 0, '22', 'DEC', 0))
 
         self.assertEqual("CW990022_DEC.V00", data)
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.parser.encode_old(FileTag(2000, 12, 'AB2', '234', 0.2))
+        data = self._parser.encode_old(FileTag(2000, 12, 'AB2', '234', 0.2))
 
         self.assertEqual("CW0012AB2_234.V02", data)
