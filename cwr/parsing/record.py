@@ -30,14 +30,33 @@ def _to_integer(data):
 
 
 def _to_recordprefix(data):
+    """
+    Transforms the final parsing result into a RecordPrefix instance.
+
+    :param data: result of parsing a record prefix
+    :return: a RecordPrefix created from the record prefix
+    """
     return RecordPrefix(data.record_type, data.transaction_sequence_n, data.record_sequence_n)
 
 
 class RecordPrefixDecoder(object):
+    """
+    Parses a CWR record prefix into a RecordPrefix instance.
+
+    Record prefixes are the first group of characters in each CWR file line.
+
+    They are composed, in order, of:
+    - Record type (alphanumeric, 3 characters, one from the Record Types Table)
+    - Transaction number (numeric, 8 characters)
+    - Sequence number (numeric, 8 characters)
+    """
+
+    # Fields
     _record_type = grammar.record_type.copy()
     _transaction_n = grammar.transaction_n.copy()
     _sequence_n = grammar.sequence_n.copy()
 
+    # Record prefix pattern
     _pattern = _record_type + _transaction_n + _sequence_n
 
     # Parsing actions
@@ -48,5 +67,11 @@ class RecordPrefixDecoder(object):
     def __init__(self):
         pass
 
-    def parse(self, record):
+    def decode(self, record):
+        """
+        Decodes the file name, creating a RecordPrefix from it.
+
+        :param record: the record to parse
+        :return: a RecordPrefix created from the file name
+        """
         return self._pattern.parseString(record)[0]
