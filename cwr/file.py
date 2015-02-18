@@ -351,7 +351,7 @@ class RecordPrefix(object):
     It should be noted that as the record type is represented by the object class it is not stored.
     """
 
-    def __init__(self, transaction_sequence_n, record_sequence_n):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n):
         """
         Constructs a RecordPrefix.
 
@@ -362,11 +362,23 @@ class RecordPrefix(object):
 
         In both cases the sequence number should be equal or great than zero.
 
+        :param record_type: type code
         :param transaction_sequence_n: position in the transactions sequence
         :param record_sequence_n: position in the records sequence
         """
+        self._record_type = record_type
         self._transaction_sequence_n = transaction_sequence_n
         self._record_sequence_n = record_sequence_n
+
+    def __str__(self):
+        return '%s t%s r%s' % (
+            self._record_type, self._transaction_sequence_n, self._record_sequence_n)
+
+    def __repr__(self):
+        return '<class %s>(record_type=%s, transaction_sequence_n=%s, record_sequence_n=%s)' % (
+        'RecordPrefix', self._record_type,
+        self._transaction_sequence_n,
+        self._record_sequence_n)
 
     @property
     def record_sequence_n(self):
@@ -381,6 +393,17 @@ class RecordPrefix(object):
         :return: the record sequence number
         """
         return self._record_sequence_n
+
+    @property
+    def record_type(self):
+        """
+        Record Type field. Table Lookup (Record Type).
+
+        The transaction type or detail record type.
+
+        :return: the record type
+        """
+        return self._record_type
 
     @property
     def transaction_sequence_n(self):

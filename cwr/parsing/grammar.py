@@ -9,6 +9,9 @@ from cwr.parsing.data import __data__ as data
 Grammar for CWR files.
 
 This is used along with pyparsing to create a BNF grammar.
+
+This stored basic nodes in the parsing tree, to be reused on the parsers, which will copy them and set up any
+parsing action required for them.
 """
 
 __author__ = 'Benardo Martínez Garrido'
@@ -34,10 +37,7 @@ filename_delimiter_zip = pp.CaselessLiteral('.zip').setResultsName("version")
 
 # FILE CONTENTS
 
-# Fields
+# Record prefix fields
 record_type = pp.oneOf(data.record_types()).setResultsName("record_type")
 transaction_n = pp.Word(pp.nums, exact=8).setResultsName("transaction_sequence_n")
 sequence_n = pp.Word(pp.nums, exact=8).setResultsName("record_sequence_n")
-
-# Patterns
-record_prefix = record_type + transaction_n + sequence_n

@@ -40,8 +40,8 @@ class TestParseRecordPrefixValid(unittest.TestCase):
         result = self._parser.parse(prefix)
 
         self.assertEqual('HDR', result.record_type)
-        self.assertEqual('00001234', result.transaction_sequence_n)
-        self.assertEqual('00000023', result.record_sequence_n)
+        self.assertEqual(1234, result.transaction_sequence_n)
+        self.assertEqual(23, result.record_sequence_n)
 
     def test_numbers_length_too_long(self):
         """
@@ -51,7 +51,9 @@ class TestParseRecordPrefixValid(unittest.TestCase):
 
         result = self._parser.parse(prefix)
 
-        self.assertEqual(len(result.transaction_sequence_n) + len(result.record_sequence_n), 16)
+        self.assertEqual('HDR', result.record_type)
+        self.assertEqual(123, result.transaction_sequence_n)
+        self.assertEqual(40000002, result.record_sequence_n)
 
 
 class TestParseRecordPrefixException(unittest.TestCase):
