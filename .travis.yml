@@ -1,13 +1,15 @@
 language: python
 env:
   - TOXENV=py26
+  - TOXENV=py26-lowest
   - TOXENV=py27
+  - TOXENV=py27-lowest
   - TOXENV=py32
   - TOXENV=py33
   - TOXENV=py34
+  - TOXENV=pypy
   - TOXENV=coverage
   - TOXENV=pep8
-  - TOXENV=docs
 install:
   - pip install tox
 script:
