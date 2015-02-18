@@ -115,6 +115,17 @@ class FileTag(object):
         self._receiver = receiver
         self._version = version
 
+    def __str__(self):
+        return 'file number %s, year %s, sent from %s to %s (CWR v%s)' % (
+            self._sequence_n, self._year, self._sender, self._receiver,
+            self._version)
+
+    def __repr__(self):
+        return '<class %s>(year=%s, sequence_n=%s, sender=%s, receiver=%s, version=%s)' % ('FileTag', self._year,
+                                                                                           self._sequence_n,
+                                                                                           self._sender, self._receiver,
+                                                                                           self._version)
+
     @property
     def year(self):
         """
