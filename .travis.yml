@@ -8,8 +8,6 @@ env:
   - TOXENV=py33-release
   - TOXENV=py34-release
   - TOXENV=pypy-release
-  - TOXENV=coverage
-  - TOXENV=pep8
 install:
   - pip install tox
 script:
