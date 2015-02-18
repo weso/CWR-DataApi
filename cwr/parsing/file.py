@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-import pyparsing as pp
 
 from cwr.file import FileTag
+from cwr.parsing import grammar
 
 """
 CWR file parsing classes.
@@ -25,15 +25,27 @@ __status__ = 'Development'
 
 def _to_version(data):
     """
-    Transforms a string into a float of two values.
+    Transforms a string representing the file format into a float of two values representing the file CWR version.
 
     This is used by the parser to create the version number.
 
-    :param data: result of parsing the version
+    :param data: result of parsing the file format
     :return: a float composed of two numeric values
     """
     number = data[0]
     return float(number[:1] + '.' + number[-1:])
+
+
+def _to_default_version(data):
+    """
+    Transforms a string representing the file format into a float of two values representing the default CWR version.
+
+    This is for files which are not CWR files, such as zipped files.
+
+    :param data: result of parsing the file format
+    :return: a float representing the default version
+    """
+    return 2.1
 
 
 def _to_integer(data):
@@ -89,31 +101,34 @@ class CWRFileNameDecoder(object):
     """
 
     # Fields
-    _year = pp.Word(pp.nums, exact=2).setResultsName("year")
-    _sequence_old = pp.Word(pp.nums, exact=2).setResultsName("sequence_n")
-    _sequence_new = pp.Word(pp.nums, exact=4).setResultsName("sequence_n")
-    _sender = pp.Word(pp.alphanums, min=2, max=3).setResultsName("sender")
-    _receiver = pp.Word(pp.alphanums, min=2, max=3).setResultsName("receiver")
-    _version_num = pp.Word(pp.nums, exact=2).setResultsName("version")
+    _sequence_old = grammar.filename_sequence_old.copy()
+    _sequence_new = grammar.filename_sequence_new.copy()
+    _year = grammar.filename_year.copy()
+    _sender = grammar.filename_sender.copy()
+    _receiver = grammar.filename_receiver.copy()
+    _version_num = grammar.filename_version_num.copy()
 
     # Delimiters
-    _header = pp.Literal('CW').suppress()
-    _delimiter_ip = pp.Literal('_').suppress()
-    _delimiter_version = pp.Literal('.V').suppress()
+    _header = grammar.filename_header.copy()
+    _delimiter_version = grammar.filename_delimiter_version.copy()
+    _delimiter_ip = grammar.filename_delimiter_ip.copy()
+    _delimiter_zip = grammar.filename_delimiter_zip.copy()
 
-    # Old and new formats
-    _header_pattern_old = _header + _year + _sequence_old + _sender + _delimiter_ip + _receiver + _delimiter_version \
-                          + _version_num
-    _header_pattern = _header + _year + _sequence_new + _sender + _delimiter_ip + _receiver + _delimiter_version \
-                      + _version_num
+    # CWR file patterns
+    _cwr_pattern_old = _header + _year + _sequence_old + _sender + \
+                       _delimiter_ip + _receiver + ((_delimiter_version + _version_num) | _delimiter_zip)
+    _cwr_pattern = _header + _year + _sequence_new + _sender + \
+                   _delimiter_ip + _receiver + ((_delimiter_version + _version_num) | _delimiter_zip)
 
     # Parsing actions
     _version_num.setParseAction(_to_version)
+    _delimiter_zip.setParseAction(_to_default_version)
     _sequence_old.setParseAction(_to_integer)
     _sequence_new.setParseAction(_to_integer)
     _year.setParseAction(_to_year)
-    _header_pattern.setParseAction(_to_filetag)
-    _header_pattern_old.setParseAction(_to_filetag)
+
+    _cwr_pattern.setParseAction(_to_filetag)
+    _cwr_pattern_old.setParseAction(_to_filetag)
 
     def __init__(self):
         pass
@@ -125,7 +140,7 @@ class CWRFileNameDecoder(object):
         :param filename: the file name to parse
         :return: a FileTag created from the file name
         """
-        return self._header_pattern.parseString(filename)[0]
+        return self._cwr_pattern.parseString(filename)[0]
 
     def decode_old(self, filename):
         """
@@ -141,7 +156,7 @@ class CWRFileNameDecoder(object):
         :param filename: the file name to parse
         :return: a FileTag created from the file name
         """
-        return self._header_pattern_old.parseString(filename)[0]
+        return self._cwr_pattern_old.parseString(filename)[0]
 
 
 class CWRFileNameEncoder(object):
@@ -185,7 +200,7 @@ class CWRFileNameEncoder(object):
         :param identifier: FileTag to parse
         :return: a string file name parsed from the identifier info
         """
-        return self._encode_filename(identifier, self._sequence_l_current)
+        return self._encode(identifier, self._sequence_l_current)
 
     def encode_old(self, identifier):
         """
@@ -201,9 +216,9 @@ class CWRFileNameEncoder(object):
         :param identifier: FileTag to parse
         :return: a string file name parsed from the identifier info
         """
-        return self._encode_filename(identifier, self._sequence_l_old)
+        return self._encode(identifier, self._sequence_l_old)
 
-    def _encode_filename(self, identifier, sequence_l):
+    def _encode(self, identifier, sequence_l):
         """
         Parses a CWR file name from a FileTag object.
 

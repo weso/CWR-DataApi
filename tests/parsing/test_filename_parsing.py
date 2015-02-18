@@ -8,7 +8,8 @@ from cwr.file import FileTag
 CWR file name parsing tests.
 
 The following cases are tested:
-- CWRFileNameDecoder decodes correctly formatted strings (using both the old and new format)
+- CWRFileNameDecoder decodes correctly formatted CWR file names (using both the old and new format)
+- CWRFileNameDecoder decodes correctly formatted zip file file names (using both the old and new format)
 - CWRFileNameEncoder encodes valid FileTags (using both the old and new format)
 """
 
@@ -18,9 +19,9 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestFileNameDecodeValid(unittest.TestCase):
+class TestFileNameCWRDecodeValid(unittest.TestCase):
     """
-    Tests that CWRFileNameDecoder decodes correctly formatted strings (using the new format)
+    Tests that CWRFileNameDecoder decodes correctly formatted CWR file names (using the new format).
     """
 
     def setUp(self):
@@ -67,9 +68,9 @@ class TestFileNameDecodeValid(unittest.TestCase):
         self.assertEqual(0.2, data.version)
 
 
-class TestFileNameDecodeValidOld(unittest.TestCase):
+class TestFileNameCWRDecodeValidOld(unittest.TestCase):
     """
-    Tests that CWRFileNameDecoder decodes correctly formatted strings (using the old format)
+    Tests that CWRFileNameDecoder decodes correctly formatted CWR file names (using the old format).
     """
 
     def setUp(self):
@@ -116,7 +117,105 @@ class TestFileNameDecodeValidOld(unittest.TestCase):
         self.assertEqual(0.2, data.version)
 
 
-class TestFileNameEncodeValid(unittest.TestCase):
+class TestFileNameZIPDecodeValid(unittest.TestCase):
+    """
+    Tests that CWRFileNameDecoder decodes correctly formatted zip file file names (using the new format).
+    """
+
+    def setUp(self):
+        self._parser = CWRFileNameDecoder()
+
+    def test_s2_r2(self):
+        # Sender with 2 digits and receiver with 2 digits
+        data = self._parser.decode('CW12012311_22.zip')
+
+        self.assertEqual(2012, data.year)
+        self.assertEqual(123, data.sequence_n)
+        self.assertEqual('11', data.sender)
+        self.assertEqual('22', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+    def test_s3_r2(self):
+        # Sender with 3 digits and receiver with 2 digits
+        data = self._parser.decode('CW130123ABC_23.zip')
+
+        self.assertEqual(2013, data.year)
+        self.assertEqual(123, data.sequence_n)
+        self.assertEqual('ABC', data.sender)
+        self.assertEqual('23', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+    def test_s2_r3(self):
+        # Sender with 2 digits and receiver with 3 digits
+        data = self._parser.decode('CW99000022_DEC.zip')
+
+        self.assertEqual(2099, data.year)
+        self.assertEqual(0, data.sequence_n)
+        self.assertEqual('22', data.sender)
+        self.assertEqual('DEC', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+    def test_s3_r3(self):
+        # Sender with 3 digits and receiver with 3 digits
+        data = self._parser.decode('CW000012AB2_234.zip')
+
+        self.assertEqual(2000, data.year)
+        self.assertEqual(12, data.sequence_n)
+        self.assertEqual('AB2', data.sender)
+        self.assertEqual('234', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+
+class TestFileNameZIPDecodeValidOld(unittest.TestCase):
+    """
+    Tests that CWRFileNameDecoder decodes correctly formatted zip file names (using the old format).
+    """
+
+    def setUp(self):
+        self._parser = CWRFileNameDecoder()
+
+    def test_s2_r2(self):
+        # Sender with 2 digits and receiver with 2 digits
+        data = self._parser.decode_old('CW122311_22.zip')
+
+        self.assertEqual(2012, data.year)
+        self.assertEqual(23, data.sequence_n)
+        self.assertEqual('11', data.sender)
+        self.assertEqual('22', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+    def test_s3_r2(self):
+        # Sender with 3 digits and receiver with 2 digits
+        data = self._parser.decode_old('CW1301ABC_23.zip')
+
+        self.assertEqual(2013, data.year)
+        self.assertEqual(1, data.sequence_n)
+        self.assertEqual('ABC', data.sender)
+        self.assertEqual('23', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+    def test_s2_r3(self):
+        # Sender with 2 digits and receiver with 3 digits
+        data = self._parser.decode_old('CW990022_DEC.zip')
+
+        self.assertEqual(2099, data.year)
+        self.assertEqual(0, data.sequence_n)
+        self.assertEqual('22', data.sender)
+        self.assertEqual('DEC', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+    def test_s3_r3(self):
+        # Sender with 3 digits and receiver with 3 digits
+        data = self._parser.decode_old('CW0012AB2_234.zip')
+
+        self.assertEqual(2000, data.year)
+        self.assertEqual(12, data.sequence_n)
+        self.assertEqual('AB2', data.sender)
+        self.assertEqual('234', data.receiver)
+        self.assertEqual(2.1, data.version)
+
+
+class TestFileNameCWREncodeValid(unittest.TestCase):
     """
     Tests that CWRFileNameEncoder encodes valid FileTags (using the new format)
     """
@@ -149,7 +248,7 @@ class TestFileNameEncodeValid(unittest.TestCase):
         self.assertEqual("CW000012AB2_234.V02", data)
 
 
-class TestFileNameEncodeValidOld(unittest.TestCase):
+class TestFileNameCWREncodeValidOld(unittest.TestCase):
     """
     Tests that CWRFileNameEncoder encodes valid FileTags (using the old format)
     """
