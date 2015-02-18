@@ -140,7 +140,7 @@ class CWRFileNameDecoder(object):
         :param filename: the file name to parse
         :return: a FileTag created from the file name
         """
-        return self._cwr_pattern.parseString(filename)[0]
+        return self._cwr_pattern.parseString(filename, parseAll=True)[0]
 
     def decode_old(self, filename):
         """
@@ -156,7 +156,7 @@ class CWRFileNameDecoder(object):
         :param filename: the file name to parse
         :return: a FileTag created from the file name
         """
-        return self._cwr_pattern_old.parseString(filename)[0]
+        return self._cwr_pattern_old.parseString(filename, parseAll=True)[0]
 
 
 class CWRFileNameEncoder(object):
