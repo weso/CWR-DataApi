@@ -61,6 +61,15 @@ class CWRFile(object):
         self._tag = tag
         self._transmission = transmission
 
+    def __str__(self):
+        return '%s [%s]' % (
+            self._tag, self._transmission)
+
+    def __repr__(self):
+        return '<class %s>(tag=%r, transmission=%r)' % (
+            'CWRFile', self._tag,
+            self._transmission)
+
     def tag(self):
         """
         The file's metadata tag.
@@ -121,7 +130,7 @@ class FileTag(object):
             self._version)
 
     def __repr__(self):
-        return '<class %s>(year=%s, sequence_n=%s, sender=%s, receiver=%s, version=%s)' % ('FileTag', self._year,
+        return '<class %s>(year=%s, sequence_n=%r, sender=%r, receiver=%r, version=%r)' % ('FileTag', self._year,
                                                                                            self._sequence_n,
                                                                                            self._sender, self._receiver,
                                                                                            self._version)
@@ -190,6 +199,18 @@ class GroupHeader(object):
         self._transaction_type = transaction_type
         self._version_number = version_number
         self._batch_request_id = batch_request_id
+
+    def __str__(self):
+        return '%s(%s)' % (
+            self._transaction_type,
+            self._group_id)
+
+    def __repr__(self):
+        return '<class %s>(group_id=%r, transaction_type=%r, version_number=%r, batch_request_id=%r)' % (
+            'GroupHeader', self._group_id,
+            self._transaction_type,
+            self._version_number,
+            self._batch_request_id)
 
     @property
     def batch_request_id(self):
@@ -260,6 +281,17 @@ class GroupTrailer(object):
         self._transaction_count = transaction_count
         self._record_count = record_count
 
+    def __str__(self):
+        return '%s(%s)' % (
+            self._transaction_type,
+            self._group_id)
+
+    def __repr__(self):
+        return '<class %s>(group_id=%r, transaction_count=%r, record_count=%r)' % (
+            'GroupTrailer', self._group_id,
+            self._transaction_count,
+            self._record_count)
+
     @property
     def group_id(self):
         """
@@ -313,6 +345,14 @@ class Record(object):
         :param prefix: the record prefix
         """
         self._prefix = prefix
+
+    def __str__(self):
+        return '%s' % (
+            self._prefix)
+
+    def __repr__(self):
+        return '<class %s>(prefix=%r)' % (
+            'Record', self._prefix)
 
     @property
     def prefix(self):
@@ -371,14 +411,14 @@ class RecordPrefix(object):
         self._record_sequence_n = record_sequence_n
 
     def __str__(self):
-        return '%s t%s r%s' % (
+        return '%s (%s-%s)' % (
             self._record_type, self._transaction_sequence_n, self._record_sequence_n)
 
     def __repr__(self):
-        return '<class %s>(record_type=%s, transaction_sequence_n=%s, record_sequence_n=%s)' % (
-        'RecordPrefix', self._record_type,
-        self._transaction_sequence_n,
-        self._record_sequence_n)
+        return '<class %s>(record_type=%r, transaction_sequence_n=%r, record_sequence_n=%r)' % (
+            'RecordPrefix', self._record_type,
+            self._transaction_sequence_n,
+            self._record_sequence_n)
 
     @property
     def record_sequence_n(self):
@@ -455,6 +495,16 @@ class TransactionGroup(object):
         self._grt = grt
         self._transactions = transactions
 
+    def __str__(self):
+        return '%s to %s [%s]' % (
+            self._grh, self._grt, self._transactions)
+
+    def __repr__(self):
+        return '<class %s>(grh=%r, grt=%r, transactions=%r)' % (
+            'TransactionGroup', self._grh,
+            self._grt,
+            self._transactions)
+
     @property
     def grh(self):
         """
@@ -509,6 +559,16 @@ class Transmission(object):
         self._hdr = hdr
         self._trl = trl
         self._groups = groups
+
+    def __str__(self):
+        return '%s to %s [%s]' % (
+            self._hdr, self._trl, self._groups)
+
+    def __repr__(self):
+        return '<class %s>(hdr=%r, trl=%r, groups=%r)' % (
+            'Transmission', self._hdr,
+            self._trl,
+            self._groups)
 
     def groups(self):
         """
@@ -568,6 +628,15 @@ class TransmissionHeader(object):
         # Other info
         self._edi_standard = edi_standard
         self._character_set = character_set
+
+    def __str__(self):
+        return '%s (%s, %s) on %s' % (
+            self._sender_name, self._sender_id, self._sender_type, self._transmission_date)
+
+    def __repr__(self):
+        return '<class %s>(sender_id=%r, sender_name=%r, sender_type=%r, creation_date=%r, transmission_date=%r)' % (
+            'TransmissionHeader', self._sender_id,
+            self._sender_name, self._sender_type, self._creation_date, self._transmission_date)
 
     @property
     def character_set(self):
@@ -684,6 +753,15 @@ class TransmissionTrailer(object):
         self._group_count = group_count
         self._transaction_count = transaction_count
         self._record_count = record_count
+
+    def __str__(self):
+        return '%s groups, %s transactions, %s records' % (
+            self._group_count, self._transaction_count, self._record_counte)
+
+    def __repr__(self):
+        return '<class %s>(group_count=%r, transaction_count=%r, record_count=%r)' % (
+            'TransmissionTrailer', self._group_count,
+            self._transaction_count, self._record_counte)
 
     @property
     def group_count(self):
