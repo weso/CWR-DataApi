@@ -9,12 +9,9 @@ env:
   - TOXENV=py34-release
   - TOXENV=pypy-release
   - TOXENV=jython-release
-matrix:
-  include:
-    - python: 2.7
-      env: TOXENV=jython*
 install:
   - if [ "$TOXENV" =~ "jython.*" ]; then sudo apt-get install jython; fi
+  - if [ "$TOXENV" =~ "jython.*" ]; then export PYTHON_EXE=jython; jython -c "print ''"; else export PYTHON_EXE=python; fi
   - pip install tox
 script:
   - tox
