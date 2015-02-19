@@ -11,8 +11,8 @@ env:
   - TOXENV=jython-release
 before_install:
   # Setting up Jython
-  - if [[ $TOXENV == "jython"* ]]; then sudo apt-get install jython; fi
-  - if [[ $TOXENV == "jython"* ]]; then export PYTHON_EXE=jython; jython -c "print ''"; fi
+  - chmod +x ./.scripts/jython_env.sh
+  - ./.scripts/jython_env.sh
 install:
   - pip install tox
 script:
