@@ -8,7 +8,6 @@ env:
   - TOXENV=py33-release
   - TOXENV=py34-release
   - TOXENV=pypy-release
-  - TOXENV=jython-release
 before_install:
   # Setting up Jython
   - chmod +x ./.scripts/jython_env.sh
