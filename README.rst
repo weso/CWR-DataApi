@@ -9,8 +9,12 @@ format for the registration and revision of musical works, used by
 publishers and performing rights societies as a way to exchange musical
 works data.
 
-While CWR standard has been created by `CISAC`_ this library has been
+While the CWR standard has been created by `CISAC`_ this library has been
 developed by `WESO`_ independently.
+
+The library includes a data model for representing the contents of a CWR
+file, and parsers to create that model from a file, and to decode and
+encode JSON messages with the data model.
 
 Status
 ------
@@ -39,7 +43,12 @@ Dependencies are indicated on requirements.txt.
 Prerequisites
 ~~~~~~~~~~~~~
 
-Requires Python 2.6, 2.7, 3.2, 3.3 or 3.4.
+Requires Python, and has been tested on the following interpreters:
+
+- Python 2 (2.6 & 2.7)
+- Python 3 (3.2, 3.3 & 3.4)
+- Pypy
+- Jython
 
 The dependencies can be acquired using the list on requirements.txt,
 with the command:
@@ -53,7 +62,7 @@ The code can be found at the GitHub `project page`_.
 
 To acquire it through Git use the following clone URI:
 
-``git clone https://github.com/Bernardo-MG/CWR-DataApi.git``
+``git clone https://github.com/weso/CWR-DataApi.git``
 
 Continuous integration
 ----------------------
@@ -70,6 +79,6 @@ The project is released under the `MIT License`_.
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://travis-ci.org/weso/CWR-DataApi/issues
 .. _project wiki: https://github.com/weso/CWR-DataApi/wiki
-.. _project page: https://github.com/Bernardo-MG/CWR-DataApi
-.. _project CI page: https://travis-ci.org/Bernardo-MG/CWR-DataApi
+.. _project page: https://github.com/weso/CWR-DataApi
+.. _project CI page: https://travis-ci.org/weso/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php
