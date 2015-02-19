@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
-from setuptools import setup, find_packages
 import ast
 import re
+
+from setuptools import setup, find_packages
+
 
 """
 PyPI configuration module.
