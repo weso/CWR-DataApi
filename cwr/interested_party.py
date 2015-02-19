@@ -94,7 +94,7 @@ class InterestedPartyRecord(Record):
         """
         Constructs an InterestedPartyRecord.
         :param prefix: the record prefix
-        :param reversionary: reversionary status flag
+        :param first_record_refusal: record refusal status flag
         :param first_record_refusal: first record refusal flag
         :param usa_license: USA license rights flag
         """
