@@ -57,7 +57,7 @@ The code can be found at the GitHub `project page`_.
 
 To acquire it through Git use the following clone URI:
 
-``git clone https://github.com/Bernardo-MG/CWR-DataApi.git``
+``git clone https://github.com/weso/CWR-DataApi.git``
 
 Continuous integration
 ----------------------
