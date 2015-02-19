@@ -9,8 +9,12 @@ format for the registration and revision of musical works, used by
 publishers and performing rights societies as a way to exchange musical
 works data.
 
-While CWR standard has been created by `CISAC`_ this library has been
+While the CWR standard has been created by `CISAC`_ this library has been
 developed by `WESO`_ independently.
+
+The library includes a data model for representing the contents of a CWR
+file, and parsers to create that model from a file, and to decode and
+encode JSON messages with the data model.
 
 Status
 ------
