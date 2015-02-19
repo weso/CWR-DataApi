@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
 
+import pyparsing as pp
+
 from cwr.file import FileTag
-from cwr.parsing import grammar
+
 
 """
 CWR file parsing classes.
@@ -17,50 +19,50 @@ rrr - Receiver. 2 or 3 digits.
 xx - Version of the CWR standard (version x.x).
 """
 
-__author__ = 'Benardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-def _to_version(data):
+def _to_version(parsed):
     """
     Transforms a string representing the file format into a float of two values representing the file CWR version.
 
     This is used by the parser to create the version number.
 
-    :param data: result of parsing the file format
+    :param parsed: result of parsing the file format
     :return: a float composed of two numeric values
     """
-    number = data[0]
+    number = parsed[0]
     return float(number[:1] + '.' + number[-1:])
 
 
-def _to_default_version(data):
+def _to_default_version(parsed):
     """
     Transforms a string representing the file format into a float of two values representing the default CWR version.
 
     This is for files which are not CWR files, such as zipped files.
 
-    :param data: result of parsing the file format
+    :param parsed: result of parsing the file format
     :return: a float representing the default version
     """
     return 2.1
 
 
-def _to_integer(data):
+def _to_integer(parsed):
     """
     Transforms a string into an integer.
 
     This is used during the parsing process.
 
-    :param data: result of parsing a number
+    :param parsed: result of parsing a number
     :return: an integer created from the input
     """
-    return int(data[0])
+    return int(parsed[0])
 
 
-def _to_year(data):
+def _to_year(parsed):
     """
     Transforms a string with two numeric values into a year.
 
@@ -68,23 +70,23 @@ def _to_year(data):
 
     This is used during the parsing process.
 
-    :param data: result of parsing a date
+    :param parsed: result of parsing a date
     :return: a year created from the input
     """
-    return int('20' + data[0])
+    return int('20' + parsed[0])
 
 
-def _to_filetag(data):
+def _to_filetag(parsed):
     """
     Transforms the final parsing result into a FileTag instance.
 
-    :param data: result of parsing a file name
+    :param parsed: result of parsing a file name
     :return: a FileTag created from the file name
     """
-    return FileTag(data.year, data.sequence_n, data.sender, data.receiver, data.version)
+    return FileTag(parsed.year, parsed.sequence_n, parsed.sender, parsed.receiver, parsed.version)
 
 
-class CWRFileNameDecoder(object):
+class CWRFileNameDecoder():
     """
     Parses a CWR file name into a FileTag class.
 
@@ -101,18 +103,18 @@ class CWRFileNameDecoder(object):
     """
 
     # Fields
-    _sequence_old = grammar.filename_sequence_old.copy()
-    _sequence_new = grammar.filename_sequence_new.copy()
-    _year = grammar.filename_year.copy()
-    _sender = grammar.filename_sender.copy()
-    _receiver = grammar.filename_receiver.copy()
-    _version_num = grammar.filename_version_num.copy()
+    _sequence_old = pp.Word(pp.nums, exact=2).setResultsName("sequence_n")
+    _sequence_new = pp.Word(pp.nums, exact=4).setResultsName("sequence_n")
+    _year = pp.Word(pp.nums, exact=2).setResultsName("year")
+    _sender = pp.Word(pp.alphanums, min=2, max=3).setResultsName("sender")
+    _receiver = pp.Word(pp.alphanums, min=2, max=3).setResultsName("receiver")
+    _version_num = pp.Word(pp.nums, exact=2).setResultsName("version")
 
     # Delimiters
-    _header = grammar.filename_header.copy()
-    _delimiter_version = grammar.filename_delimiter_version.copy()
-    _delimiter_ip = grammar.filename_delimiter_ip.copy()
-    _delimiter_zip = grammar.filename_delimiter_zip.copy()
+    _header = pp.CaselessLiteral('CW').suppress()
+    _delimiter_version = pp.CaselessLiteral('.V').suppress()
+    _delimiter_ip = pp.Literal('_').suppress()
+    _delimiter_zip = pp.CaselessLiteral('.zip').setResultsName("version")
 
     # CWR file patterns
     _cwr_pattern_old = _header + _year + _sequence_old + _sender + \
@@ -159,7 +161,7 @@ class CWRFileNameDecoder(object):
         return self._cwr_pattern_old.parseString(filename, parseAll=True)[0]
 
 
-class CWRFileNameEncoder(object):
+class CWRFileNameEncoder():
     """
     Parses a CWR file name from a FileTag class.
 

@@ -2,14 +2,12 @@
 
 import pyparsing as pp
 
-from cwr.parsing.data import __data__ as data
+from cwr.parsing.data.accessor import ParserDataStorage
 
 
 """
 Grammar for CWR files.
-
 This is used along with pyparsing to create a BNF grammar.
-
 This stored basic nodes in the parsing tree, to be reused on the parsers, which will copy them and set up any
 parsing action required for them.
 """
@@ -19,25 +17,54 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# FILE NAME
+# Acquires config data source
 
-# Fields
-filename_year = pp.Word(pp.nums, exact=2).setResultsName("year")
-filename_sequence_old = pp.Word(pp.nums, exact=2).setResultsName("sequence_n")
-filename_sequence_new = pp.Word(pp.nums, exact=4).setResultsName("sequence_n")
-filename_sender = pp.Word(pp.alphanums, min=2, max=3).setResultsName("sender")
-filename_receiver = pp.Word(pp.alphanums, min=2, max=3).setResultsName("receiver")
-filename_version_num = pp.Word(pp.nums, exact=2).setResultsName("version")
+data = ParserDataStorage()
 
-# Delimiters
-filename_header = pp.CaselessLiteral('CW').suppress()
-filename_delimiter_ip = pp.Literal('_').suppress()
-filename_delimiter_version = pp.CaselessLiteral('.V').suppress()
-filename_delimiter_zip = pp.CaselessLiteral('.zip').setResultsName("version")
+# GENERAL FIELDS
 
-# FILE CONTENTS
+"""
+Date follows the pattern YYYYMMDD, with the following constraints:
+- YYYY: can be any number
+- MM: from 01 to 12
+- DD: from 01 to 31
+"""
+date_field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
 
-# Record prefix fields
-record_type = pp.oneOf(data.record_types()).setResultsName("record_type")
-transaction_n = pp.Word(pp.nums, exact=8).setResultsName("transaction_sequence_n")
-sequence_n = pp.Word(pp.nums, exact=8).setResultsName("record_sequence_n")
+"""
+Time follows the pattern HHMMSS, with the following constraints:
+- HH: from 00 to 24
+- MM: from 00 to 59
+- SS: from 00 to 59
+"""
+time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]')
+
+"""
+Alphanumeric. Only capital letters are allowed.
+"""
+alphanum_type = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+
+# CONCRETE CASES FIELDS
+
+"""
+Characters sets should be one of the CWR list or the Unicode UTF-8 table.
+
+The Unicode UTF-8 codes are those with up to 16 or 21 bits.
+"""
+char_sets = None
+for char_set in data.character_sets():
+    regex = '[ ]{' + str(15 - len(char_set)) + '}' + char_set
+    if char_sets is None:
+        char_sets = regex
+    else:
+        char_sets += '|' + regex
+
+_character_sets = pp.Regex(char_sets)
+_unicode_1_16b = pp.Regex('U\+0[0-8,A-F]{3}[ ]{9}')
+_unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{8}')
+
+char_code = _character_sets | _unicode_1_16b | _unicode_2_21b
+
+# RECORD FIELDS
+
+record_type = pp.oneOf(data.record_types()).setResultsName('record_type')
