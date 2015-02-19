@@ -48,7 +48,6 @@ Requires Python, and has been tested on the following interpreters:
 - Python 2 (2.6 & 2.7)
 - Python 3 (3.2, 3.3 & 3.4)
 - Pypy
-- Jython
 
 The dependencies can be acquired using the list on requirements.txt,
 with the command:

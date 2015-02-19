@@ -19,6 +19,16 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
+def _to_edi_version(parsed):
+    """
+    Transforms a string with an EDI version into a float.
+
+    :param parsed: result of parsing an EDI version number
+    :return: a float with the EDI version
+    """
+    return float(parsed[0])
+
+
 class TransmissionHeaderDecoder():
     """
     Parses a CWR Transmission Header (HDR) into a TransmissionHeader instance.
@@ -45,7 +55,7 @@ class TransmissionHeaderDecoder():
     _sender_type = pp.oneOf(data.sender_types()).setResultsName('sender_type')
     _sender_id = pp.Word(pp.nums, exact=9).setResultsName('sender_id')
     _sender_name = pp.Word(grammar.alphanum_type, exact=45).setResultsName('sender_name')
-    _edi_version = pp.Regex('\d\d\.\d\d').setResultsName('edi_version')
+    _edi_version = pp.Regex('\d{2}\.\d{2}').setResultsName('edi_version')
     _creation_date = grammar.date_field.copy().setResultsName('creation_date')
     _creation_time = grammar.time_field.copy().setResultsName('creation_time')
     _transmission_date = grammar.date_field.copy().setResultsName('transmission_date')
@@ -55,6 +65,15 @@ class TransmissionHeaderDecoder():
     _pattern = _record_type + _sender_type + _sender_id + _sender_name + _edi_version + _creation_date + _creation_time \
                + _transmission_date + _character_set
 
+    # Parsing actions
+    _sender_id.setParseAction(grammar.to_integer)
+    _edi_version.setParseAction(_to_edi_version)
+    _creation_date.setParseAction(grammar.to_date)
+    _transmission_date.setParseAction(grammar.to_date)
+    _creation_time.setParseAction(grammar.to_time)
+    _sender_name.setParseAction(grammar.to_string)
+    _character_set.setParseAction(grammar.to_string)
+
     def decode(self, record):
         """
         Decodes the Transmission Header, creating a TransmissionHeader from it.
@@ -62,4 +81,4 @@ class TransmissionHeaderDecoder():
         :param record: the record to parse
         :return: a TransmissionHeader created from the file name
         """
-        return self._pattern.parseString(record, parseAll=True)[0]
+        return self._pattern.parseString(record, parseAll=True)

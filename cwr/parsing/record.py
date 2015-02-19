@@ -20,18 +20,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-def _to_integer(parsed):
-    """
-    Transforms a string into an integer.
-
-    This is used during the parsing process.
-
-    :param parsed: result of parsing a number
-    :return: an integer created from the input
-    """
-    return int(parsed[0])
-
-
 def _to_recordprefix(parsed):
     """
     Transforms the final parsing result into a RecordPrefix instance.
@@ -62,8 +50,8 @@ class RecordPrefixDecoder():
     _pattern = grammar.record_type + _transaction_n + _sequence_n
 
     # Parsing actions
-    _transaction_n.setParseAction(_to_integer)
-    _sequence_n.setParseAction(_to_integer)
+    _transaction_n.setParseAction(grammar.to_integer)
+    _sequence_n.setParseAction(grammar.to_integer)
     _pattern.setParseAction(_to_recordprefix)
 
     def decode(self, record):

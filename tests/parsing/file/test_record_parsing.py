@@ -25,7 +25,7 @@ __status__ = 'Development'
 
 class TestParseRecordPrefixValid(unittest.TestCase):
     """
-    Tests that RecordPrefixDecoder decodes correctly formatted strings, and those where the error can be corrected
+    Tests that RecordPrefixDecoder decodes correctly formatted strings
     """
 
     def setUp(self):

@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import pyparsing as pp
+import datetime
 
 from cwr.parsing.data.accessor import ParserDataStorage
 
@@ -68,3 +69,51 @@ char_code = _character_sets | _unicode_1_16b | _unicode_2_21b
 # RECORD FIELDS
 
 record_type = pp.oneOf(data.record_types()).setResultsName('record_type')
+
+# METHODS
+
+
+def to_integer(parsed):
+    """
+    Transforms a string into an integer.
+
+    :param parsed: result of parsing a number
+    :return: an integer created from the input
+    """
+    return int(parsed[0])
+
+
+def to_string(parsed):
+    """
+    Transforms a parsed string into a usable string.
+
+    This just trims the edges, removing unneeded spaces.
+
+    :param parsed: result of parsing an alphanumeric field
+    :return: a usable string
+    """
+    return parsed[0].strip()
+
+
+def to_date(parsed):
+    """
+    Transforms a string into a datetime.
+
+    This should be on the format YYYYMMDD.
+
+    :param parsed: result of parsing a date
+    :return: a datetime created from the input
+    """
+    return datetime.datetime.strptime(parsed[0], '%Y%m%d')
+
+
+def to_time(parsed):
+    """
+    Transforms a string into a datetime.
+
+    This should be on the format HHMMSS.
+
+    :param parsed: result of parsing a time
+    :return: a datetime created from the input
+    """
+    return datetime.datetime.strptime(parsed[0], '%H%M%S')
