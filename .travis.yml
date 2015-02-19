@@ -10,6 +10,7 @@ env:
   - TOXENV=pypy-release
   - TOXENV=jython-release
 install:
+  - if [ $TOXENV == jython* ]; then sudo apt-get install jython; fi
   - pip install tox
 script:
   - tox
