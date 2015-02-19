@@ -8,6 +8,7 @@ env:
   - TOXENV=py33-release
   - TOXENV=py34-release
   - TOXENV=pypy-release
+  - TOXENV=jython-release
 install:
   - pip install tox
 script:
