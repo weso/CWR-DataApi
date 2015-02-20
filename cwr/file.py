@@ -282,9 +282,10 @@ class GroupTrailer(object):
         self._record_count = record_count
 
     def __str__(self):
-        return '%s(%s)' % (
-            self._transaction_type,
-            self._group_id)
+        return '%s(g:%s, t:%s)' % (
+            self._group_id,
+            self._group_id,
+            self._transaction_count)
 
     def __repr__(self):
         return '<class %s>(group_id=%r, transaction_count=%r, record_count=%r)' % (
@@ -603,8 +604,9 @@ class TransmissionHeader(object):
     information as well as the name of the sender.
     """
 
-    def __init__(self, sender_id, sender_name, sender_type, creation_date, transmission_date, edi_standard="01.10",
-                 character_set="U0000"):
+    def __init__(self, sender_id, sender_name, sender_type, creation_date, transmission_date, record_type='HDR',
+                 edi_standard='01.10',
+                 character_set=""):
         """
         Constructs a TransmissionHeader.
 
@@ -613,9 +615,13 @@ class TransmissionHeader(object):
         :param sender_type: code identifying the type of sender
         :param creation_date: creation date and time for the file
         :param transmission_date: date in which the file was transmitted
+        :param record_type: the CWR record type
         :param edi_standard: EDI standard version (01.10 by default)
         :param character_set: file encoding set (ASCII by default)
         """
+        # Record info
+        self._record_type = record_type
+
         # Sender info
         self._sender_id = sender_id
         self._sender_name = sender_name
@@ -655,13 +661,24 @@ class TransmissionHeader(object):
     @property
     def creation_date(self):
         """
-        Creation Date and Creation Time fields. Date and Time.
+        Creation Date field. Date.
 
-        The date that this file was created, including the time.
+        The date that this file was created.
 
         :return: the creation date
         """
-        return self._creation_date
+        return self._creation_date.date()
+
+    @property
+    def creation_time(self):
+        """
+        Creation Time fields. Time.
+
+        The time at which this file was created.
+
+        :return: the creation time
+        """
+        return self._creation_date.time()
 
     @property
     def edi_standard(self):
@@ -675,6 +692,17 @@ class TransmissionHeader(object):
         :return: the EDI standard version number
         """
         return self._edi_standard
+
+    @property
+    def record_type(self):
+        """
+        Record Type field
+
+        This is expected to be 'HDR'.
+
+        :return: the record Type
+        """
+        return self._record_type
 
     @property
     def sender_id(self):
@@ -761,7 +789,7 @@ class TransmissionTrailer(object):
     def __repr__(self):
         return '<class %s>(group_count=%r, transaction_count=%r, record_count=%r)' % (
             'TransmissionTrailer', self._group_count,
-            self._transaction_count, self._record_counte)
+            self._transaction_count, self._record_count)
 
     @property
     def group_count(self):

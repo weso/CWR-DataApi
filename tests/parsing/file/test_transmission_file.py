@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import unittest
+import datetime
 
 from pyparsing import ParseException
 
@@ -41,6 +42,16 @@ class TestParseTransmissionHeader(unittest.TestCase):
 
         result = self._parser.decode(record)
 
+        self.assertEqual('HDR', result.record_type)
+        self.assertEqual('AA', result.sender_type)
+        self.assertEqual(1234, result.sender_id)
+        self.assertEqual('NAME OF THE COMPANY', result.sender_name)
+        self.assertEqual(1.1, result.edi_standard)
+        self.assertEqual(datetime.datetime.strptime('20120115', '%Y%m%d').date(), result.creation_date)
+        self.assertEqual(datetime.datetime.strptime('123000', '%H%M%S').time(), result.creation_time)
+        self.assertEqual(datetime.datetime.strptime('20121102', '%Y%m%d').date(), result.transmission_date)
+        self.assertEqual('U+0123', result.character_set)
+
     def test_valid_no_charset(self):
         """
         Tests that TransmissionHeaderDecoder decodes correctly formatted record prefixes.
@@ -50,6 +61,16 @@ class TestParseTransmissionHeader(unittest.TestCase):
         record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102               '
 
         result = self._parser.decode(record)
+
+        self.assertEqual('HDR', result.record_type)
+        self.assertEqual('AA', result.sender_type)
+        self.assertEqual(1234, result.sender_id)
+        self.assertEqual('NAME OF THE COMPANY', result.sender_name)
+        self.assertEqual(1.1, result.edi_standard)
+        self.assertEqual(datetime.datetime.strptime('20120115', '%Y%m%d').date(), result.creation_date)
+        self.assertEqual(datetime.datetime.strptime('123000', '%H%M%S').time(), result.creation_time)
+        self.assertEqual(datetime.datetime.strptime('20121102', '%Y%m%d').date(), result.transmission_date)
+        self.assertEqual('', result.character_set)
 
 
 class TestParseTransmissionHeaderException(unittest.TestCase):

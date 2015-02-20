@@ -37,7 +37,7 @@ Date follows the pattern YYYYMMDD, with the following constraints:
 - DD: from 01 to 31
 """
 date_field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])').setParseAction(
-    lambda d: datetime.datetime.strptime(d[0], '%Y%m%d'))
+    lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())
 
 """
 Time follows the pattern HHMMSS, with the following constraints:
@@ -46,7 +46,7 @@ Time follows the pattern HHMMSS, with the following constraints:
 - SS: from 00 to 59
 """
 time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]').setParseAction(
-    lambda t: datetime.datetime.strptime(t[0], '%H%M%S'))
+    lambda t: datetime.datetime.strptime(t[0], '%H%M%S').time())
 
 """
 Alphanumeric. Only capital letters are allowed.

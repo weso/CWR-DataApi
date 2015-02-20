@@ -1,9 +1,13 @@
 # -*- encoding: utf-8 -*-
 
+import datetime
+
 import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
 from cwr.parsing import grammar
+from cwr.file import TransmissionHeader
+
 
 """
 CWR Transmission parsing classes.
@@ -29,6 +33,19 @@ def _to_edi_version(parsed):
     return float(parsed[0])
 
 
+def _to_transmissionheader(parsed):
+    """
+    Transforms the final parsing result into a TransmissionHeader instance.
+
+    :param parsed: result of parsing a record prefix
+    :return: a TransmissionHeader created from the record prefix
+    """
+    creation_datetime = datetime.datetime.combine(parsed.creation_date, parsed.creation_time)
+
+    return TransmissionHeader(parsed.sender_id, parsed.sender_name, parsed.sender_type, creation_datetime,
+                              parsed.transmission_date, parsed.record_type, parsed.edi_version, parsed.character_set)
+
+
 class TransmissionHeaderDecoder():
     """
     Parses a CWR Transmission Header (HDR) into a TransmissionHeader instance.
@@ -51,7 +68,7 @@ class TransmissionHeaderDecoder():
     data = ParserDataStorage()
 
     # Fields
-    _record_type = pp.Literal(data.expected_record_type('transmission_header'))
+    _record_type = pp.Literal(data.expected_record_type('transmission_header')).setResultsName('record_type')
     _sender_type = pp.oneOf(data.sender_types()).setResultsName('sender_type')
     _sender_id = grammar.numeric(data.expected_record_field_size('transmission_header', 'sender_id')).setResultsName(
         'sender_id')
@@ -71,6 +88,7 @@ class TransmissionHeaderDecoder():
 
     # Parsing actions
     _edi_version.setParseAction(_to_edi_version)
+    _pattern.setParseAction(_to_transmissionheader)
 
     def __init__(self):
         pass
@@ -82,4 +100,4 @@ class TransmissionHeaderDecoder():
         :param record: the record to parse
         :return: a TransmissionHeader created from the file name
         """
-        return self._pattern.parseString(record)
+        return self._pattern.parseString(record)[0]
