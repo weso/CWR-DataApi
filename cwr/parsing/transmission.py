@@ -53,12 +53,12 @@ class TransmissionHeaderDecoder():
     # Fields
     _record_type = pp.Literal('HDR')
     _sender_type = pp.oneOf(data.sender_types()).setResultsName('sender_type')
-    _sender_id = pp.Word(pp.nums, exact=9).setResultsName('sender_id')
-    _sender_name = pp.Word(grammar.alphanum_type, exact=45).setResultsName('sender_name')
+    _sender_id = grammar.numeric(9).setResultsName('sender_id')
+    _sender_name = grammar.alphanum(45).setResultsName('sender_name')
     _edi_version = pp.Regex('\d{2}\.\d{2}').setResultsName('edi_version')
-    _creation_date = grammar.date_field.copy().setResultsName('creation_date')
-    _creation_time = grammar.time_field.copy().setResultsName('creation_time')
-    _transmission_date = grammar.date_field.copy().setResultsName('transmission_date')
+    _creation_date = grammar.date_field.setResultsName('creation_date')
+    _creation_time = grammar.time_field.setResultsName('creation_time')
+    _transmission_date = grammar.date_field.setResultsName('transmission_date')
     _character_set = grammar.char_code(15).setResultsName('character_set')
 
     # Transmission Header pattern
@@ -66,10 +66,7 @@ class TransmissionHeaderDecoder():
                _creation_date + _creation_time + _transmission_date + (_character_set | pp.empty) + grammar.lineEnd
 
     # Parsing actions
-    _sender_id.setParseAction(lambda n: int(n[0]))
     _edi_version.setParseAction(_to_edi_version)
-    _sender_name.setParseAction(lambda s: s[0].strip())
-    _character_set.setParseAction(lambda s: s[0].strip())
 
     def __init__(self):
         pass

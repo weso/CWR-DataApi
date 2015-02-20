@@ -51,7 +51,39 @@ time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]').setParseActi
 """
 Alphanumeric. Only capital letters are allowed.
 """
-alphanum_type = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+_alphanum_type = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+
+
+def alphanum(columns):
+    """
+    Alphanumeric field.
+
+    This is an alphanumeric CWR field, accepting only caps.
+
+    The field will be stripped of heading and trailing spaces.
+
+    :param columns: number of columns for this field
+    :return: a parser for the Alphanumeric field
+    """
+    return pp.Word(_alphanum_type, exact=columns).setParseAction(lambda s: s[0].strip())
+
+"""
+Numeric field. Only integers.
+"""
+
+
+def numeric(columns):
+    """
+    Numeric field.
+
+    This is an integer numeric field.
+
+    The field will be transformed into an integer.
+
+    :param columns: number of columns for this field
+    :return: a parser for the integer numeric field
+    """
+    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: int(n[0]))
 
 # CONCRETE CASES FIELDS
 
@@ -63,6 +95,16 @@ The Unicode UTF-8 codes are those with up to 16 or 21 bits.
 
 
 def char_code(columns):
+    """
+    Character set code.
+
+    This is one of the character sets allowed on the file.
+
+    The field will be stripped of heading and trailing spaces.
+
+    :param columns: number of columns for this field
+    :return: a parser for the character set field
+    """
     char_sets = None
     for char_set in data.character_sets():
         regex = '[ ]{' + str(15 - len(char_set)) + '}' + char_set
@@ -74,9 +116,8 @@ def char_code(columns):
     _character_sets = pp.Regex(char_sets)
     _unicode_1_16b = pp.Regex('U\+0[0-8,A-F]{3}[ ]{' + str(columns - 6) + '}')
     _unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{' + str(columns - 7) + '}')
-    _empty = pp.Regex('[ ]{' + str(columns) + '}')
 
-    return _empty | _character_sets | _unicode_1_16b | _unicode_2_21b
+    return (_character_sets | _unicode_1_16b | _unicode_2_21b).setParseAction(lambda s: s[0].strip())
 
 # RECORD FIELDS
 

@@ -43,15 +43,13 @@ class RecordPrefixDecoder():
     """
 
     # Fields
-    _transaction_n = pp.Word(pp.nums, exact=8).setResultsName("transaction_sequence_n")
-    _sequence_n = pp.Word(pp.nums, exact=8).setResultsName("record_sequence_n")
+    _transaction_n = grammar.numeric(8).setResultsName("transaction_sequence_n")
+    _sequence_n = grammar.numeric(8).setResultsName("record_sequence_n")
 
     # Record prefix pattern
     _pattern = grammar.lineStart + grammar.record_type + _transaction_n + _sequence_n + grammar.lineEnd
 
     # Parsing actions
-    _transaction_n.setParseAction(lambda n: int(n[0]))
-    _sequence_n.setParseAction(lambda n: int(n[0]))
     _pattern.setParseAction(_to_recordprefix)
 
     def __init__(self):
