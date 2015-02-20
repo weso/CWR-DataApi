@@ -51,21 +51,20 @@ time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]').setParseActi
 """
 Alphanumeric. Only capital letters are allowed.
 """
-_alphanum_type = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
 
 
 def alphanum(columns):
     """
     Alphanumeric field.
 
-    This is an alphanumeric CWR field, accepting only caps.
+    This is an alphanumeric CWR field, accepting only ASCII characters in upper case.
 
     The field will be stripped of heading and trailing spaces.
 
     :param columns: number of columns for this field
     :return: a parser for the Alphanumeric field
     """
-    return pp.Word(_alphanum_type, exact=columns).setParseAction(lambda s: s[0].strip())
+    return pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}').setParseAction(lambda s: s[0].strip())
 
 """
 Numeric field. Only integers.

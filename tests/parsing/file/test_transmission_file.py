@@ -9,11 +9,12 @@ from cwr.parsing.transmission import TransmissionHeaderDecoder
 CWR record parsing tests.
 
 The following cases are tested:
-- RecordPrefixDecoder decodes correctly formatted record prefixes
+- RecordPrefixDecoder decodes correctly formatted transmission headers
+- RecordPrefixDecoder decodes correctly transmission headers without the optional character set
 
 - RecordPrefixDecoder throws an exception when the record type is not one of the CWR record types
+- RecordPrefixDecoder throws an exception when the company name is in lower case
 - RecordPrefixDecoder throws an exception when the record numbers are too short
-- RecordPrefixDecoder throws an exception when the record numbers are too long
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -64,6 +65,14 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
         Tests that TransmissionHeaderDecoder throws an exception when the record type is not one of the CWR record types.
         """
         record = 'AAAAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
+
+        self.assertRaises(ParseException, self._parser.decode, record)
+
+    def test_invalid_lower_case_name(self):
+        """
+        Tests that TransmissionHeaderDecoder throws an exception when the company name is in lower case.
+        """
+        record = 'HDRAA000001234name of the company                          01.102012011512300020121102U+0123         '
 
         self.assertRaises(ParseException, self._parser.decode, record)
 
