@@ -64,6 +64,6 @@ class RecordPrefixDecoder():
         Decodes the file name, creating a RecordPrefix from it.
 
         :param record: the record to parse
-        :return: a RecordPrefix created from the file name
+        :return: a RecordPrefix created from the record
         """
         return self._pattern.parseString(record)[0]

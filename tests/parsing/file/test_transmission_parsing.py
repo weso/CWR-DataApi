@@ -36,7 +36,7 @@ class TestParseTransmissionHeader(unittest.TestCase):
         """
         Tests that TransmissionHeaderDecoder decodes correctly formatted record prefixes.
 
-        This contains all the fields
+        This test contains all the optional fields.
         """
         record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
 

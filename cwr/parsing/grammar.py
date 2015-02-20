@@ -37,7 +37,7 @@ Date follows the pattern YYYYMMDD, with the following constraints:
 - DD: from 01 to 31
 """
 date_field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])').setParseAction(
-    lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())
+    lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date()).setName('Date Field')
 
 """
 Time follows the pattern HHMMSS, with the following constraints:
@@ -46,7 +46,7 @@ Time follows the pattern HHMMSS, with the following constraints:
 - SS: from 00 to 59
 """
 time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]').setParseAction(
-    lambda t: datetime.datetime.strptime(t[0], '%H%M%S').time())
+    lambda t: datetime.datetime.strptime(t[0], '%H%M%S').time()).setName('Time Field')
 
 """
 Alphanumeric. Only capital letters are allowed.
@@ -64,7 +64,8 @@ def alphanum(columns):
     :param columns: number of columns for this field
     :return: a parser for the Alphanumeric field
     """
-    return pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}').setParseAction(lambda s: s[0].strip())
+    return pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}').setParseAction(lambda s: s[0].strip()).setName(
+        'Alphanumeric Field (' + str(columns) + ' columns)')
 
 
 """
@@ -83,7 +84,39 @@ def numeric(columns):
     :param columns: number of columns for this field
     :return: a parser for the integer numeric field
     """
-    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: int(n[0]))
+    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: int(n[0])).setName(
+        'Numeric Field (' + str(columns) + ' columns)')
+
+
+def numeric_from(columns, min):
+    """
+    Numeric field with a minimum value.
+
+    This is an integer numeric field where each value should be higher or equal than the minimum
+
+    The field will be transformed into an integer.
+
+    :param columns: number of columns for this field
+    :return: a parser for the integer numeric field
+    """
+
+    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: __parse_number_from(n[0], min)).setName(
+        'Numeric Field (' + str(columns) + ' columns, starting at ' + str(min) + ')')
+
+
+def __parse_number_from(number, min):
+    """
+    Parses a string into an integer, only if it is equal or above a minimum value.
+
+    :param number: the string to parse
+    :param min: the minimum value
+    :return: the parsed number, if it was valid
+    """
+    result = int(number)
+    if result < min:
+        raise pp.ParseException(0, 0, "number value invalid")
+
+    return result
 
 # CONCRETE CASES FIELDS
 
@@ -117,7 +150,8 @@ def char_code(columns):
     _unicode_1_16b = pp.Regex('U\+0[0-8,A-F]{3}[ ]{' + str(columns - 6) + '}')
     _unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{' + str(columns - 7) + '}')
 
-    return (_character_sets | _unicode_1_16b | _unicode_2_21b).setParseAction(lambda s: s[0].strip())
+    return (_character_sets | _unicode_1_16b | _unicode_2_21b).setParseAction(lambda s: s[0].strip()).setName(
+        'Char code Field (' + str(columns) + ' columns)')
 
 # RECORD FIELDS
 

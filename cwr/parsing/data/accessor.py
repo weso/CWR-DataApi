@@ -20,12 +20,14 @@ class ParserDataStorage(object):
     _file_record_types = 'cwr_record_type.csv'
     _file_sender_types = 'cwr_sender_type.csv'
     _file_character_sets = 'cwr_character_set.csv'
+    _file_transaction_types = 'cwr_transaction_type.csv'
 
     _file_record_config = 'cwr_record_config.yml'
 
     _character_sets = None
     _record_types = None
     _sender_types = None
+    _transaction_types = None
 
     _record_config = None
 
@@ -123,6 +125,19 @@ class ParserDataStorage(object):
             self._sender_types = self.__read_csv_file(self._file_sender_types)
 
         return self._sender_types
+
+    def transaction_types(self):
+        """
+        Types of transactions.
+
+        These are the codes identifying group transactions.
+
+        :return: the allowed CWR file transaction codes
+        """
+        if self._transaction_types is None:
+            self._transaction_types = self.__read_csv_file(self._file_transaction_types)
+
+        return self._transaction_types
 
     def __read_csv_file(self, file_name):
         """

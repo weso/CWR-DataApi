@@ -784,7 +784,7 @@ class TransmissionTrailer(object):
 
     def __str__(self):
         return '%s groups, %s transactions, %s records' % (
-            self._group_count, self._transaction_count, self._record_counte)
+            self._group_count, self._transaction_count, self._record_count)
 
     def __repr__(self):
         return '<class %s>(group_count=%r, transaction_count=%r, record_count=%r)' % (

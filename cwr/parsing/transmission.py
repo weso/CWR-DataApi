@@ -74,7 +74,7 @@ class TransmissionHeaderDecoder():
         'sender_id')
     _sender_name = grammar.alphanum(
         data.expected_record_field_size('transmission_header', 'sender_name')).setResultsName('sender_name')
-    _edi_version = pp.Word(data.expected_record_field_value('transmission_header', 'edi_version')).setResultsName(
+    _edi_version = pp.Literal(data.expected_record_field_value('transmission_header', 'edi_version')).setResultsName(
         'edi_version')
     _creation_date = grammar.date_field.setResultsName('creation_date')
     _creation_time = grammar.time_field.setResultsName('creation_time')
@@ -98,6 +98,6 @@ class TransmissionHeaderDecoder():
         Decodes the Transmission Header, creating a TransmissionHeader from it.
 
         :param record: the record to parse
-        :return: a TransmissionHeader created from the file name
+        :return: a TransmissionHeader created from the record
         """
         return self._pattern.parseString(record)[0]

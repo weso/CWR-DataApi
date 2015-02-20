@@ -1,3 +1,14 @@
+group_header:
+    type: 'GRH'
+    batch_request_id:
+        size: 10
+    group_id:
+        size: 5
+    sd_type:
+        size: 2
+    version_number:
+        value: '02.10'
+
 record_prefix:
     record_sequence_n:
         size: 8
@@ -5,7 +16,7 @@ record_prefix:
         size: 8
 
 transmission_header:
-    type: HDR
+    type: 'HDR'
     edi_version:
         value: '01.10'
     character_set:
