@@ -59,20 +59,20 @@ class TransmissionHeaderDecoder():
     _creation_date = grammar.date_field.copy().setResultsName('creation_date')
     _creation_time = grammar.time_field.copy().setResultsName('creation_time')
     _transmission_date = grammar.date_field.copy().setResultsName('transmission_date')
-    _character_set = grammar.char_code.copy().setResultsName('character_set')
+    _character_set = grammar.char_code(15).setResultsName('character_set')
 
     # Transmission Header pattern
-    _pattern = _record_type + _sender_type + _sender_id + _sender_name + _edi_version + _creation_date + _creation_time \
-               + _transmission_date + _character_set
+    _pattern = grammar.lineStart + _record_type + _sender_type + _sender_id + _sender_name + _edi_version + \
+               _creation_date + _creation_time + _transmission_date + (_character_set | pp.empty) + grammar.lineEnd
 
     # Parsing actions
-    _sender_id.setParseAction(grammar.to_integer)
+    _sender_id.setParseAction(lambda n: int(n[0]))
     _edi_version.setParseAction(_to_edi_version)
-    _creation_date.setParseAction(grammar.to_date)
-    _transmission_date.setParseAction(grammar.to_date)
-    _creation_time.setParseAction(grammar.to_time)
-    _sender_name.setParseAction(grammar.to_string)
-    _character_set.setParseAction(grammar.to_string)
+    _sender_name.setParseAction(lambda s: s[0].strip())
+    _character_set.setParseAction(lambda s: s[0].strip())
+
+    def __init__(self):
+        pass
 
     def decode(self, record):
         """
@@ -81,4 +81,4 @@ class TransmissionHeaderDecoder():
         :param record: the record to parse
         :return: a TransmissionHeader created from the file name
         """
-        return self._pattern.parseString(record, parseAll=True)
+        return self._pattern.parseString(record)

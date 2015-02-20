@@ -17,7 +17,7 @@ The following cases are tested:
 - RecordPrefixDecoder throws an exception when the record numbers are too long
 """
 
-__author__ = 'Benardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
@@ -68,10 +68,18 @@ class TestParseRecordPrefixException(unittest.TestCase):
 
         self.assertRaises(ParseException, self._parser.decode, prefix)
 
-    def test_invalid_wrong_length_too_long(self):
+    def test_invalid_wrong_length_too_long_record_n(self):
         """
         Tests that RecordPrefixDecoder throws an exception when the record numbers are too long.
         """
         prefix = 'HDR00000123400000023'
+
+        self.assertRaises(ParseException, self._parser.decode, prefix)
+
+    def test_invalid_wrong_length_too_long_begin_space(self):
+        """
+        Tests that RecordPrefixDecoder throws an exception when the prefix is headed by empty spaces.
+        """
+        prefix = ' HDR0000123400000023'
 
         self.assertRaises(ParseException, self._parser.decode, prefix)

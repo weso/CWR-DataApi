@@ -47,12 +47,15 @@ class RecordPrefixDecoder():
     _sequence_n = pp.Word(pp.nums, exact=8).setResultsName("record_sequence_n")
 
     # Record prefix pattern
-    _pattern = grammar.record_type + _transaction_n + _sequence_n
+    _pattern = grammar.lineStart + grammar.record_type + _transaction_n + _sequence_n + grammar.lineEnd
 
     # Parsing actions
-    _transaction_n.setParseAction(grammar.to_integer)
-    _sequence_n.setParseAction(grammar.to_integer)
+    _transaction_n.setParseAction(lambda n: int(n[0]))
+    _sequence_n.setParseAction(lambda n: int(n[0]))
     _pattern.setParseAction(_to_recordprefix)
+
+    def __init__(self):
+        pass
 
     def decode(self, record):
         """
@@ -61,4 +64,4 @@ class RecordPrefixDecoder():
         :param record: the record to parse
         :return: a RecordPrefix created from the file name
         """
-        return self._pattern.parseString(record, parseAll=True)[0]
+        return self._pattern.parseString(record)[0]
