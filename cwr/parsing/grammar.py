@@ -66,6 +66,7 @@ def alphanum(columns):
     """
     return pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}').setParseAction(lambda s: s[0].strip())
 
+
 """
 Numeric field. Only integers.
 """

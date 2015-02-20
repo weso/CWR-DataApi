@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 from cwr.file import RecordPrefix
 from cwr.parsing import grammar
+from cwr.parsing.data.accessor import ParserDataStorage
 
 
 """
@@ -42,9 +41,14 @@ class RecordPrefixDecoder():
     - Sequence number
     """
 
+    data = ParserDataStorage()
+
     # Fields
-    _transaction_n = grammar.numeric(8).setResultsName("transaction_sequence_n")
-    _sequence_n = grammar.numeric(8).setResultsName("record_sequence_n")
+    _transaction_n = grammar.numeric(
+        data.expected_record_field_size('record_prefix', 'transaction_sequence_n')).setResultsName(
+        "transaction_sequence_n")
+    _sequence_n = grammar.numeric(data.expected_record_field_size('record_prefix', 'record_sequence_n')).setResultsName(
+        "record_sequence_n")
 
     # Record prefix pattern
     _pattern = grammar.lineStart + grammar.record_type + _transaction_n + _sequence_n + grammar.lineEnd

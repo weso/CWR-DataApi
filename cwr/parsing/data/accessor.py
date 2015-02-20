@@ -3,6 +3,9 @@
 import os
 import csv
 
+import yaml
+
+
 """
 Accessor for the parsing data config files.
 """
@@ -18,9 +21,13 @@ class ParserDataStorage(object):
     _file_sender_types = 'cwr_sender_type.csv'
     _file_character_sets = 'cwr_character_set.csv'
 
+    _file_record_config = 'cwr_record_config.yml'
+
     _character_sets = None
     _record_types = None
     _sender_types = None
+
+    _record_config = None
 
     __shared_state = {}
 
@@ -39,7 +46,7 @@ class ParserDataStorage(object):
         :return: the allowed character sets
         """
         if self._character_sets is None:
-            self._character_sets = self.__read_file(self._file_character_sets)
+            self._character_sets = self.__read_csv_file(self._file_character_sets)
 
         return self._character_sets
 
@@ -52,9 +59,45 @@ class ParserDataStorage(object):
         :return: the allowed CWR record type codes
         """
         if self._record_types is None:
-            self._record_types = self.__read_file(self._file_record_types)
+            self._record_types = self.__read_csv_file(self._file_record_types)
 
         return self._record_types
+
+    def expected_record_type(self, record):
+        """
+        Returns the expected record type for the received record.
+
+        The record is the internal name used to identify a record type.
+
+        :param record: the id for the record type
+        :return: the expected record type on the record prefix
+        """
+        return self.record_config()[record]['type']
+
+    def expected_record_field_size(self, record, field):
+        """
+        Returns the expected size for a record's field.
+
+        The record and field are the internal name used to identify a record type.
+
+        :param record: the id for the record type
+        :param field: the id for the field
+        :return: the expected size for the field on the record
+        """
+        return self.record_config()[record][field]['size']
+
+    def record_config(self):
+        """
+        Configuration for the different record types.
+
+        This is loaded from a YAML file.
+
+        :return: the configuration for the different record types
+        """
+        if self._record_config is None:
+            self._record_config = self.__read_yaml_file(self._file_record_config)
+
+        return self._record_config
 
     def sender_types(self):
         """
@@ -65,11 +108,17 @@ class ParserDataStorage(object):
         :return: the allowed CWR file sender codes
         """
         if self._sender_types is None:
-            self._sender_types = self.__read_file(self._file_sender_types)
+            self._sender_types = self.__read_csv_file(self._file_sender_types)
 
         return self._sender_types
 
-    def __read_file(self, file_name):
+    def __read_csv_file(self, file_name):
+        """
+        Parses a CSV file into a list.
+
+        :param file_name: name of the CSV file
+        :return: a list with the file's contents
+        """
         result = []
         with open(os.path.join(self.__path(), os.path.basename(file_name)), 'rt') as csvfile:
             headers_reader = csv.reader(csvfile, delimiter=',', quotechar='|')
@@ -77,3 +126,13 @@ class ParserDataStorage(object):
                 for t in type_row:
                     result.append(t)
         return result
+
+    def __read_yaml_file(self, file_name):
+        """
+        Parses a YAML file into a matrix.
+
+        :param file_name: name of the YAML file
+        :return: a matrix with the file's contents
+        """
+        with open(os.path.join(self.__path(), os.path.basename(file_name)), 'rt') as yamlfile:
+            return yaml.load(yamlfile)

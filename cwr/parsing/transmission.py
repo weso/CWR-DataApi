@@ -51,15 +51,18 @@ class TransmissionHeaderDecoder():
     data = ParserDataStorage()
 
     # Fields
-    _record_type = pp.Literal('HDR')
+    _record_type = pp.Literal(data.expected_record_type('transmission_header'))
     _sender_type = pp.oneOf(data.sender_types()).setResultsName('sender_type')
-    _sender_id = grammar.numeric(9).setResultsName('sender_id')
-    _sender_name = grammar.alphanum(45).setResultsName('sender_name')
+    _sender_id = grammar.numeric(data.expected_record_field_size('transmission_header', 'sender_id')).setResultsName(
+        'sender_id')
+    _sender_name = grammar.alphanum(
+        data.expected_record_field_size('transmission_header', 'sender_name')).setResultsName('sender_name')
     _edi_version = pp.Regex('\d{2}\.\d{2}').setResultsName('edi_version')
     _creation_date = grammar.date_field.setResultsName('creation_date')
     _creation_time = grammar.time_field.setResultsName('creation_time')
     _transmission_date = grammar.date_field.setResultsName('transmission_date')
-    _character_set = grammar.char_code(15).setResultsName('character_set')
+    _character_set = grammar.char_code(
+        data.expected_record_field_size('transmission_header', 'character_set')).setResultsName('character_set')
 
     # Transmission Header pattern
     _pattern = grammar.lineStart + _record_type + _sender_type + _sender_id + _sender_name + _edi_version + \

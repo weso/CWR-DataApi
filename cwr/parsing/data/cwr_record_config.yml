@@ -1,0 +1,14 @@
+record_prefix:
+    transaction_sequence_n:
+        size: 8
+    record_sequence_n:
+        size: 8
+
+transmission_header:
+    type: HDR
+    sender_id:
+        size: 9
+    sender_name:
+        size: 45
+    character_set:
+        size: 15
