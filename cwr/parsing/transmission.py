@@ -57,7 +57,8 @@ class TransmissionHeaderDecoder():
         'sender_id')
     _sender_name = grammar.alphanum(
         data.expected_record_field_size('transmission_header', 'sender_name')).setResultsName('sender_name')
-    _edi_version = pp.Regex('\d{2}\.\d{2}').setResultsName('edi_version')
+    _edi_version = pp.Word(data.expected_record_field_value('transmission_header', 'edi_version')).setResultsName(
+        'edi_version')
     _creation_date = grammar.date_field.setResultsName('creation_date')
     _creation_time = grammar.time_field.setResultsName('creation_time')
     _transmission_date = grammar.date_field.setResultsName('transmission_date')

@@ -86,6 +86,18 @@ class ParserDataStorage(object):
         """
         return self.record_config()[record][field]['size']
 
+    def expected_record_field_value(self, record, field):
+        """
+        Returns the expected value for a record's field.
+
+        The record and field are the internal name used to identify a record type.
+
+        :param record: the id for the record type
+        :param field: the id for the field
+        :return: the expected value for the field on the record
+        """
+        return self.record_config()[record][field]['value']
+
     def record_config(self):
         """
         Configuration for the different record types.

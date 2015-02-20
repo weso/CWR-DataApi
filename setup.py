@@ -40,6 +40,7 @@ setup(
                  'Programming Language :: Python :: 3.3', 'Programming Language :: Python :: 3.4'],
     long_description=open("README.rst").read(),
     install_requires=[
-        'pyparsing'
+        'pyparsing',
+        'pyyaml',
     ],
 )
