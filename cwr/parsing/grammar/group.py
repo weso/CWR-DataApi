@@ -52,14 +52,12 @@ sd_type.setResultsName('sd_type')
 currency_indicator = pp.Word(pp.alphanums + ' ',
                              exact=data.expected_record_field_size('group_trailer', 'currency_indicator'))
 currency_indicator.leaveWhitespace()
-currency_indicator.setName('Currency Indicator')
-currency_indicator.setResultsName('currency_indicator')
+currency_indicator = currency_indicator.setName('Currency Indicator').setResultsName('currency_indicator')
 
 total_monetary_value = pp.Word(pp.alphanums + ' ',
                                exact=data.expected_record_field_size('group_trailer', 'total_monetary_value'))
 total_monetary_value.leaveWhitespace()
-total_monetary_value.setName('Total Monetary Value')
-total_monetary_value.setResultsName('total_monetary_value')
+total_monetary_value = total_monetary_value.setName('Total Monetary Value').setResultsName('total_monetary_value')
 
 # Group Header pattern
 group_header = special.lineStart + record_type_header + record.transaction_type + group_id + version_number + \

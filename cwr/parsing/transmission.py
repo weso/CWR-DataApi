@@ -47,3 +47,29 @@ class TransmissionHeaderDecoder():
         :return: a TransmissionHeader created from the record
         """
         return transmission.transmission_header.parseString(record, parseAll=True)[0]
+
+
+class TransmissionTrailerDecoder():
+    """
+    Parses a CWR Transmission Trailer (HDR) into a TransmissionTrailer instance.
+
+    The Transmission Trailer is the last record on the file.
+
+    It is composed, in order, of:
+    - Record type
+    - Group count
+    - Transaction count
+    - Record count
+    """
+
+    def __init__(self):
+        pass
+
+    def decode(self, record):
+        """
+        Decodes the Transmission Trailer, creating a TransmissionTrailer from it.
+
+        :param record: the record to parse
+        :return: a TransmissionTrailer created from the record
+        """
+        return transmission.transmission_trailer.parseString(record, parseAll=True)[0]

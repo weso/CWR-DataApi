@@ -5,6 +5,8 @@ record_prefix:
         size: 8
 
 trailer_record:
+    group_count:
+        size: 5
     transaction_count:
         size: 8
     record_count:
@@ -20,6 +22,9 @@ transmission_header:
         size: 9
     sender_name:
         size: 45
+
+transmission_trailer:
+    type: 'TRL'
 
 group_header:
     type: 'GRH'

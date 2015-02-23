@@ -23,30 +23,28 @@ data = ParserDataStorage()
 # RECORD FIELDS
 
 transaction_seq_n = field.numeric(data.expected_record_field_size('record_prefix', 'transaction_sequence_n'))
-transaction_seq_n.setName('Transaction Sequence Number')
-transaction_seq_n.setResultsName('transaction_sequence_n')
+transaction_seq_n = transaction_seq_n.setName('Transaction Sequence Number').setResultsName('transaction_sequence_n')
 
 record_seq_n = field.numeric(data.expected_record_field_size('record_prefix', 'record_sequence_n'))
-record_seq_n.setName('Record Sequence Number')
-record_seq_n.setResultsName('record_sequence_n')
+record_seq_n = record_seq_n.setName('Record Sequence Number').setResultsName('record_sequence_n')
+
+group_count = field.numeric(
+    data.expected_record_field_size('trailer_record', 'group_count'))
+group_count = group_count.setName('Group Count').setResultsName('group_count')
 
 transaction_count = field.numeric(
     data.expected_record_field_size('trailer_record', 'transaction_count'))
-transaction_count.setName('Transaction Count')
-transaction_count.setResultsName('transaction_count')
+transaction_count = transaction_count.setName('Transaction Count').setResultsName('transaction_count')
 
 record_count = field.numeric(
     data.expected_record_field_size('trailer_record', 'record_count'))
-record_count.setName('Record Count')
-record_count.setResultsName('record_count')
+record_count = record_count.setName('Record Count').setResultsName('record_count')
 
 record_type = pp.oneOf(data.record_types())
-record_type.setName('Record Type')
-record_type.setResultsName('record_type')
+record_type = record_type.setName('Record Type').setResultsName('record_type')
 
 transaction_type = pp.oneOf(data.transaction_types())
-transaction_type.setName('Transaction Type')
-transaction_type.setResultsName('transaction_type')
+transaction_type = transaction_type.setName('Transaction Type').setResultsName('transaction_type')
 
 
 # Record prefix pattern

@@ -4,7 +4,7 @@ import datetime
 
 from pyparsing import ParseException
 
-from cwr.parsing.transmission import TransmissionHeaderDecoder
+from cwr.parsing.transmission import TransmissionHeaderDecoder, TransmissionTrailerDecoder
 
 
 """
@@ -47,7 +47,7 @@ class TestParseTransmissionHeader(unittest.TestCase):
         self.assertEqual('AA', result.sender_type)
         self.assertEqual(1234, result.sender_id)
         self.assertEqual('NAME OF THE COMPANY', result.sender_name)
-        self.assertEqual(1.1, result.edi_standard)
+        self.assertEqual('01.10', result.edi_standard)
         self.assertEqual(datetime.datetime.strptime('20120115', '%Y%m%d').date(), result.creation_date)
         self.assertEqual(datetime.datetime.strptime('123000', '%H%M%S').time(), result.creation_time)
         self.assertEqual(datetime.datetime.strptime('20121102', '%Y%m%d').date(), result.transmission_date)
@@ -67,11 +67,35 @@ class TestParseTransmissionHeader(unittest.TestCase):
         self.assertEqual('AA', result.sender_type)
         self.assertEqual(1234, result.sender_id)
         self.assertEqual('NAME OF THE COMPANY', result.sender_name)
-        self.assertEqual(1.1, result.edi_standard)
+        self.assertEqual('01.10', result.edi_standard)
         self.assertEqual(datetime.datetime.strptime('20120115', '%Y%m%d').date(), result.creation_date)
         self.assertEqual(datetime.datetime.strptime('123000', '%H%M%S').time(), result.creation_time)
         self.assertEqual(datetime.datetime.strptime('20121102', '%Y%m%d').date(), result.transmission_date)
         self.assertEqual('', result.character_set)
+
+
+class TestParseTransmissionTrailer(unittest.TestCase):
+    """
+    Tests that TransmissionTrailerDecoder decodes correctly formatted strings
+    """
+
+    def setUp(self):
+        self._parser = TransmissionTrailerDecoder()
+
+    def test_valid_full(self):
+        """
+        Tests that TransmissionTrailerDecoder decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'TRL012340123456701234568'
+
+        result = self._parser.decode(record)
+
+        self.assertEqual('TRL', result.record_type)
+        self.assertEqual(1234, result.group_count)
+        self.assertEqual(1234567, result.transaction_count)
+        self.assertEqual(1234568, result.record_count)
 
 
 class TestParseTransmissionHeaderException(unittest.TestCase):
@@ -103,5 +127,22 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
         Tests that TransmissionHeaderDecoder throws an exception when the record size is too short.
         """
         record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123        '
+
+        self.assertRaises(ParseException, self._parser.decode, record)
+
+
+class TestParseTransmissionTrailerException(unittest.TestCase):
+    """
+    Tests that TransmissionTrailerDecoder throws exceptions with incorrectly formatted strings.
+    """
+
+    def setUp(self):
+        self._parser = TransmissionTrailerDecoder()
+
+    def test_invalid_wrong_length_too_short(self):
+        """
+        Tests that TransmissionTrailerDecoder throws an exception when the line is too short.
+        """
+        record = 'TRL01234012345670123456'
 
         self.assertRaises(ParseException, self._parser.decode, record)
