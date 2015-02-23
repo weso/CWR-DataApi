@@ -43,3 +43,29 @@ class GroupHeaderDecoder():
         :return: a GroupHeader created from the record
         """
         return group.group_header.parseString(record, parseAll=True)[0]
+
+
+class GroupTrailerDecoder():
+    """
+    Parses a CWR Group Trailer (GRT) into a GroupTrailer instance.
+
+    The Group Trailer is the last record on a Group.
+
+    It is composed, in order, of:
+    - Record type
+    - Group ID
+    - Transaction Count
+    - Record Count
+    """
+
+    def __init__(self):
+        pass
+
+    def decode(self, record):
+        """
+        Decodes the Group Trailer, creating a GroupTrailer from it.
+
+        :param record: the record to parse
+        :return: a GroupTrailer created from the record
+        """
+        return group.group_trailer.parseString(record, parseAll=True)[0]

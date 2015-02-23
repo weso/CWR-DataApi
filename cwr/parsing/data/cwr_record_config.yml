@@ -1,18 +1,13 @@
-group_header:
-    type: 'GRH'
-    batch_request_id:
-        size: 10
-    group_id:
-        size: 5
-    sd_type:
-        size: 2
-    version_number:
-        value: '02.10'
-
 record_prefix:
     record_sequence_n:
         size: 8
     transaction_sequence_n:
+        size: 8
+
+trailer_record:
+    transaction_count:
+        size: 8
+    record_count:
         size: 8
 
 transmission_header:
@@ -25,3 +20,21 @@ transmission_header:
         size: 9
     sender_name:
         size: 45
+
+group_header:
+    type: 'GRH'
+    batch_request_id:
+        size: 10
+    group_id:
+        size: 5
+    sd_type:
+        size: 2
+    version_number:
+        value: '02.10'
+
+group_trailer:
+    type: 'GRT'
+    currency_indicator:
+        size: 3
+    total_monetary_value:
+        size: 10
