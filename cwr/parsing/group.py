@@ -40,7 +40,7 @@ class GroupHeaderDecoder():
     # Fields
     _record_type = pp.Literal(data.expected_record_type('group_header')).setResultsName('record_type')
     _transaction_type = pp.oneOf(data.transaction_types()).setResultsName('transaction_type')
-    _group_id = field.numeric_from(data.expected_record_field_size('group_header', 'group_id'), 1).setResultsName(
+    _group_id = special.numeric_from(data.expected_record_field_size('group_header', 'group_id'), 1).setResultsName(
         'group_id')
     _version_number = pp.Literal(data.expected_record_field_value('group_header', 'version_number')).setResultsName(
         'version_number')

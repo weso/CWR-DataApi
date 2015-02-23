@@ -36,7 +36,8 @@ def alphanum(columns):
     :param columns: number of columns for this field
     :return: a parser for the Alphanumeric field
     """
-    return pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}').setParseAction(lambda s: s[0].strip()).setName(
+    return (pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')).leaveWhitespace().setParseAction(
+        lambda s: s[0].strip()).setName(
         'Alphanumeric Field (' + str(columns) + ' columns)')
 
 
@@ -102,14 +103,53 @@ Boolean field (B).
 
 Must be 'Y', for yes/true or 'N' for no/false.
 """
-boolean_field = pp.Literal('Y') | pp.Literal('N')
+boolean_field = (pp.Literal('Y') | pp.Literal('N')).setParseAction(lambda b: _to_boolean(b[0])).setName('Boolean Field')
+
+
+def _to_boolean(string):
+    """
+    Transforms a string into a boolean value.
+
+    If a value which is not 'Y' or 'N' is received, a ParseException is thrown
+
+    :param: string: the string to transform
+    :return: True if the string is 'Y', False if it is 'N'
+    """
+
+    if string == 'Y':
+        result = True
+    elif string == 'N':
+        result = False
+    else:
+        raise pp.ParseException
+
+    return result
+
 
 """
 Flag field (F).
 
 Must be 'Y', for yes/true, 'N' for no/false or 'U' for unknown.
 """
-flag_field = boolean_field | pp.Literal('U')
+flag_field = (pp.Literal('Y') | pp.Literal('N') | pp.Literal('U')).setParseAction(lambda f: _to_flag(f[0])).setName(
+    'Flag Field')
+
+
+def _to_flag(string):
+    """
+    Transforms a string into a flag value.
+
+    If a value which is not 'Y', 'N' or 'U' is received, a ParseException is thrown
+
+    :param: string: the string to transform
+    :return: True if the string is 'Y', False if it is 'N'
+    """
+
+    if string not in ('Y', 'N', 'U'):
+        raise pp.ParseException
+
+    return string
+
 
 """
 Date field (D).
@@ -119,7 +159,8 @@ Date follows the pattern YYYYMMDD, with the following constraints:
 - MM: from 01 to 12
 - DD: from 01 to 31
 """
-date_field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])').setParseAction(
+date_field = pp.Regex(
+    '[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])').leaveWhitespace().setParseAction(
     lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date()).setName('Date Field')
 
 """
@@ -130,42 +171,5 @@ Time follows the pattern HHMMSS, with the following constraints:
 - MM: from 00 to 59
 - SS: from 00 to 59
 """
-time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]').setParseAction(
+time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]').leaveWhitespace().setParseAction(
     lambda t: datetime.datetime.strptime(t[0], '%H%M%S').time()).setName('Time Field')
-
-# SPECIAL CONSTRAINTS FIELDS
-
-"""
-These are fields where special constraints are applied.
-"""
-
-
-def numeric_from(columns, minimum):
-    """
-    Numeric field with a minimum value.
-
-    This is an integer numeric field where each value should be higher or equal than the minimum
-
-    The field will be transformed into an integer.
-
-    :param columns: number of columns for this field
-    :return: a parser for the integer numeric field
-    """
-
-    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: __parse_number_from(n[0], minimum)).setName(
-        'Numeric Field (' + str(columns) + ' columns, starting at ' + str(minimum) + ')')
-
-
-def __parse_number_from(number, minimum):
-    """
-    Parses a string into an integer, only if it is equal or above a minimum value.
-
-    :param number: the string to parse
-    :param minimum: the minimum value
-    :return: the parsed number, if it was valid
-    """
-    result = int(number)
-    if result < minimum:
-        raise pp.ParseException(0, 0, "number value invalid")
-
-    return result
