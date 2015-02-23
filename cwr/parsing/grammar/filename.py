@@ -117,7 +117,6 @@ cwr_filename_old = special.lineStart + header + year + sequence_old + sender + d
 cwr_filename = special.lineStart + header + year + sequence_new + sender + delimiter_ip + receiver + \
                ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
 
-
 """
 Parsing actions for the patterns.
 
@@ -126,6 +125,8 @@ Both the old and new filename will be parsed into a FileTag instance.
 
 cwr_filename.setParseAction(lambda p: _to_filetag(p))
 cwr_filename_old.setParseAction(lambda p: _to_filetag(p))
+
+# TRANSFORMATION METHODS
 
 """
 Parsing methods.

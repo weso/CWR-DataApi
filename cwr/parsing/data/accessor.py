@@ -73,7 +73,7 @@ class ParserDataStorage(object):
         """
         return self.cwr_defaults()['default_version']
 
-    def expected_record_type(self, record):
+    def record_type(self, record):
         """
         Returns the expected record type for the received record.
 
@@ -84,7 +84,7 @@ class ParserDataStorage(object):
         """
         return self.record_config()[record]['type']
 
-    def expected_record_field_size(self, record, field):
+    def field_size(self, record, field):
         """
         Returns the expected size for a record's field.
 
@@ -96,7 +96,7 @@ class ParserDataStorage(object):
         """
         return self.record_config()[record][field]['size']
 
-    def expected_record_field_value(self, record, field):
+    def field_value(self, record, field):
         """
         Returns the expected value for a record's field.
 

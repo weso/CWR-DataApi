@@ -28,28 +28,28 @@ record_type = pp.oneOf(data.record_types())
 record_type = record_type.setName('Record Type').setResultsName('record_type')
 
 # Transaction sequence number
-transaction_seq_n = field.numeric(data.expected_record_field_size('record_prefix', 'transaction_sequence_n'))
+transaction_seq_n = field.numeric(data.field_size('record_prefix', 'transaction_sequence_n'))
 transaction_seq_n = transaction_seq_n.setName('Transaction Sequence Number').setResultsName('transaction_sequence_n')
 
 # Record sequence number
-record_seq_n = field.numeric(data.expected_record_field_size('record_prefix', 'record_sequence_n'))
+record_seq_n = field.numeric(data.field_size('record_prefix', 'record_sequence_n'))
 record_seq_n = record_seq_n.setName('Record Sequence Number').setResultsName('record_sequence_n')
 
 # Trailer fields
 
 # Group count
 group_count = field.numeric(
-    data.expected_record_field_size('trailer_record', 'group_count'))
+    data.field_size('trailer_record', 'group_count'))
 group_count = group_count.setName('Group Count').setResultsName('group_count')
 
 # Transaction count
 transaction_count = field.numeric(
-    data.expected_record_field_size('trailer_record', 'transaction_count'))
+    data.field_size('trailer_record', 'transaction_count'))
 transaction_count = transaction_count.setName('Transaction Count').setResultsName('transaction_count')
 
 # Record count
 record_count = field.numeric(
-    data.expected_record_field_size('trailer_record', 'record_count'))
+    data.field_size('trailer_record', 'record_count'))
 record_count = record_count.setName('Record Count').setResultsName('record_count')
 
 # Miscellany fields
