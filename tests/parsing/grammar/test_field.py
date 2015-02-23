@@ -394,17 +394,29 @@ class TestDateException(unittest.TestCase):
     def setUp(self):
         self.date = field.date_field
 
-    def test_wrong_day(self):
+    def test_wrong_day_too_high(self):
         """
         Tests that an exception is thrown when the day is invalid.
         """
         self.assertRaises(ParseException, self.date.parseString, '20121133')
 
-    def test_wrong_month(self):
+    def test_wrong_day_too_low(self):
+        """
+        Tests that an exception is thrown when the day is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '20121100')
+
+    def test_wrong_month_too_high(self):
         """
         Tests that an exception is thrown when the month is invalid.
         """
         self.assertRaises(ParseException, self.date.parseString, '201213112')
+
+    def test_wrong_month_too_low(self):
+        """
+        Tests that an exception is thrown when the month is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '201200112')
 
     def test_spaces_head(self):
         """

@@ -3,6 +3,7 @@ import unittest
 
 from cwr.parsing.file import CWRFileNameDecoder, CWRFileNameEncoder
 from cwr.file import FileTag
+from pyparsing import ParseException
 
 """
 CWR file name parsing tests.
@@ -279,3 +280,26 @@ class TestFileNameCWREncodeValidOld(unittest.TestCase):
         data = self._parser.encode_old(FileTag(2000, 12, 'AB2', '234', 0.2))
 
         self.assertEqual("CW0012AB2_234.V02", data)
+
+class TestFileNameCWRDecodeException(unittest.TestCase):
+
+    def setUp(self):
+        self._parser = CWRFileNameDecoder()
+
+    def test_empty(self):
+        self.assertRaises(ParseException, self._parser.decode, '')
+
+    def test_empty_old(self):
+        self.assertRaises(ParseException, self._parser.decode_old, '')
+
+    def test_sequence_too_long(self):
+        self.assertRaises(ParseException, self._parser.decode, 'CW0000012AB2_234.V21')
+
+    def test_sequence_too_short(self):
+        self.assertRaises(ParseException, self._parser.decode, 'CW000012AB2_234.V21')
+
+    def test_sender_spaces(self):
+        self.assertRaises(ParseException, self._parser.decode, 'CW000012A 2_234.V21')
+
+    def test_receiver_spaces(self):
+        self.assertRaises(ParseException, self._parser.decode, 'CW000012AB2_2 4.V21')

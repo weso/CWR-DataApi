@@ -9,6 +9,22 @@ import pyparsing as pp
 CWR fields grammar.
 
 This stores grammar for parsing the CWR fields.
+
+These fields are:
+- Alphanumeric (A). Only allows non lowercase ASCII characters.
+- Numeric field (N). Accepts integer or float values (these are handled as two different fields).
+- Boolean (B). Accepts 'Y' or 'N'.
+- Flag (F). Accepts 'Y', 'N' or 'U'.
+- Date (D). Accepts numbers in the pattern YYYYMMDD.
+- Time (T). Accepts numbers in the pattern HHMMSS.
+
+Each of these fields is parsed into a value as follows:
+- Alphanumeric (A). String with no heading or trailing white spaces.
+- Numeric field (N). Integer or float.
+- Boolean (B). Boolean.
+- Flag (F). String
+- Date (D). datetime.date.
+- Time (T). datetime.time.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -19,30 +35,28 @@ __status__ = 'Development'
 # BASIC FIELDS
 
 """
-Alphanumeric (A).
+Alphanumeric (A) field.
 
-Only capital letters are allowed.
+Only non lowercase ASCII values are allowed.
+
+The string contained in this field is parsed into a string with no heading or trailing white spaces.
 """
 
 
 def alphanum(columns):
     """
-    Alphanumeric field.
-
-    This is an alphanumeric CWR field, accepting only ASCII characters in upper case.
-
-    The field will be stripped of heading and trailing spaces.
+    Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
 
     :param columns: number of columns for this field
-    :return: a parser for the Alphanumeric field
+    :return: grammar for this Alphanumeric field
     """
 
     # Basic field
+    # The regular expression just forbids lowercase characters
     field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
 
     # Parse action
-    field.setParseAction(
-        lambda s: s[0].strip()).setName('Alphanumeric Field (' + str(columns) + ' columns)')
+    field.setParseAction(lambda s: s[0].strip())
 
     # White spaces are not removed
     field.leaveWhitespace()
@@ -54,22 +68,22 @@ def alphanum(columns):
 
 
 """
-Numeric field (N) integer.
+Numeric (N) field, integer type.
 
-Only integers.
+Only integers are allowed, and the string from the field will be parsed into an integer.
+
+For the Numeric field allowing float values check the numeric_float method.
 """
 
 
 def numeric(columns):
     """
-    Numeric field.
+    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
 
-    This is an integer numeric field.
-
-    The field will be transformed into an integer.
+    This version only allows integers.
 
     :param columns: number of columns for this field
-    :return: a parser for the integer numeric field
+    :return: grammar for the integer numeric field
     """
 
     # Basic field
@@ -85,23 +99,29 @@ def numeric(columns):
 
 
 """
-Numeric field (N) float.
+Numeric (N) field, float type.
 
-Float numeric value.
+Only float values are allowed, and the string from the field will be parsed into a float.
+
+For the Numeric field allowing integer values check the numeric method.
 """
 
 
 def numeric_float(columns, nums_int):
     """
-    Numeric field.
+    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
 
-    This is a float numeric field.
+    This version only allows floats.
 
-    The field will be transformed into an float.
+    As nothing in the string itself indicates how many of the characters are for the integer and the decimal sections,
+    this should be specified with the nums_int parameter.
+
+    This will indicate the number of characters, starting from the left, to be used for the integer value. All the
+    remaining ones will be used for the decimal value.
 
     :param columns: number of columns for this field
-    :param nums_int: columns for the integer value
-    :return: a parser for the integer numeric field
+    :param nums_int: characters, counting from the left, for the integer value
+    :return: grammar for the float numeric field
     """
 
     # Basic field
@@ -120,9 +140,12 @@ def _to_numeric_float(number, nums_int):
     """
     Transforms a string into a float.
 
+    The nums_int parameter indicates the number of characters, starting from the left, to be used for the integer value. All the
+    remaining ones will be used for the decimal value.
+
     :param number: string with the number
-    :param nums_int: columns for the integer value
-    :return: a parser for the integer numeric field
+    :param nums_int: characters, counting from the left, for the integer value
+    :return: a float created from the string
     """
     index_end = len(number) - nums_int
     return float(number[:nums_int] + '.' + number[index_end:])
@@ -132,10 +155,12 @@ def _to_numeric_float(number, nums_int):
 Boolean field (B).
 
 Must be 'Y', for yes/true or 'N' for no/false.
+
+This value will be parsed into a boolean type value.
 """
 
 # Basic field
-boolean_field = (pp.Literal('Y') | pp.Literal('N'))
+boolean_field = pp.Literal('Y') | pp.Literal('N')
 
 # Parse action
 boolean_field.setParseAction(lambda b: _to_boolean(b[0]))
@@ -168,6 +193,8 @@ def _to_boolean(string):
 Flag field (F).
 
 Must be 'Y', for yes/true, 'N' for no/false or 'U' for unknown.
+
+This string value will be just returned untouched.
 """
 
 # Basic field
@@ -184,10 +211,13 @@ def _to_flag(string):
     """
     Transforms a string into a flag value.
 
-    If a value which is not 'Y', 'N' or 'U' is received, a ParseException is thrown
+    If a value which is not 'Y', 'N' or 'U' is received, a ParseException is thrown.
+
+    The received string is untouched, so if no exception is thrown the same value that is received will be
+    the one returned.
 
     :param: string: the string to transform
-    :return: True if the string is 'Y', False if it is 'N'
+    :return: the received string
     """
 
     if string not in ('Y', 'N', 'U'):
@@ -203,9 +233,12 @@ Date follows the pattern YYYYMMDD, with the following constraints:
 - YYYY: can be any number
 - MM: from 01 to 12
 - DD: from 01 to 31
+
+This string will be parsed into a datetime.date.
 """
 
 # Basic field
+# This regex allows values from 00000101 to 99991231
 date_field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
 
 # Parse action
@@ -224,9 +257,12 @@ Time follows the pattern HHMMSS, with the following constraints:
 - HH: from 00 to 23
 - MM: from 00 to 59
 - SS: from 00 to 59
+
+This string will be parsed into a datetime.time.
 """
 
 # Basic field
+# This regex allows values from 000000 to 235959
 time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]')
 
 # Parse action
