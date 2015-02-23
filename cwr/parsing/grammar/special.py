@@ -61,10 +61,6 @@ def __parse_number_from(number, minimum):
 
     return result
 
-# RECORD FIELDS
-
-record_type = pp.oneOf(data.record_types()).setResultsName('record_type')
-
 # CONCRETE CASES FIELDS
 
 """

@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.parsing.grammar import field
 from pyparsing import ParseException
+
+from cwr.parsing.grammar import field
 
 """
 CWR file name parsing tests.
@@ -17,6 +18,7 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
+
 
 class TestAlphanumValid(unittest.TestCase):
     """
@@ -47,14 +49,12 @@ class TestAlphanumValid(unittest.TestCase):
         result = self.alpha.parseString('ABCDE')
         self.assertEqual('ABCDE', result[0])
 
-
     def test_alphanum_trailing_whites(self):
         """
         Tests that the alphanum field accepts values of the correct number of characters and trailed by white spaces.
         """
         result = self.alpha.parseString('AB   ')
         self.assertEqual('AB', result[0])
-
 
     def test_alphanum_head_whites(self):
         """
@@ -63,13 +63,13 @@ class TestAlphanumValid(unittest.TestCase):
         result = self.alpha.parseString('   DE')
         self.assertEqual('DE', result[0])
 
-
     def test_alphanum_empty(self):
         """
         Tests that the alphanum field accepts an empty string of the correct number of characters.
         """
         result = self.alpha.parseString('     ')
         self.assertEqual('', result[0])
+
 
 class TestNumericValid(unittest.TestCase):
     """
@@ -93,13 +93,14 @@ class TestNumericValid(unittest.TestCase):
         result = self.num.parseString('00123')
         self.assertEqual(123, result[0])
 
+
 class TestNumericFloatValid(unittest.TestCase):
     """
     Tests that the numeric float field accepts and parse valid values.
     """
 
     def setUp(self):
-        self.num = field.numeric_float(4,2)
+        self.num = field.numeric_float(4, 2)
 
     def test_numeric(self):
         """
@@ -122,6 +123,7 @@ class TestNumericFloatValid(unittest.TestCase):
         result = self.num.parseString('1230')
         self.assertEqual(12.3, result[0])
 
+
 class TestBooleanValid(unittest.TestCase):
     """
     Tests that the boolean field accepts and parse valid values.
@@ -143,6 +145,7 @@ class TestBooleanValid(unittest.TestCase):
         """
         result = self.boolean.parseString('N')
         self.assertEqual(False, result[0])
+
 
 class TestFlagValid(unittest.TestCase):
     """
@@ -173,6 +176,7 @@ class TestFlagValid(unittest.TestCase):
         result = self.flag.parseString('U')
         self.assertEqual('U', result[0])
 
+
 class TestDateValid(unittest.TestCase):
     """
     Tests that the date field accepts and parse valid values.
@@ -200,6 +204,7 @@ class TestDateValid(unittest.TestCase):
         self.assertEqual(12, result.year)
         self.assertEqual(11, result.month)
         self.assertEqual(21, result.day)
+
 
 class TestTimeValid(unittest.TestCase):
     """
@@ -239,6 +244,7 @@ class TestTimeValid(unittest.TestCase):
         self.assertEqual(0, result.minute)
         self.assertEqual(0, result.second)
 
+
 class TestAlphanumException(unittest.TestCase):
     """
     Tests that exceptions are thrown when using invalid values
@@ -264,6 +270,7 @@ class TestAlphanumException(unittest.TestCase):
         Tests that an exception is thrown when the field is not using capitol letters.
         """
         self.assertRaises(ParseException, self.alpha.parseString, 'ABcDE')
+
 
 class TestNumericException(unittest.TestCase):
     """
@@ -291,13 +298,14 @@ class TestNumericException(unittest.TestCase):
         """
         self.assertRaises(ParseException, self.num.parseString, '123ab')
 
+
 class TestNumericFloatException(unittest.TestCase):
     """
     Tests that exceptions are thrown when using invalid values
     """
 
     def setUp(self):
-        self.num = field.numeric_float(4,2)
+        self.num = field.numeric_float(4, 2)
 
     def test_numeric_wrong_size_empty(self):
         """
@@ -316,6 +324,7 @@ class TestNumericFloatException(unittest.TestCase):
         Tests that an exception is thrown when the field contains letters.
         """
         self.assertRaises(ParseException, self.num.parseString, '123ab')
+
 
 class TestBooleanException(unittest.TestCase):
     """
@@ -342,6 +351,7 @@ class TestBooleanException(unittest.TestCase):
         Tests that an exception is thrown when the string is empty.
         """
         self.assertRaises(ParseException, self.boolean.parseString, '')
+
 
 class TestFlagException(unittest.TestCase):
     """
@@ -374,6 +384,7 @@ class TestFlagException(unittest.TestCase):
         Tests that an exception is thrown when the string is empty.
         """
         self.assertRaises(ParseException, self.flag.parseString, '')
+
 
 class TestDateException(unittest.TestCase):
     """
@@ -412,6 +423,7 @@ class TestDateException(unittest.TestCase):
         Tests that an exception is thrown when the string is empty.
         """
         self.assertRaises(ParseException, self.date.parseString, '')
+
 
 class TestTimeException(unittest.TestCase):
     """

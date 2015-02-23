@@ -51,8 +51,8 @@ class GroupHeaderDecoder():
         'sd_type')
 
     # Group Header pattern
-    _pattern = special.lineStart + _record_type + _transaction_type + _group_id + _version_number + _batch_request_id + \
-               (_sd_type | pp.empty) + special.lineEnd
+    _pattern = special.lineStart + _record_type + _transaction_type + _group_id + _version_number + \
+               _batch_request_id + (_sd_type | pp.empty) + special.lineEnd
 
     def __init__(self):
         pass

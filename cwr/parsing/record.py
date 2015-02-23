@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from cwr.file import TransactionRecord
-from cwr.parsing.grammar import field, special
+from cwr.parsing.grammar import field, special, record
 from cwr.parsing.data.accessor import ParserDataStorage
 
 
@@ -51,7 +51,7 @@ class TransactionRecordPrefixDecoder():
         "record_sequence_n")
 
     # Record prefix pattern
-    _pattern = special.lineStart + special.record_type + _transaction_n + _sequence_n + special.lineEnd
+    _pattern = special.lineStart + record.record_type + _transaction_n + _sequence_n + special.lineEnd
 
     # Parsing actions
     _pattern.setParseAction(_to_recordprefix)
@@ -59,11 +59,11 @@ class TransactionRecordPrefixDecoder():
     def __init__(self):
         pass
 
-    def decode(self, record):
+    def decode(self, parsed):
         """
         Decodes the file name, creating a TransactionRecord from it.
 
-        :param record: the record to parse
+        :param parsed: the record to parse
         :return: a TransactionRecord created from the record
         """
-        return self._pattern.parseString(record)[0]
+        return self._pattern.parseString(parsed)[0]

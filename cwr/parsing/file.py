@@ -39,7 +39,6 @@ class CWRFileNameDecoder():
     xx - Version of the CWR standard (version x.x).
     """
 
-
     def __init__(self):
         pass
 

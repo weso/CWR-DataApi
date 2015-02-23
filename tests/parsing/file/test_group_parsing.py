@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.parsing.group import GroupHeaderDecoder
-
 from pyparsing import ParseException
+
+from cwr.parsing.group import GroupHeaderDecoder
 
 """
 CWR group parsing tests.

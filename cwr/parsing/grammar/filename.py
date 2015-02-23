@@ -48,10 +48,10 @@ delimiter_ip = pp.Literal('_').setName('IPs separator').suppress()
 delimiter_zip = pp.CaselessLiteral('.zip').setName('zip extension').setResultsName('version')
 
 # CWR filename patterns
-cwr_filename_old = special.lineStart + header + year + sequence_old + sender + \
-                   delimiter_ip + receiver + ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
-cwr_filename = special.lineStart + header + year + sequence_new + sender + \
-               delimiter_ip + receiver + ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
+cwr_filename_old = special.lineStart + header + year + sequence_old + sender + delimiter_ip + receiver \
+                   + ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
+cwr_filename = special.lineStart + header + year + sequence_new + sender + delimiter_ip + receiver + \
+               ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
 
 # Parsing actions
 delimiter_zip.setParseAction(lambda s: data.default_version())

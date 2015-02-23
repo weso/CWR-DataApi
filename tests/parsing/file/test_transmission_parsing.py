@@ -6,6 +6,7 @@ from pyparsing import ParseException
 
 from cwr.parsing.transmission import TransmissionHeaderDecoder
 
+
 """
 CWR record parsing tests.
 
