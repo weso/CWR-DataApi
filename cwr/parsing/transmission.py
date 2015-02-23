@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
-from cwr.parsing import grammar
+from cwr.parsing.grammar import field, special
 from cwr.file import TransmissionHeader
 
 
@@ -71,21 +71,21 @@ class TransmissionHeaderDecoder():
     # Fields
     _record_type = pp.Literal(data.expected_record_type('transmission_header')).setResultsName('record_type')
     _sender_type = pp.oneOf(data.sender_types()).setResultsName('sender_type')
-    _sender_id = grammar.numeric(data.expected_record_field_size('transmission_header', 'sender_id')).setResultsName(
+    _sender_id = field.numeric(data.expected_record_field_size('transmission_header', 'sender_id')).setResultsName(
         'sender_id')
-    _sender_name = grammar.alphanum(
+    _sender_name = field.alphanum(
         data.expected_record_field_size('transmission_header', 'sender_name')).setResultsName('sender_name')
     _edi_version = pp.Literal(data.expected_record_field_value('transmission_header', 'edi_version')).setResultsName(
         'edi_version')
-    _creation_date = grammar.date_field.setResultsName('creation_date')
-    _creation_time = grammar.time_field.setResultsName('creation_time')
-    _transmission_date = grammar.date_field.setResultsName('transmission_date')
-    _character_set = grammar.char_code(
+    _creation_date = field.date_field.setResultsName('creation_date')
+    _creation_time = field.time_field.setResultsName('creation_time')
+    _transmission_date = field.date_field.setResultsName('transmission_date')
+    _character_set = special.char_code(
         data.expected_record_field_size('transmission_header', 'character_set')).setResultsName('character_set')
 
     # Transmission Header pattern
-    _pattern = grammar.lineStart + _record_type + _sender_type + _sender_id + _sender_name + _edi_version + \
-               _creation_date + _creation_time + _transmission_date + (_character_set | pp.empty) + grammar.lineEnd
+    _pattern = special.lineStart + _record_type + _sender_type + _sender_id + _sender_name + _edi_version + \
+               _creation_date + _creation_time + _transmission_date + (_character_set | pp.empty) + special.lineEnd
 
     # Parsing actions
     _edi_version.setParseAction(_to_edi_version)

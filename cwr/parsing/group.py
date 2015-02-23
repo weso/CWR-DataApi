@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
-from cwr.parsing import grammar
+from cwr.parsing.grammar import field, special
 
 
 """
@@ -40,19 +40,19 @@ class GroupHeaderDecoder():
     # Fields
     _record_type = pp.Literal(data.expected_record_type('group_header')).setResultsName('record_type')
     _transaction_type = pp.oneOf(data.transaction_types()).setResultsName('transaction_type')
-    _group_id = grammar.numeric_from(data.expected_record_field_size('group_header', 'group_id'), 1).setResultsName(
+    _group_id = field.numeric_from(data.expected_record_field_size('group_header', 'group_id'), 1).setResultsName(
         'group_id')
     _version_number = pp.Literal(data.expected_record_field_value('group_header', 'version_number')).setResultsName(
         'version_number')
-    _batch_request_id = grammar.numeric(
+    _batch_request_id = field.numeric(
         data.expected_record_field_size('group_header', 'batch_request_id')).setResultsName(
         'batch_request_id')
-    _sd_type = grammar.alphanum(data.expected_record_field_size('group_header', 'sd_type')).setResultsName(
+    _sd_type = field.alphanum(data.expected_record_field_size('group_header', 'sd_type')).setResultsName(
         'sd_type')
 
     # Group Header pattern
-    _pattern = grammar.lineStart + _record_type + _transaction_type + _group_id + _version_number + _batch_request_id + \
-               (_sd_type | pp.empty) + grammar.lineEnd
+    _pattern = special.lineStart + _record_type + _transaction_type + _group_id + _version_number + _batch_request_id + \
+               (_sd_type | pp.empty) + special.lineEnd
 
     def __init__(self):
         pass

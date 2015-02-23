@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from cwr.file import TransactionRecord
-from cwr.parsing import grammar
+from cwr.parsing.grammar import field, special
 from cwr.parsing.data.accessor import ParserDataStorage
 
 
@@ -44,14 +44,14 @@ class TransactionRecordPrefixDecoder():
     data = ParserDataStorage()
 
     # Fields
-    _transaction_n = grammar.numeric(
+    _transaction_n = field.numeric(
         data.expected_record_field_size('record_prefix', 'transaction_sequence_n')).setResultsName(
         "transaction_sequence_n")
-    _sequence_n = grammar.numeric(data.expected_record_field_size('record_prefix', 'record_sequence_n')).setResultsName(
+    _sequence_n = field.numeric(data.expected_record_field_size('record_prefix', 'record_sequence_n')).setResultsName(
         "record_sequence_n")
 
     # Record prefix pattern
-    _pattern = grammar.lineStart + grammar.record_type + _transaction_n + _sequence_n + grammar.lineEnd
+    _pattern = special.lineStart + special.record_type + _transaction_n + _sequence_n + special.lineEnd
 
     # Parsing actions
     _pattern.setParseAction(_to_recordprefix)

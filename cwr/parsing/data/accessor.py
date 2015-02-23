@@ -23,6 +23,7 @@ class ParserDataStorage(object):
     _file_transaction_types = 'cwr_transaction_type.csv'
 
     _file_record_config = 'cwr_record_config.yml'
+    _file_defaults = 'cwr_defaults.yml'
 
     _character_sets = None
     _record_types = None
@@ -30,6 +31,7 @@ class ParserDataStorage(object):
     _transaction_types = None
 
     _record_config = None
+    _cwr_defaults = None
 
     __shared_state = {}
 
@@ -52,18 +54,24 @@ class ParserDataStorage(object):
 
         return self._character_sets
 
-    def record_types(self):
+    def cwr_defaults(self):
         """
-        Types of records.
+        Current CWR standards defaults.
 
-        These are the initial three digit alphanumeric codes of the records.
-
-        :return: the allowed CWR record type codes
+        :return: the current CWR standards defaults
         """
-        if self._record_types is None:
-            self._record_types = self.__read_csv_file(self._file_record_types)
+        if self._cwr_defaults is None:
+            self._cwr_defaults = self.__read_yaml_file(self._file_defaults)
 
-        return self._record_types
+        return self._cwr_defaults
+
+    def default_version(self):
+        """
+        The current version of the CWR standard.
+
+        :return: the current version of the CWR standard
+        """
+        return self.cwr_defaults()['default_version']
 
     def expected_record_type(self, record):
         """
@@ -112,6 +120,19 @@ class ParserDataStorage(object):
             self._record_config = self.__read_yaml_file(self._file_record_config)
 
         return self._record_config
+
+    def record_types(self):
+        """
+        Types of records.
+
+        These are the initial three digit alphanumeric codes of the records.
+
+        :return: the allowed CWR record type codes
+        """
+        if self._record_types is None:
+            self._record_types = self.__read_csv_file(self._file_record_types)
+
+        return self._record_types
 
     def sender_types(self):
         """
