@@ -24,19 +24,39 @@ __status__ = 'Development'
 data = ParserDataStorage()
 
 # Fields
-record_type = pp.Literal(data.expected_record_type('transmission_header')).setResultsName('record_type')
-sender_type = pp.oneOf(data.sender_types()).setResultsName('sender_type')
-sender_id = field.numeric(data.expected_record_field_size('transmission_header', 'sender_id')).setResultsName(
-    'sender_id')
-sender_name = field.alphanum(
-    data.expected_record_field_size('transmission_header', 'sender_name')).setResultsName('sender_name')
-edi_version = pp.Literal(data.expected_record_field_value('transmission_header', 'edi_version')).setResultsName(
-    'edi_version')
+record_type = pp.Literal(data.expected_record_type('transmission_header'))
+record_type.setName('Record Type')
+record_type.setResultsName('record_type')
+
+sender_type = pp.oneOf(data.sender_types())
+record_type.setName('Sender Type')
+sender_type.setResultsName('sender_type')
+
+sender_id = field.numeric(data.expected_record_field_size('transmission_header', 'sender_id'))
+record_type.setName('Sender ID')
+sender_id.setResultsName('sender_id')
+
+sender_name = field.alphanum(data.expected_record_field_size('transmission_header', 'sender_name'))
+record_type.setName('Sender Name')
+sender_name.setResultsName('sender_name')
+
+edi_version = pp.Literal(data.expected_record_field_value('transmission_header', 'edi_version'))
+record_type.setName('EDI Version')
+edi_version.setResultsName('edi_version')
+
 creation_date = field.date_field.setResultsName('creation_date')
+record_type.setName('Creation Date')
+
 creation_time = field.time_field.setResultsName('creation_time')
+record_type.setName('Creation Time')
+
 transmission_date = field.date_field.setResultsName('transmission_date')
+record_type.setName('Transmission Date')
+
 character_set = special.char_code(
-    data.expected_record_field_size('transmission_header', 'character_set')).setResultsName('character_set')
+    data.expected_record_field_size('transmission_header', 'character_set'))
+character_set.setResultsName('character_set')
+record_type.setName('Character Set')
 
 
 # Transmission Header pattern

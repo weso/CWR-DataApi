@@ -22,7 +22,10 @@ data = ParserDataStorage()
 # GENERAL GRAMMAR
 
 lineStart = pp.lineStart.suppress()
+lineStart.setName("Start of line")
+
 lineEnd = pp.lineEnd.suppress()
+lineEnd.setName("End of line")
 
 # SPECIAL CONSTRAINTS FIELDS
 
@@ -43,8 +46,16 @@ def numeric_from(columns, minimum):
     :return: a parser for the integer numeric field
     """
 
-    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: __parse_number_from(n[0], minimum)).setName(
-        'Numeric Field (' + str(columns) + ' columns, starting at ' + str(minimum) + ')')
+    # Basic field
+    field = pp.Word(pp.nums, exact=columns)
+
+    # Parse action
+    field.setParseAction(lambda n: __parse_number_from(n[0], minimum))
+
+    # Name
+    field.setName('Numeric Field (' + str(columns) + ' columns, starting at ' + str(minimum) + ')')
+
+    return field
 
 
 def __parse_number_from(number, minimum):
@@ -89,9 +100,18 @@ def char_code(columns):
         else:
             char_sets += '|' + regex
 
+    # Accepted sets
     _character_sets = pp.Regex(char_sets)
     _unicode_1_16b = pp.Regex('U\+0[0-8,A-F]{3}[ ]{' + str(columns - 6) + '}')
     _unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{' + str(columns - 7) + '}')
 
-    return (_character_sets | _unicode_1_16b | _unicode_2_21b).setParseAction(lambda s: s[0].strip()).setName(
-        'Char code Field (' + str(columns) + ' columns)')
+    # Basic field
+    field = (_character_sets | _unicode_1_16b | _unicode_2_21b)
+
+    # Parse action
+    field = field.setParseAction(lambda s: s[0].strip())
+
+    # Name
+    field.setName('Char code Field (' + str(columns) + ' columns)')
+
+    return field
