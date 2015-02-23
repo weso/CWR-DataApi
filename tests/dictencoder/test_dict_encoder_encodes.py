@@ -30,7 +30,7 @@ class TestAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AgreementRecord(None, 1, 'Original', datetime.date(2015, 1, 11), 'D', 'D',
+        entity = AgreementRecord('', 0, 0, 1, 'Original', datetime.date(2015, 1, 11), 'D', 'D',
                                  122, society_agreement_id=2, international_standard_code=3,
                                  sales_manufacture_clause='S',
                                  end_date=datetime.date(2015, 2, 11),
@@ -72,7 +72,7 @@ class TestAlternativeWorkTitle(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AlternateTitleRecord(None, 'title', 1, 'ES')
+        entity = AlternateTitleRecord('', 0, 0, 'title', 1, 'ES')
 
         self.dict = encoder.encode(entity)
 
@@ -89,7 +89,7 @@ class TestAuthoredWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AuthoredWorkRecord(None, 'title', 1,
+        entity = AuthoredWorkRecord('', 0, 0, 'title', 1,
                                     'name1', 'surname1', 'name2', 'surname2', 1, 'ip_1',
                                     2, 'ip_2',
                                     'Broadway show', 'ES', 3)
@@ -119,7 +119,7 @@ class TestIPAAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AgreementInterestedParty(None, 2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
+        entity = AgreementInterestedParty('', 0, 0, 2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6, 0.3)
 
         self.dict = encoder.encode(entity)
 
@@ -145,7 +145,7 @@ class TestPerformingArtist(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = PerformingArtistRecord(None, 'surname', 'name', 1, 2)
+        entity = PerformingArtistRecord('', 0, 0, 'surname', 'name', 1, 2)
 
         self.dict = encoder.encode(entity)
 
@@ -182,7 +182,7 @@ class TestRecordingDetails(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = RecordingDetailRecord(None, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
+        entity = RecordingDetailRecord('', 0, 0, datetime.date(2015, 1, 11), 1, 'title', 'label', 2,
                                        3, 4, 5, 6, 7)
 
         self.dict = encoder.encode(entity)
@@ -224,7 +224,7 @@ class TestWork(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = WorkRecord(None, 1, 'The Title', 'original', 'category',
+        entity = WorkRecord('', 0, 0, 1, 'The Title', 'original', 'category',
                             language_code='ES', printed_edition_publication_date=datetime.date(2015, 1, 11),
                             copyright_number=2, copyright_date=datetime.date(2015, 1, 12),
                             text_music_relationship='text_only',
@@ -273,7 +273,7 @@ class TestWorkOrigin(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = WorkOriginRecord(None, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
+        entity = WorkOriginRecord('', 0, 0, 1, 'title', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'episode', 11, 1995, 12, 13)
 
         self.dict = encoder.encode(entity)
 

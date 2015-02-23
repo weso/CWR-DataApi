@@ -42,8 +42,9 @@ def _to_transmissionheader(parsed):
     """
     creation_datetime = datetime.datetime.combine(parsed.creation_date, parsed.creation_time)
 
-    return TransmissionHeader(parsed.sender_id, parsed.sender_name, parsed.sender_type, creation_datetime,
-                              parsed.transmission_date, parsed.record_type, parsed.edi_version, parsed.character_set)
+    return TransmissionHeader(parsed.record_type, parsed.sender_id, parsed.sender_name, parsed.sender_type,
+                              creation_datetime,
+                              parsed.transmission_date, parsed.edi_version, parsed.character_set)
 
 
 class TransmissionHeaderDecoder():

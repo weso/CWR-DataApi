@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from abc import ABCMeta
 
-from cwr.file import Record
+from cwr.file import TransactionRecord
 
 
 """
@@ -81,7 +81,7 @@ class InterestedParty(object):
         return self._tax_id
 
 
-class InterestedPartyRecord(Record):
+class InterestedPartyRecord(TransactionRecord):
     """
     Represents a CWR Interested Party Record.
 
@@ -89,16 +89,16 @@ class InterestedPartyRecord(Record):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, prefix, first_record_refusal='U', usa_license='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_record_refusal='U', usa_license='',
                  pr_society=None, mr_society=None, sr_society=None):
         """
         Constructs an InterestedPartyRecord.
-        :param prefix: the record prefix
+
         :param first_record_refusal: record refusal status flag
         :param first_record_refusal: first record refusal flag
         :param usa_license: USA license rights flag
         """
-        super(InterestedPartyRecord, self).__init__(prefix)
+        super(InterestedPartyRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Flags
         self._first_record_refusal = first_record_refusal
         self._usa_license = usa_license
@@ -167,7 +167,7 @@ class InterestedPartyRecord(Record):
         return self._usa_license
 
 
-class IPTerritoryRecord(Record):
+class IPTerritoryRecord(TransactionRecord):
     """
     Represents a CWR Publisher or Writer Territory of Control (SPT/SWT).
 
@@ -182,9 +182,10 @@ class IPTerritoryRecord(Record):
     included in the Agreement.
     """
 
-    def __init__(self, prefix, ip_id, ie_indicator, tis_numeric_code, sequence_n,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, ie_indicator, tis_numeric_code,
+                 sequence_n,
                  pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
-        super(IPTerritoryRecord, self).__init__(prefix)
+        super(IPTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Territory information
         self._tis_numeric_code = tis_numeric_code
 
@@ -334,14 +335,14 @@ class PublisherRecord(InterestedPartyRecord):
     who are involved in the ownership and collection of a work. May they be under control of the submitter or not.
     """
 
-    def __init__(self, prefix, publisher, sequence_n, agreement_id='', publisher_type=None, publisher_unknown='F',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher, sequence_n, agreement_id='',
+                 publisher_type=None, publisher_unknown='F',
                  agreement_type=None, isac='', society_agreement_id='',
                  pr_society=None, pr_owner_share=0, mr_society=None, mr_owner_share=0, sr_society=None,
                  sr_owner_share=0, special_agreements=None, first_record_refusal='U', usa_license=''):
         """
         Constructs a PublisherRecord.
 
-        :param prefix: the record prefix
         :param publisher: the publisher information
         :param sequence_n: the position in the Publisher Chain
         :param agreement_id: the submitter's id for the agreement
@@ -357,7 +358,8 @@ class PublisherRecord(InterestedPartyRecord):
         :param sr_society: Synchronization Rights society
         :param sr_owner_share: Synchronization Rights share
         """
-        super(PublisherRecord, self).__init__(prefix, first_record_refusal, usa_license,
+        super(PublisherRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
+                                              first_record_refusal, usa_license,
                                               pr_society, mr_society, sr_society)
 
         # Publisher info
@@ -704,7 +706,7 @@ class Writer(InterestedParty):
         return self._personal_number
 
 
-class WriterPublisherRecord(Record):
+class WriterPublisherRecord(TransactionRecord):
     """
     Represents a CWR Publisher For Writer (PWR) record.
 
@@ -721,8 +723,9 @@ class WriterPublisherRecord(Record):
     publisher agreement.
     """
 
-    def __init__(self, prefix, publisher_id, writer_id, agreement_id=None, society_agreement_id=None):
-        super(WriterPublisherRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_id, writer_id,
+                 agreement_id=None, society_agreement_id=None):
+        super(WriterPublisherRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Parties IDs
         self._publisher_id = publisher_id
         self._writer_id = writer_id
@@ -786,12 +789,14 @@ class WriterRecord(InterestedPartyRecord):
     These contain all the information available to the submitter for a Writer.
     """
 
-    def __init__(self, prefix, writer, designation=None, work_for_hire=False, writer_unknown='F',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer, designation=None,
+                 work_for_hire=False, writer_unknown='F',
                  reversionary='U', first_record_refusal='U', usa_license='',
                  pr_society=None, pr_ownership_share=0,
                  mr_society=None, mr_ownership_share=0,
                  sr_society=None, sr_ownership_share=0):
-        super(WriterRecord, self).__init__(prefix, first_record_refusal, usa_license,
+        super(WriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, first_record_refusal,
+                                           usa_license,
                                            pr_society, mr_society, sr_society)
         # Writer info
         self._writer = writer

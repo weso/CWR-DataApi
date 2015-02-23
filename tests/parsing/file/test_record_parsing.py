@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.record import RecordPrefixDecoder
+from cwr.parsing.record import TransactionRecordPrefixDecoder
 
 
 """
@@ -24,13 +24,13 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestParseRecordPrefixValid(unittest.TestCase):
+class TestParseTransactionRecordPrefixValid(unittest.TestCase):
     """
     Tests that RecordPrefixDecoder decodes correctly formatted strings
     """
 
     def setUp(self):
-        self._parser = RecordPrefixDecoder()
+        self._parser = TransactionRecordPrefixDecoder()
 
     def test_valid(self):
         """
@@ -51,7 +51,7 @@ class TestParseRecordPrefixException(unittest.TestCase):
     """
 
     def setUp(self):
-        self._parser = RecordPrefixDecoder()
+        self._parser = TransactionRecordPrefixDecoder()
 
     def test_wrong_type(self):
         """

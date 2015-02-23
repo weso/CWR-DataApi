@@ -88,7 +88,7 @@ def numeric(columns):
         'Numeric Field (' + str(columns) + ' columns)')
 
 
-def numeric_from(columns, min):
+def numeric_from(columns, minimum):
     """
     Numeric field with a minimum value.
 
@@ -100,20 +100,20 @@ def numeric_from(columns, min):
     :return: a parser for the integer numeric field
     """
 
-    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: __parse_number_from(n[0], min)).setName(
-        'Numeric Field (' + str(columns) + ' columns, starting at ' + str(min) + ')')
+    return pp.Word(pp.nums, exact=columns).setParseAction(lambda n: __parse_number_from(n[0], minimum)).setName(
+        'Numeric Field (' + str(columns) + ' columns, starting at ' + str(minimum) + ')')
 
 
-def __parse_number_from(number, min):
+def __parse_number_from(number, minimum):
     """
     Parses a string into an integer, only if it is equal or above a minimum value.
 
     :param number: the string to parse
-    :param min: the minimum value
+    :param minimum: the minimum value
     :return: the parsed number, if it was valid
     """
     result = int(number)
-    if result < min:
+    if result < minimum:
         raise pp.ParseException(0, 0, "number value invalid")
 
     return result

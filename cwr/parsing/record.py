@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from cwr.file import RecordPrefix
+from cwr.file import TransactionRecord
 from cwr.parsing import grammar
 from cwr.parsing.data.accessor import ParserDataStorage
 
@@ -21,17 +21,17 @@ __status__ = 'Development'
 
 def _to_recordprefix(parsed):
     """
-    Transforms the final parsing result into a RecordPrefix instance.
+    Transforms the final parsing result into a TransactionRecord instance.
 
     :param parsed: result of parsing a record prefix
-    :return: a RecordPrefix created from the record prefix
+    :return: a TransactionRecord created from the record prefix
     """
-    return RecordPrefix(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n)
+    return TransactionRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n)
 
 
-class RecordPrefixDecoder():
+class TransactionRecordPrefixDecoder():
     """
-    Parses a CWR record prefix into a RecordPrefix instance.
+    Parses a CWR record prefix into a TransactionRecord instance.
 
     Record prefixes are the first group of characters in each CWR file line.
 
@@ -61,9 +61,9 @@ class RecordPrefixDecoder():
 
     def decode(self, record):
         """
-        Decodes the file name, creating a RecordPrefix from it.
+        Decodes the file name, creating a TransactionRecord from it.
 
         :param record: the record to parse
-        :return: a RecordPrefix created from the record
+        :return: a TransactionRecord created from the record
         """
         return self._pattern.parseString(record)[0]

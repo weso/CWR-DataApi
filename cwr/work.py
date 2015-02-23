@@ -2,7 +2,7 @@
 from abc import ABCMeta
 import datetime
 
-from cwr.file import Record
+from cwr.file import TransactionRecord
 
 
 """
@@ -15,14 +15,14 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class BaseWorkRecord(Record):
+class BaseWorkRecord(TransactionRecord):
     """
     Base class representing a Work's info.
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, prefix, title, language_code=None, iswc=None):
-        super(BaseWorkRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None, iswc=None):
+        super(BaseWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._title = title
         self._language_code = language_code
         self._iswc = iswc
@@ -83,13 +83,15 @@ class WorkRecord(BaseWorkRecord):
     structure, because they are all meant to hold a Work's information for a Work Transaction.
     """
 
-    def __init__(self, prefix, work_id, title, version_type, musical_distribution_category,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, work_id, title, version_type,
+                 musical_distribution_category,
                  printed_edition_publication_date=None, text_music_relationship=None, language_code=None,
                  copyright_number='', copyright_date=None, music_arrangement=None, lyric_adaptation=None,
                  excerpt_type=None, composite_type=None, composite_component_count=1, iswc='', cwr_work_type=None,
                  duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
                  recorded_indicator=False, priority_flag=False, exceptional_clause=False, grand_rights_indicator=False):
-        super(WorkRecord, self).__init__(prefix, title, language_code, iswc)
+        super(WorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title, language_code,
+                                         iswc)
         # Work identifying info
         self._work_id = work_id
         self._title = title
@@ -406,7 +408,7 @@ class WorkRecord(BaseWorkRecord):
         return self._work_id
 
 
-class WorkTransaction(object):
+class WorkTransaction(TransactionRecord):
     """
     Represents a CWR Work Transaction.
 
@@ -449,10 +451,12 @@ class WorkTransaction(object):
     [[SPU, SPT*]*, OPU*, [SWR, SWT*, PWR*]*, OWR*, ALT*, EWT, VER, PER*, REC, ORN*, INS*, IND*, COM*, ARI*]
     """
 
-    def __init__(self, entire_work_title=None, original_work_title=None, recording=None, alternate_titles=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, entire_work_title=None,
+                 original_work_title=None, recording=None, alternate_titles=None,
                  publishers_controlled=None, publishers_other=None, writers_controlled=None,
                  writers_other=None, performers=None, origins=None, inst_summaries=None,
                  inst_details=None, components=None, info=None):
+        super(WorkTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._entire_work_title = entire_work_title
         self._original_work_title = original_work_title
         self._recording = recording
@@ -674,7 +678,7 @@ class WorkTransaction(object):
         return self._writers_other
 
 
-class ComponentRecord(Record):
+class ComponentRecord(TransactionRecord):
     """
     Represents a CWR Component (COM).
 
@@ -682,11 +686,11 @@ class ComponentRecord(Record):
     composite.
     """
 
-    def __init__(self, prefix, title, last_name_1, submitter_id='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, last_name_1, submitter_id='',
                  first_name_1='', first_name_2='', last_name_2='',
                  ipi_base_1=None, ipi_name_1=None, ipi_base_2=None, ipi_name_2=None,
                  iswc=''):
-        super(ComponentRecord, self).__init__(prefix)
+        super(ComponentRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Work's info
         self._submitter_id = submitter_id
         self._title = title
@@ -849,11 +853,12 @@ class AuthoredWorkRecord(BaseWorkRecord):
     It also indicates the original source of the work.
     """
 
-    def __init__(self, prefix, title, work_id='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, work_id='',
                  first_name_1='', last_name_1='', first_name_2='', last_name_2='',
                  ipi_base_1=None, ipi_name_1=None, ipi_base_2=None, ipi_name_2=None,
                  source=None, language_code=None, iswc=None):
-        super(AuthoredWorkRecord, self).__init__(prefix, title, language_code, iswc)
+        super(AuthoredWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title,
+                                                 language_code, iswc)
 
         # Work's info
         self._work_id = work_id
@@ -994,7 +999,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
         return self._work_id
 
 
-class AlternateTitleRecord(Record):
+class AlternateTitleRecord(TransactionRecord):
     """
     Represents a CWR Alternate Title (ALT) record.
 
@@ -1006,8 +1011,9 @@ class AlternateTitleRecord(Record):
     would indicate a work translation.
     """
 
-    def __init__(self, prefix, alternate_title, title_type, language=None):
-        super(AlternateTitleRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, alternate_title, title_type,
+                 language=None):
+        super(AlternateTitleRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._alternate_title = alternate_title
         self._title_type = title_type
         self._language = language
@@ -1046,17 +1052,18 @@ class AlternateTitleRecord(Record):
         return self._title_type
 
 
-class RecordingDetailRecord(Record):
+class RecordingDetailRecord(TransactionRecord):
     """
     Represents a CWR Recording Detail (REC).
 
     This record contains information on the first commercial release of the work.
     """
 
-    def __init__(self, prefix, first_release_date=None, first_release_duration=None, first_album_title='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_release_date=None,
+                 first_release_duration=None, first_album_title='',
                  first_album_label='', first_release_catalog_id='', ean=None,
                  isrc=None, recording_format=None, recording_technique=None, media_type=None):
-        super(RecordingDetailRecord, self).__init__(prefix)
+        super(RecordingDetailRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._first_release_date = first_release_date
 
         if first_release_duration is None:
@@ -1188,7 +1195,7 @@ class RecordingDetailRecord(Record):
         return self._recording_technique
 
 
-class InstrumentationRecord(Record):
+class InstrumentationRecord(TransactionRecord):
     """
     Represents a CWR Instrumentation (INS) record.
 
@@ -1204,8 +1211,9 @@ class InstrumentationRecord(Record):
     IND records to describe, for example, a work written for two wind quintets and two pianos.
     """
 
-    def __init__(self, prefix, number_voices=0, instr_type=None, description=''):
-        super(InstrumentationRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, number_voices=0, instr_type=None,
+                 description=''):
+        super(InstrumentationRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._number_voices = number_voices
         self._instr_type = instr_type
         self._description = description
@@ -1246,7 +1254,7 @@ class InstrumentationRecord(Record):
         return self._number_voices
 
 
-class InstrumentationDetailRecord(Record):
+class InstrumentationDetailRecord(TransactionRecord):
     """
     Represents a CWR Instrumentation Detail (IND) record.
 
@@ -1256,8 +1264,8 @@ class InstrumentationDetailRecord(Record):
     records as well as IND records to describe the individual instruments (if any).
     """
 
-    def __init__(self, prefix, code, players=0):
-        super(InstrumentationDetailRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, code, players=0):
+        super(InstrumentationDetailRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._code = code
         self._players = players
 
@@ -1284,7 +1292,7 @@ class InstrumentationDetailRecord(Record):
         return self._players
 
 
-class WorkOriginRecord(Record):
+class WorkOriginRecord(TransactionRecord):
     """
     Represents a CWR Work Origin (ORN) record.
 
@@ -1299,12 +1307,13 @@ class WorkOriginRecord(Record):
     the CIS tool, AV Index.
     """
 
-    def __init__(self, prefix, intended_purpose, production_title='', cd_identifier='', cut_number=0,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, intended_purpose, production_title='',
+                 cd_identifier='', cut_number=0,
                  library='', bltvr='', visan_version=0, visan_isan=0, visan_episode=0,
                  visan_check_digit=0, production_id='', episode_title='',
                  episode_id='', production_year=0, avi_key_society=0,
                  avi_key_number=''):
-        super(WorkOriginRecord, self).__init__(prefix)
+        super(WorkOriginRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._intended_purpose = intended_purpose
         self._production_title = production_title
         self._cd_identifier = cd_identifier
@@ -1512,15 +1521,16 @@ class WorkOriginRecord(Record):
         return self._visan_version
 
 
-class PerformingArtistRecord(Record):
+class PerformingArtistRecord(TransactionRecord):
     """
     Represents a CWR Performing Artist (PER).
 
     Contains the info of a person or group performing this work either in public or on a recording.
     """
 
-    def __init__(self, prefix, last_name, first_name='', ipi_name=None, ipi_base_number=None):
-        super(PerformingArtistRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, last_name, first_name='', ipi_name=None,
+                 ipi_base_number=None):
+        super(PerformingArtistRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._first_name = first_name
         self._last_name = last_name
         self._ipi_name = ipi_name

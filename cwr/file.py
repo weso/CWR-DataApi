@@ -37,6 +37,130 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
+class Record(object):
+    """
+    Represents a CWR file Record.
+
+    A Record, at its core, just contains an alphanumeric code identifying its type.
+
+    Albeit it's name, this prefix appears in both detail record and Transaction headers, being always the
+    first values on their lines.
+
+    With this prefix it is possible to identify each record or transaction, and also to verify it's correct
+    position on the file.
+
+    This is so because it is composed of three values: the record type,
+    """
+
+    def __init__(self, record_type):
+        """
+        Constructs a RecordPrefix.
+
+        :param record_type: type code
+        """
+        self._record_type = record_type
+
+    def __str__(self):
+        return '%s' % (
+            self._record_type)
+
+    def __repr__(self):
+        return '<class %s>(record_type=%rr)' % (
+            'Record', self._record_type)
+
+    @property
+    def record_type(self):
+        """
+        Record Type field. Table Lookup (Record Type).
+
+        The transaction type or detail record type.
+
+        :return: the record type
+        """
+        return self._record_type
+
+
+class TransactionRecord(Record):
+    """
+    Represents a CWR Transaction Record.
+
+    This is meant to be used with those records containing a prefix and sequence numbering, which are transaction and detail records.
+
+    The prefix serves both to identify them and to validate their position on the file.
+
+    This is done with the transaction sequence number and the record sequence number.
+
+    So, for example, a Transaction header's prefix could be: INS - 12 - 0. Meaning it is an Instrumentation transaction
+    and that it should be the 13th (the numeration begins with 0) transaction on the file. As transactions are not
+    records, the second number should be always zero.
+
+    In the case of a detail record, it could be: IND - 12 - 3. Meaning it is an Instrumentation Detail record, owned
+    by the 13th transaction (which is the one of the previous paragraph), and that it is the 3th (starting with
+    1) detail on the file.
+    """
+    __metaclass__ = ABCMeta
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n):
+        """
+        Constructs a record with the specified information.
+
+        Note that the sequence numbering differs if this is the header for a Transaction or a detail record.
+
+        In the first case, the record sequence is always zero. In the second, the Transaction sequence
+        is equal to its parent Transaction sequence number.
+
+        In both cases the sequence number should be equal or great than zero.
+
+        :param transaction_sequence_n: position in the transactions sequence
+        :param record_sequence_n: position in the records sequence
+        """
+        super(TransactionRecord, self).__init__(record_type)
+        self._transaction_sequence_n = transaction_sequence_n
+        self._record_sequence_n = record_sequence_n
+
+    def __str__(self):
+        return '%s (%s-%s)' % (
+            self._record_type, self._transaction_sequence_n, self._record_sequence_n)
+
+    def __repr__(self):
+        return '<class %s>(record_type=%r, transaction_sequence_n=%r, record_sequence_n=%r)' % (
+            'TransactionRecord', self._record_type,
+            self._transaction_sequence_n,
+            self._record_sequence_n)
+
+    @property
+    def record_sequence_n(self):
+        """
+        Record Sequence number field. Numeric.
+
+        Transactions always have this value set to 0.
+
+        For detail records this value is equal to the record sequence number of the previous detail record stored
+        on the file, plus 1. So Detail numbering will start with 1.
+
+        :return: the record sequence number
+        """
+        return self._record_sequence_n
+
+    @property
+    def transaction_sequence_n(self):
+        """
+        Transaction Sequence number field. Numeric.
+
+        In each Group the transaction sequence starts with 0, so the first Transaction of each Group should have
+        0 as the sequence number.
+
+        The following Transactions should have a sequence number equal to the previous Transaction header's number
+        incremented by 1.
+
+        In the case of detail records the transaction sequence should be equal to the transaction sequence of the
+        previous Transaction header, the owner of the detail.
+
+        :return: the transaction sequence number
+        """
+        return self._transaction_sequence_n
+
+
 class CWRFile(object):
     """
     Represents a CWR file and all the data contained in it.
@@ -185,7 +309,7 @@ class FileTag(object):
         return self._version
 
 
-class GroupHeader(object):
+class GroupHeader(Record):
     """
     Represents a CWR file Group Header (GRH).
 
@@ -194,7 +318,8 @@ class GroupHeader(object):
     A group can only contain one type of transaction and this is indicated in the Transaction Type field.
     """
 
-    def __init__(self, group_id, transaction_type, version_number="02.10", batch_request_id=0):
+    def __init__(self, record_type, group_id, transaction_type, version_number="02.10", batch_request_id=0):
+        super(GroupHeader, self).__init__(record_type)
         self._group_id = group_id
         self._transaction_type = transaction_type
         self._version_number = version_number
@@ -262,14 +387,14 @@ class GroupHeader(object):
         return self._version_number
 
 
-class GroupTrailer(object):
+class GroupTrailer(Record):
     """
     Represents a CWR file Group Trailer (GRT).
 
     The Group Trailer Record indicates the end of a group and provides both transaction and record counts for the group.
     """
 
-    def __init__(self, group_id, transaction_count, record_count):
+    def __init__(self, record_type, group_id, transaction_count, record_count):
         """
         Constructs a GroupTrailer.
 
@@ -277,6 +402,7 @@ class GroupTrailer(object):
         :param transaction_count: number of transactions in the group
         :param record_count: number of records in the group
         """
+        super(GroupTrailer, self).__init__(record_type)
         self._group_id = group_id
         self._transaction_count = transaction_count
         self._record_count = record_count
@@ -327,142 +453,6 @@ class GroupTrailer(object):
         :return: the number of transactions
         """
         return self._transaction_count
-
-
-class Record(object):
-    """
-    Represents a CWR Record.
-
-    This is meant to be used with those records containing a prefix, which are transaction and detail records.
-
-    The prefix serves both to identify them and to validate their position on the file.
-    """
-    __metaclass__ = ABCMeta
-
-    def __init__(self, prefix):
-        """
-        Constructs a record with the specified prefix.
-
-        :param prefix: the record prefix
-        """
-        self._prefix = prefix
-
-    def __str__(self):
-        return '%s' % (
-            self._prefix)
-
-    def __repr__(self):
-        return '<class %s>(prefix=%r)' % (
-            'Record', self._prefix)
-
-    @property
-    def prefix(self):
-        """
-        The record's prefix.
-
-        This is a RecordPrefix, and serves both to uniquely identify the Record and to validate it's position in the
-        file.
-
-        :return: this record's prefix
-        """
-        return self._prefix
-
-
-class RecordPrefix(object):
-    """
-    Represents a CWR file Record Prefix.
-
-    Albeit it's name, this prefix appears in both detail record and Transaction headers, being always the
-    first values on their lines.
-
-    With this prefix it is possible to identify each record or transaction, and also to verify it's correct
-    position on the file.
-
-    This is so because it is composed of three values: the record type, the transaction sequence number and
-    the record sequence number.
-
-    So, for example, a Transaction header's prefix could be: INS - 12 - 0. Meaning it is an Instrumentation transaction
-    and that it should be the 13th (the numeration begins with 0) transaction on the file. As transactions are not
-    records, the second number should be always zero.
-
-    In the case of a detail record, it could be: IND - 12 - 3. Meaning it is an Instrumentation Detail record, owned
-    by the 13th transaction (which is the one of the previous paragraph), and that it is the 4th (again, starting with
-    0) detail on the file.
-
-    It should be noted that as the record type is represented by the object class it is not stored.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n):
-        """
-        Constructs a RecordPrefix.
-
-        Note that the sequence numbering differs if this is the header for a Transaction or a detail record.
-
-        In the first case, the record sequence is always zero. In the second, the Transaction sequence
-        is equal to its parent Transaction sequence number.
-
-        In both cases the sequence number should be equal or great than zero.
-
-        :param record_type: type code
-        :param transaction_sequence_n: position in the transactions sequence
-        :param record_sequence_n: position in the records sequence
-        """
-        self._record_type = record_type
-        self._transaction_sequence_n = transaction_sequence_n
-        self._record_sequence_n = record_sequence_n
-
-    def __str__(self):
-        return '%s (%s-%s)' % (
-            self._record_type, self._transaction_sequence_n, self._record_sequence_n)
-
-    def __repr__(self):
-        return '<class %s>(record_type=%r, transaction_sequence_n=%r, record_sequence_n=%r)' % (
-            'RecordPrefix', self._record_type,
-            self._transaction_sequence_n,
-            self._record_sequence_n)
-
-    @property
-    def record_sequence_n(self):
-        """
-        Record Sequence number field. Numeric.
-
-        Transactions always have this value set to 0.
-
-        For detail records this value is equal to the record sequence number of the previous detail record stored
-        on the file, plus 1.
-
-        :return: the record sequence number
-        """
-        return self._record_sequence_n
-
-    @property
-    def record_type(self):
-        """
-        Record Type field. Table Lookup (Record Type).
-
-        The transaction type or detail record type.
-
-        :return: the record type
-        """
-        return self._record_type
-
-    @property
-    def transaction_sequence_n(self):
-        """
-        Transaction Sequence number field. Numeric.
-
-        In each Group the transaction sequence starts with 0, so the first Transaction of each Group should have
-        0 as the sequence number.
-
-        The following Transactions should have a sequence number equal to the previous Transaction header's number
-        incremented by 1.
-
-        In the case of detail records the transaction sequence should be equal to the transaction sequence of the
-        previous Transaction header, the owner of the detail.
-
-        :return: the transaction sequence number
-        """
-        return self._transaction_sequence_n
 
 
 class TransactionGroup(object):
@@ -596,7 +586,7 @@ class Transmission(object):
         return self._trl
 
 
-class TransmissionHeader(object):
+class TransmissionHeader(Record):
     """
     Represents a CWR file Transmission Header (HDR).
 
@@ -604,7 +594,7 @@ class TransmissionHeader(object):
     information as well as the name of the sender.
     """
 
-    def __init__(self, sender_id, sender_name, sender_type, creation_date, transmission_date, record_type='HDR',
+    def __init__(self, record_type, sender_id, sender_name, sender_type, creation_date, transmission_date,
                  edi_standard='01.10',
                  character_set=""):
         """
@@ -619,6 +609,8 @@ class TransmissionHeader(object):
         :param edi_standard: EDI standard version (01.10 by default)
         :param character_set: file encoding set (ASCII by default)
         """
+        super(TransmissionHeader, self).__init__(record_type)
+
         # Record info
         self._record_type = record_type
 
@@ -760,7 +752,7 @@ class TransmissionHeader(object):
         return self._transmission_date
 
 
-class TransmissionTrailer(object):
+class TransmissionTrailer(Record):
     """
     Represents a CWR file Transmission Trailer (TRL).
 
@@ -770,7 +762,7 @@ class TransmissionTrailer(object):
     record.
     """
 
-    def __init__(self, group_count, transaction_count, record_count):
+    def __init__(self, record_type, group_count, transaction_count, record_count):
         """
         Constructs a TransmissionTrailer.
 
@@ -778,6 +770,8 @@ class TransmissionTrailer(object):
         :param transaction_count: the total number of transactions on the file
         :param record_count: the total number of records on the file
         """
+        super(TransmissionTrailer, self).__init__(record_type)
+
         self._group_count = group_count
         self._transaction_count = transaction_count
         self._record_count = record_count

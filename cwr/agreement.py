@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from cwr.file import Record
+from cwr.file import TransactionRecord
 
 """
 Agreement model classes.
@@ -15,7 +15,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class AgreementInterestedParty(Record):
+class AgreementInterestedParty(TransactionRecord):
     """
     Represents a CWR Interested Party for the Agreement (IPA).
 
@@ -23,13 +23,12 @@ class AgreementInterestedParty(Record):
     to assign through the agreement.
     """
 
-    def __init__(self, prefix, ip_id, last_name, agreement_role_code,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, last_name, agreement_role_code,
                  writer_name='', ipi=None, ipi_name=None,
                  pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
         """
         Constructs an AgreementInterestedParty.
 
-        :param prefix: the record prefix
         :param ip_id: the interested party ID
         :param last_name: the writer last name or the publisher name
         :param agreement_role_code: the role in the agreement
@@ -43,7 +42,7 @@ class AgreementInterestedParty(Record):
         :param sr_society: synchronization rights society
         :param sr_share: synchronization rights share
         """
-        super(AgreementInterestedParty, self).__init__(prefix)
+        super(AgreementInterestedParty, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement and Interested Party relationship
         self._ip_id = ip_id
         self._agreement_role_code = agreement_role_code
@@ -221,7 +220,7 @@ class AgreementInterestedParty(Record):
         return self._writer_name
 
 
-class AgreementRecord(Record):
+class AgreementRecord(TransactionRecord):
     """
     Represents a CWR Agreement Record (AGR).
 
@@ -235,7 +234,8 @@ class AgreementRecord(Record):
     registration. If a society has assigned an agreement number, then it too can be used as the link.
     """
 
-    def __init__(self, prefix, agreement_id, agreement_type, start_date, prior_royalty_status,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement_id, agreement_type, start_date,
+                 prior_royalty_status,
                  post_term_collection_status, works_number, society_agreement_id='',
                  international_standard_code='', sales_manufacture_clause='S',
                  end_date=None, signature_date=None, retention_end_date=None, prior_royalty_start_date=None,
@@ -244,7 +244,6 @@ class AgreementRecord(Record):
         """
         Constructs an Agreement Record.
 
-        :param prefix: the record prefix
         :param agreement_id: the submitter's ID for the agreement
         :param agreement_type: the type of agreement
         :param start_date: starting date for the agreement
@@ -262,7 +261,7 @@ class AgreementRecord(Record):
         :param shares_change: indicates if the writer's shares can change
         :param advance_given: indicates if an advancement has been paid
         """
-        super(AgreementRecord, self).__init__(prefix)
+        super(AgreementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement identification data
         self._agreement_id = agreement_id
         self._society_agreement_id = society_agreement_id
@@ -519,7 +518,7 @@ class AgreementRecord(Record):
         return self._works_number
 
 
-class AgreementTerritoryRecord(Record):
+class AgreementTerritoryRecord(TransactionRecord):
     """
     Represents a CWR Territory in Agreement (TER).
 
@@ -531,15 +530,14 @@ class AgreementTerritoryRecord(Record):
     This is to be used in an Agreement Transaction.
     """
 
-    def __init__(self, prefix, tis_code, ie_indicator):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, tis_code, ie_indicator):
         """
         Constructs an AgreementTerritory.
 
-        :param prefix: the record prefix
         :param tis_code: the TIS code
         :param ie_indicator: indicates if it is included or not
         """
-        super(AgreementTerritoryRecord, self).__init__(prefix)
+        super(AgreementTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._tis_code = tis_code
         self._ie_indicator = ie_indicator
 
@@ -570,7 +568,7 @@ class AgreementTerritoryRecord(Record):
         return self._tis_code
 
 
-class AgreementTransaction(object):
+class AgreementTransaction(TransactionRecord):
     """
     Represents a CWR Agreement Supporting Work Registration Transaction (AGR).
 
@@ -592,13 +590,14 @@ class AgreementTransaction(object):
     share.
     """
 
-    def __init__(self, agreement, territories):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement, territories):
         """
         Constructs an AgreementTransaction.
 
         :param agreement: the Agreement record
         :param territories: the Territories and their IPAs
         """
+        super(AgreementTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._agreement = agreement
         self._territories = territories
 
