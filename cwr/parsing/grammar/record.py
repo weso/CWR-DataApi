@@ -3,8 +3,7 @@
 import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
-from cwr.parsing.grammar import field, special
-from cwr.file import TransactionRecord
+from cwr.parsing.grammar import field
 
 """
 Grammar for Records.
@@ -48,17 +47,5 @@ transaction_type = transaction_type.setName('Transaction Type').setResultsName('
 
 
 # Record prefix pattern
-record_prefix = special.lineStart + record_type + transaction_seq_n + record_seq_n + special.lineEnd
-
-# Parsing actions
-record_prefix.setParseAction(lambda p: _to_recordprefix(p))
-
-
-def _to_recordprefix(parsed):
-    """
-    Transforms the final parsing result into a TransactionRecord instance.
-
-    :param parsed: result of parsing a record prefix
-    :return: a TransactionRecord created from the record prefix
-    """
-    return TransactionRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n)
+record_prefix = record_type + transaction_seq_n + record_seq_n
+record_prefix.leaveWhitespace()

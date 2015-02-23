@@ -3,19 +3,10 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.record import TransactionRecordPrefixDecoder
-
+from cwr.parsing.grammar.record import record_prefix
 
 """
-CWR record parsing tests.
-
-The following cases are tested:
-- RecordPrefixDecoder decodes correctly formatted record prefixes
-
-- RecordPrefixDecoder throws an exception when the record type is not one of the CWR record types
-- RecordPrefixDecoder throws an exception when the record numbers are too short
-- RecordPrefixDecoder throws an exception when the record numbers are too long
-- RecordPrefixDecoder throws an exception when the record beings with an empty space
+CWR file Record parsing tests.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -29,16 +20,13 @@ class TestParseTransactionRecordPrefixValid(unittest.TestCase):
     Tests that RecordPrefixDecoder decodes correctly formatted strings
     """
 
-    def setUp(self):
-        self._parser = TransactionRecordPrefixDecoder()
-
     def test_valid(self):
         """
         Tests that RecordPrefixDecoder decodes correctly formatted record prefixes.
         """
         prefix = 'HDR0000123400000023'
 
-        result = self._parser.decode(prefix)
+        result = record_prefix.parseString(prefix)
 
         self.assertEqual('HDR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
@@ -50,16 +38,13 @@ class TestParseRecordPrefixException(unittest.TestCase):
     Tests that RecordPrefixDecoder throws exceptions with incorrectly formatted strings.
     """
 
-    def setUp(self):
-        self._parser = TransactionRecordPrefixDecoder()
-
     def test_wrong_type(self):
         """
         Tests that RecordPrefixDecoder throws an exception when the record type is not one of the CWR record types.
         """
         prefix = 'AAA0000123400000023'
 
-        self.assertRaises(ParseException, self._parser.decode, prefix)
+        self.assertRaises(ParseException, record_prefix.parseString, prefix)
 
     def test_record_n_too_short(self):
         """
@@ -67,15 +52,7 @@ class TestParseRecordPrefixException(unittest.TestCase):
         """
         prefix = 'HDR000123400000023'
 
-        self.assertRaises(ParseException, self._parser.decode, prefix)
-
-    def test_record_n_too_long(self):
-        """
-        Tests that RecordPrefixDecoder throws an exception when the record numbers are too long.
-        """
-        prefix = 'HDR00000123400000023'
-
-        self.assertRaises(ParseException, self._parser.decode, prefix)
+        self.assertRaises(ParseException, record_prefix.parseString, prefix)
 
     def test_begins_empty(self):
         """
@@ -83,4 +60,4 @@ class TestParseRecordPrefixException(unittest.TestCase):
         """
         prefix = ' HDR0000123400000023'
 
-        self.assertRaises(ParseException, self._parser.decode, prefix)
+        self.assertRaises(ParseException, record_prefix.parseString, prefix)
