@@ -48,7 +48,7 @@ def alphanum(columns):
     field.leaveWhitespace()
 
     # Name
-    field = field.setName('Alphanumeric Field (' + str(columns) + ' columns)')
+    field.setName('Alphanumeric Field (' + str(columns) + ' columns)')
 
     return field
 
@@ -79,7 +79,7 @@ def numeric(columns):
     field.setParseAction(lambda n: int(n[0]))
 
     # Name
-    field = field.setName('Numeric Field (' + str(columns) + ' columns)')
+    field.setName('Numeric Field (' + str(columns) + ' columns)')
 
     return field
 
@@ -111,7 +111,7 @@ def numeric_float(columns, nums_int):
     field.setParseAction(lambda n: _to_numeric_float(n[0], nums_int))
 
     # Name
-    field = field.setName('Numeric Field float (' + str(columns) + ' columns)')
+    field.setName('Numeric Field float (' + str(columns) + ' columns)')
 
     return field
 
@@ -141,7 +141,7 @@ boolean_field = (pp.Literal('Y') | pp.Literal('N'))
 boolean_field.setParseAction(lambda b: _to_boolean(b[0]))
 
 # Name
-boolean_field = boolean_field.setName('Boolean Field')
+boolean_field.setName('Boolean Field')
 
 
 def _to_boolean(string):
@@ -177,7 +177,7 @@ flag_field = (pp.Literal('Y') | pp.Literal('N') | pp.Literal('U'))
 flag_field.setParseAction(lambda f: _to_flag(f[0]))
 
 # Name
-flag_field = flag_field.setName('Flag Field')
+flag_field.setName('Flag Field')
 
 
 def _to_flag(string):
@@ -215,7 +215,7 @@ date_field.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').d
 date_field.leaveWhitespace()
 
 # Name
-date_field = date_field.setName('Date Field')
+date_field.setName('Date Field')
 
 """
 Time field (T).
@@ -236,4 +236,4 @@ time_field.setParseAction(lambda t: datetime.datetime.strptime(t[0], '%H%M%S').t
 time_field.leaveWhitespace()
 
 # Name
-time_field = time_field.setName('Time Field')
+time_field.setName('Time Field')

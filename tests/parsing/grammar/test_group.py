@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.group import GroupHeaderDecoder, GroupTrailerDecoder
+from cwr.parsing.grammar import group
 
 """
 CWR group parsing tests.
@@ -22,9 +22,6 @@ class TestParseGroupHeader(unittest.TestCase):
     Tests that GroupHeaderDecoder decodes correctly formatted strings
     """
 
-    def setUp(self):
-        self._parser = GroupHeaderDecoder()
-
     def test_valid_full(self):
         """
         Tests that GroupHeaderDecoder decodes correctly formatted Group Header.
@@ -33,7 +30,7 @@ class TestParseGroupHeader(unittest.TestCase):
         """
         record = 'GRHACK0123402.100123456789  '
 
-        result = self._parser.decode(record)
+        result = group.group_header.parseString(record)[0]
 
         self.assertEqual('GRH', result.record_type)
         self.assertEqual('ACK', result.transaction_type)
@@ -49,7 +46,7 @@ class TestParseGroupHeader(unittest.TestCase):
         """
         record = 'GRHACK0123402.10000000000000  '
 
-        result = self._parser.decode(record)
+        result = group.group_header.parseString(record)[0]
 
         self.assertEqual('GRH', result.record_type)
         self.assertEqual('ACK', result.transaction_type)
@@ -63,9 +60,6 @@ class TestParseGroupTrailer(unittest.TestCase):
     Tests that GroupTrailerDecoder decodes correctly formatted strings
     """
 
-    def setUp(self):
-        self._parser = GroupTrailerDecoder()
-
     def test_valid_full(self):
         """
         Tests that GroupHeaderDecoder decodes correctly formatted Group Header.
@@ -74,7 +68,7 @@ class TestParseGroupTrailer(unittest.TestCase):
         """
         record = 'GRT012340123456701234567             '
 
-        result = self._parser.decode(record)
+        result = group.group_trailer.parseString(record)[0]
 
         self.assertEqual('GRT', result.record_type)
         self.assertEqual(1234, result.group_id)
@@ -87,9 +81,6 @@ class TestParseGroupHeaderException(unittest.TestCase):
     Tests that GroupHeaderDecoder throws exceptions with incorrectly formatted strings.
     """
 
-    def setUp(self):
-        self._parser = GroupHeaderDecoder()
-
     def test_invalid_wrong_group_id(self):
         """
         Tests that GroupHeaderDecoder throws an exception when the group ID is 0.
@@ -97,7 +88,7 @@ class TestParseGroupHeaderException(unittest.TestCase):
         # TODO: Check the exception's info
         record = 'GRHACK0000002.100123456789  '
 
-        self.assertRaises(ParseException, self._parser.decode, record)
+        self.assertRaises(ParseException, group.group_header.parseString, record)
 
 
 class TestParseGroupTrailerException(unittest.TestCase):
@@ -105,13 +96,10 @@ class TestParseGroupTrailerException(unittest.TestCase):
     Tests that GroupTrailerDecoder throws exceptions with incorrectly formatted strings.
     """
 
-    def setUp(self):
-        self._parser = GroupHeaderDecoder()
-
     def test_invalid_wrong_group_id(self):
         """
         Tests that GroupTrailerDecoder throws an exception when the group ID is 0.
         """
         record = 'GRHACK0000002.100123456789  '
 
-        self.assertRaises(ParseException, self._parser.decode, record)
+        self.assertRaises(ParseException, group.group_trailer.parseString, record)
