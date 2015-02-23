@@ -27,13 +27,35 @@ class TestParseGroupHeader(unittest.TestCase):
 
     def test_valid_full(self):
         """
-        Tests that GroupHeaderDecoder decodes correctly formatted record prefixes.
+        Tests that GroupHeaderDecoder decodes correctly formatted Group Header.
 
         This test contains all the optional fields.
         """
         record = 'GRHACK0123402.100123456789  '
 
         result = self._parser.decode(record)
+
+        self.assertEqual('GRH', result.record_type)
+        self.assertEqual('ACK', result.transaction_type)
+        self.assertEqual(1234, result.group_id)
+        self.assertEqual('02.10', result.version_number)
+        self.assertEqual(123456789, result.batch_request_id)
+
+    def test_valid_no_batch_request(self):
+        """
+        Tests that GroupHeaderDecoder decodes a Group Header with no batch id.
+
+        This test contains all the optional fields.
+        """
+        record = 'GRHACK0123402.10000000000000  '
+
+        result = self._parser.decode(record)
+
+        self.assertEqual('GRH', result.record_type)
+        self.assertEqual('ACK', result.transaction_type)
+        self.assertEqual(1234, result.group_id)
+        self.assertEqual('02.10', result.version_number)
+        self.assertEqual(0, result.batch_request_id)
 
 
 class TestParseGroupHeaderException(unittest.TestCase):

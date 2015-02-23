@@ -3,7 +3,8 @@
 import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
-from cwr.parsing.grammar import field, special
+from cwr.parsing.grammar import field, special, record
+from cwr.file import GroupHeader
 
 
 """
@@ -33,5 +34,20 @@ sd_type = field.alphanum(data.expected_record_field_size('group_header', 'sd_typ
     'sd_type')
 
 # Group Header pattern
-group_header = special.lineStart + record_type + field.transaction_type + group_id + version_number + \
+group_header = special.lineStart + record_type + record.transaction_type + group_id + version_number + \
                batch_request_id + (sd_type | pp.empty) + special.lineEnd
+
+# Parsing actions
+group_header.setParseAction(lambda h: _to_groupheader(h))
+
+
+def _to_groupheader(parsed):
+    """
+    Transforms the final parsing result into a GroupHeader instance.
+
+    :param parsed: result of parsing a group header
+    :return: a GroupHeader created from the record prefix
+    """
+
+    return GroupHeader(parsed.record_type, parsed.group_id, parsed.transaction_type, parsed.version_number,
+                              parsed.batch_request_id)

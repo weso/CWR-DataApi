@@ -42,4 +42,4 @@ class GroupHeaderDecoder():
         :param record: the record to parse
         :return: a GroupHeader created from the record
         """
-        return group.group_header.parseString(record, parseAll=True)
+        return group.group_header.parseString(record, parseAll=True)[0]
