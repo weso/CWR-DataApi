@@ -160,13 +160,13 @@ This value will be parsed into a boolean type value.
 """
 
 # Basic field
-boolean_field = pp.Literal('Y') | pp.Literal('N')
+boolean = pp.Literal('Y') | pp.Literal('N')
 
 # Parse action
-boolean_field.setParseAction(lambda b: _to_boolean(b[0]))
+boolean.setParseAction(lambda b: _to_boolean(b[0]))
 
 # Name
-boolean_field.setName('Boolean Field')
+boolean.setName('Boolean Field')
 
 
 def _to_boolean(string):
@@ -198,13 +198,13 @@ This string value will be just returned untouched.
 """
 
 # Basic field
-flag_field = (pp.Literal('Y') | pp.Literal('N') | pp.Literal('U'))
+flag = (pp.Literal('Y') | pp.Literal('N') | pp.Literal('U'))
 
 # Parse action
-flag_field.setParseAction(lambda f: _to_flag(f[0]))
+flag.setParseAction(lambda f: _to_flag(f[0]))
 
 # Name
-flag_field.setName('Flag Field')
+flag.setName('Flag Field')
 
 
 def _to_flag(string):
@@ -239,16 +239,16 @@ This string will be parsed into a datetime.date.
 
 # Basic field
 # This regex allows values from 00000101 to 99991231
-date_field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
+date = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
 
 # Parse action
-date_field.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())
+date.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())
 
 # White spaces are not removed
-date_field.leaveWhitespace()
+date.leaveWhitespace()
 
 # Name
-date_field.setName('Date Field')
+date.setName('Date Field')
 
 """
 Time field (T).
@@ -263,13 +263,13 @@ This string will be parsed into a datetime.time.
 
 # Basic field
 # This regex allows values from 000000 to 235959
-time_field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]')
+time = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]')
 
 # Parse action
-time_field.setParseAction(lambda t: datetime.datetime.strptime(t[0], '%H%M%S').time())
+time.setParseAction(lambda t: datetime.datetime.strptime(t[0], '%H%M%S').time())
 
 # White spaces are not removed
-time_field.leaveWhitespace()
+time.leaveWhitespace()
 
 # Name
-time_field.setName('Time Field')
+time.setName('Time Field')

@@ -6,7 +6,7 @@ from pyparsing import ParseException
 from cwr.parsing.grammar import group
 
 """
-CWR group parsing tests.
+CWR group grammar tests.
 
 The following cases are tested:
 """
@@ -17,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestParseGroupHeader(unittest.TestCase):
+class TestGrammarGroupHeader(unittest.TestCase):
     """
     Tests that GroupHeaderDecoder decodes correctly formatted strings
     """
@@ -55,7 +55,7 @@ class TestParseGroupHeader(unittest.TestCase):
         self.assertEqual(0, result.batch_request_id)
 
 
-class TestParseGroupTrailer(unittest.TestCase):
+class TestGrammarGroupTrailer(unittest.TestCase):
     """
     Tests that GroupTrailerDecoder decodes correctly formatted strings
     """
@@ -76,7 +76,7 @@ class TestParseGroupTrailer(unittest.TestCase):
         self.assertEqual(1234567, result.record_count)
 
 
-class TestParseGroupHeaderException(unittest.TestCase):
+class TestGrammarGroupHeaderException(unittest.TestCase):
     """
     Tests that GroupHeaderDecoder throws exceptions with incorrectly formatted strings.
     """
@@ -91,7 +91,7 @@ class TestParseGroupHeaderException(unittest.TestCase):
         self.assertRaises(ParseException, group.group_header.parseString, record)
 
 
-class TestParseGroupTrailerException(unittest.TestCase):
+class TestGrammarGroupTrailerException(unittest.TestCase):
     """
     Tests that GroupTrailerDecoder throws exceptions with incorrectly formatted strings.
     """

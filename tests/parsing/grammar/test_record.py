@@ -26,7 +26,7 @@ class TestParseTransactionRecordPrefixValid(unittest.TestCase):
         """
         prefix = 'HDR0000123400000023'
 
-        result = record_prefix.parseString(prefix)
+        result = record_prefix('HDR').parseString(prefix)
 
         self.assertEqual('HDR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
@@ -44,7 +44,7 @@ class TestParseRecordPrefixException(unittest.TestCase):
         """
         prefix = 'AAA0000123400000023'
 
-        self.assertRaises(ParseException, record_prefix.parseString, prefix)
+        self.assertRaises(ParseException, record_prefix('HDR').parseString, prefix)
 
     def test_record_n_too_short(self):
         """
@@ -52,7 +52,7 @@ class TestParseRecordPrefixException(unittest.TestCase):
         """
         prefix = 'HDR000123400000023'
 
-        self.assertRaises(ParseException, record_prefix.parseString, prefix)
+        self.assertRaises(ParseException, record_prefix('HDR').parseString, prefix)
 
     def test_begins_empty(self):
         """
@@ -60,4 +60,4 @@ class TestParseRecordPrefixException(unittest.TestCase):
         """
         prefix = ' HDR0000123400000023'
 
-        self.assertRaises(ParseException, record_prefix.parseString, prefix)
+        self.assertRaises(ParseException, record_prefix('HDR').parseString, prefix)

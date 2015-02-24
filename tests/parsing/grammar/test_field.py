@@ -130,7 +130,7 @@ class TestBooleanValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.boolean = field.boolean_field
+        self.boolean = field.boolean
 
     def test_true(self):
         """
@@ -153,7 +153,7 @@ class TestFlagValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.flag = field.flag_field
+        self.flag = field.flag
 
     def test_true(self):
         """
@@ -183,7 +183,7 @@ class TestDateValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.date = field.date_field
+        self.date = field.date
 
     def test_common(self):
         """
@@ -212,7 +212,7 @@ class TestTimeValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.time = field.time_field
+        self.time = field.time
 
     def test_common(self):
         """
@@ -332,7 +332,7 @@ class TestBooleanException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.boolean = field.boolean_field
+        self.boolean = field.boolean
 
     def test_true_lower(self):
         """
@@ -359,7 +359,7 @@ class TestFlagException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.flag = field.flag_field
+        self.flag = field.flag
 
     def test_true_lower(self):
         """
@@ -392,7 +392,7 @@ class TestDateException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.date = field.date_field
+        self.date = field.date
 
     def test_wrong_day_too_high(self):
         """
@@ -443,7 +443,7 @@ class TestTimeException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.time = field.time_field
+        self.time = field.time
 
     def test_wrong_hour(self):
         """

@@ -43,3 +43,28 @@ group_trailer:
         size: 3
     total_monetary_value:
         size: 10
+
+agreement:
+    type: 'AGR'
+    agreement_id:
+        size: 14
+    international_standard_code:
+        size: 14
+    number_works:
+        size: 5
+    society_agreement_number:
+        size: 14
+    prior_royalty_status:
+        value:
+            - 'N'
+            - 'A'
+            - 'D'
+    post_term_collection_status:
+        value:
+            - 'N'
+            - 'O'
+            - 'D'
+    sales_manufacture_clause:
+        value:
+            - 'S'
+            - 'M'

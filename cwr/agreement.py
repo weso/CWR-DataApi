@@ -236,7 +236,7 @@ class AgreementRecord(TransactionRecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement_id, agreement_type, start_date,
                  prior_royalty_status,
-                 post_term_collection_status, works_number, society_agreement_id='',
+                 post_term_collection_status, works_number, society_agreement_number='',
                  international_standard_code='', sales_manufacture_clause='S',
                  end_date=None, signature_date=None, retention_end_date=None, prior_royalty_start_date=None,
                  post_term_collection_end_date=None,
@@ -250,7 +250,7 @@ class AgreementRecord(TransactionRecord):
         :param prior_royalty_status: the status of the royalties before the agreement
         :param post_term_collection_status: if and how the the acquirer can get royalties after the retention end
         :param works_number: number of works in the agreement
-        :param society_agreement_id: ID given by a society for the agreement
+        :param society_agreement_number: ID given by a society for the agreement
         :param international_standard_code: ISA ID for the agreement
         :param sales_manufacture_clause: indicates if the rights are for sale or manufacture
         :param end_date: end date for the agreement
@@ -264,7 +264,7 @@ class AgreementRecord(TransactionRecord):
         super(AgreementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement identification data
         self._agreement_id = agreement_id
-        self._society_agreement_id = society_agreement_id
+        self._society_agreement_number = society_agreement_number
         self._international_standard_code = international_standard_code
         self._agreement_type = agreement_type
 
@@ -493,7 +493,7 @@ class AgreementRecord(TransactionRecord):
 
         :return: the society given ID
         """
-        return self._society_agreement_id
+        return self._society_agreement_number
 
     @property
     def start_date(self):

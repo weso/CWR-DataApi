@@ -19,16 +19,20 @@ __status__ = 'Development'
 class ParserDataStorage(object):
     _file_record_types = 'cwr_record_type.csv'
     _file_sender_types = 'cwr_sender_type.csv'
-    _file_character_sets = 'cwr_character_set.csv'
+    _file_agreement_types = 'cwr_agreement_type.csv'
     _file_transaction_types = 'cwr_transaction_type.csv'
+
+    _file_character_sets = 'cwr_character_set.csv'
 
     _file_record_config = 'cwr_record_config.yml'
     _file_defaults = 'cwr_defaults.yml'
 
-    _character_sets = None
     _record_types = None
     _sender_types = None
+    _agreement_types = None
     _transaction_types = None
+
+    _character_sets = None
 
     _record_config = None
     _cwr_defaults = None
@@ -40,6 +44,19 @@ class ParserDataStorage(object):
 
     def __path(self):
         return os.path.dirname(__file__)
+
+    def agreement_types(self):
+        """
+        Types of Agreement.
+
+        These are the allowed Agreement types.
+
+        :return: the allowed CWR Agreement type codes
+        """
+        if self._agreement_types is None:
+            self._agreement_types = self.__read_csv_file(self._file_agreement_types)
+
+        return self._agreement_types
 
     def character_sets(self):
         """
@@ -73,17 +90,6 @@ class ParserDataStorage(object):
         """
         return self.cwr_defaults()['default_version']
 
-    def record_type(self, record):
-        """
-        Returns the expected record type for the received record.
-
-        The record is the internal name used to identify a record type.
-
-        :param record: the id for the record type
-        :return: the expected record type on the record prefix
-        """
-        return self.record_config()[record]['type']
-
     def field_size(self, record, field):
         """
         Returns the expected size for a record's field.
@@ -107,6 +113,17 @@ class ParserDataStorage(object):
         :return: the expected value for the field on the record
         """
         return self.record_config()[record][field]['value']
+
+    def record_type(self, record):
+        """
+        Returns the expected record type for the received record.
+
+        The record is the internal name used to identify a record type.
+
+        :param record: the id for the record type
+        :return: the expected record type on the record prefix
+        """
+        return self.record_config()[record]['type']
 
     def record_config(self):
         """

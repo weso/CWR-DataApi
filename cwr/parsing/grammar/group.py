@@ -52,12 +52,10 @@ These fields are:
 """
 
 # Record Type for the header
-record_type_header = pp.Literal(data.record_type('group_header'))
-record_type_header = record_type_header.setName('Record Type').setResultsName('record_type')
+record_type_header = record.record_type(data.record_type('group_header'))
 
 # Record Type for the trailer
-record_type_trailer = pp.Literal(data.record_type('group_trailer'))
-record_type_trailer = record_type_trailer.setName('Record Type').setResultsName('record_type')
+record_type_trailer = record.record_type(data.record_type('group_trailer'))
 
 # Group ID
 group_id = special.numeric_from(data.field_size('group_header', 'group_id'), 1)
@@ -108,10 +106,12 @@ These are the grammatical structures for the Group Header and Group Trailer.
 # Group Header pattern
 group_header = special.lineStart + record_type_header + record.transaction_type + group_id + version_number + \
                batch_request_id + (sd_type | pp.empty) + special.lineEnd
+group_header.leaveWhitespace()
 
 # Group Trailer pattern
 group_trailer = special.lineStart + record_type_trailer + group_id + record.transaction_count + record.record_count + \
                 currency_indicator + total_monetary_value + special.lineEnd
+group_trailer.leaveWhitespace()
 
 """
 Parsing actions for the patterns.
@@ -134,7 +134,7 @@ def _to_groupheader(parsed):
     Transforms the final parsing result into a GroupHeader instance.
 
     :param parsed: result of parsing a group header
-    :return: a GroupHeader created from the string
+    :return: a GroupHeader created from the parsed record
     """
     return GroupHeader(parsed.record_type, parsed.group_id, parsed.transaction_type, parsed.version_number,
                        parsed.batch_request_id)
@@ -145,7 +145,7 @@ def _to_grouptrailer(parsed):
     Transforms the final parsing result into a GroupTrailer instance.
 
     :param parsed: result of parsing a group trailer
-    :return: a GroupTrailer created from the string
+    :return: a GroupTrailer created from the parsed record
     """
 
     return GroupTrailer(parsed.record_type, parsed.group_id, parsed.transaction_count, parsed.record_count)
