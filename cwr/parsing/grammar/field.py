@@ -43,20 +43,25 @@ The string contained in this field is parsed into a string with no heading or tr
 """
 
 
-def alphanum(columns):
+def alphanum(columns, optional=True):
     """
     Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
 
     :param columns: number of columns for this field
+    :param optional: indicates if the field can be empty
     :return: grammar for this Alphanumeric field
     """
 
-    # Basic field
     # The regular expression just forbids lowercase characters
     field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
 
     # Parse action
     field.setParseAction(lambda s: s[0].strip())
+
+    # Basic field
+    if not optional:
+        # Parse action
+        field.addParseAction(_to_alphanumeric_compulsory)
 
     # White spaces are not removed
     field.leaveWhitespace()
@@ -65,6 +70,15 @@ def alphanum(columns):
     field.setName('Alphanumeric Field (' + str(columns) + ' columns)')
 
     return field
+
+
+def _to_alphanumeric_compulsory(instr, loc, p):
+    string = instr.strip()
+
+    if len(string) == 0:
+        raise pp.ParseException(instr, loc, "The field should not be empty")
+
+    return string
 
 
 """
@@ -184,7 +198,7 @@ def _to_boolean(string):
     elif string == 'N':
         result = False
     else:
-        raise pp.ParseException
+        raise pp.ParseException(string, msg='Is not a valid boolean value')
 
     return result
 
@@ -221,7 +235,7 @@ def _to_flag(string):
     """
 
     if string not in ('Y', 'N', 'U'):
-        raise pp.ParseException
+        raise pp.ParseException(string, msg='Is not a valid flag value')
 
     return string
 
@@ -230,7 +244,7 @@ def _to_flag(string):
 Date field (D).
 
 Date follows the pattern YYYYMMDD, with the following constraints:
-- YYYY: can be any number
+- YYYY: from 0001 to 9999
 - MM: from 01 to 12
 - DD: from 01 to 31
 
@@ -238,8 +252,8 @@ This string will be parsed into a datetime.date.
 """
 
 # Basic field
-# This regex allows values from 00000101 to 99991231
-date = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
+# This regex allows values from 00010101 to 99991231
+date = pp.Regex('[0-9][0-9][0-9][1-9](0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
 
 # Parse action
 date.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())
@@ -249,6 +263,39 @@ date.leaveWhitespace()
 
 # Name
 date.setName('Date Field')
+
+"""
+Empty Date (D) field.
+
+For those cases where the date is optional, this date can be empty.
+"""
+
+# Basic field
+_date_empty = pp.Literal('00000000')
+
+# Parse action
+_date_empty.setParseAction(pp.replaceWith(None))
+
+# White spaces are not removed
+_date_empty.leaveWhitespace()
+
+# Name
+_date_empty.setName('Date Field')
+
+"""
+Optional Date (D) field.
+
+For those cases where the date is optional, allows the basic date format, and also an empty one.
+"""
+
+# Basic field
+date_optional = date | _date_empty
+
+# White spaces are not removed
+date_optional.leaveWhitespace()
+
+# Name
+date_optional.setName('Date Field')
 
 """
 Time field (T).

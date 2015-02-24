@@ -27,7 +27,7 @@ Agreement fields.
 record_prefix_agreement = record.record_prefix(data.record_type('agreement'))
 
 # Submitter's Agreement Number
-submitter_agreement_n = field.alphanum(data.field_size('agreement', 'agreement_id'))
+submitter_agreement_n = field.alphanum(data.field_size('agreement', 'agreement_id'), optional=False)
 submitter_agreement_n = submitter_agreement_n.setName('Submitters Agreement Number').setResultsName('agreement_id')
 
 # International Standard Agreement Code
@@ -43,11 +43,11 @@ agreement_start_date = field.date
 agreement_start_date = agreement_start_date.setName('Agreement Start Date').setResultsName('start_date')
 
 # Agreement End Date
-agreement_end_date = field.date
+agreement_end_date = field.date_optional
 agreement_end_date = agreement_end_date.setName('Agreement End Date').setResultsName('end_date')
 
 # Retention End Date
-retention_end_date = field.date
+retention_end_date = field.date_optional
 retention_end_date = retention_end_date.setName('Retention End Date').setResultsName('retention_end_date')
 
 # Prior Royalty Status
@@ -55,7 +55,7 @@ prior_royalty_status = pp.oneOf(data.field_value('agreement', 'prior_royalty_sta
 prior_royalty_status = prior_royalty_status.setName('Prior Royalty Status').setResultsName('prior_royalty_status')
 
 # Prior Royalty Start Date
-prior_royalty_start_date = field.date
+prior_royalty_start_date = field.date_optional
 prior_royalty_start_date = prior_royalty_start_date.setName('Prior Royalty Start Date').setResultsName(
     'prior_royalty_start_date')
 
@@ -65,12 +65,12 @@ post_term_collection_status = post_term_collection_status.setName('Post Term Col
     'post_term_collection_status')
 
 # Post Term Collection End Date
-post_term_collection_end_date = field.date
+post_term_collection_end_date = field.date_optional
 post_term_collection_end_date = post_term_collection_end_date.setName('Post Term Collection End Date').setResultsName(
     'post_term_collection_end_date')
 
 # Date of Signature of Agreement
-date_of_signature = field.date
+date_of_signature = field.date_optional
 date_of_signature = date_of_signature.setName('Date of Signature of Agreement').setResultsName('signature_date')
 
 # Number of Works

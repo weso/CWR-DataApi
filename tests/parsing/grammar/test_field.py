@@ -63,12 +63,56 @@ class TestAlphanumValid(unittest.TestCase):
         result = self.alpha.parseString('   DE')
         self.assertEqual('DE', result[0])
 
+    def test_alphanum_whites(self):
+        """
+        Tests that the alphanum field accepts values surrounded by whitespaces.
+        """
+        result = self.alpha.parseString('  C  ')
+        self.assertEqual('C', result[0])
+
     def test_alphanum_empty(self):
         """
         Tests that the alphanum field accepts an empty string of the correct number of characters.
         """
         result = self.alpha.parseString('     ')
         self.assertEqual('', result[0])
+
+
+class TestAlphanumCompulsoryValid(unittest.TestCase):
+    """
+    Tests that the alphanumeric field accepts and parse valid values.
+    """
+
+    def setUp(self):
+        self.alpha = field.alphanum(5, optional=False)
+
+    def test_alphanum_full(self):
+        """
+        Tests that the alphanum field accepts values of the correct number of characters.
+        """
+        result = self.alpha.parseString('ABCD1')
+        self.assertEqual('ABCD1', result[0])
+
+    def test_alphanum_trailing_whites(self):
+        """
+        Tests that the alphanum field accepts values of the correct number of characters and trailed by white spaces.
+        """
+        result = self.alpha.parseString('AB   ')
+        self.assertEqual('AB', result[0])
+
+    def test_alphanum_head_whites(self):
+        """
+        Tests that the alphanum field accepts values of the correct number of characters and headed by white spaces.
+        """
+        result = self.alpha.parseString('   DE')
+        self.assertEqual('DE', result[0])
+
+    def test_alphanum_whites(self):
+        """
+        Tests that the alphanum field accepts values surrounded by whitespaces.
+        """
+        result = self.alpha.parseString('  C  ')
+        self.assertEqual('C', result[0])
 
 
 class TestNumericValid(unittest.TestCase):
@@ -205,6 +249,63 @@ class TestDateValid(unittest.TestCase):
         self.assertEqual(11, result.month)
         self.assertEqual(21, result.day)
 
+    def test_minimum(self):
+        """
+        Tests that the date field accepts a valid date.
+        """
+        result = self.date.parseString('00010101')[0]
+
+        self.assertEqual(1, result.year)
+        self.assertEqual(1, result.month)
+        self.assertEqual(1, result.day)
+
+
+class TestDateOptionalValid(unittest.TestCase):
+    """
+    Tests that the empty date field accepts and parse valid values.
+    """
+
+    def setUp(self):
+        self.date = field.date_optional
+
+    def test_common(self):
+        """
+        Tests that the date field accepts a valid date.
+        """
+        result = self.date.parseString('20121121')[0]
+
+        self.assertEqual(2012, result.year)
+        self.assertEqual(11, result.month)
+        self.assertEqual(21, result.day)
+
+    def test_small_year(self):
+        """
+        Tests that the date field accepts an uncommonly short year.
+        """
+        result = self.date.parseString('00121121')[0]
+
+        self.assertEqual(12, result.year)
+        self.assertEqual(11, result.month)
+        self.assertEqual(21, result.day)
+
+    def test_minimum(self):
+        """
+        Tests that the date field accepts a valid date.
+        """
+        result = self.date.parseString('00010101')[0]
+
+        self.assertEqual(1, result.year)
+        self.assertEqual(1, result.month)
+        self.assertEqual(1, result.day)
+
+    def test_empty(self):
+        """
+        Tests that the date field accepts a valid date.
+        """
+        result = self.date.parseString('00000000')[0]
+
+        self.assertEqual(None, result)
+
 
 class TestTimeValid(unittest.TestCase):
     """
@@ -270,6 +371,39 @@ class TestAlphanumException(unittest.TestCase):
         Tests that an exception is thrown when the field is not using capitol letters.
         """
         self.assertRaises(ParseException, self.alpha.parseString, 'ABcDE')
+
+
+class TestAlphanumCompulsoryException(unittest.TestCase):
+    """
+    Tests that exceptions are thrown when using invalid values
+    """
+
+    def setUp(self):
+        self.alpha = field.alphanum(5, optional=False)
+
+    def test_alphanum_wrong_size_empty(self):
+        """
+        Tests that an exception is thrown when the field is empty and it shouldn't be.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, '')
+
+    def test_alphanum_wrong_size_too_small(self):
+        """
+        Tests that an exception is thrown when the field is smaller than expected.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, 'AB')
+
+    def test_alphanum_wrong_no_caps(self):
+        """
+        Tests that an exception is thrown when the field is not using capitol letters.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, 'ABcDE')
+
+    def test_empty(self):
+        """
+        Tests that an exception is thrown when the field is empty and it shouldn't be.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, '     ')
 
 
 class TestNumericException(unittest.TestCase):
@@ -352,6 +486,12 @@ class TestBooleanException(unittest.TestCase):
         """
         self.assertRaises(ParseException, self.boolean.parseString, '')
 
+    def test_invalid(self):
+        """
+        Tests that an exception is thrown when the string is invalid.
+        """
+        self.assertRaises(ParseException, self.boolean.parseString, 'W')
+
 
 class TestFlagException(unittest.TestCase):
     """
@@ -410,13 +550,82 @@ class TestDateException(unittest.TestCase):
         """
         Tests that an exception is thrown when the month is invalid.
         """
-        self.assertRaises(ParseException, self.date.parseString, '201213112')
+        self.assertRaises(ParseException, self.date.parseString, '20121312')
 
     def test_wrong_month_too_low(self):
         """
         Tests that an exception is thrown when the month is invalid.
         """
-        self.assertRaises(ParseException, self.date.parseString, '201200112')
+        self.assertRaises(ParseException, self.date.parseString, '20120012')
+
+    def test_wrong_year_too_low(self):
+        """
+        Tests that an exception is thrown when the year is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '00001112')
+
+    def test_spaces_head(self):
+        """
+        Tests that an exception is thrown when the string is headed by empty spaces.
+        """
+        self.assertRaises(ParseException, self.date.parseString, ' 20121121')
+
+    def test_spaces_letters(self):
+        """
+        Tests that an exception is thrown when the string contains letters.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '201211XV')
+
+    def test_zeros(self):
+        """
+        Tests that an exception is thrown when the year is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '00000000')
+
+    def test_empty(self):
+        """
+        Tests that an exception is thrown when the string is empty.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '')
+
+
+class TestDateOptionalException(unittest.TestCase):
+    """
+    Tests that exceptions are thrown when using invalid values
+    """
+
+    def setUp(self):
+        self.date = field.date_optional
+
+    def test_wrong_day_too_high(self):
+        """
+        Tests that an exception is thrown when the day is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '20121133')
+
+    def test_wrong_day_too_low(self):
+        """
+        Tests that an exception is thrown when the day is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '20121100')
+
+    def test_wrong_month_too_high(self):
+        """
+        Tests that an exception is thrown when the month is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '20121312')
+
+    def test_wrong_month_too_low(self):
+        """
+        Tests that an exception is thrown when the month is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '20120012')
+
+    def test_wrong_year_too_low(self):
+        """
+        Tests that an exception is thrown when the year is invalid.
+        """
+        self.assertRaises(ParseException, self.date.parseString, '00001112')
 
     def test_spaces_head(self):
         """

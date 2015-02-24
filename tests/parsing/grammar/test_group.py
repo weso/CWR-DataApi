@@ -44,7 +44,7 @@ class TestGrammarGroupHeader(unittest.TestCase):
 
         This test contains all the optional fields.
         """
-        record = 'GRHACK0123402.10000000000000  '
+        record = 'GRHACK0123402.100000000000  '
 
         result = group.group_header.parseString(record)[0]
 
