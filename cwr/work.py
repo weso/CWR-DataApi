@@ -2,7 +2,7 @@
 from abc import ABCMeta
 import datetime
 
-from cwr.file import TransactionRecord
+from cwr.record import TransactionRecord
 
 
 """

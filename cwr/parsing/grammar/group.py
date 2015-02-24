@@ -4,7 +4,7 @@ import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
 from cwr.parsing.grammar import field, special, record
-from cwr.file import GroupHeader, GroupTrailer
+from cwr.group import GroupHeader, GroupTrailer
 
 
 """

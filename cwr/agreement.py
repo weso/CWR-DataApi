@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from cwr.file import TransactionRecord
+from cwr.record import TransactionRecord
 
 """
 Agreement model classes.

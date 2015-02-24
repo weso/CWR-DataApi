@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from abc import ABCMeta
 
-from cwr.file import TransactionRecord
+from cwr.record import TransactionRecord
 
 
 """

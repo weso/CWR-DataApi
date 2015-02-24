@@ -6,7 +6,7 @@ import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
 from cwr.parsing.grammar import field, special, record
-from cwr.file import TransmissionHeader, TransmissionTrailer
+from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
 
 """
