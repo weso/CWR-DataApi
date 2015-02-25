@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-import re
-
 import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
@@ -29,7 +27,7 @@ Agreement fields.
 record_prefix_agreement = record.record_prefix(data.record_type('agreement'))
 
 # Submitter's Agreement Number
-submitter_agreement_n = field.alphanum(data.field_size('agreement', 'agreement_id'), optional=False)
+submitter_agreement_n = field.alphanum(data.field_size('agreement', 'agreement_id'), compulsory=True)
 submitter_agreement_n = submitter_agreement_n.setName('Submitters Agreement Number').setResultsName('agreement_id')
 
 # International Standard Agreement Code
@@ -127,21 +125,17 @@ def _to_agreement(parsed):
     :return: a AgreementRecord created from the parsed record
     """
 
-    print parsed
-
-    match_result = re.match('0*', str(parsed.prior_royalty_start_date))
     if parsed.prior_royalty_status == 'D':
-        if match_result:
-            raise pp.ParseException(parsed.prior_royalty_start_date, msg='Prior Royalty Start Date required')
-    elif not match_result:
-        raise pp.ParseException(parsed.prior_royalty_start_date, msg='Prior Royalty Start Date should not be set')
+        if not parsed.prior_royalty_start_date:
+            raise pp.ParseException(str(parsed.prior_royalty_start_date), msg='Prior Royalty Start Date required')
+    elif parsed.prior_royalty_start_date:
+        raise pp.ParseException(str(parsed.prior_royalty_start_date), msg='Prior Royalty Start Date should not be set')
 
-    match_result = re.match('0*', str(parsed.post_term_collection_end_date))
     if parsed.post_term_collection_status == 'D':
-        if match_result:
-            raise pp.ParseException(parsed.post_term_collection_end_date, msg='Post Term Collection End Date required')
-    elif not match_result:
-        raise pp.ParseException(parsed.post_term_collection_end_date,
+        if not parsed.post_term_collection_end_date:
+            raise pp.ParseException(str(parsed.prior_royalty_start_date), msg='Post Term Collection End Date required')
+    elif parsed.post_term_collection_end_date:
+        raise pp.ParseException(str(parsed.prior_royalty_start_date),
                                 msg='Post Term Collection End Date should not be set')
 
     return AgreementRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
