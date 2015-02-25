@@ -1,10 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
+
 from cwr.parsing.grammar import work
-
-from pyparsing import ParseException
-
-from cwr.parsing.grammar import transmission
 
 
 """
@@ -15,6 +12,7 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
+
 
 class TestWorkValid(unittest.TestCase):
     """
@@ -33,8 +31,7 @@ class TestWorkValid(unittest.TestCase):
         record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789A012345678920130102AB0123456789POP030201YMUSPOTMODMOVNEWNONTHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
 
         result = self.grammar.parseString(record)[0]
-        print self.grammar.parseString(record)
-"""
+
         self.assertEqual('NWR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
@@ -62,10 +59,10 @@ class TestWorkValid(unittest.TestCase):
         self.assertEqual('AR', result.cwr_work_type)
         self.assertEqual(True, result.grand_rights_indicator)
         self.assertEqual(12, result.composite_component_count)
-        self.assertEqual(2, result.printed_edition_publication_date.month)
-        self.assertEqual(3, result.printed_edition_publication_date.day)
+        self.assertEqual(2, result.printed_edition_publication_date.day)
+        self.assertEqual(3, result.printed_edition_publication_date.month)
         self.assertEqual(2014, result.printed_edition_publication_date.year)
         self.assertEqual('Y', result.exceptional_clause)
         self.assertEqual('28#3', result.opus_number)
         self.assertEqual('KV 297#1', result.catalogue_number)
-        self.assertEqual('Y', result.priority_flag)"""
+        self.assertEqual('Y', result.priority_flag)

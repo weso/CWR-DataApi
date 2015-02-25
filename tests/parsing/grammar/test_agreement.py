@@ -18,7 +18,6 @@ __status__ = 'Development'
 
 
 class TestGrammarGroupHeader(unittest.TestCase):
-
     def setUp(self):
         self.grammar = agreement.agreement
 
@@ -98,9 +97,9 @@ class TestGrammarGroupHeader(unittest.TestCase):
 
 
 class TestGrammarGroupHeaderException(unittest.TestCase):
-
     def setUp(self):
         self.grammar = agreement.agreement
+
     def test_works_zero(self):
         """
         Tests that a exception is thrown when the the works number is zero.

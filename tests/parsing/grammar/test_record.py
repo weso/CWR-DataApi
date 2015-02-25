@@ -58,7 +58,7 @@ class TestParseRecordPrefixException(unittest.TestCase):
         """
         prefix = 'HDR000123400000023'
 
-        self.assertRaises(ParseException,self.grammar.parseString, prefix)
+        self.assertRaises(ParseException, self.grammar.parseString, prefix)
 
     def test_begins_empty(self):
         """
