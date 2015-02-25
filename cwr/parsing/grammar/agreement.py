@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-import cwr.parsing.constraints.agreement as constraints
+import cwr.constraints.agreement as constraints
 from cwr.parsing.data.accessor import ParserDataStorage
 from cwr.parsing.grammar import record, field, special
 from cwr.agreement import AgreementRecord
@@ -118,7 +118,7 @@ Validation actions for the patterns.
 agreement.addParseAction(lambda p: constraints.prior_royalty_status_and_date_coherency(p[0]))
 agreement.addParseAction(lambda p: constraints.post_term_collection_status_and_date_coherency(p[0]))
 agreement.addParseAction(lambda p: constraints.retention_end_date_after_agreement_end_date(p[0]))
-agreement.addParseAction(lambda p: constraints.prior_royalty_start_date_before_agreement_end_date(p[0]))
+agreement.addParseAction(lambda p: constraints.prior_royalty_start_date_before_agreement_start_date(p[0]))
 agreement.addParseAction(lambda p: constraints.post_term_collection_end_date_after_end_dates(p[0]))
 agreement.addParseAction(lambda p: constraints.sales_manufacture_required_by_agreement_type(p[0]))
 
