@@ -2,6 +2,7 @@
 
 import pyparsing as pp
 
+import cwr.parsing.constraints.agreement as constraints
 from cwr.parsing.data.accessor import ParserDataStorage
 from cwr.parsing.grammar import record, field, special
 from cwr.agreement import AgreementRecord
@@ -109,7 +110,17 @@ agreement.leaveWhitespace()
 Parsing actions for the patterns.
 """
 
-agreement.setParseAction(lambda h: _to_agreement(h))
+agreement.setParseAction(lambda a: _to_agreement(a))
+
+"""
+Validation actions for the patterns.
+"""
+agreement.addParseAction(lambda p: constraints.prior_royalty_status_and_date_coherency(p[0]))
+agreement.addParseAction(lambda p: constraints.post_term_collection_status_and_date_coherency(p[0]))
+agreement.addParseAction(lambda p: constraints.retention_end_date_after_agreement_end_date(p[0]))
+agreement.addParseAction(lambda p: constraints.prior_royalty_start_date_before_agreement_end_date(p[0]))
+agreement.addParseAction(lambda p: constraints.post_term_collection_end_date_after_end_dates(p[0]))
+agreement.addParseAction(lambda p: constraints.sales_manufacture_required_by_agreement_type(p[0]))
 
 """
 Parsing methods.
@@ -126,17 +137,6 @@ def _to_agreement(parsed):
     :return: a AgreementRecord created from the parsed record
     """
 
-    _check_prior_royalty_status_and_date(parsed.prior_royalty_status, parsed.prior_royalty_start_date)
-    _check_post_term_collection_status_and_date(parsed.post_term_collection_status,
-                                                parsed.post_term_collection_end_date)
-
-    _retention_end_date_calendar_position(parsed.retention_end_date, parsed.end_date)
-    _prior_royalty_start_date_calendar_position(parsed.prior_royalty_start_date, parsed.start_date)
-    _post_term_collection_end_date_calendar_position(parsed.post_term_collection_end_date, parsed.end_date,
-                                                     parsed.retention_end_date)
-
-    _sales_manufacture_for_type(parsed.sales_manufacture_clause, parsed.agreement_type)
-
     return AgreementRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                            parsed.agreement_id, parsed.agreement_type, parsed.start_date,
                            parsed.prior_royalty_status, parsed.post_term_collection_status, parsed.works_number,
@@ -148,64 +148,3 @@ def _to_agreement(parsed):
                            prior_royalty_start_date=parsed.prior_royalty_start_date,
                            post_term_collection_end_date=parsed.post_term_collection_end_date,
                            shares_change=parsed.shares_change, advance_given=parsed.advance_given)
-
-
-"""
-Validation methods.
-
-These are the methods which validate the parsed data.
-"""
-
-
-def _check_prior_royalty_status_and_date(status, date):
-    if status == 'D':
-        if not date:
-            raise pp.ParseException(str(date), msg='Prior Royalty Start Date required')
-    elif date:
-        raise pp.ParseException(str(date), msg='Prior Royalty Start Date should not be set')
-
-
-def _check_post_term_collection_status_and_date(status, date):
-    if status == 'D':
-        if not date:
-            raise pp.ParseException(str(date), msg='Post Term Collection End Date required')
-    elif date:
-        raise pp.ParseException(str(date),
-                                msg='Post Term Collection End Date should not be set')
-
-
-def _retention_end_date_calendar_position(retention_end_date, end_date):
-    if retention_end_date:
-        if not end_date:
-            raise pp.ParseException('',
-                                    msg='Retention End Date requires the Agreement End Date to be set')
-        elif end_date >= retention_end_date:
-            raise pp.ParseException('',
-                                    msg='The Retention End Date must be after the Agreement End Date')
-
-
-def _prior_royalty_start_date_calendar_position(prior_royalty_start_date, start_date):
-    if prior_royalty_start_date and prior_royalty_start_date >= start_date:
-        raise pp.ParseException('',
-                                msg='The Prior Royalty Start Date must be before the Agreement End Date')
-
-
-def _post_term_collection_end_date_calendar_position(post_term_collection_end_date, end_date, retention_end_date):
-    if post_term_collection_end_date:
-        if retention_end_date:
-            if post_term_collection_end_date <= retention_end_date:
-                raise pp.ParseException('',
-                                        msg='The Post Term Collection End Date must be after the Retention End Date')
-        elif end_date:
-            if post_term_collection_end_date <= end_date:
-                raise pp.ParseException('',
-                                        msg='The Post Term Collection End Date must be after the Agreement End Date')
-        else:
-            raise pp.ParseException('',
-                                    msg='The Post Term Collection End Date requires the Agreement End Date or the Retention End Date to be set')
-
-
-def _sales_manufacture_for_type(sm_clause, agreement_type):
-    if agreement_type in ('OP', 'OS') and len(sm_clause) == 0:
-        message = "The Sales/Manufacture Clause is required for the agreement type %s" % (agreement_type)
-        raise pp.ParseException('', msg=message)
