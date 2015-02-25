@@ -31,7 +31,7 @@ class TestAgreement(unittest.TestCase):
     def setUp(self):
         encoder = CWRDictionaryEncoder()
         entity = AgreementRecord('', 0, 0, 1, 'Original', datetime.date(2015, 1, 11), 'D', 'D',
-                                 122, society_agreement_id=2, international_standard_code=3,
+                                 122, society_agreement_number=2, international_standard_code=3,
                                  sales_manufacture_clause='S',
                                  end_date=datetime.date(2015, 2, 11),
                                  signature_date=datetime.date(2015, 6, 11),

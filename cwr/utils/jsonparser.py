@@ -24,7 +24,7 @@ def parse_agreement(json_item):
     # TODO Optional fields may be missing on the JSON
     agreement = AgreementRecord(record_type='', transaction_sequence_n=0, record_sequence_n=0,
                                 agreement_id=json_item['submitter_agreement_number'],
-                                society_agreement_id=json_item['society_agreement_number'],
+                                society_agreement_number=json_item['society_agreement_number'],
                                 agreement_type=json_item['agreement_type'],
                                 start_date=json_item['start_date'],
                                 end_date=json_item['end_date'],
