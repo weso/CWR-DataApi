@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.grammar import field
+from cwr.grammar import field
 
 
 """

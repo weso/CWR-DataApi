@@ -3,8 +3,9 @@
 import pyparsing as pp
 
 from cwr.file import FileTag
-from cwr.parsing.grammar import field, special
-from cwr.parsing.data.accessor import ParserDataStorage
+from cwr.grammar import field, special
+from cwr.data.accessor import ParserDataStorage
+
 
 """
 CWR file name grammar.

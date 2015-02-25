@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from cwr.parsing.grammar import filename
+from cwr.grammar import filename
 
 
 """

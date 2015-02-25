@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.file import CWRFileNameDecoder, CWRFileNameEncoder
+from cwr.utils.file import CWRFileNameDecoder, CWRFileNameEncoder
 from cwr.file import FileTag
 
 """

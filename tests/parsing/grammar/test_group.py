@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.grammar import group
+from cwr.grammar import group
 
 """
 CWR group grammar tests.

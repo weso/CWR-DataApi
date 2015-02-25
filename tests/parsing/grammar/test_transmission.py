@@ -4,7 +4,7 @@ import datetime
 
 from pyparsing import ParseException
 
-from cwr.parsing.grammar import transmission
+from cwr.grammar import transmission
 
 
 """

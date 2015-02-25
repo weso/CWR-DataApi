@@ -2,9 +2,10 @@
 
 import pyparsing as pp
 
-from cwr.parsing.data.accessor import ParserDataStorage
-from cwr.parsing.grammar import record, field, special
+from cwr.data.accessor import ParserDataStorage
+from cwr.grammar import field, special, record
 from cwr import work
+
 
 """
 CWR Work grammar.

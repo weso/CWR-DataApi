@@ -2,8 +2,8 @@
 
 import pyparsing as pp
 
-from cwr.parsing.data.accessor import ParserDataStorage
-from cwr.parsing.grammar import field
+from cwr.data.accessor import ParserDataStorage
+from cwr.grammar import field
 
 """
 Grammar for Records.

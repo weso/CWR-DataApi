@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.grammar.record import record_prefix
+from cwr.grammar.record import record_prefix
 
 """
 CWR file Record parsing tests.

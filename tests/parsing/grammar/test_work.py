@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.parsing.grammar import work
+from cwr.grammar import work
 
 
 """

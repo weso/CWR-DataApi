@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.parsing.grammar import agreement
+from cwr.grammar import agreement
 
 """
 CWR agreement grammar tests.
