@@ -4,7 +4,7 @@ import pyparsing as pp
 
 from cwr.file import FileTag
 from cwr.grammar import field, special
-from data.accessor import ParserDataStorage
+from data.accessor import CWRConfiguration
 
 
 """
@@ -31,8 +31,8 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# Acquires config data source
-data = ParserDataStorage()
+# Acquires data sources
+_config = CWRConfiguration()
 
 """
 Filename fields.
@@ -103,7 +103,7 @@ delimiter_ip.setName('IPs separator')
 
 # ZIP extension
 delimiter_zip = pp.CaselessLiteral('.zip')
-delimiter_zip.setParseAction(lambda s: data.default_version())
+delimiter_zip.setParseAction(lambda s: _config.default_version())
 delimiter_zip = delimiter_zip.setName('zip extension').setResultsName('version')
 
 """

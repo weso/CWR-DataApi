@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import ParserDataStorage
+from data.accessor import CWRTables
 
 
 """
@@ -16,8 +16,8 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# Acquires config data source
-data = ParserDataStorage()
+# Acquires data sources
+_tables = CWRTables()
 
 # GENERAL GRAMMAR
 
@@ -46,7 +46,7 @@ def char_code(columns):
     :return: a parser for the character set field
     """
     char_sets = None
-    for char_set in data.character_sets():
+    for char_set in _tables.character_sets():
         regex = '[ ]{' + str(15 - len(char_set)) + '}' + char_set
         if char_sets is None:
             char_sets = regex
@@ -79,7 +79,7 @@ def language_code():
     :return: a parser for the language code field
     """
 
-    field = pp.oneOf(data.language_codes())
+    field = pp.oneOf(_tables.language_codes())
 
     # Parse action
     field = field.setParseAction(lambda s: s[0].strip())

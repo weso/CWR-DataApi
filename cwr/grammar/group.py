@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import ParserDataStorage
+from data.accessor import CWRConfiguration
 from cwr.grammar import field, special, record
 from cwr.group import GroupHeader, GroupTrailer
 
@@ -38,8 +38,8 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# Acquires config data source
-data = ParserDataStorage()
+# Acquires data sources
+_config = CWRConfiguration()
 
 """
 Group fields.
@@ -52,21 +52,21 @@ These fields are:
 """
 
 # Record Type for the header
-record_type_header = record.record_type(data.record_type('group_header'))
+record_type_header = record.record_type(_config.record_type('group_header'))
 
 # Record Type for the trailer
-record_type_trailer = record.record_type(data.record_type('group_trailer'))
+record_type_trailer = record.record_type(_config.record_type('group_trailer'))
 
 # Group ID
-group_id = field.numeric(data.field_size('group_header', 'group_id'), compulsory=True)
+group_id = field.numeric(_config.field_size('group_header', 'group_id'), compulsory=True)
 group_id = group_id.setName('Group ID').setResultsName('group_id')
 
 # Version Number
-version_number = pp.Literal(data.field_value('group_header', 'version_number'))
+version_number = pp.Literal(_config.field_value('group_header', 'version_number'))
 version_number = version_number.setName('Version Number').setResultsName('version_number')
 
 # Batch Request ID
-batch_request_id = field.numeric(data.field_size('group_header', 'batch_request_id'))
+batch_request_id = field.numeric(_config.field_size('group_header', 'batch_request_id'))
 batch_request_id = batch_request_id.setName('Batch Request ID').setResultsName('batch_request_id')
 
 """
@@ -81,19 +81,19 @@ They are:
 """
 
 # SD Type
-sd_type = field.alphanum(data.field_size('group_header', 'sd_type'))
+sd_type = field.alphanum(_config.field_size('group_header', 'sd_type'))
 sd_type.leaveWhitespace()
 sd_type = sd_type.setName('SD Type').setResultsName('sd_type')
 
 # Currency Indicator
 currency_indicator = pp.Word(pp.alphanums + ' ',
-                             exact=data.field_size('group_trailer', 'currency_indicator'))
+                             exact=_config.field_size('group_trailer', 'currency_indicator'))
 currency_indicator.leaveWhitespace()
 currency_indicator = currency_indicator.setName('Currency Indicator').setResultsName('currency_indicator')
 
 # Total Monetary Value
 total_monetary_value = pp.Word(pp.alphanums + ' ',
-                               exact=data.field_size('group_trailer', 'total_monetary_value'))
+                               exact=_config.field_size('group_trailer', 'total_monetary_value'))
 total_monetary_value.leaveWhitespace()
 total_monetary_value = total_monetary_value.setName('Total Monetary Value').setResultsName('total_monetary_value')
 

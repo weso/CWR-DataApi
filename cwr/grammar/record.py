@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import ParserDataStorage
+from data.accessor import CWRTables, CWRConfiguration
 from cwr.grammar import field
 
 """
@@ -16,8 +16,9 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# Acquires config data source
-data = ParserDataStorage()
+# Acquires data sources
+_tables = CWRTables()
+_config = CWRConfiguration()
 
 # RECORD FIELDS
 
@@ -32,34 +33,34 @@ def record_type(values):
     return type_field
 
 # Transaction sequence number
-transaction_seq_n = field.numeric(data.field_size('record_prefix', 'transaction_sequence_n'))
+transaction_seq_n = field.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'))
 transaction_seq_n = transaction_seq_n.setName('Transaction Sequence Number').setResultsName('transaction_sequence_n')
 
 # Record sequence number
-record_seq_n = field.numeric(data.field_size('record_prefix', 'record_sequence_n'))
+record_seq_n = field.numeric(_config.field_size('record_prefix', 'record_sequence_n'))
 record_seq_n = record_seq_n.setName('Record Sequence Number').setResultsName('record_sequence_n')
 
 # Trailer fields
 
 # Group count
 group_count = field.numeric(
-    data.field_size('trailer_record', 'group_count'))
+    _config.field_size('trailer_record', 'group_count'))
 group_count = group_count.setName('Group Count').setResultsName('group_count')
 
 # Transaction count
 transaction_count = field.numeric(
-    data.field_size('trailer_record', 'transaction_count'))
+    _config.field_size('trailer_record', 'transaction_count'))
 transaction_count = transaction_count.setName('Transaction Count').setResultsName('transaction_count')
 
 # Record count
 record_count = field.numeric(
-    data.field_size('trailer_record', 'record_count'))
+    _config.field_size('trailer_record', 'record_count'))
 record_count = record_count.setName('Record Count').setResultsName('record_count')
 
 # Miscellany fields
 
 # Transaction type
-transaction_type = pp.oneOf(data.transaction_types())
+transaction_type = pp.oneOf(_tables.transaction_types())
 transaction_type = transaction_type.setName('Transaction Type').setResultsName('transaction_type')
 
 # PATTERNS

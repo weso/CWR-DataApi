@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 import cwr.constraints.agreement as constraints
-from data.accessor import ParserDataStorage
+from data.accessor import CWRConfiguration, CWRTables
 from cwr.grammar import field, special, record
 from cwr.agreement import AgreementRecord
 
@@ -17,26 +17,27 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# Acquires config data source
-data = ParserDataStorage()
+# Acquires data sources
+_tables = CWRTables()
+_config = CWRConfiguration()
 
 """
 Agreement fields.
 """
 
 # Record Type for the agreement
-record_prefix_agreement = record.record_prefix(data.record_type('agreement'))
+record_prefix_agreement = record.record_prefix(_config.record_type('agreement'))
 
 # Submitter's Agreement Number
-submitter_agreement_n = field.alphanum(data.field_size('agreement', 'agreement_id'), compulsory=True)
+submitter_agreement_n = field.alphanum(_config.field_size('agreement', 'agreement_id'), compulsory=True)
 submitter_agreement_n = submitter_agreement_n.setName('Submitters Agreement Number').setResultsName('agreement_id')
 
 # International Standard Agreement Code
-is_code = field.alphanum(data.field_size('agreement', 'international_standard_code'))
+is_code = field.alphanum(_config.field_size('agreement', 'international_standard_code'))
 is_code = is_code.setName('International Standard Agreement Code').setResultsName('international_standard_code')
 
 # Agreement Type
-agreement_type = pp.oneOf(data.agreement_types())
+agreement_type = pp.oneOf(_tables.agreement_types())
 agreement_type = agreement_type.setName('Agreement Type').setResultsName('agreement_type')
 
 # Agreement Start Date
@@ -52,7 +53,7 @@ retention_end_date = field.date()
 retention_end_date = retention_end_date.setName('Retention End Date').setResultsName('retention_end_date')
 
 # Prior Royalty Status
-prior_royalty_status = pp.oneOf(data.field_value('agreement', 'prior_royalty_status'))
+prior_royalty_status = pp.oneOf(_config.field_value('agreement', 'prior_royalty_status'))
 prior_royalty_status = prior_royalty_status.setName('Prior Royalty Status').setResultsName('prior_royalty_status')
 
 # Prior Royalty Start Date
@@ -61,7 +62,7 @@ prior_royalty_start_date = prior_royalty_start_date.setName('Prior Royalty Start
     'prior_royalty_start_date')
 
 # Post Term Collection Status
-post_term_collection_status = pp.oneOf(data.field_value('agreement', 'post_term_collection_status'))
+post_term_collection_status = pp.oneOf(_config.field_value('agreement', 'post_term_collection_status'))
 post_term_collection_status = post_term_collection_status.setName('Post Term Collection Status').setResultsName(
     'post_term_collection_status')
 
@@ -75,11 +76,11 @@ date_of_signature = field.date()
 date_of_signature = date_of_signature.setName('Date of Signature of Agreement').setResultsName('signature_date')
 
 # Number of Works
-number_works = field.numeric(data.field_size('agreement', 'number_works'), compulsory=True)
+number_works = field.numeric(_config.field_size('agreement', 'number_works'), compulsory=True)
 number_works = number_works.setName('Number of Works').setResultsName('works_number')
 
 # Sales/Manufacture Clause
-sm_clause = pp.oneOf(data.field_value('agreement', 'sales_manufacture_clause')) | pp.Literal(' ')
+sm_clause = pp.oneOf(_config.field_value('agreement', 'sales_manufacture_clause')) | pp.Literal(' ')
 sm_clause = sm_clause.setName('Sales/Manufacture Clause').setResultsName('sales_manufacture_clause')
 sm_clause.setParseAction(lambda s: s[0].strip())
 
@@ -92,7 +93,7 @@ advance_given = field.boolean()
 advance_given = advance_given.setName('Advance Given').setResultsName('advance_given')
 
 # Society Given Agreement Number
-society_id = field.alphanum(data.field_size('agreement', 'society_agreement_number'))
+society_id = field.alphanum(_config.field_size('agreement', 'society_agreement_number'))
 society_id = society_id.setName('Society Given Agreement Number').setResultsName('society_agreement_number')
 
 """
