@@ -136,7 +136,6 @@ def _to_agreement(parsed):
     :param parsed: result of parsing an Agreement transaction header
     :return: a AgreementRecord created from the parsed record
     """
-
     return AgreementRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                            parsed.agreement_id, parsed.agreement_type, parsed.start_date,
                            parsed.prior_royalty_status, parsed.post_term_collection_status, parsed.works_number,

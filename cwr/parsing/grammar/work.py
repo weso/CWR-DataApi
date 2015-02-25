@@ -159,7 +159,6 @@ def _to_work(parsed):
     :param parsed: result of parsing a Work transaction header
     :return: a WorkRecord created from the parsed record
     """
-    print parsed
     return work.WorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                            parsed.work_id, parsed.title, parsed.version_type, parsed.musical_distribution_category,
                            printed_edition_publication_date=parsed.printed_edition_publication_date,

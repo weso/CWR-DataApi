@@ -80,7 +80,7 @@ class TestParseTransmissionTrailer(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = transmission.transmission_header
+        self.grammar = transmission.transmission_trailer
 
     def test_valid_full(self):
         """
