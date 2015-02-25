@@ -27,8 +27,11 @@ __status__ = 'Development'
 
 class TestParseTransmissionHeader(unittest.TestCase):
     """
-    Tests that TransmissionHeaderDecoder decodes correctly formatted strings
+    Tests that the Transmission Header grammar decodes correctly formatted strings
     """
+
+    def setUp(self):
+        self.grammar = transmission.transmission_header
 
     def test_valid_full(self):
         """
@@ -38,7 +41,7 @@ class TestParseTransmissionHeader(unittest.TestCase):
         """
         record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
 
-        result = transmission.transmission_header.parseString(record)[0]
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual('HDR', result.record_type)
         self.assertEqual('AA', result.sender_type)
@@ -58,7 +61,7 @@ class TestParseTransmissionHeader(unittest.TestCase):
         """
         record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102               '
 
-        result = transmission.transmission_header.parseString(record)[0]
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual('HDR', result.record_type)
         self.assertEqual('AA', result.sender_type)
@@ -76,6 +79,9 @@ class TestParseTransmissionTrailer(unittest.TestCase):
     Tests that TransmissionTrailerDecoder decodes correctly formatted strings
     """
 
+    def setUp(self):
+        self.grammar = transmission.transmission_header
+
     def test_valid_full(self):
         """
         Tests that TransmissionTrailerDecoder decodes correctly formatted record prefixes.
@@ -84,7 +90,7 @@ class TestParseTransmissionTrailer(unittest.TestCase):
         """
         record = 'TRL012340123456701234568'
 
-        result = transmission.transmission_trailer.parseString(record)[0]
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual('TRL', result.record_type)
         self.assertEqual(1234, result.group_count)
@@ -97,13 +103,16 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
     Tests that TransmissionHeaderDecoder throws exceptions with incorrectly formatted strings.
     """
 
+    def setUp(self):
+        self.grammar = transmission.transmission_header
+
     def test_invalid_wrong_type(self):
         """
         Tests that TransmissionHeaderDecoder throws an exception when the record type is not one of the CWR record types.
         """
         record = 'AAAAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
 
-        self.assertRaises(ParseException, transmission.transmission_header.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_invalid_lower_case_name(self):
         """
@@ -111,7 +120,7 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
         """
         record = 'HDRAA000001234name of the company                          01.102012011512300020121102U+0123         '
 
-        self.assertRaises(ParseException, transmission.transmission_header.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_invalid_wrong_length_too_short(self):
         """
@@ -119,7 +128,7 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
         """
         record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123        '
 
-        self.assertRaises(ParseException, transmission.transmission_header.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
 
 class TestParseTransmissionTrailerException(unittest.TestCase):
@@ -127,10 +136,13 @@ class TestParseTransmissionTrailerException(unittest.TestCase):
     Tests that TransmissionTrailerDecoder throws exceptions with incorrectly formatted strings.
     """
 
+    def setUp(self):
+        self.grammar = transmission.transmission_header
+
     def test_invalid_wrong_length_too_short(self):
         """
         Tests that TransmissionTrailerDecoder throws an exception when the line is too short.
         """
         record = 'TRL01234012345670123456'
 
-        self.assertRaises(ParseException, transmission.transmission_trailer.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)

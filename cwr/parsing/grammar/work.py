@@ -34,7 +34,7 @@ language_code = language_code.setName('Language Code').setResultsName('language_
 
 # Submitter Work Number
 work_id = field.alphanum(data.field_size('work', 'work_id'), compulsory=True)
-work_title = work_title.setName('Submitter Work Number').setResultsName('work_id')
+work_id = work_id.setName('Submitter Work Number').setResultsName('work_id')
 
 # ISWC
 iswc = field.alphanum(data.field_size('work', 'iswc'))
@@ -66,6 +66,10 @@ text_music_relationship = pp.oneOf(data.text_music_relationships())
 text_music_relationship = text_music_relationship.setName('Text Music Relationship').setResultsName(
     'text_music_relationship')
 
+# Composite Type
+composite_type = pp.oneOf(data.composite_types())
+composite_type = composite_type.setName('Composite Type').setResultsName('composite_type')
+
 # Version Type
 version_type = pp.oneOf(data.version_types())
 version_type = version_type.setName('Version Type').setResultsName('version_type')
@@ -85,6 +89,10 @@ lyric_adaptation = lyric_adaptation.setName('Lyric Adaptation').setResultsName('
 # Contact Name
 contact_name = field.alphanum(data.field_size('work', 'contact_name'))
 contact_name = contact_name.setName('Contact Name').setResultsName('contact_name')
+
+# Contact ID
+contact_id = field.alphanum(data.field_size('work', 'contact_id'))
+contact_id = contact_id.setName('Contact ID').setResultsName('contact_id')
 
 # Work Type
 work_type = pp.oneOf(data.work_types())
@@ -118,3 +126,14 @@ catalogue_number = catalogue_number.setName('Catalogue Number').setResultsName('
 # Priority Flag
 priority_flag = field.flag()
 priority_flag = priority_flag.setName('Priority Flag').setResultsName('priority_flag')
+
+"""
+Work patterns.
+"""
+
+work_record = special.lineStart + record_prefix_agreement + work_title + language_code + work_id + iswc + \
+              copyright_date + copyright_number + musical_distribution_category + duration + recorded + \
+              text_music_relationship + composite_type + version_type + excerpt_type + music_arrangement + \
+              lyric_adaptation + contact_name + contact_id + work_type + gr_indicator + composite_count + \
+              printed_edition_publication_date + exceptional_clause + opus_number + catalogue_number + priority_flag + \
+              special.lineEnd

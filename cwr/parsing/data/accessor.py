@@ -22,6 +22,7 @@ class ParserDataStorage(object):
     _file_agreement_types = 'cwr_agreement_type.csv'
     _file_transaction_types = 'cwr_transaction_type.csv'
 
+    _file_composite_type = 'cwr_composite_type.csv'
     _file_work_type = 'cwr_work_type.csv'
     _file_lyric_adaptation = 'cwr_lyric_adaptation.csv'
     _file_music_arrangement = 'cwr_music_arrangement.csv'
@@ -37,6 +38,7 @@ class ParserDataStorage(object):
     _file_record_config = 'cwr_record_config.yml'
     _file_defaults = 'cwr_defaults.yml'
 
+    _composite_types = None
     _work_types = None
     _lyric_adaptations = None
     _music_arrangement = None
@@ -100,6 +102,17 @@ class ParserDataStorage(object):
             self._cwr_defaults = self.__read_yaml_file(self._file_defaults)
 
         return self._cwr_defaults
+
+    def composite_types(self):
+        """
+        Composite Types.
+
+        :return: the allowed CWR Composite Type codes
+        """
+        if self._composite_types is None:
+            self._composite_types = self.__read_csv_file(self._file_composite_type)
+
+        return self._composite_types
 
     def default_version(self):
         """

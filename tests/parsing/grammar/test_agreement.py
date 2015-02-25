@@ -18,6 +18,10 @@ __status__ = 'Development'
 
 
 class TestGrammarGroupHeader(unittest.TestCase):
+
+    def setUp(self):
+        self.grammar = agreement.agreement
+
     def test_valid_full(self):
         """
         Tests that GroupHeaderDecoder decodes correctly formatted Group Header.
@@ -26,7 +30,7 @@ class TestGrammarGroupHeader(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201605062017060701234MYY0123456789012A'
 
-        result = agreement.agreement.parseString(record)[0]
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual('AGR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
@@ -68,7 +72,7 @@ class TestGrammarGroupHeader(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123              OG201201020000000000000000N00000000N000000000000000001234 NN              '
 
-        result = agreement.agreement.parseString(record)[0]
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual('AGR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
@@ -94,13 +98,16 @@ class TestGrammarGroupHeader(unittest.TestCase):
 
 
 class TestGrammarGroupHeaderException(unittest.TestCase):
+
+    def setUp(self):
+        self.grammar = agreement.agreement
     def test_works_zero(self):
         """
         Tests that a exception is thrown when the the works number is zero.
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201605062017060700000MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_missing_agreement_id(self):
         """
@@ -108,7 +115,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023              D1234567890123OG201201022013020320140304D20100405O201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_prior_royalty_missing_date(self):
         """
@@ -116,7 +123,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D00000000D201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_prior_royalty_none_and_date(self):
         """
@@ -124,7 +131,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304N20100405D201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_prior_royalty_all_and_date(self):
         """
@@ -132,7 +139,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304A20100405D201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_post_term_collection_missing_date(self):
         """
@@ -140,7 +147,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D000000002017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_post_term_collection_none_and_date(self):
         """
@@ -148,7 +155,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405N201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_post_term_collection_open_and_date(self):
         """
@@ -156,7 +163,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405O201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_retention_end_and_no_agreement_end(self):
         """
@@ -164,7 +171,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201020000000020140304D20100405D201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_retention_end_before_agreement_end(self):
         """
@@ -172,7 +179,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022020010120140304D20100405D201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_prior_royalty_start_after_agreement_start(self):
         """
@@ -180,7 +187,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20150405D201605062017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_post_term_collection_end_before_retention_end(self):
         """
@@ -188,7 +195,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201401012017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_post_term_collection_end_before_agreement_end_with_retention(self):
         """
@@ -196,7 +203,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201201012017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_post_term_collection_end_before_agreement_end_without_retention(self):
         """
@@ -204,7 +211,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020300000000D20100405D201201012017060701234MYY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_no_sm_clause_for_op(self):
         """
@@ -212,7 +219,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OP201201022013020320140304D20100405D201605062017060701234 YY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
 
     def test_no_sm_clause_for_os(self):
@@ -221,4 +228,4 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         """
         record = 'AGR0000123400000023C1234567890123D1234567890123OS201201022013020320140304D20100405D201605062017060701234 YY0123456789012A'
 
-        self.assertRaises(ParseException, agreement.agreement.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)

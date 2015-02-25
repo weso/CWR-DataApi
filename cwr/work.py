@@ -89,7 +89,7 @@ class WorkRecord(BaseWorkRecord):
                  copyright_number='', copyright_date=None, music_arrangement=None, lyric_adaptation=None,
                  excerpt_type=None, composite_type=None, composite_component_count=1, iswc='', cwr_work_type=None,
                  duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
-                 recorded_indicator=False, priority_flag=False, exceptional_clause=False, grand_rights_indicator=False):
+                 recorded_indicator='U', priority_flag='U', exceptional_clause='U', grand_rights_indicator=False):
         super(WorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title, language_code,
                                          iswc)
         # Work identifying info
