@@ -40,9 +40,7 @@ def char_code(columns):
     """
     Character set code.
 
-    This is one of the character sets allowed on the file.
-
-    The field will be stripped of heading and trailing spaces.
+    This accepts one of the character sets allowed on the file.
 
     :param columns: number of columns for this field
     :return: a parser for the character set field
@@ -67,6 +65,26 @@ def char_code(columns):
     field = field.setParseAction(lambda s: s[0].strip())
 
     # Name
-    field.setName('Char code Field (' + str(columns) + ' columns)')
+    field.setName('Char Code Field (' + str(columns) + ' columns)')
+
+    return field
+
+
+def language_code():
+    """
+    Language code.
+
+    This accepts one of the language codes allowed by the CWR standard.
+
+    :return: a parser for the language code field
+    """
+
+    field = pp.oneOf(data.language_codes())
+
+    # Parse action
+    field = field.setParseAction(lambda s: s[0].strip())
+
+    # Name
+    field.setName('Language Code Field')
 
     return field

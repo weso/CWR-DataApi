@@ -23,12 +23,13 @@ data = ParserDataStorage()
 
 # Prefix fields
 
+
 # Record type
 def record_type(values):
-    field = pp.oneOf(values)
-    field = field.setName('Record Type').setResultsName('record_type')
+    type_field = pp.oneOf(values)
+    type_field = type_field.setName('Record Type').setResultsName('record_type')
 
-    return field
+    return type_field
 
 # Transaction sequence number
 transaction_seq_n = field.numeric(data.field_size('record_prefix', 'transaction_sequence_n'))
@@ -63,14 +64,16 @@ transaction_type = transaction_type.setName('Transaction Type').setResultsName('
 
 # PATTERNS
 
+
 # Record prefix pattern
-def record_prefix(type):
+def record_prefix(required_type):
     """
     Creates a record prefix for the specified record type.
 
-    :param type: the type of the record using this prefix
+    :param required_type: the type of the record using this prefix
     :return: the record prefix
     """
-    result = record_type(type) + transaction_seq_n + record_seq_n
+    result = record_type(required_type) + transaction_seq_n + record_seq_n
     result.leaveWhitespace()
+
     return result

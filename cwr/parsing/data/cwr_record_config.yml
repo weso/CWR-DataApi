@@ -68,3 +68,28 @@ agreement:
         value:
             - 'S'
             - 'M'
+
+work:
+    type:
+        - 'NWR'
+        - 'REV'
+        - 'ISW'
+        - 'EXC'
+    work_title:
+        size: 60
+    work_id:
+        size: 14
+    iswc:
+        size: 11
+    copyright_number:
+        size: 12
+    contact_name:
+        size: 30
+    contact_id:
+        size: 10
+    composite_count:
+        size: 3
+    opus_number:
+        size: 25
+    catalogue:
+        size: 25

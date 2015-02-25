@@ -22,15 +22,34 @@ class ParserDataStorage(object):
     _file_agreement_types = 'cwr_agreement_type.csv'
     _file_transaction_types = 'cwr_transaction_type.csv'
 
+    _file_work_type = 'cwr_work_type.csv'
+    _file_lyric_adaptation = 'cwr_lyric_adaptation.csv'
+    _file_music_arrangement = 'cwr_music_arrangement.csv'
+    _file_version_type = 'cwr_version_type.csv'
+    _file_excerpt_type = 'cwr_excerpt_type.csv'
+    _file_tmr = 'cwr_text_music_relationship.csv'
+    _file_mwdc = 'cwr_musical_work_distribution_category.csv'
+
+    _file_language_codes = 'cwr_language_code.csv'
+
     _file_character_sets = 'cwr_character_set.csv'
 
     _file_record_config = 'cwr_record_config.yml'
     _file_defaults = 'cwr_defaults.yml'
 
+    _work_types = None
+    _lyric_adaptations = None
+    _music_arrangement = None
     _record_types = None
     _sender_types = None
     _agreement_types = None
     _transaction_types = None
+
+    _version_types = None
+    _excerpt_types = None
+    _tmr = None
+    _mwdc = None
+    _language_codes = None
 
     _character_sets = None
 
@@ -90,6 +109,17 @@ class ParserDataStorage(object):
         """
         return self.cwr_defaults()['default_version']
 
+    def excerpt_types(self):
+        """
+        CWR Excerpt Types.
+
+        :return: the allowed Excerpt Type codes
+        """
+        if self._excerpt_types is None:
+            self._excerpt_types = self.__read_csv_file(self._file_excerpt_type)
+
+        return self._excerpt_types
+
     def field_size(self, record, field):
         """
         Returns the expected size for a record's field.
@@ -124,6 +154,52 @@ class ParserDataStorage(object):
         :return: the expected record type on the record prefix
         """
         return self.record_config()[record]['type']
+
+    def language_codes(self):
+        """
+        Allowed language codes.
+
+        :return: the allowed language codes
+        """
+        if self._language_codes is None:
+            self._language_codes = self.__read_csv_file(self._file_language_codes)
+
+        return self._language_codes
+
+    def lyric_adaptations(self):
+        """
+        Lyric Adaptation codes.
+
+        :return: the allowed CWR Lyric Adaptation codes
+        """
+        if self._lyric_adaptations is None:
+            self._lyric_adaptations = self.__read_csv_file(self._file_lyric_adaptation)
+
+        return self._lyric_adaptations
+
+    def music_arrangements(self):
+        """
+        Music Arrangement codes.
+
+        :return: the allowed Music Arrangement codes
+        """
+        if self._music_arrangement is None:
+            self._music_arrangement = self.__read_csv_file(self._file_music_arrangement)
+
+        return self._music_arrangement
+
+    def musical_work_distribution_categories(self):
+        """
+        Musical Work Distribution Categories.
+
+        These are the allowed Musical Work Distribution Categories.
+
+        :return: the allowed Musical Work Distribution Categories codes
+        """
+        if self._mwdc is None:
+            self._mwdc = self.__read_csv_file(self._file_mwdc)
+
+        return self._mwdc
 
     def record_config(self):
         """
@@ -164,6 +240,19 @@ class ParserDataStorage(object):
 
         return self._sender_types
 
+    def text_music_relationships(self):
+        """
+        Text-Music Relationships.
+
+        These are the allowed Text-Music Relationship code.
+
+        :return: the allowed Text-Music Relationship codes
+        """
+        if self._tmr is None:
+            self._tmr = self.__read_csv_file(self._file_tmr)
+
+        return self._tmr
+
     def transaction_types(self):
         """
         Types of transactions.
@@ -176,6 +265,28 @@ class ParserDataStorage(object):
             self._transaction_types = self.__read_csv_file(self._file_transaction_types)
 
         return self._transaction_types
+
+    def version_types(self):
+        """
+        Version Types.
+
+        :return: the allowed Version Type codes
+        """
+        if self._version_types is None:
+            self._version_types = self.__read_csv_file(self._file_version_type)
+
+        return self._version_types
+
+    def work_types(self):
+        """
+        Work Type codes.
+
+        :return: the allowed CWR Work Type codes
+        """
+        if self._work_types is None:
+            self._work_types = self.__read_csv_file(self._file_work_type)
+
+        return self._work_types
 
     def __read_csv_file(self, file_name):
         """
