@@ -27,51 +27,6 @@ lineStart.setName("Start of line")
 lineEnd = pp.lineEnd.suppress()
 lineEnd.setName("End of line")
 
-# SPECIAL CONSTRAINTS FIELDS
-
-"""
-These are fields where special constraints are applied.
-"""
-
-
-def numeric_from(columns, minimum):
-    """
-    Numeric field with a minimum value.
-
-    This is an integer numeric field where each value should be higher or equal than the minimum
-
-    The field will be transformed into an integer.
-
-    :param columns: number of columns for this field
-    :return: a parser for the integer numeric field
-    """
-
-    # Basic field
-    field = pp.Word(pp.nums, exact=columns)
-
-    # Parse action
-    field.setParseAction(lambda n: __parse_number_from(n[0], minimum))
-
-    # Name
-    field.setName('Numeric Field (' + str(columns) + ' columns, starting at ' + str(minimum) + ')')
-
-    return field
-
-
-def __parse_number_from(number, minimum):
-    """
-    Parses a string into an integer, only if it is equal or above a minimum value.
-
-    :param number: the string to parse
-    :param minimum: the minimum value
-    :return: the parsed number, if it was valid
-    """
-    result = int(number)
-    if result < minimum:
-        raise pp.ParseException(0, 0, "number value invalid")
-
-    return result
-
 # CONCRETE CASES FIELDS
 
 """

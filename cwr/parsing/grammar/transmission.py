@@ -78,15 +78,15 @@ edi_version = pp.Literal(data.field_value('transmission_header', 'edi_version'))
 edi_version = edi_version.setName('EDI Version').setResultsName('edi_version')
 
 # Creation Date
-creation_date = field.date
+creation_date = field.date(compulsory=True)
 creation_date = creation_date.setName('Creation Date').setResultsName('creation_date')
 
 # Creation Time
-creation_time = field.time
+creation_time = field.time()
 creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
 
 # Transmission Date
-transmission_date = field.date
+transmission_date = field.date(compulsory=True)
 transmission_date = transmission_date.setName('Transmission Date').setResultsName('transmission_date')
 
 # Character Set

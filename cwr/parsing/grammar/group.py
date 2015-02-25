@@ -58,7 +58,7 @@ record_type_header = record.record_type(data.record_type('group_header'))
 record_type_trailer = record.record_type(data.record_type('group_trailer'))
 
 # Group ID
-group_id = special.numeric_from(data.field_size('group_header', 'group_id'), 1)
+group_id = field.numeric(data.field_size('group_header', 'group_id'), compulsory=True)
 group_id = group_id.setName('Group ID').setResultsName('group_id')
 
 # Version Number

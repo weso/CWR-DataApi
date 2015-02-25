@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import re
+
 import pyparsing as pp
 
 from cwr.parsing.data.accessor import ParserDataStorage
@@ -39,15 +41,15 @@ agreement_type = pp.oneOf(data.agreement_types())
 agreement_type = agreement_type.setName('Agreement Type').setResultsName('agreement_type')
 
 # Agreement Start Date
-agreement_start_date = field.date
+agreement_start_date = field.date(compulsory=True)
 agreement_start_date = agreement_start_date.setName('Agreement Start Date').setResultsName('start_date')
 
 # Agreement End Date
-agreement_end_date = field.date_optional
+agreement_end_date = field.date()
 agreement_end_date = agreement_end_date.setName('Agreement End Date').setResultsName('end_date')
 
 # Retention End Date
-retention_end_date = field.date_optional
+retention_end_date = field.date()
 retention_end_date = retention_end_date.setName('Retention End Date').setResultsName('retention_end_date')
 
 # Prior Royalty Status
@@ -55,7 +57,7 @@ prior_royalty_status = pp.oneOf(data.field_value('agreement', 'prior_royalty_sta
 prior_royalty_status = prior_royalty_status.setName('Prior Royalty Status').setResultsName('prior_royalty_status')
 
 # Prior Royalty Start Date
-prior_royalty_start_date = field.date_optional
+prior_royalty_start_date = field.date()
 prior_royalty_start_date = prior_royalty_start_date.setName('Prior Royalty Start Date').setResultsName(
     'prior_royalty_start_date')
 
@@ -65,12 +67,12 @@ post_term_collection_status = post_term_collection_status.setName('Post Term Col
     'post_term_collection_status')
 
 # Post Term Collection End Date
-post_term_collection_end_date = field.date_optional
+post_term_collection_end_date = field.date()
 post_term_collection_end_date = post_term_collection_end_date.setName('Post Term Collection End Date').setResultsName(
     'post_term_collection_end_date')
 
 # Date of Signature of Agreement
-date_of_signature = field.date_optional
+date_of_signature = field.date()
 date_of_signature = date_of_signature.setName('Date of Signature of Agreement').setResultsName('signature_date')
 
 # Number of Works
@@ -82,11 +84,11 @@ sm_clause = pp.oneOf(data.field_value('agreement', 'sales_manufacture_clause'))
 sm_clause = sm_clause.setName('Sales/Manufacture Clause').setResultsName('sales_manufacture_clause')
 
 # Shares Change
-sales_change = field.boolean
+sales_change = field.boolean()
 sales_change = sales_change.setName('Shares Change').setResultsName('shares_change')
 
 # Advance Given
-advance_given = field.boolean
+advance_given = field.boolean()
 advance_given = advance_given.setName('Advance Given').setResultsName('advance_given')
 
 # Society Given Agreement Number
@@ -124,6 +126,24 @@ def _to_agreement(parsed):
     :param parsed: result of parsing an Agreement transaction header
     :return: a AgreementRecord created from the parsed record
     """
+
+    print parsed
+
+    match_result = re.match('0*', str(parsed.prior_royalty_start_date))
+    if parsed.prior_royalty_status == 'D':
+        if match_result:
+            raise pp.ParseException(parsed.prior_royalty_start_date, msg='Prior Royalty Start Date required')
+    elif not match_result:
+        raise pp.ParseException(parsed.prior_royalty_start_date, msg='Prior Royalty Start Date should not be set')
+
+    match_result = re.match('0*', str(parsed.post_term_collection_end_date))
+    if parsed.post_term_collection_status == 'D':
+        if match_result:
+            raise pp.ParseException(parsed.post_term_collection_end_date, msg='Post Term Collection End Date required')
+    elif not match_result:
+        raise pp.ParseException(parsed.post_term_collection_end_date,
+                                msg='Post Term Collection End Date should not be set')
+
     return AgreementRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                            parsed.agreement_id, parsed.agreement_type, parsed.start_date,
                            parsed.prior_royalty_status, parsed.post_term_collection_status, parsed.works_number,
