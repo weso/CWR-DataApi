@@ -4,7 +4,7 @@ import pyparsing as pp
 
 from cwr.file import FileTag
 from cwr.grammar import field, special
-from cwr.data.accessor import ParserDataStorage
+from data.accessor import ParserDataStorage
 
 
 """

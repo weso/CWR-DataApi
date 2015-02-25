@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 import cwr.constraints.agreement as constraints
-from cwr.data.accessor import ParserDataStorage
+from data.accessor import ParserDataStorage
 from cwr.grammar import field, special, record
 from cwr.agreement import AgreementRecord
 

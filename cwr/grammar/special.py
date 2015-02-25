@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from cwr.data.accessor import ParserDataStorage
+from data.accessor import ParserDataStorage
 
 
 """
