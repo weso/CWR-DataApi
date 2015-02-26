@@ -17,13 +17,13 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestGrammarGroupHeader(unittest.TestCase):
+class TestGrammarAgreement(unittest.TestCase):
     def setUp(self):
         self.grammar = agreement.agreement
 
     def test_valid_full(self):
         """
-        Tests that GroupHeaderDecoder decodes correctly formatted Group Header.
+        Tests that the Agreement grammar parses correctly formatted strings.
 
         This test contains all the optional fields.
         """

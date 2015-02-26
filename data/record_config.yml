@@ -101,3 +101,16 @@ work:
         size: 2
     composite_type:
         size: 3
+
+acknowledgement:
+    type: 'ACK'
+    group_id:
+        size: 5
+    transaction_n:
+        size: 8
+    title:
+        size: 60
+    submitter_id:
+        size: 20
+    recipient_id:
+        size: 20

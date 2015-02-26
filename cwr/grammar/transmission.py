@@ -126,7 +126,7 @@ def _to_transmissionheader(parsed):
     :param parsed: result of parsing a Transmission Header
     :return: a TransmissionHeader created from the parsed record
     """
-    creation_datetime = datetime.datetime.combine(parsed.creation_date, parsed.creation_time)
+    creation_datetime = datetime.datetime.combine(parsed.creation_date_time, parsed.creation_time)
 
     return TransmissionHeader(parsed.record_type, parsed.sender_id, parsed.sender_name, parsed.sender_type,
                               creation_datetime,

@@ -178,6 +178,7 @@ class CWRTables(object):
     _file_mwdc = 'cwr_musical_work_distribution_category.csv'
     _file_language_codes = 'cwr_language_code.csv'
     _file_character_sets = 'cwr_character_set.csv'
+    _file_transaction_status = 'cwr_transaction_status.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -194,6 +195,7 @@ class CWRTables(object):
     _mwdc = None
     _language_codes = None
     _character_sets = None
+    _transaction_status = None
 
     def agreement_types(self):
         """
@@ -327,6 +329,17 @@ class CWRTables(object):
             self._tmr = self._reader.read_csv_file(self._file_tmr)
 
         return self._tmr
+
+    def transaction_status(self):
+        """
+        Transaction Status codes
+
+        :return: the allowed CWR file transaction status codes
+        """
+        if self._transaction_status is None:
+            self._transaction_status = self._reader.read_csv_file(self._file_transaction_status)
+
+        return self._transaction_status
 
     def transaction_types(self):
         """
