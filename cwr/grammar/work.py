@@ -5,6 +5,7 @@ import pyparsing as pp
 from data.accessor import CWRTables, CWRConfiguration
 from cwr.grammar import field, field_special, record
 from cwr import work
+from cwr.constraints import work as constraints
 
 
 """
@@ -71,6 +72,17 @@ text_music_relationship = text_music_relationship.setName('Text Music Relationsh
 
 # Composite Type
 composite_type = pp.oneOf(_tables.composite_types())
+composite_type_option = pp.Regex('[ ]{' + str(_config.field_size('work', 'composite_type')) + '}')
+
+composite_type.setName('Composite Type')
+composite_type_option.setName('Composite Type')
+
+composite_type_option.leaveWhitespace()
+
+composite_type_option.setParseAction(pp.replaceWith(None))
+
+composite_type = composite_type | composite_type_option
+
 composite_type = composite_type.setName('Composite Type').setResultsName('composite_type')
 
 # Version Type
@@ -83,10 +95,32 @@ excerpt_type = excerpt_type.setName('Excerpt Type').setResultsName('excerpt_type
 
 # Music Arrangement
 music_arrangement = pp.oneOf(_tables.music_arrangements())
+music_arrangement_option = pp.Regex('[ ]{' + str(_config.field_size('work', 'music_arrangement')) + '}')
+
+music_arrangement.setName('Music Arrangement')
+music_arrangement_option.setName('Music Arrangement')
+
+music_arrangement_option.leaveWhitespace()
+
+music_arrangement_option.setParseAction(pp.replaceWith(None))
+
+music_arrangement = music_arrangement | music_arrangement_option
+
 music_arrangement = music_arrangement.setName('Music Arrangement').setResultsName('music_arrangement')
 
 # Lyric Adaptation
 lyric_adaptation = pp.oneOf(_tables.lyric_adaptations())
+lyric_adaptation_option = pp.Regex('[ ]{' + str(_config.field_size('work', 'lyric_adaptation')) + '}')
+
+lyric_adaptation.setName('Lyric Adaptation')
+lyric_adaptation_option.setName('Lyric Adaptation')
+
+lyric_adaptation_option.leaveWhitespace()
+
+lyric_adaptation_option.setParseAction(pp.replaceWith(None))
+
+lyric_adaptation = lyric_adaptation | lyric_adaptation_option
+
 lyric_adaptation = lyric_adaptation.setName('Lyric Adaptation').setResultsName('lyric_adaptation')
 
 # Contact Name
@@ -99,6 +133,17 @@ contact_id = contact_id.setName('Contact ID').setResultsName('contact_id')
 
 # Work Type
 work_type = pp.oneOf(_tables.work_types())
+work_type_option = pp.Regex('[ ]{' + str(_config.field_size('work', 'work_type')) + '}')
+
+work_type.setName('Work Type')
+work_type_option.setName('Work Type')
+
+work_type_option.leaveWhitespace()
+
+work_type_option.setParseAction(pp.replaceWith(None))
+
+work_type = work_type | work_type_option
+
 work_type = work_type.setName('Work Type').setResultsName('cwr_work_type')
 
 # Grand Rights Indicator
@@ -146,6 +191,15 @@ Parsing actions for the patterns.
 """
 
 work_record.setParseAction(lambda p: _to_work(p))
+
+"""
+Validation actions for the patterns.
+"""
+work_record.addParseAction(lambda p: constraints.ser_has_duration(p[0]))
+work_record.addParseAction(lambda p: constraints.mod_has_music_arrangement(p[0]))
+work_record.addParseAction(lambda p: constraints.mod_has_lyric_adaptation(p[0]))
+work_record.addParseAction(lambda p: constraints.composite_has_count(p[0]))
+work_record.addParseAction(lambda p: constraints.count_when_composite(p[0]))
 
 """
 Parsing methods.

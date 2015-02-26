@@ -93,3 +93,11 @@ work:
         size: 25
     catalogue:
         size: 25
+    music_arrangement:
+        size: 3
+    lyric_adaptation:
+        size: 3
+    work_type:
+        size: 2
+    composite_type:
+        size: 3

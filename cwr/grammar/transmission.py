@@ -104,7 +104,7 @@ These are the grammatical structures for the Transmission Header and Transmissio
 # Transmission Header pattern
 transmission_header = field_special.lineStart + record_type_header + sender_type + sender_id + sender_name + edi_version + \
                       creation_date + creation_time + transmission_date + (
-                      character_set | pp.empty) + field_special.lineEnd
+                          character_set | pp.empty) + field_special.lineEnd
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + record_type_trailer + record.group_count + record.transaction_count + \
                        record.record_count + field_special.lineEnd

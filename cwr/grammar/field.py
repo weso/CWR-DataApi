@@ -232,10 +232,11 @@ This value will be parsed into a boolean type value.
 """
 
 
-def boolean():
+def boolean(compulsory=False):
     """
     Creates the grammar for a Boolean (F) field, accepting only 'Y' or 'N'
 
+    :param compulsory: indicates if the field must be filled
     :return: grammar for the flag field
     """
 
@@ -247,6 +248,21 @@ def boolean():
 
     # Name
     field.setName('Boolean Field')
+
+    if not compulsory:
+        optional = pp.Literal(' ')
+
+        optional.setParseAction(lambda b: False)
+
+        optional.setName('Boolean Field')
+
+        # White spaces are not removed
+        optional.leaveWhitespace()
+
+        field = field | optional
+
+        # Name
+        field.setName('Boolean Field')
 
     return field
 
@@ -360,11 +376,11 @@ def date(compulsory=False):
 
         field = field | optional
 
+        # Name
+        field.setName('Date Field')
+
     # White spaces are not removed
     field.leaveWhitespace()
-
-    # Name
-    field.setName('Date Field')
 
     return field
 
