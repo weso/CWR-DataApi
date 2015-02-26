@@ -9,6 +9,11 @@ CWR Work constraints.
 These are for validating works.
 """
 
+__author__ = 'Bernardo Martínez Garrido'
+__license__ = 'MIT'
+__version__ = '0.0.0'
+__status__ = 'Development'
+
 
 def ser_has_duration(work):
     """

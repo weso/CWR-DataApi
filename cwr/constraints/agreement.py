@@ -9,6 +9,11 @@ CWR Agreement constraints.
 These are for validating agreements.
 """
 
+__author__ = 'Bernardo Martínez Garrido'
+__license__ = 'MIT'
+__version__ = '0.0.0'
+__status__ = 'Development'
+
 
 def prior_royalty_status_and_date_coherency(agreement):
     """

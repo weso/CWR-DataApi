@@ -117,6 +117,7 @@ agreement.setParseAction(lambda a: _to_agreement(a))
 """
 Validation actions for the patterns.
 """
+
 agreement.addParseAction(lambda p: constraints.prior_royalty_status_and_date_coherency(p[0]))
 agreement.addParseAction(lambda p: constraints.post_term_collection_status_and_date_coherency(p[0]))
 agreement.addParseAction(lambda p: constraints.retention_end_date_after_agreement_end_date(p[0]))

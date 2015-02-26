@@ -7,6 +7,7 @@ import pyparsing as pp
 from data.accessor import CWRConfiguration, CWRTables
 from cwr.grammar import field, field_special, record
 from cwr.acknowledgement import AcknowledgementRecord
+from cwr.constraints import acknowledgement as constraints
 
 
 """
@@ -92,6 +93,12 @@ Parsing actions for the patterns.
 acknowledgement.setParseAction(lambda a: _to_acknowledgement_record(a))
 
 creation_date_time.setParseAction(lambda d: _combine_date_time(d[0].creation_date, d[0].creation_time))
+
+"""
+Validation actions for the patterns.
+"""
+
+acknowledgement.addParseAction(lambda p: constraints.title_when_record_requires(p[0]))
 
 """
 Parsing methods.
