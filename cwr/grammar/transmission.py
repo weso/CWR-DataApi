@@ -67,11 +67,11 @@ sender_type = pp.oneOf(_tables.sender_types())
 sender_type = sender_type.setName('Sender Type').setResultsName('sender_type')
 
 # Sender ID
-sender_id = field.numeric(_config.field_size('transmission_header', 'sender_id'))
+sender_id = field.numeric(_config.field_size('transmission_header', 'sender_id'), compulsory=True)
 sender_id = sender_id.setName('Sender ID').setResultsName('sender_id')
 
 # Sender Name
-sender_name = field.alphanum(_config.field_size('transmission_header', 'sender_name'))
+sender_name = field.alphanum(_config.field_size('transmission_header', 'sender_name'), compulsory=True)
 sender_name = sender_name.setName('Sender Name').setResultsName('sender_name')
 
 # EDI Version
@@ -101,9 +101,13 @@ Transmission patterns.
 These are the grammatical structures for the Transmission Header and Transmission Trailer.
 """
 
+# Creation date and time pattern
+creation_date_time = pp.Group(creation_date + creation_time)
+creation_date_time = creation_date_time.setName('Creation Date and Time').setResultsName('creation_date_time')
+
 # Transmission Header pattern
 transmission_header = field_special.lineStart + record_type_header + sender_type + sender_id + sender_name + edi_version + \
-                      creation_date + creation_time + transmission_date + (
+                      creation_date_time + transmission_date + (
                           character_set | pp.empty) + field_special.lineEnd
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + record_type_trailer + record.group_count + record.transaction_count + \
@@ -118,6 +122,19 @@ The header will be parsed into a TransmissionHeader and the trailer into a Trans
 transmission_header.setParseAction(lambda h: _to_transmissionheader(h))
 transmission_trailer.setParseAction(lambda t: _to_transmissiontrailer(t))
 
+creation_date_time.setParseAction(lambda d: _combine_date_time(d[0].creation_date, d[0].creation_time))
+
+
+def _combine_date_time(date, time):
+    """
+    Combines the received date and time.
+
+    :param date: date to combine
+    :param time: time to combine
+    :return: the date and time combined
+    """
+    return datetime.datetime.combine(date, time)
+
 
 def _to_transmissionheader(parsed):
     """
@@ -126,10 +143,8 @@ def _to_transmissionheader(parsed):
     :param parsed: result of parsing a Transmission Header
     :return: a TransmissionHeader created from the parsed record
     """
-    creation_datetime = datetime.datetime.combine(parsed.creation_date_time, parsed.creation_time)
-
     return TransmissionHeader(parsed.record_type, parsed.sender_id, parsed.sender_name, parsed.sender_type,
-                              creation_datetime,
+                              parsed.creation_date_time,
                               parsed.transmission_date, parsed.edi_version, parsed.character_set)
 
 

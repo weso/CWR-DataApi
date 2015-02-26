@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 import unittest
-import datetime
 
 from pyparsing import ParseException
 
@@ -48,9 +47,15 @@ class TestParseTransmissionHeader(unittest.TestCase):
         self.assertEqual(1234, result.sender_id)
         self.assertEqual('NAME OF THE COMPANY', result.sender_name)
         self.assertEqual('01.10', result.edi_standard)
-        self.assertEqual(datetime.datetime.strptime('20120115', '%Y%m%d').date(), result.creation_date_time)
-        self.assertEqual(datetime.datetime.strptime('123000', '%H%M%S').time(), result.creation_time)
-        self.assertEqual(datetime.datetime.strptime('20121102', '%Y%m%d').date(), result.transmission_date)
+        self.assertEqual(2012, result.creation_date_time.year)
+        self.assertEqual(1, result.creation_date_time.month)
+        self.assertEqual(15, result.creation_date_time.day)
+        self.assertEqual(12, result.creation_date_time.hour)
+        self.assertEqual(30, result.creation_date_time.minute)
+        self.assertEqual(0, result.creation_date_time.second)
+        self.assertEqual(2012, result.transmission_date.year)
+        self.assertEqual(11, result.transmission_date.month)
+        self.assertEqual(2, result.transmission_date.day)
         self.assertEqual('U+0123', result.character_set)
 
     def test_valid_no_charset(self):
@@ -68,9 +73,15 @@ class TestParseTransmissionHeader(unittest.TestCase):
         self.assertEqual(1234, result.sender_id)
         self.assertEqual('NAME OF THE COMPANY', result.sender_name)
         self.assertEqual('01.10', result.edi_standard)
-        self.assertEqual(datetime.datetime.strptime('20120115', '%Y%m%d').date(), result.creation_date_time)
-        self.assertEqual(datetime.datetime.strptime('123000', '%H%M%S').time(), result.creation_time)
-        self.assertEqual(datetime.datetime.strptime('20121102', '%Y%m%d').date(), result.transmission_date)
+        self.assertEqual(2012, result.creation_date_time.year)
+        self.assertEqual(1, result.creation_date_time.month)
+        self.assertEqual(15, result.creation_date_time.day)
+        self.assertEqual(12, result.creation_date_time.hour)
+        self.assertEqual(30, result.creation_date_time.minute)
+        self.assertEqual(0, result.creation_date_time.second)
+        self.assertEqual(2012, result.transmission_date.year)
+        self.assertEqual(11, result.transmission_date.month)
+        self.assertEqual(2, result.transmission_date.day)
         self.assertEqual('', result.character_set)
 
 

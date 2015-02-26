@@ -25,7 +25,7 @@ class TransmissionHeader(Record):
     information as well as the name of the sender.
     """
 
-    def __init__(self, record_type, sender_id, sender_name, sender_type, creation_date, transmission_date,
+    def __init__(self, record_type, sender_id, sender_name, sender_type, creation_date_time, transmission_date,
                  edi_standard='01.10',
                  character_set=""):
         """
@@ -34,7 +34,7 @@ class TransmissionHeader(Record):
         :param sender_id: the CWR Sender ID or the Society Code
         :param sender_name: name of the sender
         :param sender_type: code identifying the type of sender
-        :param creation_date: creation date and time for the file
+        :param creation_date_time: creation date and time for the file
         :param transmission_date: date in which the file was transmitted
         :param record_type: the CWR record type
         :param edi_standard: EDI standard version (01.10 by default)
@@ -51,7 +51,7 @@ class TransmissionHeader(Record):
         self._sender_type = sender_type
 
         # Dates
-        self._creation_date = creation_date
+        self._creation_date_time = creation_date_time
         self._transmission_date = transmission_date
 
         # Other info
@@ -65,7 +65,7 @@ class TransmissionHeader(Record):
     def __repr__(self):
         return '<class %s>(sender_id=%r, sender_name=%r, sender_type=%r, creation_date=%r, transmission_date=%r)' % (
             'TransmissionHeader', self._sender_id,
-            self._sender_name, self._sender_type, self._creation_date, self._transmission_date)
+            self._sender_name, self._sender_type, self._creation_date_time, self._transmission_date)
 
     @property
     def character_set(self):
@@ -82,26 +82,15 @@ class TransmissionHeader(Record):
         return self._character_set
 
     @property
-    def creation_date(self):
+    def creation_date_time(self):
         """
-        Creation Date field. Date.
+        Creation Date and Time fields. Date and time.
 
         The date that this file was created.
 
         :return: the creation date
         """
-        return self._creation_date.date()
-
-    @property
-    def creation_time(self):
-        """
-        Creation Time fields. Time.
-
-        The time at which this file was created.
-
-        :return: the creation time
-        """
-        return self._creation_date.time()
+        return self._creation_date_time
 
     @property
     def edi_standard(self):
