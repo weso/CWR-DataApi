@@ -35,6 +35,8 @@ class BaseWorkRecord(TransactionRecord):
         If the International Standard Work Code has been notified to you, you may include it in your registration
         or revision.
 
+        This will return a ISWCCode instance or None.
+
         :return: the International Standard Work Code
         """
         return self._iswc
@@ -87,7 +89,7 @@ class WorkRecord(BaseWorkRecord):
                  musical_distribution_category,
                  printed_edition_publication_date=None, text_music_relationship=None, language_code=None,
                  copyright_number='', copyright_date=None, music_arrangement=None, lyric_adaptation=None,
-                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc='', cwr_work_type=None,
+                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, cwr_work_type=None,
                  duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
                  recorded_indicator='U', priority_flag='U', exceptional_clause='U', grand_rights_indicator=False):
         super(WorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title, language_code,

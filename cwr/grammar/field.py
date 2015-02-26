@@ -352,7 +352,7 @@ def date(compulsory=False):
 
     if not compulsory:
         # If it is not compulsory the empty date is accepted
-        optional = pp.Literal('00000000')
+        optional = pp.Regex('[0]{8}')
         optional.setParseAction(pp.replaceWith(None))
 
         # Name

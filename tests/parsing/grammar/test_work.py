@@ -28,7 +28,7 @@ class TestWorkValid(unittest.TestCase):
 
         This test contains all the optional fields.
         """
-        record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789A012345678920130102AB0123456789POP030201YMUSPOTMODMOVNEWNONTHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
+        record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789POP030201YMUSPOTMODMOVNEWNONTHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
 
         result = self.grammar.parseString(record)[0]
 
@@ -38,7 +38,7 @@ class TestWorkValid(unittest.TestCase):
         self.assertEqual('TITLE OF THE WORK', result.title)
         self.assertEqual('EN', result.language_code)
         self.assertEqual('ABCD0123456789', result.work_id)
-        self.assertEqual('A0123456789', result.iswc)
+        self.assertEqual('T0123456789', result.iswc)
         self.assertEqual(1, result.copyright_date.month)
         self.assertEqual(2, result.copyright_date.day)
         self.assertEqual(2013, result.copyright_date.year)

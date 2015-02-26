@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar import field, special, record
+from cwr.grammar import field, field_special, record
 from cwr import work
 
 
@@ -32,7 +32,7 @@ work_title = field.alphanum(_config.field_size('work', 'work_title'), compulsory
 work_title = work_title.setName('Work Title').setResultsName('title')
 
 # Language Code
-language_code = special.language_code()
+language_code = pp.oneOf(_tables.language_codes())
 language_code = language_code.setName('Language Code').setResultsName('language_code')
 
 # Submitter Work Number
@@ -40,7 +40,7 @@ work_id = field.alphanum(_config.field_size('work', 'work_id'), compulsory=True)
 work_id = work_id.setName('Submitter Work Number').setResultsName('work_id')
 
 # ISWC
-iswc = field.alphanum(_config.field_size('work', 'iswc'))
+iswc = field_special.iswc()
 iswc = iswc.setName('ISWC').setResultsName('iswc')
 
 # Copyright Date
@@ -134,12 +134,12 @@ priority_flag = priority_flag.setName('Priority Flag').setResultsName('priority_
 Work patterns.
 """
 
-work_record = special.lineStart + record_prefix_agreement + work_title + language_code + work_id + iswc + \
+work_record = field_special.lineStart + record_prefix_agreement + work_title + language_code + work_id + iswc + \
               copyright_date + copyright_number + musical_distribution_category + duration + recorded + \
               text_music_relationship + composite_type + version_type + excerpt_type + music_arrangement + \
               lyric_adaptation + contact_name + contact_id + work_type + gr_indicator + composite_count + \
               printed_edition_publication_date + exceptional_clause + opus_number + catalogue_number + priority_flag + \
-              special.lineEnd
+              field_special.lineEnd
 
 """
 Parsing actions for the patterns.

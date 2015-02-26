@@ -3,6 +3,7 @@
 import pyparsing as pp
 
 from data.accessor import CWRTables
+from cwr.other import ISWCCode
 
 
 """
@@ -70,21 +71,68 @@ def char_code(columns):
     return field
 
 
-def language_code():
+def iswc(compulsory=False):
     """
-    Language code.
+    ISWC field.
 
-    This accepts one of the language codes allowed by the CWR standard.
+    A ISWC code written on a field follows the Pattern TNNNNNNNNNC. This being:
+    - T: header, it is always T.
+    - N: numeric value.
+    - C: control digit.
 
-    :return: a parser for the language code field
+    So, for example, an ISWC code field can contain T0345246801.
+
+    :return: a parser for the ISWC field
     """
 
-    field = pp.oneOf(_tables.language_codes())
+    # Header is always T
+    header = pp.Literal('T').suppress()
+    header = header.setName('ISWC Header').setResultsName('header')
+
+    # ID code is composed of 9 numbers
+    id_code = pp.Regex('[0-9]{9}')
+    id_code = id_code.setName('ID Code').setResultsName('id_code')
+    id_code = id_code.setParseAction(lambda c: int(c[0]))
+
+    # Check digit is a single number
+    check_digit = pp.Regex('[0-9]')
+    check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
+    check_digit = check_digit.setParseAction(lambda c: int(c[0]))
+
+    # T followed by 10 numbers
+    iswc = pp.Combine(header + id_code + check_digit)
 
     # Parse action
-    field = field.setParseAction(lambda s: s[0].strip())
+    iswc.setParseAction(lambda c: _to_iswccode(c))
 
     # Name
-    field.setName('Language Code Field')
+    iswc.setName('ISWC Field')
 
-    return field
+    if not compulsory:
+        # If it is not compulsory then it can be set as empty
+        empty = pp.Regex('[ ]{11}')
+        empty.setParseAction(pp.replaceWith(None))
+        empty.setName('ISWC Field')
+
+        iswc = empty | iswc
+        # Name
+        iswc.setName('ISWC Field')
+
+    # White spaces are not removed
+    iswc.leaveWhitespace()
+
+    return iswc
+
+
+def _to_iswccode(code):
+    """
+    Transforms the result of parsing a ISWC code string into a ISWCCode instance.
+
+    :param code: the parsed code
+    :return: a ISWCCode instance
+    """
+
+    if code:
+        return ISWCCode(code.id_code, code.check_digit)
+    else:
+        return code

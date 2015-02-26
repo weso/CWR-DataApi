@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestFlagValid(unittest.TestCase):
     """
-    Tests that the flag field accepts and parse valid values.
+    Tests that the flag field accepts and parses valid values.
     """
 
     def setUp(self):

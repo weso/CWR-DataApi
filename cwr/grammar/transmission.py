@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar import field, special, record
+from cwr.grammar import field, field_special, record
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
 
@@ -91,7 +91,7 @@ transmission_date = field.date(compulsory=True)
 transmission_date = transmission_date.setName('Transmission Date').setResultsName('transmission_date')
 
 # Character Set
-character_set = special.char_code(
+character_set = field_special.char_code(
     _config.field_size('transmission_header', 'character_set'))
 character_set = character_set.setName('Character Set').setResultsName('character_set')
 
@@ -102,11 +102,12 @@ These are the grammatical structures for the Transmission Header and Transmissio
 """
 
 # Transmission Header pattern
-transmission_header = special.lineStart + record_type_header + sender_type + sender_id + sender_name + edi_version + \
-                      creation_date + creation_time + transmission_date + (character_set | pp.empty) + special.lineEnd
+transmission_header = field_special.lineStart + record_type_header + sender_type + sender_id + sender_name + edi_version + \
+                      creation_date + creation_time + transmission_date + (
+                      character_set | pp.empty) + field_special.lineEnd
 # Transmission Header pattern
-transmission_trailer = special.lineStart + record_type_trailer + record.group_count + record.transaction_count + \
-                       record.record_count + special.lineEnd
+transmission_trailer = field_special.lineStart + record_type_trailer + record.group_count + record.transaction_count + \
+                       record.record_count + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

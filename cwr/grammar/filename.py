@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from cwr.file import FileTag
-from cwr.grammar import field, special
+from cwr.grammar import field, field_special
 from data.accessor import CWRConfiguration
 
 
@@ -113,10 +113,10 @@ This the grammatical structure for the old and new filename templates.
 """
 
 # CWR filename patterns
-cwr_filename_old = special.lineStart + header + year + sequence_old + sender + delimiter_ip + receiver \
-                   + ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
-cwr_filename = special.lineStart + header + year + sequence_new + sender + delimiter_ip + receiver + \
-               ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
+cwr_filename_old = field_special.lineStart + header + year + sequence_old + sender + delimiter_ip + receiver \
+                   + ((delimiter_version + version_num) | delimiter_zip) + field_special.lineEnd
+cwr_filename = field_special.lineStart + header + year + sequence_new + sender + delimiter_ip + receiver + \
+               ((delimiter_version + version_num) | delimiter_zip) + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

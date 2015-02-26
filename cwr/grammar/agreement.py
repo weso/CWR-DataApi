@@ -4,7 +4,7 @@ import pyparsing as pp
 
 import cwr.constraints.agreement as constraints
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, special, record
+from cwr.grammar import field, field_special, record
 from cwr.agreement import AgreementRecord
 
 
@@ -101,10 +101,10 @@ Agreement patterns.
 """
 
 # Agreement Pattern
-agreement = special.lineStart + record_prefix_agreement + submitter_agreement_n + is_code + agreement_type + \
+agreement = field_special.lineStart + record_prefix_agreement + submitter_agreement_n + is_code + agreement_type + \
             agreement_start_date + agreement_end_date + retention_end_date + prior_royalty_status + \
             prior_royalty_start_date + post_term_collection_status + post_term_collection_end_date + \
-            date_of_signature + number_works + sm_clause + sales_change + advance_given + society_id + special.lineEnd
+            date_of_signature + number_works + sm_clause + sales_change + advance_given + society_id + field_special.lineEnd
 agreement.leaveWhitespace()
 
 """
