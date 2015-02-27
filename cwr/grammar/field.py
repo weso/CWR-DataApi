@@ -56,6 +56,9 @@ def alphanum(columns, compulsory=False):
     :return: grammar for this Alphanumeric field
     """
 
+    if columns <= 0:
+        raise BaseException()
+
     # The regular expression just forbids lowercase characters
     field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
 
@@ -112,6 +115,9 @@ def numeric(columns, compulsory=False):
     :param compulsory: indicates if the zero is disallowed
     :return: grammar for the integer numeric field
     """
+
+    if columns <= 0:
+        raise BaseException()
 
     # Only numbers are accepted
     field = pp.Word(pp.nums, exact=columns)
@@ -173,6 +179,12 @@ def numeric_float(columns, nums_int, compulsory=False):
     :param compulsory: indicates if the zero is disallowed
     :return: grammar for the float numeric field
     """
+
+    if columns <= 0:
+        raise BaseException()
+
+    if nums_int < 0:
+        raise BaseException()
 
     # Basic field
     field = pp.Word(pp.nums, exact=columns)

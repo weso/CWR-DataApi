@@ -81,6 +81,32 @@ class TestNumericCompulsoryValid(unittest.TestCase):
         self.assertEqual(123, result[0])
 
 
+class TestNumericConstructorException(unittest.TestCase):
+    def test_cols_negative(self):
+        """
+        Tests that an exception is thrown when the columns are set as negative.
+        """
+        self.assertRaises(BaseException, field.numeric, -1)
+
+    def test_cols_negative_compulsory(self):
+        """
+        Tests that an exception is thrown when the columns are set as negative.
+        """
+        self.assertRaises(BaseException, field.numeric, -1, True)
+
+    def test_cols_zero(self):
+        """
+        Tests that an exception is thrown when the columns are set as zero.
+        """
+        self.assertRaises(BaseException, field.numeric, 0)
+
+    def test_cols_zero_compulsory(self):
+        """
+        Tests that an exception is thrown when the columns are set as zero.
+        """
+        self.assertRaises(BaseException, field.numeric, 0, True)
+
+
 class TestNumericException(unittest.TestCase):
     """
     Tests that exceptions are thrown when using invalid values

@@ -4,6 +4,7 @@ import pyparsing as pp
 
 from data.accessor import CWRTables
 from cwr.other import ISWCCode, IPIBaseNumber
+from cwr.grammar import field
 
 
 """
@@ -46,6 +47,10 @@ def char_code(columns):
     :param columns: number of columns for this field
     :return: a parser for the character set field
     """
+
+    if columns <= 0:
+        raise BaseException()
+
     char_sets = None
     for char_set in _tables.character_sets():
         regex = '[ ]{' + str(15 - len(char_set)) + '}' + char_set
@@ -207,3 +212,39 @@ def _to_iswccode(code):
         return ISWCCode(code.id_code, code.check_digit)
     else:
         return code
+
+
+def percentage(columns, compulsory=False):
+    """
+    Creates the grammar for a Numeric (N) field storing a percentage and accepting only the specified number of characters.
+
+    The three first digits will be for the integer value.
+
+    The columns can't be lower than 3.
+
+    :param columns: number of columns for this field
+    :param compulsory: indicates if the zero is disallowed
+    :return: grammar for the float numeric field
+    """
+
+    if columns < 3:
+        raise BaseException()
+
+    percentage_field = field.numeric_float(columns, 3, compulsory)
+
+    percentage_field.addParseAction(lambda v: _assert_is_percentage(v[0]))
+
+    percentage_field.setName('Percentage Field')
+
+    return percentage_field
+
+
+def _assert_is_percentage(value):
+    """
+    Makes sure the received value is a percentage. Otherwise an exception is thrown.
+
+    :param value: the value to check
+    """
+
+    if value < 0 or value > 100:
+        raise pp.ParseException('', 'The value on a percentage field should be between 0 and 100')

@@ -161,8 +161,8 @@ class CWRDictionaryEncoder(object):
         encoded['agreement_role_code'] = agreement.agreement_role_code
         encoded['ip_id'] = agreement.ip_id
         encoded['ip_last_name'] = agreement.last_name
-        encoded['ip_ipi'] = agreement.ipi
-        encoded['ipi_name'] = agreement.ipi_name
+        encoded['ip_ipi'] = agreement.ipi_base
+        encoded['ipi_name'] = agreement.ipi
         encoded['ip_writer_name'] = agreement.writer_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share

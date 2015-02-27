@@ -119,7 +119,7 @@ class TestIPAAgreement(unittest.TestCase):
 
     def setUp(self):
         encoder = CWRDictionaryEncoder()
-        entity = AgreementInterestedParty('', 0, 0, 2, 'party', 'assign', 'writer', 3, 'cae_name', 4, 0.1, 5, 0.2, 6,
+        entity = AgreementInterestedParty('', 0, 0, 2, 'party', 'assign', 'writer', 'cae_name', 3, 4, 0.1, 5, 0.2, 6,
                                           0.3)
 
         self.dict = encoder.encode(entity)

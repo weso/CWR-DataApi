@@ -138,8 +138,8 @@ class TestIPA(unittest.TestCase):
         data['ip_id'] = 1
         data['ip_last_name'] = 'surname'
         data['agreement_role_code'] = 'assign'
-        data['ip_ipi'] = 3
-        data['ipi_name'] = 'cae_name'
+        data['ipi_name'] = 3
+        data['ip_ipi'] = 'cae_name'
         data['ip_writer_name'] = 'writer'
         data['mr_share'] = 0.1
         data['pr_share'] = 0.2
@@ -156,8 +156,8 @@ class TestIPA(unittest.TestCase):
         self.assertEqual('surname', self.agreement.last_name)
         self.assertEqual('assign', self.agreement.agreement_role_code)
         self.assertEqual('writer', self.agreement.writer_name)
-        self.assertEqual(3, self.agreement.ipi)
-        self.assertEqual('cae_name', self.agreement.ipi_name)
+        self.assertEqual(3, self.agreement.ipi_base)
+        self.assertEqual('cae_name', self.agreement.ipi)
         self.assertEqual('writer', self.agreement.writer_name)
         self.assertEqual(0.1, self.agreement.mr_share)
         self.assertEqual(0.2, self.agreement.pr_share)

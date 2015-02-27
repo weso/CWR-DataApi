@@ -144,6 +144,32 @@ class TestAlphanumCompulsoryValid(unittest.TestCase):
         self.assertEqual('C', result[0])
 
 
+class TestAlphanumConstructorException(unittest.TestCase):
+    def test_cols_negative(self):
+        """
+        Tests that an exception is thrown when the columns are set as negative.
+        """
+        self.assertRaises(BaseException, field.alphanum, -1)
+
+    def test_cols_negative_compulsory(self):
+        """
+        Tests that an exception is thrown when the columns are set as negative.
+        """
+        self.assertRaises(BaseException, field.alphanum, -1, True)
+
+    def test_cols_zero(self):
+        """
+        Tests that an exception is thrown when the columns are set as zero.
+        """
+        self.assertRaises(BaseException, field.alphanum, 0)
+
+    def test_cols_zero_compulsory(self):
+        """
+        Tests that an exception is thrown when the columns are set as zero.
+        """
+        self.assertRaises(BaseException, field.alphanum, 0, True)
+
+
 class TestAlphanumException(unittest.TestCase):
     """
     Tests that exceptions are thrown when using invalid values
