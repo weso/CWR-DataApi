@@ -35,7 +35,7 @@ creation_date = field.date(compulsory=True)
 creation_date = creation_date.setName('Creation Date').setResultsName('creation_date')
 
 # Creation Time
-creation_time = field.time()
+creation_time = field.time(compulsory=True)
 creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
 
 # Original Group ID
@@ -90,9 +90,9 @@ acknowledgement = field_special.lineStart + record_prefix_acknowledgement + crea
 Parsing actions for the patterns.
 """
 
-acknowledgement.setParseAction(lambda a: _to_acknowledgement_record(a))
-
 creation_date_time.setParseAction(lambda d: _combine_date_time(d[0].creation_date, d[0].creation_time))
+
+acknowledgement.setParseAction(lambda a: _to_acknowledgement_record(a))
 
 """
 Validation actions for the patterns.

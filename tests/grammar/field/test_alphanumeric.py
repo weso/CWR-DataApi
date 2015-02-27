@@ -24,6 +24,12 @@ class TestAlphanumValid(unittest.TestCase):
     def setUp(self):
         self.alpha = field.alphanum(5)
 
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Alphanumeric Field', self.alpha.name)
+
     def test_alphanum_full(self):
         """
         Tests that the alphanum field accepts values of the correct number of characters.
@@ -88,6 +94,12 @@ class TestAlphanumCompulsoryValid(unittest.TestCase):
 
     def setUp(self):
         self.alpha = field.alphanum(5, compulsory=True)
+
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Alphanumeric Field', self.alpha.name)
 
     def test_alphanum_full(self):
         """

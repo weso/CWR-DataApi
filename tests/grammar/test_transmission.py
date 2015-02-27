@@ -7,15 +7,9 @@ from cwr.grammar import transmission
 
 
 """
-CWR record parsing tests.
+CWR Transmission grammar tests.
 
 The following cases are tested:
-- RecordPrefixDecoder decodes correctly formatted transmission headers
-- RecordPrefixDecoder decodes correctly transmission headers without the optional character set
-
-- RecordPrefixDecoder throws an exception when the record type is not one of the CWR record types
-- RecordPrefixDecoder throws an exception when the company name is in lower case
-- RecordPrefixDecoder throws an exception when the record numbers are too short
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -34,7 +28,7 @@ class TestParseTransmissionHeader(unittest.TestCase):
 
     def test_valid_full(self):
         """
-        Tests that TransmissionHeaderDecoder decodes correctly formatted record prefixes.
+        Tests that Transmission Header grammar decodes correctly formatted record prefixes.
 
         This test contains all the optional fields.
         """
@@ -82,7 +76,7 @@ class TestParseTransmissionHeader(unittest.TestCase):
         self.assertEqual(2012, result.transmission_date.year)
         self.assertEqual(11, result.transmission_date.month)
         self.assertEqual(2, result.transmission_date.day)
-        self.assertEqual('', result.character_set)
+        self.assertEqual(None, result.character_set)
 
 
 class TestParseTransmissionTrailer(unittest.TestCase):

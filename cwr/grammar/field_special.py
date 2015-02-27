@@ -100,13 +100,13 @@ def iswc(compulsory=False):
     check_digit = check_digit.setParseAction(lambda c: int(c[0]))
 
     # T followed by 10 numbers
-    iswc = pp.Combine(header + id_code + check_digit)
+    iswc_field = pp.Combine(header + id_code + check_digit)
 
     # Parse action
-    iswc.setParseAction(lambda c: _to_iswccode(c))
+    iswc_field.setParseAction(lambda c: _to_iswccode(c))
 
     # Name
-    iswc.setName('ISWC Field')
+    iswc_field.setName('ISWC Field')
 
     if not compulsory:
         # If it is not compulsory then it can be set as empty
@@ -114,14 +114,14 @@ def iswc(compulsory=False):
         empty.setParseAction(pp.replaceWith(None))
         empty.setName('ISWC Field')
 
-        iswc = empty | iswc
+        iswc_field = empty | iswc_field
         # Name
-        iswc.setName('ISWC Field')
+        iswc_field.setName('ISWC Field')
 
     # White spaces are not removed
-    iswc.leaveWhitespace()
+    iswc_field.leaveWhitespace()
 
-    return iswc
+    return iswc_field
 
 
 def _to_iswccode(code):

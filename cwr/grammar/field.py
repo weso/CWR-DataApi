@@ -70,7 +70,7 @@ def alphanum(columns, compulsory=False):
     field.leaveWhitespace()
 
     # Name
-    field.setName('Alphanumeric Field (' + str(columns) + ' columns)')
+    field.setName('Alphanumeric Field')
 
     return field
 
@@ -124,7 +124,7 @@ def numeric(columns, compulsory=False):
         field.addParseAction(lambda s: _check_above_value_int(s[0], 0))
 
     # Name
-    field.setName('Numeric Field (' + str(columns) + ' columns)')
+    field.setName('Numeric Field')
 
     return field
 
@@ -143,7 +143,7 @@ def _check_above_value_int(string, minimum):
     value = int(string)
 
     if value <= minimum:
-        message = "The Numeric Field value should be above %s" % (minimum)
+        message = "The Numeric Field value should be above %s" % minimum
         raise pp.ParseException(string, message)
 
 
@@ -185,7 +185,7 @@ def numeric_float(columns, nums_int, compulsory=False):
         field.addParseAction(lambda s: _check_above_value_float(s[0], 0))
 
     # Name
-    field.setName('Numeric Field float (' + str(columns) + ' columns)')
+    field.setName('Numeric Field')
 
     return field
 
@@ -219,7 +219,7 @@ def _check_above_value_float(string, minimum):
     value = float(string)
 
     if value <= minimum:
-        message = "The Numeric Field value should be above %s" % (minimum)
+        message = "The Numeric Field value should be above %s" % minimum
         raise pp.ParseException(string, message)
 
 
@@ -296,21 +296,37 @@ This string value will be just returned untouched.
 """
 
 
-def flag():
+def flag(compulsory=False):
     """
     Creates the grammar for a Flag (F) field, accepting only 'Y', 'N' or 'U'.
 
+    :param compulsory: indicates if the empty flag is disallowed
     :return: grammar for the flag field
     """
 
     # Basic field
-    field = pp.Combine(pp.Literal('Y') | pp.Literal('N') | pp.Literal('U'))
+    field = pp.Combine(pp.Word('YNU', exact=1))
 
     # Parse action
     field.setParseAction(lambda f: _to_flag(f[0]))
 
     # Name
     field.setName('Flag Field')
+
+    if not compulsory:
+        # If it is not compulsory the empty date is accepted
+        optional = pp.Literal(' ')
+        optional.setParseAction(pp.replaceWith(None))
+
+        # Name
+        optional.setName('Flag Field')
+
+        field = field | optional
+
+        # Name
+        field.setName('Flag Field')
+
+    field.leaveWhitespace()
 
     return field
 
@@ -397,7 +413,7 @@ This string will be parsed into a datetime.time.
 """
 
 
-def time():
+def time(compulsory=False):
     """
     Creates the grammar for a Time (D) field, accepting only numbers in a certain pattern.
 

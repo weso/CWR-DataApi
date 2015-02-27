@@ -24,6 +24,12 @@ class TestBooleanValid(unittest.TestCase):
     def setUp(self):
         self.boolean = field.boolean()
 
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Boolean Field', self.boolean.name)
+
     def test_true(self):
         """
         Tests that the boolean field accepts true ('Y').
@@ -53,6 +59,12 @@ class TestBooleanCompulsoryValid(unittest.TestCase):
 
     def setUp(self):
         self.boolean = field.boolean(compulsory=True)
+
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Boolean Field', self.boolean.name)
 
     def test_true(self):
         """

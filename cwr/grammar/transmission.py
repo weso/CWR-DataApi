@@ -93,6 +93,17 @@ transmission_date = transmission_date.setName('Transmission Date').setResultsNam
 # Character Set
 character_set = field_special.char_code(
     _config.field_size('transmission_header', 'character_set'))
+character_set_empty = pp.Regex('[ ]{' + str(_config.field_size('transmission_header', 'character_set')) + '}')
+
+character_set.setName('Work Type')
+character_set_empty.setName('Work Type')
+
+character_set_empty.leaveWhitespace()
+
+character_set_empty.setParseAction(pp.replaceWith(None))
+
+character_set = character_set | character_set_empty
+
 character_set = character_set.setName('Character Set').setResultsName('character_set')
 
 """
@@ -107,12 +118,13 @@ creation_date_time = creation_date_time.setName('Creation Date and Time').setRes
 
 # Transmission Header pattern
 transmission_header = field_special.lineStart + record_type_header + sender_type + sender_id + sender_name + edi_version + \
-                      creation_date_time + transmission_date + (
-                          character_set | pp.empty) + field_special.lineEnd
+                      creation_date_time + transmission_date + character_set + field_special.lineEnd
+
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + record_type_trailer + record.group_count + record.transaction_count + \
                        record.record_count + field_special.lineEnd
 
+transmission_trailer.leaveWhitespace()
 """
 Parsing actions for the patterns.
 

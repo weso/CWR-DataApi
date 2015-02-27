@@ -27,7 +27,7 @@ class TransmissionHeader(Record):
 
     def __init__(self, record_type, sender_id, sender_name, sender_type, creation_date_time, transmission_date,
                  edi_standard='01.10',
-                 character_set=""):
+                 character_set=None):
         """
         Constructs a TransmissionHeader.
 

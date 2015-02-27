@@ -62,7 +62,7 @@ duration = field.time()
 duration = duration.setName('Duration').setResultsName('duration')
 
 # Recorded Indicator
-recorded = field.flag()
+recorded = field.flag(compulsory=True)
 recorded = recorded.setName('Recorded Indicator').setResultsName('recorded_indicator')
 
 # Text Music Relationship

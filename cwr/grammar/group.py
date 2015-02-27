@@ -82,20 +82,20 @@ They are:
 
 # SD Type
 sd_type = field.alphanum(_config.field_size('group_header', 'sd_type'))
-sd_type.leaveWhitespace()
 sd_type = sd_type.setName('SD Type').setResultsName('sd_type')
+sd_type.leaveWhitespace()
 
 # Currency Indicator
 currency_indicator = pp.Word(pp.alphanums + ' ',
                              exact=_config.field_size('group_trailer', 'currency_indicator'))
-currency_indicator.leaveWhitespace()
 currency_indicator = currency_indicator.setName('Currency Indicator').setResultsName('currency_indicator')
+currency_indicator.leaveWhitespace()
 
 # Total Monetary Value
 total_monetary_value = pp.Word(pp.alphanums + ' ',
                                exact=_config.field_size('group_trailer', 'total_monetary_value'))
-total_monetary_value.leaveWhitespace()
 total_monetary_value = total_monetary_value.setName('Total Monetary Value').setResultsName('total_monetary_value')
+total_monetary_value.leaveWhitespace()
 
 """
 Group patterns.
@@ -105,13 +105,11 @@ These are the grammatical structures for the Group Header and Group Trailer.
 
 # Group Header pattern
 group_header = field_special.lineStart + record_type_header + record.transaction_type + group_id + version_number + \
-               batch_request_id + (sd_type | pp.empty) + field_special.lineEnd
-group_header.leaveWhitespace()
+               batch_request_id + sd_type + field_special.lineEnd
 
 # Group Trailer pattern
 group_trailer = field_special.lineStart + record_type_trailer + group_id + record.transaction_count + record.record_count + \
                 currency_indicator + total_monetary_value + field_special.lineEnd
-group_trailer.leaveWhitespace()
 
 """
 Parsing actions for the patterns.

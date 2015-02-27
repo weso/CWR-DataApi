@@ -114,3 +114,11 @@ acknowledgement:
         size: 20
     recipient_id:
         size: 20
+
+
+agreement_territory:
+    type: 'TER'
+    ie_indicator:
+        value:
+            - 'E'
+            - 'I'

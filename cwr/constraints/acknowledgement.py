@@ -29,5 +29,5 @@ def title_when_record_requires(acknowledgement):
         # The Transaction is of a type which requires the title
         # And
         # No title has been set
-        message = 'When the Transaction Type is %s the Creation Title must be set' % (acknowledgement.transaction_type)
+        message = 'When the Transaction Type is %s the Creation Title must be set' % acknowledgement.transaction_type
         raise pp.ParseException('', msg=message)

@@ -44,17 +44,17 @@ record_seq_n = record_seq_n.setName('Record Sequence Number').setResultsName('re
 
 # Group count
 group_count = field.numeric(
-    _config.field_size('trailer_record', 'group_count'))
+    _config.field_size('trailer_record', 'group_count'), compulsory=True)
 group_count = group_count.setName('Group Count').setResultsName('group_count')
 
 # Transaction count
 transaction_count = field.numeric(
-    _config.field_size('trailer_record', 'transaction_count'))
+    _config.field_size('trailer_record', 'transaction_count'), compulsory=True)
 transaction_count = transaction_count.setName('Transaction Count').setResultsName('transaction_count')
 
 # Record count
 record_count = field.numeric(
-    _config.field_size('trailer_record', 'record_count'))
+    _config.field_size('trailer_record', 'record_count'), compulsory=True)
 record_count = record_count.setName('Record Count').setResultsName('record_count')
 
 # Miscellany fields

@@ -179,6 +179,7 @@ class CWRTables(object):
     _file_language_codes = 'cwr_language_code.csv'
     _file_character_sets = 'cwr_character_set.csv'
     _file_transaction_status = 'cwr_transaction_status.csv'
+    _file_tis = 'cwr_tis.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -196,6 +197,7 @@ class CWRTables(object):
     _language_codes = None
     _character_sets = None
     _transaction_status = None
+    _tis = None
 
     def agreement_types(self):
         """
@@ -329,6 +331,23 @@ class CWRTables(object):
             self._tmr = self._reader.read_csv_file(self._file_tmr)
 
         return self._tmr
+
+    def tis_codes(self):
+        """
+        TIS codes.
+
+        :return: the allowed TIS codes
+        """
+        if self._tis is None:
+            values = self._reader.read_csv_file(self._file_tis)
+            self._tis = []
+            for code in values:
+                value = code
+                while len(value) < 4:
+                    value = '0' + value
+                self._tis.append(value)
+
+        return self._tis
 
     def transaction_status(self):
         """

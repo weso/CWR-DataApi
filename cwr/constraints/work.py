@@ -32,7 +32,7 @@ def ser_has_duration(work):
             # Or
             # Duration is zero
             message = 'When the Musical Distribution Category is set to %s the duration should be higher than 0' % \
-                      (work.musical_distribution_category)
+                      work.musical_distribution_category
             raise pp.ParseException('', msg=message)
 
 
@@ -49,7 +49,7 @@ def mod_has_music_arrangement(work):
     if work.version_type == 'MOD':
         if not work.music_arrangement or len(work.music_arrangement) == 0:
             message = 'When the Version Type is set to %s the Music Arrangement must be set' % \
-                      (work.version_type)
+                      work.version_type
             raise pp.ParseException('', msg=message)
 
 
@@ -70,7 +70,7 @@ def mod_has_lyric_adaptation(work):
             # Or
             # Lyric Adaptation is empty
             message = 'When the Version Type is set to %s the Lyric Adaptation must be set' % \
-                      (work.version_type)
+                      work.version_type
             raise pp.ParseException('', msg=message)
 
 

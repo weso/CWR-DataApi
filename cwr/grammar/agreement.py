@@ -83,6 +83,7 @@ number_works = number_works.setName('Number of Works').setResultsName('works_num
 sm_clause = pp.oneOf(_config.field_value('agreement', 'sales_manufacture_clause')) | pp.Literal(' ')
 sm_clause = sm_clause.setName('Sales/Manufacture Clause').setResultsName('sales_manufacture_clause')
 sm_clause.setParseAction(lambda s: s[0].strip())
+sm_clause.leaveWhitespace()
 
 # Shares Change
 sales_change = field.boolean()
@@ -95,6 +96,7 @@ advance_given = advance_given.setName('Advance Given').setResultsName('advance_g
 # Society Given Agreement Number
 society_id = field.alphanum(_config.field_size('agreement', 'society_agreement_number'))
 society_id = society_id.setName('Society Given Agreement Number').setResultsName('society_agreement_number')
+society_id.leaveWhitespace()
 
 """
 Agreement patterns.
@@ -106,7 +108,6 @@ agreement = field_special.lineStart + record_prefix_agreement + submitter_agreem
             prior_royalty_start_date + post_term_collection_status + post_term_collection_end_date + \
             date_of_signature + number_works + sm_clause + sales_change + advance_given + society_id + \
             field_special.lineEnd
-agreement.leaveWhitespace()
 
 """
 Parsing actions for the patterns.

@@ -163,5 +163,5 @@ def sales_manufacture_required_by_agreement_type(agreement):
     :param agreement: the agreement to validate
     """
     if agreement.agreement_type in ('OP', 'OS') and len(agreement.sales_manufacture_clause) == 0:
-        message = "The Sales/Manufacture Clause is required for the agreement type %s" % (agreement.agreement_type)
+        message = "The Sales/Manufacture Clause is required for the agreement type %s" % agreement.agreement_type
         raise pp.ParseException('', msg=message)

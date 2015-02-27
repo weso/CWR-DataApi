@@ -24,6 +24,12 @@ class TestNumericValid(unittest.TestCase):
     def setUp(self):
         self.num = field.numeric(5)
 
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Numeric Field', self.num.name)
+
     def test_numeric(self):
         """
         Tests that the numeric field accepts values of the correct number of characters.
@@ -53,6 +59,12 @@ class TestNumericCompulsoryValid(unittest.TestCase):
 
     def setUp(self):
         self.num = field.numeric(5, compulsory=True)
+
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Numeric Field', self.num.name)
 
     def test_numeric(self):
         """

@@ -24,6 +24,12 @@ class TestTimeValid(unittest.TestCase):
     def setUp(self):
         self.time = field.time()
 
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Time Field', self.time.name)
+
     def test_common(self):
         """
         Tests that the time field accepts a valid time.
@@ -62,6 +68,12 @@ class TestTimeException(unittest.TestCase):
 
     def setUp(self):
         self.time = field.time()
+
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Time Field', self.time.name)
 
     def test_wrong_hour(self):
         """

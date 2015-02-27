@@ -24,6 +24,12 @@ class TestDateValid(unittest.TestCase):
     def setUp(self):
         self.date = field.date()
 
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Date Field', self.date.name)
+
     def test_common(self):
         """
         Tests that the date field accepts a valid date.
@@ -80,6 +86,12 @@ class TestCompulsoryValid(unittest.TestCase):
 
     def setUp(self):
         self.date = field.date(compulsory=True)
+
+    def test_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        self.assertEqual('Date Field', self.date.name)
 
     def test_common(self):
         """
