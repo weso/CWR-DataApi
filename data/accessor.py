@@ -167,6 +167,7 @@ class CWRTables(object):
     _file_record_types = 'cwr_record_type.csv'
     _file_sender_types = 'cwr_sender_type.csv'
     _file_agreement_types = 'cwr_agreement_type.csv'
+    _file_agreement_roles = 'cwr_agreement_role.csv'
     _file_transaction_types = 'cwr_transaction_type.csv'
     _file_composite_type = 'cwr_composite_type.csv'
     _file_work_type = 'cwr_work_type.csv'
@@ -180,6 +181,7 @@ class CWRTables(object):
     _file_character_sets = 'cwr_character_set.csv'
     _file_transaction_status = 'cwr_transaction_status.csv'
     _file_tis = 'cwr_tis.csv'
+    _file_society_codes = 'cwr_society_code.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -189,6 +191,7 @@ class CWRTables(object):
     _record_types = None
     _sender_types = None
     _agreement_types = None
+    _agreement_roles = None
     _transaction_types = None
     _version_types = None
     _excerpt_types = None
@@ -198,6 +201,18 @@ class CWRTables(object):
     _character_sets = None
     _transaction_status = None
     _tis = None
+    _society_codes = None
+
+    def agreement_roles(self):
+        """
+        Roles for Agreements.
+
+        :return: the allowed CWR Agreement role codes
+        """
+        if self._agreement_roles is None:
+            self._agreement_roles = self._reader.read_csv_file(self._file_agreement_roles)
+
+        return self._agreement_roles
 
     def agreement_types(self):
         """
@@ -318,6 +333,17 @@ class CWRTables(object):
             self._sender_types = self._reader.read_csv_file(self._file_sender_types)
 
         return self._sender_types
+
+    def society_codes(self):
+        """
+        Society Codes
+
+        :return: the allowed rights societies codes
+        """
+        if self._society_codes is None:
+            self._society_codes = self._reader.read_csv_file(self._file_society_codes)
+
+        return self._society_codes
 
     def text_music_relationships(self):
         """

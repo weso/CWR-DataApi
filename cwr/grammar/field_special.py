@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from data.accessor import CWRTables
-from cwr.other import ISWCCode
+from cwr.other import ISWCCode, IPIBaseNumber
 
 
 """
@@ -69,6 +69,77 @@ def char_code(columns):
     field.setName('Char Code Field (' + str(columns) + ' columns)')
 
     return field
+
+
+def ipi_base_number(compulsory=False):
+    """
+    IPI Base Number field.
+
+    An IPI Base Number code written on a field follows the Pattern C-NNNNNNNNN-M. This being:
+    - C: header, a character.
+    - N: numeric value.
+    - M: control digit.
+
+    So, for example, an IPI Base Number code field can contain I-000000229-7.
+
+    :return: a parser for the IPI Base Number field
+    """
+
+    # Separators are '-'
+    separator = pp.Literal('-').suppress()
+    separator = separator.setName('IPI Base Number Separator').setResultsName('separator')
+
+    # Header is a digit in uppercase
+    header = pp.Literal('I')
+    header = header.setName('IPI Base Number Header').setResultsName('header')
+
+    # ID code is composed of 9 numbers
+    id_code = pp.Regex('[0-9]{9}')
+    id_code = id_code.setName('ID Code').setResultsName('id_code')
+    id_code = id_code.setParseAction(lambda c: int(c[0]))
+
+    # Check digit is a single number
+    check_digit = pp.Regex('[0-9]')
+    check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
+    check_digit = check_digit.setParseAction(lambda c: int(c[0]))
+
+    # Digit followed separator, 9 numbers, separator and 1 number
+    ipi_base_field = header + separator + id_code + separator + check_digit
+
+    # Parse action
+    ipi_base_field.setParseAction(lambda c: _to_ipibasecode(c))
+
+    # Name
+    ipi_base_field.setName('IPI Base Number Field')
+
+    if not compulsory:
+        # If it is not compulsory then it can be set as empty
+        empty = pp.Regex('[ ]{13}')
+        empty.setParseAction(pp.replaceWith(None))
+        empty.setName('IPI Base Number Field')
+
+        ipi_base_field = empty | ipi_base_field
+        # Name
+        ipi_base_field.setName('ISWC Field')
+
+    # White spaces are not removed
+    ipi_base_field.leaveWhitespace()
+
+    return ipi_base_field
+
+
+def _to_ipibasecode(code):
+    """
+    Transforms the result of parsing an IPI Base Number code string into a IPIBaseNumber instance.
+
+    :param code: the parsed code
+    :return: a IPIBaseNumber instance
+    """
+
+    if code:
+        return IPIBaseNumber(code.header, code.id_code, code.check_digit)
+    else:
+        return code
 
 
 def iswc(compulsory=False):

@@ -115,10 +115,26 @@ acknowledgement:
     recipient_id:
         size: 20
 
-
 agreement_territory:
     type: 'TER'
     ie_indicator:
         value:
             - 'E'
             - 'I'
+
+ipa:
+    type: 'IPA'
+    ipi:
+        size: 11
+    ip_number:
+        size: 9
+    ip_last_name:
+        size: 45
+    ip_name:
+        size: 30
+    pr_share:
+        size: 5
+    mr_share:
+        size: 5
+    sr_share:
+        size: 5

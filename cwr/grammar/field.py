@@ -202,7 +202,7 @@ def _to_numeric_float(number, nums_int):
     :return: a float created from the string
     """
     index_end = len(number) - nums_int
-    return float(number[:nums_int] + '.' + number[index_end:])
+    return float(number[:nums_int] + '.' + number[-index_end:])
 
 
 def _check_above_value_float(string, minimum):

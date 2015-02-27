@@ -32,6 +32,7 @@ class TestISWCValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
+        self.assertEqual('T', result.header)
         self.assertEqual(34524680, result.id_code)
         self.assertEqual(1, result.check_digit)
 
@@ -53,6 +54,7 @@ class TestISWCValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
+        self.assertEqual('T', result.header)
         self.assertEqual(999999999, result.id_code)
         self.assertEqual(9, result.check_digit)
 
@@ -64,6 +66,7 @@ class TestISWCValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
+        self.assertEqual('T', result.header)
         self.assertEqual(000000000, result.id_code)
         self.assertEqual(0, result.check_digit)
 
@@ -84,6 +87,7 @@ class TestISWCCompulsoryValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
+        self.assertEqual('T', result.header)
         self.assertEqual(34524680, result.id_code)
         self.assertEqual(1, result.check_digit)
 
@@ -95,6 +99,7 @@ class TestISWCCompulsoryValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
+        self.assertEqual('T', result.header)
         self.assertEqual(999999999, result.id_code)
         self.assertEqual(9, result.check_digit)
 
@@ -106,6 +111,7 @@ class TestISWCCompulsoryValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
+        self.assertEqual('T', result.header)
         self.assertEqual(000000000, result.id_code)
         self.assertEqual(0, result.check_digit)
 
@@ -150,7 +156,7 @@ class TestISWCException(unittest.TestCase):
 
         self.assertRaises(ParseException, self.iswc.parseString, code)
 
-    def test_too_short(self):
+    def test_too_short_empty(self):
         """
         Tests that an exception is thrown when the string is too short
         """
@@ -158,7 +164,7 @@ class TestISWCException(unittest.TestCase):
 
         self.assertRaises(ParseException, self.iswc.parseString, code)
 
-    def test_too_short_empty(self):
+    def test_too_short(self):
         """
         Tests that an exception is thrown when the string is too short
         """

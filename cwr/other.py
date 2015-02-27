@@ -10,10 +10,86 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class ISWCCode(object):
-    def __init__(self, id_code, check_digit):
+class _ThreePartsCode(object):
+    """
+    Represents a code composed of a header, an ID and a check digit.
+
+    These codes are used by CISAC for identification purposes.
+    """
+
+    _code_size = 9
+
+    def __init__(self, header, id_code, check_digit):
+        self._header = header
         self._id_code = id_code
         self._check_digit = check_digit
+
+    def __str__(self):
+        return '%s-%s-%s' % (self._header, self._printable_id_code(), self._check_digit)
+
+    def __repr__(self):
+        return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % ('ThreePartsCode', self._header,
+                                                                      self._id_code, self._check_digit)
+
+    def _printable_id_code(self):
+        """
+        Returns the code in a printable form, filling with zeros if needed.
+
+        :return: the ID code in a printable form
+        """
+        code = str(self.id_code)
+        while len(code) < self._code_size:
+            code = '0' + code
+
+        return code
+
+    @property
+    def header(self):
+        """
+        The header identifying the type of code.
+
+        This is a single character.
+
+        :return: the header of the code
+        """
+        return self._header
+
+    @property
+    def id_code(self):
+        """
+        Identification code.
+
+        This is usully composed of up to nine digits.
+
+        :return: the ISWC unique code
+        """
+        return self._id_code
+
+    @property
+    def check_digit(self):
+        """
+        Check digit.
+
+        This is composed of a single digit
+
+        :return: the check digit
+        """
+        return self._check_digit
+
+
+class ISWCCode(_ThreePartsCode):
+    """
+    Represents a ISWC Code.
+
+    This stands for International Standard Musical Work Code, and are codes identifying a single musical work.
+
+    It is composed of a prefix, nine digits identifying the work and a check digit.
+
+    Currently the only prefix allowed is T, used to refer to musical works.
+    """
+
+    def __init__(self, id_code, check_digit):
+        super(ISWCCode, self).__init__('T', id_code, check_digit)
 
     def __str__(self):
         return 'ISWC T-%s-%s' % (self._printable_id_code(), self._check_digit)
@@ -23,34 +99,36 @@ class ISWCCode(object):
 
     def _printable_id_code(self):
         """
-        Returns the code in a printable form, filling with zeros if needed.
+        Returns the code in a printable form, separating it into groups of three characters using a point between them.
 
         :return: the ID code in a printable form
         """
-        code = str(self.id_code)
-        while len(code) < 9:
-            code = '0' + code
+        code = super(ISWCCode, self)._printable_id_code()
 
-        return code
+        code1 = code[:3]
+        code2 = code[3:6]
+        code3 = code[-3:]
 
-    @property
-    def id_code(self):
-        """
-        Unique number for this ISWC.
+        return '%s.%s.%s' % (code1, code2, code3)
 
-        This is composed of up to nine digits.
 
-        :return: the ISWC unique code
-        """
-        return self._id_code
+class IPIBaseNumber(_ThreePartsCode):
+    """
+    Represents an IPI Base Number Code.
 
-    @property
-    def check_digit(self):
-        """
-        Check digit for the ISWC code.
+    IPI stands for Interested party information.
 
-        This is composed of a single digit
+    These are codes identifying a party on a musical work transaction.
 
-        :return: the check digit
-        """
-        return self._check_digit
+    It is composed of a prefix, nine digits identifying the party and a check digit.
+    """
+
+    def __init__(self, header, id_code, check_digit):
+        super(IPIBaseNumber, self).__init__(header, id_code, check_digit)
+
+    def __str__(self):
+        return '%s-%s-%s' % (self.header, self._printable_id_code(), self.check_digit)
+
+    def __repr__(self):
+        return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % ('IPIBaseNumber', self._header,
+                                                                      self._id_code, self._check_digit)
