@@ -2,7 +2,7 @@
 from abc import ABCMeta
 import datetime
 
-from cwr.record import TransactionRecord
+from cwr.record import TransactionRecord, NRARecord
 
 
 """
@@ -1054,6 +1054,44 @@ class AlternateTitleRecord(TransactionRecord):
         return self._title_type
 
 
+class NATRecord(NRARecord):
+    """
+    Represents a CWR Non-Roman Alphabet Title (NAT) record.
+
+    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
+    This record can be used to describe the original title of a work, and it can also be used to describe alternate
+    titles.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language=None):
+        super(NATRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+        # Title info
+        self._title = title
+        self._title_type = title_type
+
+    @property
+    def title(self):
+        """
+        Title field. Alphanumeric.
+
+        The work title in non-Roman alphabet.
+
+        :return: the work title in non-Roman alphabet
+        """
+        return self._title
+
+    @property
+    def title_type(self):
+        """
+        Title Type field. Table Lookup (Title Type Table).
+
+        Indicates the type of title presented on this record (original, alternate etc.).
+
+        :return: the type of the title
+        """
+        return self._title_type
+
+
 class RecordingDetailRecord(TransactionRecord):
     """
     Represents a CWR Recording Detail (REC).
@@ -1585,3 +1623,84 @@ class PerformingArtistRecord(TransactionRecord):
         :return: the Performing Artist last name
         """
         return self._last_name
+
+
+class NRARecordWork(NRARecord):
+    """
+    Represents a Non-Roman Alphabet record used for Work details.
+
+    This represents the following records:
+    - Non-Roman Alphabet Entire Work Title for Excerpts (NET).
+    - Non-Roman Alphabet Title for Components (NCT).
+    - Non-Roman Alphabet Original Title for Version (NVT).
+
+    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
+    This record can be used to describe the original title of a work, and it can also be used to describe alternate
+    titles.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language=None):
+        super(NRARecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+        self._title = title
+
+    @property
+    def title(self):
+        """
+        Title field. Alphanumeric.
+
+        The title in non-Roman alphabet.
+
+        :return: the title in non-Roman alphabet
+        """
+        return self._title
+
+
+class NOWRecordWork(NRARecord):
+    """
+    Represents a CWR Non-Roman Alphabet Other Writer Name (NOW) record.
+
+    This record identifies writer names in non-roman alphabets for the work named in an EWT (entire work for an
+    excerpt), VER (original work for a version), or COM (component) record. The language code is used to identify the
+    alphabet.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name, name, position=None,
+                 language=None):
+        super(NOWRecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+        # Writer information
+        self._first_name = first_name
+        self._name = name
+        self._position = position
+
+    @property
+    def first_name(self):
+        """
+        Writer First Name. Alphanumeric.
+
+        The first name of this writer.
+
+        :return: the first name of this writer
+        """
+        return self._first_name
+
+    @property
+    def name(self):
+        """
+        Writer Name. Alphanumeric.
+
+        The name of this writer.
+
+        :return: the name of this writer
+        """
+        return self._name
+
+    @property
+    def position(self):
+        """
+        Writer Position field. List lookup (previous record).
+
+        The position of the writer in the corresponding EWT, VER, or COM record.
+
+        :return: the position of the writer in the previous record
+        """
+        return self._position

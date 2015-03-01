@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from cwr.record import TransactionRecord
+from cwr.record import TransactionRecord, NRARecord
 
 """
 Agreement model classes.
@@ -218,6 +218,60 @@ class AgreementInterestedParty(TransactionRecord):
         :return: the Writer's first and middle names
         """
         return self._writer_name
+
+
+class NPARecord(NRARecord):
+    """
+    Represents a CWR Non-Roman Alphabet Agreement Party Name Record (NPA).
+
+    This record identifies names in a non-roman alphabet for the acquiring parties of this agreement. The language code
+    is used to identify the alphabet. This record can be used to identify the name of the party in the preceding IPA
+    record.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer, ip_id='',
+                 language=None):
+        super(NPARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+        # IP info
+        self._ip_name = ip_name
+        self._ip_writer = ip_writer
+        self._ip_id = ip_id
+
+        # Language info
+        self._language = language
+
+    @property
+    def ip_id(self):
+        """
+        Interested Party # field. Alphanumeric.
+
+        Submitting publisher’s unique identifier for this Writer.
+
+        :return: the Interested Party ID
+        """
+        return self._ip_id
+
+    @property
+    def ip_name(self):
+        """
+        Interested Party Name field. Alphanumeric.
+
+        The last of a writer or the publisher name.
+
+        :return: the last name of a writer of the publisher name
+        """
+        return self._ip_name
+
+    @property
+    def ip_writer(self):
+        """
+        Interested Party Writer field. Alphanumeric.
+
+        The first name of a writer.
+
+        :return: the first name of a writer
+        """
+        return self._ip_writer
 
 
 class AgreementRecord(TransactionRecord):

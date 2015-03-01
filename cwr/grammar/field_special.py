@@ -65,15 +65,15 @@ def char_code(columns):
     _unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{' + str(columns - 7) + '}')
 
     # Basic field
-    field = (_character_sets | _unicode_1_16b | _unicode_2_21b)
+    char_code_field = (_character_sets | _unicode_1_16b | _unicode_2_21b)
 
     # Parse action
-    field = field.setParseAction(lambda s: s[0].strip())
+    char_code_field = char_code_field.setParseAction(lambda s: s[0].strip())
 
     # Name
-    field.setName('Char Code Field (' + str(columns) + ' columns)')
+    char_code_field.setName('Char Code Field (' + str(columns) + ' columns)')
 
-    return field
+    return char_code_field
 
 
 def ipi_base_number(compulsory=False):

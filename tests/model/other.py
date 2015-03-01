@@ -25,7 +25,7 @@ class TestISWCCode(unittest.TestCase):
 
         self.assertEqual('ISWC T-000.000.123-1', str(iswc))
 
-    def test_printable_text(self):
+    def test_printable_text_full(self):
         iswc = ISWCCode(123456789, 1)
 
         self.assertEqual('ISWC T-123.456.789-1', str(iswc))
