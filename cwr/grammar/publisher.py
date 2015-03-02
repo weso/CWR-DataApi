@@ -80,9 +80,9 @@ Publisher patterns.
 publisher = field_special.lineStart + record.record_prefix(_config.record_type('publisher')) + sequence_n + \
             field_special.ip_id() + name + unknown + \
             field_table.publisher_type() + tax_id + field_special.ipi_name_number() + agreement_id + \
-            society.pr_affiliation() + society.pr_share + \
-            society.mr_affiliation() + society.mr_share + \
-            society.sr_affiliation() + society.sr_share + \
+            society.pr_affiliation + society.pr_share + \
+            society.mr_affiliation + society.mr_share + \
+            society.sr_affiliation + society.sr_share + \
             field_table.special_agreement() + first_refusal + filler + ipi_base + international_code + \
             society_id + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
 
@@ -91,6 +91,11 @@ Parsing actions for the patterns.
 """
 
 publisher.setParseAction(lambda p: _to_publisherrecord(p))
+
+"""
+Validation actions for the patterns.
+"""
+
 
 """
 Parsing methods.
