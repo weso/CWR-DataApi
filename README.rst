@@ -10,7 +10,7 @@ publishers and performing rights societies as a way to exchange musical
 works data.
 
 While the CWR standard has been created by `CISAC`_ this library has been
-developed by `WESO`_ independently.
+developed by `WESO`_ independently, with help from `BMAT`_.
 
 The library includes a data model for representing the contents of a CWR
 file, and parsers to create that model from a file, and to decode and
@@ -75,6 +75,7 @@ License
 The project is released under the `MIT License`_.
 
 .. _CISAC: http://www.cisac.org/
+.. _BMAT: http://www.bmat.com/
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://travis-ci.org/weso/CWR-DataApi/issues
 .. _project wiki: https://github.com/weso/CWR-DataApi/wiki
