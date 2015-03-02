@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record, society, table
+from cwr.grammar import field, field_special, record, society, field_table
 from cwr.agreement import AgreementInterestedParty
 from cwr.constraints import ipa as constraints
 
@@ -35,7 +35,8 @@ ip_name = ip_name.setName('Interested Party Writer First Name').setResultsName('
 IPA patterns.
 """
 
-ipa = field_special.lineStart + record.record_prefix(_config.record_type('ipa')) + table.agreement_role_code + \
+ipa = field_special.lineStart + record.record_prefix(_config.record_type('ipa')) + field_table.agreement_role_code(
+    True) + \
       field_special.ipi_name_number() + field_special.ipi_base_number() + \
       field_special.ip_id(
           compulsory=True) + ip_last_name + ip_name + society.pr_affiliation + society.pr_share + society.mr_affiliation + \

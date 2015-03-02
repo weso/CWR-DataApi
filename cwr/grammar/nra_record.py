@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record, table
+from cwr.grammar import field, field_special, record, field_table
 from cwr.agreement import NPARecord
 
 
@@ -45,7 +45,7 @@ NPA patterns.
 
 npa = field_special.lineStart + record.record_prefix(
     _config.record_type(
-        'npa')) + field_special.ip_id() + ip_name + ip_writer_name + table.language + field_special.lineEnd
+        'npa')) + field_special.ip_id() + ip_name + ip_writer_name + field_table.language() + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

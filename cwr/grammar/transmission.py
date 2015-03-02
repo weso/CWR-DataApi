@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar import field, field_special, record, table
+from cwr.grammar import field, field_special, record, field_table
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
 
@@ -96,7 +96,7 @@ creation_date_time = creation_date_time.setName('Creation Date and Time').setRes
 
 # Transmission Header pattern
 transmission_header = field_special.lineStart + record.record_type(_config.record_type('transmission_header')) + \
-                      table.sender_type + sender_id + sender_name + edi_version + \
+                      field_table.sender_type(True) + sender_id + sender_name + edi_version + \
                       creation_date_time + transmission_date + character_set + field_special.lineEnd
 
 # Transmission Header pattern

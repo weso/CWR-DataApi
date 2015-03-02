@@ -2,7 +2,7 @@
 
 import cwr.constraints.agreement as constraints
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record, table
+from cwr.grammar import field, field_special, record, field_table
 from cwr.agreement import AgreementRecord
 
 
@@ -80,10 +80,10 @@ Agreement patterns.
 
 # Agreement Pattern
 agreement = field_special.lineStart + record.record_prefix(
-    _config.record_type('agreement')) + submitter_agreement_n + is_code + table.agreement_type + \
-            agreement_start_date + agreement_end_date + retention_end_date + table.prior_royalty_status + \
-            prior_royalty_start_date + table.post_term_collection_status + post_term_collection_end_date + \
-            date_of_signature + number_works + table.sm_clause + sales_change + advance_given + society_id + \
+    _config.record_type('agreement')) + submitter_agreement_n + is_code + field_table.agreement_type() + \
+            agreement_start_date + agreement_end_date + retention_end_date + field_table.prior_royalty_status(True) + \
+            prior_royalty_start_date + field_table.post_term_collection_status(True) + post_term_collection_end_date + \
+            date_of_signature + number_works + field_table.sm_clause() + sales_change + advance_given + society_id + \
             field_special.lineEnd
 
 """

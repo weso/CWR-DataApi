@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar import field, field_special, record, table
+from cwr.grammar import field, field_special, record, field_table
 from cwr import work
 from cwr.constraints import work as constraints
 
@@ -93,10 +93,12 @@ Work patterns.
 """
 
 work_record = field_special.lineStart + record.record_prefix(_config.record_type('work')) + work_title + \
-              table.language + work_id + iswc + \
-              copyright_date + copyright_number + table.musical_distribution_category + duration + recorded + \
-              table.text_music_relationship + table.composite_type + table.version_type + table.excerpt_type + table.music_arrangement + \
-              table.lyric_adaptation + contact_name + contact_id + table.work_type + gr_indicator + composite_count + \
+              field_table.language() + work_id + iswc + \
+              copyright_date + copyright_number + field_table.musical_distribution_category(
+    True) + duration + recorded + \
+              field_table.text_music_relationship(True) + field_table.composite_type() + field_table.version_type(
+    True) + field_table.excerpt_type(True) + field_table.music_arrangement() + \
+              field_table.lyric_adaptation() + contact_name + contact_id + field_table.work_type() + gr_indicator + composite_count + \
               printed_edition_publication_date + exceptional_clause + opus_number + catalogue_number + priority_flag + \
               field_special.lineEnd
 

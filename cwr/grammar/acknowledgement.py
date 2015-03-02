@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record, group, table
+from cwr.grammar import field, field_special, record, group, field_table
 from cwr.acknowledgement import AcknowledgementRecord
 from cwr.constraints import acknowledgement as constraints
 
@@ -71,8 +71,9 @@ creation_date_time = creation_date_time.setName('Creation Date and Time').setRes
 # Acknowledgment Pattern
 acknowledgement = field_special.lineStart + record.record_prefix(_config.record_type('acknowledgement')) + \
                   creation_date_time + \
-                  original_group_id + original_transaction_n + table.original_transaction_type + creation_title + \
-                  submitter_creation_n + recipient_creation_n + processing_date + table.transaction_status + \
+                  original_group_id + original_transaction_n + field_table.original_transaction_type(
+    True) + creation_title + \
+                  submitter_creation_n + recipient_creation_n + processing_date + field_table.transaction_status(True) + \
                   field_special.lineEnd
 
 """

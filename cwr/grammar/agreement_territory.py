@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field_special, record, table
+from cwr.grammar import field_special, record, field_table
 from cwr.agreement import AgreementTerritoryRecord
 
 
@@ -23,7 +23,8 @@ Territory in Agreement patterns.
 """
 
 territory_in_agreement = field_special.lineStart + record.record_prefix(
-    _config.record_type('agreement_territory')) + table.ie_indicator + table.tis_code + field_special.lineEnd
+    _config.record_type('agreement_territory')) + field_table.ie_indicator(True) + field_table.tis_code(
+    True) + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

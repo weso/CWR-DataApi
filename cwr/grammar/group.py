@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field, field_special, record, table
+from cwr.grammar import field, field_special, record, field_table
 from cwr.group import GroupHeader, GroupTrailer
 
 
@@ -99,7 +99,7 @@ These are the grammatical structures for the Group Header and Group Trailer.
 
 # Group Header pattern
 group_header = field_special.lineStart + record.record_type(
-    _config.record_type('group_header')) + table.transaction_type + group_id + version_number + \
+    _config.record_type('group_header')) + field_table.transaction_type(True) + group_id + version_number + \
                batch_request_id + sd_type + field_special.lineEnd
 
 # Group Trailer pattern
