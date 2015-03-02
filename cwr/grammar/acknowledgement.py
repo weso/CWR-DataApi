@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record
+from cwr.grammar import field, field_special, record, group
 from cwr.acknowledgement import AcknowledgementRecord
 from cwr.constraints import acknowledgement as constraints
 
@@ -39,8 +39,8 @@ creation_time = field.time(compulsory=True)
 creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
 
 # Original Group ID
-original_group_id = field.numeric(_config.field_size('acknowledgement', 'group_id'), compulsory=True)
-original_group_id = original_group_id.setName('Original Group ID').setResultsName('group_id')
+original_group_id = group.group_id
+original_group_id = original_group_id.setName('Original Group ID')
 
 # Original Transaction Sequence #
 original_transaction_n = field.numeric(_config.field_size('acknowledgement', 'transaction_n'), compulsory=True)

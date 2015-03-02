@@ -157,7 +157,7 @@ class TestIPA(unittest.TestCase):
         self.assertEqual('assign', self.agreement.agreement_role_code)
         self.assertEqual('writer', self.agreement.writer_name)
         self.assertEqual(3, self.agreement.ipi_base)
-        self.assertEqual('cae_name', self.agreement.ipi)
+        self.assertEqual('cae_name', self.agreement.ipi_name)
         self.assertEqual('writer', self.agreement.writer_name)
         self.assertEqual(0.1, self.agreement.mr_share)
         self.assertEqual(0.2, self.agreement.pr_share)

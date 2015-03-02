@@ -24,7 +24,7 @@ class AgreementInterestedParty(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, last_name, agreement_role_code,
-                 writer_name='', ipi=None, ipi_base=None,
+                 writer_name='', ipi_name=None, ipi_base=None,
                  pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
         """
         Constructs an AgreementInterestedParty.
@@ -33,7 +33,7 @@ class AgreementInterestedParty(TransactionRecord):
         :param last_name: the writer last name or the publisher name
         :param agreement_role_code: the role in the agreement
         :param writer_name: the writer name
-        :param ipi: IPI code
+        :param ipi_name: IPI Name number
         :param ipi_base: IPI Base number
         :param pr_society: performing rights society
         :param pr_share: performing rights share
@@ -48,7 +48,7 @@ class AgreementInterestedParty(TransactionRecord):
         self._agreement_role_code = agreement_role_code
 
         # Interested Party info
-        self._ipi = ipi
+        self._ipi_name = ipi_name
         self._ipi_base = ipi_base
         self._last_name = last_name
         self._writer_name = writer_name
@@ -102,7 +102,7 @@ class AgreementInterestedParty(TransactionRecord):
         return self._ipi_base
 
     @property
-    def ipi(self):
+    def ipi_name(self):
         """
         Interested Party IPI Name number field. Table Lookup (IPI Database).
 
@@ -112,7 +112,7 @@ class AgreementInterestedParty(TransactionRecord):
 
         :return: the IPI name number for this interested party
         """
-        return self._ipi
+        return self._ipi_name
 
     @property
     def last_name(self):
@@ -229,12 +229,12 @@ class NPARecord(NRARecord):
     record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer, ip_id='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer_name, ip_id='',
                  language=None):
         super(NPARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
         # IP info
         self._ip_name = ip_name
-        self._ip_writer = ip_writer
+        self._ip_writer_name = ip_writer_name
         self._ip_id = ip_id
 
         # Language info
@@ -263,15 +263,15 @@ class NPARecord(NRARecord):
         return self._ip_name
 
     @property
-    def ip_writer(self):
+    def ip_writer_name(self):
         """
-        Interested Party Writer field. Alphanumeric.
+        Interested Party Writer Name field. Alphanumeric.
 
         The first name of a writer.
 
         :return: the first name of a writer
         """
-        return self._ip_writer
+        return self._ip_writer_name
 
 
 class AgreementRecord(TransactionRecord):

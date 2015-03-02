@@ -182,6 +182,9 @@ class CWRTables(object):
     _file_transaction_status = 'cwr_transaction_status.csv'
     _file_tis = 'cwr_tis.csv'
     _file_society_codes = 'cwr_society_code.csv'
+    _file_publisher_type = 'cwr_society_code.csv'
+    _file_special_agreement_indicator = 'cwr_special_agreement_indicator.csv'
+    _file_usa_license_indicators = 'cwr_usa_license_indicator.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -202,6 +205,9 @@ class CWRTables(object):
     _transaction_status = None
     _tis = None
     _society_codes = None
+    _publisher_type = None
+    _special_agreement_indicator = None
+    _usa_license_indicators = None
 
     def agreement_roles(self):
         """
@@ -308,6 +314,17 @@ class CWRTables(object):
 
         return self._mwdc
 
+    def publisher_types(self):
+        """
+        Publisher Types.
+
+        :return: the allowed Publisher Type codes
+        """
+        if self._publisher_type is None:
+            self._publisher_type = self._reader.read_csv_file(self._file_publisher_type)
+
+        return self._publisher_type
+
     def record_types(self):
         """
         Types of records.
@@ -336,7 +353,7 @@ class CWRTables(object):
 
     def society_codes(self):
         """
-        Society Codes
+        Society Codes.
 
         :return: the allowed rights societies codes
         """
@@ -344,6 +361,17 @@ class CWRTables(object):
             self._society_codes = self._reader.read_csv_file(self._file_society_codes)
 
         return self._society_codes
+
+    def special_agreement_indicators(self):
+        """
+        Special Agreement Indicators.
+
+        :return: the allowed Special Agreement Indicator codes
+        """
+        if self._special_agreement_indicator is None:
+            self._special_agreement_indicator = self._reader.read_csv_file(self._file_special_agreement_indicator)
+
+        return self._special_agreement_indicator
 
     def text_music_relationships(self):
         """
@@ -398,6 +426,17 @@ class CWRTables(object):
             self._transaction_types = self._reader.read_csv_file(self._file_transaction_types)
 
         return self._transaction_types
+
+    def usa_license_indicators(self):
+        """
+        USA License Indicator.
+
+        :return: the allowed CWR USA License Indicator codes
+        """
+        if self._usa_license_indicators is None:
+            self._usa_license_indicators = self._reader.read_csv_file(self._file_usa_license_indicators)
+
+        return self._usa_license_indicators
 
     def version_types(self):
         """

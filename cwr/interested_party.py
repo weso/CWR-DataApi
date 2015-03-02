@@ -162,7 +162,7 @@ class InterestedPartyRecord(TransactionRecord):
 
         This field indicates whether rights for this Interested Party flow through ASCAP, BMI, or SESAC for the U.S.
 
-        :return: the first leter of the society with the USA rights
+        :return: the first letter of the society with the USA rights
         """
         return self._usa_license
 
@@ -380,6 +380,10 @@ class PublisherRecord(InterestedPartyRecord):
     """
     Represents a CWR Publisher Record (SPU/OPU).
 
+    This represents the following records:
+    - Publisher Controlled By Submitter (SPU)
+    - Other Publisher (OPU)
+
     This contains information about original publishers, income participants, sub-publishers, and/or  administrators
     who are involved in the ownership and collection of a work. May they be under control of the submitter or not.
     """
@@ -561,7 +565,7 @@ class PublisherRecord(InterestedPartyRecord):
     @property
     def special_agreements(self):
         """
-        Special Agreements Indicator. Table Lookup (?).
+        Special Agreements Indicator. Table Lookup (Special Agreement Indicator Table).
 
         Indicates publisher claiming reversionary rights.
 
