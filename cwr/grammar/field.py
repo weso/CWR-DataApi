@@ -429,6 +429,7 @@ def time(compulsory=False):
     """
     Creates the grammar for a Time (D) field, accepting only numbers in a certain pattern.
 
+    :param compulsory: indicates if the empty time is disallowed
     :return: grammar for the date field
     """
 
@@ -446,3 +447,39 @@ def time(compulsory=False):
     field.setName('Time Field')
 
     return field
+
+
+"""
+Lookup field (L).
+
+This accepts only values from a table or list.
+"""
+
+
+def lookup(values, columns=1, compulsory=False):
+    """
+    Creates the grammar for a Lookup (L) field, accepting only values from a list.
+
+    :param compulsory: indicates if the empty string is disallowed
+    :return: grammar for the lookup field
+    """
+    lookup_field = pp.oneOf(values)
+
+    lookup_field.setName('Lookup Field')
+
+    lookup_field.setParseAction(lambda s: s[0].strip())
+
+    if not compulsory:
+        lookup_field_option = pp.Regex('[ ]{' + str(columns) + '}')
+
+        lookup_field_option.setName('Lookup Field')
+
+        lookup_field_option.leaveWhitespace()
+
+        lookup_field_option.setParseAction(pp.replaceWith(None))
+
+        lookup_field = lookup_field | lookup_field_option
+
+        lookup_field.setName('Lookup Field')
+
+    return lookup_field

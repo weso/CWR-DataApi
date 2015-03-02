@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 import cwr.constraints.agreement as constraints
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record
+from cwr.grammar import field, field_special, record, table
 from cwr.agreement import AgreementRecord
 
 
@@ -33,10 +31,6 @@ submitter_agreement_n = submitter_agreement_n.setName('Submitters Agreement Numb
 is_code = field.alphanum(_config.field_size('agreement', 'international_standard_code'))
 is_code = is_code.setName('International Standard Agreement Code').setResultsName('international_standard_code')
 
-# Agreement Type
-agreement_type = pp.oneOf(_tables.agreement_types())
-agreement_type = agreement_type.setName('Agreement Type').setResultsName('agreement_type')
-
 # Agreement Start Date
 agreement_start_date = field.date(compulsory=True)
 agreement_start_date = agreement_start_date.setName('Agreement Start Date').setResultsName('start_date')
@@ -49,19 +43,10 @@ agreement_end_date = agreement_end_date.setName('Agreement End Date').setResults
 retention_end_date = field.date()
 retention_end_date = retention_end_date.setName('Retention End Date').setResultsName('retention_end_date')
 
-# Prior Royalty Status
-prior_royalty_status = pp.oneOf(_config.field_value('agreement', 'prior_royalty_status'))
-prior_royalty_status = prior_royalty_status.setName('Prior Royalty Status').setResultsName('prior_royalty_status')
-
 # Prior Royalty Start Date
 prior_royalty_start_date = field.date()
 prior_royalty_start_date = prior_royalty_start_date.setName('Prior Royalty Start Date').setResultsName(
     'prior_royalty_start_date')
-
-# Post Term Collection Status
-post_term_collection_status = pp.oneOf(_config.field_value('agreement', 'post_term_collection_status'))
-post_term_collection_status = post_term_collection_status.setName('Post Term Collection Status').setResultsName(
-    'post_term_collection_status')
 
 # Post Term Collection End Date
 post_term_collection_end_date = field.date()
@@ -75,12 +60,6 @@ date_of_signature = date_of_signature.setName('Date of Signature of Agreement').
 # Number of Works
 number_works = field.numeric(_config.field_size('agreement', 'number_works'), compulsory=True)
 number_works = number_works.setName('Number of Works').setResultsName('works_number')
-
-# Sales/Manufacture Clause
-sm_clause = pp.oneOf(_config.field_value('agreement', 'sales_manufacture_clause')) | pp.Literal(' ')
-sm_clause = sm_clause.setName('Sales/Manufacture Clause').setResultsName('sales_manufacture_clause')
-sm_clause.setParseAction(lambda s: s[0].strip())
-sm_clause.leaveWhitespace()
 
 # Shares Change
 sales_change = field.boolean()
@@ -101,10 +80,10 @@ Agreement patterns.
 
 # Agreement Pattern
 agreement = field_special.lineStart + record.record_prefix(
-    _config.record_type('agreement')) + submitter_agreement_n + is_code + agreement_type + \
-            agreement_start_date + agreement_end_date + retention_end_date + prior_royalty_status + \
-            prior_royalty_start_date + post_term_collection_status + post_term_collection_end_date + \
-            date_of_signature + number_works + sm_clause + sales_change + advance_given + society_id + \
+    _config.record_type('agreement')) + submitter_agreement_n + is_code + table.agreement_type + \
+            agreement_start_date + agreement_end_date + retention_end_date + table.prior_royalty_status + \
+            prior_royalty_start_date + table.post_term_collection_status + post_term_collection_end_date + \
+            date_of_signature + number_works + table.sm_clause + sales_change + advance_given + society_id + \
             field_special.lineEnd
 
 """

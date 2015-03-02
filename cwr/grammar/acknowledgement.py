@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record, group
+from cwr.grammar import field, field_special, record, group, table
 from cwr.acknowledgement import AcknowledgementRecord
 from cwr.constraints import acknowledgement as constraints
 
@@ -44,11 +44,6 @@ original_transaction_n = field.numeric(_config.field_size('acknowledgement', 'tr
 original_transaction_n = original_transaction_n.setName('Original Transaction Sequence #').setResultsName(
     'transaction_n')
 
-# Original Transaction Type
-original_transaction_type = pp.oneOf(_tables.record_types())
-original_transaction_type = original_transaction_type.setName('Original Transaction Type').setResultsName(
-    'transaction_type')
-
 # Creation Title
 creation_title = field.alphanum(_config.field_size('acknowledgement', 'title'))
 creation_title = creation_title.setName('Creation Title').setResultsName('title')
@@ -65,10 +60,6 @@ recipient_creation_n = recipient_creation_n.setName('Recipient Creation #').setR
 processing_date = field.date(compulsory=True)
 processing_date = processing_date.setName('Processing Date').setResultsName('processing_date')
 
-# Transaction Status
-transaction_status = pp.oneOf(_tables.transaction_status())
-transaction_status = transaction_status.setName('Transaction Status').setResultsName('transaction_status')
-
 """
 Acknowledgment patterns.
 """
@@ -80,8 +71,8 @@ creation_date_time = creation_date_time.setName('Creation Date and Time').setRes
 # Acknowledgment Pattern
 acknowledgement = field_special.lineStart + record.record_prefix(_config.record_type('acknowledgement')) + \
                   creation_date_time + \
-                  original_group_id + original_transaction_n + original_transaction_type + creation_title + \
-                  submitter_creation_n + recipient_creation_n + processing_date + transaction_status + \
+                  original_group_id + original_transaction_n + table.original_transaction_type + creation_title + \
+                  submitter_creation_n + recipient_creation_n + processing_date + table.transaction_status + \
                   field_special.lineEnd
 
 """

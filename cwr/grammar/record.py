@@ -57,12 +57,6 @@ record_count = field.numeric(
     _config.field_size('trailer_record', 'record_count'), compulsory=True)
 record_count = record_count.setName('Record Count').setResultsName('record_count')
 
-# Miscellany fields
-
-# Transaction type
-transaction_type = pp.oneOf(_tables.transaction_types())
-transaction_type = transaction_type.setName('Transaction Type').setResultsName('transaction_type')
-
 # PATTERNS
 
 

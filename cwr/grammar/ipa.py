@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record, society
+from cwr.grammar import field, field_special, record, society, table
 from cwr.agreement import AgreementInterestedParty
 from cwr.constraints import ipa as constraints
 
@@ -25,10 +23,6 @@ _config = CWRConfiguration()
 Interested Party in Agreement fields.
 """
 
-# Agreement Role Code
-agreement_role_code = pp.oneOf(_tables.agreement_roles())
-agreement_role_code = agreement_role_code.setName('Agreement Role Code').setResultsName('agreement_role_code')
-
 # Interested Party Last Name
 ip_last_name = field.alphanum(_config.field_size('ipa', 'ip_last_name'), compulsory=True)
 ip_last_name = ip_last_name.setName('Interested Party Last Name').setResultsName('last_name')
@@ -41,7 +35,7 @@ ip_name = ip_name.setName('Interested Party Writer First Name').setResultsName('
 IPA patterns.
 """
 
-ipa = field_special.lineStart + record.record_prefix(_config.record_type('ipa')) + agreement_role_code + \
+ipa = field_special.lineStart + record.record_prefix(_config.record_type('ipa')) + table.agreement_role_code + \
       field_special.ipi_name_number() + field_special.ipi_base_number() + \
       field_special.ip_id(
           compulsory=True) + ip_last_name + ip_name + society.pr_affiliation + society.pr_share + society.mr_affiliation + \

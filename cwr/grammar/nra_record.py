@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record
+from cwr.grammar import field, field_special, record, table
 from cwr.agreement import NPARecord
 
 
@@ -27,18 +25,6 @@ _config = CWRConfiguration()
 General fields.
 """
 
-# Language Code
-language = pp.oneOf(_tables.language_codes())
-language_empty = pp.Regex('[ ]{2}')
-language_empty = language_empty.setName('Language Code').setResultsName('language')
-language_empty.leaveWhitespace()
-language = language.setName('Language Code').setResultsName('language')
-
-language_empty.setParseAction(pp.replaceWith(None))
-
-language = language | language_empty
-language = language.setName('Language Code').setResultsName('language')
-
 """
 NPA fields.
 """
@@ -58,7 +44,8 @@ NPA patterns.
 """
 
 npa = field_special.lineStart + record.record_prefix(
-    _config.record_type('npa')) + field_special.ip_id() + ip_name + ip_writer_name + language + field_special.lineEnd
+    _config.record_type(
+        'npa')) + field_special.ip_id() + ip_name + ip_writer_name + table.language + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

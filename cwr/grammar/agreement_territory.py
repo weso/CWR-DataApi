@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field_special, record
+from cwr.grammar import field_special, record, table
 from cwr.agreement import AgreementTerritoryRecord
 
 
@@ -21,24 +19,11 @@ _tables = CWRTables()
 _config = CWRConfiguration()
 
 """
-Territory in Agreement fields.
-"""
-
-# Inclusion/Exclusion Indicator
-ie_indicator = pp.oneOf(_config.field_value('agreement_territory', 'ie_indicator'))
-ie_indicator = ie_indicator.setName('Inclusion/Exclusion Indicator').setResultsName('ie_indicator')
-
-# TIS Numeric Code
-tis_code = pp.oneOf(_tables.tis_codes())
-tis_code = tis_code.setName('TIS Numeric Code').setResultsName('tis_code')
-tis_code.setParseAction(lambda c: int(c[0]))
-
-"""
 Territory in Agreement patterns.
 """
 
 territory_in_agreement = field_special.lineStart + record.record_prefix(
-    _config.record_type('agreement_territory')) + ie_indicator + tis_code + field_special.lineEnd
+    _config.record_type('agreement_territory')) + table.ie_indicator + table.tis_code + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

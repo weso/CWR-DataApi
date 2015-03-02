@@ -90,7 +90,7 @@ class TestGrammarAgreement(unittest.TestCase):
         self.assertEqual(None, result.post_term_collection_end_date)
         self.assertEqual(None, result.signature_date)
         self.assertEqual(1234, result.works_number)
-        self.assertEqual('', result.sales_manufacture_clause)
+        self.assertEqual(None, result.sales_manufacture_clause)
         self.assertEqual(False, result.shares_change)
         self.assertEqual(False, result.advance_given)
         self.assertEqual('', result.society_agreement_number)

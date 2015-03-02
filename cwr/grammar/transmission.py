@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar import field, field_special, record
+from cwr.grammar import field, field_special, record, table
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
 
@@ -56,10 +56,6 @@ These fields are:
 - Character Set. Alphanumeric.
 """
 
-# Sender Type
-sender_type = pp.oneOf(_tables.sender_types())
-sender_type = sender_type.setName('Sender Type').setResultsName('sender_type')
-
 # Sender ID
 sender_id = field.numeric(_config.field_size('transmission_header', 'sender_id'), compulsory=True)
 sender_id = sender_id.setName('Sender ID').setResultsName('sender_id')
@@ -85,19 +81,7 @@ transmission_date = field.date(compulsory=True)
 transmission_date = transmission_date.setName('Transmission Date').setResultsName('transmission_date')
 
 # Character Set
-character_set = field_special.char_code(
-    _config.field_size('transmission_header', 'character_set'))
-character_set_empty = pp.Regex('[ ]{' + str(_config.field_size('transmission_header', 'character_set')) + '}')
-
-character_set.setName('Work Type')
-character_set_empty.setName('Work Type')
-
-character_set_empty.leaveWhitespace()
-
-character_set_empty.setParseAction(pp.replaceWith(None))
-
-character_set = character_set | character_set_empty
-
+character_set = field_special.char_code(_config.field_size('transmission_header', 'character_set'))
 character_set = character_set.setName('Character Set').setResultsName('character_set')
 
 """
@@ -112,7 +96,7 @@ creation_date_time = creation_date_time.setName('Creation Date and Time').setRes
 
 # Transmission Header pattern
 transmission_header = field_special.lineStart + record.record_type(_config.record_type('transmission_header')) + \
-                      sender_type + sender_id + sender_name + edi_version + \
+                      table.sender_type + sender_id + sender_name + edi_version + \
                       creation_date_time + transmission_date + character_set + field_special.lineEnd
 
 # Transmission Header pattern

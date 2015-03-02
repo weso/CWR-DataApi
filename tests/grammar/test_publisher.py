@@ -57,3 +57,38 @@ class TestPublisherRecordValid(unittest.TestCase):
         self.assertEqual('A0123456789125', result.society_agreement_id)
         self.assertEqual('OS', result.agreement_type)
         self.assertEqual('B', result.usa_license)
+
+    def test_valid_min(self):
+        """
+        Tests that Publisher Record grammar decodes correctly formatted record prefixes.
+
+        This test contains none of the optional fields.
+        """
+        prefix = 'SPU000012340000002319                                                                  00000000000                 00000   00000   00000                                               '
+
+        result = self.grammar.parseString(prefix)[0]
+
+        self.assertEqual('SPU', result.record_type)
+        self.assertEqual(1234, result.transaction_sequence_n)
+        self.assertEqual(23, result.record_sequence_n)
+        self.assertEqual(19, result.sequence_n)
+        self.assertEqual('', result.publisher.ip_id)
+        self.assertEqual('', result.publisher.name)
+        self.assertEqual(None, result.publisher_unknown)
+        self.assertEqual(None, result.publisher_type)
+        self.assertEqual('', result.publisher.tax_id)
+        self.assertEqual(0, result.publisher.ipi_name)
+        self.assertEqual('', result.agreement_id)
+        self.assertEqual(None, result.pr_society)
+        self.assertEqual(0, result.pr_owner_share)
+        self.assertEqual(None, result.mr_society)
+        self.assertEqual(0, result.mr_owner_share)
+        self.assertEqual(None, result.sr_society)
+        self.assertEqual(0, result.sr_owner_share)
+        self.assertEqual(None, result.special_agreements)
+        self.assertEqual(None, result.first_record_refusal)
+        self.assertEqual(None, result.publisher.ipi_base_id)
+        self.assertEqual('', result.isac)
+        self.assertEqual('', result.society_agreement_id)
+        self.assertEqual(None, result.agreement_type)
+        self.assertEqual(None, result.usa_license)

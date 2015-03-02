@@ -38,13 +38,14 @@ The Unicode UTF-8 codes are those with up to 16 or 21 bits.
 """
 
 
-def char_code(columns):
+def char_code(columns, compulsory=False):
     """
     Character set code.
 
     This accepts one of the character sets allowed on the file.
 
     :param columns: number of columns for this field
+    :param compulsory: indicates if the empty string is disallowed
     :return: a parser for the character set field
     """
 
@@ -72,6 +73,20 @@ def char_code(columns):
 
     # Name
     char_code_field.setName('Char Code Field (' + str(columns) + ' columns)')
+
+    char_code_field.setName('Character Set Field')
+
+    if not compulsory:
+        char_code_field_empty = pp.Regex('[ ]{' + str(columns) + '}')
+        char_code_field_empty.setName('Character Set Field')
+
+        char_code_field_empty.leaveWhitespace()
+
+        char_code_field_empty.setParseAction(pp.replaceWith(None))
+
+        char_code_field = char_code_field | char_code_field_empty
+
+        char_code_field.setName('Character Set Field')
 
     return char_code_field
 
@@ -295,7 +310,7 @@ def shares(compulsory=False):
 
     :return: grammar for the society ID field
     """
-    shares_field = percentage(5)
+    shares_field = percentage(5, compulsory)
     shares_field.setName('Shares Field')
 
     return shares_field
