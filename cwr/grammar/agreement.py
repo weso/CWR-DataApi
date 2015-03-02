@@ -25,9 +25,6 @@ _config = CWRConfiguration()
 Agreement fields.
 """
 
-# Record Type for the agreement
-record_prefix_agreement = record.record_prefix(_config.record_type('agreement'))
-
 # Submitter's Agreement Number
 submitter_agreement_n = field.alphanum(_config.field_size('agreement', 'agreement_id'), compulsory=True)
 submitter_agreement_n = submitter_agreement_n.setName('Submitters Agreement Number').setResultsName('agreement_id')
@@ -103,7 +100,8 @@ Agreement patterns.
 """
 
 # Agreement Pattern
-agreement = field_special.lineStart + record_prefix_agreement + submitter_agreement_n + is_code + agreement_type + \
+agreement = field_special.lineStart + record.record_prefix(
+    _config.record_type('agreement')) + submitter_agreement_n + is_code + agreement_type + \
             agreement_start_date + agreement_end_date + retention_end_date + prior_royalty_status + \
             prior_royalty_start_date + post_term_collection_status + post_term_collection_end_date + \
             date_of_signature + number_works + sm_clause + sales_change + advance_given + society_id + \

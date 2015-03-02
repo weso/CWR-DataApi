@@ -142,11 +142,11 @@ publisher:
         size: 45
     tax_id:
         size: 9
-    agreement_id:
+    submitter_agreement_id:
         size: 14
     pr_society:
         size: 3
     international_code:
         size: 14
-    society_id:
+    society_agreement_id:
         size: 14

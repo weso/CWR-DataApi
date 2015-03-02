@@ -182,7 +182,7 @@ class CWRTables(object):
     _file_transaction_status = 'cwr_transaction_status.csv'
     _file_tis = 'cwr_tis.csv'
     _file_society_codes = 'cwr_society_code.csv'
-    _file_publisher_type = 'cwr_society_code.csv'
+    _file_publisher_type = 'cwr_publisher_type.csv'
     _file_special_agreement_indicator = 'cwr_special_agreement_indicator.csv'
     _file_usa_license_indicators = 'cwr_usa_license_indicator.csv'
 

@@ -51,12 +51,6 @@ These fields are:
 - Batch Request ID. Numeric.
 """
 
-# Record Type for the header
-record_type_header = record.record_type(_config.record_type('group_header'))
-
-# Record Type for the trailer
-record_type_trailer = record.record_type(_config.record_type('group_trailer'))
-
 # Group ID
 group_id = field.numeric(_config.field_size('group_header', 'group_id'), compulsory=True)
 group_id = group_id.setName('Group ID').setResultsName('group_id')
@@ -104,11 +98,13 @@ These are the grammatical structures for the Group Header and Group Trailer.
 """
 
 # Group Header pattern
-group_header = field_special.lineStart + record_type_header + record.transaction_type + group_id + version_number + \
+group_header = field_special.lineStart + record.record_type(
+    _config.record_type('group_header')) + record.transaction_type + group_id + version_number + \
                batch_request_id + sd_type + field_special.lineEnd
 
 # Group Trailer pattern
-group_trailer = field_special.lineStart + record_type_trailer + group_id + record.transaction_count + record.record_count + \
+group_trailer = field_special.lineStart + record.record_type(
+    _config.record_type('group_trailer')) + group_id + record.transaction_count + record.record_count + \
                 currency_indicator + total_monetary_value + field_special.lineEnd
 
 """

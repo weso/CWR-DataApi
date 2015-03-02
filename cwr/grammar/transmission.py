@@ -56,12 +56,6 @@ These fields are:
 - Character Set. Alphanumeric.
 """
 
-# Record Type for the header
-record_type_header = record.record_type(_config.record_type('transmission_header'))
-
-# Record Type for the trailer
-record_type_trailer = record.record_type(_config.record_type('transmission_trailer'))
-
 # Sender Type
 sender_type = pp.oneOf(_tables.sender_types())
 sender_type = sender_type.setName('Sender Type').setResultsName('sender_type')
@@ -117,11 +111,13 @@ creation_date_time = pp.Group(creation_date + creation_time)
 creation_date_time = creation_date_time.setName('Creation Date and Time').setResultsName('creation_date_time')
 
 # Transmission Header pattern
-transmission_header = field_special.lineStart + record_type_header + sender_type + sender_id + sender_name + edi_version + \
+transmission_header = field_special.lineStart + record.record_type(_config.record_type('transmission_header')) + \
+                      sender_type + sender_id + sender_name + edi_version + \
                       creation_date_time + transmission_date + character_set + field_special.lineEnd
 
 # Transmission Header pattern
-transmission_trailer = field_special.lineStart + record_type_trailer + record.group_count + record.transaction_count + \
+transmission_trailer = field_special.lineStart + record.record_type(_config.record_type('transmission_trailer')) + \
+                       record.group_count + record.transaction_count + \
                        record.record_count + field_special.lineEnd
 
 transmission_trailer.leaveWhitespace()

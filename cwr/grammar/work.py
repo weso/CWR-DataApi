@@ -25,9 +25,6 @@ _config = CWRConfiguration()
 Work fields.
 """
 
-# Record Type for the work
-record_prefix_agreement = record.record_prefix(_config.record_type('work'))
-
 # Work Title
 work_title = field.alphanum(_config.field_size('work', 'work_title'), compulsory=True)
 work_title = work_title.setName('Work Title').setResultsName('title')
@@ -179,7 +176,8 @@ priority_flag = priority_flag.setName('Priority Flag').setResultsName('priority_
 Work patterns.
 """
 
-work_record = field_special.lineStart + record_prefix_agreement + work_title + language_code + work_id + iswc + \
+work_record = field_special.lineStart + record.record_prefix(_config.record_type('work')) + work_title + \
+              language_code + work_id + iswc + \
               copyright_date + copyright_number + musical_distribution_category + duration + recorded + \
               text_music_relationship + composite_type + version_type + excerpt_type + music_arrangement + \
               lyric_adaptation + contact_name + contact_id + work_type + gr_indicator + composite_count + \

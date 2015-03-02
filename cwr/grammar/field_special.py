@@ -167,7 +167,7 @@ def ipi_name_number(compulsory=False):
     """
     IPI Name Number field.
 
-    An IPI Base Number is composed of eleven digits.
+    An IPI Name Number is composed of eleven digits.
 
     So, for example, an IPI Name Number code field can contain 00014107338.
 

@@ -3,7 +3,8 @@
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field, field_special, record
+from cwr.grammar import field, field_special, record, agreement, society
+from cwr.interested_party import Publisher, PublisherRecord
 
 
 """
@@ -27,15 +28,9 @@ _config = CWRConfiguration()
 Publisher fields.
 """
 
-# Record Prefix
-record_prefix_publisher = record.record_prefix(_config.record_type('publisher'))
-
 # Publisher Sequence #
-sequence_n = field.numeric(_config.field_size('publisher', 'sequence_n'))
+sequence_n = field.numeric(_config.field_size('publisher', 'sequence_n'), compulsory=True)
 sequence_n = sequence_n.setName('Publisher Sequence #').setResultsName('sequence_n')
-
-# Interested Party #
-ip_id = field_special.ip_id()
 
 # Publisher name
 name = field.alphanum(_config.field_size('publisher', 'name'))
@@ -43,22 +38,20 @@ name = name.setName('Publisher name').setResultsName('name')
 
 # Publisher Unknown Indicator
 unknown = field.flag()
-unknown = unknown.setName('Publisher Unknown Indicator').setResultsName('unknown')
+unknown = unknown.setName('Publisher Unknown Indicator').setResultsName('publisher_unknown')
 
 # Publisher Type
 publisher_type = pp.oneOf(_tables.publisher_types())
 publisher_type = publisher_type.setName('Publisher Type').setResultsName('publisher_type')
+publisher_type.setParseAction(lambda s: s[0].strip())
 
 # Tax ID #
 tax_id = field.alphanum(_config.field_size('publisher', 'tax_id'))
 tax_id = tax_id.setName('Tax ID #').setResultsName('tax_id')
 
-# Publisher IPI Name #
-ipi_name = field_special.ipi_name_number()
-
 # Submitter Agreement Number
-agreement_id = field.alphanum(_config.field_size('publisher', 'agreement_id'))
-agreement_id = agreement_id.setName('Submitter Agreement Number').setResultsName('agreement_id')
+agreement_id = field.alphanum(_config.field_size('publisher', 'submitter_agreement_id'))
+agreement_id = agreement_id.setName('Submitter Agreement Number').setResultsName('submitter_agreement_id')
 
 # PR Affiliation Society #
 pr_society = field.alphanum(_config.field_size('publisher', 'pr_society'))
@@ -66,11 +59,11 @@ pr_society = pr_society.setName('PR Affiliation Society #').setResultsName('pr_s
 
 # Special Agreements Indicator
 special_agreement = pp.oneOf(_tables.special_agreement_indicators())
-special_agreement = special_agreement.setName('Special Agreements Indicator').setResultsName('special_agreement')
+special_agreement = special_agreement.setName('Special Agreements Indicator').setResultsName('special_agreements')
 
 # First Recording Refusal Indicator
 first_refusal = field.flag()
-first_refusal = first_refusal.setName('First Recording Refusal Indicator').setResultsName('first_refusal')
+first_refusal = first_refusal.setName('First Recording Refusal Indicator').setResultsName('first_record_refusal')
 
 # Filler
 filler = pp.Literal(' ')
@@ -79,17 +72,70 @@ filler.suppress()
 
 # Publisher IPI Base Number
 ipi_base = field_special.ipi_base_number()
-ipi_base = ipi_base.setName('Publisher IPI Base Number').setResultsName('ipi_base')
 
 # International Standard Agreement Code
 international_code = field.alphanum(_config.field_size('publisher', 'international_code'))
 international_code = international_code.setName('International Standard Agreement Code').setResultsName(
-    'international_code')
+    'isac')
 
 # Society-assigned Agreement Number
-society_id = field.alphanum(_config.field_size('publisher', 'society_id'))
-society_id = society_id.setName('Society-assigned Agreement Number').setResultsName('society_id')
+society_id = field.alphanum(_config.field_size('publisher', 'society_agreement_id'))
+society_id = society_id.setName('Society-assigned Agreement Number').setResultsName('society_agreement_id')
 
 # USA License Indicator
 usa_license = pp.oneOf(_tables.usa_license_indicators())
 usa_license = usa_license.setName('USA License Indicator').setResultsName('usa_license')
+
+"""
+Publisher patterns.
+"""
+
+publisher = field_special.lineStart + record.record_prefix(_config.record_type('publisher')) + sequence_n + \
+            field_special.ip_id() + name + unknown + \
+            publisher_type + tax_id + field_special.ipi_name_number() + agreement_id + \
+            society.pr_affiliation() + society.pr_share + \
+            society.mr_affiliation() + society.mr_share + \
+            society.sr_affiliation() + society.sr_share + \
+            special_agreement + first_refusal + filler + ipi_base + international_code + \
+            society_id + agreement.agreement_type + usa_license + field_special.lineEnd
+
+"""
+Parsing actions for the patterns.
+"""
+
+publisher.setParseAction(lambda p: _to_publisherrecord(p))
+
+"""
+Parsing methods.
+
+These are the methods which transform nodes into instances of classes.
+"""
+
+
+def _to_publisher(parsed):
+    """
+    Transforms the final parsing result into an Publisher instance.
+
+    :param parsed: result of parsing the Publisher info in a Publisher record
+    :return: an Publisher created from the parsed record
+    """
+
+    return Publisher(parsed.ip_id, parsed.name, parsed.ipi_base, parsed.tax_id, parsed.ipi_name)
+
+
+def _to_publisherrecord(parsed):
+    """
+    Transforms the final parsing result into an PublisherRecord instance.
+
+    :param parsed: result of parsing a Publisher record
+    :return: an PublisherRecord created from the parsed record
+    """
+    publisher = _to_publisher(parsed)
+
+    return PublisherRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                           publisher, parsed.sequence_n, parsed.submitter_agreement_id, parsed.publisher_type,
+                           parsed.publisher_unknown, parsed.agreement_type, parsed.isac,
+                           parsed.society_agreement_id, parsed.pr_society, parsed.pr_share,
+                           parsed.mr_society, parsed.mr_share, parsed.sr_society,
+                           parsed.sr_share, parsed.special_agreements,
+                           parsed.first_record_refusal, parsed.usa_license)

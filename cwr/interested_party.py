@@ -389,8 +389,7 @@ class PublisherRecord(InterestedPartyRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher, sequence_n, agreement_id='',
-                 publisher_type=None, publisher_unknown='F',
-                 agreement_type=None, isac='', society_agreement_id='',
+                 publisher_type=None, publisher_unknown='N', agreement_type=None, isac='', society_agreement_id='',
                  pr_society=None, pr_owner_share=0, mr_society=None, mr_owner_share=0, sr_society=None,
                  sr_owner_share=0, special_agreements=None, first_record_refusal='U', usa_license=''):
         """

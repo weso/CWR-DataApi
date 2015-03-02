@@ -27,9 +27,6 @@ _config = CWRConfiguration()
 General fields.
 """
 
-# Interested Party #
-ip_id = field_special.ip_id()
-
 # Language Code
 language = pp.oneOf(_tables.language_codes())
 language_empty = pp.Regex('[ ]{2}')
@@ -46,9 +43,6 @@ language = language.setName('Language Code').setResultsName('language')
 NPA fields.
 """
 
-# Record Type for the territory in agreement
-record_prefix_npa = record.record_prefix(_config.record_type('npa'))
-
 # Interested Party Name
 ip_name = field.alphanum(_config.field_size('npa', 'ip_name'), compulsory=True)
 ip_name = ip_name.setName('Interested Party Name').setResultsName('ip_name')
@@ -63,7 +57,8 @@ ip_writer_name.leaveWhitespace()
 NPA patterns.
 """
 
-npa = field_special.lineStart + record_prefix_npa + ip_id + ip_name + ip_writer_name + language + field_special.lineEnd
+npa = field_special.lineStart + record.record_prefix(
+    _config.record_type('npa')) + field_special.ip_id() + ip_name + ip_writer_name + language + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

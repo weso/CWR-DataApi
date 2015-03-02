@@ -24,9 +24,6 @@ _config = CWRConfiguration()
 Territory in Agreement fields.
 """
 
-# Record Type for the territory in agreement
-record_prefix_tir = record.record_prefix(_config.record_type('agreement_territory'))
-
 # Inclusion/Exclusion Indicator
 ie_indicator = pp.oneOf(_config.field_value('agreement_territory', 'ie_indicator'))
 ie_indicator = ie_indicator.setName('Inclusion/Exclusion Indicator').setResultsName('ie_indicator')
@@ -40,7 +37,8 @@ tis_code.setParseAction(lambda c: int(c[0]))
 Territory in Agreement patterns.
 """
 
-territory_in_agreement = field_special.lineStart + record_prefix_tir + ie_indicator + tis_code + field_special.lineEnd
+territory_in_agreement = field_special.lineStart + record.record_prefix(
+    _config.record_type('agreement_territory')) + ie_indicator + tis_code + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

@@ -27,9 +27,6 @@ _config = CWRConfiguration()
 Acknowledgement fields.
 """
 
-# Record Type for the acknowledgement
-record_prefix_acknowledgement = record.record_prefix(_config.record_type('acknowledgement'))
-
 # Creation Date
 creation_date = field.date(compulsory=True)
 creation_date = creation_date.setName('Creation Date').setResultsName('creation_date')
@@ -81,7 +78,8 @@ creation_date_time = pp.Group(creation_date + creation_time)
 creation_date_time = creation_date_time.setName('Creation Date and Time').setResultsName('creation_date_time')
 
 # Acknowledgment Pattern
-acknowledgement = field_special.lineStart + record_prefix_acknowledgement + creation_date_time + \
+acknowledgement = field_special.lineStart + record.record_prefix(_config.record_type('acknowledgement')) + \
+                  creation_date_time + \
                   original_group_id + original_transaction_n + original_transaction_type + creation_title + \
                   submitter_creation_n + recipient_creation_n + processing_date + transaction_status + \
                   field_special.lineEnd
