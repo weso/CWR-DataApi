@@ -5,6 +5,7 @@ import pyparsing as pp
 from data.accessor import CWRConfiguration, CWRTables
 from cwr.grammar import field, field_special, record, society, field_table
 from cwr.interested_party import Publisher, PublisherRecord
+from cwr.constraints import publisher as constraints
 
 
 """
@@ -41,19 +42,15 @@ unknown = field.flag()
 unknown = unknown.setName('Publisher Unknown Indicator').setResultsName('publisher_unknown')
 
 # Tax ID #
-tax_id = field.alphanum(_config.field_size('publisher', 'tax_id'))
+tax_id = field.numeric(_config.field_size('publisher', 'tax_id'))
 tax_id = tax_id.setName('Tax ID #').setResultsName('tax_id')
 
 # Submitter Agreement Number
 agreement_id = field.alphanum(_config.field_size('publisher', 'submitter_agreement_id'))
 agreement_id = agreement_id.setName('Submitter Agreement Number').setResultsName('submitter_agreement_id')
 
-# PR Affiliation Society #
-pr_society = field.alphanum(_config.field_size('publisher', 'pr_society'))
-pr_society = pr_society.setName('PR Affiliation Society #').setResultsName('pr_society')
-
 # First Recording Refusal Indicator
-first_refusal = field.flag()
+first_refusal = field.lookup(('Y', 'N'), columns=1)
 first_refusal = first_refusal.setName('First Recording Refusal Indicator').setResultsName('first_record_refusal')
 
 # Filler
@@ -80,9 +77,9 @@ Publisher patterns.
 publisher = field_special.lineStart + record.record_prefix(_config.record_type('publisher')) + sequence_n + \
             field_special.ip_id() + name + unknown + \
             field_table.publisher_type() + tax_id + field_special.ipi_name_number() + agreement_id + \
-            society.pr_affiliation + society.pr_share + \
-            society.mr_affiliation + society.mr_share + \
-            society.sr_affiliation + society.sr_share + \
+            society.pr_affiliation() + society.pr_share(max=50) + \
+            society.mr_affiliation() + society.mr_share() + \
+            society.sr_affiliation() + society.sr_share() + \
             field_table.special_agreement() + first_refusal + filler + ipi_base + international_code + \
             society_id + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
 
@@ -96,6 +93,15 @@ publisher.setParseAction(lambda p: _to_publisherrecord(p))
 Validation actions for the patterns.
 """
 
+publisher.addParseAction(lambda p: constraints.no_owner_has_no_shares(p[0]))
+publisher.addParseAction(lambda p: constraints.owner_has_shares(p[0]))
+publisher.addParseAction(lambda p: constraints.sequence_above_zero(p[0]))
+publisher.addParseAction(lambda p: constraints.controlled_publisher_has_id(p[0]))
+publisher.addParseAction(lambda p: constraints.controlled_or_known_publisher_has_name(p[0]))
+publisher.addParseAction(lambda p: constraints.controlled_has_type(p[0]))
+publisher.addParseAction(lambda p: constraints.controlled_has_unknown_blank(p[0]))
+publisher.addParseAction(lambda p: constraints.other_has_unknown_not_blank(p[0]))
+publisher.addParseAction(lambda p: constraints.other_unknown_has_no_name(p[0]))
 
 """
 Parsing methods.

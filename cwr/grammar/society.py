@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 
-from cwr.grammar import field_special
+from cwr.grammar import field_special, field_table
 
 
 """
@@ -14,25 +14,51 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Performing Rights Affiliation Society
-pr_affiliation = field_special.society()
-pr_affiliation = pr_affiliation.setName('Performing Rights Affiliation Society').setResultsName('pr_society')
+def pr_affiliation(compulsory=False):
+    pr_affiliation_field = field_table.society(compulsory=compulsory)
+    pr_affiliation_field = pr_affiliation_field.setName('Performing Rights Affiliation Society').setResultsName(
+        'pr_society')
+
+    return pr_affiliation_field
+
 
 # Performing Rights Share
-pr_share = field_special.shares()
-pr_share = pr_share.setName('Performing Rights Share').setResultsName('pr_share')
+def pr_share(max=100, compulsory=False):
+    pr_share_field = field_special.shares(max=max, compulsory=compulsory)
+    pr_share_field = pr_share_field.setName('Performing Rights Share').setResultsName('pr_share')
+
+    return pr_share_field
+
 
 # Mechanical Rights Affiliation Society
-mr_affiliation = field_special.society()
-mr_affiliation = mr_affiliation.setName('Mechanical Rights Affiliation Society').setResultsName('mr_society')
+def mr_affiliation(compulsory=False):
+    mr_affiliation_field = field_table.society(compulsory=compulsory)
+    mr_affiliation_field = mr_affiliation_field.setName('Mechanical Rights Affiliation Society').setResultsName(
+        'mr_society')
+
+    return mr_affiliation_field
+
 
 # Mechanical Rights Share
-mr_share = field_special.shares()
-mr_share = mr_share.setName('Mechanical Rights Share').setResultsName('mr_share')
+def mr_share(max=100, compulsory=False):
+    mr_share_field = field_special.shares(max=max, compulsory=compulsory)
+    mr_share_field = mr_share_field.setName('Mechanical Rights Share').setResultsName('mr_share')
+
+    return mr_share_field
+
 
 # Synchronization Rights Affiliation Society
-sr_affiliation = field_special.society()
-sr_affiliation = sr_affiliation.setName('Synchronization Rights Affiliation Society').setResultsName('sr_society')
+def sr_affiliation(compulsory=False):
+    sr_affiliation_field = field_table.society(compulsory=compulsory)
+    sr_affiliation_field = sr_affiliation_field.setName('Synchronization Rights Affiliation Society').setResultsName(
+        'sr_society')
+
+    return sr_affiliation_field
+
 
 # Synchronization Rights Share
-sr_share = field_special.shares()
-sr_share = sr_share.setName('Synchronization Rights Share').setResultsName('sr_share')
+def sr_share(max=100, compulsory=False):
+    sr_share_field = field_special.shares(max=max, compulsory=compulsory)
+    sr_share_field = sr_share_field.setName('Synchronization Rights Share').setResultsName('sr_share')
+
+    return sr_share_field

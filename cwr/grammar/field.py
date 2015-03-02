@@ -482,4 +482,6 @@ def lookup(values, columns=1, compulsory=False):
 
         lookup_field.setName('Lookup Field')
 
+        lookup_field.leaveWhitespace()
+
     return lookup_field

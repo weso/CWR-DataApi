@@ -223,3 +223,20 @@ def agreement_type(compulsory=False):
     agreement_type_field = agreement_type_field.setName('Agreement Type').setResultsName('agreement_type')
 
     return agreement_type_field
+
+
+def society(compulsory=False):
+    """
+    Creates the grammar for a society ID.
+
+    These are rights societies, used to identify Performing, Mechanical and Synchronization rights.
+
+    :return: grammar for the society ID field
+    """
+    society_field = field.lookup(_tables.society_codes(), columns=3, compulsory=compulsory)
+
+    society_field.setParseAction(lambda c: None if c[0] is None else int(c[0]))
+
+    society_field.setName('Society ID Field')
+
+    return society_field

@@ -35,12 +35,13 @@ ip_name = ip_name.setName('Interested Party Writer First Name').setResultsName('
 IPA patterns.
 """
 
-ipa = field_special.lineStart + record.record_prefix(_config.record_type('ipa')) + field_table.agreement_role_code(
-    True) + \
+ipa = field_special.lineStart + record.record_prefix(_config.record_type('ipa')) + \
+      field_table.agreement_role_code(True) + \
       field_special.ipi_name_number() + field_special.ipi_base_number() + \
-      field_special.ip_id(
-          compulsory=True) + ip_last_name + ip_name + society.pr_affiliation + society.pr_share + society.mr_affiliation + \
-      society.mr_share + society.sr_affiliation + society.sr_share + field_special.lineEnd
+      field_special.ip_id(compulsory=True) + ip_last_name + ip_name + \
+      society.pr_affiliation() + society.pr_share() + \
+      society.mr_affiliation() + society.mr_share() + \
+      society.sr_affiliation() + society.sr_share() + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

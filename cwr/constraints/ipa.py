@@ -28,9 +28,11 @@ def acquiror_has_shares(ipa):
         shares = 0
         if ipa.pr_society is not None:
             shares += ipa.pr_share
-        elif ipa.mr_society is not None:
+
+        if ipa.mr_society is not None:
             shares += ipa.mr_share
-        elif ipa.sr_society is not None:
+
+        if ipa.sr_society is not None:
             shares += ipa.sr_share
 
         if shares == 0:

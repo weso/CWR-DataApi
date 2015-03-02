@@ -262,7 +262,7 @@ def _to_iswccode(code):
         return code
 
 
-def percentage(columns, compulsory=False):
+def percentage(columns, max=100, compulsory=False):
     """
     Creates the grammar for a Numeric (N) field storing a percentage and accepting only the specified number of
     characters.
@@ -281,25 +281,25 @@ def percentage(columns, compulsory=False):
 
     percentage_field = field.numeric_float(columns, 3, compulsory)
 
-    percentage_field.addParseAction(lambda v: _assert_is_percentage(v[0]))
+    percentage_field.addParseAction(lambda v: _assert_is_percentage(v[0], max))
 
     percentage_field.setName('Percentage Field')
 
     return percentage_field
 
 
-def _assert_is_percentage(value):
+def _assert_is_percentage(value, max=100):
     """
     Makes sure the received value is a percentage. Otherwise an exception is thrown.
 
     :param value: the value to check
     """
 
-    if value < 0 or value > 100:
+    if value < 0 or value > max:
         raise pp.ParseException('', 'The value on a percentage field should be between 0 and 100')
 
 
-def shares(compulsory=False):
+def shares(max=100, compulsory=False):
     """
     Creates the grammar for a shares field.
 
@@ -310,36 +310,7 @@ def shares(compulsory=False):
 
     :return: grammar for the society ID field
     """
-    shares_field = percentage(5, compulsory)
+    shares_field = percentage(5, max=max, compulsory=compulsory)
     shares_field.setName('Shares Field')
 
     return shares_field
-
-
-def society(compulsory=False):
-    """
-    Creates the grammar for a society ID.
-
-    These are rights societies, used to identify Performing, Mechanical and Synchronization rights.
-
-    :return: grammar for the society ID field
-    """
-    society_field = pp.oneOf(_tables.society_codes())
-
-    society_field.setParseAction(lambda c: int(c[0]))
-
-    society_field.setName('Society ID Field')
-
-    if not compulsory:
-        society_field_empty = pp.Regex('[ ]{3}')
-
-        society_field_empty.setName('Society ID Field')
-
-        society_field_empty.setParseAction(pp.replaceWith(None))
-        society_field_empty.leaveWhitespace()
-
-        society_field = society_field_empty | society_field
-
-        society_field_empty.setName('Society ID Field')
-
-    return society_field
