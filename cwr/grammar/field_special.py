@@ -2,7 +2,6 @@
 
 import pyparsing as pp
 
-from data.accessor import CWRTables
 from cwr.other import ISWCCode, IPIBaseNumber
 from cwr.grammar import field
 
@@ -18,9 +17,6 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# Acquires data sources
-_tables = CWRTables()
-
 # GENERAL GRAMMAR
 
 lineStart = pp.lineStart.suppress()
@@ -30,66 +26,6 @@ lineEnd = pp.lineEnd.suppress()
 lineEnd.setName("End of line")
 
 # CONCRETE CASES FIELDS
-
-"""
-Characters sets should be one of the CWR list or the Unicode UTF-8 table.
-
-The Unicode UTF-8 codes are those with up to 16 or 21 bits.
-"""
-
-
-def char_code(columns, compulsory=False):
-    """
-    Character set code.
-
-    This accepts one of the character sets allowed on the file.
-
-    :param columns: number of columns for this field
-    :param compulsory: indicates if the empty string is disallowed
-    :return: a parser for the character set field
-    """
-
-    if columns <= 0:
-        raise BaseException()
-
-    char_sets = None
-    for char_set in _tables.character_sets():
-        regex = '[ ]{' + str(15 - len(char_set)) + '}' + char_set
-        if char_sets is None:
-            char_sets = regex
-        else:
-            char_sets += '|' + regex
-
-    # Accepted sets
-    _character_sets = pp.Regex(char_sets)
-    _unicode_1_16b = pp.Regex('U\+0[0-8,A-F]{3}[ ]{' + str(columns - 6) + '}')
-    _unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{' + str(columns - 7) + '}')
-
-    # Basic field
-    char_code_field = (_character_sets | _unicode_1_16b | _unicode_2_21b)
-
-    # Parse action
-    char_code_field = char_code_field.setParseAction(lambda s: s[0].strip())
-
-    # Name
-    char_code_field.setName('Char Code Field (' + str(columns) + ' columns)')
-
-    char_code_field.setName('Character Set Field')
-
-    if not compulsory:
-        char_code_field_empty = pp.Regex('[ ]{' + str(columns) + '}')
-        char_code_field_empty.setName('Character Set Field')
-
-        char_code_field_empty.leaveWhitespace()
-
-        char_code_field_empty.setParseAction(pp.replaceWith(None))
-
-        char_code_field = char_code_field | char_code_field_empty
-
-        char_code_field.setName('Character Set Field')
-
-    return char_code_field
-
 
 def ip_id(compulsory=False):
     """

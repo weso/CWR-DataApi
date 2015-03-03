@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import CWRConfiguration, CWRTables
+from data.accessor import CWRConfiguration
 from cwr.grammar import field, field_special, record, society, field_table
 from cwr.interested_party import Publisher, PublisherRecord
 from cwr.constraints import publisher as constraints
@@ -22,7 +22,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 """
@@ -117,7 +116,6 @@ def _to_publisher(parsed):
     :param parsed: result of parsing the Publisher info in a Publisher record
     :return: an Publisher created from the parsed record
     """
-
     return Publisher(parsed.ip_id, parsed.name, parsed.ipi_base, parsed.tax_id, parsed.ipi_name)
 
 

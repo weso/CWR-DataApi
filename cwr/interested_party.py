@@ -232,8 +232,7 @@ class IPTerritoryRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, ie_indicator, tis_numeric_code,
-                 sequence_n,
-                 pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
+                 sequence_n, pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
         super(IPTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Territory information
         self._tis_numeric_code = tis_numeric_code

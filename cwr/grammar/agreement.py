@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import cwr.constraints.agreement as constraints
-from data.accessor import CWRConfiguration, CWRTables
+from data.accessor import CWRConfiguration
 from cwr.grammar import field, field_special, record, field_table
 from cwr.agreement import AgreementRecord
 
@@ -16,7 +16,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 """

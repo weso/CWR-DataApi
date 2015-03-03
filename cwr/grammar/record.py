@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import CWRTables, CWRConfiguration
+from data.accessor import CWRConfiguration
 from cwr.grammar import field
 
 """
@@ -17,7 +17,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 # RECORD FIELDS

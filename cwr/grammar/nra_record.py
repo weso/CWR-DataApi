@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from data.accessor import CWRConfiguration, CWRTables
+from data.accessor import CWRConfiguration
 from cwr.grammar import field, field_special, record, field_table, publisher
 from cwr.agreement import NPARecord
 from cwr.interested_party import NPNRecord
@@ -20,7 +20,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 """

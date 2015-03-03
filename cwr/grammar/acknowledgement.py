@@ -4,7 +4,7 @@ import datetime
 
 import pyparsing as pp
 
-from data.accessor import CWRConfiguration, CWRTables
+from data.accessor import CWRConfiguration
 from cwr.grammar import field, field_special, record, group, field_table
 from cwr.acknowledgement import AcknowledgementRecord
 from cwr.constraints import acknowledgement as constraints
@@ -20,7 +20,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 """

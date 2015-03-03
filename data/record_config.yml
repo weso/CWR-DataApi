@@ -155,3 +155,10 @@ publisher:
         size: 14
     society_agreement_id:
         size: 14
+
+publisher_territory:
+    type: 'SPT'
+    constant:
+        size: 6
+    sequence_n:
+        size: 3

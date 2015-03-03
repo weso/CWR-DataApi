@@ -81,7 +81,7 @@ transmission_date = field.date(compulsory=True)
 transmission_date = transmission_date.setName('Transmission Date').setResultsName('transmission_date')
 
 # Character Set
-character_set = field_special.char_code(_config.field_size('transmission_header', 'character_set'))
+character_set = field_table.char_code(_config.field_size('transmission_header', 'character_set'))
 character_set = character_set.setName('Character Set').setResultsName('character_set')
 
 """

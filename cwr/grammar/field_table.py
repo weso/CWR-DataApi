@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import pyparsing as pp
+
 from data.accessor import CWRConfiguration, CWRTables
 from cwr.grammar import field
 
@@ -240,3 +242,56 @@ def society(compulsory=False):
     society_field.setName('Society ID Field')
 
     return society_field
+
+
+def char_code(columns, compulsory=False):
+    """
+    Character set code.
+
+    This accepts one of the character sets allowed on the file.
+
+    :param columns: number of columns for this field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: a parser for the character set field
+    """
+
+    if columns <= 0:
+        raise BaseException()
+
+    char_sets = None
+    for char_set in _tables.character_sets():
+        regex = '[ ]{' + str(15 - len(char_set)) + '}' + char_set
+        if char_sets is None:
+            char_sets = regex
+        else:
+            char_sets += '|' + regex
+
+    # Accepted sets
+    _character_sets = pp.Regex(char_sets)
+    _unicode_1_16b = pp.Regex('U\+0[0-8,A-F]{3}[ ]{' + str(columns - 6) + '}')
+    _unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{' + str(columns - 7) + '}')
+
+    # Basic field
+    char_code_field = (_character_sets | _unicode_1_16b | _unicode_2_21b)
+
+    # Parse action
+    char_code_field = char_code_field.setParseAction(lambda s: s[0].strip())
+
+    # Name
+    char_code_field.setName('Char Code Field (' + str(columns) + ' columns)')
+
+    char_code_field.setName('Character Set Field')
+
+    if not compulsory:
+        char_code_field_empty = pp.Regex('[ ]{' + str(columns) + '}')
+        char_code_field_empty.setName('Character Set Field')
+
+        char_code_field_empty.leaveWhitespace()
+
+        char_code_field_empty.setParseAction(pp.replaceWith(None))
+
+        char_code_field = char_code_field | char_code_field_empty
+
+        char_code_field.setName('Character Set Field')
+
+    return char_code_field
