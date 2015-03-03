@@ -125,17 +125,20 @@ ipa:
     ip_name:
         size: 30
 
+nra:
+    name:
+        size: 160
+
 npa:
     type: 'NPA'
-    ip_name:
-        size: 160
-    ip_writer_name:
-        size: 160
 
 npn:
     type: 'NPN'
     name:
         size: 480
+
+nwn:
+    type: 'NWN'
 
 publisher:
     type:
