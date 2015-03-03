@@ -87,6 +87,41 @@ class TestAlphanumValid(unittest.TestCase):
         self.assertEqual('', result[0])
 
 
+class TestAlphanumHugeValid(unittest.TestCase):
+    """
+    Tests that the alphanumeric field accepts and parse valid values.
+    """
+
+    def setUp(self):
+        self.alpha = field.alphanum(480)
+
+    def test_common(self):
+        """
+        Tests that the alphanum field accepts values of the correct number of characters.
+        """
+        result = self.alpha.parseString(
+            'THE NAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ')
+        self.assertEqual('THE NAME', result[0])
+
+    def test_full(self):
+        """
+        Tests that the alphanum field accepts values of the correct number of characters.
+        """
+        result = self.alpha.parseString(
+            'THEANAMEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+        self.assertEqual(
+            'THEANAMEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            result[0])
+
+    def test_empty(self):
+        """
+        Tests that the alphanum field accepts an empty string of the correct number of characters.
+        """
+        result = self.alpha.parseString(
+            '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ')
+        self.assertEqual('', result[0])
+
+
 class TestAlphanumCompulsoryValid(unittest.TestCase):
     """
     Tests that the alphanumeric field accepts and parse valid values.
@@ -195,6 +230,27 @@ class TestAlphanumException(unittest.TestCase):
         Tests that an exception is thrown when the field is not using capitol letters.
         """
         self.assertRaises(ParseException, self.alpha.parseString, 'ABcDE')
+
+
+class TestAlphanumHugeException(unittest.TestCase):
+    """
+    Tests that exceptions are thrown when using invalid values
+    """
+
+    def setUp(self):
+        self.alpha = field.alphanum(480)
+
+    def test_alphanum_wrong_size_empty(self):
+        """
+        Tests that an exception is thrown when the field is empty and it shouldn't be.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, '')
+
+    def test_alphanum_wrong_size_too_small(self):
+        """
+        Tests that an exception is thrown when the field is smaller than expected.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, 'AB')
 
 
 class TestAlphanumCompulsoryException(unittest.TestCase):

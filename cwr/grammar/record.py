@@ -28,7 +28,7 @@ _config = CWRConfiguration()
 # Record type
 def record_type(values):
     type_field = pp.oneOf(values)
-    type_field = type_field.setName('Record Type').setResultsName('record_type')
+    type_field = type_field.setName('Record Type (one of ' + str(values) + ')').setResultsName('record_type')
 
     return type_field
 

@@ -132,6 +132,11 @@ npa:
     ip_writer_name:
         size: 160
 
+npn:
+    type: 'NPN'
+    name:
+        size: 480
+
 publisher:
     type:
         - 'SPU'

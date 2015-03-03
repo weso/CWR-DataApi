@@ -125,6 +125,7 @@ class TestPercentage50Valid(unittest.TestCase):
 
         self.assertEqual(0, result[0])
 
+
 class TestPercentageCompulsoryValid(unittest.TestCase):
     """
     Tests that the percentage field accepts and parse valid values.
@@ -202,6 +203,7 @@ class TestPercentageException(unittest.TestCase):
         Tests that an exception is thrown when the value is set higher than the maximum value.
         """
         self.assertRaises(ParseException, self.perc.parseString, '')
+
 
 class TestPercentage50Exception(unittest.TestCase):
     """
