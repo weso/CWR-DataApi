@@ -6,7 +6,7 @@ from cwr.interested_party import IPTerritoryRecord
 
 
 """
-CWR Publisher Territory of Control (SPT) grammar.
+CWR Writer Territory of Control (SWT) records grammar.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -21,32 +21,28 @@ _config = CWRConfiguration()
 General fields.
 """
 
-# Constant
-constant = field_special.blank(_config.field_size('publisher_territory', 'constant'))
-
 # Shares Change
 shares_change = field.boolean()
 shares_change = shares_change.setName('Shares Change').setResultsName('shares_change')
 
 # Sequence #
-sequence_n = field.numeric(_config.field_size('publisher_territory', 'sequence_n'))
+sequence_n = field.numeric(_config.field_size('writer_territory', 'sequence_n'))
 sequence_n = sequence_n.setName('Sequence #').setResultsName('sequence_n')
 
 """
-SPT patterns.
+Patterns.
 """
 
 territory = field_special.lineStart + record.record_prefix(
     _config.record_type(
-        'publisher_territory')) + field_special.ip_id(compulsory=True) + constant + \
-            society.pr_share(max=50) + society.mr_share() + society.sr_share() + \
+        'writer_territory')) + field_special.ip_id() + society.pr_share() + society.mr_share() + society.sr_share() + \
             field_table.ie_indicator() + field_table.tis_code() + shares_change + sequence_n + field_special.lineEnd
 
 """
 Parsing actions for the patterns.
 """
 
-territory.setParseAction(lambda p: _to_publisherterritory(p))
+territory.setParseAction(lambda p: _to_writerterritory(p))
 
 """
 Parsing methods.
@@ -55,7 +51,7 @@ These are the methods which transform nodes into instances of classes.
 """
 
 
-def _to_publisherterritory(parsed):
+def _to_writerterritory(parsed):
     """
     Transforms the final parsing result into an IPTerritoryRecord instance.
 

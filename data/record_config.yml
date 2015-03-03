@@ -180,3 +180,8 @@ writer:
         size: 1
     personal_number:
         size: 12
+
+writer_territory:
+    type: 'SWT'
+    sequence_n:
+        size: 3
