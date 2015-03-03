@@ -250,3 +250,19 @@ def shares(max=100, compulsory=False):
     shares_field.setName('Shares Field')
 
     return shares_field
+
+
+def blank(columns):
+    """
+    Creates the grammar for a group of blank spaces.
+
+    These are for constant empty strings which should be ignored.
+
+    :param columns: the number of blank spaces
+    :return: grammar for a group of blank spaces
+    """
+    filler = pp.Regex('[ ]{' + str(columns) + '}')
+    filler.leaveWhitespace()
+    filler.suppress()
+
+    return filler

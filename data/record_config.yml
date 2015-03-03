@@ -162,3 +162,18 @@ publisher_territory:
         size: 6
     sequence_n:
         size: 3
+
+writer:
+    type:
+        - 'SWT'
+        - 'OWT'
+    first_name:
+        size: 30
+    last_name:
+        size: 45
+    writer_designation:
+        size: 2
+    filler:
+        size: 1
+    personal_number:
+        size: 12

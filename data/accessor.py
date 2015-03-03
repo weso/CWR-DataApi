@@ -185,6 +185,7 @@ class CWRTables(object):
     _file_publisher_type = 'cwr_publisher_type.csv'
     _file_special_agreement_indicator = 'cwr_special_agreement_indicator.csv'
     _file_usa_license_indicators = 'cwr_usa_license_indicator.csv'
+    _file_writer_designation_codes = 'cwr_writer_designation_code.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -208,6 +209,7 @@ class CWRTables(object):
     _publisher_type = None
     _special_agreement_indicator = None
     _usa_license_indicators = None
+    _writer_designation_codes = None
 
     def agreement_roles(self):
         """
@@ -459,3 +461,14 @@ class CWRTables(object):
             self._work_types = self._reader.read_csv_file(self._file_work_type)
 
         return self._work_types
+
+    def writer_designation_codes(self):
+        """
+        Writer Designation codes.
+
+        :return: the allowed CWR Writer Designation codes
+        """
+        if self._writer_designation_codes is None:
+            self._writer_designation_codes = self._reader.read_csv_file(self._file_writer_designation_codes)
+
+        return self._writer_designation_codes

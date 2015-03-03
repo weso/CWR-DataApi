@@ -537,19 +537,6 @@ class PublisherRecord(InterestedPartyRecord):
         return self._publisher_unknown
 
     @property
-    def reversionary(self):
-        """
-        Reversionary Indicator field. Flag (Yes/No/Unknown).
-
-        Indicates publisher claiming reversionary rights.
-
-        Note that only some societies, such as SOCAN, recognize reversionary rights.
-
-        :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
-        """
-        return self.reversionary
-
-    @property
     def sequence_n(self):
         """
         Publisher Sequence Number field. Numeric.
@@ -865,6 +852,7 @@ class WriterRecord(InterestedPartyRecord):
         # Other info
         self._reversionary = reversionary
 
+    @property
     def designation(self):
         """
         Writer Designation Code field. Table Lookup (Writer Designation Table).
@@ -878,6 +866,19 @@ class WriterRecord(InterestedPartyRecord):
         return self._designation
 
     @property
+    def reversionary(self):
+        """
+        Reversionary Indicator field. Flag (Yes/No/Unknown).
+
+        Indicates publisher claiming reversionary rights.
+
+        Note that only some societies, such as SOCAN, recognize reversionary rights.
+
+        :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
+        """
+        return self._reversionary
+
+    @property
     def work_for_hire(self):
         """
         Work For Hire Indicator field. Boolean.
@@ -888,6 +889,7 @@ class WriterRecord(InterestedPartyRecord):
         """
         return self._work_for_hire
 
+    @property
     def writer(self):
         """
         The Writer information.
@@ -898,6 +900,7 @@ class WriterRecord(InterestedPartyRecord):
         """
         return self._writer
 
+    @property
     def writer_unknown(self):
         """
         Writer Unknown Indicator field. Flag (Yes/No/Unknown).

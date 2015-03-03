@@ -25,9 +25,9 @@ Lookup fields.
 
 # Original Transaction Type
 def original_transaction_type(compulsory=False):
-    original_transaction_type_field = field.lookup(_tables.record_types(), compulsory=compulsory)
-    original_transaction_type_field = original_transaction_type_field.setName(
-        'Original Transaction Type').setResultsName(
+    original_transaction_type_field = field.lookup(_tables.record_types(), compulsory=compulsory,
+                                                   name='Original Transaction Type')
+    original_transaction_type_field = original_transaction_type_field.setResultsName(
         'transaction_type')
 
     return original_transaction_type_field
@@ -35,8 +35,9 @@ def original_transaction_type(compulsory=False):
 
 # Transaction Status
 def transaction_status(compulsory=False):
-    transaction_status_field = field.lookup(_tables.transaction_status(), compulsory=compulsory)
-    transaction_status_field = transaction_status_field.setName('Transaction Status').setResultsName(
+    transaction_status_field = field.lookup(_tables.transaction_status(), compulsory=compulsory,
+                                            name='Transaction Status')
+    transaction_status_field = transaction_status_field.setResultsName(
         'transaction_status')
 
     return transaction_status_field
@@ -45,8 +46,8 @@ def transaction_status(compulsory=False):
 # Prior Royalty Status
 def prior_royalty_status(compulsory=False):
     prior_royalty_status_field = field.lookup(_config.field_value('agreement', 'prior_royalty_status'),
-                                              compulsory=compulsory)
-    prior_royalty_status_field = prior_royalty_status_field.setName('Prior Royalty Status').setResultsName(
+                                              compulsory=compulsory, name='Prior Royalty Status')
+    prior_royalty_status_field = prior_royalty_status_field.setResultsName(
         'prior_royalty_status')
 
     return prior_royalty_status_field
@@ -55,9 +56,8 @@ def prior_royalty_status(compulsory=False):
 # Post Term Collection Status
 def post_term_collection_status(compulsory=False):
     post_term_collection_status_field = field.lookup(_config.field_value('agreement', 'post_term_collection_status'),
-                                                     compulsory=compulsory)
-    post_term_collection_status_field = post_term_collection_status_field.setName(
-        'Post Term Collection Status').setResultsName(
+                                                     compulsory=compulsory, name='Post Term Collection Status')
+    post_term_collection_status_field = post_term_collection_status_field.setResultsName(
         'post_term_collection_status')
 
     return post_term_collection_status_field
@@ -65,24 +65,26 @@ def post_term_collection_status(compulsory=False):
 
 # Sales/Manufacture Clause
 def sm_clause(compulsory=False):
-    sm_clause_field = field.lookup(_config.field_value('agreement', 'sales_manufacture_clause'), compulsory=compulsory)
-    sm_clause_field = sm_clause_field.setName('Sales/Manufacture Clause').setResultsName('sales_manufacture_clause')
+    sm_clause_field = field.lookup(_config.field_value('agreement', 'sales_manufacture_clause'), compulsory=compulsory,
+                                   name='Sales/Manufacture Clause')
+    sm_clause_field = sm_clause_field.setResultsName('sales_manufacture_clause')
 
     return sm_clause_field
 
 
 # Inclusion/Exclusion Indicator
 def ie_indicator(compulsory=False):
-    ie_indicator_field = field.lookup(_config.field_value('agreement_territory', 'ie_indicator'), compulsory=compulsory)
-    ie_indicator_field = ie_indicator_field.setName('Inclusion/Exclusion Indicator').setResultsName('ie_indicator')
+    ie_indicator_field = field.lookup(_config.field_value('agreement_territory', 'ie_indicator'), compulsory=compulsory,
+                                      name='Inclusion/Exclusion Indicator')
+    ie_indicator_field = ie_indicator_field.setResultsName('ie_indicator')
 
     return ie_indicator_field
 
 
 # TIS Numeric Code
 def tis_code(compulsory=False):
-    tis_code_field = field.lookup(_tables.tis_codes(), compulsory=compulsory)
-    tis_code_field = tis_code_field.setName('TIS Numeric Code').setResultsName('tis_code')
+    tis_code_field = field.lookup(_tables.tis_codes(), compulsory=compulsory, name='TIS Numeric Code')
+    tis_code_field = tis_code_field.setResultsName('tis_code')
     tis_code_field.setParseAction(lambda c: int(c[0]))
 
     return tis_code_field
@@ -90,8 +92,9 @@ def tis_code(compulsory=False):
 
 # Agreement Role Code
 def agreement_role_code(compulsory=False):
-    agreement_role_code_field = field.lookup(_tables.agreement_roles(), compulsory=compulsory)
-    agreement_role_code_field = agreement_role_code_field.setName('Agreement Role Code').setResultsName(
+    agreement_role_code_field = field.lookup(_tables.agreement_roles(), compulsory=compulsory,
+                                             name='Agreement Role Code')
+    agreement_role_code_field = agreement_role_code_field.setResultsName(
         'agreement_role_code')
 
     return agreement_role_code_field
@@ -99,24 +102,27 @@ def agreement_role_code(compulsory=False):
 
 # Language Code
 def language(compulsory=False):
-    language_field = field.lookup(_tables.language_codes(), columns=2, compulsory=compulsory)
-    language_field = language_field.setName('Language Code').setResultsName('language')
+    language_field = field.lookup(_tables.language_codes(), columns=2, compulsory=compulsory,
+                                  name='Language Code')
+    language_field = language_field.setResultsName('language')
 
     return language_field
 
 
 # Publisher Type
 def publisher_type(compulsory=False):
-    publisher_type_field = field.lookup(_tables.publisher_types(), columns=2, compulsory=compulsory)
-    publisher_type_field = publisher_type_field.setName('Publisher Type').setResultsName('publisher_type')
+    publisher_type_field = field.lookup(_tables.publisher_types(), columns=2, compulsory=compulsory,
+                                        name='Publisher Type')
+    publisher_type_field = publisher_type_field.setResultsName('publisher_type')
 
     return publisher_type_field
 
 
 # Special Agreements Indicator
 def special_agreement(compulsory=False):
-    special_agreement_field = field.lookup(_tables.special_agreement_indicators(), compulsory=compulsory)
-    special_agreement_field = special_agreement_field.setName('Special Agreements Indicator').setResultsName(
+    special_agreement_field = field.lookup(_tables.special_agreement_indicators(), compulsory=compulsory,
+                                           name='Special Agreements Indicator')
+    special_agreement_field = special_agreement_field.setResultsName(
         'special_agreements')
 
     return special_agreement_field
@@ -124,16 +130,17 @@ def special_agreement(compulsory=False):
 
 # Transaction type
 def transaction_type(compulsory=False):
-    transaction_type_field = field.lookup(_tables.transaction_types(), compulsory=compulsory)
-    transaction_type_field = transaction_type_field.setName('Transaction Type').setResultsName('transaction_type')
+    transaction_type_field = field.lookup(_tables.transaction_types(), compulsory=compulsory,
+                                          name='Transaction Type')
+    transaction_type_field = transaction_type_field.setResultsName('transaction_type')
 
     return transaction_type_field
 
 
 # Sender Type
 def sender_type(compulsory=False):
-    sender_type_field = field.lookup(_tables.sender_types(), compulsory=compulsory)
-    sender_type_field = sender_type_field.setName('Sender Type').setResultsName('sender_type')
+    sender_type_field = field.lookup(_tables.sender_types(), compulsory=compulsory, name='Sender Type')
+    sender_type_field = sender_type_field.setResultsName('sender_type')
 
     return sender_type_field
 
@@ -141,17 +148,19 @@ def sender_type(compulsory=False):
 # Musical Work Distribution Category
 def musical_distribution_category(compulsory=False):
     musical_distribution_category_field = field.lookup(_tables.musical_work_distribution_categories(),
-                                                       compulsory=compulsory)
-    musical_distribution_category_field = musical_distribution_category_field.setName(
-        'Musical Work Distribution Category').setResultsName('musical_distribution_category')
+                                                       compulsory=compulsory,
+                                                       name='Musical Work Distribution Category')
+    musical_distribution_category_field = musical_distribution_category_field.setResultsName(
+        'musical_distribution_category')
 
     return musical_distribution_category_field
 
 
 # Text Music Relationship
 def text_music_relationship(compulsory=False):
-    text_music_relationship_field = field.lookup(_tables.text_music_relationships(), compulsory=compulsory)
-    text_music_relationship_field = text_music_relationship_field.setName('Text Music Relationship').setResultsName(
+    text_music_relationship_field = field.lookup(_tables.text_music_relationships(), compulsory=compulsory,
+                                                 name='Text Music Relationship')
+    text_music_relationship_field = text_music_relationship_field.setResultsName(
         'text_music_relationship')
 
     return text_music_relationship_field
@@ -161,24 +170,26 @@ def text_music_relationship(compulsory=False):
 def composite_type(compulsory=False):
     composite_type_field = field.lookup(_tables.composite_types(),
                                         columns=str(_config.field_size('work', 'composite_type')),
-                                        compulsory=compulsory)
-    composite_type_field = composite_type_field.setName('Composite Type').setResultsName('composite_type')
+                                        compulsory=compulsory, name='Composite Type')
+    composite_type_field = composite_type_field.setResultsName('composite_type')
 
     return composite_type_field
 
 
 # Version Type
 def version_type(compulsory=False):
-    version_type_field = field.lookup(_tables.version_types(), compulsory=compulsory)
-    version_type_field = version_type_field.setName('Version Type').setResultsName('version_type')
+    version_type_field = field.lookup(_tables.version_types(), compulsory=compulsory,
+                                      name='Version Type')
+    version_type_field = version_type_field.setResultsName('version_type')
 
     return version_type_field
 
 
 # Excerpt Type
 def excerpt_type(compulsory=False):
-    excerpt_type_field = field.lookup(_tables.excerpt_types(), compulsory=compulsory)
-    excerpt_type_field = excerpt_type_field.setName('Excerpt Type').setResultsName('excerpt_type')
+    excerpt_type_field = field.lookup(_tables.excerpt_types(), compulsory=compulsory,
+                                      name='Excerpt Type')
+    excerpt_type_field = excerpt_type_field.setResultsName('excerpt_type')
 
     return excerpt_type_field
 
@@ -187,8 +198,9 @@ def excerpt_type(compulsory=False):
 def music_arrangement(compulsory=False):
     music_arrangement_field = field.lookup(_tables.music_arrangements(),
                                            columns=str(_config.field_size('work', 'music_arrangement')),
-                                           compulsory=compulsory)
-    music_arrangement_field = music_arrangement_field.setName('Music Arrangement').setResultsName('music_arrangement')
+                                           compulsory=compulsory,
+                                           name='Music Arrangement')
+    music_arrangement_field = music_arrangement_field.setResultsName('music_arrangement')
 
     return music_arrangement_field
 
@@ -196,8 +208,9 @@ def music_arrangement(compulsory=False):
 # Lyric Adaptation
 def lyric_adaptation(compulsory=False):
     lyric_adaptation_field = field.lookup(_tables.lyric_adaptations(),
-                                          columns=_config.field_size('work', 'lyric_adaptation'), compulsory=compulsory)
-    lyric_adaptation_field = lyric_adaptation_field.setName('Lyric Adaptation').setResultsName('lyric_adaptation')
+                                          columns=_config.field_size('work', 'lyric_adaptation'), compulsory=compulsory,
+                                          name='Lyric Adaptation')
+    lyric_adaptation_field = lyric_adaptation_field.setResultsName('lyric_adaptation')
 
     return lyric_adaptation_field
 
@@ -205,24 +218,25 @@ def lyric_adaptation(compulsory=False):
 # Work Type
 def work_type(compulsory=False):
     work_type_field = field.lookup(_tables.work_types(), columns=_config.field_size('work', 'work_type'),
-                                   compulsory=compulsory)
-    work_type_field = work_type_field.setName('Work Type').setResultsName('cwr_work_type')
+                                   compulsory=compulsory, name='Work Type')
+    work_type_field = work_type_field.setResultsName('cwr_work_type')
 
     return work_type_field
 
 
 # USA License Indicator
 def usa_license(compulsory=False):
-    usa_license_field = field.lookup(_tables.usa_license_indicators(), compulsory=compulsory)
-    usa_license_field = usa_license_field.setName('USA License Indicator').setResultsName('usa_license')
+    usa_license_field = field.lookup(_tables.usa_license_indicators(), compulsory=compulsory,
+                                     name='USA License Indicator')
+    usa_license_field = usa_license_field.setResultsName('usa_license')
 
     return usa_license_field
 
 
 # Agreement Type
 def agreement_type(compulsory=False):
-    agreement_type_field = field.lookup(_tables.agreement_types(), compulsory=compulsory)
-    agreement_type_field = agreement_type_field.setName('Agreement Type').setResultsName('agreement_type')
+    agreement_type_field = field.lookup(_tables.agreement_types(), compulsory=compulsory, name='Agreement Type')
+    agreement_type_field = agreement_type_field.setResultsName('agreement_type')
 
     return agreement_type_field
 
@@ -242,6 +256,16 @@ def society(compulsory=False):
     society_field.setName('Society ID Field')
 
     return society_field
+
+
+# Writer Designation
+def writer_designation(compulsory=False):
+    writer_designation_field = field.lookup(_tables.writer_designation_codes(),
+                                            columns=_config.field_size('writer', 'writer_designation'),
+                                            compulsory=compulsory, name='Writer Designation')
+    writer_designation_field = writer_designation_field.setResultsName('writer_designation')
+
+    return writer_designation_field
 
 
 def char_code(columns, compulsory=False):

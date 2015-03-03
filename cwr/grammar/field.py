@@ -456,23 +456,28 @@ This accepts only values from a table or list.
 """
 
 
-def lookup(values, columns=1, compulsory=False):
+def lookup(values, columns=1, compulsory=False, name=None):
     """
     Creates the grammar for a Lookup (L) field, accepting only values from a list.
 
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for the lookup field
     """
+    if name is None:
+        name = 'Lookup Field'
+
     lookup_field = pp.oneOf(values)
 
-    lookup_field.setName('Lookup Field')
+    lookup_field.setName(name)
 
     lookup_field.setParseAction(lambda s: s[0].strip())
+
+    lookup_field.leaveWhitespace()
 
     if not compulsory:
         lookup_field_option = pp.Regex('[ ]{' + str(columns) + '}')
 
-        lookup_field_option.setName('Lookup Field')
+        lookup_field_option.setName(name)
 
         lookup_field_option.leaveWhitespace()
 
@@ -480,7 +485,7 @@ def lookup(values, columns=1, compulsory=False):
 
         lookup_field = lookup_field | lookup_field_option
 
-        lookup_field.setName('Lookup Field')
+        lookup_field.setName(name)
 
         lookup_field.leaveWhitespace()
 

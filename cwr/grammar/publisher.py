@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 from data.accessor import CWRConfiguration
 from cwr.grammar import field, field_special, record, society, field_table
 from cwr.interested_party import Publisher, PublisherRecord
@@ -52,11 +50,6 @@ agreement_id = agreement_id.setName('Submitter Agreement Number').setResultsName
 first_refusal = field.lookup(('Y', 'N'), columns=1)
 first_refusal = first_refusal.setName('First Recording Refusal Indicator').setResultsName('first_record_refusal')
 
-# Filler
-filler = pp.Literal(' ')
-filler.leaveWhitespace()
-filler.suppress()
-
 # Publisher IPI Base Number
 ipi_base = field_special.ipi_base_number()
 
@@ -79,7 +72,7 @@ publisher = field_special.lineStart + record.record_prefix(_config.record_type('
             society.pr_affiliation() + society.pr_share(max=50) + \
             society.mr_affiliation() + society.mr_share() + \
             society.sr_affiliation() + society.sr_share() + \
-            field_table.special_agreement() + first_refusal + filler + ipi_base + international_code + \
+            field_table.special_agreement() + first_refusal + field_special.blank(1) + ipi_base + international_code + \
             society_id + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
 
 """
@@ -114,7 +107,7 @@ def _to_publisher(parsed):
     Transforms the final parsing result into an Publisher instance.
 
     :param parsed: result of parsing the Publisher info in a Publisher record
-    :return: an Publisher created from the parsed record
+    :return: a Publisher created from the parsed record
     """
     return Publisher(parsed.ip_id, parsed.name, parsed.ipi_base, parsed.tax_id, parsed.ipi_name)
 
