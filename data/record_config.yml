@@ -197,5 +197,10 @@ alternate_title:
         size: 60
 
 table:
-    title_type_field:
+    title_type:
         size: 2
+
+nat:
+    type: 'NAT'
+    title:
+        size: 640

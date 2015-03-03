@@ -4,6 +4,7 @@ from data.accessor import CWRConfiguration
 from cwr.grammar import field, field_special, record, field_table, publisher
 from cwr.agreement import NPARecord
 from cwr.interested_party import NPNRecord, NWNRecord
+from cwr.work import NATRecord
 
 
 """
@@ -13,6 +14,7 @@ This is for the following records:
 - Non-Roman Alphabet Agreement Party Name (NPA)
 - Non-Roman Alphabet Publisher Name (NPN)
 - Non-Roman Alphabet Writer Name (NWN)
+- Non-Roman Alphabet Title (NAT)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -65,6 +67,14 @@ writer_first_name = writer_first_name.setName('Writer First Name').setResultsNam
 writer_first_name.leaveWhitespace()
 
 """
+NAT fields.
+"""
+
+# Title
+nat_title = field.alphanum(_config.field_size('nat', 'title'), compulsory=True)
+nat_title = nat_title.setName('Title').setResultsName('title')
+
+"""
 NRA patterns.
 """
 
@@ -82,6 +92,10 @@ nwn = field_special.lineStart + record.record_prefix(
         'nwn')) + field_special.ip_id() + writer_last_name + writer_first_name + \
       field_table.language() + field_special.lineEnd
 
+nat = field_special.lineStart + record.record_prefix(
+    _config.record_type(
+        'nat')) + nat_title + field_table.title_type() + field_table.language() + field_special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -91,6 +105,8 @@ npa.setParseAction(lambda a: _to_npa(a))
 npn.setParseAction(lambda a: _to_npn(a))
 
 nwn.setParseAction(lambda a: _to_nwn(a))
+
+nat.setParseAction(lambda a: _to_nat(a))
 
 """
 Parsing methods.
@@ -130,3 +146,14 @@ def _to_nwn(parsed):
     """
     return NWNRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                      parsed.writer_first_name, parsed.writer_last_name, parsed.ip_id, parsed.language)
+
+
+def _to_nat(parsed):
+    """
+    Transforms the final parsing result into an NATRecord instance.
+
+    :param parsed: result of parsing an NAT transaction
+    :return: a NATRecord created from the parsed record
+    """
+    return NATRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                     parsed.title, parsed.title_type, parsed.language)

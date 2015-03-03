@@ -271,9 +271,9 @@ def writer_designation(compulsory=False):
 # Title Type
 def title_type(compulsory=False):
     title_type_field = field.lookup(_tables.title_types(),
-                                    columns=_config.field_size('table', 'title_type_field'),
+                                    columns=_config.field_size('table', 'title_type'),
                                     compulsory=compulsory, name='Title Type')
-    title_type_field = title_type_field.setResultsName('title_type_field')
+    title_type_field = title_type_field.setResultsName('title_type')
 
     return title_type_field
 
