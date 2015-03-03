@@ -150,7 +150,7 @@ class TestPublisherRecordException(unittest.TestCase):
 
         self.assertRaises(ParseException, self.grammar.parseString, record)
 
-    def test_not_controlled_unknown_no_name(self):
+    def test_not_controlled_unknown_has_name(self):
         record = 'OPU000012340000002319A12345678PUBLISHER NAME                               YAQ92370341200014107338A0123456789123009020500100300001102312LY I-000000229-7A0123456789124A0123456789125OSB'
 
         self.assertRaises(ParseException, self.grammar.parseString, record)

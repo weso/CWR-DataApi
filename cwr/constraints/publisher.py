@@ -155,7 +155,7 @@ def other_unknown_has_no_name(publisher):
 
     :param publisher: the Publisher to validate
     """
-    if publisher.record_type == 'OPU' and publisher.publisher_unknown is 'Y' and len(publisher.publisher.name) > 0:
+    if publisher.record_type == 'OPU' and publisher.publisher_unknown == 'Y' and len(publisher.publisher.name) > 0:
         raise pp.ParseException('', msg='Unknown publishers should not have a name')
 
 
