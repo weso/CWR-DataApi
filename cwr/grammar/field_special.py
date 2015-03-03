@@ -181,6 +181,8 @@ def iswc(compulsory=False):
     # White spaces are not removed
     iswc_field.leaveWhitespace()
 
+    iswc_field = iswc_field.setResultsName('iswc')
+
     return iswc_field
 
 

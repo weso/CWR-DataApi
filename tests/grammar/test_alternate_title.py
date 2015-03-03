@@ -29,4 +29,5 @@ class TestAlternateTitleGrammar(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('THE TITLE', result.alternate_title)
+        self.assertEqual('AT', result.alternate_title)
         self.assertEqual('ES', result.language)
