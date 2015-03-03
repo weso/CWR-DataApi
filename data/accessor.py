@@ -187,6 +187,10 @@ class CWRTables(object):
     _file_usa_license_indicators = 'cwr_usa_license_indicator.csv'
     _file_writer_designation_codes = 'cwr_writer_designation_code.csv'
     _file_title_types = 'cwr_title_type.csv'
+    _file_prior_royalty_status = 'cwr_prior_royalty_status.csv'
+    _file_post_term_collection_status = 'cwr_post_term_collection_status.csv'
+    _file_sales_manufacture_clause = 'cwr_sales_manufacture_clause.csv'
+    _file_ie_indicator = 'cwr_ie_indicator.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -212,6 +216,10 @@ class CWRTables(object):
     _usa_license_indicators = None
     _writer_designation_codes = None
     _title_types = None
+    _prior_royalty_status = None
+    _post_term_collection_status = None
+    _sales_manufacture_clause = None
+    _ie_indicator = None
 
     def agreement_roles(self):
         """
@@ -272,6 +280,17 @@ class CWRTables(object):
 
         return self._excerpt_types
 
+    def ie_indicator(self):
+        """
+        CWR I/E Indicator codes.
+
+        :return: the allowed I/E Indicator codes
+        """
+        if self._ie_indicator is None:
+            self._ie_indicator = self._reader.read_csv_file(self._file_ie_indicator)
+
+        return self._ie_indicator
+
     def language_codes(self):
         """
         Allowed language codes.
@@ -318,6 +337,28 @@ class CWRTables(object):
 
         return self._mwdc
 
+    def post_term_collection_status(self):
+        """
+        Post-Term Collection Status codes.
+
+        :return: the allowed Post-Term Collection Status codes
+        """
+        if self._post_term_collection_status is None:
+            self._post_term_collection_status = self._reader.read_csv_file(self._file_post_term_collection_status)
+
+        return self._post_term_collection_status
+
+    def prior_royalty_status(self):
+        """
+        Prior Royalty Status codes.
+
+        :return: the allowed Prior Royalty Status codes
+        """
+        if self._prior_royalty_status is None:
+            self._prior_royalty_status = self._reader.read_csv_file(self._file_prior_royalty_status)
+
+        return self._prior_royalty_status
+
     def publisher_types(self):
         """
         Publisher Types.
@@ -341,6 +382,17 @@ class CWRTables(object):
             self._record_types = self._reader.read_csv_file(self._file_record_types)
 
         return self._record_types
+
+    def sales_manufacture_clause(self):
+        """
+        Sales/Manufacture Clause.
+
+        :return: the allowed CWR Sales/Manufacture Clause codes
+        """
+        if self._sales_manufacture_clause is None:
+            self._sales_manufacture_clause = self._reader.read_csv_file(self._file_sales_manufacture_clause)
+
+        return self._sales_manufacture_clause
 
     def sender_types(self):
         """

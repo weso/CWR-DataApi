@@ -54,20 +54,6 @@ agreement:
         size: 5
     society_agreement_number:
         size: 14
-    prior_royalty_status:
-        value:
-            - 'N'
-            - 'A'
-            - 'D'
-    post_term_collection_status:
-        value:
-            - 'N'
-            - 'O'
-            - 'D'
-    sales_manufacture_clause:
-        value:
-            - 'S'
-            - 'M'
 
 work:
     type:
@@ -91,14 +77,6 @@ work:
         size: 25
     catalogue:
         size: 25
-    music_arrangement:
-        size: 3
-    lyric_adaptation:
-        size: 3
-    work_type:
-        size: 2
-    composite_type:
-        size: 3
 
 acknowledgement:
     type: 'ACK'
@@ -113,10 +91,6 @@ acknowledgement:
 
 agreement_territory:
     type: 'TER'
-    ie_indicator:
-        value:
-            - 'E'
-            - 'I'
 
 ipa:
     type: 'IPA'
@@ -174,8 +148,6 @@ writer:
         size: 30
     last_name:
         size: 45
-    writer_designation:
-        size: 2
     filler:
         size: 1
     personal_number:
@@ -199,8 +171,73 @@ alternate_title:
 table:
     title_type:
         size: 2
+    composite_type:
+        size: 3
+    music_arrangement:
+        size: 3
+    lyric_adaptation:
+        size: 3
+    work_type:
+        size: 2
+    writer_designation:
+        size: 2
+    original_transaction_type:
+        size: 3
+    transaction_status:
+        size: 2
+    prior_royalty_status:
+        size: 1
+    post_term_collection_status:
+        size: 1
+    sm_clause:
+        size: 1
+    ie_indicator_field:
+        size: 1
+    tis_code:
+        size: 4
+    agreement_role_code:
+        size: 2
+    language:
+        size: 2
+    publisher_type:
+        size: 2
+    special_agreement:
+        size: 1
+    transaction_type:
+        size: 3
+    sender_type:
+        size: 2
+    sender_type:
+        size: 2
+    musical_distribution_category:
+        size: 3
+    text_music_relationship:
+        size: 3
+    text_music_relationship:
+        size: 3
+    version_type:
+        size: 3
+    excerpt_type:
+        size: 3
+    usa_license:
+        size: 1
+    agreement_type:
+        size: 2
+    society:
+        size: 3
 
 nat:
     type: 'NAT'
     title:
         size: 640
+
+entire_work_title:
+    type: 'EWT'
+    entire_work_title:
+        size: 60
+    writer_last_name:
+        size: 45
+    writer_first_name:
+        size: 30
+    source:
+        size: 60
