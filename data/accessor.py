@@ -186,6 +186,7 @@ class CWRTables(object):
     _file_special_agreement_indicator = 'cwr_special_agreement_indicator.csv'
     _file_usa_license_indicators = 'cwr_usa_license_indicator.csv'
     _file_writer_designation_codes = 'cwr_writer_designation_code.csv'
+    _file_title_types = 'cwr_title_type.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -210,6 +211,7 @@ class CWRTables(object):
     _special_agreement_indicator = None
     _usa_license_indicators = None
     _writer_designation_codes = None
+    _title_types = None
 
     def agreement_roles(self):
         """
@@ -404,6 +406,17 @@ class CWRTables(object):
                 self._tis.append(value)
 
         return self._tis
+
+    def title_types(self):
+        """
+        Title Types.
+
+        :return: the allowed Title Type codes
+        """
+        if self._title_types is None:
+            self._title_types = self._reader.read_csv_file(self._file_title_types)
+
+        return self._title_types
 
     def transaction_status(self):
         """

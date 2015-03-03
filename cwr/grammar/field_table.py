@@ -268,6 +268,16 @@ def writer_designation(compulsory=False):
     return writer_designation_field
 
 
+# Title Type
+def title_type(compulsory=False):
+    title_type_field = field.lookup(_tables.title_types(),
+                                    columns=_config.field_size('table', 'title_type_field'),
+                                    compulsory=compulsory, name='Title Type')
+    title_type_field = title_type_field.setResultsName('title_type_field')
+
+    return title_type_field
+
+
 def char_code(columns, compulsory=False):
     """
     Character set code.

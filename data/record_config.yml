@@ -190,3 +190,12 @@ writer_publisher:
     type: 'PWR'
     publisher_name:
         size: 45
+
+alternate_title:
+    type: 'ALT'
+    alternate_title:
+        size: 60
+
+table:
+    title_type_field:
+        size: 2
