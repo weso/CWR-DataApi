@@ -242,7 +242,7 @@ entire_work_title:
     source:
         size: 60
 
-original_work:
+original_work_title:
     type: 'VER'
     original_title:
         size: 60

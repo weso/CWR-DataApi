@@ -30,7 +30,7 @@ ALT fields.
 # Alternate Title
 alternate_title = field.alphanum(_config.field_size('alternate_title', 'alternate_title'))
 alternate_title = alternate_title.setName('Alternate Title').setResultsName(
-    'alternate_title')
+    'title')
 
 """
 EWT fields.
@@ -39,20 +39,16 @@ EWT fields.
 # Entire Work Title
 entire_work_title = field.alphanum(_config.field_size('entire_work_title', 'entire_work_title'))
 entire_work_title = entire_work_title.setName('Entire Work Title').setResultsName(
-    'entire_work_title')
+    'title')
 
 """
 VER fields.
 """
 
 # Original Work Title
-original_title = field.alphanum(_config.field_size('original_work', 'original_title'))
+original_title = field.alphanum(_config.field_size('original_work_title', 'original_title'))
 original_title = original_title.setName('Original Work Title').setResultsName(
-    'alternate_title')
-
-# Source
-source = field.alphanum(_config.field_size('entire_work_title', 'source'))
-source = source.setName('Source').setResultsName('source')
+    'title')
 
 """
 Author fields
@@ -93,6 +89,14 @@ writer_2_ipi_name = writer_2_ipi_name.setName('Writer 1 IPI Name #').setResultsN
 writer_2_ipi_base = field_special.ipi_base_number()
 writer_2_ipi_base = writer_2_ipi_base.setName('Writer 1 IPI Base #').setResultsName('ipi_base_2')
 
+# Source
+source = field.alphanum(_config.field_size('entire_work_title', 'source'))
+source = source.setName('Source').setResultsName('source')
+
+# ISWC
+iswc = field_special.iswc()
+iswc = iswc.setResultsName('iswc')
+
 """
 Patterns.
 """
@@ -101,13 +105,14 @@ alternate = field_special.lineStart + record.record_prefix(_config.record_type('
             alternate_title + field_table.title_type() + field_table.language() + field_special.lineEnd
 
 entire_title = field_special.lineStart + record.record_prefix(_config.record_type('entire_work_title')) + \
-               entire_work_title + field_special.iswc() + field_table.language() + writer_1_last_name + \
+               entire_work_title + iswc + field_table.language() + writer_1_last_name + \
                writer_1_first_name + source + writer_1_ipi_name + \
                writer_1_ipi_base + writer_2_last_name + \
                writer_2_first_name + writer_2_ipi_name + writer_2_ipi_base + work.work_id + field_special.lineEnd
 
-version = field_special.lineStart + original_title + field_special.iswc() + field_table.language() + writer_1_last_name + \
-          writer_1_first_name + writer_1_ipi_name + \
+version = field_special.lineStart + record.record_prefix(_config.record_type('original_work_title')) + \
+          original_title + iswc + field_table.language() + writer_1_last_name + \
+          writer_1_first_name + source + writer_1_ipi_name + \
           writer_1_ipi_base + writer_2_last_name + \
           writer_2_first_name + writer_2_ipi_name + writer_2_ipi_base + work.work_id + field_special.lineEnd
 
@@ -136,7 +141,7 @@ def _to_alternate_title(parsed):
     :return: a AlternateTitleRecord created from the parsed record
     """
     return AlternateTitleRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                parsed.alternate_title, parsed.title_type, parsed.language)
+                                parsed.title, parsed.title_type, parsed.language)
 
 
 def _to_entire_title(parsed):
@@ -147,7 +152,7 @@ def _to_entire_title(parsed):
     :return: a AuthoredWorkRecord created from the parsed record
     """
     return AuthoredWorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                              parsed.entire_work_title, parsed.work_id, parsed.first_name_1, parsed.last_name_1,
+                              parsed.title, parsed.work_id, parsed.first_name_1, parsed.last_name_1,
                               parsed.first_name_2, parsed.last_name_2, parsed.ipi_base_1,
                               parsed.ipi_name_1, parsed.ipi_base_2, parsed.ipi_name_2,
                               parsed.source, parsed.language, parsed.iswc)

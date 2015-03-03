@@ -33,6 +33,7 @@ work_id = work_id.setName('Submitter Work Number').setResultsName('work_id')
 
 # ISWC
 iswc = field_special.iswc()
+iswc = iswc.setResultsName('iswc')
 
 # Copyright Date
 copyright_date = field.date()

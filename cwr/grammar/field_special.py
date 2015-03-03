@@ -166,7 +166,7 @@ def iswc(compulsory=False):
     iswc_field.setParseAction(lambda c: _to_iswccode(c))
 
     # Name
-    iswc_field.setName('ISWC Field')
+    iswc_field.setName('ISWC Field').setResultsName('iswc')
 
     if not compulsory:
         # If it is not compulsory then it can be set as empty
@@ -181,8 +181,6 @@ def iswc(compulsory=False):
     # White spaces are not removed
     iswc_field.leaveWhitespace()
 
-    iswc_field = iswc_field.setResultsName('iswc')
-
     return iswc_field
 
 
@@ -193,7 +191,6 @@ def _to_iswccode(code):
     :param code: the parsed code
     :return: a ISWCCode instance
     """
-
     if code:
         return ISWCCode(code.id_code, code.check_digit)
     else:
