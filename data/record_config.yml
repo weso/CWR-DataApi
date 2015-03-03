@@ -185,3 +185,8 @@ writer_territory:
     type: 'SWT'
     sequence_n:
         size: 3
+
+writer_publisher:
+    type: 'PWR'
+    publisher_name:
+        size: 45
