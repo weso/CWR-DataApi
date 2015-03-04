@@ -348,3 +348,12 @@ nra_work:
         - 'NVT'
     title:
         size: 640
+
+now:
+    type: 'NOW'
+    name:
+        size: 160
+    last_name:
+        size: 160
+    position:
+        size: 1

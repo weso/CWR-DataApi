@@ -1667,7 +1667,7 @@ class NRARecordWork(NRARecord):
         return self._title
 
 
-class NOWRecordWork(NRARecord):
+class NOWRecord(NRARecord):
     """
     Represents a CWR Non-Roman Alphabet Other Writer Name (NOW) record.
 
@@ -1678,7 +1678,7 @@ class NOWRecordWork(NRARecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name, name, position=None,
                  language=None):
-        super(NOWRecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+        super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
         # Writer information
         self._first_name = first_name
         self._name = name

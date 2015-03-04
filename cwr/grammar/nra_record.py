@@ -5,7 +5,7 @@ from cwr.grammar import publisher
 from cwr.grammar.field import table, special, record, basic
 from cwr.agreement import NPARecord
 from cwr.interested_party import NPNRecord, NWNRecord
-from cwr.work import NATRecord, NPRRecord, NRARecordWork
+from cwr.work import NATRecord, NPRRecord, NRARecordWork, NOWRecord
 
 
 """
@@ -20,6 +20,7 @@ This is for the following records:
 - Non-Roman Alphabet Entire Work Title for Excerpts (NET)
 - Non-Roman Alphabet Title for Components (NCT)
 - Non-Roman Alphabet Original Title for Version (NVT)
+- Non-Roman Alphabet Other Writer Name (NOW)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -109,6 +110,22 @@ title = basic.alphanum(_config.field_size('nra_work', 'title'))
 title = title.setName('Title').setResultsName('title')
 
 """
+NOW fields.
+"""
+
+# Writer Name
+writer_name = basic.alphanum(_config.field_size('now', 'name'))
+writer_name = writer_name.setName('Writer Name').setResultsName('name')
+
+# Writer Last Name
+writer_first_name_now = basic.alphanum(_config.field_size('now', 'last_name'))
+writer_first_name_now = writer_first_name_now.setName('Writer Last Name').setResultsName('first_name')
+
+# Writer Position
+writer_position = basic.numeric(_config.field_size('now', 'position'))
+writer_position = writer_position.setName('Writer Position').setResultsName('position')
+
+"""
 NRA patterns.
 """
 
@@ -138,6 +155,10 @@ npr = special.lineStart + record.record_prefix(
 nra_work = special.lineStart + record.record_prefix(
     _config.record_type('nra_work')) + title + table.language() + special.lineEnd
 
+now = special.lineStart + record.record_prefix(
+    _config.record_type(
+        'now')) + writer_name + writer_first_name_now + table.language() + writer_position + special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -153,6 +174,8 @@ nat.setParseAction(lambda a: _to_nat(a))
 npr.setParseAction(lambda a: _to_npr(a))
 
 nra_work.setParseAction(lambda a: _to_nra_work(a))
+
+now.setParseAction(lambda a: _to_now(a))
 
 """
 Parsing methods.
@@ -226,3 +249,14 @@ def _to_nra_work(parsed):
     """
     return NRARecordWork(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                          parsed.title, parsed.language)
+
+
+def _to_now(parsed):
+    """
+    Transforms the final parsing result into an NOWRecord instance.
+
+    :param parsed: result of parsing a NOW transaction
+    :return: a NOWRecord created from the parsed record
+    """
+    return NOWRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                     parsed.first_name, parsed.name, parsed.position, parsed.language)
