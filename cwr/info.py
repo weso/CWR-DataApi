@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from cwr.file import Record
+from cwr.record import TransactionRecord
 
 """
 CWR information model.
@@ -11,7 +11,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class AdditionalRelatedInfoRecord(Record):
+class AdditionalRelatedInfoRecord(TransactionRecord):
     """
     Represents a CWR Additional Related Info (ARI).
 
@@ -28,8 +28,9 @@ class AdditionalRelatedInfoRecord(Record):
     The note field should be used sparingly.
     """
 
-    def __init__(self, prefix, society_id, right_type, work_id='', subject=None, note=''):
-        super(AdditionalRelatedInfoRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, society_id, right_type, work_id='',
+                 subject=None, note=''):
+        super(AdditionalRelatedInfoRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._society_id = society_id
         self._right_type = right_type
         self._work_id = work_id

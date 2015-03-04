@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from cwr.file import Record
+from cwr.record import TransactionRecord, NRARecord
 
 """
 Agreement model classes.
@@ -15,7 +15,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class AgreementInterestedParty(Record):
+class AgreementInterestedParty(TransactionRecord):
     """
     Represents a CWR Interested Party for the Agreement (IPA).
 
@@ -23,19 +23,18 @@ class AgreementInterestedParty(Record):
     to assign through the agreement.
     """
 
-    def __init__(self, prefix, ip_id, last_name, agreement_role_code,
-                 writer_name='', ipi=None, cae_ipi_name=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, last_name, agreement_role_code,
+                 writer_name='', ipi_name=None, ipi_base=None,
                  pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
         """
         Constructs an AgreementInterestedParty.
 
-        :param prefix: the record prefix
         :param ip_id: the interested party ID
         :param last_name: the writer last name or the publisher name
         :param agreement_role_code: the role in the agreement
         :param writer_name: the writer name
-        :param ipi: IPI code
-        :param cae_ipi_name: CAE/IPI Name number
+        :param ipi_name: IPI Name number
+        :param ipi_base: IPI Base number
         :param pr_society: performing rights society
         :param pr_share: performing rights share
         :param mr_society: mechanization rights society
@@ -43,14 +42,14 @@ class AgreementInterestedParty(Record):
         :param sr_society: synchronization rights society
         :param sr_share: synchronization rights share
         """
-        super(AgreementInterestedParty, self).__init__(prefix)
+        super(AgreementInterestedParty, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement and Interested Party relationship
         self._ip_id = ip_id
         self._agreement_role_code = agreement_role_code
-        self._cae_ipi_name = cae_ipi_name
 
         # Interested Party info
-        self._ipi = ipi
+        self._ipi_name = ipi_name
+        self._ipi_base = ipi_base
         self._last_name = last_name
         self._writer_name = writer_name
 
@@ -80,19 +79,6 @@ class AgreementInterestedParty(Record):
         return self._agreement_role_code
 
     @property
-    def cae_ipi_name(self):
-        """
-        Interested Party CAE/IPI Name number field. Table Lookup (IPI Database).
-
-        The CAE number (IP name number) assigned to this interested party with 2 leading zero’s or the IPI Name number.
-
-        These values reside in the IPI Database.
-
-        :return: the CAE or IPI name number for this interested party
-        """
-        return self._cae_ipi_name
-
-    @property
     def ip_id(self):
         """
         Interested Party Number field. Alphanumeric.
@@ -104,7 +90,7 @@ class AgreementInterestedParty(Record):
         return self._ip_id
 
     @property
-    def ipi(self):
+    def ipi_base(self):
         """
         IPI Base Number field. Table Lookup (CISAC CIS).
 
@@ -113,7 +99,20 @@ class AgreementInterestedParty(Record):
 
         :return: IPI base number for the interested party
         """
-        return self._ipi
+        return self._ipi_base
+
+    @property
+    def ipi_name(self):
+        """
+        Interested Party IPI Name number field. Table Lookup (IPI Database).
+
+        The IPI number assigned to this interested party with 2 leading zero’s or the IPI Name number.
+
+        These values reside in the IPI Database.
+
+        :return: the IPI name number for this interested party
+        """
+        return self._ipi_name
 
     @property
     def last_name(self):
@@ -221,7 +220,61 @@ class AgreementInterestedParty(Record):
         return self._writer_name
 
 
-class AgreementRecord(Record):
+class NPARecord(NRARecord):
+    """
+    Represents a CWR Non-Roman Alphabet Agreement Party Name Record (NPA).
+
+    This record identifies names in a non-roman alphabet for the acquiring parties of this agreement. The language code
+    is used to identify the alphabet. This record can be used to identify the name of the party in the preceding IPA
+    record.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer_name, ip_id='',
+                 language=None):
+        super(NPARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+        # IP info
+        self._ip_name = ip_name
+        self._ip_writer_name = ip_writer_name
+        self._ip_id = ip_id
+
+        # Language info
+        self._language = language
+
+    @property
+    def ip_id(self):
+        """
+        Interested Party # field. Alphanumeric.
+
+        Submitting publisher’s unique identifier for this Writer.
+
+        :return: the Interested Party ID
+        """
+        return self._ip_id
+
+    @property
+    def ip_name(self):
+        """
+        Interested Party Name field. Alphanumeric.
+
+        The last of a writer or the publisher name.
+
+        :return: the last name of a writer of the publisher name
+        """
+        return self._ip_name
+
+    @property
+    def ip_writer_name(self):
+        """
+        Interested Party Writer Name field. Alphanumeric.
+
+        The first name of a writer.
+
+        :return: the first name of a writer
+        """
+        return self._ip_writer_name
+
+
+class AgreementRecord(TransactionRecord):
     """
     Represents a CWR Agreement Record (AGR).
 
@@ -235,8 +288,9 @@ class AgreementRecord(Record):
     registration. If a society has assigned an agreement number, then it too can be used as the link.
     """
 
-    def __init__(self, prefix, agreement_id, agreement_type, start_date, prior_royalty_status,
-                 post_term_collection_status, works_number, society_agreement_id='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement_id, agreement_type, start_date,
+                 prior_royalty_status,
+                 post_term_collection_status, works_number, society_agreement_number='',
                  international_standard_code='', sales_manufacture_clause='S',
                  end_date=None, signature_date=None, retention_end_date=None, prior_royalty_start_date=None,
                  post_term_collection_end_date=None,
@@ -244,14 +298,13 @@ class AgreementRecord(Record):
         """
         Constructs an Agreement Record.
 
-        :param prefix: the record prefix
         :param agreement_id: the submitter's ID for the agreement
         :param agreement_type: the type of agreement
         :param start_date: starting date for the agreement
         :param prior_royalty_status: the status of the royalties before the agreement
         :param post_term_collection_status: if and how the the acquirer can get royalties after the retention end
         :param works_number: number of works in the agreement
-        :param society_agreement_id: ID given by a society for the agreement
+        :param society_agreement_number: ID given by a society for the agreement
         :param international_standard_code: ISA ID for the agreement
         :param sales_manufacture_clause: indicates if the rights are for sale or manufacture
         :param end_date: end date for the agreement
@@ -262,10 +315,10 @@ class AgreementRecord(Record):
         :param shares_change: indicates if the writer's shares can change
         :param advance_given: indicates if an advancement has been paid
         """
-        super(AgreementRecord, self).__init__(prefix)
+        super(AgreementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement identification data
         self._agreement_id = agreement_id
-        self._society_agreement_id = society_agreement_id
+        self._society_agreement_number = society_agreement_number
         self._international_standard_code = international_standard_code
         self._agreement_type = agreement_type
 
@@ -494,7 +547,7 @@ class AgreementRecord(Record):
 
         :return: the society given ID
         """
-        return self._society_agreement_id
+        return self._society_agreement_number
 
     @property
     def start_date(self):
@@ -519,7 +572,7 @@ class AgreementRecord(Record):
         return self._works_number
 
 
-class AgreementTerritoryRecord(Record):
+class AgreementTerritoryRecord(TransactionRecord):
     """
     Represents a CWR Territory in Agreement (TER).
 
@@ -531,15 +584,14 @@ class AgreementTerritoryRecord(Record):
     This is to be used in an Agreement Transaction.
     """
 
-    def __init__(self, prefix, tis_code, ie_indicator):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, tis_code, ie_indicator):
         """
         Constructs an AgreementTerritory.
 
-        :param prefix: the record prefix
         :param tis_code: the TIS code
         :param ie_indicator: indicates if it is included or not
         """
-        super(AgreementTerritoryRecord, self).__init__(prefix)
+        super(AgreementTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._tis_code = tis_code
         self._ie_indicator = ie_indicator
 
@@ -570,7 +622,7 @@ class AgreementTerritoryRecord(Record):
         return self._tis_code
 
 
-class AgreementTransaction(object):
+class AgreementTransaction(TransactionRecord):
     """
     Represents a CWR Agreement Supporting Work Registration Transaction (AGR).
 
@@ -592,13 +644,14 @@ class AgreementTransaction(object):
     share.
     """
 
-    def __init__(self, agreement, territories):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement, territories):
         """
         Constructs an AgreementTransaction.
 
         :param agreement: the Agreement record
         :param territories: the Territories and their IPAs
         """
+        super(AgreementTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._agreement = agreement
         self._territories = territories
 

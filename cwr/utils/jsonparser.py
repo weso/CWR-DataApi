@@ -22,8 +22,9 @@ def parse_agreement(json_item):
     :return: an Agreement parsed from the JSON and with the specified id
     """
     # TODO Optional fields may be missing on the JSON
-    agreement = AgreementRecord(prefix=None, agreement_id=json_item['submitter_agreement_number'],
-                                society_agreement_id=json_item['society_agreement_number'],
+    agreement = AgreementRecord(record_type='', transaction_sequence_n=0, record_sequence_n=0,
+                                agreement_id=json_item['submitter_agreement_number'],
+                                society_agreement_number=json_item['society_agreement_number'],
                                 agreement_type=json_item['agreement_type'],
                                 start_date=json_item['start_date'],
                                 end_date=json_item['end_date'],
@@ -49,7 +50,7 @@ def parse_alternative_work_title(json_item):
     :param json_item: JSON object to parse
     :return: an AlternativeWorkTitle parsed from the JSON
     """
-    title = AlternateTitleRecord(None, json_item['alternate_title'],
+    title = AlternateTitleRecord('', 0, 0, json_item['alternate_title'],
                                  json_item['title_type'],
                                  json_item['language'])
 
@@ -63,16 +64,16 @@ def parse_authored_work(json_item):
     :param json_item: JSON object to parse
     :return: an AuthoredWork parsed from the JSON
     """
-    title = AuthoredWorkRecord(None, work_id=json_item['work_id'],
+    title = AuthoredWorkRecord('', 0, 0, work_id=json_item['work_id'],
                                title=json_item['title'],
                                language_code=json_item['language_code'],
                                source=json_item['source'],
                                first_name_1=json_item['first_name_1'],
                                ipi_base_1=json_item['ipi_base_1'],
-                               cae_ipi_name_1=json_item['cae_ipi_name_1'],
+                               ipi_name_1=json_item['ipi_name_1'],
                                first_name_2=json_item['first_name_2'],
                                ipi_base_2=json_item['ipi_base_2'],
-                               cae_ipi_name_2=json_item['cae_ipi_name_2'],
+                               ipi_name_2=json_item['ipi_name_2'],
                                last_name_1=json_item['last_name_1'],
                                last_name_2=json_item['last_name_2'],
                                iswc=json_item['iswc'])
@@ -87,9 +88,9 @@ def parse_ipa(json_item):
     :param json_item: JSON object to parse
     :return: an IPA parsed from the JSON
     """
-    agreement = AgreementInterestedParty(None, json_item['ip_id'], json_item['ip_last_name'],
+    agreement = AgreementInterestedParty('', 0, 0, json_item['ip_id'], json_item['ip_last_name'],
                                          json_item['agreement_role_code'], json_item['ip_writer_name'],
-                                         json_item['ip_ipi'], json_item['cae_ipi_name'], json_item['pr_society'],
+                                         json_item['ip_ipi'], json_item['ipi_name'], json_item['pr_society'],
                                          json_item['pr_share'],
                                          json_item['mr_society'], json_item['mr_share'], json_item['sr_society'],
                                          json_item['sr_share'])
@@ -104,9 +105,9 @@ def parse_performing_artist(json_item):
     :param json_item: JSON object to parse
     :return: a PerformingArtist parsed from the JSON
     """
-    artist = PerformingArtistRecord(None, json_item['last_name'],
+    artist = PerformingArtistRecord('', 0, 0, json_item['last_name'],
                                     json_item['first_name'],
-                                    json_item['cae_ipi_name'],
+                                    json_item['ipi_name'],
                                     json_item['ipi_base_number'])
 
     return artist
@@ -123,7 +124,7 @@ def parse_publisher(json_item):
                           json_item['name'],
                           json_item['ipi_base_id'],
                           json_item['tax_id'],
-                          json_item['cae_ipi_name'])
+                          json_item['ipi_name'])
 
     return publisher
 
@@ -135,7 +136,7 @@ def parse_recording_details(json_item):
     :param json_item: JSON object to parse
     :return: a RecordingDetails parsed from the JSON
     """
-    details = RecordingDetailRecord(None, json_item['first_release_date'],
+    details = RecordingDetailRecord('', 0, 0, json_item['first_release_date'],
                                     json_item['first_release_duration'],
                                     json_item['first_album_title'],
                                     json_item['first_album_label'],
@@ -156,7 +157,7 @@ def parse_work(json_item):
     :param json_item: JSON object to parse
     :return: a Work parsed from the JSON and with the specified id
     """
-    work = WorkRecord(None, work_id=json_item['work_id'], title=json_item['title'],
+    work = WorkRecord('', 0, 0, work_id=json_item['work_id'], title=json_item['title'],
                       language_code=json_item['language_code'],
                       printed_edition_publication_date=json_item['printed_edition_publication_date'],
                       copyright_number=json_item['copyright_number'],
@@ -186,7 +187,7 @@ def parse_work_origin(json_item):
     :param json_item: JSON object to parse
     :return: a WorkOrigin parsed from the JSON
     """
-    origin = WorkOriginRecord(None, json_item['intended_purpose'],
+    origin = WorkOriginRecord('', 0, 0, json_item['intended_purpose'],
                               json_item['production_title'],
                               json_item['cd_identifier'],
                               json_item['cut_number'],
@@ -213,7 +214,7 @@ def parse_writer(json_item):
     :param json_item: JSON object to parse
     :return: a Writer parsed from the JSON and with the specified id
     """
-    writer = Writer(None, json_item['first_name'],
+    writer = Writer(json_item['first_name'],
                     json_item['personal_number'], json_item['ip_id'],
                     json_item['ip_name'], json_item['ip_base_id'],
                     json_item['last_name'])
