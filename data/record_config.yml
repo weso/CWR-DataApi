@@ -235,6 +235,8 @@ table:
         size: 3
     standard_instrumentations:
         size: 3
+    instruments:
+        size: 3
 
 nat:
     type: 'NAT'
@@ -307,9 +309,14 @@ work_origin:
     production_year:
         size: 4
 
-instrumentation:
+instrumentation_summary:
     type: 'INS'
     voices:
         size: 3
     description:
         size: 50
+
+instrumentation_detail:
+    type: 'IND'
+    players:
+        size: 3

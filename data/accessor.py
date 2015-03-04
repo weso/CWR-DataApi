@@ -196,6 +196,7 @@ class CWRTables(object):
     _file_media_type = 'cwr_media_type.csv'
     _file_intended_purpose = 'cwr_intended_purpose.csv'
     _file_standard_instrumentation_type = 'cwr_standard_instrumentation_type.csv'
+    _file_instrument = 'cwr_instrument.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -230,6 +231,7 @@ class CWRTables(object):
     _media_types = None
     _intended_purposes = None
     _standard_instrumentation_types = None
+    _instruments = None
 
     def agreement_roles(self):
         """
@@ -300,6 +302,17 @@ class CWRTables(object):
             self._ie_indicator = self._reader.read_csv_file(self._file_ie_indicator)
 
         return self._ie_indicator
+
+    def instruments(self):
+        """
+        CWR Instrument codes.
+
+        :return: the allowed Instrument codes
+        """
+        if self._instruments is None:
+            self._instruments = self._reader.read_csv_file(self._file_instrument)
+
+        return self._instruments
 
     def intended_purposes(self):
         """

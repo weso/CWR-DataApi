@@ -4,7 +4,7 @@ from data.accessor import CWRTables, CWRConfiguration
 from cwr.grammar import work
 from cwr.grammar.field import table, special, record, basic
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
-    WorkOriginRecord, InstrumentationSummaryRecord
+    WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord
 
 
 """
@@ -18,6 +18,7 @@ This is for the following records:
 - Recording Detail (REC)
 - Work Origin (ORN)
 - Instrumentation Summary (INS)
+- Instrumentation Detail (IND)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -138,12 +139,20 @@ INS fields.
 """
 
 # Number of voices
-number_voices = basic.numeric(_config.field_size('instrumentation', 'voices'))
+number_voices = basic.numeric(_config.field_size('instrumentation_summary', 'voices'))
 number_voices = number_voices.setName('Number of voices').setResultsName('voices')
 
 # Instrumentation Description
-instr_description = basic.alphanum(_config.field_size('instrumentation', 'description'))
+instr_description = basic.alphanum(_config.field_size('instrumentation_summary', 'description'))
 instr_description = instr_description.setName('Instrumentation Description').setResultsName('description')
+
+"""
+IND fields.
+"""
+
+# Number of players
+players_n = basic.numeric(_config.field_size('instrumentation_detail', 'players'))
+players_n = players_n.setName('Number of players').setResultsName('players')
 
 """
 Author fields
@@ -225,8 +234,12 @@ origin = special.lineStart + record.record_prefix(_config.record_type('work_orig
          production_title + cd_identifier + cut_number + library + bltvr + special.visan() + production_n + \
          episode_title + episode_n + year_production + special.avi() + special.lineEnd
 
-instrumentation = special.lineStart + record.record_prefix(_config.record_type('instrumentation')) + number_voices + \
-                  table.standard_instrumentations() + instr_description + special.lineEnd
+inst_summary = special.lineStart + record.record_prefix(
+    _config.record_type('instrumentation_summary')) + number_voices + \
+               table.standard_instrumentations() + instr_description + special.lineEnd
+
+inst_detail = special.lineStart + record.record_prefix(_config.record_type('instrumentation_detail')) + \
+              table.instruments() + players_n + special.lineEnd
 
 """
 Parsing actions for the patterns.
@@ -244,7 +257,9 @@ recording.setParseAction(lambda p: _to_recording_detail(p))
 
 origin.setParseAction(lambda p: _to_work_origin(p))
 
-instrumentation.setParseAction(lambda p: _to_instrumentation_summary(p))
+inst_summary.setParseAction(lambda p: _to_instrumentation_summary(p))
+
+inst_detail.setParseAction(lambda p: _to_instrumentation_detail(p))
 
 """
 Parsing methods.
@@ -331,10 +346,21 @@ def _to_work_origin(parsed):
 
 def _to_instrumentation_summary(parsed):
     """
+    Transforms the final parsing result into an InstrumentationSummaryRecord instance.
+
+    :param parsed: result of parsing an Instrumentation Summary record
+    :return: a InstrumentationSummaryRecord created from the parsed record
+    """
+    return InstrumentationSummaryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                                        parsed.voices, parsed.standard_instrumentation, parsed.description)
+
+
+def _to_instrumentation_detail(parsed):
+    """
     Transforms the final parsing result into an InstrumentationDetailRecord instance.
 
     :param parsed: result of parsing an Instrumentation Detail record
     :return: a InstrumentationDetailRecord created from the parsed record
     """
-    return InstrumentationSummaryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                        parsed.voices, parsed.standard_instrumentation, parsed.description)
+    return InstrumentationDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                                       parsed.instruments, parsed.players)
