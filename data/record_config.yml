@@ -233,6 +233,8 @@ table:
         size: 3
     intended_purpose:
         size: 3
+    standard_instrumentations:
+        size: 3
 
 nat:
     type: 'NAT'
@@ -304,3 +306,10 @@ work_origin:
         size: 20
     production_year:
         size: 4
+
+instrumentation:
+    type: 'INS'
+    voices:
+        size: 3
+    description:
+        size: 50

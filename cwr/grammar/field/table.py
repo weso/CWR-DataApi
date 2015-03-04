@@ -353,6 +353,16 @@ def intended_purposes(compulsory=False):
     return intended_purpose_field
 
 
+# Standard Instrumentations
+def standard_instrumentations(compulsory=False):
+    standard_instrumentations_field = basic.lookup(_tables.standard_instrumentation_types(),
+                                                   columns=_config.field_size('table', 'standard_instrumentations'),
+                                                   compulsory=compulsory, name='Standard Instrumentation Type')
+    standard_instrumentations_field = standard_instrumentations_field.setResultsName('standard_instrumentation')
+
+    return standard_instrumentations_field
+
+
 def char_code(columns, compulsory=False):
     """
     Character set code.

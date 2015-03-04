@@ -4,7 +4,7 @@ from data.accessor import CWRTables, CWRConfiguration
 from cwr.grammar import work
 from cwr.grammar.field import table, special, record, basic
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
-    WorkOriginRecord
+    WorkOriginRecord, InstrumentationSummaryRecord
 
 
 """
@@ -17,6 +17,7 @@ This is for the following records:
 - Performing Artist (PER)
 - Recording Detail (REC)
 - Work Origin (ORN)
+- Instrumentation Summary (INS)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -133,6 +134,18 @@ year_production = basic.numeric(_config.field_size('work_origin', 'production_ye
 year_production = year_production.setName('Year of Production').setResultsName('production_year')
 
 """
+INS fields.
+"""
+
+# Number of voices
+number_voices = basic.numeric(_config.field_size('instrumentation', 'voices'))
+number_voices = number_voices.setName('Number of voices').setResultsName('voices')
+
+# Instrumentation Description
+instr_description = basic.alphanum(_config.field_size('instrumentation', 'description'))
+instr_description = instr_description.setName('Instrumentation Description').setResultsName('description')
+
+"""
 Author fields
 """
 
@@ -212,6 +225,9 @@ origin = special.lineStart + record.record_prefix(_config.record_type('work_orig
          production_title + cd_identifier + cut_number + library + bltvr + special.visan() + production_n + \
          episode_title + episode_n + year_production + special.avi() + special.lineEnd
 
+instrumentation = special.lineStart + record.record_prefix(_config.record_type('instrumentation')) + number_voices + \
+                  table.standard_instrumentations() + instr_description + special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -227,6 +243,8 @@ performing.setParseAction(lambda p: _to_performing_artist(p))
 recording.setParseAction(lambda p: _to_recording_detail(p))
 
 origin.setParseAction(lambda p: _to_work_origin(p))
+
+instrumentation.setParseAction(lambda p: _to_instrumentation_summary(p))
 
 """
 Parsing methods.
@@ -309,3 +327,14 @@ def _to_work_origin(parsed):
                             parsed.intended_purpose, parsed.production_title, parsed.cd_identifier, parsed.cut_number,
                             parsed.library, parsed.bltvr, parsed.visan, parsed.production_id, parsed.episode_title,
                             parsed.episode_id, parsed.production_year, parsed.avi)
+
+
+def _to_instrumentation_summary(parsed):
+    """
+    Transforms the final parsing result into an InstrumentationDetailRecord instance.
+
+    :param parsed: result of parsing an Instrumentation Detail record
+    :return: a InstrumentationDetailRecord created from the parsed record
+    """
+    return InstrumentationSummaryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                                        parsed.voices, parsed.standard_instrumentation, parsed.description)

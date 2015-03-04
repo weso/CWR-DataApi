@@ -195,6 +195,7 @@ class CWRTables(object):
     _file_recording_technique = 'cwr_recording_technique.csv'
     _file_media_type = 'cwr_media_type.csv'
     _file_intended_purpose = 'cwr_intended_purpose.csv'
+    _file_standard_instrumentation_type = 'cwr_standard_instrumentation_type.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -228,6 +229,7 @@ class CWRTables(object):
     _recording_techniques = None
     _media_types = None
     _intended_purposes = None
+    _standard_instrumentation_types = None
 
     def agreement_roles(self):
         """
@@ -480,6 +482,17 @@ class CWRTables(object):
             self._special_agreement_indicator = self._reader.read_csv_file(self._file_special_agreement_indicator)
 
         return self._special_agreement_indicator
+
+    def standard_instrumentation_types(self):
+        """
+        Standard Instrumentation Types.
+
+        :return: the allowed Standard Instrumentation Type codes
+        """
+        if self._standard_instrumentation_types is None:
+            self._standard_instrumentation_types = self._reader.read_csv_file(self._file_standard_instrumentation_type)
+
+        return self._standard_instrumentation_types
 
     def text_music_relationships(self):
         """
