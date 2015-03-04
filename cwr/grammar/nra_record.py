@@ -4,7 +4,7 @@ from data.accessor import CWRConfiguration
 from cwr.grammar import field, field_special, record, field_table, publisher
 from cwr.agreement import NPARecord
 from cwr.interested_party import NPNRecord, NWNRecord
-from cwr.work import NATRecord
+from cwr.work import NATRecord, NPRRecord
 
 
 """
@@ -15,6 +15,7 @@ This is for the following records:
 - Non-Roman Alphabet Publisher Name (NPN)
 - Non-Roman Alphabet Writer Name (NWN)
 - Non-Roman Alphabet Title (NAT)
+- Performance Data in non-roman alphabet (NPR)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -75,6 +76,27 @@ nat_title = field.alphanum(_config.field_size('nat', 'title'), compulsory=True)
 nat_title = nat_title.setName('Title').setResultsName('title')
 
 """
+NPR fields.
+"""
+
+# Performing Artist Name
+performing_artist_name = field.alphanum(_config.field_size('npr', 'performing_artist_name'))
+performing_artist_name = performing_artist_name.setName('Performing Artist Name').setResultsName('name')
+
+# Performing Artist Name
+performing_artist_first_name = field.alphanum(_config.field_size('npr', 'performing_artist_first_name'))
+performing_artist_first_name = performing_artist_first_name.setName('Performing Artist First Name').setResultsName(
+    'first_name')
+
+# Performance Language
+performance_language = field_table.language()
+performance_language = performance_language.setName('Performance Language').setResultsName('performance_language')
+
+# Dialect
+dialect = field.alphanum(_config.field_size('npr', 'dialect'))
+dialect = dialect.setName('Dialect').setResultsName('dialect')
+
+"""
 NRA patterns.
 """
 
@@ -96,6 +118,11 @@ nat = field_special.lineStart + record.record_prefix(
     _config.record_type(
         'nat')) + nat_title + field_table.title_type() + field_table.language() + field_special.lineEnd
 
+npr = field_special.lineStart + record.record_prefix(
+    _config.record_type(
+        'npr')) + performing_artist_name + performing_artist_first_name + field_special.ipi_name_number() + \
+      field_special.ipi_base_number() + field_table.language() + performance_language + dialect + field_special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -107,6 +134,8 @@ npn.setParseAction(lambda a: _to_npn(a))
 nwn.setParseAction(lambda a: _to_nwn(a))
 
 nat.setParseAction(lambda a: _to_nat(a))
+
+npr.setParseAction(lambda a: _to_npr(a))
 
 """
 Parsing methods.
@@ -157,3 +186,15 @@ def _to_nat(parsed):
     """
     return NATRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                      parsed.title, parsed.title_type, parsed.language)
+
+
+def _to_npr(parsed):
+    """
+    Transforms the final parsing result into an NPRRecord instance.
+
+    :param parsed: result of parsing an NPR transaction
+    :return: a NPRRecord created from the parsed record
+    """
+    return NPRRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                     parsed.first_name, parsed.name, parsed.ipi_name, parsed.ipi_base,
+                     parsed.language, parsed.performance_language, parsed.dialect)

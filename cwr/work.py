@@ -1704,3 +1704,96 @@ class NOWRecordWork(NRARecord):
         :return: the position of the writer in the previous record
         """
         return self._position
+
+
+class NPRRecord(NRARecord):
+    """
+    Represents a CWR Performance Data in non-roman alphabet (NPR) record.
+
+    This record contains either the non-roman alphabet name of a person or group performing this work either in public
+    or on a recording, or the language/dialect of the performance. This is particularly important for Chinese dialects
+    such as Cantonese. Performance Dialect, if entered, must be a valid code from ISO 639-2(T).
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name='', name='', ipi_name=None,
+                 ipi_base=None,
+                 language=None, performance_language=None, performance_dialect=None):
+        super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+        # Artist data
+        self._first_name = first_name
+        self._name = name
+        self._ipi_name = ipi_name
+        self._ipi_base = ipi_base
+
+        # Language data
+        self._performance_language = performance_language
+        self._performance_dialect = performance_dialect
+
+    @property
+    def first_name(self):
+        """
+        Performing Artist First Name field. Alphanumeric.
+
+        First name of a person that has performed the work on a recording or in public.
+
+        :return: the performer's first name
+        """
+        return self._first_name
+
+    @property
+    def ipi_base(self):
+        """
+        Performing Artist IPI Base Number field. Table lookup (IPI database).
+
+        The IPI base number assigned to this performing artist.
+
+        :return: the performer's IPI base number
+        """
+        return self._ipi_base
+
+    @property
+    def ipi_name(self):
+        """
+        Performing Artist IPI Name # field. Table Lookup (IPI database).
+
+        The IPI Name # corresponding to this performing artist. Values reside in the IPI database.
+
+        :return: the IPI name number
+        """
+        return self._ipi_name
+
+    @property
+    def name(self):
+        """
+        Performing Artist Name. Alphanumeric.
+
+        Name of a person or full name of a group that has performed the work on a recording or in public. Note that if
+        the performer is known by a single name, it should be entered in this field.
+
+        :return: the performer's name
+        """
+        return self._name
+
+    @property
+    def performance_dialect(self):
+        """
+        Performance Dialect field. Table Lookup (639-2(T)).
+
+        The dialect used in the performance.
+
+        e.g. if the performance is in Mandarin, YUE Cantonese, MIN NAN or HAKKA, then use: CHN, YUH, CFR or HAK.
+
+        :return: the dialect used in the performance
+        """
+        return self._performance_dialect
+
+    @property
+    def performance_language(self):
+        """
+        Performance Language field. Table lookup (Language Code Table).
+
+        The language used in the performance.
+
+        :return: the language used in the performance
+        """
+        return self._performance_language

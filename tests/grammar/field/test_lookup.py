@@ -16,19 +16,41 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
+class TestLookupName(unittest.TestCase):
+    def test_default_name(self):
+        """
+        Tests that the field is named correctly
+        """
+        lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+
+        self.assertEqual('Lookup Field', lookup.name)
+
+    def test_default_name_compulsory(self):
+        """
+        Tests that the field is named correctly
+        """
+        lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
+
+        self.assertEqual('Lookup Field', lookup.name)
+
+    def test_give_name_factory_no_changes(self):
+        """
+        Tests that the field name does not change for creating a new one
+        """
+        lookup1 = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field1')
+        lookup2 = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field2')
+
+        self.assertEqual('field1', lookup1.name)
+        self.assertEqual('field2', lookup2.name)
+
+
 class TestLookupValid(unittest.TestCase):
     """
     Tests that the lookup field accepts and parse valid values.
     """
 
     def setUp(self):
-        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=False)
-
-    def test_name(self):
-        """
-        Tests that the field is named correctly
-        """
-        self.assertEqual('Lookup Field', self.lookup.name)
+        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3)
 
     def test_valid(self):
         """
@@ -53,12 +75,6 @@ class TestLookupValidCompulsory(unittest.TestCase):
     def setUp(self):
         self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
 
-    def test_name(self):
-        """
-        Tests that the field is named correctly
-        """
-        self.assertEqual('Lookup Field', self.lookup.name)
-
     def test_valid(self):
         """
         Tests that the field accepts a valid value
@@ -69,7 +85,7 @@ class TestLookupValidCompulsory(unittest.TestCase):
 
 class TestLookupException(unittest.TestCase):
     def setUp(self):
-        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=False)
+        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3)
 
     def test_invalid(self):
         """

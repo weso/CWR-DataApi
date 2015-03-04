@@ -253,3 +253,12 @@ performing_artist:
         size: 45
     performer_first_name:
         size: 30
+
+npr:
+    type: 'NPR'
+    performing_artist_name:
+        size: 160
+    performing_artist_first_name:
+        size: 160
+    dialect:
+        size: 3
