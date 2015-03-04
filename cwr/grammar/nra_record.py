@@ -5,7 +5,7 @@ from cwr.grammar import publisher
 from cwr.grammar.field import table, special, record, basic
 from cwr.agreement import NPARecord
 from cwr.interested_party import NPNRecord, NWNRecord
-from cwr.work import NATRecord, NPRRecord
+from cwr.work import NATRecord, NPRRecord, NRARecordWork
 
 
 """
@@ -17,6 +17,9 @@ This is for the following records:
 - Non-Roman Alphabet Writer Name (NWN)
 - Non-Roman Alphabet Title (NAT)
 - Performance Data in non-roman alphabet (NPR)
+- Non-Roman Alphabet Entire Work Title for Excerpts (NET)
+- Non-Roman Alphabet Title for Components (NCT)
+- Non-Roman Alphabet Original Title for Version (NVT)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -98,6 +101,14 @@ dialect = basic.alphanum(_config.field_size('npr', 'dialect'))
 dialect = dialect.setName('Dialect').setResultsName('dialect')
 
 """
+Work NRA fields.
+"""
+
+# Title
+title = basic.alphanum(_config.field_size('nra_work', 'title'))
+title = title.setName('Title').setResultsName('title')
+
+"""
 NRA patterns.
 """
 
@@ -124,6 +135,9 @@ npr = special.lineStart + record.record_prefix(
         'npr')) + performing_artist_name + performing_artist_first_name + special.ipi_name_number() + \
       special.ipi_base_number() + table.language() + performance_language + dialect + special.lineEnd
 
+nra_work = special.lineStart + record.record_prefix(
+    _config.record_type('nra_work')) + title + table.language() + special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -137,6 +151,8 @@ nwn.setParseAction(lambda a: _to_nwn(a))
 nat.setParseAction(lambda a: _to_nat(a))
 
 npr.setParseAction(lambda a: _to_npr(a))
+
+nra_work.setParseAction(lambda a: _to_nra_work(a))
 
 """
 Parsing methods.
@@ -199,3 +215,14 @@ def _to_npr(parsed):
     return NPRRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                      parsed.first_name, parsed.name, parsed.ipi_name, parsed.ipi_base,
                      parsed.language, parsed.performance_language, parsed.dialect)
+
+
+def _to_nra_work(parsed):
+    """
+    Transforms the final parsing result into an NRARecordWork instance.
+
+    :param parsed: result of parsing an Work NRA transaction
+    :return: a NRARecordWork created from the parsed record
+    """
+    return NRARecordWork(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                         parsed.title, parsed.language)

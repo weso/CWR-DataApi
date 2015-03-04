@@ -340,3 +340,11 @@ message:
         size: 3
     text:
         size: 150
+
+nra_work:
+    type:
+        - 'NCT'
+        - 'NET'
+        - 'NVT'
+    title:
+        size: 640
