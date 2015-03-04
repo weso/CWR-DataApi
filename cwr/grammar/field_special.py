@@ -265,3 +265,24 @@ def blank(columns):
     filler.suppress()
 
     return filler
+
+
+def ean_13(compulsory=False):
+    ean_13_field = field.numeric(13, compulsory)
+
+    ean_13_field = ean_13_field.setName('Shares Field').setResultsName('ean_13')
+
+    return ean_13_field
+
+
+def isrc(compulsory=False):
+    country = field.alphanum(2)
+    registrant = field.alphanum(3)
+    year = field.numeric(2)
+    work_id = field.numeric(5)
+
+    isrc_field = pp.Combine(country + registrant + year + work_id)
+
+    isrc_field = isrc_field.setName('ISRC Field').setResultsName('isrc')
+
+    return isrc_field

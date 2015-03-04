@@ -225,6 +225,12 @@ table:
         size: 2
     society:
         size: 3
+    recording_format:
+        size: 1
+    recording_technique:
+        size: 1
+    media_type:
+        size: 3
 
 nat:
     type: 'NAT'
@@ -262,3 +268,16 @@ npr:
         size: 160
     dialect:
         size: 3
+
+recording_detail:
+    type: 'REC'
+    constant_1:
+        size: 60
+    constant_2:
+        size: 5
+    first_album_title:
+        size: 60
+    first_album_label:
+        size: 60
+    first_release_catalog_id:
+        size: 18

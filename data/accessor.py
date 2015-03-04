@@ -191,6 +191,9 @@ class CWRTables(object):
     _file_post_term_collection_status = 'cwr_post_term_collection_status.csv'
     _file_sales_manufacture_clause = 'cwr_sales_manufacture_clause.csv'
     _file_ie_indicator = 'cwr_ie_indicator.csv'
+    _file_recording_format = 'cwr_recording_format.csv'
+    _file_recording_technique = 'cwr_recording_technique.csv'
+    _file_media_type = 'cwr_media_type.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -220,6 +223,9 @@ class CWRTables(object):
     _post_term_collection_status = None
     _sales_manufacture_clause = None
     _ie_indicator = None
+    _recording_formats = None
+    _recording_techniques = None
+    _media_types = None
 
     def agreement_roles(self):
         """
@@ -313,6 +319,17 @@ class CWRTables(object):
 
         return self._lyric_adaptations
 
+    def media_types(self):
+        """
+        Media Type codes.
+
+        :return: the allowed Media Type codes
+        """
+        if self._media_types is None:
+            self._media_types = self._reader.read_csv_file(self._file_media_type)
+
+        return self._media_types
+
     def music_arrangements(self):
         """
         Music Arrangement codes.
@@ -382,6 +399,28 @@ class CWRTables(object):
             self._record_types = self._reader.read_csv_file(self._file_record_types)
 
         return self._record_types
+
+    def recording_formats(self):
+        """
+        Types of recordings.
+
+        :return: the allowed CWR recording format codes
+        """
+        if self._recording_formats is None:
+            self._recording_formats = self._reader.read_csv_file(self._file_recording_format)
+
+        return self._recording_formats
+
+    def recording_techniques(self):
+        """
+        Types of recording techniques.
+
+        :return: the allowed CWR recording technique codes
+        """
+        if self._recording_techniques is None:
+            self._recording_techniques = self._reader.read_csv_file(self._file_recording_technique)
+
+        return self._recording_techniques
 
     def sales_manufacture_clause(self):
         """

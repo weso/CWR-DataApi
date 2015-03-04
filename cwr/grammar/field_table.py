@@ -313,6 +313,36 @@ def title_type(compulsory=False):
     return title_type_field
 
 
+# Recording Formats
+def recording_formats(compulsory=False):
+    recording_format_field = field.lookup(_tables.recording_formats(),
+                                          columns=_config.field_size('table', 'recording_format'),
+                                          compulsory=compulsory, name='Recording Format')
+    recording_format_field = recording_format_field.setResultsName('recording_format')
+
+    return recording_format_field
+
+
+# Recording Techniques
+def recording_techniques(compulsory=False):
+    recording_technique_field = field.lookup(_tables.recording_techniques(),
+                                             columns=_config.field_size('table', 'recording_technique'),
+                                             compulsory=compulsory, name='Recording Technique')
+    recording_technique_field = recording_technique_field.setResultsName('recording_technique')
+
+    return recording_technique_field
+
+
+# Media Types
+def media_types(compulsory=False):
+    media_type_field = field.lookup(_tables.media_types(),
+                                    columns=_config.field_size('table', 'media_type'),
+                                    compulsory=compulsory, name='Media Type')
+    media_type_field = media_type_field.setResultsName('media_type')
+
+    return media_type_field
+
+
 def char_code(columns, compulsory=False):
     """
     Character set code.
