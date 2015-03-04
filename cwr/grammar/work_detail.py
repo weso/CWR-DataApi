@@ -4,7 +4,7 @@ from data.accessor import CWRTables, CWRConfiguration
 from cwr.grammar import work
 from cwr.grammar.field import table, special, record, basic
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
-    WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord
+    WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord, ComponentRecord
 
 
 """
@@ -19,6 +19,7 @@ This is for the following records:
 - Work Origin (ORN)
 - Instrumentation Summary (INS)
 - Instrumentation Detail (IND)
+- Component (COM)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -155,6 +156,18 @@ players_n = basic.numeric(_config.field_size('instrumentation_detail', 'players'
 players_n = players_n.setName('Number of players').setResultsName('players')
 
 """
+COM fields.
+"""
+
+# Title
+component_title = basic.alphanum(_config.field_size('component', 'title'))
+component_title = component_title.setName('Title').setResultsName('title')
+
+# Duration
+component_duration = basic.time()
+component_duration = component_duration.setName('Duration').setResultsName('duration')
+
+"""
 Author fields
 """
 
@@ -241,6 +254,11 @@ inst_summary = special.lineStart + record.record_prefix(
 inst_detail = special.lineStart + record.record_prefix(_config.record_type('instrumentation_detail')) + \
               table.instruments() + players_n + special.lineEnd
 
+component = special.lineStart + record.record_prefix(_config.record_type('component')) + component_title + \
+            iswc + work.work_id + component_duration + writer_1_last_name + writer_1_first_name + writer_1_ipi_name + \
+            writer_2_last_name + writer_2_first_name + writer_2_ipi_name + writer_1_ipi_base + \
+            writer_2_ipi_base + special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -260,6 +278,8 @@ origin.setParseAction(lambda p: _to_work_origin(p))
 inst_summary.setParseAction(lambda p: _to_instrumentation_summary(p))
 
 inst_detail.setParseAction(lambda p: _to_instrumentation_detail(p))
+
+component.setParseAction(lambda p: _to_component(p))
 
 """
 Parsing methods.
@@ -364,3 +384,16 @@ def _to_instrumentation_detail(parsed):
     """
     return InstrumentationDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                                        parsed.instruments, parsed.players)
+
+
+def _to_component(parsed):
+    """
+    Transforms the final parsing result into an ComponentRecord instance.
+
+    :param parsed: result of parsing an Component Detail record
+    :return: a ComponentRecord created from the parsed record
+    """
+    return ComponentRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n, parsed.title,
+                           parsed.last_name_1, parsed.work_id, parsed.first_name_1, parsed.first_name_2,
+                           parsed.last_name_2, parsed.ipi_base_1, parsed.ipi_name_1, parsed.ipi_base_2,
+                           parsed.ipi_name_2, parsed.iswc, parsed.duration)

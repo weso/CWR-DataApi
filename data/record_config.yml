@@ -320,3 +320,8 @@ instrumentation_detail:
     type: 'IND'
     players:
         size: 3
+
+component:
+    type: 'COM'
+    title:
+        size: 60

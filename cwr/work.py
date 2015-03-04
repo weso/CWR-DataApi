@@ -691,12 +691,13 @@ class ComponentRecord(TransactionRecord):
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, last_name_1, submitter_id='',
                  first_name_1='', first_name_2='', last_name_2='',
                  ipi_base_1=None, ipi_name_1=None, ipi_base_2=None, ipi_name_2=None,
-                 iswc=''):
+                 iswc='', duration=None):
         super(ComponentRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Work's info
         self._submitter_id = submitter_id
         self._title = title
         self._iswc = iswc
+        self._duration = duration
 
         # First writer's info
         self._first_name_1 = first_name_1
@@ -709,6 +710,17 @@ class ComponentRecord(TransactionRecord):
         self._last_name_2 = last_name_2
         self._ipi_base_2 = ipi_base_2
         self._ipi_name_2 = ipi_name_2
+
+    @property
+    def duration(self):
+        """
+        Duration Field. Time.
+
+        The duration of this composite component.
+
+        :return: the component's duration
+        """
+        return self._duration
 
     @property
     def first_name_1(self):
