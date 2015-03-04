@@ -2,7 +2,7 @@
 
 from data.accessor import CWRTables, CWRConfiguration
 from cwr.grammar import field, field_special, record, field_table, work
-from cwr.work import AlternateTitleRecord, AuthoredWorkRecord
+from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord
 
 
 """
@@ -12,6 +12,7 @@ This is for the following records:
 - Alternate Title (ALT)
 - Entire Work Title for Excerpts (EWT)
 - Original Work Title for Versions (VER)
+- Performing Artist (PER)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -49,6 +50,18 @@ VER fields.
 original_title = field.alphanum(_config.field_size('original_work_title', 'original_title'))
 original_title = original_title.setName('Original Work Title').setResultsName(
     'title')
+
+"""
+PER fields.
+"""
+
+# Performing Artist Last Name
+performer_last_name = field.alphanum(_config.field_size('performing_artist', 'performer_last_name'))
+performer_last_name = performer_last_name.setName('Performing Artist Last Name').setResultsName('last_name')
+
+# Performing Artist First Name
+performer_first_name = field.alphanum(_config.field_size('performing_artist', 'performer_first_name'))
+performer_first_name = performer_first_name.setName('Performing Artist First Name').setResultsName('first_name')
 
 """
 Author fields
@@ -116,6 +129,10 @@ version = field_special.lineStart + record.record_prefix(_config.record_type('or
           writer_1_ipi_base + writer_2_last_name + \
           writer_2_first_name + writer_2_ipi_name + writer_2_ipi_base + work.work_id + field_special.lineEnd
 
+performing = field_special.lineStart + record.record_prefix(_config.record_type('performing_artist')) + \
+             performer_last_name + performer_first_name + field_special.ipi_name_number() + \
+             field_special.ipi_base_number() + field_special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -125,6 +142,8 @@ alternate.setParseAction(lambda p: _to_alternate_title(p))
 entire_title.setParseAction(lambda p: _to_entire_title(p))
 
 version.setParseAction(lambda p: _to_version_title(p))
+
+performing.setParseAction(lambda p: _to_performing_artist(p))
 
 """
 Parsing methods.
@@ -170,3 +189,14 @@ def _to_version_title(parsed):
                               parsed.first_name_2, parsed.last_name_2, parsed.ipi_base_1,
                               parsed.ipi_name_1, parsed.ipi_base_2, parsed.ipi_name_2,
                               parsed.source, parsed.language, parsed.iswc)
+
+
+def _to_performing_artist(parsed):
+    """
+    Transforms the final parsing result into an PerformingArtistRecord instance.
+
+    :param parsed: result of parsing a Performing Artist record record
+    :return: a PerformingArtistRecord created from the parsed record
+    """
+    return PerformingArtistRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                                  parsed.last_name, parsed.first_name, parsed.ipi_name, parsed.ipi_base)

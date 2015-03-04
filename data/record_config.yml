@@ -246,3 +246,10 @@ original_work_title:
     type: 'VER'
     original_title:
         size: 60
+
+performing_artist:
+    type: 'PER'
+    performer_last_name:
+        size: 45
+    performer_first_name:
+        size: 30
