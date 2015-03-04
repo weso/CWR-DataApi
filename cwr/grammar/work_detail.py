@@ -20,6 +20,7 @@ This is for the following records:
 - Instrumentation Summary (INS)
 - Instrumentation Detail (IND)
 - Component (COM)
+- Additional Related Information (ARI)
 """
 
 __author__ = 'Bernardo Martínez Garrido'

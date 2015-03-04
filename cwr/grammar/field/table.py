@@ -289,6 +289,7 @@ def society(compulsory=False):
     society_field.setParseAction(lambda c: None if c[0] is None else int(c[0]))
 
     society_field.setName('Society ID Field')
+    society_field = society_field.setResultsName('society')
 
     return society_field
 
@@ -401,6 +402,26 @@ def record_types(compulsory=False):
     record_type_field = record_type_field.setResultsName('record_type')
 
     return record_type_field
+
+
+# Types of Right
+def types_of_right(compulsory=False):
+    types_of_right_field = basic.lookup(_tables.type_of_rights(),
+                                        columns=_config.field_size('table', 'type_of_right'),
+                                        compulsory=compulsory, name='Type of Right')
+    types_of_right_field = types_of_right_field.setResultsName('type_of_right')
+
+    return types_of_right_field
+
+
+# Subject Codes
+def subject_codes(compulsory=False):
+    subject_codes_field = basic.lookup(_tables.subject_codes(),
+                                       columns=_config.field_size('table', 'subject_code'),
+                                       compulsory=compulsory, name='Subject Code')
+    subject_codes_field = subject_codes_field.setResultsName('subject_code')
+
+    return subject_codes_field
 
 
 def char_code(columns, compulsory=False):

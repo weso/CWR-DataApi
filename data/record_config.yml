@@ -243,6 +243,10 @@ table:
         size: 3
     record_type:
         size: 3
+    type_of_right:
+        size: 3
+    subject_code:
+        size: 2
 
 nat:
     type: 'NAT'
@@ -357,3 +361,10 @@ now:
         size: 160
     position:
         size: 1
+
+ari:
+    type: 'ARI'
+    work_number:
+        size: 14
+    note:
+        size: 160

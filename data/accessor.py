@@ -199,6 +199,8 @@ class CWRTables(object):
     _file_instrument = 'cwr_instrument.csv'
     _file_message_type = 'cwr_message_type.csv'
     _file_message_level = 'cwr_message_level.csv'
+    _file_type_of_right = 'cwr_type_of_right.csv'
+    _file_subject_code = 'cwr_subject_code.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -236,6 +238,8 @@ class CWRTables(object):
     _instruments = None
     _message_types = None
     _message_levels = None
+    _type_of_rights = None
+    _subject_codes = None
 
     def agreement_roles(self):
         """
@@ -533,6 +537,17 @@ class CWRTables(object):
 
         return self._standard_instrumentation_types
 
+    def subject_codes(self):
+        """
+        Subject Codes.
+
+        :return: the allowed Subject Code codes
+        """
+        if self._subject_codes is None:
+            self._subject_codes = self._reader.read_csv_file(self._file_subject_code)
+
+        return self._subject_codes
+
     def text_music_relationships(self):
         """
         Text-Music Relationships.
@@ -573,6 +588,17 @@ class CWRTables(object):
             self._title_types = self._reader.read_csv_file(self._file_title_types)
 
         return self._title_types
+
+    def type_of_rights(self):
+        """
+        Type of Right.
+
+        :return: the allowed Type of Right codes.
+        """
+        if self._type_of_rights is None:
+            self._type_of_rights = self._reader.read_csv_file(self._file_type_of_right)
+
+        return self._type_of_rights
 
     def transaction_status(self):
         """
