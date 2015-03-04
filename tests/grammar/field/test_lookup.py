@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -21,7 +21,7 @@ class TestLookupName(unittest.TestCase):
         """
         Tests that the field is named correctly
         """
-        lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+        lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
 
         self.assertEqual('Lookup Field', lookup.name)
 
@@ -29,7 +29,7 @@ class TestLookupName(unittest.TestCase):
         """
         Tests that the field is named correctly
         """
-        lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
+        lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
 
         self.assertEqual('Lookup Field', lookup.name)
 
@@ -37,8 +37,8 @@ class TestLookupName(unittest.TestCase):
         """
         Tests that the field name does not change for creating a new one
         """
-        lookup1 = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field1')
-        lookup2 = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field2')
+        lookup1 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field1')
+        lookup2 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field2')
 
         self.assertEqual('field1', lookup1.name)
         self.assertEqual('field2', lookup2.name)
@@ -50,7 +50,7 @@ class TestLookupValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
 
     def test_valid(self):
         """
@@ -73,7 +73,7 @@ class TestLookupValidCompulsory(unittest.TestCase):
     """
 
     def setUp(self):
-        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
+        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
 
     def test_valid(self):
         """
@@ -85,7 +85,7 @@ class TestLookupValidCompulsory(unittest.TestCase):
 
 class TestLookupException(unittest.TestCase):
     def setUp(self):
-        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
 
     def test_invalid(self):
         """
@@ -102,7 +102,7 @@ class TestLookupException(unittest.TestCase):
 
 class TestLookupExceptionCompulsory(unittest.TestCase):
     def setUp(self):
-        self.lookup = field.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
+        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
 
     def test_invalid(self):
         """

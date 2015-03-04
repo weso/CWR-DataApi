@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field, field_special, record, field_table, publisher, society
+from cwr.grammar import publisher, society
+from cwr.grammar.field import table, special, record, basic
 from cwr.interested_party import Writer, WriterRecord
 
 
@@ -26,45 +27,45 @@ General fields.
 """
 
 # Writer Last Name
-last_name = field.alphanum(_config.field_size('writer', 'last_name'))
+last_name = basic.alphanum(_config.field_size('writer', 'last_name'))
 last_name = last_name.setName('Writer Last Name').setResultsName('last_name')
 
 # Writer First Name
-first_name = field.alphanum(_config.field_size('writer', 'first_name'))
+first_name = basic.alphanum(_config.field_size('writer', 'first_name'))
 first_name = first_name.setName('Writer First Name').setResultsName('first_name')
 
 # Writer Unknown Indicator
-unknown = field.flag()
+unknown = basic.flag()
 unknown = unknown.setName('Writer Unknown Indicator').setResultsName('writer_unknown')
 
 # Reversionary Indicator
-reversionary = field.flag()
+reversionary = basic.flag()
 reversionary = reversionary.setName('Reversionary Indicator').setResultsName('reversionary')
 
 # First Recording Refusal Indicator
-refusal = field.flag()
+refusal = basic.flag()
 refusal = refusal.setName('First Recording Refusal Indicator').setResultsName('first_record_refusal')
 
 # Work For Hire Indicator
-for_hire = field.flag()
+for_hire = basic.flag()
 for_hire = for_hire.setName('Work For Hire Indicator').setResultsName('work_for_hire')
 
 # Personal Number
-personal_number = field.numeric(_config.field_size('writer', 'personal_number'))
+personal_number = basic.numeric(_config.field_size('writer', 'personal_number'))
 personal_number = personal_number.setName('Personal Number').setResultsName('personal_number')
 
 """
 Patterns.
 """
 
-writer = field_special.lineStart + record.record_prefix(
-    _config.record_type('writer')) + field_special.ip_id() + last_name + first_name + unknown + \
-         field_table.writer_designation() + publisher.tax_id + field_special.ipi_name_number() + \
+writer = special.lineStart + record.record_prefix(
+    _config.record_type('writer')) + special.ip_id() + last_name + first_name + unknown + \
+         table.writer_designation() + publisher.tax_id + special.ipi_name_number() + \
          society.pr_affiliation() + society.pr_share() + \
          society.mr_affiliation() + society.mr_share() + \
          society.sr_affiliation() + society.sr_share() + \
-         reversionary + refusal + for_hire + field_special.blank(_config.field_size('writer', 'filler')) + \
-         field_special.ipi_base_number() + personal_number + field_table.usa_license() + field_special.lineEnd
+         reversionary + refusal + for_hire + special.blank(_config.field_size('writer', 'filler')) + \
+         special.ipi_base_number() + personal_number + table.usa_license() + special.lineEnd
 
 """
 Parsing actions for the patterns.

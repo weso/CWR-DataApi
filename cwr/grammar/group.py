@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field, field_special, record, field_table
+from cwr.grammar.field import table, special, record, basic
 from cwr.group import GroupHeader, GroupTrailer
 
 
@@ -52,7 +52,7 @@ These fields are:
 """
 
 # Group ID
-group_id = field.numeric(_config.field_size('group_header', 'group_id'), compulsory=True)
+group_id = basic.numeric(_config.field_size('group_header', 'group_id'), compulsory=True)
 group_id = group_id.setName('Group ID').setResultsName('group_id')
 
 # Version Number
@@ -60,7 +60,7 @@ version_number = pp.Literal(_config.field_value('group_header', 'version_number'
 version_number = version_number.setName('Version Number').setResultsName('version_number')
 
 # Batch Request ID
-batch_request_id = field.numeric(_config.field_size('group_header', 'batch_request_id'))
+batch_request_id = basic.numeric(_config.field_size('group_header', 'batch_request_id'))
 batch_request_id = batch_request_id.setName('Batch Request ID').setResultsName('batch_request_id')
 
 """
@@ -75,7 +75,7 @@ They are:
 """
 
 # SD Type
-sd_type = field.alphanum(_config.field_size('group_header', 'sd_type'))
+sd_type = basic.alphanum(_config.field_size('group_header', 'sd_type'))
 sd_type = sd_type.setName('SD Type').setResultsName('sd_type')
 sd_type.leaveWhitespace()
 
@@ -98,14 +98,14 @@ These are the grammatical structures for the Group Header and Group Trailer.
 """
 
 # Group Header pattern
-group_header = field_special.lineStart + record.record_type(
-    _config.record_type('group_header')) + field_table.transaction_type(True) + group_id + version_number + \
-               batch_request_id + sd_type + field_special.lineEnd
+group_header = special.lineStart + record.record_type(
+    _config.record_type('group_header')) + table.transaction_type(True) + group_id + version_number + \
+               batch_request_id + sd_type + special.lineEnd
 
 # Group Trailer pattern
-group_trailer = field_special.lineStart + record.record_type(
+group_trailer = special.lineStart + record.record_type(
     _config.record_type('group_trailer')) + group_id + record.transaction_count + record.record_count + \
-                currency_indicator + total_monetary_value + field_special.lineEnd
+                currency_indicator + total_monetary_value + special.lineEnd
 
 """
 Parsing actions for the patterns.

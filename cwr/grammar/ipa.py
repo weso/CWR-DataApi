@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field, field_special, record, society, field_table
+from cwr.grammar import society
+from cwr.grammar.field import table, special, record, basic
 from cwr.agreement import AgreementInterestedParty
 from cwr.constraints import ipa as constraints
 
@@ -23,24 +24,24 @@ Interested Party in Agreement fields.
 """
 
 # Interested Party Last Name
-ip_last_name = field.alphanum(_config.field_size('ipa', 'ip_last_name'), compulsory=True)
+ip_last_name = basic.alphanum(_config.field_size('ipa', 'ip_last_name'), compulsory=True)
 ip_last_name = ip_last_name.setName('Interested Party Last Name').setResultsName('last_name')
 
 # Interested Party Writer First Name
-ip_name = field.alphanum(_config.field_size('ipa', 'ip_name'))
+ip_name = basic.alphanum(_config.field_size('ipa', 'ip_name'))
 ip_name = ip_name.setName('Interested Party Writer First Name').setResultsName('writer_name')
 
 """
 IPA patterns.
 """
 
-ipa = field_special.lineStart + record.record_prefix(_config.record_type('ipa')) + \
-      field_table.agreement_role_code(True) + \
-      field_special.ipi_name_number() + field_special.ipi_base_number() + \
-      field_special.ip_id(compulsory=True) + ip_last_name + ip_name + \
+ipa = special.lineStart + record.record_prefix(_config.record_type('ipa')) + \
+      table.agreement_role_code(True) + \
+      special.ipi_name_number() + special.ipi_base_number() + \
+      special.ip_id(compulsory=True) + ip_last_name + ip_name + \
       society.pr_affiliation() + society.pr_share() + \
       society.mr_affiliation() + society.mr_share() + \
-      society.sr_affiliation() + society.sr_share() + field_special.lineEnd
+      society.sr_affiliation() + society.sr_share() + special.lineEnd
 
 """
 Parsing actions for the patterns.

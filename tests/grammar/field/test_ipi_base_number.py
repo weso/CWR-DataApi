@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field_special
+from cwr.grammar.field import special
 
 
 """
@@ -22,7 +22,7 @@ class TestIPIBaseNumberValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.ipi = field_special.ipi_base_number()
+        self.ipi = special.ipi_base_number()
 
     def test_common(self):
         """
@@ -77,7 +77,7 @@ class TestIPIBaseNumberCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.ipi = field_special.ipi_base_number(compulsory=True)
+        self.ipi = special.ipi_base_number(compulsory=True)
 
     def test_common(self):
         """
@@ -122,7 +122,7 @@ class TestIPIBaseNumberException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.ipi = field_special.ipi_base_number()
+        self.ipi = special.ipi_base_number()
 
     def test_no_numbers(self):
         """
@@ -187,7 +187,7 @@ class TestIPIBaseNumberCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.ipi = field_special.ipi_base_number(compulsory=True)
+        self.ipi = special.ipi_base_number(compulsory=True)
 
     def test_no_numbers(self):
         """

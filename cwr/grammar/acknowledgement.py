@@ -5,7 +5,8 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field, field_special, record, group, field_table
+from cwr.grammar import group
+from cwr.grammar.field import table, special, record, basic
 from cwr.acknowledgement import AcknowledgementRecord
 from cwr.constraints import acknowledgement as constraints
 
@@ -27,11 +28,11 @@ Acknowledgement fields.
 """
 
 # Creation Date
-creation_date = field.date(compulsory=True)
+creation_date = basic.date(compulsory=True)
 creation_date = creation_date.setName('Creation Date').setResultsName('creation_date')
 
 # Creation Time
-creation_time = field.time(compulsory=True)
+creation_time = basic.time(compulsory=True)
 creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
 
 # Original Group ID
@@ -39,24 +40,24 @@ original_group_id = group.group_id
 original_group_id = original_group_id.setName('Original Group ID')
 
 # Original Transaction Sequence #
-original_transaction_n = field.numeric(_config.field_size('acknowledgement', 'transaction_n'), compulsory=True)
+original_transaction_n = basic.numeric(_config.field_size('acknowledgement', 'transaction_n'), compulsory=True)
 original_transaction_n = original_transaction_n.setName('Original Transaction Sequence #').setResultsName(
     'transaction_n')
 
 # Creation Title
-creation_title = field.alphanum(_config.field_size('acknowledgement', 'title'))
+creation_title = basic.alphanum(_config.field_size('acknowledgement', 'title'))
 creation_title = creation_title.setName('Creation Title').setResultsName('title')
 
 # Submitter Creation #
-submitter_creation_n = field.alphanum(_config.field_size('acknowledgement', 'submitter_id'))
+submitter_creation_n = basic.alphanum(_config.field_size('acknowledgement', 'submitter_id'))
 submitter_creation_n = submitter_creation_n.setName('Submitter Creation #').setResultsName('submitter_id')
 
 # Recipient Creation #
-recipient_creation_n = field.alphanum(_config.field_size('acknowledgement', 'recipient_id'))
+recipient_creation_n = basic.alphanum(_config.field_size('acknowledgement', 'recipient_id'))
 recipient_creation_n = recipient_creation_n.setName('Recipient Creation #').setResultsName('recipient_id')
 
 # Processing Date
-processing_date = field.date(compulsory=True)
+processing_date = basic.date(compulsory=True)
 processing_date = processing_date.setName('Processing Date').setResultsName('processing_date')
 
 """
@@ -68,12 +69,12 @@ creation_date_time = pp.Group(creation_date + creation_time)
 creation_date_time = creation_date_time.setName('Creation Date and Time').setResultsName('creation_date_time')
 
 # Acknowledgment Pattern
-acknowledgement = field_special.lineStart + record.record_prefix(_config.record_type('acknowledgement')) + \
+acknowledgement = special.lineStart + record.record_prefix(_config.record_type('acknowledgement')) + \
                   creation_date_time + \
-                  original_group_id + original_transaction_n + field_table.original_transaction_type(
+                  original_group_id + original_transaction_n + table.original_transaction_type(
     True) + creation_title + \
-                  submitter_creation_n + recipient_creation_n + processing_date + field_table.transaction_status(True) + \
-                  field_special.lineEnd
+                  submitter_creation_n + recipient_creation_n + processing_date + table.transaction_status(True) + \
+                  special.lineEnd
 
 """
 Parsing actions for the patterns.

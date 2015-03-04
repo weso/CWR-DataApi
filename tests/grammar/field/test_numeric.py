@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -22,7 +22,7 @@ class TestNumericValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric(5)
+        self.num = basic.numeric(5)
 
     def test_name(self):
         """
@@ -58,7 +58,7 @@ class TestNumericCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric(5, compulsory=True)
+        self.num = basic.numeric(5, compulsory=True)
 
     def test_name(self):
         """
@@ -86,25 +86,25 @@ class TestNumericConstructorException(unittest.TestCase):
         """
         Tests that an exception is thrown when the columns are set as negative.
         """
-        self.assertRaises(BaseException, field.numeric, -1)
+        self.assertRaises(BaseException, basic.numeric, -1)
 
     def test_cols_negative_compulsory(self):
         """
         Tests that an exception is thrown when the columns are set as negative.
         """
-        self.assertRaises(BaseException, field.numeric, -1, True)
+        self.assertRaises(BaseException, basic.numeric, -1, True)
 
     def test_cols_zero(self):
         """
         Tests that an exception is thrown when the columns are set as zero.
         """
-        self.assertRaises(BaseException, field.numeric, 0)
+        self.assertRaises(BaseException, basic.numeric, 0)
 
     def test_cols_zero_compulsory(self):
         """
         Tests that an exception is thrown when the columns are set as zero.
         """
-        self.assertRaises(BaseException, field.numeric, 0, True)
+        self.assertRaises(BaseException, basic.numeric, 0, True)
 
 
 class TestNumericException(unittest.TestCase):
@@ -113,7 +113,7 @@ class TestNumericException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric(5)
+        self.num = basic.numeric(5)
 
     def test_numeric_wrong_size_empty(self):
         """
@@ -146,7 +146,7 @@ class TestNumericCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric(5, compulsory=True)
+        self.num = basic.numeric(5, compulsory=True)
 
     def test_numeric_zero(self):
         """

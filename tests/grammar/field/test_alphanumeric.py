@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -22,7 +22,7 @@ class TestAlphanumValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.alpha = field.alphanum(5)
+        self.alpha = basic.alphanum(5)
 
     def test_name(self):
         """
@@ -93,7 +93,7 @@ class TestAlphanumHugeValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.alpha = field.alphanum(480)
+        self.alpha = basic.alphanum(480)
 
     def test_common(self):
         """
@@ -128,7 +128,7 @@ class TestAlphanumCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.alpha = field.alphanum(5, compulsory=True)
+        self.alpha = basic.alphanum(5, compulsory=True)
 
     def test_name(self):
         """
@@ -184,25 +184,25 @@ class TestAlphanumConstructorException(unittest.TestCase):
         """
         Tests that an exception is thrown when the columns are set as negative.
         """
-        self.assertRaises(BaseException, field.alphanum, -1)
+        self.assertRaises(BaseException, basic.alphanum, -1)
 
     def test_cols_negative_compulsory(self):
         """
         Tests that an exception is thrown when the columns are set as negative.
         """
-        self.assertRaises(BaseException, field.alphanum, -1, True)
+        self.assertRaises(BaseException, basic.alphanum, -1, True)
 
     def test_cols_zero(self):
         """
         Tests that an exception is thrown when the columns are set as zero.
         """
-        self.assertRaises(BaseException, field.alphanum, 0)
+        self.assertRaises(BaseException, basic.alphanum, 0)
 
     def test_cols_zero_compulsory(self):
         """
         Tests that an exception is thrown when the columns are set as zero.
         """
-        self.assertRaises(BaseException, field.alphanum, 0, True)
+        self.assertRaises(BaseException, basic.alphanum, 0, True)
 
 
 class TestAlphanumException(unittest.TestCase):
@@ -211,7 +211,7 @@ class TestAlphanumException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.alpha = field.alphanum(5)
+        self.alpha = basic.alphanum(5)
 
     def test_alphanum_wrong_size_empty(self):
         """
@@ -238,7 +238,7 @@ class TestAlphanumHugeException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.alpha = field.alphanum(480)
+        self.alpha = basic.alphanum(480)
 
     def test_alphanum_wrong_size_empty(self):
         """
@@ -259,7 +259,7 @@ class TestAlphanumCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.alpha = field.alphanum(5, compulsory=True)
+        self.alpha = basic.alphanum(5, compulsory=True)
 
     def test_alphanum_wrong_size_empty(self):
         """

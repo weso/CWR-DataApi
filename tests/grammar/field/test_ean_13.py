@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar import field_special
+from cwr.grammar.field import special
 
 
 """
@@ -16,7 +16,7 @@ __status__ = 'Development'
 
 class TestEAN13Valid(unittest.TestCase):
     def setUp(self):
-        self.ean = field_special.ean_13()
+        self.ean = special.ean_13()
 
     def test_common(self):
         """

@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -22,7 +22,7 @@ class TestTimeValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.time = field.time()
+        self.time = basic.time()
 
     def test_name(self):
         """
@@ -67,7 +67,7 @@ class TestTimeException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.time = field.time()
+        self.time = basic.time()
 
     def test_name(self):
         """

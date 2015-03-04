@@ -231,6 +231,8 @@ table:
         size: 1
     media_type:
         size: 3
+    intended_purpose:
+        size: 3
 
 nat:
     type: 'NAT'
@@ -281,3 +283,24 @@ recording_detail:
         size: 60
     first_release_catalog_id:
         size: 18
+
+work_origin:
+    type: 'ORN'
+    production_title:
+        size: 60
+    cd_identifier:
+        size: 15
+    cut_number:
+        size: 4
+    library:
+        size: 60
+    bltvr:
+        size: 1
+    production_n:
+        size: 12
+    episode_title:
+        size: 60
+    episode_n:
+        size: 20
+    production_year:
+        size: 4

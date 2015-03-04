@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration, CWRTables
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -25,7 +25,7 @@ Lookup fields.
 
 # Original Transaction Type
 def original_transaction_type(compulsory=False):
-    original_transaction_type_field = field.lookup(_tables.transaction_types(),
+    original_transaction_type_field = basic.lookup(_tables.transaction_types(),
                                                    columns=_config.field_size('table', 'original_transaction_type'),
                                                    compulsory=compulsory,
                                                    name='Original Transaction Type')
@@ -37,7 +37,7 @@ def original_transaction_type(compulsory=False):
 
 # Transaction Status
 def transaction_status(compulsory=False):
-    transaction_status_field = field.lookup(_tables.transaction_status(),
+    transaction_status_field = basic.lookup(_tables.transaction_status(),
                                             columns=_config.field_size('table', 'transaction_status'),
                                             compulsory=compulsory,
                                             name='Transaction Status')
@@ -49,7 +49,7 @@ def transaction_status(compulsory=False):
 
 # Prior Royalty Status
 def prior_royalty_status(compulsory=False):
-    prior_royalty_status_field = field.lookup(_tables.prior_royalty_status(),
+    prior_royalty_status_field = basic.lookup(_tables.prior_royalty_status(),
                                               columns=_config.field_size('table', 'prior_royalty_status'),
                                               compulsory=compulsory, name='Prior Royalty Status')
     prior_royalty_status_field = prior_royalty_status_field.setResultsName(
@@ -60,7 +60,7 @@ def prior_royalty_status(compulsory=False):
 
 # Post Term Collection Status
 def post_term_collection_status(compulsory=False):
-    post_term_collection_status_field = field.lookup(_tables.post_term_collection_status(),
+    post_term_collection_status_field = basic.lookup(_tables.post_term_collection_status(),
                                                      columns=_config.field_size('table', 'post_term_collection_status'),
                                                      compulsory=compulsory, name='Post Term Collection Status')
     post_term_collection_status_field = post_term_collection_status_field.setResultsName(
@@ -71,7 +71,7 @@ def post_term_collection_status(compulsory=False):
 
 # Sales/Manufacture Clause
 def sm_clause(compulsory=False):
-    sm_clause_field = field.lookup(_tables.sales_manufacture_clause(),
+    sm_clause_field = basic.lookup(_tables.sales_manufacture_clause(),
                                    columns=_config.field_size('table', 'sm_clause'),
                                    compulsory=compulsory,
                                    name='Sales/Manufacture Clause')
@@ -82,7 +82,7 @@ def sm_clause(compulsory=False):
 
 # Inclusion/Exclusion Indicator
 def ie_indicator(compulsory=False):
-    ie_indicator_field = field.lookup(_tables.ie_indicator(), compulsory=compulsory,
+    ie_indicator_field = basic.lookup(_tables.ie_indicator(), compulsory=compulsory,
                                       columns=_config.field_size('table', 'ie_indicator_field'),
                                       name='Inclusion/Exclusion Indicator')
     ie_indicator_field = ie_indicator_field.setResultsName('ie_indicator')
@@ -92,7 +92,7 @@ def ie_indicator(compulsory=False):
 
 # TIS Numeric Code
 def tis_code(compulsory=False):
-    tis_code_field = field.lookup(_tables.tis_codes(),
+    tis_code_field = basic.lookup(_tables.tis_codes(),
                                   columns=_config.field_size('table', 'tis_code'),
                                   compulsory=compulsory, name='TIS Numeric Code')
     tis_code_field = tis_code_field.setResultsName('tis_code')
@@ -103,7 +103,7 @@ def tis_code(compulsory=False):
 
 # Agreement Role Code
 def agreement_role_code(compulsory=False):
-    agreement_role_code_field = field.lookup(_tables.agreement_roles(),
+    agreement_role_code_field = basic.lookup(_tables.agreement_roles(),
                                              columns=_config.field_size('table', 'agreement_role_code'),
                                              compulsory=compulsory,
                                              name='Agreement Role Code')
@@ -115,7 +115,7 @@ def agreement_role_code(compulsory=False):
 
 # Language Code
 def language(compulsory=False):
-    language_field = field.lookup(_tables.language_codes(),
+    language_field = basic.lookup(_tables.language_codes(),
                                   columns=_config.field_size('table', 'language'), compulsory=compulsory,
                                   name='Language Code')
     language_field = language_field.setResultsName('language')
@@ -125,7 +125,7 @@ def language(compulsory=False):
 
 # Publisher Type
 def publisher_type(compulsory=False):
-    publisher_type_field = field.lookup(_tables.publisher_types(),
+    publisher_type_field = basic.lookup(_tables.publisher_types(),
                                         columns=_config.field_size('table', 'publisher_type'), compulsory=compulsory,
                                         name='Publisher Type')
     publisher_type_field = publisher_type_field.setResultsName('publisher_type')
@@ -135,7 +135,7 @@ def publisher_type(compulsory=False):
 
 # Special Agreements Indicator
 def special_agreement(compulsory=False):
-    special_agreement_field = field.lookup(_tables.special_agreement_indicators(),
+    special_agreement_field = basic.lookup(_tables.special_agreement_indicators(),
                                            columns=_config.field_size('table', 'special_agreement'),
                                            compulsory=compulsory,
                                            name='Special Agreements Indicator')
@@ -147,7 +147,7 @@ def special_agreement(compulsory=False):
 
 # Transaction type
 def transaction_type(compulsory=False):
-    transaction_type_field = field.lookup(_tables.transaction_types(),
+    transaction_type_field = basic.lookup(_tables.transaction_types(),
                                           columns=_config.field_size('table', 'transaction_type'),
                                           compulsory=compulsory,
                                           name='Transaction Type')
@@ -158,7 +158,7 @@ def transaction_type(compulsory=False):
 
 # Sender Type
 def sender_type(compulsory=False):
-    sender_type_field = field.lookup(_tables.sender_types(),
+    sender_type_field = basic.lookup(_tables.sender_types(),
                                      columns=_config.field_size('table', 'sender_type'),
                                      compulsory=compulsory, name='Sender Type')
     sender_type_field = sender_type_field.setResultsName('sender_type')
@@ -168,7 +168,7 @@ def sender_type(compulsory=False):
 
 # Musical Work Distribution Category
 def musical_distribution_category(compulsory=False):
-    musical_distribution_category_field = field.lookup(_tables.musical_work_distribution_categories(),
+    musical_distribution_category_field = basic.lookup(_tables.musical_work_distribution_categories(),
                                                        columns=_config.field_size('table',
                                                                                   'musical_distribution_category'),
                                                        compulsory=compulsory,
@@ -181,7 +181,7 @@ def musical_distribution_category(compulsory=False):
 
 # Text Music Relationship
 def text_music_relationship(compulsory=False):
-    text_music_relationship_field = field.lookup(_tables.text_music_relationships(),
+    text_music_relationship_field = basic.lookup(_tables.text_music_relationships(),
                                                  columns=_config.field_size('table', 'text_music_relationship'),
                                                  compulsory=compulsory,
                                                  name='Text Music Relationship')
@@ -193,7 +193,7 @@ def text_music_relationship(compulsory=False):
 
 # Composite Type
 def composite_type(compulsory=False):
-    composite_type_field = field.lookup(_tables.composite_types(),
+    composite_type_field = basic.lookup(_tables.composite_types(),
                                         columns=_config.field_size('table', 'composite_type'),
                                         compulsory=compulsory, name='Composite Type')
     composite_type_field = composite_type_field.setResultsName('composite_type')
@@ -203,7 +203,7 @@ def composite_type(compulsory=False):
 
 # Version Type
 def version_type(compulsory=False):
-    version_type_field = field.lookup(_tables.version_types(),
+    version_type_field = basic.lookup(_tables.version_types(),
                                       columns=_config.field_size('table', 'version_type'),
                                       compulsory=compulsory,
                                       name='Version Type')
@@ -214,7 +214,7 @@ def version_type(compulsory=False):
 
 # Excerpt Type
 def excerpt_type(compulsory=False):
-    excerpt_type_field = field.lookup(_tables.excerpt_types(),
+    excerpt_type_field = basic.lookup(_tables.excerpt_types(),
                                       columns=_config.field_size('table', 'excerpt_type'),
                                       compulsory=compulsory,
                                       name='Excerpt Type')
@@ -225,7 +225,7 @@ def excerpt_type(compulsory=False):
 
 # Music Arrangement
 def music_arrangement(compulsory=False):
-    music_arrangement_field = field.lookup(_tables.music_arrangements(),
+    music_arrangement_field = basic.lookup(_tables.music_arrangements(),
                                            columns=_config.field_size('table', 'music_arrangement'),
                                            compulsory=compulsory,
                                            name='Music Arrangement')
@@ -236,7 +236,7 @@ def music_arrangement(compulsory=False):
 
 # Lyric Adaptation
 def lyric_adaptation(compulsory=False):
-    lyric_adaptation_field = field.lookup(_tables.lyric_adaptations(),
+    lyric_adaptation_field = basic.lookup(_tables.lyric_adaptations(),
                                           columns=_config.field_size('table', 'lyric_adaptation'),
                                           compulsory=compulsory,
                                           name='Lyric Adaptation')
@@ -247,7 +247,7 @@ def lyric_adaptation(compulsory=False):
 
 # Work Type
 def work_type(compulsory=False):
-    work_type_field = field.lookup(_tables.work_types(), columns=_config.field_size('table', 'work_type'),
+    work_type_field = basic.lookup(_tables.work_types(), columns=_config.field_size('table', 'work_type'),
                                    compulsory=compulsory, name='Work Type')
     work_type_field = work_type_field.setResultsName('cwr_work_type')
 
@@ -256,7 +256,7 @@ def work_type(compulsory=False):
 
 # USA License Indicator
 def usa_license(compulsory=False):
-    usa_license_field = field.lookup(_tables.usa_license_indicators(),
+    usa_license_field = basic.lookup(_tables.usa_license_indicators(),
                                      columns=_config.field_size('table', 'usa_license'),
                                      compulsory=compulsory,
                                      name='USA License Indicator')
@@ -267,7 +267,7 @@ def usa_license(compulsory=False):
 
 # Agreement Type
 def agreement_type(compulsory=False):
-    agreement_type_field = field.lookup(_tables.agreement_types(),
+    agreement_type_field = basic.lookup(_tables.agreement_types(),
                                         columns=_config.field_size('table', 'agreement_type'),
                                         compulsory=compulsory, name='Agreement Type')
     agreement_type_field = agreement_type_field.setResultsName('agreement_type')
@@ -283,7 +283,7 @@ def society(compulsory=False):
 
     :return: grammar for the society ID field
     """
-    society_field = field.lookup(_tables.society_codes(),
+    society_field = basic.lookup(_tables.society_codes(),
                                  columns=_config.field_size('table', 'society'), compulsory=compulsory)
 
     society_field.setParseAction(lambda c: None if c[0] is None else int(c[0]))
@@ -295,7 +295,7 @@ def society(compulsory=False):
 
 # Writer Designation
 def writer_designation(compulsory=False):
-    writer_designation_field = field.lookup(_tables.writer_designation_codes(),
+    writer_designation_field = basic.lookup(_tables.writer_designation_codes(),
                                             columns=_config.field_size('table', 'writer_designation'),
                                             compulsory=compulsory, name='Writer Designation')
     writer_designation_field = writer_designation_field.setResultsName('writer_designation')
@@ -305,7 +305,7 @@ def writer_designation(compulsory=False):
 
 # Title Type
 def title_type(compulsory=False):
-    title_type_field = field.lookup(_tables.title_types(),
+    title_type_field = basic.lookup(_tables.title_types(),
                                     columns=_config.field_size('table', 'title_type'),
                                     compulsory=compulsory, name='Title Type')
     title_type_field = title_type_field.setResultsName('title_type')
@@ -315,7 +315,7 @@ def title_type(compulsory=False):
 
 # Recording Formats
 def recording_formats(compulsory=False):
-    recording_format_field = field.lookup(_tables.recording_formats(),
+    recording_format_field = basic.lookup(_tables.recording_formats(),
                                           columns=_config.field_size('table', 'recording_format'),
                                           compulsory=compulsory, name='Recording Format')
     recording_format_field = recording_format_field.setResultsName('recording_format')
@@ -325,7 +325,7 @@ def recording_formats(compulsory=False):
 
 # Recording Techniques
 def recording_techniques(compulsory=False):
-    recording_technique_field = field.lookup(_tables.recording_techniques(),
+    recording_technique_field = basic.lookup(_tables.recording_techniques(),
                                              columns=_config.field_size('table', 'recording_technique'),
                                              compulsory=compulsory, name='Recording Technique')
     recording_technique_field = recording_technique_field.setResultsName('recording_technique')
@@ -335,12 +335,22 @@ def recording_techniques(compulsory=False):
 
 # Media Types
 def media_types(compulsory=False):
-    media_type_field = field.lookup(_tables.media_types(),
+    media_type_field = basic.lookup(_tables.media_types(),
                                     columns=_config.field_size('table', 'media_type'),
                                     compulsory=compulsory, name='Media Type')
     media_type_field = media_type_field.setResultsName('media_type')
 
     return media_type_field
+
+
+# Intended Purposes
+def intended_purposes(compulsory=False):
+    intended_purpose_field = basic.lookup(_tables.intended_purposes(),
+                                          columns=_config.field_size('table', 'intended_purpose'),
+                                          compulsory=compulsory, name='Media Type')
+    intended_purpose_field = intended_purpose_field.setResultsName('intended_purpose')
+
+    return intended_purpose_field
 
 
 def char_code(columns, compulsory=False):

@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field_special
+from cwr.grammar.field import special
 
 
 """
@@ -22,7 +22,7 @@ class TestISWCValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.iswc = field_special.iswc()
+        self.iswc = special.iswc()
 
     def test_common(self):
         """
@@ -77,7 +77,7 @@ class TestISWCCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.iswc = field_special.iswc(compulsory=True)
+        self.iswc = special.iswc(compulsory=True)
 
     def test_common(self):
         """
@@ -122,7 +122,7 @@ class TestISWCException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.iswc = field_special.iswc()
+        self.iswc = special.iswc()
 
     def test_only_header(self):
         """
@@ -179,7 +179,7 @@ class TestISWCCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.iswc = field_special.iswc(compulsory=True)
+        self.iswc = special.iswc(compulsory=True)
 
     def test_only_header(self):
         """

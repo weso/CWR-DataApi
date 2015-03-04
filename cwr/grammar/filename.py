@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from cwr.file import FileTag
-from cwr.grammar import field, field_special
+from cwr.grammar.field import basic, special
 from data.accessor import CWRConfiguration
 
 
@@ -53,15 +53,15 @@ Each of these fields is parsed into a value as follows:
 """
 
 # Sequence Number old
-sequence_old = field.numeric(2)
+sequence_old = basic.numeric(2)
 sequence_old = sequence_old.setName('Sequence Number').setResultsName('sequence_n')
 
 # Sequence Number new
-sequence_new = field.numeric(4)
+sequence_new = basic.numeric(4)
 sequence_new = sequence_new.setName('Sequence Number').setResultsName('sequence_n')
 
 # Year
-year = field.numeric(2)
+year = basic.numeric(2)
 year.setParseAction(lambda y: int('20' + y[0]))
 year = year.setName('Year').setResultsName('year')
 
@@ -74,7 +74,7 @@ receiver = pp.Word(pp.alphanums, min=2, max=3)
 receiver = receiver.setName('Received').setResultsName('receiver')
 
 # Version number
-version_num = field.numeric_float(2, 1)
+version_num = basic.numeric_float(2, 1)
 version_num = version_num.setName('Version').setResultsName('version')
 
 """
@@ -113,10 +113,10 @@ This the grammatical structure for the old and new filename templates.
 """
 
 # CWR filename patterns
-cwr_filename_old = field_special.lineStart + header + year + sequence_old + sender + delimiter_ip + receiver \
-                   + ((delimiter_version + version_num) | delimiter_zip) + field_special.lineEnd
-cwr_filename = field_special.lineStart + header + year + sequence_new + sender + delimiter_ip + receiver + \
-               ((delimiter_version + version_num) | delimiter_zip) + field_special.lineEnd
+cwr_filename_old = special.lineStart + header + year + sequence_old + sender + delimiter_ip + receiver \
+                   + ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
+cwr_filename = special.lineStart + header + year + sequence_new + sender + delimiter_ip + receiver + \
+               ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
 
 """
 Parsing actions for the patterns.

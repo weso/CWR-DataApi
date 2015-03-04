@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -22,7 +22,7 @@ class TestNumericFloatValidEven(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(4, 2)
+        self.num = basic.numeric_float(4, 2)
 
     def test_numeric(self):
         """
@@ -73,7 +73,7 @@ class TestNumericCompulsoryFloatValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(4, 2, compulsory=True)
+        self.num = basic.numeric_float(4, 2, compulsory=True)
 
     def test_numeric(self):
         """
@@ -110,7 +110,7 @@ class TestNumericFloatUnevenValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(5, 3)
+        self.num = basic.numeric_float(5, 3)
 
     def test_numeric(self):
         """
@@ -161,7 +161,7 @@ class TestNumericFloatUnevenCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(5, 3, compulsory=True)
+        self.num = basic.numeric_float(5, 3, compulsory=True)
 
     def test_numeric(self):
         """
@@ -197,37 +197,37 @@ class TestNumericFloatConstructorException(unittest.TestCase):
         """
         Tests that an exception is thrown when the columns are set as negative.
         """
-        self.assertRaises(BaseException, field.numeric_float, -1, 2)
+        self.assertRaises(BaseException, basic.numeric_float, -1, 2)
 
     def test_cols_negative_compulsory(self):
         """
         Tests that an exception is thrown when the columns are set as negative.
         """
-        self.assertRaises(BaseException, field.numeric_float, -1, 2, True)
+        self.assertRaises(BaseException, basic.numeric_float, -1, 2, True)
 
     def test_cols_zero(self):
         """
         Tests that an exception is thrown when the columns are set as zero.
         """
-        self.assertRaises(BaseException, field.numeric_float, 0, 2)
+        self.assertRaises(BaseException, basic.numeric_float, 0, 2)
 
     def test_cols_zero_compulsory(self):
         """
         Tests that an exception is thrown when the columns are set as zero.
         """
-        self.assertRaises(BaseException, field.numeric_float, 0, 2, True)
+        self.assertRaises(BaseException, basic.numeric_float, 0, 2, True)
 
     def test_pos_negative(self):
         """
         Tests that an exception is thrown when the positive values size is set as negative.
         """
-        self.assertRaises(BaseException, field.numeric_float, 3, -1)
+        self.assertRaises(BaseException, basic.numeric_float, 3, -1)
 
     def test_pos_negative_compulsory(self):
         """
         Tests that an exception is thrown when the positive values size is set as negative.
         """
-        self.assertRaises(BaseException, field.numeric_float, 3, -1, True)
+        self.assertRaises(BaseException, basic.numeric_float, 3, -1, True)
 
 
 class TestNumericFloatException(unittest.TestCase):
@@ -236,7 +236,7 @@ class TestNumericFloatException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(4, 2)
+        self.num = basic.numeric_float(4, 2)
 
     def test_numeric_wrong_size_empty(self):
         """
@@ -263,7 +263,7 @@ class TestNumericCompulsoryFloatException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(4, 2, compulsory=True)
+        self.num = basic.numeric_float(4, 2, compulsory=True)
 
     def test_numeric_zero(self):
         """
@@ -296,7 +296,7 @@ class TestNumericFloatUnevenException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(5, 3)
+        self.num = basic.numeric_float(5, 3)
 
     def test_numeric_wrong_size_empty(self):
         """
@@ -323,7 +323,7 @@ class TestNumericFloatUnevenCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.num = field.numeric_float(5, 3, compulsory=True)
+        self.num = basic.numeric_float(5, 3, compulsory=True)
 
     def test_numeric_zero(self):
         """

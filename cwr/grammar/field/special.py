@@ -2,8 +2,8 @@
 
 import pyparsing as pp
 
-from cwr.other import ISWCCode, IPIBaseNumber
-from cwr.grammar import field
+from cwr.other import ISWCCode, IPIBaseNumber, VISAN, AVIKey
+from cwr.grammar.field import basic
 
 
 """
@@ -35,7 +35,7 @@ def ip_id(compulsory=False):
 
     :return: a parser for the IP Number field
     """
-    ip_id_field = field.alphanum(9, compulsory)
+    ip_id_field = basic.alphanum(9, compulsory)
     ip_id_field = ip_id_field.setName('Interested Party Number Field').setResultsName('ip_id')
 
     return ip_id_field
@@ -124,7 +124,7 @@ def ipi_name_number(compulsory=False):
 
     :return: a parser for the IPI Name Number field
     """
-    ipi_name_number_field = field.numeric(11, compulsory=compulsory)
+    ipi_name_number_field = basic.numeric(11, compulsory=compulsory)
 
     ipi_name_number_field = ipi_name_number_field.setName('IPI Name Number Field').setResultsName('ipi_name')
 
@@ -150,14 +150,12 @@ def iswc(compulsory=False):
     header = header.setName('ISWC Header').setResultsName('header')
 
     # ID code is composed of 9 numbers
-    id_code = pp.Regex('[0-9]{9}')
+    id_code = basic.numeric(9)
     id_code = id_code.setName('ID Code').setResultsName('id_code')
-    id_code = id_code.setParseAction(lambda c: int(c[0]))
 
     # Check digit is a single number
-    check_digit = pp.Regex('[0-9]')
+    check_digit = basic.numeric(1)
     check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
-    check_digit = check_digit.setParseAction(lambda c: int(c[0]))
 
     # T followed by 10 numbers
     iswc_field = pp.Combine(header + id_code + check_digit)
@@ -214,7 +212,7 @@ def percentage(columns, max=100, compulsory=False):
     if columns < 3:
         raise BaseException()
 
-    percentage_field = field.numeric_float(columns, 3, compulsory)
+    percentage_field = basic.numeric_float(columns, 3, compulsory)
 
     percentage_field.addParseAction(lambda v: _assert_is_percentage(v[0], max))
 
@@ -268,7 +266,7 @@ def blank(columns):
 
 
 def ean_13(compulsory=False):
-    ean_13_field = field.numeric(13, compulsory)
+    ean_13_field = basic.numeric(13, compulsory)
 
     ean_13_field = ean_13_field.setName('Shares Field').setResultsName('ean_13')
 
@@ -276,13 +274,59 @@ def ean_13(compulsory=False):
 
 
 def isrc(compulsory=False):
-    country = field.alphanum(2)
-    registrant = field.alphanum(3)
-    year = field.numeric(2)
-    work_id = field.numeric(5)
+    country = basic.alphanum(2)
+    registrant = basic.alphanum(3)
+    year = basic.numeric(2)
+    work_id = basic.numeric(5)
 
     isrc_field = pp.Combine(country + registrant + year + work_id)
 
     isrc_field = isrc_field.setName('ISRC Field').setResultsName('isrc')
 
     return isrc_field
+
+
+def visan(compulsory=False):
+    version = basic.numeric(8)
+    version = version.setName('Version').setResultsName('version')
+
+    isan = basic.numeric(12)
+    isan = isan.setName('ISAN').setResultsName('isan')
+
+    episode = basic.numeric(4)
+    episode = episode.setName('Episode').setResultsName('episode')
+
+    check_digit = basic.numeric(1)
+    check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
+
+    visan_field = pp.Combine(version + isan + episode + check_digit)
+
+    visan_field.setParseAction(lambda v: _to_visan(v[0]))
+
+    visan_field = visan_field.setName('V-ISAN Field').setResultsName('visan')
+
+    return visan_field
+
+
+def _to_visan(parsed):
+    return VISAN(parsed.version, parsed.isan, parsed.episode, parsed.check_digit)
+
+
+def avi(compulsory=False):
+    society_code = basic.numeric(3)
+    society_code = society_code.setName('Society Code').setResultsName('society_code')
+
+    av_number = basic.alphanum(15)
+    av_number = av_number.setName('Audio-Visual Number').setResultsName('av_number')
+
+    avi_field = pp.Combine(society_code + av_number)
+
+    avi_field.setParseAction(lambda v: _to_avi(v[0]))
+
+    avi_field = avi_field.setName('AVI Field').setResultsName('avi')
+
+    return avi_field
+
+
+def _to_avi(parsed):
+    return AVIKey(parsed.society_code, parsed.av_number)

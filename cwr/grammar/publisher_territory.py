@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field_special, record, society, field_table, field
+from cwr.grammar import society
+from cwr.grammar.field import table, special, record, basic
 from cwr.interested_party import IPTerritoryRecord
 
 
@@ -22,25 +23,25 @@ General fields.
 """
 
 # Constant
-constant = field_special.blank(_config.field_size('publisher_territory', 'constant'))
+constant = special.blank(_config.field_size('publisher_territory', 'constant'))
 
 # Shares Change
-shares_change = field.boolean()
+shares_change = basic.boolean()
 shares_change = shares_change.setName('Shares Change').setResultsName('shares_change')
 
 # Sequence #
-sequence_n = field.numeric(_config.field_size('publisher_territory', 'sequence_n'))
+sequence_n = basic.numeric(_config.field_size('publisher_territory', 'sequence_n'))
 sequence_n = sequence_n.setName('Sequence #').setResultsName('sequence_n')
 
 """
 SPT patterns.
 """
 
-territory = field_special.lineStart + record.record_prefix(
+territory = special.lineStart + record.record_prefix(
     _config.record_type(
-        'publisher_territory')) + field_special.ip_id(compulsory=True) + constant + \
+        'publisher_territory')) + special.ip_id(compulsory=True) + constant + \
             society.pr_share(max=50) + society.mr_share() + society.sr_share() + \
-            field_table.ie_indicator() + field_table.tis_code() + shares_change + sequence_n + field_special.lineEnd
+            table.ie_indicator() + table.tis_code() + shares_change + sequence_n + special.lineEnd
 
 """
 Parsing actions for the patterns.

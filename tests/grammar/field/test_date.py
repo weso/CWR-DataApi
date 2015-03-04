@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -22,7 +22,7 @@ class TestDateValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.date = field.date()
+        self.date = basic.date()
 
     def test_name(self):
         """
@@ -85,7 +85,7 @@ class TestCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.date = field.date(compulsory=True)
+        self.date = basic.date(compulsory=True)
 
     def test_name(self):
         """
@@ -140,7 +140,7 @@ class TestDateException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.date = field.date()
+        self.date = basic.date()
 
     def test_wrong_day_too_high(self):
         """
@@ -197,7 +197,7 @@ class TestDateCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.date = field.date(compulsory=True)
+        self.date = basic.date(compulsory=True)
 
     def test_wrong_day_too_high(self):
         """

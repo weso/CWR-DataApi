@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field_special, record, field_table
+from cwr.grammar.field import table, special, record
 from cwr.agreement import AgreementTerritoryRecord
 
 
@@ -21,9 +21,9 @@ _config = CWRConfiguration()
 Territory in Agreement patterns.
 """
 
-territory_in_agreement = field_special.lineStart + record.record_prefix(
-    _config.record_type('agreement_territory')) + field_table.ie_indicator(True) + field_table.tis_code(
-    True) + field_special.lineEnd
+territory_in_agreement = special.lineStart + record.record_prefix(
+    _config.record_type('agreement_territory')) + table.ie_indicator(True) + table.tis_code(
+    True) + special.lineEnd
 
 """
 Parsing actions for the patterns.

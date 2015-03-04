@@ -1349,10 +1349,8 @@ class WorkOriginRecord(TransactionRecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, intended_purpose, production_title='',
                  cd_identifier='', cut_number=0,
-                 library='', bltvr='', visan_version=0, visan_isan=0, visan_episode=0,
-                 visan_check_digit=0, production_id='', episode_title='',
-                 episode_id='', production_year=0, avi_key_society=0,
-                 avi_key_number=''):
+                 library='', bltvr='', visan=None, production_id='', episode_title='',
+                 episode_id='', production_year=0, avi=None):
         super(WorkOriginRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._intended_purpose = intended_purpose
         self._production_title = production_title
@@ -1360,39 +1358,21 @@ class WorkOriginRecord(TransactionRecord):
         self._cut_number = cut_number
         self._library = library
         self._bltvr = bltvr
-        self._visan_version = visan_version
-        self._visan_isan = visan_isan
-        self._visan_episode = visan_episode
-        self._visan_check_digit = visan_check_digit
+        self._visan = visan
         self._production_id = production_id
         self._episode_title = episode_title
         self._episode_id = episode_id
         self._production_year = production_year
-        self._avi_key_society = avi_key_society
-        self._avi_key_number = avi_key_number
+        self._avi = avi
 
     @property
-    def avi_key_number(self):
+    def avi(self):
         """
-        Audio-Visual Number field. Alphanumeric.
+        Audio-Visual Key.
 
-        Unique number  used internally by the 'owning' society  to identify the audio-visual work as referenced in the
-        AV Index.
-
-        :return: the audio-visual number field
+        :return: the audio-visual key
         """
-        return self._avi_key_number
-
-    @property
-    def avi_key_society(self):
-        """
-        AVI Society Code field. Numeric.
-
-        The IPI code of the society whose audio visual work detail entry is referenced in the AV Index.
-
-        :return: the AVI society code
-        """
-        return self._avi_key_society
+        return self._avi
 
     @property
     def bltvr(self):
@@ -1509,56 +1489,15 @@ class WorkOriginRecord(TransactionRecord):
         return self._production_year
 
     @property
-    def visan_check_digit(self):
+    def visan(self):
         """
-        V-ISAN Check Digit field. Numeric.
+        V-ISAN.
 
-        Unique identifier for audio-visual production in which this work is first used.
+        This is expected to be a VISAN object.
 
-        Check digit to verify accuracy of ISAN.
-
-        :return: the check digit
+        :return: the V-ISAN
         """
-        return self._visan_check_digit
-
-    @property
-    def visan_episode(self):
-        """
-        V-ISAN Episode field. Numeric.
-
-        Unique identifier for audio-visual production in which this work is first used.
-
-        Unique identifier for episode.
-
-        :return: the episode id
-        """
-        return self._visan_episode
-
-    @property
-    def visan_isan(self):
-        """
-        V-ISAN ISAN field. Numeric.
-
-        Unique identifier for audio-visual production in which this work is first used.
-
-        ISAN portion of the V-ISAN.
-
-        :return: the V-ISAN ISAN
-        """
-        return self._visan_isan
-
-    @property
-    def visan_version(self):
-        """
-        V-ISAN Version field. Numeric.
-
-        Unique identifier for audio-visual production in which this work is first used.
-
-        Version portion of the V-ISAN.
-
-        :return: the V-ISAN version
-        """
-        return self._visan_version
+        return self._visan
 
 
 class PerformingArtistRecord(TransactionRecord):

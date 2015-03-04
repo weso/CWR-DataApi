@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -22,7 +22,7 @@ class TestFlagValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.flag = field.flag()
+        self.flag = basic.flag()
 
     def test_name(self):
         """
@@ -65,7 +65,7 @@ class TestFlagCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.flag = field.flag(compulsory=True)
+        self.flag = basic.flag(compulsory=True)
 
     def test_name(self):
         """
@@ -101,7 +101,7 @@ class TestFlagException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.flag = field.flag()
+        self.flag = basic.flag()
 
     def test_true_lower(self):
         """
@@ -134,7 +134,7 @@ class TestFlagCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.flag = field.flag(compulsory=True)
+        self.flag = basic.flag(compulsory=True)
 
     def test_true_lower(self):
         """

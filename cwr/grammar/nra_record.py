@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field, field_special, record, field_table, publisher
+from cwr.grammar import publisher
+from cwr.grammar.field import table, special, record, basic
 from cwr.agreement import NPARecord
 from cwr.interested_party import NPNRecord, NWNRecord
 from cwr.work import NATRecord, NPRRecord
@@ -35,12 +36,12 @@ NPA fields.
 """
 
 # Interested Party Name
-ip_name = field.alphanum(_config.field_size('nra', 'name'), compulsory=True)
+ip_name = basic.alphanum(_config.field_size('nra', 'name'), compulsory=True)
 ip_name = ip_name.setName('Interested Party Name').setResultsName('ip_name')
 ip_name.leaveWhitespace()
 
 # Interested Party Writer First Name
-ip_writer_name = field.alphanum(_config.field_size('nra', 'name'), compulsory=True)
+ip_writer_name = basic.alphanum(_config.field_size('nra', 'name'), compulsory=True)
 ip_writer_name = ip_writer_name.setName('Interested Party Writer First Name').setResultsName('ip_writer_name')
 ip_writer_name.leaveWhitespace()
 
@@ -49,7 +50,7 @@ NPN fields.
 """
 
 # Publisher Name
-publisher_name = field.alphanum(_config.field_size('npn', 'name'), compulsory=True)
+publisher_name = basic.alphanum(_config.field_size('npn', 'name'), compulsory=True)
 publisher_name = publisher_name.setName('Publisher Name').setResultsName('name')
 publisher_name.leaveWhitespace()
 
@@ -58,12 +59,12 @@ NWN fields.
 """
 
 # Writer Last Name
-writer_last_name = field.alphanum(_config.field_size('nra', 'name'), compulsory=True)
+writer_last_name = basic.alphanum(_config.field_size('nra', 'name'), compulsory=True)
 writer_last_name = writer_last_name.setName('Writer Last Name').setResultsName('writer_last_name')
 writer_last_name.leaveWhitespace()
 
 # Writer First Name
-writer_first_name = field.alphanum(_config.field_size('nra', 'name'), compulsory=True)
+writer_first_name = basic.alphanum(_config.field_size('nra', 'name'), compulsory=True)
 writer_first_name = writer_first_name.setName('Writer First Name').setResultsName('writer_first_name')
 writer_first_name.leaveWhitespace()
 
@@ -72,7 +73,7 @@ NAT fields.
 """
 
 # Title
-nat_title = field.alphanum(_config.field_size('nat', 'title'), compulsory=True)
+nat_title = basic.alphanum(_config.field_size('nat', 'title'), compulsory=True)
 nat_title = nat_title.setName('Title').setResultsName('title')
 
 """
@@ -80,48 +81,48 @@ NPR fields.
 """
 
 # Performing Artist Name
-performing_artist_name = field.alphanum(_config.field_size('npr', 'performing_artist_name'))
+performing_artist_name = basic.alphanum(_config.field_size('npr', 'performing_artist_name'))
 performing_artist_name = performing_artist_name.setName('Performing Artist Name').setResultsName('name')
 
 # Performing Artist Name
-performing_artist_first_name = field.alphanum(_config.field_size('npr', 'performing_artist_first_name'))
+performing_artist_first_name = basic.alphanum(_config.field_size('npr', 'performing_artist_first_name'))
 performing_artist_first_name = performing_artist_first_name.setName('Performing Artist First Name').setResultsName(
     'first_name')
 
 # Performance Language
-performance_language = field_table.language()
+performance_language = table.language()
 performance_language = performance_language.setName('Performance Language').setResultsName('performance_language')
 
 # Dialect
-dialect = field.alphanum(_config.field_size('npr', 'dialect'))
+dialect = basic.alphanum(_config.field_size('npr', 'dialect'))
 dialect = dialect.setName('Dialect').setResultsName('dialect')
 
 """
 NRA patterns.
 """
 
-npa = field_special.lineStart + record.record_prefix(
+npa = special.lineStart + record.record_prefix(
     _config.record_type(
-        'npa')) + field_special.ip_id() + ip_name + ip_writer_name + field_table.language() + field_special.lineEnd
+        'npa')) + special.ip_id() + ip_name + ip_writer_name + table.language() + special.lineEnd
 
-npn = field_special.lineStart + record.record_prefix(
+npn = special.lineStart + record.record_prefix(
     _config.record_type(
-        'npn')) + publisher.sequence_n + field_special.ip_id(compulsory=True) + publisher_name + \
-      field_table.language() + field_special.lineEnd
+        'npn')) + publisher.sequence_n + special.ip_id(compulsory=True) + publisher_name + \
+      table.language() + special.lineEnd
 
-nwn = field_special.lineStart + record.record_prefix(
+nwn = special.lineStart + record.record_prefix(
     _config.record_type(
-        'nwn')) + field_special.ip_id() + writer_last_name + writer_first_name + \
-      field_table.language() + field_special.lineEnd
+        'nwn')) + special.ip_id() + writer_last_name + writer_first_name + \
+      table.language() + special.lineEnd
 
-nat = field_special.lineStart + record.record_prefix(
+nat = special.lineStart + record.record_prefix(
     _config.record_type(
-        'nat')) + nat_title + field_table.title_type() + field_table.language() + field_special.lineEnd
+        'nat')) + nat_title + table.title_type() + table.language() + special.lineEnd
 
-npr = field_special.lineStart + record.record_prefix(
+npr = special.lineStart + record.record_prefix(
     _config.record_type(
-        'npr')) + performing_artist_name + performing_artist_first_name + field_special.ipi_name_number() + \
-      field_special.ipi_base_number() + field_table.language() + performance_language + dialect + field_special.lineEnd
+        'npr')) + performing_artist_name + performing_artist_first_name + special.ipi_name_number() + \
+      special.ipi_base_number() + table.language() + performance_language + dialect + special.lineEnd
 
 """
 Parsing actions for the patterns.

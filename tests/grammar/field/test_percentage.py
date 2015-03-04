@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field_special
+from cwr.grammar.field import special
 
 
 """
@@ -22,7 +22,7 @@ class TestPercentageValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = field_special.percentage(5)
+        self.perc = special.percentage(5)
 
     def test_name(self):
         """
@@ -77,7 +77,7 @@ class TestPercentage50Valid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = field_special.percentage(5, max=50)
+        self.perc = special.percentage(5, max=50)
 
     def test_name(self):
         """
@@ -132,7 +132,7 @@ class TestPercentageCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = field_special.percentage(5, compulsory=True)
+        self.perc = special.percentage(5, compulsory=True)
 
     def test_name(self):
         """
@@ -175,13 +175,13 @@ class TestPercentageCompulsoryValid(unittest.TestCase):
 
 class TestPercentageConstructorException(unittest.TestCase):
     def test_too_small(self):
-        self.assertRaises(BaseException, field_special.percentage, 2)
+        self.assertRaises(BaseException, special.percentage, 2)
 
     def test_zero(self):
-        self.assertRaises(BaseException, field_special.percentage, 0)
+        self.assertRaises(BaseException, special.percentage, 0)
 
     def test_negative(self):
-        self.assertRaises(BaseException, field_special.percentage, -1)
+        self.assertRaises(BaseException, special.percentage, -1)
 
 
 class TestPercentageException(unittest.TestCase):
@@ -190,7 +190,7 @@ class TestPercentageException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = field_special.percentage(5)
+        self.perc = special.percentage(5)
 
     def test_above_max(self):
         """
@@ -211,7 +211,7 @@ class TestPercentage50Exception(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = field_special.percentage(5, max=50)
+        self.perc = special.percentage(5, max=50)
 
     def test_above_max(self):
         """
@@ -232,7 +232,7 @@ class TestPercentageCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = field_special.percentage(5, compulsory=True)
+        self.perc = special.percentage(5, compulsory=True)
 
     def test_above_max(self):
         """

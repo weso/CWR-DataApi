@@ -132,3 +132,45 @@ class IPIBaseNumber(_ThreePartsCode):
     def __repr__(self):
         return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % ('IPIBaseNumber', self._header,
                                                                       self._id_code, self._check_digit)
+
+
+class VISAN(object):
+    """
+    Represents a V-ISAN code.
+    """
+
+    def __init__(self, version, isan, episode, check_digit):
+        self._version = version
+        self._isan = isan
+        self._episode = episode
+        self._check_digit = check_digit
+
+    @property
+    def check_digit(self):
+        return self._check_digit
+
+    @property
+    def episode(self):
+        return self._episode
+
+    @property
+    def isan(self):
+        return self._isan
+
+    @property
+    def version(self):
+        return self._version
+
+
+class AVIKey(object):
+    def __init__(self, society_code, av_number):
+        self._society_code = society_code
+        self._av_number = av_number
+
+    @property
+    def av_number(self):
+        return self._av_number
+
+    @property
+    def society_code(self):
+        return self._society_code

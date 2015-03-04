@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 """
 Grammar for Records.
@@ -32,27 +32,27 @@ def record_type(values):
     return type_field
 
 # Transaction sequence number
-transaction_seq_n = field.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'))
+transaction_seq_n = basic.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'))
 transaction_seq_n = transaction_seq_n.setName('Transaction Sequence Number').setResultsName('transaction_sequence_n')
 
 # Record sequence number
-record_seq_n = field.numeric(_config.field_size('record_prefix', 'record_sequence_n'))
+record_seq_n = basic.numeric(_config.field_size('record_prefix', 'record_sequence_n'))
 record_seq_n = record_seq_n.setName('Record Sequence Number').setResultsName('record_sequence_n')
 
 # Trailer fields
 
 # Group count
-group_count = field.numeric(
+group_count = basic.numeric(
     _config.field_size('trailer_record', 'group_count'), compulsory=True)
 group_count = group_count.setName('Group Count').setResultsName('group_count')
 
 # Transaction count
-transaction_count = field.numeric(
+transaction_count = basic.numeric(
     _config.field_size('trailer_record', 'transaction_count'), compulsory=True)
 transaction_count = transaction_count.setName('Transaction Count').setResultsName('transaction_count')
 
 # Record count
-record_count = field.numeric(
+record_count = basic.numeric(
     _config.field_size('trailer_record', 'record_count'), compulsory=True)
 record_count = record_count.setName('Record Count').setResultsName('record_count')
 

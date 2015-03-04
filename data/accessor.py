@@ -194,6 +194,7 @@ class CWRTables(object):
     _file_recording_format = 'cwr_recording_format.csv'
     _file_recording_technique = 'cwr_recording_technique.csv'
     _file_media_type = 'cwr_media_type.csv'
+    _file_intended_purpose = 'cwr_intended_purpose.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -226,6 +227,7 @@ class CWRTables(object):
     _recording_formats = None
     _recording_techniques = None
     _media_types = None
+    _intended_purposes = None
 
     def agreement_roles(self):
         """
@@ -296,6 +298,17 @@ class CWRTables(object):
             self._ie_indicator = self._reader.read_csv_file(self._file_ie_indicator)
 
         return self._ie_indicator
+
+    def intended_purposes(self):
+        """
+        CWR Intended Purpose codes.
+
+        :return: the allowed Intended Purpose codes
+        """
+        if self._intended_purposes is None:
+            self._intended_purposes = self._reader.read_csv_file(self._file_intended_purpose)
+
+        return self._intended_purposes
 
     def language_codes(self):
         """

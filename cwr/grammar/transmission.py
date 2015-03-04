@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar import field, field_special, record, field_table
+from cwr.grammar.field import table, special, record, basic
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
 
@@ -57,11 +57,11 @@ These fields are:
 """
 
 # Sender ID
-sender_id = field.numeric(_config.field_size('transmission_header', 'sender_id'), compulsory=True)
+sender_id = basic.numeric(_config.field_size('transmission_header', 'sender_id'), compulsory=True)
 sender_id = sender_id.setName('Sender ID').setResultsName('sender_id')
 
 # Sender Name
-sender_name = field.alphanum(_config.field_size('transmission_header', 'sender_name'), compulsory=True)
+sender_name = basic.alphanum(_config.field_size('transmission_header', 'sender_name'), compulsory=True)
 sender_name = sender_name.setName('Sender Name').setResultsName('sender_name')
 
 # EDI Version
@@ -69,19 +69,19 @@ edi_version = pp.Literal(_config.field_value('transmission_header', 'edi_version
 edi_version = edi_version.setName('EDI Version').setResultsName('edi_version')
 
 # Creation Date
-creation_date = field.date(compulsory=True)
+creation_date = basic.date(compulsory=True)
 creation_date = creation_date.setName('Creation Date').setResultsName('creation_date')
 
 # Creation Time
-creation_time = field.time()
+creation_time = basic.time()
 creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
 
 # Transmission Date
-transmission_date = field.date(compulsory=True)
+transmission_date = basic.date(compulsory=True)
 transmission_date = transmission_date.setName('Transmission Date').setResultsName('transmission_date')
 
 # Character Set
-character_set = field_table.char_code(_config.field_size('transmission_header', 'character_set'))
+character_set = table.char_code(_config.field_size('transmission_header', 'character_set'))
 character_set = character_set.setName('Character Set').setResultsName('character_set')
 
 """
@@ -95,14 +95,14 @@ creation_date_time = pp.Group(creation_date + creation_time)
 creation_date_time = creation_date_time.setName('Creation Date and Time').setResultsName('creation_date_time')
 
 # Transmission Header pattern
-transmission_header = field_special.lineStart + record.record_type(_config.record_type('transmission_header')) + \
-                      field_table.sender_type(True) + sender_id + sender_name + edi_version + \
-                      creation_date_time + transmission_date + character_set + field_special.lineEnd
+transmission_header = special.lineStart + record.record_type(_config.record_type('transmission_header')) + \
+                      table.sender_type(True) + sender_id + sender_name + edi_version + \
+                      creation_date_time + transmission_date + character_set + special.lineEnd
 
 # Transmission Header pattern
-transmission_trailer = field_special.lineStart + record.record_type(_config.record_type('transmission_trailer')) + \
+transmission_trailer = special.lineStart + record.record_type(_config.record_type('transmission_trailer')) + \
                        record.group_count + record.transaction_count + \
-                       record.record_count + field_special.lineEnd
+                       record.record_count + special.lineEnd
 
 transmission_trailer.leaveWhitespace()
 """

@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import field
+from cwr.grammar.field import basic
 
 
 """
@@ -22,7 +22,7 @@ class TestBooleanValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.boolean = field.boolean()
+        self.boolean = basic.boolean()
 
     def test_name(self):
         """
@@ -58,7 +58,7 @@ class TestBooleanCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.boolean = field.boolean(compulsory=True)
+        self.boolean = basic.boolean(compulsory=True)
 
     def test_name(self):
         """
@@ -87,7 +87,7 @@ class TestBooleanException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.boolean = field.boolean()
+        self.boolean = basic.boolean()
 
     def test_true_lower(self):
         """
@@ -120,7 +120,7 @@ class TestBooleanCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.boolean = field.boolean(compulsory=True)
+        self.boolean = basic.boolean(compulsory=True)
 
     def test_true_lower(self):
         """

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar import field_special
+from cwr.grammar.field import special
 
 
 """
@@ -16,7 +16,7 @@ __status__ = 'Development'
 
 class TestISRCValid(unittest.TestCase):
     def setUp(self):
-        self.isrc = field_special.isrc()
+        self.isrc = special.isrc()
 
     def test_common(self):
         """
