@@ -7,7 +7,7 @@ import pyparsing as pp
 from data.accessor import CWRConfiguration
 from cwr.grammar import group
 from cwr.grammar.field import table, special, record, basic
-from cwr.acknowledgement import AcknowledgementRecord
+from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.constraints import acknowledgement as constraints
 
 
@@ -61,6 +61,26 @@ processing_date = basic.date(compulsory=True)
 processing_date = processing_date.setName('Processing Date').setResultsName('processing_date')
 
 """
+Message fields
+"""
+
+# Validation Number
+validation = basic.numeric(_config.field_size('message', 'validation'))
+validation = validation.setName('Validation Number').setResultsName('validation')
+
+# Message Record Type
+record_message = table.record_types()
+record_message = record_message.setName('Message Record Type').setResultsName('message_record_type')
+
+# Message Text
+message_text = basic.alphanum(_config.field_size('message', 'text'))
+message_text = message_text.setName('Message Text').setResultsName('text')
+
+# Original Record Sequence #
+sequence_n = record.record_seq_n
+sequence_n = sequence_n.setName('Original Record Sequence #').setResultsName('sequence_n')
+
+"""
 Acknowledgment patterns.
 """
 
@@ -76,6 +96,10 @@ acknowledgement = special.lineStart + record.record_prefix(_config.record_type('
                   submitter_creation_n + recipient_creation_n + processing_date + table.transaction_status(True) + \
                   special.lineEnd
 
+message = special.lineStart + record.record_prefix(_config.record_type('message')) + table.message_types() + \
+          sequence_n + record_message + table.message_levels() + validation + message_text + \
+          special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
@@ -83,6 +107,8 @@ Parsing actions for the patterns.
 creation_date_time.setParseAction(lambda d: _combine_date_time(d[0].creation_date, d[0].creation_time))
 
 acknowledgement.setParseAction(lambda a: _to_acknowledgement_record(a))
+
+message.setParseAction(lambda a: _to_message_record(a))
 
 """
 Validation actions for the patterns.
@@ -119,3 +145,16 @@ def _to_acknowledgement_record(parsed):
                                  parsed.group_id, parsed.transaction_n, parsed.transaction_type,
                                  parsed.transaction_status, parsed.creation_date_time, parsed.processing_date,
                                  parsed.title, parsed.submitter_id, parsed.recipient_id)
+
+
+def _to_message_record(parsed):
+    """
+    Transforms the final parsing result into a MessageRecord instance.
+
+    :param parsed: result of parsing a Message record
+    :return: a MessageRecord created from the parsed record
+    """
+    return MessageRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                         parsed.message_type,
+                         parsed.text, parsed.sequence_n, parsed.message_record_type, parsed.message_level,
+                         parsed.validation)

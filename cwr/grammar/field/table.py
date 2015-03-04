@@ -373,6 +373,36 @@ def instruments(compulsory=False):
     return instruments_field
 
 
+# Message Types
+def message_types(compulsory=False):
+    message_type_field = basic.lookup(_tables.message_types(),
+                                      columns=_config.field_size('table', 'message_type'),
+                                      compulsory=compulsory, name='Message Type')
+    message_type_field = message_type_field.setResultsName('message_type')
+
+    return message_type_field
+
+
+# Message Levels
+def message_levels(compulsory=False):
+    message_level_field = basic.lookup(_tables.message_levels(),
+                                       columns=_config.field_size('table', 'message_level'),
+                                       compulsory=compulsory, name='Message Level')
+    message_level_field = message_level_field.setResultsName('message_level')
+
+    return message_level_field
+
+
+# Record Types
+def record_types(compulsory=False):
+    record_type_field = basic.lookup(_tables.record_types(),
+                                     columns=_config.field_size('table', 'record_type'),
+                                     compulsory=compulsory, name='Record Type')
+    record_type_field = record_type_field.setResultsName('record_type')
+
+    return record_type_field
+
+
 def char_code(columns, compulsory=False):
     """
     Character set code.

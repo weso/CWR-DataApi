@@ -237,6 +237,12 @@ table:
         size: 3
     instruments:
         size: 3
+    message_type:
+        size: 3
+    message_level:
+        size: 3
+    record_type:
+        size: 3
 
 nat:
     type: 'NAT'
@@ -325,3 +331,12 @@ component:
     type: 'COM'
     title:
         size: 60
+
+message:
+    type: 'MSG'
+    original_record:
+        size: 8
+    validation:
+        size: 3
+    text:
+        size: 150

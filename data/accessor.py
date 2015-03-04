@@ -197,6 +197,8 @@ class CWRTables(object):
     _file_intended_purpose = 'cwr_intended_purpose.csv'
     _file_standard_instrumentation_type = 'cwr_standard_instrumentation_type.csv'
     _file_instrument = 'cwr_instrument.csv'
+    _file_message_type = 'cwr_message_type.csv'
+    _file_message_level = 'cwr_message_level.csv'
 
     # Data loaded from the tables
     _composite_types = None
@@ -232,6 +234,8 @@ class CWRTables(object):
     _intended_purposes = None
     _standard_instrumentation_types = None
     _instruments = None
+    _message_types = None
+    _message_levels = None
 
     def agreement_roles(self):
         """
@@ -357,6 +361,28 @@ class CWRTables(object):
             self._media_types = self._reader.read_csv_file(self._file_media_type)
 
         return self._media_types
+
+    def message_levels(self):
+        """
+        Message Level codes.
+
+        :return: the allowed Message Level codes
+        """
+        if self._message_levels is None:
+            self._message_levels = self._reader.read_csv_file(self._file_message_level)
+
+        return self._message_levels
+
+    def message_types(self):
+        """
+        Message Type codes.
+
+        :return: the allowed Message Type codes
+        """
+        if self._message_types is None:
+            self._message_types = self._reader.read_csv_file(self._file_message_type)
+
+        return self._message_types
 
     def music_arrangements(self):
         """
