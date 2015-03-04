@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from cwr.file import Record
+from cwr.record import TransactionRecord
 
 
 """
@@ -13,26 +13,27 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class AcknowledgementRecord(Record):
+class AcknowledgementRecord(TransactionRecord):
     """
     Represents a CWR Acknowledgement of Transaction (ACK).
     """
 
-    def __init__(self, prefix, group_id, transaction_n, transaction_type, transaction_status, date_creation,
-                 date_processing, title='', submitter_id='', recipient_id=''):
-        super(AcknowledgementRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, group_id, transaction_n,
+                 transaction_type, transaction_status, creation_date_time,
+                 processing_date, title='', submitter_id='', recipient_id=''):
+        super(AcknowledgementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._group_id = group_id
         self._transaction_n = transaction_n
         self._transaction_type = transaction_type
         self._transaction_status = transaction_status
-        self._date_creation = date_creation
-        self._date_processing = date_processing
+        self._creation_date_time = creation_date_time
+        self._processing_date = processing_date
         self._title = title
         self._submitter_id = submitter_id
         self._recipient_id = recipient_id
 
     @property
-    def date_creation(self):
+    def creation_date_time(self):
         """
         Creation Date and Time field. Date and Time.
 
@@ -40,18 +41,7 @@ class AcknowledgementRecord(Record):
 
         :return: the date and time in which the file was created
         """
-        return self._date_creation
-
-    @property
-    def date_processing(self):
-        """
-        Processing Date field. Date.
-
-        The date this transaction or file was formally processed by the recipient.
-
-        :return: the date in which the transaction or file was processed
-        """
-        return self._date_processing
+        return self._creation_date_time
 
     @property
     def group_id(self):
@@ -65,6 +55,17 @@ class AcknowledgementRecord(Record):
         :return: the original transaction group id
         """
         return self._group_id
+
+    @property
+    def processing_date(self):
+        """
+        Processing Date field. Date.
+
+        The date this transaction or file was formally processed by the recipient.
+
+        :return: the date in which the transaction or file was processed
+        """
+        return self._processing_date
 
     @property
     def recipient_id(self):
@@ -146,7 +147,7 @@ class AcknowledgementRecord(Record):
         return self._transaction_type
 
 
-class AcknowledgementTransaction(object):
+class AcknowledgementTransaction(TransactionRecord):
     """
     Represents a CWR Acknowledgment Transaction (ACK).
 
@@ -174,7 +175,9 @@ class AcknowledgementTransaction(object):
     [ACK, MSG*, AGR|NWR|REV|EXC]
     """
 
-    def __init__(self, ack, agr=None, nwr=None, rev=None, exc=None, messages=None):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ack, agr=None, nwr=None, rev=None,
+                 exc=None, messages=None):
+        super(AcknowledgementTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._ack = ack
         self._agr = agr
         self._nwr = nwr
@@ -245,7 +248,7 @@ class AcknowledgementTransaction(object):
         return self._rev
 
 
-class MessageRecord(Record):
+class MessageRecord(TransactionRecord):
     """
     Represents a CWR Message (MSG).
 
@@ -269,11 +272,12 @@ class MessageRecord(Record):
     For example, if Message Type is equal to T, then the entire work registration has been rejected.
     """
 
-    def __init__(self, prefix, message_type, text, sequence_n, record_type, message_level, validation_n):
-        super(MessageRecord, self).__init__(prefix)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, message_type, text, sequence_n,
+                 message_record_type, message_level, validation_n):
+        super(MessageRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._message_type = message_type
         self._sequence_n = sequence_n
-        self._record_type = record_type
+        self._message_record_type = message_record_type
         self._message_level = message_level
         self._validation_n = validation_n
         self._text = text
@@ -297,6 +301,17 @@ class MessageRecord(Record):
         return self._message_level
 
     @property
+    def message_record_type(self):
+        """
+        Message's Record Type field. Alphanumeric.
+
+        The record type within the original transaction that caused generation of this message.
+
+        :return: the record type
+        """
+        return self._message_record_type
+
+    @property
     def message_type(self):
         """
         Message Type field. Table Lookup ('E'/'F'/'G'/'R'/'T').
@@ -313,17 +328,6 @@ class MessageRecord(Record):
         :return: the message type
         """
         return self._message_type
-
-    @property
-    def record_type(self):
-        """
-        Record Type field. Alphanumeric.
-
-        The record type within the original transaction that caused generation of this message.
-
-        :return: the record type
-        """
-        return self._record_type
 
     @property
     def sequence_n(self):

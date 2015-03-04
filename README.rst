@@ -10,7 +10,7 @@ publishers and performing rights societies as a way to exchange musical
 works data.
 
 While the CWR standard has been created by `CISAC`_ this library has been
-developed by `WESO`_ independently.
+developed by `WESO`_ independently, with help from `BMAT`_.
 
 The library includes a data model for representing the contents of a CWR
 file, and parsers to create that model from a file, and to decode and
@@ -48,7 +48,6 @@ Requires Python, and has been tested on the following interpreters:
 - Python 2 (2.6 & 2.7)
 - Python 3 (3.2, 3.3 & 3.4)
 - Pypy
-- Jython
 
 The dependencies can be acquired using the list on requirements.txt,
 with the command:
@@ -76,6 +75,7 @@ License
 The project is released under the `MIT License`_.
 
 .. _CISAC: http://www.cisac.org/
+.. _BMAT: http://www.bmat.com/
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://travis-ci.org/weso/CWR-DataApi/issues
 .. _project wiki: https://github.com/weso/CWR-DataApi/wiki
