@@ -1,17 +1,18 @@
 language: python
-python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-services:
-  - mongodb
+env:
+  - TOXENV=py26-release
+  - TOXENV=py26-lowest
+  - TOXENV=py27-release
+  - TOXENV=py27-lowest
+  - TOXENV=py32-release
+  - TOXENV=py33-release
+  - TOXENV=py34-release
+  - TOXENV=pypy-release
+before_install:
+  # Setting up Jython
+  - chmod +x ./.scripts/jython_env.sh
+  - ./.scripts/jython_env.sh
 install:
-  - pip install -r requirements.txt
-before_script:
-# To avoid the connection error with MongoDB
-# At random, the DB takes too long to start and the app can't connect to it
-  - sleep 15
+  - pip install tox
 script:
-  - nosetests
+  - tox

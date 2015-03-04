@@ -1,1 +1,2 @@
-pymongo==2.8
+pyparsing==2.0.3
+pyyaml==3.11
