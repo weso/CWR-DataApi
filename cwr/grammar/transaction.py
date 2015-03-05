@@ -22,11 +22,11 @@ agreement_transaction = agreement.agreement + pp.OneOrMore(interested_party.terr
 # Work
 work_transaction = work.work_record + pp.Optional(pp.OneOrMore(publisher.publisher)) + pp.Optional(
     pp.OneOrMore(publisher.publisher)) + pp.Optional(pp.OneOrMore(writer.writer)) + pp.Optional(
-    pp.OneOrMore(writer.writer)) + pp.Optional(pp.OneOrMore(rule_work_detail.alternate)) + pp.OneOrMore(
-    nra.nat) + pp.OneOrMore(work_detail.information_for_excerpts) + pp.OneOrMore(
+    pp.OneOrMore(writer.writer)) + pp.Optional(pp.OneOrMore(rule_work_detail.alternate)) + pp.Optional(
+    nra.nat) + pp.Optional(work_detail.information_for_excerpts) + pp.Optional(
     work_detail.information_for_versions) + pp.Optional(
-    pp.OneOrMore(rule_work_detail.performing)) + pp.Optional(pp.OneOrMore(nra.npr)) + pp.OneOrMore(
-    rule_work_detail.recording) + pp.OneOrMore(rule_work_detail.origin) + pp.Optional(
+    pp.OneOrMore(rule_work_detail.performing)) + pp.Optional(pp.OneOrMore(nra.npr)) + pp.Optional(
+    rule_work_detail.recording) + pp.Optional(rule_work_detail.origin) + pp.Optional(
     pp.OneOrMore(work_detail.instrumentation_information)) + pp.Optional(
     pp.OneOrMore(work_detail.information_for_components)) + pp.Optional(
     pp.OneOrMore(ari.ari))
