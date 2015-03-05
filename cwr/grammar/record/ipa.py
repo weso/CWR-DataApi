@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import society
+from cwr.grammar.record import society
 from cwr.grammar.field import table, special, record, basic
 from cwr.agreement import AgreementInterestedParty
 from cwr.constraints import ipa as constraints

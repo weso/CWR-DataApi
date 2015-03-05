@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import agreement
+from cwr.grammar.record import agreement
 from cwr.grammar.field import special, record, basic
 from cwr.interested_party import WriterPublisherRecord
 

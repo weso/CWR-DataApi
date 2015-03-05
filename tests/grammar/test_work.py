@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import work
+from cwr.grammar.record import work
 
 
 """

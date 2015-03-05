@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar import work_detail
+from cwr.grammar.record import work_detail
 
 
 """

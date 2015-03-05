@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar import group
+from cwr.grammar.record import group
 from cwr.grammar.field import table, special, record, basic
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.constraints import acknowledgement as constraints

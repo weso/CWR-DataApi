@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar import agreement_territory
+from cwr.grammar.record import agreement_territory
 
 
 """

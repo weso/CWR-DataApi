@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar import ari
+from cwr.grammar.record import ari
 
 
 """

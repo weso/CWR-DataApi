@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar import writer_publisher
+from cwr.grammar.record import writer_publisher
 
 
 """

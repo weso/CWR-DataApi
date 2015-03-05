@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import acknowledgement
+from cwr.grammar.record import acknowledgement
 
 """
 CWR acknowledgement grammar tests.

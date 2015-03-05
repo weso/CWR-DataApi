@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar import work
+from cwr.grammar.record import work
 from cwr.grammar.field import table, special, record, basic
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
     WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord, ComponentRecord

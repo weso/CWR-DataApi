@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar import publisher
+from cwr.grammar.record import publisher
 
 """
 CWR file Publisher parsing tests.
