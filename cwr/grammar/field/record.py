@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import basic
 
@@ -26,8 +24,9 @@ _config = CWRConfiguration()
 
 # Record type
 def record_type(values, compulsory=False):
-    field = pp.oneOf(values)
-    field = field.setName('Record Type (one of ' + str(values) + ')')
+    field = basic.lookup(values, columns=_config.field_size('table', 'record_type'),
+                         compulsory=compulsory,
+                         name='Record Type (one of ' + str(values) + ')')
 
     return field.setResultsName('record_type')
 
