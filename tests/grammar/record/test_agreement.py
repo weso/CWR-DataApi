@@ -220,7 +220,6 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
 
         self.assertRaises(ParseException, self.grammar.parseString, record)
 
-
     def test_no_sm_clause_for_os(self):
         """
         Tests that am exception is thrown when the Sales/Manufacture Clause is not set for an Agreement which requires it.

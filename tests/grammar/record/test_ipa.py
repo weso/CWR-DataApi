@@ -54,7 +54,6 @@ class TestIPAGrammar(unittest.TestCase):
         self.assertEqual(11, result.sr_society)
         self.assertEqual(023.12, result.sr_share)
 
-
     def test_societies_lowest(self):
         """
         Tests that IPA grammar decodes correctly formatted record prefixes.

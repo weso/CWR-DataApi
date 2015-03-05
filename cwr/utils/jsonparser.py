@@ -198,11 +198,7 @@ def parse_work_origin(json_item):
                               json_item['visan_episode'],
                               json_item['visan_check_digit'],
                               json_item['production_id'],
-                              json_item['episode_title'],
-                              json_item['episode_id'],
-                              json_item['production_year'],
-                              json_item['avi_key_society'],
-                              json_item['avi_key_number'])
+                              json_item['episode_title'])
 
     return origin
 

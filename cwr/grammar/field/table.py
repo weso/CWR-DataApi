@@ -23,6 +23,7 @@ _config = CWRConfiguration()
 Lookup fields.
 """
 
+
 # Original Transaction Type
 def original_transaction_type(compulsory=False):
     original_transaction_type_field = basic.lookup(_tables.transaction_types(),

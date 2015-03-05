@@ -26,10 +26,10 @@ _config = CWRConfiguration()
 
 # Record type
 def record_type(values):
-    type_field = pp.oneOf(values)
-    type_field = type_field.setName('Record Type (one of ' + str(values) + ')').setResultsName('record_type')
+    field = pp.oneOf(values)
+    field = field.setName('Record Type (one of ' + str(values) + ')')
 
-    return type_field
+    return field.setResultsName('record_type')
 
 # Transaction sequence number
 transaction_seq_n = basic.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'))
@@ -67,7 +67,7 @@ def record_prefix(required_type):
     :param required_type: the type of the record using this prefix
     :return: the record prefix
     """
-    result = record_type(required_type) + transaction_seq_n + record_seq_n
-    result.leaveWhitespace()
+    field = record_type(required_type) + transaction_seq_n + record_seq_n
+    field.leaveWhitespace()
 
-    return result
+    return field

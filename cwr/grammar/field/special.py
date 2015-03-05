@@ -27,6 +27,7 @@ lineEnd.setName("End of line")
 
 # CONCRETE CASES FIELDS
 
+
 def ip_id(compulsory=False):
     """
     IP Number field.
@@ -195,7 +196,7 @@ def _to_iswccode(code):
         return code
 
 
-def percentage(columns, max=100, compulsory=False):
+def percentage(columns, maximum=100, compulsory=False):
     """
     Creates the grammar for a Numeric (N) field storing a percentage and accepting only the specified number of
     characters.
@@ -214,25 +215,25 @@ def percentage(columns, max=100, compulsory=False):
 
     percentage_field = basic.numeric_float(columns, 3, compulsory)
 
-    percentage_field.addParseAction(lambda v: _assert_is_percentage(v[0], max))
+    percentage_field.addParseAction(lambda v: _assert_is_percentage(v[0], maximum))
 
     percentage_field.setName('Percentage Field')
 
     return percentage_field
 
 
-def _assert_is_percentage(value, max=100):
+def _assert_is_percentage(value, maximum=100):
     """
     Makes sure the received value is a percentage. Otherwise an exception is thrown.
 
     :param value: the value to check
     """
 
-    if value < 0 or value > max:
+    if value < 0 or value > maximum:
         raise pp.ParseException('', 'The value on a percentage field should be between 0 and 100')
 
 
-def shares(max=100, compulsory=False):
+def shares(maximum=100, compulsory=False):
     """
     Creates the grammar for a shares field.
 
@@ -243,7 +244,7 @@ def shares(max=100, compulsory=False):
 
     :return: grammar for the society ID field
     """
-    shares_field = percentage(5, max=max, compulsory=compulsory)
+    shares_field = percentage(5, maximum=maximum, compulsory=compulsory)
     shares_field.setName('Shares Field')
 
     return shares_field

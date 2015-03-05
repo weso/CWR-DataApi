@@ -77,7 +77,7 @@ class TestPercentage50Valid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = special.percentage(5, max=50)
+        self.perc = special.percentage(5, maximum=50)
 
     def test_name(self):
         """
@@ -211,7 +211,7 @@ class TestPercentage50Exception(unittest.TestCase):
     """
 
     def setUp(self):
-        self.perc = special.percentage(5, max=50)
+        self.perc = special.percentage(5, maximum=50)
 
     def test_above_max(self):
         """

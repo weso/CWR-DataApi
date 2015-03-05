@@ -70,7 +70,6 @@ class TestWorkValid(unittest.TestCase):
         self.assertEqual('KV 297#1', result.catalogue_number)
         self.assertEqual('Y', result.priority_flag)
 
-
     def test_valid_minimum(self):
         """
         Tests that the Work grammar decodes correctly formatted Work record.

@@ -13,6 +13,7 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
+
 # Performing Rights Affiliation Society
 def pr_affiliation(compulsory=False):
     pr_affiliation_field = table.society(compulsory=compulsory)
@@ -23,8 +24,8 @@ def pr_affiliation(compulsory=False):
 
 
 # Performing Rights Share
-def pr_share(max=100, compulsory=False):
-    pr_share_field = special.shares(max=max, compulsory=compulsory)
+def pr_share(maximum=100, compulsory=False):
+    pr_share_field = special.shares(maximum=maximum, compulsory=compulsory)
     pr_share_field = pr_share_field.setName('Performing Rights Share').setResultsName('pr_share')
 
     return pr_share_field
@@ -40,8 +41,8 @@ def mr_affiliation(compulsory=False):
 
 
 # Mechanical Rights Share
-def mr_share(max=100, compulsory=False):
-    mr_share_field = special.shares(max=max, compulsory=compulsory)
+def mr_share(maximum=100, compulsory=False):
+    mr_share_field = special.shares(maximum=maximum, compulsory=compulsory)
     mr_share_field = mr_share_field.setName('Mechanical Rights Share').setResultsName('mr_share')
 
     return mr_share_field
@@ -57,8 +58,8 @@ def sr_affiliation(compulsory=False):
 
 
 # Synchronization Rights Share
-def sr_share(max=100, compulsory=False):
-    sr_share_field = special.shares(max=max, compulsory=compulsory)
+def sr_share(maximum=100, compulsory=False):
+    sr_share_field = special.shares(maximum=maximum, compulsory=compulsory)
     sr_share_field = sr_share_field.setName('Synchronization Rights Share').setResultsName('sr_share')
 
     return sr_share_field

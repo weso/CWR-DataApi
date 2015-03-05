@@ -70,7 +70,7 @@ Publisher patterns.
 publisher = special.lineStart + record.record_prefix(_config.record_type('publisher')) + sequence_n + \
             special.ip_id() + name + unknown + \
             table.publisher_type() + tax_id + special.ipi_name_number() + agreement_id + \
-            society.pr_affiliation() + society.pr_share(max=50) + \
+            society.pr_affiliation() + society.pr_share(maximum=50) + \
             society.mr_affiliation() + society.mr_share() + \
             society.sr_affiliation() + society.sr_share() + \
             table.special_agreement() + first_refusal + special.blank(1) + ipi_base + international_code + \
