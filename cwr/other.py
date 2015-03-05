@@ -137,6 +137,8 @@ class IPIBaseNumber(_ThreePartsCode):
 class VISAN(object):
     """
     Represents a V-ISAN code.
+
+    This is a variation on the ISAN (International Standard Audiovisual Number)
     """
 
     def __init__(self, version, isan, episode, check_digit):
@@ -147,30 +149,58 @@ class VISAN(object):
 
     @property
     def check_digit(self):
+        """
+        Returns the check digit.
+
+        :return: the check digit
+        """
         return self._check_digit
 
     @property
     def episode(self):
+        """
+        Returns the episode number.
+        :return: the episode number
+        """
         return self._episode
 
     @property
     def isan(self):
+        """
+        Returns the ISAN code
+        :return: the ISAN code
+        """
         return self._isan
 
     @property
     def version(self):
+        """
+        Returns the version number.
+        :return: the version number
+        """
         return self._version
 
 
 class AVIKey(object):
+    """
+    Represents an AVI key.
+    """
     def __init__(self, society_code, av_number):
         self._society_code = society_code
         self._av_number = av_number
 
     @property
     def av_number(self):
+        """
+        Returns the audio-visual number.
+        :return: the audio-visual number
+        """
         return self._av_number
 
     @property
     def society_code(self):
+        """
+        Returns the society code.
+        :return: the society code
+        """
         return self._society_code

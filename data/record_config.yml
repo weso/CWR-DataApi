@@ -368,3 +368,9 @@ ari:
         size: 14
     note:
         size: 160
+
+special:
+    ip_id:
+        size: 9
+    shares:
+        size: 5
