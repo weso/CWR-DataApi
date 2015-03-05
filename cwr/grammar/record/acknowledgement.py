@@ -77,7 +77,7 @@ message_text = basic.alphanum(_config.field_size('message', 'text'))
 message_text = message_text.setName('Message Text').setResultsName('text')
 
 # Original Record Sequence #
-sequence_n = record.record_seq_n
+sequence_n = record.record_seq_n(compulsory=True)
 sequence_n = sequence_n.setName('Original Record Sequence #').setResultsName('sequence_n')
 
 """
@@ -89,14 +89,15 @@ creation_date_time = pp.Group(creation_date + creation_time)
 creation_date_time = creation_date_time.setName('Creation Date and Time').setResultsName('creation_date_time')
 
 # Acknowledgment Pattern
-acknowledgement = special.lineStart + record.record_prefix(_config.record_type('acknowledgement')) + \
+acknowledgement = special.lineStart + record.record_prefix(_config.record_type('acknowledgement'), compulsory=True) + \
                   creation_date_time + \
                   original_group_id + original_transaction_n + table.original_transaction_type(
     True) + creation_title + \
                   submitter_creation_n + recipient_creation_n + processing_date + table.transaction_status(True) + \
                   special.lineEnd
 
-message = special.lineStart + record.record_prefix(_config.record_type('message')) + table.message_types() + \
+message = special.lineStart + record.record_prefix(_config.record_type('message'),
+                                                   compulsory=True) + table.message_types() + \
           sequence_n + record_message + table.message_levels() + validation + message_text + \
           special.lineEnd
 

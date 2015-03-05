@@ -35,7 +35,7 @@ ip_name = ip_name.setName('Interested Party Writer First Name').setResultsName('
 IPA patterns.
 """
 
-ipa = special.lineStart + record.record_prefix(_config.record_type('ipa')) + \
+ipa = special.lineStart + record.record_prefix(_config.record_type('ipa'), compulsory=True) + \
       table.agreement_role_code(True) + \
       special.ipi_name_number() + special.ipi_base_number() + \
       special.ip_id(compulsory=True) + ip_last_name + ip_name + \

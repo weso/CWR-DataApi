@@ -40,7 +40,7 @@ Patterns.
 
 publisher = special.lineStart + record.record_prefix(
     _config.record_type(
-        'writer_publisher')) + publisher_ip_id + publisher_name + agreement.submitter_agreement_n + \
+        'writer_publisher'), compulsory=True) + publisher_ip_id + publisher_name + agreement.submitter_agreement_n + \
             agreement.society_id + writer_ip_id + special.lineEnd
 
 """

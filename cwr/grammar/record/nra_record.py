@@ -131,33 +131,34 @@ NRA patterns.
 
 npa = special.lineStart + record.record_prefix(
     _config.record_type(
-        'npa')) + special.ip_id() + ip_name + ip_writer_name + table.language() + special.lineEnd
+        'npa'), compulsory=True) + special.ip_id() + ip_name + ip_writer_name + table.language() + special.lineEnd
 
 npn = special.lineStart + record.record_prefix(
     _config.record_type(
-        'npn')) + publisher.sequence_n + special.ip_id(compulsory=True) + publisher_name + \
+        'npn'), compulsory=True) + publisher.sequence_n + special.ip_id(compulsory=True) + publisher_name + \
       table.language() + special.lineEnd
 
 nwn = special.lineStart + record.record_prefix(
     _config.record_type(
-        'nwn')) + special.ip_id() + writer_last_name + writer_first_name + \
+        'nwn'), compulsory=True) + special.ip_id() + writer_last_name + writer_first_name + \
       table.language() + special.lineEnd
 
 nat = special.lineStart + record.record_prefix(
     _config.record_type(
-        'nat')) + nat_title + table.title_type() + table.language() + special.lineEnd
+        'nat'), compulsory=True) + nat_title + table.title_type() + table.language() + special.lineEnd
 
 npr = special.lineStart + record.record_prefix(
     _config.record_type(
-        'npr')) + performing_artist_name + performing_artist_first_name + special.ipi_name_number() + \
+        'npr'), compulsory=True) + performing_artist_name + performing_artist_first_name + special.ipi_name_number() + \
       special.ipi_base_number() + table.language() + performance_language + dialect + special.lineEnd
 
 nra_work = special.lineStart + record.record_prefix(
-    _config.record_type('nra_work')) + title + table.language() + special.lineEnd
+    _config.record_type('nra_work'), compulsory=True) + title + table.language() + special.lineEnd
 
 now = special.lineStart + record.record_prefix(
     _config.record_type(
-        'now')) + writer_name + writer_first_name_now + table.language() + writer_position + special.lineEnd
+        'now'),
+    compulsory=True) + writer_name + writer_first_name_now + table.language() + writer_position + special.lineEnd
 
 """
 Parsing actions for the patterns.

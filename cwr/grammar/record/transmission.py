@@ -95,14 +95,16 @@ creation_date_time = pp.Group(creation_date + creation_time)
 creation_date_time = creation_date_time.setName('Creation Date and Time').setResultsName('creation_date_time')
 
 # Transmission Header pattern
-transmission_header = special.lineStart + record.record_type(_config.record_type('transmission_header')) + \
+transmission_header = special.lineStart + record.record_type(_config.record_type('transmission_header'),
+                                                             compulsory=True) + \
                       table.sender_type(True) + sender_id + sender_name + edi_version + \
                       creation_date_time + transmission_date + character_set + special.lineEnd
 
 # Transmission Header pattern
-transmission_trailer = special.lineStart + record.record_type(_config.record_type('transmission_trailer')) + \
-                       record.group_count + record.transaction_count + \
-                       record.record_count + special.lineEnd
+transmission_trailer = special.lineStart + record.record_type(_config.record_type('transmission_trailer'),
+                                                              compulsory=True) + \
+                       record.group_count(compulsory=True) + record.transaction_count(compulsory=True) + \
+                       record.record_count(compulsory=True) + special.lineEnd
 
 transmission_trailer.leaveWhitespace()
 """

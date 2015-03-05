@@ -59,7 +59,7 @@ Patterns.
 """
 
 writer = special.lineStart + record.record_prefix(
-    _config.record_type('writer')) + special.ip_id() + last_name + first_name + unknown + \
+    _config.record_type('writer'), compulsory=True) + special.ip_id() + last_name + first_name + unknown + \
          table.writer_designation() + publisher.tax_id + special.ipi_name_number() + \
          society.pr_affiliation() + society.pr_share() + \
          society.mr_affiliation() + society.mr_share() + \

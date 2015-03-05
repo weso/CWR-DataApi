@@ -79,7 +79,7 @@ Agreement patterns.
 
 # Agreement Pattern
 agreement = special.lineStart + record.record_prefix(
-    _config.record_type('agreement')) + submitter_agreement_n + is_code + table.agreement_type() + \
+    _config.record_type('agreement'), compulsory=True) + submitter_agreement_n + is_code + table.agreement_type() + \
             agreement_start_date + agreement_end_date + retention_end_date + table.prior_royalty_status(True) + \
             prior_royalty_start_date + table.post_term_collection_status(True) + post_term_collection_end_date + \
             date_of_signature + number_works + table.sm_clause() + sales_change + advance_given + society_id + \

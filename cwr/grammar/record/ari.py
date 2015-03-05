@@ -33,7 +33,8 @@ note = note.setName('Note').setResultsName('note')
 Patterns.
 """
 
-ari = special.lineStart + record.record_prefix(_config.record_type('ari')) + table.society() + work_number + \
+ari = special.lineStart + record.record_prefix(_config.record_type('ari'),
+                                               compulsory=True) + table.society() + work_number + \
       table.types_of_right() + table.subject_codes() + note + special.lineEnd
 
 """

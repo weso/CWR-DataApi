@@ -92,7 +92,7 @@ priority_flag = priority_flag.setName('Priority Flag').setResultsName('priority_
 Work patterns.
 """
 
-work_record = special.lineStart + record.record_prefix(_config.record_type('work')) + work_title + \
+work_record = special.lineStart + record.record_prefix(_config.record_type('work'), compulsory=True) + work_title + \
               table.language() + work_id + iswc + \
               copyright_date + copyright_number + table.musical_distribution_category(
     True) + duration + recorded + \

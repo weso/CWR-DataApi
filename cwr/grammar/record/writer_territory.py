@@ -36,7 +36,8 @@ Patterns.
 
 territory = special.lineStart + record.record_prefix(
     _config.record_type(
-        'writer_territory')) + special.ip_id() + society.pr_share() + society.mr_share() + society.sr_share() + \
+        'writer_territory'),
+    compulsory=True) + special.ip_id() + society.pr_share() + society.mr_share() + society.sr_share() + \
             table.ie_indicator() + table.tis_code() + shares_change + sequence_n + special.lineEnd
 
 """

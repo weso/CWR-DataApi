@@ -25,49 +25,69 @@ _config = CWRConfiguration()
 
 
 # Record type
-def record_type(values):
+def record_type(values, compulsory=False):
     field = pp.oneOf(values)
     field = field.setName('Record Type (one of ' + str(values) + ')')
 
     return field.setResultsName('record_type')
 
+
 # Transaction sequence number
-transaction_seq_n = basic.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'))
-transaction_seq_n = transaction_seq_n.setName('Transaction Sequence Number').setResultsName('transaction_sequence_n')
+def transaction_seq_n(compulsory=False):
+    field = basic.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'), compulsory=compulsory)
+    field = field.setName('Transaction Sequence Number')
+
+    return field.setResultsName('transaction_sequence_n')
+
 
 # Record sequence number
-record_seq_n = basic.numeric(_config.field_size('record_prefix', 'record_sequence_n'))
-record_seq_n = record_seq_n.setName('Record Sequence Number').setResultsName('record_sequence_n')
+def record_seq_n(compulsory=False):
+    field = basic.numeric(_config.field_size('record_prefix', 'record_sequence_n'), compulsory=compulsory)
+    field = field.setName('Record Sequence Number')
+
+    return field.setResultsName('record_sequence_n')
+
 
 # Trailer fields
 
+
 # Group count
-group_count = basic.numeric(
-    _config.field_size('trailer_record', 'group_count'), compulsory=True)
-group_count = group_count.setName('Group Count').setResultsName('group_count')
+def group_count(compulsory=False):
+    field = basic.numeric(
+        _config.field_size('trailer_record', 'group_count'), compulsory=compulsory)
+    field = field.setName('Group Count')
+
+    return field.setResultsName('group_count')
+
 
 # Transaction count
-transaction_count = basic.numeric(
-    _config.field_size('trailer_record', 'transaction_count'), compulsory=True)
-transaction_count = transaction_count.setName('Transaction Count').setResultsName('transaction_count')
+def transaction_count(compulsory=False):
+    field = basic.numeric(
+        _config.field_size('trailer_record', 'transaction_count'), compulsory=compulsory)
+    field = field.setName('Transaction Count')
+
+    return field.setResultsName('transaction_count')
+
 
 # Record count
-record_count = basic.numeric(
-    _config.field_size('trailer_record', 'record_count'), compulsory=True)
-record_count = record_count.setName('Record Count').setResultsName('record_count')
+def record_count(compulsory=False):
+    field = basic.numeric(
+        _config.field_size('trailer_record', 'record_count'), compulsory=compulsory)
+    field = field.setName('Record Count')
 
-# PATTERNS
+    return field.setResultsName('record_count')
 
 
-# Record prefix pattern
-def record_prefix(required_type):
+# Record prefix
+def record_prefix(required_type, compulsory=False):
     """
     Creates a record prefix for the specified record type.
 
     :param required_type: the type of the record using this prefix
     :return: the record prefix
     """
-    field = record_type(required_type) + transaction_seq_n + record_seq_n
+    field = record_type(required_type, compulsory=compulsory) + transaction_seq_n(compulsory=compulsory) + record_seq_n(
+        compulsory=compulsory)
     field.leaveWhitespace()
 
     return field

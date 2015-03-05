@@ -99,12 +99,13 @@ These are the grammatical structures for the Group Header and Group Trailer.
 
 # Group Header pattern
 group_header = special.lineStart + record.record_type(
-    _config.record_type('group_header')) + table.transaction_type(True) + group_id + version_number + \
+    _config.record_type('group_header'), compulsory=True) + table.transaction_type(True) + group_id + version_number + \
                batch_request_id + sd_type + special.lineEnd
 
 # Group Trailer pattern
 group_trailer = special.lineStart + record.record_type(
-    _config.record_type('group_trailer')) + group_id + record.transaction_count + record.record_count + \
+    _config.record_type('group_trailer'), compulsory=True) + group_id + record.transaction_count(
+    compulsory=True) + record.record_count(compulsory=True) + \
                 currency_indicator + total_monetary_value + special.lineEnd
 
 """

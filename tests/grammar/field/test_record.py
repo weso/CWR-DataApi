@@ -21,7 +21,7 @@ class TestParseTransactionRecordPrefixValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = record_prefix('HDR')
+        self.grammar = record_prefix('HDR', compulsory=True)
 
     def test_valid(self):
         """
@@ -42,7 +42,7 @@ class TestParseRecordPrefixException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = record_prefix('HDR')
+        self.grammar = record_prefix('HDR', compulsory=True)
 
     def test_wrong_type(self):
         """

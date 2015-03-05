@@ -219,43 +219,46 @@ iswc = iswc.setResultsName('iswc')
 Patterns.
 """
 
-alternate = special.lineStart + record.record_prefix(_config.record_type('alternate_title')) + \
+alternate = special.lineStart + record.record_prefix(_config.record_type('alternate_title'), compulsory=True) + \
             alternate_title + table.title_type() + table.language() + special.lineEnd
 
-entire_title = special.lineStart + record.record_prefix(_config.record_type('entire_work_title')) + \
+entire_title = special.lineStart + record.record_prefix(_config.record_type('entire_work_title'), compulsory=True) + \
                entire_work_title + iswc + table.language() + writer_1_last_name + \
                writer_1_first_name + source + writer_1_ipi_name + \
                writer_1_ipi_base + writer_2_last_name + \
                writer_2_first_name + writer_2_ipi_name + writer_2_ipi_base + work.work_id + special.lineEnd
 
-version = special.lineStart + record.record_prefix(_config.record_type('original_work_title')) + \
+version = special.lineStart + record.record_prefix(_config.record_type('original_work_title'), compulsory=True) + \
           original_title + iswc + table.language() + writer_1_last_name + \
           writer_1_first_name + source + writer_1_ipi_name + \
           writer_1_ipi_base + writer_2_last_name + \
           writer_2_first_name + writer_2_ipi_name + writer_2_ipi_base + work.work_id + special.lineEnd
 
-performing = special.lineStart + record.record_prefix(_config.record_type('performing_artist')) + \
+performing = special.lineStart + record.record_prefix(_config.record_type('performing_artist'), compulsory=True) + \
              performer_last_name + performer_first_name + special.ipi_name_number() + \
              special.ipi_base_number() + special.lineEnd
 
-recording = special.lineStart + record.record_prefix(_config.record_type('recording_detail')) + first_release + \
+recording = special.lineStart + record.record_prefix(_config.record_type('recording_detail'),
+                                                     compulsory=True) + first_release + \
             special.blank(_config.field_size('recording_detail', 'constant_1')) + \
             first_release_duration + special.blank(_config.field_size('recording_detail', 'constant_2')) + \
             first_title + first_label + first_catalog + special.ean_13() + special.isrc() + table.recording_formats() + \
             table.recording_techniques() + table.media_types() + special.lineEnd
 
-origin = special.lineStart + record.record_prefix(_config.record_type('work_origin')) + table.intended_purposes() + \
+origin = special.lineStart + record.record_prefix(_config.record_type('work_origin'),
+                                                  compulsory=True) + table.intended_purposes() + \
          production_title + cd_identifier + cut_number + library + bltvr + special.visan() + production_n + \
          episode_title + episode_n + year_production + special.avi() + special.lineEnd
 
 inst_summary = special.lineStart + record.record_prefix(
-    _config.record_type('instrumentation_summary')) + number_voices + \
+    _config.record_type('instrumentation_summary'), compulsory=True) + number_voices + \
                table.standard_instrumentations() + instr_description + special.lineEnd
 
-inst_detail = special.lineStart + record.record_prefix(_config.record_type('instrumentation_detail')) + \
+inst_detail = special.lineStart + record.record_prefix(_config.record_type('instrumentation_detail'), compulsory=True) + \
               table.instruments() + players_n + special.lineEnd
 
-component = special.lineStart + record.record_prefix(_config.record_type('component')) + component_title + \
+component = special.lineStart + record.record_prefix(_config.record_type('component'),
+                                                     compulsory=True) + component_title + \
             iswc + work.work_id + component_duration + writer_1_last_name + writer_1_first_name + writer_1_ipi_name + \
             writer_2_last_name + writer_2_first_name + writer_2_ipi_name + writer_1_ipi_base + \
             writer_2_ipi_base + special.lineEnd

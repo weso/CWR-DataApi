@@ -39,7 +39,7 @@ SPT patterns.
 
 territory = special.lineStart + record.record_prefix(
     _config.record_type(
-        'publisher_territory')) + special.ip_id(compulsory=True) + constant + \
+        'publisher_territory'), compulsory=True) + special.ip_id(compulsory=True) + constant + \
             society.pr_share(maximum=50) + society.mr_share() + society.sr_share() + \
             table.ie_indicator() + table.tis_code() + shares_change + sequence_n + special.lineEnd
 

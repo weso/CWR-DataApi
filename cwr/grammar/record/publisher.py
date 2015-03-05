@@ -67,7 +67,7 @@ society_id = society_id.setName('Society-assigned Agreement Number').setResultsN
 Publisher patterns.
 """
 
-publisher = special.lineStart + record.record_prefix(_config.record_type('publisher')) + sequence_n + \
+publisher = special.lineStart + record.record_prefix(_config.record_type('publisher'), compulsory=True) + sequence_n + \
             special.ip_id() + name + unknown + \
             table.publisher_type() + tax_id + special.ipi_name_number() + agreement_id + \
             society.pr_affiliation() + society.pr_share(maximum=50) + \
