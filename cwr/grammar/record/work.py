@@ -102,11 +102,22 @@ work_record = special.lineStart + record.record_prefix(_config.record_type('work
               printed_edition_publication_date + exceptional_clause + opus_number + catalogue_number + priority_flag + \
               special.lineEnd
 
+conflict = special.lineStart + record.record_prefix(_config.record_type('work_conflict'), compulsory=True) + work_title + \
+              table.language() + work_id + iswc + \
+              copyright_date + copyright_number + table.musical_distribution_category(
+    True) + duration + recorded + \
+              table.text_music_relationship(True) + table.composite_type() + table.version_type(
+    True) + table.excerpt_type(True) + table.music_arrangement() + \
+              table.lyric_adaptation() + contact_name + contact_id + table.work_type() + gr_indicator + composite_count + \
+              printed_edition_publication_date + exceptional_clause + opus_number + catalogue_number + priority_flag + \
+              special.lineEnd
+
 """
 Parsing actions for the patterns.
 """
 
 work_record.setParseAction(lambda p: _to_work(p))
+conflict.setParseAction(lambda p: _to_work(p))
 
 """
 Validation actions for the patterns.

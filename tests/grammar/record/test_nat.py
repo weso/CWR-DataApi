@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import nra_record
+from cwr.grammar.record import nra
 
 
 """
@@ -22,7 +22,7 @@ class TestNPAGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = nra_record.nat
+        self.grammar = nra.nat
 
     def test_valid_full(self):
         """

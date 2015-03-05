@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import nra_record
+from cwr.grammar.record import nra
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestNPRGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = nra_record.npr
+        self.grammar = nra.npr
 
     def test_valid_full(self):
         """
