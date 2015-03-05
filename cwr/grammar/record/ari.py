@@ -1,7 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table, special, record, basic
+from cwr.grammar.field import ari as field_ari
+from cwr.grammar.field import table as field_table
+from cwr.grammar.field import special as field_special
+from cwr.grammar.field import record as field_record
 from cwr.info import AdditionalRelatedInfoRecord
 
 
@@ -18,24 +21,12 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 
 """
-ARI fields.
-"""
-
-# Work #
-work_number = basic.alphanum(_config.field_size('ari', 'work_number'))
-work_number = work_number.setName('Work #').setResultsName('work_id')
-
-# Note
-note = basic.alphanum(_config.field_size('ari', 'note'))
-note = note.setName('Note').setResultsName('note')
-
-"""
 Patterns.
 """
 
-ari = special.lineStart + record.record_prefix(_config.record_type('ari'),
-                                               compulsory=True) + table.society() + work_number + \
-      table.types_of_right() + table.subject_codes() + note + special.lineEnd
+ari = field_special.lineStart + field_record.record_prefix(_config.record_type('ari'),
+                                                           compulsory=True) + field_table.society() + field_ari.work_number + \
+      field_table.types_of_right() + field_table.subject_codes() + field_ari.note + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.record import agreement
-from cwr.grammar.field import special, record, basic
+from cwr.grammar.field import special as field_special
+from cwr.grammar.field import record as field_record
+from cwr.grammar.field import agreement as field_agreement
+from cwr.grammar.field import writer_publisher as field_writer_publisher
 from cwr.interested_party import WriterPublisherRecord
 
 
@@ -19,29 +21,14 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 
 """
-General fields.
-"""
-
-# Publisher IP #
-publisher_ip_id = special.ip_id()
-publisher_ip_id = publisher_ip_id.setName('Publisher IP #').setResultsName('publisher_id')
-
-# Publisher Name
-publisher_name = basic.alphanum(_config.field_size('writer_publisher', 'publisher_name'))
-publisher_name = publisher_name.setName('Publisher Name').setResultsName('publisher_name')
-
-# Writer IP #
-writer_ip_id = special.ip_id()
-writer_ip_id = writer_ip_id.setName('Writer IP #').setResultsName('writer_id')
-
-"""
 Patterns.
 """
 
-publisher = special.lineStart + record.record_prefix(
+publisher = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
-        'writer_publisher'), compulsory=True) + publisher_ip_id + publisher_name + agreement.submitter_agreement_n + \
-            agreement.society_id + writer_ip_id + special.lineEnd
+        'writer_publisher'),
+    compulsory=True) + field_writer_publisher.publisher_ip_id + field_writer_publisher.publisher_name + field_agreement.submitter_agreement_n + \
+            field_agreement.society_id + field_writer_publisher.writer_ip_id + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

@@ -1,8 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from data.accessor import CWRTables, CWRConfiguration
-from cwr.grammar.record import work
-from cwr.grammar.field import table, special, record, basic
+from data.accessor import CWRConfiguration
+from cwr.grammar.field import work as field_work
+from cwr.grammar.field import table as field_table
+from cwr.grammar.field import special as field_special
+from cwr.grammar.field import record as field_record
+from cwr.grammar.field import work_detail as field_work_detail
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
     WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord, ComponentRecord
 
@@ -29,239 +32,61 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
-
-"""
-ALT fields.
-"""
-
-# Alternate Title
-alternate_title = basic.alphanum(_config.field_size('alternate_title', 'alternate_title'))
-alternate_title = alternate_title.setName('Alternate Title').setResultsName(
-    'title')
-
-"""
-EWT fields.
-"""
-
-# Entire Work Title
-entire_work_title = basic.alphanum(_config.field_size('entire_work_title', 'entire_work_title'))
-entire_work_title = entire_work_title.setName('Entire Work Title').setResultsName(
-    'title')
-
-"""
-VER fields.
-"""
-
-# Original Work Title
-original_title = basic.alphanum(_config.field_size('original_work_title', 'original_title'))
-original_title = original_title.setName('Original Work Title').setResultsName(
-    'title')
-
-"""
-PER fields.
-"""
-
-# Performing Artist Last Name
-performer_last_name = basic.alphanum(_config.field_size('performing_artist', 'performer_last_name'))
-performer_last_name = performer_last_name.setName('Performing Artist Last Name').setResultsName('last_name')
-
-# Performing Artist First Name
-performer_first_name = basic.alphanum(_config.field_size('performing_artist', 'performer_first_name'))
-performer_first_name = performer_first_name.setName('Performing Artist First Name').setResultsName('first_name')
-
-"""
-REC fields.
-"""
-
-# First Release Date
-first_release = basic.date()
-first_release = first_release.setName('First Release Date').setResultsName('first_release_date')
-
-# First Release Duration
-first_release_duration = basic.time()
-first_release_duration = first_release_duration.setName('First Release Duration').setResultsName(
-    'first_release_duration')
-
-# First Album Title
-first_title = basic.alphanum(_config.field_size('recording_detail', 'first_album_title'))
-first_title = first_title.setName('First Album Title').setResultsName('first_album_title')
-
-# First Album Label
-first_label = basic.alphanum(_config.field_size('recording_detail', 'first_album_label'))
-first_label = first_label.setName('First Album Label').setResultsName('first_album_label')
-
-# First Release Catalog #
-first_catalog = basic.alphanum(_config.field_size('recording_detail', 'first_release_catalog_id'))
-first_catalog = first_catalog.setName('First Release Catalog #').setResultsName('first_release_catalog_id')
-
-"""
-ORN fields.
-"""
-
-# Production Title
-production_title = basic.alphanum(_config.field_size('work_origin', 'production_title'))
-production_title = production_title.setName('Production Title').setResultsName('production_title')
-
-# CD Identifier
-cd_identifier = basic.alphanum(_config.field_size('work_origin', 'cd_identifier'))
-cd_identifier = cd_identifier.setName('CD Identifier').setResultsName('cd_identifier')
-
-# Cut Number
-cut_number = basic.numeric(_config.field_size('work_origin', 'cut_number'))
-cut_number = cut_number.setName('Cut Number').setResultsName('cut_number')
-
-# Library
-library = basic.alphanum(_config.field_size('work_origin', 'library'))
-library = library.setName('Library').setResultsName('library')
-
-# BLTVR
-bltvr = basic.alphanum(_config.field_size('work_origin', 'bltvr'))
-bltvr = bltvr.setName('BLTVR').setResultsName('bltvr')
-
-# Production #
-production_n = basic.alphanum(_config.field_size('work_origin', 'production_n'))
-production_n = production_n.setName('Production #').setResultsName('production_id')
-
-# Episode Title
-episode_title = basic.alphanum(_config.field_size('work_origin', 'episode_title'))
-episode_title = episode_title.setName('Episode Title').setResultsName('episode_title')
-
-# Episode #
-episode_n = basic.alphanum(_config.field_size('work_origin', 'episode_n'))
-episode_n = episode_n.setName('Episode #').setResultsName('episode_id')
-
-# Year of Production
-year_production = basic.numeric(_config.field_size('work_origin', 'production_year'))
-year_production = year_production.setName('Year of Production').setResultsName('production_year')
-
-"""
-INS fields.
-"""
-
-# Number of voices
-number_voices = basic.numeric(_config.field_size('instrumentation_summary', 'voices'))
-number_voices = number_voices.setName('Number of voices').setResultsName('voices')
-
-# Instrumentation Description
-instr_description = basic.alphanum(_config.field_size('instrumentation_summary', 'description'))
-instr_description = instr_description.setName('Instrumentation Description').setResultsName('description')
-
-"""
-IND fields.
-"""
-
-# Number of players
-players_n = basic.numeric(_config.field_size('instrumentation_detail', 'players'))
-players_n = players_n.setName('Number of players').setResultsName('players')
-
-"""
-COM fields.
-"""
-
-# Title
-component_title = basic.alphanum(_config.field_size('component', 'title'))
-component_title = component_title.setName('Title').setResultsName('title')
-
-# Duration
-component_duration = basic.time()
-component_duration = component_duration.setName('Duration').setResultsName('duration')
-
-"""
-Author fields
-"""
-
-# Writer 1 Last Name
-writer_1_last_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_last_name'))
-writer_1_last_name = writer_1_last_name.setName('Writer 1 Last Name').setResultsName(
-    'last_name_1')
-
-# Writer 1 First Name
-writer_1_first_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_first_name'))
-writer_1_first_name = writer_1_first_name.setName('Writer 1 Last Name').setResultsName(
-    'first_name_1')
-
-# Writer 1 IPI Name #
-writer_1_ipi_name = special.ipi_name_number()
-writer_1_ipi_name = writer_1_ipi_name.setName('Writer 1 IPI Name #').setResultsName('ipi_name_1')
-
-# Writer 1 IPI Base #
-writer_1_ipi_base = special.ipi_base_number()
-writer_1_ipi_base = writer_1_ipi_base.setName('Writer 1 IPI Base #').setResultsName('ipi_base_1')
-
-# Writer 2 Last Name
-writer_2_last_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_last_name'))
-writer_2_last_name = writer_2_last_name.setName('Writer 2 Last Name').setResultsName(
-    'last_name_2')
-
-# Writer 2 First Name
-writer_2_first_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_first_name'))
-writer_2_first_name = writer_2_first_name.setName('Writer 2 Last Name').setResultsName('first_name_2')
-
-# Writer 2 IPI Name #
-writer_2_ipi_name = special.ipi_name_number()
-writer_2_ipi_name = writer_2_ipi_name.setName('Writer 1 IPI Name #').setResultsName('ipi_name_2')
-
-# Writer 2 IPI Base #
-writer_2_ipi_base = special.ipi_base_number()
-writer_2_ipi_base = writer_2_ipi_base.setName('Writer 1 IPI Base #').setResultsName('ipi_base_2')
-
-# Source
-source = basic.alphanum(_config.field_size('entire_work_title', 'source'))
-source = source.setName('Source').setResultsName('source')
-
-# ISWC
-iswc = special.iswc()
-iswc = iswc.setResultsName('iswc')
 
 """
 Patterns.
 """
 
-alternate = special.lineStart + record.record_prefix(_config.record_type('alternate_title'), compulsory=True) + \
-            alternate_title + table.title_type() + table.language() + special.lineEnd
+alternate = field_special.lineStart + field_record.record_prefix(_config.record_type('alternate_title'),
+                                                                 compulsory=True) + \
+            field_work_detail.alternate_title + field_table.title_type() + field_table.language() + field_special.lineEnd
 
-entire_title = special.lineStart + record.record_prefix(_config.record_type('entire_work_title'), compulsory=True) + \
-               entire_work_title + iswc + table.language() + writer_1_last_name + \
-               writer_1_first_name + source + writer_1_ipi_name + \
-               writer_1_ipi_base + writer_2_last_name + \
-               writer_2_first_name + writer_2_ipi_name + writer_2_ipi_base + work.work_id + special.lineEnd
+entire_title = field_special.lineStart + field_record.record_prefix(_config.record_type('entire_work_title'),
+                                                                    compulsory=True) + \
+               field_work_detail.entire_work_title + field_work_detail.iswc + field_table.language() + field_work_detail.writer_1_last_name + \
+               field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name + \
+               field_work_detail.writer_1_ipi_base + field_work_detail.writer_2_last_name + \
+               field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name + field_work_detail.writer_2_ipi_base + field_work.work_id + field_special.lineEnd
 
-version = special.lineStart + record.record_prefix(_config.record_type('original_work_title'), compulsory=True) + \
-          original_title + iswc + table.language() + writer_1_last_name + \
-          writer_1_first_name + source + writer_1_ipi_name + \
-          writer_1_ipi_base + writer_2_last_name + \
-          writer_2_first_name + writer_2_ipi_name + writer_2_ipi_base + work.work_id + special.lineEnd
+version = field_special.lineStart + field_record.record_prefix(_config.record_type('original_work_title'),
+                                                               compulsory=True) + \
+          field_work_detail.original_title + field_work_detail.iswc + field_table.language() + field_work_detail.writer_1_last_name + \
+          field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name + \
+          field_work_detail.writer_1_ipi_base + field_work_detail.writer_2_last_name + \
+          field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name + field_work_detail.writer_2_ipi_base + field_work.work_id + field_special.lineEnd
 
-performing = special.lineStart + record.record_prefix(_config.record_type('performing_artist'), compulsory=True) + \
-             performer_last_name + performer_first_name + special.ipi_name_number() + \
-             special.ipi_base_number() + special.lineEnd
+performing = field_special.lineStart + field_record.record_prefix(_config.record_type('performing_artist'),
+                                                                  compulsory=True) + \
+             field_work_detail.performer_last_name + field_work_detail.performer_first_name + field_special.ipi_name_number() + \
+             field_special.ipi_base_number() + field_special.lineEnd
 
-recording = special.lineStart + record.record_prefix(_config.record_type('recording_detail'),
-                                                     compulsory=True) + first_release + \
-            special.blank(_config.field_size('recording_detail', 'constant_1')) + \
-            first_release_duration + special.blank(_config.field_size('recording_detail', 'constant_2')) + \
-            first_title + first_label + first_catalog + special.ean_13() + special.isrc() + table.recording_formats() + \
-            table.recording_techniques() + table.media_types() + special.lineEnd
+recording = field_special.lineStart + field_record.record_prefix(_config.record_type('recording_detail'),
+                                                                 compulsory=True) + field_work_detail.first_release + \
+            field_special.blank(_config.field_size('recording_detail', 'constant_1')) + \
+            field_work_detail.first_release_duration + field_special.blank(
+    _config.field_size('recording_detail', 'constant_2')) + \
+            field_work_detail.first_title + field_work_detail.first_label + field_work_detail.first_catalog + field_special.ean_13() + field_special.isrc() + field_table.recording_formats() + \
+            field_table.recording_techniques() + field_table.media_types() + field_special.lineEnd
 
-origin = special.lineStart + record.record_prefix(_config.record_type('work_origin'),
-                                                  compulsory=True) + table.intended_purposes() + \
-         production_title + cd_identifier + cut_number + library + bltvr + special.visan() + production_n + \
-         episode_title + episode_n + year_production + special.avi() + special.lineEnd
+origin = field_special.lineStart + field_record.record_prefix(_config.record_type('work_origin'),
+                                                              compulsory=True) + field_table.intended_purposes() + \
+         field_work_detail.production_title + field_work_detail.cd_identifier + field_work_detail.cut_number + field_work_detail.library + field_work_detail.bltvr + field_special.visan() + field_work_detail.production_n + \
+         field_work_detail.episode_title + field_work_detail.episode_n + field_work_detail.year_production + field_special.avi() + field_special.lineEnd
 
-inst_summary = special.lineStart + record.record_prefix(
-    _config.record_type('instrumentation_summary'), compulsory=True) + number_voices + \
-               table.standard_instrumentations() + instr_description + special.lineEnd
+inst_summary = field_special.lineStart + field_record.record_prefix(
+    _config.record_type('instrumentation_summary'), compulsory=True) + field_work_detail.number_voices + \
+               field_table.standard_instrumentations() + field_work_detail.instr_description + field_special.lineEnd
 
-inst_detail = special.lineStart + record.record_prefix(_config.record_type('instrumentation_detail'), compulsory=True) + \
-              table.instruments() + players_n + special.lineEnd
+inst_detail = field_special.lineStart + field_record.record_prefix(_config.record_type('instrumentation_detail'),
+                                                                   compulsory=True) + \
+              field_table.instruments() + field_work_detail.players_n + field_special.lineEnd
 
-component = special.lineStart + record.record_prefix(_config.record_type('component'),
-                                                     compulsory=True) + component_title + \
-            iswc + work.work_id + component_duration + writer_1_last_name + writer_1_first_name + writer_1_ipi_name + \
-            writer_2_last_name + writer_2_first_name + writer_2_ipi_name + writer_1_ipi_base + \
-            writer_2_ipi_base + special.lineEnd
+component = field_special.lineStart + field_record.record_prefix(_config.record_type('component'),
+                                                                 compulsory=True) + field_work_detail.component_title + \
+            field_work_detail.iswc + field_work.work_id + field_work_detail.component_duration + field_work_detail.writer_1_last_name + field_work_detail.writer_1_first_name + field_work_detail.writer_1_ipi_name + \
+            field_work_detail.writer_2_last_name + field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name + field_work_detail.writer_1_ipi_base + \
+            field_work_detail.writer_2_ipi_base + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

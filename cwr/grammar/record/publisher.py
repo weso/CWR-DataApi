@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.record import society
-from cwr.grammar.field import table, special, record, basic
+from cwr.grammar.field import table as field_table, society
+from cwr.grammar.field import special as field_special
+from cwr.grammar.field import record as field_record
+from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Publisher, PublisherRecord
 from cwr.constraints import publisher as constraints
 
@@ -24,57 +26,19 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 
 """
-Publisher fields.
-"""
-
-# Publisher Sequence #
-sequence_n = basic.numeric(_config.field_size('publisher', 'sequence_n'), compulsory=True)
-sequence_n = sequence_n.setName('Publisher Sequence #').setResultsName('sequence_n')
-
-# Publisher name
-name = basic.alphanum(_config.field_size('publisher', 'name'))
-name = name.setName('Publisher name').setResultsName('name')
-
-# Publisher Unknown Indicator
-unknown = basic.flag()
-unknown = unknown.setName('Publisher Unknown Indicator').setResultsName('publisher_unknown')
-
-# Tax ID #
-tax_id = basic.numeric(_config.field_size('publisher', 'tax_id'))
-tax_id = tax_id.setName('Tax ID #').setResultsName('tax_id')
-
-# Submitter Agreement Number
-agreement_id = basic.alphanum(_config.field_size('publisher', 'submitter_agreement_id'))
-agreement_id = agreement_id.setName('Submitter Agreement Number').setResultsName('submitter_agreement_id')
-
-# First Recording Refusal Indicator
-first_refusal = basic.lookup(('Y', 'N'), columns=1)
-first_refusal = first_refusal.setName('First Recording Refusal Indicator').setResultsName('first_record_refusal')
-
-# Publisher IPI Base Number
-ipi_base = special.ipi_base_number()
-
-# International Standard Agreement Code
-international_code = basic.alphanum(_config.field_size('publisher', 'international_code'))
-international_code = international_code.setName('International Standard Agreement Code').setResultsName(
-    'isac')
-
-# Society-assigned Agreement Number
-society_id = basic.alphanum(_config.field_size('publisher', 'society_agreement_id'))
-society_id = society_id.setName('Society-assigned Agreement Number').setResultsName('society_agreement_id')
-
-"""
 Publisher patterns.
 """
 
-publisher = special.lineStart + record.record_prefix(_config.record_type('publisher'), compulsory=True) + sequence_n + \
-            special.ip_id() + name + unknown + \
-            table.publisher_type() + tax_id + special.ipi_name_number() + agreement_id + \
+publisher = field_special.lineStart + field_record.record_prefix(_config.record_type('publisher'),
+                                                                        compulsory=True) + field_publisher.sequence_n + \
+            field_special.ip_id() + field_publisher.name + field_publisher.unknown + \
+            field_table.publisher_type() + field_publisher.tax_id + field_special.ipi_name_number() + field_publisher.agreement_id + \
             society.pr_affiliation() + society.pr_share(maximum=50) + \
             society.mr_affiliation() + society.mr_share() + \
             society.sr_affiliation() + society.sr_share() + \
-            table.special_agreement() + first_refusal + special.blank(1) + ipi_base + international_code + \
-            society_id + table.agreement_type() + table.usa_license() + special.lineEnd
+            field_table.special_agreement() + field_publisher.first_refusal + field_special.blank(
+    1) + field_publisher.ipi_base + field_publisher.international_code + \
+            field_publisher.society_id + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

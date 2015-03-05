@@ -2,7 +2,10 @@
 
 import cwr.constraints.agreement as constraints
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table, special, record, basic
+from cwr.grammar.field import table as field_table
+from cwr.grammar.field import agreement as field_agreement
+from cwr.grammar.field import special as field_special
+from cwr.grammar.field import record as field_record
 from cwr.agreement import AgreementRecord
 
 
@@ -19,71 +22,19 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 
 """
-Agreement fields.
-"""
-
-# Submitter's Agreement Number
-submitter_agreement_n = basic.alphanum(_config.field_size('agreement', 'agreement_id'), compulsory=True)
-submitter_agreement_n = submitter_agreement_n.setName('Submitters Agreement Number').setResultsName('agreement_id')
-
-# International Standard Agreement Code
-is_code = basic.alphanum(_config.field_size('agreement', 'international_standard_code'))
-is_code = is_code.setName('International Standard Agreement Code').setResultsName('international_standard_code')
-
-# Agreement Start Date
-agreement_start_date = basic.date(compulsory=True)
-agreement_start_date = agreement_start_date.setName('Agreement Start Date').setResultsName('start_date')
-
-# Agreement End Date
-agreement_end_date = basic.date()
-agreement_end_date = agreement_end_date.setName('Agreement End Date').setResultsName('end_date')
-
-# Retention End Date
-retention_end_date = basic.date()
-retention_end_date = retention_end_date.setName('Retention End Date').setResultsName('retention_end_date')
-
-# Prior Royalty Start Date
-prior_royalty_start_date = basic.date()
-prior_royalty_start_date = prior_royalty_start_date.setName('Prior Royalty Start Date').setResultsName(
-    'prior_royalty_start_date')
-
-# Post Term Collection End Date
-post_term_collection_end_date = basic.date()
-post_term_collection_end_date = post_term_collection_end_date.setName('Post Term Collection End Date').setResultsName(
-    'post_term_collection_end_date')
-
-# Date of Signature of Agreement
-date_of_signature = basic.date()
-date_of_signature = date_of_signature.setName('Date of Signature of Agreement').setResultsName('signature_date')
-
-# Number of Works
-number_works = basic.numeric(_config.field_size('agreement', 'number_works'), compulsory=True)
-number_works = number_works.setName('Number of Works').setResultsName('works_number')
-
-# Shares Change
-sales_change = basic.boolean()
-sales_change = sales_change.setName('Shares Change').setResultsName('shares_change')
-
-# Advance Given
-advance_given = basic.boolean()
-advance_given = advance_given.setName('Advance Given').setResultsName('advance_given')
-
-# Society Given Agreement Number
-society_id = basic.alphanum(_config.field_size('agreement', 'society_agreement_number'))
-society_id = society_id.setName('Society Given Agreement Number').setResultsName('society_agreement_number')
-society_id.leaveWhitespace()
-
-"""
 Agreement patterns.
 """
 
 # Agreement Pattern
-agreement = special.lineStart + record.record_prefix(
-    _config.record_type('agreement'), compulsory=True) + submitter_agreement_n + is_code + table.agreement_type() + \
-            agreement_start_date + agreement_end_date + retention_end_date + table.prior_royalty_status(True) + \
-            prior_royalty_start_date + table.post_term_collection_status(True) + post_term_collection_end_date + \
-            date_of_signature + number_works + table.sm_clause() + sales_change + advance_given + society_id + \
-            special.lineEnd
+agreement = field_special.lineStart + field_record.record_prefix(
+    _config.record_type('agreement'),
+    compulsory=True) + field_agreement.submitter_agreement_n + field_agreement.is_code + field_table.agreement_type() + \
+            field_agreement.agreement_start_date + field_agreement.agreement_end_date + field_agreement.retention_end_date + field_table.prior_royalty_status(
+    True) + \
+            field_agreement.prior_royalty_start_date + field_table.post_term_collection_status(
+    True) + field_agreement.post_term_collection_end_date + \
+            field_agreement.date_of_signature + field_agreement.number_works + field_table.sm_clause() + field_agreement.sales_change + field_agreement.advance_given + field_agreement.society_id + \
+            field_special.lineEnd
 
 """
 Parsing actions for the patterns.
