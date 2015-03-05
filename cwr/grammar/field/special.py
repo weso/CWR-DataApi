@@ -88,6 +88,11 @@ def ipi_base_number(compulsory=False):
     # Name
     field.setName('IPI Base Number Field')
 
+    field_num = basic.numeric(13, compulsory=compulsory)
+    field_num.setName('IPI Base Number Field')
+
+    field = field | field_num
+
     if not compulsory:
         # If it is not compulsory then it can be set as empty
         empty = pp.Regex('[ ]{13}')
@@ -131,11 +136,21 @@ def ipi_name_number(compulsory=False):
     :param compulsory: indicates if the empty string is disallowed
     :return: a parser for the IPI Name Number field
     """
-    ipi_name_number_field = basic.numeric(11, compulsory=compulsory)
+    field = basic.numeric(11, compulsory=compulsory)
 
-    ipi_name_number_field = ipi_name_number_field.setName('IPI Name Number Field').setResultsName('ipi_name')
+    if not compulsory:
+        # If it is not compulsory then it can be set as empty
+        empty = pp.Regex('[ ]{11}')
+        empty.setParseAction(pp.replaceWith(None))
+        empty.setName('IPI Base Number Field')
 
-    return ipi_name_number_field
+        field = empty | field
+        # Name
+        field.setName('IPI Name Number Field')
+
+    field = field.setName('IPI Name Number Field').setResultsName('ipi_name')
+
+    return field
 
 
 def iswc(compulsory=False):

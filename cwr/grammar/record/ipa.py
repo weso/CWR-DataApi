@@ -6,7 +6,6 @@ from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import ipa as field_ipa
 from cwr.agreement import AgreementInterestedParty
-from cwr.constraints import ipa as constraints
 
 
 """
@@ -38,13 +37,6 @@ Parsing actions for the patterns.
 """
 
 ipa.setParseAction(lambda p: _to_ipa(p))
-
-"""
-Validation actions for the patterns.
-"""
-
-ipa.addParseAction(lambda p: constraints.acquiror_has_shares(p[0]))
-ipa.addParseAction(lambda p: constraints.shares_have_society(p[0]))
 
 """
 Parsing methods.

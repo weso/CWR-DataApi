@@ -19,6 +19,23 @@ class TestFileValid(unittest.TestCase):
     def setUp(self):
         self.grammar = file.cwr_file
 
+    def test(self):
+        header_file = 'HDRPB226144593AGENCIA GRUPO MUSICAL                        01.102013080902591120130809               '
+        header_group = 'GRHAGR0000102.100130400001  '
+        agr = 'AGR000000000000000000023683606100              OS200311182013111820131118N        D20131118        00009SYY              '
+        ipa_1 = 'IPA0000000000000001AS0026166137500000000000001183606  ITALIAN                                      GILBERTI DUANTE               61 0500061 0000061 00000'
+        ipa_2 = 'IPA0000000000000002AC00250165006000000000000066       SOCIETY MUSIC                                                              61 0500061 1000061 10000'
+        territory = 'TER0000000000000000I2136'
+        trailer_group = 'GRT000010000017900000719   0000000000'
+        trailer_file = 'TRL000020000053200005703'
+
+        record = header_file + '\n' + header_group + '\n' + agr + '\n' + territory + '\n' + ipa_1 + '\n' + ipa_2 +\
+                 '\n' + trailer_group + '\n' + trailer_file
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(8, len(result))
+
     def test_agreement_full(self):
         header_file = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
 

@@ -6,7 +6,6 @@ from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import work as field_work
 from cwr import work
-from cwr.constraints import work as constraints
 
 
 """
@@ -54,15 +53,6 @@ Parsing actions for the patterns.
 
 work_record.setParseAction(lambda p: _to_work(p))
 conflict.setParseAction(lambda p: _to_work(p))
-
-"""
-Validation actions for the patterns.
-"""
-work_record.addParseAction(lambda p: constraints.ser_has_duration(p[0]))
-work_record.addParseAction(lambda p: constraints.mod_has_music_arrangement(p[0]))
-work_record.addParseAction(lambda p: constraints.mod_has_lyric_adaptation(p[0]))
-work_record.addParseAction(lambda p: constraints.composite_has_count(p[0]))
-work_record.addParseAction(lambda p: constraints.count_when_composite(p[0]))
 
 """
 Parsing methods.

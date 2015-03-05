@@ -148,12 +148,6 @@ class TestNumericCompulsoryException(unittest.TestCase):
     def setUp(self):
         self.num = basic.numeric(5, compulsory=True)
 
-    def test_numeric_zero(self):
-        """
-        Tests that an exception is thrown when the field is empty and it shouldn't be.
-        """
-        self.assertRaises(ParseException, self.num.parseString, '00000')
-
     def test_numeric_wrong_size_empty(self):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.

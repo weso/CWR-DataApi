@@ -125,32 +125,10 @@ def numeric(columns, compulsory=False):
     # Parse action
     field.setParseAction(lambda n: int(n[0]))
 
-    if compulsory:
-        # Compulsory field validation action
-        field.addParseAction(lambda s: _check_above_value_int(s[0], 0))
-
     # Name
     field.setName('Numeric Field')
 
     return field
-
-
-def _check_above_value_int(string, minimum):
-    """
-    Checks that the number parsed from the string is above a minimum.
-
-    This is used on compulsory numeric fields.
-
-    If the value is not above the minimum an exception is thrown.
-
-    :param string: the field value
-    :param minimum: minimum value
-    """
-    value = int(string)
-
-    if value <= minimum:
-        message = "The Numeric Field value should be above %s" % minimum
-        raise pp.ParseException(string, message)
 
 
 """
@@ -402,7 +380,14 @@ def date(compulsory=False):
         # Name
         optional.setName('Date Field')
 
-        field = field | optional
+        # If it is not compulsory the empty date is accepted
+        empty = pp.Regex('[ ]{8}')
+        empty.setParseAction(pp.replaceWith(None))
+
+        # Name
+        empty.setName('Date Field')
+
+        field = field | optional | empty
 
         # Name
         field.setName('Date Field')

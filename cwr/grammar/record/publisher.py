@@ -6,7 +6,6 @@ from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Publisher, PublisherRecord
-from cwr.constraints import publisher as constraints
 
 
 """
@@ -45,20 +44,6 @@ Parsing actions for the patterns.
 """
 
 publisher.setParseAction(lambda p: _to_publisherrecord(p))
-
-"""
-Validation actions for the patterns.
-"""
-
-publisher.addParseAction(lambda p: constraints.no_owner_has_no_shares(p[0]))
-publisher.addParseAction(lambda p: constraints.owner_has_shares(p[0]))
-publisher.addParseAction(lambda p: constraints.sequence_above_zero(p[0]))
-publisher.addParseAction(lambda p: constraints.controlled_publisher_has_id(p[0]))
-publisher.addParseAction(lambda p: constraints.controlled_or_known_publisher_has_name(p[0]))
-publisher.addParseAction(lambda p: constraints.controlled_has_type(p[0]))
-publisher.addParseAction(lambda p: constraints.controlled_has_unknown_blank(p[0]))
-publisher.addParseAction(lambda p: constraints.other_has_unknown_not_blank(p[0]))
-publisher.addParseAction(lambda p: constraints.other_unknown_has_no_name(p[0]))
 
 """
 Parsing methods.

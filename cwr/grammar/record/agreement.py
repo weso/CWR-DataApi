@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-import cwr.constraints.agreement as constraints
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import table as field_table
 from cwr.grammar.field import agreement as field_agreement
@@ -33,7 +32,8 @@ agreement = field_special.lineStart + field_record.record_prefix(
     True) + \
             field_agreement.prior_royalty_start_date + field_table.post_term_collection_status(
     True) + field_agreement.post_term_collection_end_date + \
-            field_agreement.date_of_signature + field_agreement.number_works + field_table.sm_clause() + field_agreement.sales_change + field_agreement.advance_given + field_agreement.society_id + \
+            field_agreement.date_of_signature + field_agreement.number_works + field_table.sm_clause() + \
+            field_agreement.sales_change + field_agreement.advance_given + field_agreement.society_id + \
             field_special.lineEnd
 
 """
@@ -41,17 +41,6 @@ Parsing actions for the patterns.
 """
 
 agreement.setParseAction(lambda a: _to_agreement(a))
-
-"""
-Validation actions for the patterns.
-"""
-
-agreement.addParseAction(lambda p: constraints.prior_royalty_status_and_date_coherency(p[0]))
-agreement.addParseAction(lambda p: constraints.post_term_collection_status_and_date_coherency(p[0]))
-agreement.addParseAction(lambda p: constraints.retention_end_date_after_agreement_end_date(p[0]))
-agreement.addParseAction(lambda p: constraints.prior_royalty_start_date_before_agreement_start_date(p[0]))
-agreement.addParseAction(lambda p: constraints.post_term_collection_end_date_after_end_dates(p[0]))
-agreement.addParseAction(lambda p: constraints.sales_manufacture_required_by_agreement_type(p[0]))
 
 """
 Parsing methods.
