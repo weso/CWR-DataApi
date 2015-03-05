@@ -283,6 +283,16 @@ def isrc(compulsory=False):
 
     isrc_field = isrc_field.setName('ISRC Field').setResultsName('isrc')
 
+    if not compulsory:
+        # If it is not compulsory then it can be set as empty
+        empty = pp.Regex('[ ]{12}')
+        empty.setParseAction(pp.replaceWith(None))
+        empty.setName('ISRC Field')
+
+        isrc_field = empty | isrc_field
+        # Name
+        isrc_field.setName('ISRC Field')
+
     return isrc_field
 
 
@@ -305,6 +315,16 @@ def visan(compulsory=False):
 
     visan_field = visan_field.setName('V-ISAN Field').setResultsName('visan')
 
+    if not compulsory:
+        # If it is not compulsory then it can be set as empty
+        empty = pp.Regex('[ ]{25}')
+        empty.setParseAction(pp.replaceWith(None))
+        empty.setName('V-ISAN Field')
+
+        visan_field = empty | visan_field
+        # Name
+        visan_field.setName('V-ISAN Field')
+
     return visan_field
 
 
@@ -324,6 +344,16 @@ def avi(compulsory=False):
     avi_field.setParseAction(lambda v: _to_avi(v[0]))
 
     avi_field = avi_field.setName('AVI Field').setResultsName('avi')
+
+    if not compulsory:
+        # If it is not compulsory then it can be set as empty
+        empty = pp.Regex('[ ]{18}')
+        empty.setParseAction(pp.replaceWith(None))
+        empty.setName('AVI Field')
+
+        avi_field = empty | avi_field
+        # Name
+        avi_field.setName('AVI Field')
 
     return avi_field
 

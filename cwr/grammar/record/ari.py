@@ -27,7 +27,7 @@ work_number = work_number.setName('Work #').setResultsName('work_id')
 
 # Note
 note = basic.alphanum(_config.field_size('ari', 'note'))
-note = work_number.setName('Note').setResultsName('note')
+note = note.setName('Note').setResultsName('note')
 
 """
 Patterns.
