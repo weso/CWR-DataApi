@@ -1,8 +1,6 @@
 # -*- encoding: utf-8 -*-
 import unittest
 
-from pyparsing import ParseException
-
 from cwr.grammar.record import work
 
 

@@ -185,6 +185,7 @@ class AVIKey(object):
     """
     Represents an AVI key.
     """
+
     def __init__(self, society_code, av_number):
         self._society_code = society_code
         self._av_number = av_number
