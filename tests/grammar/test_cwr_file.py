@@ -29,7 +29,7 @@ class TestFileValid(unittest.TestCase):
         trailer_group = 'GRT000010000017900000719   0000000000'
         trailer_file = 'TRL000020000053200005703'
 
-        record = header_file + '\n' + header_group + '\n' + agr + '\n' + territory + '\n' + ipa_1 + '\n' + ipa_2 +\
+        record = header_file + '\n' + header_group + '\n' + agr + '\n' + territory + '\n' + ipa_1 + '\n' + ipa_2 + \
                  '\n' + trailer_group + '\n' + trailer_file
 
         result = self.grammar.parseString(record)

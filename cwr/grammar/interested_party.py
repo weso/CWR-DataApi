@@ -37,12 +37,9 @@ controlled_publisher_information = original_publisher_information + pp.Optional(
     pp.OneOrMore(administrator_information)) + pp.Optional(pp.OneOrMore(subpublisher_information)) + pp.Optional(
     pp.OneOrMore(publisher.publisher))
 
-# Acquirer
-acquirer_information = ipa.ipa + pp.Optional(nra.npa)
-
-# Assignor
-assignor_information = ipa.ipa + pp.Optional(nra.npa)
+# IPA
+ipa_information = ipa.ipa + pp.Optional(nra.npa)
 
 # Territory
-territory_information = pp.OneOrMore(agreement_territory.territory_in_agreement) + pp.OneOrMore(assignor_information) \
-    # + pp.OneOrMore(acquirer_information)
+territory_information = pp.OneOrMore(agreement_territory.territory_in_agreement) + ipa_information * 2 + \
+                        pp.ZeroOrMore(ipa_information)

@@ -19,6 +19,11 @@ class TestGrammarAgreement(unittest.TestCase):
     def setUp(self):
         self.grammar = agreement.agreement
 
+    def test(self):
+        record = 'AGR000000010000000000041383606100              OS200006062017010120170101N        D20170101        00001SYY              '
+
+        result = self.grammar.parseString(record)[0]
+
     def test_full(self):
         record = 'AGR000000000000000000023683606100              OS200311182013111820131118N        D20131118        00009SYY              '
 

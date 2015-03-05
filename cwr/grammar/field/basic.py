@@ -363,8 +363,8 @@ def date(compulsory=False):
     """
 
     # Basic field
-    # This regex allows values from 00010101 to 99991231
-    field = pp.Regex('[0-9][0-9](([0-9][1-9])|([1-9][0-9]))(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
+    # This regex allows values from 00000101 to 99991231
+    field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])')
 
     # Parse action
     field.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())

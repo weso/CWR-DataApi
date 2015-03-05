@@ -30,6 +30,16 @@ class TestDateValid(unittest.TestCase):
         """
         self.assertEqual('Date Field', self.date.name)
 
+    def test_year_ends_zero(self):
+        """
+        Tests that the date field accepts a date where the year ends in zeros.
+        """
+        result = self.date.parseString('20000606')[0]
+
+        self.assertEqual(2000, result.year)
+        self.assertEqual(6, result.month)
+        self.assertEqual(6, result.day)
+
     def test_common(self):
         """
         Tests that the date field accepts a valid date.
@@ -166,12 +176,6 @@ class TestDateException(unittest.TestCase):
         """
         self.assertRaises(ParseException, self.date.parseString, '20120012')
 
-    def test_wrong_year_too_low(self):
-        """
-        Tests that an exception is thrown when the year is invalid.
-        """
-        self.assertRaises(ParseException, self.date.parseString, '00001112')
-
     def test_spaces_head(self):
         """
         Tests that an exception is thrown when the string is headed by empty spaces.
@@ -222,12 +226,6 @@ class TestDateCompulsoryException(unittest.TestCase):
         Tests that an exception is thrown when the month is invalid.
         """
         self.assertRaises(ParseException, self.date.parseString, '20120012')
-
-    def test_wrong_year_too_low(self):
-        """
-        Tests that an exception is thrown when the year is invalid.
-        """
-        self.assertRaises(ParseException, self.date.parseString, '00001112')
 
     def test_spaces_head(self):
         """

@@ -43,9 +43,8 @@ def read(file):
         print('Initial line is now %s' % file)
 
     for line in cwr:
-        print(line)
-        file += line + '\n'
-    print(cwr.read())
+        file += line
+    print(file)
     print(rule_file.cwr_file.parseString(file))
 
 

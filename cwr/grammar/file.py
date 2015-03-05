@@ -20,9 +20,10 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Transaction and group
-transaction_info = transaction.agreement_transaction | transaction.work_transaction | transaction.acknowledgement_transaction
+transaction_info = pp.OneOrMore(transaction.agreement_transaction) | pp.OneOrMore(
+    transaction.work_transaction) | pp.OneOrMore(transaction.acknowledgement_transaction)
 
-group_info = group.group_header + pp.OneOrMore(transaction_info) + group.group_trailer
+group_info = group.group_header + transaction_info + group.group_trailer
 
 # File rule
 cwr_file = transmission.transmission_header + pp.OneOrMore(group_info) + transmission.transmission_trailer
