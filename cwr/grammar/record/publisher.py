@@ -30,7 +30,7 @@ Publisher patterns.
 """
 
 publisher = field_special.lineStart + field_record.record_prefix(_config.record_type('publisher'),
-                                                                        compulsory=True) + field_publisher.sequence_n + \
+                                                                 compulsory=True) + field_publisher.sequence_n + \
             field_special.ip_id() + field_publisher.name + field_publisher.unknown + \
             field_table.publisher_type() + field_publisher.tax_id + field_special.ipi_name_number() + field_publisher.agreement_id + \
             society.pr_affiliation() + society.pr_share(maximum=50) + \

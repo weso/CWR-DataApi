@@ -44,5 +44,5 @@ acquirer_information = ipa.ipa + pp.Optional(nra.npa)
 assignor_information = ipa.ipa + pp.Optional(nra.npa)
 
 # Territory
-territory_information = pp.OneOrMore(agreement_territory.territory_in_agreement) + pp.OneOrMore(assignor_information) + \
-                        pp.OneOrMore(acquirer_information)
+territory_information = pp.OneOrMore(agreement_territory.territory_in_agreement) + pp.OneOrMore(assignor_information) \
+    # + pp.OneOrMore(acquirer_information)
