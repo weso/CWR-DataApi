@@ -330,6 +330,7 @@ def isrc(compulsory=False):
         empty = pp.Regex('[ ]{12}')
         empty.setParseAction(pp.replaceWith(None))
         empty.setName('ISRC Field')
+        empty.leaveWhitespace()
 
         field = empty | field
         # Name

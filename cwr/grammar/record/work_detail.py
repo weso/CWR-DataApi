@@ -66,7 +66,8 @@ recording = field_special.lineStart + field_record.record_prefix(_config.record_
             field_special.blank(_config.field_size('recording_detail', 'constant_1')) + \
             field_work_detail.first_release_duration + field_special.blank(
     _config.field_size('recording_detail', 'constant_2')) + \
-            field_work_detail.first_title + field_work_detail.first_label + field_work_detail.first_catalog + field_special.ean_13() + field_special.isrc() + field_table.recording_formats() + \
+            field_work_detail.first_title + field_work_detail.first_label + field_work_detail.first_catalog + \
+            field_special.ean_13() + field_special.isrc() + field_table.recording_formats() + \
             field_table.recording_techniques() + field_table.media_types() + field_special.lineEnd
 
 origin = field_special.lineStart + field_record.record_prefix(_config.record_type('work_origin'),

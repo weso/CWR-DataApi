@@ -19,6 +19,40 @@ class TestAcknowledgementTransactionValid(unittest.TestCase):
     def setUp(self):
         self.grammar = transaction.work_transaction
 
+    def test(self):
+        record = 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
+                 'SPU0000019900000702014271370  MUSIC SOCIETY                                 E          005101734040102328568410061 0500061 1000061 10000   0000000000000                            OS ' + '\n' + \
+                 'SPU00000199000007030166       ANOTHER SOCIETY                               AM         002501650060477617137010061 0000061 0000061 00000   0000000000000                            PS ' + '\n' + \
+                 'SPU00000199000007040170       YET ANOTHER SOCIETY                           SE         002261445930035870006610059 00000   00000   00000   0000000000000                            PG ' + '\n' + \
+                 'SPT000001990000070570             050000500005000I0484Y001' + '\n' + \
+                 'SWR00000199000007061185684  A NAME                                       YET ANOTHER NAME               C          0026058307861 0500061 0000061 00000    0000260582865             ' + '\n' + \
+                 'SWT00000199000007071185684  050000500005000I0484Y001' + '\n' + \
+                 'PWR00000199000007084271370  MUSIC SOCIETY                                01023285684100              1185684  ' + '\n' + \
+                 'PER0000019900000709A NAME                                                                     000000000000000000000000' + '\n' + \
+                 'REC000001990000071019980101                                                            000300     A COMPILATION                                               P A I  _AR_                                                 33002                                       U   '
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(10, len(result))
+
+        self.assertEqual('NWR', result[0].record_type)
+
+        self.assertEqual('SPU', result[1].record_type)
+        self.assertEqual('SPU', result[2].record_type)
+        self.assertEqual('SPU', result[3].record_type)
+
+        self.assertEqual('SPT', result[4].record_type)
+
+        self.assertEqual('SWR', result[5].record_type)
+
+        self.assertEqual('SWT', result[6].record_type)
+
+        self.assertEqual('PWR', result[7].record_type)
+
+        self.assertEqual('PER', result[8].record_type)
+
+        self.assertEqual('REC', result[9].record_type)
+
     def test_work_full(self):
         record = 'NWR0000017900000000STREET NAME                                                   1430374       T037306869919980730            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
                  'SPU00000179000005380166       MUSIC SOCIETY                                 E          002501650060399357851805061 0025061 0050061 00500   0000000000000                            OS ' + '\n' + \

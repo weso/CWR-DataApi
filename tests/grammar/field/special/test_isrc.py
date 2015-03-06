@@ -27,3 +27,13 @@ class TestISRCValid(unittest.TestCase):
         result = self.isrc.parseString(code)[0]
 
         self.assertEqual('ESA2B1212345', result)
+
+    def test_white(self):
+        """
+        Tests an average code.
+        """
+        code = '            '
+
+        result = self.isrc.parseString(code)[0]
+
+        self.assertEqual(None, result)

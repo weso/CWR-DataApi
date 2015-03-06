@@ -20,6 +20,29 @@ class TestWorkDetalGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = work_detail.recording
 
+    def test_common(self):
+        record = 'REC000001990000071019980101                                                            000300     A COMPILATION                                               A B C  _SYMBOLS_                                            33221                                       U   '
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('REC', result.record_type)
+        self.assertEqual(199, result.transaction_sequence_n)
+        self.assertEqual(710, result.record_sequence_n)
+        self.assertEqual(1998, result.first_release_date.year)
+        self.assertEqual(1, result.first_release_date.month)
+        self.assertEqual(1, result.first_release_date.day)
+        self.assertEqual(0, result.first_release_duration.hour)
+        self.assertEqual(3, result.first_release_duration.minute)
+        self.assertEqual(0, result.first_release_duration.second)
+        self.assertEqual('A COMPILATION', result.first_album_title)
+        self.assertEqual('A B C  _SYMBOLS_', result.first_album_label)
+        self.assertEqual('33221', result.first_release_catalog_id)
+        self.assertEqual(None, result.ean)
+        self.assertEqual('', result.isrc)
+        self.assertEqual(None, result.recording_format)
+        self.assertEqual('U', result.recording_technique)
+        self.assertEqual(None, result.media_type)
+
     def test_valid_full(self):
         record = 'REC000012340000002320120113                                                            102030     ALBUM TITLE                                                 ALBUM LABEL                                                 CATALOG ID        1234567890123ESA2B1212345ADCD '
 
