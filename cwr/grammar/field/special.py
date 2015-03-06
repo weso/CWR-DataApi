@@ -316,12 +316,13 @@ def isrc(compulsory=False):
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for an ISRC field
     """
+    separator = pp.Literal('-')
     country = basic.alphanum(2)
     registrant = basic.alphanum(3)
-    year = basic.numeric(2)
-    work_id = basic.numeric(5)
+    year = pp.Regex('[0-9]{2}')
+    work_id = pp.Regex('[0-9]{2}')
 
-    field = pp.Combine(country + registrant + year + work_id)
+    field = pp.Combine(country + separator + registrant + separator + year + separator + work_id)
 
     field = field.setName('ISRC Field').setResultsName('isrc')
 

@@ -19,7 +19,7 @@ class TestAcknowledgementTransactionValid(unittest.TestCase):
     def setUp(self):
         self.grammar = transaction.work_transaction
 
-    def test(self):
+    def test_common(self):
         record = 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
                  'SPU0000019900000702014271370  MUSIC SOCIETY                                 E          005101734040102328568410061 0500061 1000061 10000   0000000000000                            OS ' + '\n' + \
                  'SPU00000199000007030166       ANOTHER SOCIETY                               AM         002501650060477617137010061 0000061 0000061 00000   0000000000000                            PS ' + '\n' + \

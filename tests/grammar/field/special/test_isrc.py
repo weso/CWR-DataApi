@@ -22,11 +22,11 @@ class TestISRCValid(unittest.TestCase):
         """
         Tests an average code.
         """
-        code = 'ESA2B1212345'
+        code = 'ES-A2B-12-12'
 
         result = self.isrc.parseString(code)[0]
 
-        self.assertEqual('ESA2B1212345', result)
+        self.assertEqual('ES-A2B-12-12', result)
 
     def test_white(self):
         """
