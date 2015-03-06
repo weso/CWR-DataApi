@@ -144,8 +144,8 @@ publisher_territory:
 
 writer:
     type:
-        - 'SWT'
-        - 'OWT'
+        - 'SWR'
+        - 'OWR'
     first_name:
         size: 30
     last_name:

@@ -30,11 +30,11 @@ class TestWriterGrammar(unittest.TestCase):
 
         This test contains all the optional fields.
         """
-        record = 'SWT0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
+        record = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
 
         result = self.grammar.parseString(record)[0]
 
-        self.assertEqual('SWT', result.record_type)
+        self.assertEqual('SWR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('A12345678', result.writer.ip_id)

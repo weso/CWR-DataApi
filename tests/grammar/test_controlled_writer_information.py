@@ -20,7 +20,7 @@ class TestControlledWriterInformationValid(unittest.TestCase):
         self.grammar = interested_party.controlled_writer_information
 
     def test_full(self):
-        writer = 'SWT0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
+        writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
         nwn = 'NWN0000123400000023A12345678LAST NAME                                                                                                                                                       FIRST NAME                                                                                                                                                      ES'
         territory_1 = 'SWT0000123400000023A12345678010120500002520I0008Y012'
         territory_2 = 'SWT0000123400000023A12345678010120500002520I0008Y012'
@@ -33,7 +33,7 @@ class TestControlledWriterInformationValid(unittest.TestCase):
 
         self.assertEqual(6, len(result))
 
-        self.assertEqual('SWT', result[0].record_type)
+        self.assertEqual('SWR', result[0].record_type)
         self.assertEqual('NWN', result[1].record_type)
         self.assertEqual('SWT', result[2].record_type)
         self.assertEqual('SWT', result[3].record_type)
@@ -41,7 +41,7 @@ class TestControlledWriterInformationValid(unittest.TestCase):
         self.assertEqual('PWR', result[5].record_type)
 
     def test_min(self):
-        writer = 'SWT0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
+        writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
         publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
 
         record = writer + '\n' + publisher_1
@@ -50,5 +50,5 @@ class TestControlledWriterInformationValid(unittest.TestCase):
 
         self.assertEqual(2, len(result))
 
-        self.assertEqual('SWT', result[0].record_type)
+        self.assertEqual('SWR', result[0].record_type)
         self.assertEqual('PWR', result[1].record_type)
