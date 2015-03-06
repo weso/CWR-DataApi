@@ -21,7 +21,7 @@ ALT fields.
 """
 
 # Alternate Title
-alternate_title = basic.alphanum(_config.field_size('alternate_title', 'alternate_title'))
+alternate_title = basic.alphanum(_config.field_size('alternate_title', 'alternate_title'), extended=True)
 alternate_title = alternate_title.setName('Alternate Title').setResultsName(
     'title')
 

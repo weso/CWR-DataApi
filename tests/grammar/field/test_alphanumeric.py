@@ -245,6 +245,12 @@ class TestAlphanumException(unittest.TestCase):
         """
         self.assertRaises(ParseException, self.alpha.parseString, 'ABcDE')
 
+    def test_invalid_char(self):
+        """
+        Tests that an exception is thrown when the field is not using capitol letters.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, 'ABƏDE')
+
 
 class TestAlphanumHugeException(unittest.TestCase):
     """
@@ -298,3 +304,9 @@ class TestAlphanumCompulsoryException(unittest.TestCase):
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """
         self.assertRaises(ParseException, self.alpha.parseString, '     ')
+
+    def test_invalid_char(self):
+        """
+        Tests that an exception is thrown when the field is not using capitol letters.
+        """
+        self.assertRaises(ParseException, self.alpha.parseString, 'ABƏDE')

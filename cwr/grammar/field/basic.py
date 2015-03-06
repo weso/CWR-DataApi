@@ -43,7 +43,7 @@ The string contained in this field is parsed into a string with no heading or tr
 """
 
 
-def alphanum(columns, compulsory=False):
+def alphanum(columns, compulsory=False, extended=False):
     """
     Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
 
@@ -53,14 +53,19 @@ def alphanum(columns, compulsory=False):
 
     :param columns: number of columns for this field
     :param compulsory: indicates if empty strings are disallowed
+    :param extended: indicates if this is the exceptional case where non-ASCII are allowed
     :return: grammar for this Alphanumeric field
     """
 
     if columns <= 0:
         raise BaseException()
 
-    # The regular expression just forbids lowercase characters
-    field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
+    if not extended:
+        # The regular expression just forbids lowercase characters
+        field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
+    else:
+        # The regular expression forbids lowercase characters but allows non-ascii characters
+        field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]|[^\x00-\x7F]){' + str(columns) + '}')
 
     # Parse action
     field.setParseAction(lambda s: s[0].strip())

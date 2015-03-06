@@ -20,6 +20,11 @@ class TestAlternateTitleGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = work_detail.alternate
 
+    def test_extended_character(self):
+        record = 'ALT0000028200001380PAƏ                                                        AT  '
+
+        result = self.grammar.parseString(record)[0]
+
     def test_valid_full(self):
         record = 'ALT0000123400000023THE TITLE                                                   ATES'
 
