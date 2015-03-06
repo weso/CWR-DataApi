@@ -86,6 +86,13 @@ class TestAlphanumValid(unittest.TestCase):
         result = self.alpha.parseString('     ')
         self.assertEqual('', result[0])
 
+    def test_spaces_between(self):
+        """
+        Tests that the alphanum field accepts a string of the correct number of characters with spaces in between.
+        """
+        result = self.alpha.parseString('AB CD')
+        self.assertEqual('AB CD', result[0])
+
 
 class TestAlphanumHugeValid(unittest.TestCase):
     """
@@ -177,6 +184,13 @@ class TestAlphanumCompulsoryValid(unittest.TestCase):
         """
         result = self.alpha.parseString('  C  ')
         self.assertEqual('C', result[0])
+
+    def test_spaces_between(self):
+        """
+        Tests that the alphanum field accepts a string of the correct number of characters with spaces in between.
+        """
+        result = self.alpha.parseString('AB CD')
+        self.assertEqual('AB CD', result[0])
 
 
 class TestAlphanumConstructorException(unittest.TestCase):

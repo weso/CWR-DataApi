@@ -173,11 +173,11 @@ def iswc(compulsory=False):
     header = header.setName('ISWC Header').setResultsName('header')
 
     # ID code is composed of 9 numbers
-    id_code = basic.numeric(9)
+    id_code = basic.numeric(9, compulsory=True)
     id_code = id_code.setName('ID Code').setResultsName('id_code')
 
     # Check digit is a single number
-    check_digit = basic.numeric(1)
+    check_digit = basic.numeric(1, compulsory=True)
     check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
 
     # T followed by 10 numbers

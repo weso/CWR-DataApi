@@ -120,15 +120,44 @@ def numeric(columns, compulsory=False):
         raise BaseException()
 
     # Only numbers are accepted
-    field = pp.Word(pp.nums, exact=columns)
+    field = pp.Regex('[0-9]{' + str(columns) + '}')
 
     # Parse action
-    field.setParseAction(lambda n: int(n[0]))
+    field.setParseAction(lambda n: _to_int(n))
+    field.leaveWhitespace()
 
     # Name
     field.setName('Numeric Field')
 
+    if not compulsory:
+        empty = pp.Regex('[ ]{' + str(columns) + '}')
+
+        empty.setParseAction(pp.replaceWith(None))
+
+        empty.setName('Numeric Field')
+
+        # White spaces are not removed
+        empty.leaveWhitespace()
+
+        field = field | empty
+
+        # Name
+        field.setName('Numeric Field')
+
     return field
+
+
+def _to_int(parsed):
+    """
+    Transforms the received parsed value into an integer.
+
+    :param parsed: the parsed value
+    :return: an integer created from the value
+    """
+    if len(parsed) > 0:
+        return int(parsed[0])
+    else:
+        return None
 
 
 """
@@ -240,16 +269,16 @@ def boolean(compulsory=False):
     field.setName('Boolean Field')
 
     if not compulsory:
-        optional = pp.Literal(' ')
+        empty = pp.Literal(' ')
 
-        optional.setParseAction(lambda b: False)
+        empty.setParseAction(lambda b: False)
 
-        optional.setName('Boolean Field')
+        empty.setName('Boolean Field')
 
         # White spaces are not removed
-        optional.leaveWhitespace()
+        empty.leaveWhitespace()
 
-        field = field | optional
+        field = field | empty
 
         # Name
         field.setName('Boolean Field')

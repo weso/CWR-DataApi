@@ -21,6 +21,36 @@ class TestPublisherRecordValid(unittest.TestCase):
     def setUp(self):
         self.grammar = publisher.publisher
 
+    def test_common(self):
+        record = 'SPU00000179000005380166       THE MUSIC SOCIETY                             E          002501650060399357851805061 0025061 0050061 00500   0000000000000                            OS '
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('SPU', result.record_type)
+        self.assertEqual(179, result.transaction_sequence_n)
+        self.assertEqual(538, result.record_sequence_n)
+        self.assertEqual(1, result.sequence_n)
+        self.assertEqual('66', result.publisher.ip_id)
+        self.assertEqual('THE MUSIC SOCIETY', result.publisher.name)
+        self.assertEqual(None, result.publisher_unknown)
+        self.assertEqual('E', result.publisher_type)
+        self.assertEqual(None, result.publisher.tax_id)
+        self.assertEqual(250165006, result.publisher.ipi_name)
+        self.assertEqual('03993578518050', result.agreement_id)
+        self.assertEqual(61, result.pr_society)
+        self.assertEqual(2.5, result.pr_owner_share)
+        self.assertEqual(61, result.mr_society)
+        self.assertEqual(5, result.mr_owner_share)
+        self.assertEqual(61, result.sr_society)
+        self.assertEqual(5, result.sr_owner_share)
+        self.assertEqual(None, result.special_agreements)
+        self.assertEqual(None, result.first_record_refusal)
+        self.assertEqual(0, result.publisher.ipi_base_id)
+        self.assertEqual('', result.isac)
+        self.assertEqual('', result.society_agreement_id)
+        self.assertEqual('OS', result.agreement_type)
+        self.assertEqual(None, result.usa_license)
+
     def test_valid_full(self):
         """
         Tests that Publisher Record grammar decodes correctly formatted record prefixes.

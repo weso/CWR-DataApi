@@ -62,8 +62,20 @@ sequence_new = sequence_new.setName('Sequence Number').setResultsName('sequence_
 
 # Year
 year = basic.numeric(2)
-year.setParseAction(lambda y: int('20' + y[0]))
+year.setParseAction(lambda y: _to_year(y))
 year = year.setName('Year').setResultsName('year')
+
+
+def _to_year(parsed):
+    """
+    Transforms the parsed two digits integer into a valid year value.
+
+    :param parsed: the parsed value
+    """
+    if len(parsed) > 0:
+        return 2000 + parsed[0]
+    else:
+        return None
 
 # Sender
 sender = pp.Word(pp.alphanums, min=2, max=3)

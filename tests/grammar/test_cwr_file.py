@@ -19,6 +19,60 @@ class TestFileValid(unittest.TestCase):
     def setUp(self):
         self.grammar = file.cwr_file
 
+    def _agreement_territory(self):
+        territory_1 = 'TER0000123400000023I0020'
+        territory_2 = 'TER0000123400000023I0020'
+
+        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
+        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
+
+        assignor_1 = ipa + '\n' + npa
+
+        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
+        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
+
+        assignor_2 = ipa + '\n' + npa
+
+        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
+        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
+
+        acquirer_1 = ipa + '\n' + npa
+
+        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
+        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
+
+        acquirer_2 = ipa + '\n' + npa
+
+        return territory_1 + '\n' + territory_2 + '\n' + assignor_1 + '\n' + assignor_2 + '\n' + acquirer_1 + '\n' + acquirer_2
+
+    def _agreement(self):
+        agreement = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201605062017060701234MYY0123456789012A'
+
+        agr_territory_1 = self._agreement_territory()
+
+        agr_territory_2 = self._agreement_territory()
+
+        return agreement + '\n' + agr_territory_1 + '\n' + agr_territory_2
+
+    def _agreement_group(self):
+        header = 'GRHAGR0123402.100123456789  '
+
+        trailer = 'GRT000010000017900000719   0000000000'
+
+        return header + '\n' + self._agreement() + '\n' + trailer
+
+    def _work_group(self):
+        header = 'GRHNWR0000202.100130500002  '
+
+        trailer = 'GRT012340123456701234567             '
+
+        return header + '\n' + self._work() + '\n' + trailer
+
+    def _work(self):
+        work = 'NWR0000017900000000NAME OF THE STREET                                            1430374       T037306869919980730            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y'
+
+        return work
+
     def test(self):
         header_file = 'HDRPB226144593AGENCIA GRUPO MUSICAL                        01.102013080902591120130809               '
         header_group = 'GRHAGR0000102.100130400001  '
@@ -36,70 +90,23 @@ class TestFileValid(unittest.TestCase):
 
         self.assertEqual(8, len(result))
 
+    def test_agreement_work(self):
+        header_file = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
+
+        trailer_file = 'TRL012340123456701234568'
+
+        record = header_file + '\n' + self._agreement_group() + '\n' + self._work_group() + '\n' + trailer_file
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(28, len(result))
+
     def test_agreement_full(self):
         header_file = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
 
         trailer_file = 'TRL012340123456701234568'
 
-        header = 'GRHACK0123402.100123456789  '
-
-        trailer = 'GRT012340123456701234567             '
-
-        agreement = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201605062017060701234MYY0123456789012A'
-
-        territory_1 = 'TER0000123400000023I0020'
-        territory_2 = 'TER0000123400000023I0020'
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        assignor_1 = ipa + '\n' + npa
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        assignor_2 = ipa + '\n' + npa
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        acquirer_1 = ipa + '\n' + npa
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        acquirer_2 = ipa + '\n' + npa
-
-        agr_territory_1 = territory_1 + '\n' + territory_2 + '\n' + assignor_1 + '\n' + assignor_2 + '\n' + acquirer_1 + '\n' + acquirer_2
-
-        territory_1 = 'TER0000123400000023I0020'
-        territory_2 = 'TER0000123400000023I0020'
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        assignor_1 = ipa + '\n' + npa
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        assignor_2 = ipa + '\n' + npa
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        acquirer_1 = ipa + '\n' + npa
-
-        ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
-        npa = 'NPA0000123400000023012345678PARTY NAME                                                                                                                                                      PARTY WRITER NAME                                                                                                                                               ES'
-
-        acquirer_2 = ipa + '\n' + npa
-
-        agr_territory_2 = territory_1 + '\n' + territory_2 + '\n' + assignor_1 + '\n' + assignor_2 + '\n' + acquirer_1 + '\n' + acquirer_2
-
-        agreement_record = agreement + '\n' + agr_territory_1 + '\n' + agr_territory_2
-
-        group = header + '\n' + agreement_record + '\n' + trailer
+        group = self._agreement_group()
 
         record = header_file + '\n' + group + '\n' + trailer_file
 
