@@ -40,7 +40,7 @@ def ip_id(compulsory=False):
 
     :return: a parser for the IP Number field
     """
-    field = basic.alphanum(_config.field_size('special', 'ip_id'), compulsory)
+    field = basic.alphanum(_config.field_size('special', 'ip_id'), compulsory=compulsory)
     field = field.setName('Interested Party Number Field').setResultsName('ip_id')
 
     return field
@@ -235,7 +235,7 @@ def percentage(columns, maximum=100, compulsory=False):
     if columns < 3:
         raise BaseException()
 
-    field = basic.numeric_float(columns, 3, compulsory)
+    field = basic.numeric_float(columns, 3, compulsory=compulsory)
 
     field.addParseAction(lambda v: _assert_is_percentage(v[0], maximum))
 
@@ -299,7 +299,7 @@ def ean_13(compulsory=False):
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for an EAN 13 field
     """
-    field = basic.numeric(13, compulsory)
+    field = basic.numeric(13, compulsory=compulsory)
 
     field = field.setName('Shares Field')
 

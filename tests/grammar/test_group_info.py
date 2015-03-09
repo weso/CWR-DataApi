@@ -88,7 +88,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + self._agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
     def test_agreement_small_pair(self):
         header = 'GRHAGR0000102.100130400001  '
@@ -96,7 +96,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + self._agreement_short() + '\n' + self._agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
     def test_agreement_full(self):
         header = 'GRHACK0123402.100123456789  '
@@ -109,42 +109,44 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + agreement_record_1 + '\n' + agreement_record_2 + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
-        self.assertEqual(44, len(result))
+        self.assertEqual('GRH', result.grh.record_type)
 
-        self.assertEqual('GRH', result[0].record_type)
+        self.assertEqual('GRT', result.grt.record_type)
 
-        self.assertEqual('AGR', result[1].record_type)
+        transactions = result.transactions
 
-        self.assertEqual('TER', result[2].record_type)
-        self.assertEqual('TER', result[3].record_type)
+        self.assertEqual(42, len(transactions))
 
-        self.assertEqual('IPA', result[4].record_type)
-        self.assertEqual('NPA', result[5].record_type)
+        self.assertEqual('AGR', transactions[0].record_type)
 
-        self.assertEqual('IPA', result[6].record_type)
-        self.assertEqual('NPA', result[7].record_type)
+        self.assertEqual('TER', transactions[1].record_type)
+        self.assertEqual('TER', transactions[2].record_type)
 
-        self.assertEqual('IPA', result[8].record_type)
-        self.assertEqual('NPA', result[9].record_type)
+        self.assertEqual('IPA', transactions[3].record_type)
+        self.assertEqual('NPA', transactions[4].record_type)
 
-        self.assertEqual('IPA', result[10].record_type)
-        self.assertEqual('NPA', result[11].record_type)
+        self.assertEqual('IPA', transactions[5].record_type)
+        self.assertEqual('NPA', transactions[6].record_type)
 
-        self.assertEqual('TER', result[12].record_type)
-        self.assertEqual('TER', result[13].record_type)
+        self.assertEqual('IPA', transactions[7].record_type)
+        self.assertEqual('NPA', transactions[8].record_type)
 
-        self.assertEqual('IPA', result[14].record_type)
-        self.assertEqual('NPA', result[15].record_type)
+        self.assertEqual('IPA', transactions[9].record_type)
+        self.assertEqual('NPA', transactions[10].record_type)
 
-        self.assertEqual('IPA', result[16].record_type)
-        self.assertEqual('NPA', result[17].record_type)
+        self.assertEqual('TER', transactions[11].record_type)
+        self.assertEqual('TER', transactions[12].record_type)
 
-        self.assertEqual('IPA', result[18].record_type)
-        self.assertEqual('NPA', result[19].record_type)
+        self.assertEqual('IPA', transactions[13].record_type)
+        self.assertEqual('NPA', transactions[14].record_type)
 
-        self.assertEqual('IPA', result[20].record_type)
-        self.assertEqual('NPA', result[21].record_type)
+        self.assertEqual('IPA', transactions[15].record_type)
+        self.assertEqual('NPA', transactions[16].record_type)
 
-        self.assertEqual('GRT', result[43].record_type)
+        self.assertEqual('IPA', transactions[17].record_type)
+        self.assertEqual('NPA', transactions[18].record_type)
+
+        self.assertEqual('IPA', transactions[19].record_type)
+        self.assertEqual('NPA', transactions[20].record_type)

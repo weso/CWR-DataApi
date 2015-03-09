@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestTransactionInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = file.transaction_info
+        self.grammar = file.group_transactions
 
     def test_agreement_full(self):
         agreement = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201605062017060701234MYY0123456789012A'
@@ -74,7 +74,7 @@ class TestTransactionInformationValid(unittest.TestCase):
 
         record = agreement + '\n' + agr_territory_1 + '\n' + agr_territory_2
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual(21, len(result))
 
@@ -115,7 +115,7 @@ class TestTransactionInformationValid(unittest.TestCase):
 
         record = work
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual(1, len(result))
 
@@ -131,7 +131,7 @@ class TestTransactionInformationValid(unittest.TestCase):
 
         record = acknowledgement + '\n' + message_1 + '\n' + message_2 + '\n' + agreement
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual(4, len(result))
 
@@ -152,7 +152,7 @@ class TestTransactionInformationValid(unittest.TestCase):
 
         record = acknowledgement + '\n' + message_1 + '\n' + message_2 + '\n' + work + '\n' + conflict
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual(5, len(result))
 

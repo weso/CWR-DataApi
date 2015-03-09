@@ -24,12 +24,12 @@ __status__ = 'Development'
 Fields.
 """
 
-_group_transactions = pp.Group(
+group_transactions = pp.Group(
     pp.OneOrMore(transaction.agreement_transaction) | pp.OneOrMore(transaction.work_transaction) | \
     pp.OneOrMore(transaction.acknowledgement_transaction))
-_group_transactions = _group_transactions.setName('Group Transactions').setResultsName('transactions')
+group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
 
-group_info = group.group_header + _group_transactions + group.group_trailer
+group_info = group.group_header + group_transactions + group.group_trailer
 
 _transmission_groups = pp.OneOrMore(group_info)
 _transmission_groups = _transmission_groups.setName('Transmission Groups').setResultsName('groups')
