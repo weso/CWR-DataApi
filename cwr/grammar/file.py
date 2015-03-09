@@ -4,7 +4,7 @@ import pyparsing as pp
 
 from cwr.grammar.record import transmission, group
 from cwr.grammar import transaction
-from cwr.file import Transmission
+from cwr.file import Transmission, TransactionGroup
 
 
 """
@@ -24,14 +24,15 @@ __status__ = 'Development'
 Fields.
 """
 
-# Transaction and group
-transaction_info = pp.OneOrMore(transaction.agreement_transaction) | pp.OneOrMore(
-    transaction.work_transaction) | pp.OneOrMore(transaction.acknowledgement_transaction)
+_group_transactions = pp.Group(
+    pp.OneOrMore(transaction.agreement_transaction) | pp.OneOrMore(transaction.work_transaction) | \
+    pp.OneOrMore(transaction.acknowledgement_transaction))
+_group_transactions = _group_transactions.setName('Group Transactions').setResultsName('transactions')
 
-group_info = group.group_header + transaction_info + group.group_trailer
+group_info = group.group_header + _group_transactions + group.group_trailer
 
 _transmission_groups = pp.OneOrMore(group_info)
-_transmission_groups = _transmission_groups.setName('Transmission Groups').setResultsName('transmission_groups')
+_transmission_groups = _transmission_groups.setName('Transmission Groups').setResultsName('groups')
 
 """
 Rules.
@@ -45,6 +46,8 @@ Parsing actions for the patterns.
 """
 
 cwr_transmission.setParseAction(lambda a: _to_transmission(a))
+
+group_info.setParseAction(lambda a: _to_group(a))
 
 """
 Parsing methods.
@@ -60,4 +63,14 @@ def _to_transmission(parsed):
     :param parsed: result of parsing a Transmission
     :return: a Transmission created from the parsed record
     """
-    return Transmission(parsed.transmission_header, parsed.transmission_trailer, parsed.transmission_groups)
+    return Transmission(parsed.transmission_header, parsed.transmission_trailer, parsed.groups)
+
+
+def _to_group(parsed):
+    """
+    Transforms the final parsing result into a TransactionGroup instance.
+
+    :param parsed: result of parsing a Transactions Group
+    :return: a TransactionGroup created from the parsed record
+    """
+    return TransactionGroup(parsed.group_header, parsed.group_trailer, parsed.transactions)
