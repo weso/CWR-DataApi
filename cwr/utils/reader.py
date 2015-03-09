@@ -45,7 +45,7 @@ def read(file):
     for line in cwr:
         file += line
     print(file)
-    print(rule_file.cwr_file.parseString(file))
+    print(rule_file.cwr_transmission.parseString(file))
 
 
 if __name__ == '__main__':

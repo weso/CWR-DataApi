@@ -278,6 +278,7 @@ class Transmission(object):
             self._trl,
             self._groups)
 
+    @property
     def groups(self):
         """
         The transmission groups. This is a collection of TransactionGroups.
@@ -286,6 +287,7 @@ class Transmission(object):
         """
         return self._groups
 
+    @property
     def hdr(self):
         """
         The transmission header. This is a TransmissionHeader.
@@ -294,6 +296,7 @@ class Transmission(object):
         """
         return self._hdr
 
+    @property
     def trl(self):
         """
         The transmission trailer. This is a TransmissionTrailer.

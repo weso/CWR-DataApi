@@ -52,12 +52,14 @@ transmission_header = field_special.lineStart + field_record.record_type(_config
                       field_table.sender_type(
                           True) + field_transmission.sender_id + field_transmission.sender_name + field_transmission.edi_version + \
                       field_transmission.creation_date_time + field_transmission.transmission_date + field_transmission.character_set + field_special.lineEnd
+transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + field_record.record_type(_config.record_type('transmission_trailer'),
                                                                           compulsory=True) + \
                        field_record.group_count(compulsory=True) + field_record.transaction_count(compulsory=True) + \
                        field_record.record_count(compulsory=True) + field_special.lineEnd
+transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()
 """
