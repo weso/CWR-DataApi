@@ -32,21 +32,27 @@ lineEnd.setName("End of line")
 # CONCRETE CASES FIELDS
 
 
-def ip_id(compulsory=False):
+def ip_id(name=None, compulsory=False):
     """
     IP Number field.
 
     On the CWR standard an Interested Party can have an alphanumeric ID of up to 9 digits.
 
+    :param name: name for the field
+    :param compulsory: indicates if empty strings are disallowed
     :return: a parser for the IP Number field
     """
+
+    if name is None:
+        name = 'Interested Party Number Field'
+
     field = basic.alphanum(_config.field_size('special', 'ip_id'), compulsory=compulsory)
-    field = field.setName('Interested Party Number Field').setResultsName('ip_id')
+    field.setName(name)
 
-    return field
+    return field.setResultsName('ip_id')
 
 
-def ipi_base_number(compulsory=False):
+def ipi_base_number(name=None, compulsory=False):
     """
     IPI Base Number field.
 
@@ -57,9 +63,13 @@ def ipi_base_number(compulsory=False):
 
     So, for example, an IPI Base Number code field can contain I-000000229-7.
 
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: a parser for the IPI Base Number field
     """
+
+    if name is None:
+        name = 'IPI Base Number Field'
 
     # Separators are '-'
     separator = pp.Literal('-').suppress()
@@ -80,16 +90,16 @@ def ipi_base_number(compulsory=False):
     check_digit = check_digit.setParseAction(lambda c: int(c[0]))
 
     # Digit followed separator, 9 numbers, separator and 1 number
-    field = header + separator + id_code + separator + check_digit
+    field = pp.Group(header + separator + id_code + separator + check_digit)
 
     # Parse action
-    field.setParseAction(lambda c: _to_ipibasecode(c))
+    field.setParseAction(lambda c: _to_ipibasecode(c[0]))
 
     # Name
-    field.setName('IPI Base Number Field')
+    field.setName(name)
 
     field_num = basic.numeric(13, compulsory=compulsory)
-    field_num.setName('IPI Base Number Field')
+    field_num.setName(name)
 
     field = field | field_num
 
@@ -97,18 +107,16 @@ def ipi_base_number(compulsory=False):
         # If it is not compulsory then it can be set as empty
         empty = pp.Regex('[ ]{13}')
         empty.setParseAction(pp.replaceWith(None))
-        empty.setName('IPI Base Number Field')
+        empty.setName(name)
 
         field = empty | field
         # Name
-        field.setName('ISWC Field')
+        field.setName(name)
 
     # White spaces are not removed
     field.leaveWhitespace()
 
-    field = field.setResultsName('ipi_base')
-
-    return field
+    return field.setResultsName('ipi_base')
 
 
 def _to_ipibasecode(code):
@@ -125,7 +133,7 @@ def _to_ipibasecode(code):
         return code
 
 
-def ipi_name_number(compulsory=False):
+def ipi_name_number(name=None, compulsory=False):
     """
     IPI Name Number field.
 
@@ -133,27 +141,32 @@ def ipi_name_number(compulsory=False):
 
     So, for example, an IPI Name Number code field can contain 00014107338.
 
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: a parser for the IPI Name Number field
     """
+
+    if name is None:
+        name = 'IPI Base Number Field'
+
     field = basic.numeric(11, compulsory=compulsory)
 
     if not compulsory:
         # If it is not compulsory then it can be set as empty
         empty = pp.Regex('[ ]{11}')
         empty.setParseAction(pp.replaceWith(None))
-        empty.setName('IPI Base Number Field')
+        empty.setName(name)
 
         field = empty | field
         # Name
-        field.setName('IPI Name Number Field')
+        field.setName(name)
 
-    field = field.setName('IPI Name Number Field').setResultsName('ipi_name')
+    field.setName(name)
 
-    return field
+    return field.setResultsName('ipi_name')
 
 
-def iswc(compulsory=False):
+def iswc(name=None, compulsory=False):
     """
     ISWC field.
 
@@ -164,9 +177,13 @@ def iswc(compulsory=False):
 
     So, for example, an ISWC code field can contain T0345246801.
 
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: a parser for the ISWC field
     """
+
+    if name is None:
+        name = 'ISWC Field'
 
     # Header is always T
     header = pp.Literal('T').suppress()
@@ -181,28 +198,28 @@ def iswc(compulsory=False):
     check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
 
     # T followed by 10 numbers
-    field = pp.Combine(header + id_code + check_digit)
+    field = pp.Group(header + id_code + check_digit)
 
     # Parse action
-    field.setParseAction(lambda c: _to_iswccode(c))
+    field.setParseAction(lambda c: _to_iswccode(c[0]))
 
     # Name
-    field.setName('ISWC Field').setResultsName('iswc')
+    field.setName(name)
 
     if not compulsory:
         # If it is not compulsory then it can be set as empty
         empty = pp.Regex('[ ]{11}')
         empty.setParseAction(pp.replaceWith(None))
-        empty.setName('ISWC Field')
+        empty.setName(name)
 
         field = empty | field
         # Name
-        field.setName('ISWC Field')
+        field.setName(name)
 
     # White spaces are not removed
     field.leaveWhitespace()
 
-    return field
+    return field.setResultsName('iswc')
 
 
 def _to_iswccode(code):
@@ -218,19 +235,27 @@ def _to_iswccode(code):
         return code
 
 
-def percentage(columns, maximum=100, compulsory=False):
+def percentage(columns, maximum=100, name=None, compulsory=False):
     """
     Creates the grammar for a Numeric (N) field storing a percentage and accepting only the specified number of
     characters.
+
+    It is possible to set the maximum allowed value. By default this is 100 (for 100%), and if modified it is
+    expected to be reduced, not increased.
 
     The three first digits will be for the integer value.
 
     The columns can't be lower than 3.
 
     :param columns: number of columns for this field
+    :param maximum: maximum allowed value
+    :param name: name for the field
     :param compulsory: indicates if the zero is disallowed
     :return: grammar for the float numeric field
     """
+
+    if name is None:
+        name = 'Percentage Field'
 
     if columns < 3:
         raise BaseException()
@@ -239,7 +264,7 @@ def percentage(columns, maximum=100, compulsory=False):
 
     field.addParseAction(lambda v: _assert_is_percentage(v[0], maximum))
 
-    field.setName('Percentage Field')
+    field.setName(name)
 
     return field
 
@@ -255,7 +280,7 @@ def _assert_is_percentage(value, maximum=100):
         raise pp.ParseException('', 'The value on a percentage field should be between 0 and 100')
 
 
-def shares(maximum=100, compulsory=False):
+def shares(maximum=100, name=None, compulsory=False):
     """
     Creates the grammar for a shares field.
 
@@ -265,57 +290,79 @@ def shares(maximum=100, compulsory=False):
     They range from 00000, for 0%, to 100000, for 100%.
 
     :param maximum: the maximum value for the shares
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for the society ID field
     """
+
+    if name is None:
+        name = 'Shares Field'
+
     field = percentage(_config.field_size('special', 'shares'), maximum=maximum, compulsory=compulsory)
-    field.setName('Shares Field')
+    field.setName(name)
 
     return field
 
 
-def blank(columns):
+def blank(columns, name=None):
     """
     Creates the grammar for a group of blank spaces.
 
     These are for constant empty strings which should be ignored, as they are used just as fillers.
 
     :param columns: the number of blank spaces
+    :param name: name for the field
     :return: grammar for a group of blank spaces
     """
+
+    if name is None:
+        name = 'Blank Field'
+
     field = pp.Regex('[ ]{' + str(columns) + '}')
     field.leaveWhitespace()
     field.suppress()
 
+    field.setName(name)
+
     return field
 
 
-def ean_13(compulsory=False):
+def ean_13(name=None, compulsory=False):
     """
     Creates the grammar for an EAN 13 code.
 
     These are the codes on thirteen digits barcodes.
 
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for an EAN 13 field
     """
+
+    if name is None:
+        name = 'Shares Field'
+
     field = basic.numeric(13, compulsory=compulsory)
 
-    field = field.setName('Shares Field')
+    field = field.setName(name)
 
     return field.setResultsName('ean_13')
 
 
-def isrc(compulsory=False):
+def isrc(name=None, compulsory=False):
     """
     Creates the grammar for an ISRC code.
 
     ISRC stands for International Standard Recording Code, which is the standard ISO 3901. This stores information
     identifying a particular recording.
 
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for an ISRC field
     """
+
+    if name is None:
+        name = 'ISRC Field'
+
     separator = pp.Literal('-')
     country = basic.alphanum(2)
     registrant = basic.alphanum(3)
@@ -324,34 +371,40 @@ def isrc(compulsory=False):
 
     field = pp.Combine(country + separator + registrant + separator + year + separator + work_id)
 
-    field = field.setName('ISRC Field').setResultsName('isrc')
+    field.setName(name)
 
     if not compulsory:
         # If it is not compulsory then it can be set as empty
         empty = pp.Regex('[ ]{12}')
         empty.setParseAction(pp.replaceWith(None))
-        empty.setName('ISRC Field')
+        empty.setName(name)
         empty.leaveWhitespace()
 
         field = empty | field
         # Name
-        field.setName('ISRC Field')
+        field.setName(name)
 
     # TODO: Fix this field
     field = basic.alphanum(12, compulsory=compulsory)
-    field = field.setName('ISRC Field').setResultsName('isrc')
-    return field
+    field = field.setName(name)
+
+    return field.setResultsName('isrc')
 
 
-def visan(compulsory=False):
+def visan(name=None, compulsory=False):
     """
     Creates the grammar for a V-ISAN code.
 
     This is a variation on the ISAN (International Standard Audiovisual Number)
 
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for an ISRC field
     """
+
+    if name is None:
+        name = 'V-ISAN Field'
+
     version = basic.numeric(8)
     version = version.setName('Version').setResultsName('version')
 
@@ -364,23 +417,24 @@ def visan(compulsory=False):
     check_digit = basic.numeric(1)
     check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
 
-    field = pp.Combine(version + isan + episode + check_digit)
+    field = pp.Group(version + isan + episode + check_digit)
 
     field.setParseAction(lambda v: _to_visan(v[0]))
 
-    field = field.setName('V-ISAN Field').setResultsName('visan')
+    field.setName(name)
 
     if not compulsory:
         # If it is not compulsory then it can be set as empty
         empty = pp.Regex('[ ]{25}')
         empty.setParseAction(pp.replaceWith(None))
-        empty.setName('V-ISAN Field')
+        empty.setName(name)
 
         field = empty | field
-        # Name
-        field.setName('V-ISAN Field')
 
-    return field
+        # Name
+        field.setName(name)
+
+    return field.setResultsName('visan')
 
 
 def _to_visan(parsed):
@@ -393,38 +447,43 @@ def _to_visan(parsed):
     return VISAN(parsed.version, parsed.isan, parsed.episode, parsed.check_digit)
 
 
-def avi(compulsory=False):
+def avi(name=None, compulsory=False):
     """
     Creates the grammar for an AVI code.
 
     This is a variation on the ISAN (International Standard Audiovisual Number)
 
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for an ISRC field
     """
+
+    if name is None:
+        name = 'AVI Field'
+
     society_code = basic.numeric(3)
     society_code = society_code.setName('Society Code').setResultsName('society_code')
 
     av_number = basic.alphanum(15)
     av_number = av_number.setName('Audio-Visual Number').setResultsName('av_number')
 
-    field = pp.Combine(society_code + av_number)
+    field = pp.Group(society_code + av_number)
 
     field.setParseAction(lambda v: _to_avi(v[0]))
 
-    field = field.setName('AVI Field').setResultsName('avi')
+    field = field.setName(name)
 
     if not compulsory:
         # If it is not compulsory then it can be set as empty
         empty = pp.Regex('[ ]{18}')
         empty.setParseAction(pp.replaceWith(None))
-        empty.setName('AVI Field')
+        empty.setName(name)
 
         field = empty | field
         # Name
-        field.setName('AVI Field')
+        field.setName(name)
 
-    return field
+    return field.setResultsName('avi')
 
 
 def _to_avi(parsed):

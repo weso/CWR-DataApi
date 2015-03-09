@@ -71,6 +71,24 @@ class TestIPIBaseNumberValid(unittest.TestCase):
         self.assertEqual(0, result.check_digit)
 
 
+class TestIPIBaseNumberResultName(unittest.TestCase):
+    """
+    Tests that the IPI Base Number accepts and parses valid values.
+    """
+
+    def setUp(self):
+        self.ipi = special.ipi_base_number()
+
+    def test_common(self):
+        code = 'I-000000229-7'
+
+        result = self.ipi.parseString(code)
+
+        self.assertEqual('I', result.ipi_base.header)
+        self.assertEqual(229, result.ipi_base.id_code)
+        self.assertEqual(7, result.ipi_base.check_digit)
+
+
 class TestIPIBaseNumberCompulsoryValid(unittest.TestCase):
     """
     Tests that the IPI Base Number accepts and parses valid values.

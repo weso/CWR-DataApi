@@ -218,6 +218,10 @@ def numeric_float(columns, nums_int, name=None, compulsory=False):
         # Integer columns can't have negative size
         raise BaseException()
 
+    if nums_int < columns:
+        # There are more integer numbers than columns
+        raise BaseException()
+
     # Basic field
     field = pp.Word(pp.nums, exact=columns)
 
