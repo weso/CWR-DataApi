@@ -43,7 +43,7 @@ The string contained in this field is parsed into a string with no heading or tr
 """
 
 
-def alphanum(columns, compulsory=False):
+def alphanum(columns, compulsory=False, extended=False):
     """
     Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
 
@@ -53,14 +53,19 @@ def alphanum(columns, compulsory=False):
 
     :param columns: number of columns for this field
     :param compulsory: indicates if empty strings are disallowed
+    :param extended: indicates if this is the exceptional case where non-ASCII are allowed
     :return: grammar for this Alphanumeric field
     """
 
     if columns <= 0:
         raise BaseException()
 
-    # The regular expression just forbids lowercase characters
-    field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
+    if not extended:
+        # The regular expression just forbids lowercase characters
+        field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
+    else:
+        # The regular expression forbids lowercase characters but allows non-ascii characters
+        field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]|[^\x00-\x7F]){' + str(columns) + '}')
 
     # Parse action
     field.setParseAction(lambda s: s[0].strip())
@@ -120,37 +125,44 @@ def numeric(columns, compulsory=False):
         raise BaseException()
 
     # Only numbers are accepted
-    field = pp.Word(pp.nums, exact=columns)
+    field = pp.Regex('[0-9]{' + str(columns) + '}')
 
     # Parse action
-    field.setParseAction(lambda n: int(n[0]))
-
-    if compulsory:
-        # Compulsory field validation action
-        field.addParseAction(lambda s: _check_above_value_int(s[0], 0))
+    field.setParseAction(lambda n: _to_int(n))
+    field.leaveWhitespace()
 
     # Name
     field.setName('Numeric Field')
 
+    if not compulsory:
+        empty = pp.Regex('[ ]{' + str(columns) + '}')
+
+        empty.setParseAction(pp.replaceWith(None))
+
+        empty.setName('Numeric Field')
+
+        # White spaces are not removed
+        empty.leaveWhitespace()
+
+        field = field | empty
+
+        # Name
+        field.setName('Numeric Field')
+
     return field
 
 
-def _check_above_value_int(string, minimum):
+def _to_int(parsed):
     """
-    Checks that the number parsed from the string is above a minimum.
+    Transforms the received parsed value into an integer.
 
-    This is used on compulsory numeric fields.
-
-    If the value is not above the minimum an exception is thrown.
-
-    :param string: the field value
-    :param minimum: minimum value
+    :param parsed: the parsed value
+    :return: an integer created from the value
     """
-    value = int(string)
-
-    if value <= minimum:
-        message = "The Numeric Field value should be above %s" % minimum
-        raise pp.ParseException(string, message)
+    if len(parsed) > 0:
+        return int(parsed[0])
+    else:
+        return None
 
 
 """
@@ -262,16 +274,16 @@ def boolean(compulsory=False):
     field.setName('Boolean Field')
 
     if not compulsory:
-        optional = pp.Literal(' ')
+        empty = pp.Literal(' ')
 
-        optional.setParseAction(lambda b: False)
+        empty.setParseAction(lambda b: False)
 
-        optional.setName('Boolean Field')
+        empty.setName('Boolean Field')
 
         # White spaces are not removed
-        optional.leaveWhitespace()
+        empty.leaveWhitespace()
 
-        field = field | optional
+        field = field | empty
 
         # Name
         field.setName('Boolean Field')
@@ -385,8 +397,8 @@ def date(compulsory=False):
     """
 
     # Basic field
-    # This regex allows values from 00010101 to 99991231
-    field = pp.Regex('[0-9][0-9](([0-9][1-9])|([1-9][0-9]))(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])')
+    # This regex allows values from 00000101 to 99991231
+    field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])')
 
     # Parse action
     field.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())
@@ -402,7 +414,14 @@ def date(compulsory=False):
         # Name
         optional.setName('Date Field')
 
-        field = field | optional
+        # If it is not compulsory the empty date is accepted
+        empty = pp.Regex('[ ]{8}')
+        empty.setParseAction(pp.replaceWith(None))
+
+        # Name
+        empty.setName('Date Field')
+
+        field = field | optional | empty
 
         # Name
         field.setName('Date Field')
