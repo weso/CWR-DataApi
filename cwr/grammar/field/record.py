@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-import pyparsing as pp
-
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import basic
 
@@ -24,50 +22,121 @@ _config = CWRConfiguration()
 # Prefix fields
 
 
-# Record type
-def record_type(values):
-    type_field = pp.oneOf(values)
-    type_field = type_field.setName('Record Type (one of ' + str(values) + ')').setResultsName('record_type')
+def record_type(values, compulsory=False):
+    """
+    Creates a record type field.
 
-    return type_field
+    These serve as the header field on records, identifying them.
 
-# Transaction sequence number
-transaction_seq_n = basic.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'))
-transaction_seq_n = transaction_seq_n.setName('Transaction Sequence Number').setResultsName('transaction_sequence_n')
+    Usually this field can be only an specific value, but sometimes a small range of codes is allowed. This is
+    specified by the 'values' parameter.
 
-# Record sequence number
-record_seq_n = basic.numeric(_config.field_size('record_prefix', 'record_sequence_n'))
-record_seq_n = record_seq_n.setName('Record Sequence Number').setResultsName('record_sequence_n')
+    While it is possible to set this field as optional, it is expected to be compulsory.
+
+    :param values: allowed record type codes
+    :param compulsory: indicates if the empty string is disallowed
+    :return: grammar for the record type field
+    """
+    field = basic.lookup(values, columns=_config.field_size('table', 'record_type'),
+                         compulsory=compulsory,
+                         name='Record Type (one of ' + str(values) + ')')
+
+    return field.setResultsName('record_type')
+
+
+def transaction_seq_n(compulsory=False):
+    """
+    Creates a transaction sequence field.
+
+    This represents the position of a transaction in a group.
+
+    :param compulsory: indicates if the empty string is disallowed
+    :return: grammar for the transaction sequence number field
+    """
+    field = basic.numeric(_config.field_size('record_prefix', 'transaction_sequence_n'), compulsory=compulsory)
+    field = field.setName('Transaction Sequence Number')
+
+    return field.setResultsName('transaction_sequence_n')
+
+
+def record_seq_n(compulsory=False):
+    """
+    Creates a record sequence field.
+
+    This represents the position of a record in a transaction.
+
+    :param compulsory: indicates if the empty string is disallowed
+    :return: grammar for the record sequence number field
+    """
+    field = basic.numeric(_config.field_size('record_prefix', 'record_sequence_n'), compulsory=compulsory)
+    field = field.setName('Record Sequence Number')
+
+    return field.setResultsName('record_sequence_n')
+
 
 # Trailer fields
 
-# Group count
-group_count = basic.numeric(
-    _config.field_size('trailer_record', 'group_count'), compulsory=True)
-group_count = group_count.setName('Group Count').setResultsName('group_count')
+
+def group_count(compulsory=False):
+    """
+    Creates a group count field.
+
+    This field is used on trailer records to indicate the total number of groups previous to this record.
+
+    :param compulsory: indicates if the empty string is disallowed
+    :return: grammar for the group count field
+    """
+    field = basic.numeric(
+        _config.field_size('trailer_record', 'group_count'), compulsory=compulsory)
+    field = field.setName('Group Count')
+
+    return field.setResultsName('group_count')
+
 
 # Transaction count
-transaction_count = basic.numeric(
-    _config.field_size('trailer_record', 'transaction_count'), compulsory=True)
-transaction_count = transaction_count.setName('Transaction Count').setResultsName('transaction_count')
+def transaction_count(compulsory=False):
+    """
+    Creates a transaction count field.
+
+    This field is used on trailer records to indicate the total number of transactions previous to this record.
+
+    :param compulsory: indicates if the empty string is disallowed
+    :return: grammar for the transaction count field
+    """
+    field = basic.numeric(
+        _config.field_size('trailer_record', 'transaction_count'), compulsory=compulsory)
+    field = field.setName('Transaction Count')
+
+    return field.setResultsName('transaction_count')
+
 
 # Record count
-record_count = basic.numeric(
-    _config.field_size('trailer_record', 'record_count'), compulsory=True)
-record_count = record_count.setName('Record Count').setResultsName('record_count')
+def record_count(compulsory=False):
+    """
+    Creates a record count field.
 
-# PATTERNS
+    This field is used on trailer records to indicate the total number of records previous to this record.
+
+    :param compulsory: indicates if the empty string is disallowed
+    :return: grammar for the record count field
+    """
+    field = basic.numeric(
+        _config.field_size('trailer_record', 'record_count'), compulsory=compulsory)
+    field = field.setName('Record Count')
+
+    return field.setResultsName('record_count')
 
 
-# Record prefix pattern
-def record_prefix(required_type):
+# Record prefix
+def record_prefix(required_type, compulsory=False):
     """
     Creates a record prefix for the specified record type.
 
     :param required_type: the type of the record using this prefix
     :return: the record prefix
     """
-    result = record_type(required_type) + transaction_seq_n + record_seq_n
-    result.leaveWhitespace()
+    field = record_type(required_type, compulsory=compulsory) + transaction_seq_n(compulsory=compulsory) + record_seq_n(
+        compulsory=compulsory)
+    field.leaveWhitespace()
 
-    return result
+    return field
