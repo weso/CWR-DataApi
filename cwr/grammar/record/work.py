@@ -29,9 +29,10 @@ work_record = field_special.lineStart + field_record.record_prefix(_config.recor
                                                                    compulsory=True) + field_work.work_title + \
               field_table.language() + field_work.work_id + field_work.iswc + \
               field_work.copyright_date + field_work.copyright_number + field_table.musical_distribution_category(
-    True) + field_work.duration + field_work.recorded + \
-              field_table.text_music_relationship(True) + field_table.composite_type() + field_table.version_type(
-    True) + field_table.excerpt_type(True) + field_table.music_arrangement() + \
+    compulsory=True) + field_work.duration + field_work.recorded + \
+              field_table.text_music_relationship(
+                  compulsory=True) + field_table.composite_type() + field_table.version_type(
+    compulsory=True) + field_table.excerpt_type(compulsory=True) + field_table.music_arrangement() + \
               field_table.lyric_adaptation() + field_work.contact_name + field_work.contact_id + field_table.work_type() + field_work.gr_indicator + field_work.composite_count + \
               field_work.printed_edition_publication_date + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
               field_special.lineEnd
@@ -40,9 +41,10 @@ conflict = field_special.lineStart + field_record.record_prefix(_config.record_t
                                                                 compulsory=True) + field_work.work_title + \
            field_table.language() + field_work.work_id + field_work.iswc + \
            field_work.copyright_date + field_work.copyright_number + field_table.musical_distribution_category(
-    True) + field_work.duration + field_work.recorded + \
-           field_table.text_music_relationship(True) + field_table.composite_type() + field_table.version_type(
-    True) + field_table.excerpt_type(True) + field_table.music_arrangement() + \
+    compulsory=True) + field_work.duration + field_work.recorded + \
+           field_table.text_music_relationship(
+               compulsory=True) + field_table.composite_type() + field_table.version_type(
+    compulsory=True) + field_table.excerpt_type(compulsory=True) + field_table.music_arrangement() + \
            field_table.lyric_adaptation() + field_work.contact_name + field_work.contact_id + field_table.work_type() + field_work.gr_indicator + field_work.composite_count + \
            field_work.printed_edition_publication_date + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
            field_special.lineEnd

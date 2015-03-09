@@ -23,7 +23,7 @@ Territory in Agreement patterns.
 
 territory_in_agreement = special.lineStart + record.record_prefix(
     _config.record_type('agreement_territory'), compulsory=True) + table.ie_indicator(True) + table.tis_code(
-    True) + special.lineEnd
+    compulsory=True) + special.lineEnd
 
 """
 Parsing actions for the patterns.

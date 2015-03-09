@@ -25,7 +25,7 @@ IPA patterns.
 """
 
 ipa = field_special.lineStart + field_record.record_prefix(_config.record_type('ipa'), compulsory=True) + \
-      field_table.agreement_role_code(True) + \
+      field_table.agreement_role_code(compulsory=True) + \
       field_special.ipi_name_number() + field_special.ipi_base_number() + \
       field_special.ip_id(compulsory=True) + field_ipa.ip_last_name + field_ipa.ip_name + \
       society.pr_affiliation() + society.pr_share() + \

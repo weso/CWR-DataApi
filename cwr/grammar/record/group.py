@@ -51,7 +51,7 @@ These are the grammatical structures for the Group Header and Group Trailer.
 # Group Header pattern
 group_header = field_special.lineStart + field_record.record_type(
     _config.record_type('group_header'), compulsory=True) + field_table.transaction_type(
-    True) + field_group.group_id + field_group.version_number + \
+    compulsory=True) + field_group.group_id + field_group.version_number + \
                field_group.batch_request_id + field_group.sd_type + field_special.lineEnd
 group_header = group_header.setName('Group Header').setResultsName('group_header')
 

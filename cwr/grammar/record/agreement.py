@@ -29,9 +29,9 @@ agreement = field_special.lineStart + field_record.record_prefix(
     _config.record_type('agreement'),
     compulsory=True) + field_agreement.submitter_agreement_n + field_agreement.is_code + field_table.agreement_type() + \
             field_agreement.agreement_start_date + field_agreement.agreement_end_date + field_agreement.retention_end_date + field_table.prior_royalty_status(
-    True) + \
+    compulsory=True) + \
             field_agreement.prior_royalty_start_date + field_table.post_term_collection_status(
-    True) + field_agreement.post_term_collection_end_date + \
+    compulsory=True) + field_agreement.post_term_collection_end_date + \
             field_agreement.date_of_signature + field_agreement.number_works + field_table.sm_clause() + \
             field_agreement.sales_change + field_agreement.advance_given + field_agreement.society_id + \
             field_special.lineEnd

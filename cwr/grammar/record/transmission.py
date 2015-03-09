@@ -50,7 +50,7 @@ These are the grammatical structures for the Transmission Header and Transmissio
 transmission_header = field_special.lineStart + field_record.record_type(_config.record_type('transmission_header'),
                                                                          compulsory=True) + \
                       field_table.sender_type(
-                          True) + field_transmission.sender_id + field_transmission.sender_name + field_transmission.edi_version + \
+                          compulsory=True) + field_transmission.sender_id + field_transmission.sender_name + field_transmission.edi_version + \
                       field_transmission.creation_date_time + field_transmission.transmission_date + field_transmission.character_set + field_special.lineEnd
 transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 

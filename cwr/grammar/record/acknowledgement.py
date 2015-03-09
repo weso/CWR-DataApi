@@ -30,9 +30,9 @@ acknowledgement = field_special.lineStart + field_record.record_prefix(_config.r
                                                                        compulsory=True) + \
                   field_ack.creation_date_time + \
                   field_ack.original_group_id + field_ack.original_transaction_n + field_table.original_transaction_type(
-    True) + field_ack.creation_title + \
+    compulsory=True) + field_ack.creation_title + \
                   field_ack.submitter_creation_n + field_ack.recipient_creation_n + field_ack.processing_date + field_table.transaction_status(
-    True) + \
+    compulsory=True) + \
                   field_special.lineEnd
 
 message = field_special.lineStart + field_record.record_prefix(_config.record_type('message'),
