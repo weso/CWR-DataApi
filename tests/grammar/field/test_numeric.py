@@ -51,6 +51,13 @@ class TestNumericValid(unittest.TestCase):
         result = self.num.parseString('00123')
         self.assertEqual(123, result[0])
 
+    def test_whitespaces(self):
+        """
+        Tests that the numeric field accepts whitespaces.
+        """
+        result = self.num.parseString('     ')
+        self.assertEqual(None, result[0])
+
 
 class TestNumericCompulsoryValid(unittest.TestCase):
     """
@@ -139,6 +146,12 @@ class TestNumericException(unittest.TestCase):
         """
         self.assertRaises(ParseException, self.num.parseString, '123ab')
 
+    def test_spaces_between(self):
+        """
+        Tests that an exception is thrown when the field contains whitespaces between the numbers.
+        """
+        self.assertRaises(ParseException, self.num.parseString, '12 34')
+
 
 class TestNumericCompulsoryException(unittest.TestCase):
     """
@@ -148,17 +161,17 @@ class TestNumericCompulsoryException(unittest.TestCase):
     def setUp(self):
         self.num = basic.numeric(5, compulsory=True)
 
-    def test_numeric_zero(self):
-        """
-        Tests that an exception is thrown when the field is empty and it shouldn't be.
-        """
-        self.assertRaises(ParseException, self.num.parseString, '00000')
-
     def test_numeric_wrong_size_empty(self):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """
         self.assertRaises(ParseException, self.num.parseString, '')
+
+    def test_whitespaces(self):
+        """
+        Tests that an exception is thrown when the field is composed of whitespaces.
+        """
+        self.assertRaises(ParseException, self.num.parseString, '     ')
 
     def test_numeric_wrong_size_too_small(self):
         """
@@ -177,3 +190,9 @@ class TestNumericCompulsoryException(unittest.TestCase):
         Tests that an exception is thrown when the field contains letters.
         """
         self.assertRaises(ParseException, self.num.parseString, '123ab')
+
+    def test_spaces_between(self):
+        """
+        Tests that an exception is thrown when the field contains whitespaces between the numbers.
+        """
+        self.assertRaises(ParseException, self.num.parseString, '12 34')

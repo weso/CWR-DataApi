@@ -60,7 +60,6 @@ work:
         - 'NWR'
         - 'REV'
         - 'ISW'
-        - 'EXC'
     work_title:
         size: 60
     work_id:
@@ -77,6 +76,9 @@ work:
         size: 25
     catalogue:
         size: 25
+
+work_conflict:
+    type: 'EXC'
 
 acknowledgement:
     type: 'ACK'
@@ -142,8 +144,8 @@ publisher_territory:
 
 writer:
     type:
-        - 'SWT'
-        - 'OWT'
+        - 'SWR'
+        - 'OWR'
     first_name:
         size: 30
     last_name:
@@ -368,3 +370,9 @@ ari:
         size: 14
     note:
         size: 160
+
+special:
+    ip_id:
+        size: 9
+    shares:
+        size: 5

@@ -40,7 +40,28 @@ class CWRFileNameDecoder():
     """
 
     def __init__(self):
-        pass
+        self.__grammar = filename.cwr_filename
+        self.__grammar_old = filename.cwr_filename_old
+
+    @property
+    def _grammar(self):
+        """
+        The grammar being used to parse the text file name.
+
+        :return: the test file name grammar
+        """
+        return self.__grammar
+
+    @property
+    def _grammar_old(self):
+        """
+        The grammar being used to parse the text file name.
+
+        This is for the old format.
+
+        :return: the test file name grammar
+        """
+        return self.__grammar_old
 
     def decode(self, file_name):
         """
@@ -49,7 +70,7 @@ class CWRFileNameDecoder():
         :param file_name: the file name to parse
         :return: a FileTag created from the file name
         """
-        return filename.cwr_filename.parseString(file_name, parseAll=True)[0]
+        return self._grammar.parseString(file_name, parseAll=True)[0]
 
     def decode_old(self, file_name):
         """
@@ -65,7 +86,7 @@ class CWRFileNameDecoder():
         :param file_name: the file name to parse
         :return: a FileTag created from the file name
         """
-        return filename.cwr_filename_old.parseString(file_name, parseAll=True)[0]
+        return self._grammar_old.parseString(file_name, parseAll=True)[0]
 
 
 class CWRFileNameEncoder():

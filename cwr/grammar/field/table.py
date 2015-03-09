@@ -23,6 +23,7 @@ _config = CWRConfiguration()
 Lookup fields.
 """
 
+
 # Original Transaction Type
 def original_transaction_type(compulsory=False):
     original_transaction_type_field = basic.lookup(_tables.transaction_types(),
@@ -283,12 +284,19 @@ def society(compulsory=False):
 
     :return: grammar for the society ID field
     """
+    codes = _tables.society_codes()
+    for code in codes:
+        if len(code) > 1 and code[0] == '0':
+            codes.append(code[1:])
+            if len(code) > 2 and code[1] == '0':
+                codes.append(code[2:])
+
     society_field = basic.lookup(_tables.society_codes(),
-                                 columns=_config.field_size('table', 'society'), compulsory=compulsory)
+                                 columns=_config.field_size('table', 'society'), compulsory=compulsory,
+                                 name='Society ID Field')
 
     society_field.setParseAction(lambda c: None if c[0] is None else int(c[0]))
 
-    society_field.setName('Society ID Field')
     society_field = society_field.setResultsName('society')
 
     return society_field
