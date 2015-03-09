@@ -30,7 +30,7 @@ class TestDateValid(unittest.TestCase):
         """
         self.assertEqual('Date Field', self.date.name)
 
-    def test_year_ends_zero(self):
+    def test_year_ends_zero_several(self):
         """
         Tests that the date field accepts a date where the year ends in zeros.
         """
@@ -40,6 +40,16 @@ class TestDateValid(unittest.TestCase):
         self.assertEqual(6, result.month)
         self.assertEqual(6, result.day)
 
+    def test_year_ends_zero(self):
+        """
+        Tests that the date field accepts a year ending in a zero.
+        """
+        result = self.date.parseString('20101121')[0]
+
+        self.assertEqual(2010, result.year)
+        self.assertEqual(11, result.month)
+        self.assertEqual(21, result.day)
+
     def test_common(self):
         """
         Tests that the date field accepts a valid date.
@@ -47,16 +57,6 @@ class TestDateValid(unittest.TestCase):
         result = self.date.parseString('20121121')[0]
 
         self.assertEqual(2012, result.year)
-        self.assertEqual(11, result.month)
-        self.assertEqual(21, result.day)
-
-    def test_year_ends_zero(self):
-        """
-        Tests that the date field accepts a year ending in zero.
-        """
-        result = self.date.parseString('20101121')[0]
-
-        self.assertEqual(2010, result.year)
         self.assertEqual(11, result.month)
         self.assertEqual(21, result.day)
 

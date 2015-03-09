@@ -20,7 +20,12 @@ class TestWorkDetalGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = work_detail.recording
 
-    def test(self):
+    def test_common_3(self):
+        record = 'REC000005310000516420080304                                                            000300     A NAME _ AND 1999                                           THIS IS THE LABEL                                           G0100007401741                 GBBBN0009590 U   '
+
+        result = self.grammar.parseString(record)[0]
+
+    def test_common_2(self):
         record = 'REC000004230000318620080715                                                            000248     A NAME _ AND 1999                                           THIS IS THE LABEL                                           60251768039                    BR-UM7-08-00 U   '
 
         result = self.grammar.parseString(record)[0]

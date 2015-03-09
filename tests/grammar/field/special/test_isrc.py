@@ -36,4 +36,4 @@ class TestISRCValid(unittest.TestCase):
 
         result = self.isrc.parseString(code)[0]
 
-        self.assertEqual(None, result)
+        self.assertEqual('', result)

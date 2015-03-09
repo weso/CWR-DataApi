@@ -337,6 +337,9 @@ def isrc(compulsory=False):
         # Name
         field.setName('ISRC Field')
 
+    # TODO: Fix this field
+    field = basic.alphanum(12, compulsory=compulsory)
+    field = field.setName('ISRC Field').setResultsName('isrc')
     return field
 
 
