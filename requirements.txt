@@ -1,3 +1,4 @@
 pyparsing==2.0.3
 pyyaml==3.11
 chardet==2.3.0
+kitchen==1.2.1

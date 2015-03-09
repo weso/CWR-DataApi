@@ -21,7 +21,7 @@ class TestAlternateTitleGrammar(unittest.TestCase):
         self.grammar = work_detail.alternate
 
     def test_extended_character(self):
-        record = 'ALT0000028200001380PAƏ                                                         AT  '
+        record = 'ALT0000028200001380PA\xc6\x8f                                                        AT  '
 
         result = self.grammar.parseString(record)[0]
 

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from pyparsing import ParseException
@@ -175,8 +175,9 @@ class TestAlphanumExtendedValid(unittest.TestCase):
         """
         Tests that the alphanum field accepts a string of the correct number of characters with spaces in between.
         """
-        result = self.alpha.parseString('ABƏCD')
-        self.assertEqual('ABƏCD', result[0])
+        text = 'AB\xc6\x8fC'
+        result = self.alpha.parseString(text)
+        self.assertEqual('AB\xc6\x8fC', result[0])
 
 
 class TestAlphanumHugeValid(unittest.TestCase):
@@ -334,7 +335,7 @@ class TestAlphanumException(unittest.TestCase):
         """
         Tests that an exception is thrown when the field is not using capitol letters.
         """
-        self.assertRaises(ParseException, self.alpha.parseString, 'ABƏDE')
+        self.assertRaises(ParseException, self.alpha.parseString, 'AB\xc6\x8fDE')
 
 
 class TestAlphanumHugeException(unittest.TestCase):
@@ -394,4 +395,4 @@ class TestAlphanumCompulsoryException(unittest.TestCase):
         """
         Tests that an exception is thrown when the field is not using capitol letters.
         """
-        self.assertRaises(ParseException, self.alpha.parseString, 'ABƏDE')
+        self.assertRaises(ParseException, self.alpha.parseString, 'AB\xc6\x8fDE')
