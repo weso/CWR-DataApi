@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from cwr.agreement import AgreementRecord, AgreementInterestedParty
 from cwr.interested_party import Publisher, Writer
 from cwr.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \

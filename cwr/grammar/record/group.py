@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.group import GroupHeader, GroupTrailer

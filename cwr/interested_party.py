@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from abc import ABCMeta
 
 from cwr.record import TransactionRecord, NRARecord
