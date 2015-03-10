@@ -57,7 +57,7 @@ transmission_header = transmission_header.setName('Transmission Header').setResu
 transmission_trailer = field_special.lineStart + field_record.record_type(_config.record_type('transmission_trailer'),
                                                                           compulsory=True) + \
                        field_record.group_count(compulsory=True) + field_record.transaction_count(compulsory=True) + \
-                       field_record.record_count(compulsory=True) + field_special.lineEnd
+                       field_record.record_count(compulsory=True)
 transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()

@@ -20,7 +20,39 @@ class TestFileValid(unittest.TestCase):
     def setUp(self):
         self.grammar = file.cwr_transmission
 
-    def test(self):
+    def test_empty_lines_end(self):
+        record = _common()
+
+        record += '\n' + ' ' + '\n' + ' ' + '\t' + ' ' + '\n'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('HDR', result.header.record_type)
+        self.assertTrue(isinstance(result.header, TransmissionHeader))
+
+        self.assertEqual('TRL', result.trailer.record_type)
+        self.assertTrue(isinstance(result.trailer, TransmissionTrailer))
+
+        self.assertEqual(1, len(result.groups))
+
+        group = result.groups[0]
+
+        self.assertEqual('GRH', group.group_header.record_type)
+
+        self.assertEqual('GRT', group.group_trailer.record_type)
+
+        self.assertEqual('AGR', group.group_header.transaction_type)
+
+        transactions = group.transactions
+
+        self.assertEqual(4, len(transactions))
+
+        self.assertEqual('AGR', transactions[0].record_type)
+        self.assertEqual('TER', transactions[1].record_type)
+        self.assertEqual('IPA', transactions[2].record_type)
+        self.assertEqual('IPA', transactions[3].record_type)
+
+    def test_common(self):
         record = _common()
 
         result = self.grammar.parseString(record)[0]

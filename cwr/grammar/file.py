@@ -39,7 +39,8 @@ Rules.
 """
 
 # File rule
-cwr_transmission = transmission.transmission_header + _transmission_groups + transmission.transmission_trailer
+cwr_transmission = transmission.transmission_header + _transmission_groups + transmission.transmission_trailer + pp.ZeroOrMore(
+    pp.lineEnd().suppress()).suppress()
 
 """
 Parsing actions for the patterns.
