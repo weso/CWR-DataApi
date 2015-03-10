@@ -3,6 +3,7 @@
 import pyparsing as pp
 
 from cwr.grammar.record import transmission, group
+from cwr.grammar.field import special
 from cwr.grammar import transaction
 from cwr.file import Transmission, TransactionGroup
 
@@ -40,7 +41,7 @@ Rules.
 
 # File rule
 cwr_transmission = transmission.transmission_header + _transmission_groups + transmission.transmission_trailer + pp.ZeroOrMore(
-    pp.lineEnd()).suppress()
+    special.lineEnd)
 
 """
 Parsing actions for the patterns.
