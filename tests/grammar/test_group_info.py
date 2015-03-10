@@ -111,9 +111,9 @@ class TestGroupInformationValid(unittest.TestCase):
 
         result = self.grammar.parseString(record)[0]
 
-        self.assertEqual('GRH', result.grh.record_type)
+        self.assertEqual('GRH', result.group_header.record_type)
 
-        self.assertEqual('GRT', result.grt.record_type)
+        self.assertEqual('GRT', result.group_trailer.record_type)
 
         transactions = result.transactions
 

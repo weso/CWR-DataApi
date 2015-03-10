@@ -214,7 +214,7 @@ class TransactionGroup(object):
             self._transactions)
 
     @property
-    def grh(self):
+    def group_header(self):
         """
         The group's header. This is a GroupHeader.
 
@@ -223,7 +223,7 @@ class TransactionGroup(object):
         return self._grh
 
     @property
-    def grt(self):
+    def group_trailer(self):
         """
         The group's trailer. This is a GroupTrailer.
 
@@ -288,7 +288,7 @@ class Transmission(object):
         return self._groups
 
     @property
-    def hdr(self):
+    def header(self):
         """
         The transmission header. This is a TransmissionHeader.
 
@@ -297,7 +297,7 @@ class Transmission(object):
         return self._hdr
 
     @property
-    def trl(self):
+    def trailer(self):
         """
         The transmission trailer. This is a TransmissionTrailer.
 

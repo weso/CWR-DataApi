@@ -7,7 +7,15 @@ from cwr.grammar.field import basic
 
 
 """
-Grammar for concrete CWR Table/List Lookup fields.
+Grammar rules for concrete CWR Table/List Lookup fields.
+
+These fields all apply the same kind of constraint: all the values not contained in a defined collection are rejected.
+
+The only exception is when the field is set as optional. Then an empty string composed of whitespaces is allowed.
+
+Additionally, the usual constraints of the Alphanumeric field (non lowercase ASCII) apply.
+
+All the values are read from the lists contained in the library, through the CWRTables class.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -15,17 +23,27 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
+"""
+Configuration classes.
+"""
+
 # Acquires data sources
 _tables = CWRTables()
 _config = CWRConfiguration()
 
 """
-Lookup fields.
+Fields.
 """
 
 
-# Original Transaction Type
 def original_transaction_type(name=None, compulsory=False):
+    """
+    Original Transaction Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Original Transaction Type field rules
+    """
     if name is None:
         name = 'Original Transaction Type'
 
@@ -39,8 +57,14 @@ def original_transaction_type(name=None, compulsory=False):
     return original_transaction_type_field
 
 
-# Transaction Status
 def transaction_status(name=None, compulsory=False):
+    """
+    Transaction Status field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Transaction Status field rules
+    """
     if name is None:
         name = 'Transaction Status'
 
@@ -54,8 +78,14 @@ def transaction_status(name=None, compulsory=False):
     return transaction_status_field
 
 
-# Prior Royalty Status
 def prior_royalty_status(name=None, compulsory=False):
+    """
+    Prior Royalty Status field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Prior Royalty Status field rules
+    """
     if name is None:
         name = 'Prior Royalty Status'
 
@@ -68,8 +98,14 @@ def prior_royalty_status(name=None, compulsory=False):
     return prior_royalty_status_field
 
 
-# Post Term Collection Status
 def post_term_collection_status(name=None, compulsory=False):
+    """
+    Post Term Collection Status field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Post Term Collection Status field rules
+    """
     if name is None:
         name = 'Post Term Collection Status'
 
@@ -82,8 +118,14 @@ def post_term_collection_status(name=None, compulsory=False):
     return post_term_collection_status_field
 
 
-# Sales/Manufacture Clause
 def sm_clause(name=None, compulsory=False):
+    """
+    Sales/Manufacture Clause field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Sales/Manufacture Clause field rules
+    """
     if name is None:
         name = 'Sales/Manufacture Clause'
 
@@ -96,8 +138,14 @@ def sm_clause(name=None, compulsory=False):
     return sm_clause_field
 
 
-# Inclusion/Exclusion Indicator
 def ie_indicator(name=None, compulsory=False):
+    """
+    Inclusion/Exclusion Indicator field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Inclusion/Exclusion Indicator field rules
+    """
     if name is None:
         name = 'Inclusion/Exclusion Indicator'
 
@@ -109,8 +157,14 @@ def ie_indicator(name=None, compulsory=False):
     return ie_indicator_field
 
 
-# TIS Numeric Code
 def tis_code(name=None, compulsory=False):
+    """
+    TIS Numeric Code field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the TIS Numeric Code field rules
+    """
     if name is None:
         name = 'TIS Numeric Code'
 
@@ -123,8 +177,14 @@ def tis_code(name=None, compulsory=False):
     return tis_code_field
 
 
-# Agreement Role Code
 def agreement_role_code(name=None, compulsory=False):
+    """
+    Agreement Role Code field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Agreement Role Code field rules
+    """
     if name is None:
         name = 'Agreement Role Code'
 
@@ -138,8 +198,14 @@ def agreement_role_code(name=None, compulsory=False):
     return agreement_role_code_field
 
 
-# Language Code
 def language(name=None, compulsory=False):
+    """
+    Language Code field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Language Code field rules
+    """
     if name is None:
         name = 'Language Code'
 
@@ -151,8 +217,14 @@ def language(name=None, compulsory=False):
     return language_field
 
 
-# Publisher Type
 def publisher_type(name=None, compulsory=False):
+    """
+    Publisher Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Publisher Type field rules
+    """
     if name is None:
         name = 'Publisher Type'
 
@@ -164,8 +236,14 @@ def publisher_type(name=None, compulsory=False):
     return publisher_type_field
 
 
-# Special Agreements Indicator
 def special_agreement(name=None, compulsory=False):
+    """
+    Special Agreements Indicator field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Special Agreements Indicator field rules
+    """
     if name is None:
         name = 'Special Agreements Indicator'
 
@@ -179,8 +257,14 @@ def special_agreement(name=None, compulsory=False):
     return special_agreement_field
 
 
-# Transaction type
 def transaction_type(name=None, compulsory=False):
+    """
+    Transaction Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Transaction Type field rules
+    """
     if name is None:
         name = 'Transaction Type'
 
@@ -193,8 +277,14 @@ def transaction_type(name=None, compulsory=False):
     return transaction_type_field
 
 
-# Sender Type
 def sender_type(name=None, compulsory=False):
+    """
+    Sender Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Sender Type field rules
+    """
     if name is None:
         name = 'Sender Type'
 
@@ -206,8 +296,14 @@ def sender_type(name=None, compulsory=False):
     return sender_type_field
 
 
-# Musical Work Distribution Category
 def musical_distribution_category(name=None, compulsory=False):
+    """
+    Musical Work Distribution Category field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Musical Work Distribution Category field rules
+    """
     if name is None:
         name = 'Musical Work Distribution Category'
 
@@ -222,8 +318,14 @@ def musical_distribution_category(name=None, compulsory=False):
     return musical_distribution_category_field
 
 
-# Text Music Relationship
 def text_music_relationship(name=None, compulsory=False):
+    """
+    Text Music Relationship field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Text Music Relationship field rules
+    """
     if name is None:
         name = 'Text Music Relationship'
 
@@ -237,8 +339,14 @@ def text_music_relationship(name=None, compulsory=False):
     return text_music_relationship_field
 
 
-# Composite Type
 def composite_type(name=None, compulsory=False):
+    """
+    Composite Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Composite Type field rules
+    """
     if name is None:
         name = 'Composite Type'
 
@@ -250,8 +358,14 @@ def composite_type(name=None, compulsory=False):
     return composite_type_field
 
 
-# Version Type
 def version_type(name=None, compulsory=False):
+    """
+    Version Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Version Type field rules
+    """
     if name is None:
         name = 'Version Type'
 
@@ -264,8 +378,14 @@ def version_type(name=None, compulsory=False):
     return version_type_field
 
 
-# Excerpt Type
 def excerpt_type(name=None, compulsory=False):
+    """
+    Excerpt Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Excerpt Type field rules
+    """
     if name is None:
         name = 'Excerpt Type'
 
@@ -278,8 +398,14 @@ def excerpt_type(name=None, compulsory=False):
     return excerpt_type_field
 
 
-# Music Arrangement
 def music_arrangement(name=None, compulsory=False):
+    """
+    Music Arrangement field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Music Arrangement field rules
+    """
     if name is None:
         name = 'Music Arrangement'
 
@@ -292,8 +418,14 @@ def music_arrangement(name=None, compulsory=False):
     return music_arrangement_field
 
 
-# Lyric Adaptation
 def lyric_adaptation(name=None, compulsory=False):
+    """
+    Lyric Adaptation field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Lyric Adaptation field rules
+    """
     if name is None:
         name = 'Lyric Adaptation'
 
@@ -306,8 +438,14 @@ def lyric_adaptation(name=None, compulsory=False):
     return lyric_adaptation_field
 
 
-# Work Type
 def work_type(name=None, compulsory=False):
+    """
+    Work Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Work Type field rules
+    """
     if name is None:
         name = 'Work Type'
 
@@ -318,8 +456,14 @@ def work_type(name=None, compulsory=False):
     return work_type_field
 
 
-# USA License Indicator
 def usa_license(name=None, compulsory=False):
+    """
+    USA License Indicator field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the USA License Indicator field rules
+    """
     if name is None:
         name = 'USA License Indicator'
 
@@ -332,8 +476,14 @@ def usa_license(name=None, compulsory=False):
     return usa_license_field
 
 
-# Agreement Type
 def agreement_type(name=None, compulsory=False):
+    """
+    Agreement Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Agreement Type field rules
+    """
     if name is None:
         name = 'Agreement Type'
 
@@ -347,11 +497,11 @@ def agreement_type(name=None, compulsory=False):
 
 def society(name=None, compulsory=False):
     """
-    Creates the grammar for a society ID.
+    Society ID field.
 
-    These are rights societies, used to identify Performing, Mechanical and Synchronization rights.
-
-    :return: grammar for the society ID field
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Society ID field rules
     """
     if name is None:
         name = 'Society ID Field'
@@ -374,8 +524,14 @@ def society(name=None, compulsory=False):
     return society_field
 
 
-# Writer Designation
 def writer_designation(name=None, compulsory=False):
+    """
+    Writer Designation field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Writer Designation field rules
+    """
     if name is None:
         name = 'Writer Designation'
 
@@ -387,8 +543,14 @@ def writer_designation(name=None, compulsory=False):
     return writer_designation_field
 
 
-# Title Type
 def title_type(name=None, compulsory=False):
+    """
+    Title Type field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Title Type field rules
+    """
     if name is None:
         name = 'Title Type'
 
@@ -400,8 +562,14 @@ def title_type(name=None, compulsory=False):
     return title_type_field
 
 
-# Recording Formats
 def recording_formats(name=None, compulsory=False):
+    """
+    Recording Formats field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Recording Formats field rules
+    """
     if name is None:
         name = 'Recording Format'
 
@@ -413,8 +581,14 @@ def recording_formats(name=None, compulsory=False):
     return recording_format_field
 
 
-# Recording Techniques
 def recording_techniques(name=None, compulsory=False):
+    """
+    Recording Techniques field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Recording Techniques field rules
+    """
     if name is None:
         name = 'Recording Technique'
 
@@ -426,8 +600,14 @@ def recording_techniques(name=None, compulsory=False):
     return recording_technique_field
 
 
-# Media Types
 def media_types(name=None, compulsory=False):
+    """
+    Media Types field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Media Types field rules
+    """
     if name is None:
         name = 'Media Type'
 
@@ -439,8 +619,14 @@ def media_types(name=None, compulsory=False):
     return media_type_field
 
 
-# Intended Purposes
 def intended_purposes(name=None, compulsory=False):
+    """
+    Intended Purposes field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Intended Purposes field rules
+    """
     if name is None:
         name = 'Intended Purpose'
 
@@ -452,8 +638,14 @@ def intended_purposes(name=None, compulsory=False):
     return intended_purpose_field
 
 
-# Standard Instrumentations
 def standard_instrumentations(name=None, compulsory=False):
+    """
+    Standard Instrumentations field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Standard Instrumentations field rules
+    """
     if name is None:
         name = 'Standard Instrumentation Type'
 
@@ -465,8 +657,14 @@ def standard_instrumentations(name=None, compulsory=False):
     return standard_instrumentations_field
 
 
-# Instruments
 def instruments(name=None, compulsory=False):
+    """
+    Instruments field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Instruments field rules
+    """
     if name is None:
         name = 'Instrument'
 
@@ -478,8 +676,14 @@ def instruments(name=None, compulsory=False):
     return instruments_field
 
 
-# Message Types
 def message_types(name=None, compulsory=False):
+    """
+    Message Types field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Message Types field rules
+    """
     if name is None:
         name = 'Message Type'
 
@@ -491,8 +695,14 @@ def message_types(name=None, compulsory=False):
     return message_type_field
 
 
-# Message Levels
 def message_levels(name=None, compulsory=False):
+    """
+    Message Levels field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Message Levels field rules
+    """
     if name is None:
         name = 'Message Level'
 
@@ -504,8 +714,14 @@ def message_levels(name=None, compulsory=False):
     return message_level_field
 
 
-# Record Types
 def record_types(name=None, compulsory=False):
+    """
+    Record Types field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Record Types field rules
+    """
     if name is None:
         name = 'Record Type'
 
@@ -517,8 +733,14 @@ def record_types(name=None, compulsory=False):
     return record_type_field
 
 
-# Types of Right
 def types_of_right(name=None, compulsory=False):
+    """
+    Types of Right field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Types of Right field rules
+    """
     if name is None:
         name = 'Type of Right'
 
@@ -530,8 +752,14 @@ def types_of_right(name=None, compulsory=False):
     return types_of_right_field
 
 
-# Subject Codes
 def subject_codes(name=None, compulsory=False):
+    """
+    Subject Codes field.
+
+    :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
+    :return: an instance of the Subject Codes field rules
+    """
     if name is None:
         name = 'Subject Code'
 
@@ -545,13 +773,11 @@ def subject_codes(name=None, compulsory=False):
 
 def char_code(columns, name=None, compulsory=False):
     """
-    Character set code.
+    Character set code field.
 
-    This accepts one of the character sets allowed on the file.
-
-    :param columns: number of columns for this field
+    :param name: name for the field
     :param compulsory: indicates if the empty string is disallowed
-    :return: a parser for the character set field
+    :return: an instance of the Character set code field rules
     """
     if name is None:
         name = 'Char Code Field (' + str(columns) + ' columns)'

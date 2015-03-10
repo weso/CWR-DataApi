@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from data.accessor import CWRTables, CWRConfiguration
+from data.accessor import CWRConfiguration
 from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
@@ -37,7 +37,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 """

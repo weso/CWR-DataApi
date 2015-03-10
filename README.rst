@@ -1,8 +1,8 @@
-CWR Data Access API
+CWR Data Model API
 ===================
 
-This projects offers a domain model for the CISAC CWR standard v2.1 for
-Python applications.
+This projects offers a domain model for the CISAC CWR standard v2.1 to be
+used on Python applications.
 
 CWR stands for Common Works Registration, and it is a common or standard
 format for the registration and revision of musical works, used by
@@ -45,8 +45,8 @@ Prerequisites
 
 Requires Python, and has been tested on the following interpreters:
 
-- Python 2 (2.6 & 2.7)
-- Python 3 (3.2, 3.3 & 3.4)
+- Python 2 (2.6, 2.7)
+- Python 3 (3.2, 3.3, 3.4)
 - Pypy
 
 The dependencies can be acquired using the list on requirements.txt,

@@ -64,7 +64,7 @@ def alphanum(columns, name=None, compulsory=False, extended=False):
     if name is None:
         name = 'Alphanumeric Field'
 
-    if columns <= 0:
+    if columns < 0:
         # Can't be empty or have negative size
         raise BaseException()
 
@@ -221,7 +221,7 @@ def numeric_float(columns, nums_int, name=None, compulsory=False):
     if columns < nums_int:
         # There are more integer numbers than columns
         message = 'The number of columns is %s and should be higher or equal than the integers: %s' % (
-        columns, nums_int)
+            columns, nums_int)
         raise BaseException(message)
 
     # Basic field
@@ -526,9 +526,9 @@ def lookup(values, columns=1, name=None, compulsory=False):
 
     Like in the Alphanumeric field, the result will be stripped of all heading and trailing whitespaces.
 
-    :param compulsory: indicates if the empty string is disallowed
     :param columns: number of columns, for the case this field is left empty
     :param name: name for the field
+    :param compulsory: indicates if the empty string is disallowed
     :return: grammar for the lookup field
     """
     if name is None:
