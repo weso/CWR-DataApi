@@ -24,9 +24,9 @@ __status__ = 'Development'
 Fields.
 """
 
-group_transactions = pp.Group(
-    pp.OneOrMore(transaction.agreement_transaction) | pp.OneOrMore(transaction.work_transaction) | \
-    pp.OneOrMore(transaction.acknowledgement_transaction))
+group_transactions = pp.OneOrMore(
+    pp.Group(transaction.agreement_transaction | transaction.work_transaction | \
+             transaction.acknowledgement_transaction))
 group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
 
 group_info = group.group_header + group_transactions + group.group_trailer

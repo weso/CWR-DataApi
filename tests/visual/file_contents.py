@@ -42,7 +42,7 @@ def _read(file):
 
 
 if __name__ == '__main__':
-    print("Write the file's path")
+    print("File contents parsing test")
     path = raw_input("Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ")
     print '\n'
     print "Reading file %s" % (path)
@@ -51,17 +51,20 @@ if __name__ == '__main__':
     start = time.clock()
     file = _read(path)
     end = time.clock()
-    final = (end - start)
+    time_read = (end - start)
 
-    print 'Read the file in %s seconds' % (final)
+    print 'Read the file in %s seconds' % (time_read)
     print '\n'
 
     start = time.clock()
     data = rule_file.cwr_transmission.parseString(file)[0]
     end = time.clock()
-    final = (end - start)
+    time_parse = (end - start)
 
-    print 'Parsed the file in %s seconds' % (final)
+    print 'Parsed the file in %s seconds' % (time_parse)
+    print '\n'
+
+    print 'In total the process took %s seconds' % (time_read + time_parse)
     print '\n'
 
     printer = CWRPrinter()

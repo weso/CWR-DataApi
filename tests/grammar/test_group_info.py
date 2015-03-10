@@ -117,36 +117,39 @@ class TestGroupInformationValid(unittest.TestCase):
 
         transactions = result.transactions
 
-        self.assertEqual(42, len(transactions))
+        self.assertEqual(2, len(transactions))
 
-        self.assertEqual('AGR', transactions[0].record_type)
+        transaction = transactions[0]
+        self.assertEqual(21, len(transaction))
 
-        self.assertEqual('TER', transactions[1].record_type)
-        self.assertEqual('TER', transactions[2].record_type)
+        self.assertEqual('AGR', transaction[0].record_type)
 
-        self.assertEqual('IPA', transactions[3].record_type)
-        self.assertEqual('NPA', transactions[4].record_type)
+        self.assertEqual('TER', transaction[1].record_type)
+        self.assertEqual('TER', transaction[2].record_type)
 
-        self.assertEqual('IPA', transactions[5].record_type)
-        self.assertEqual('NPA', transactions[6].record_type)
+        self.assertEqual('IPA', transaction[3].record_type)
+        self.assertEqual('NPA', transaction[4].record_type)
 
-        self.assertEqual('IPA', transactions[7].record_type)
-        self.assertEqual('NPA', transactions[8].record_type)
+        self.assertEqual('IPA', transaction[5].record_type)
+        self.assertEqual('NPA', transaction[6].record_type)
 
-        self.assertEqual('IPA', transactions[9].record_type)
-        self.assertEqual('NPA', transactions[10].record_type)
+        self.assertEqual('IPA', transaction[7].record_type)
+        self.assertEqual('NPA', transaction[8].record_type)
 
-        self.assertEqual('TER', transactions[11].record_type)
-        self.assertEqual('TER', transactions[12].record_type)
+        self.assertEqual('IPA', transaction[9].record_type)
+        self.assertEqual('NPA', transaction[10].record_type)
 
-        self.assertEqual('IPA', transactions[13].record_type)
-        self.assertEqual('NPA', transactions[14].record_type)
+        self.assertEqual('TER', transaction[11].record_type)
+        self.assertEqual('TER', transaction[12].record_type)
 
-        self.assertEqual('IPA', transactions[15].record_type)
-        self.assertEqual('NPA', transactions[16].record_type)
+        self.assertEqual('IPA', transaction[13].record_type)
+        self.assertEqual('NPA', transaction[14].record_type)
 
-        self.assertEqual('IPA', transactions[17].record_type)
-        self.assertEqual('NPA', transactions[18].record_type)
+        self.assertEqual('IPA', transaction[15].record_type)
+        self.assertEqual('NPA', transaction[16].record_type)
 
-        self.assertEqual('IPA', transactions[19].record_type)
-        self.assertEqual('NPA', transactions[20].record_type)
+        self.assertEqual('IPA', transaction[17].record_type)
+        self.assertEqual('NPA', transaction[18].record_type)
+
+        self.assertEqual('IPA', transaction[19].record_type)
+        self.assertEqual('NPA', transaction[20].record_type)
