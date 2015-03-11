@@ -34,21 +34,22 @@ original_group_id = group.group_id
 original_group_id = original_group_id.setName('Original Group ID')
 
 # Original Transaction Sequence #
-original_transaction_n = basic.numeric(_config.field_size('acknowledgement', 'transaction_n'), compulsory=True)
-original_transaction_n = original_transaction_n.setName('Original Transaction Sequence #').setResultsName(
-    'transaction_n')
+original_transaction_sequence_n = basic.numeric(_config.field_size('acknowledgement', 'transaction_n'), compulsory=True)
+original_transaction_sequence_n = original_transaction_sequence_n.setName(
+    'Original Transaction Sequence #').setResultsName(
+    'original_transaction_sequence_n')
 
 # Creation Title
 creation_title = basic.alphanum(_config.field_size('acknowledgement', 'title'))
-creation_title = creation_title.setName('Creation Title').setResultsName('title')
+creation_title = creation_title.setName('Creation Title').setResultsName('creation_title')
 
 # Submitter Creation #
 submitter_creation_n = basic.alphanum(_config.field_size('acknowledgement', 'submitter_id'))
-submitter_creation_n = submitter_creation_n.setName('Submitter Creation #').setResultsName('submitter_id')
+submitter_creation_n = submitter_creation_n.setName('Submitter Creation #').setResultsName('submitter_creation_n')
 
 # Recipient Creation #
 recipient_creation_n = basic.alphanum(_config.field_size('acknowledgement', 'recipient_id'))
-recipient_creation_n = recipient_creation_n.setName('Recipient Creation #').setResultsName('recipient_id')
+recipient_creation_n = recipient_creation_n.setName('Recipient Creation #').setResultsName('recipient_creation_n')
 
 # Processing Date
 processing_date = basic.date(compulsory=True)

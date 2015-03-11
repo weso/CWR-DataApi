@@ -30,7 +30,7 @@ class TestMessageGrammar(unittest.TestCase):
 
         This test contains all the optional fields.
         """
-        record = 'MSG0000123400000023F00001234AGRE123MESSAGE                                                                                                                                               '
+        record = 'MSG0000123400000023F00001235AGRE123MESSAGE                                                                                                                                               '
 
         result = self.grammar.parseString(record)[0]
 
@@ -38,8 +38,8 @@ class TestMessageGrammar(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('F', result.message_type)
-        self.assertEqual(1234, result.sequence_n)
+        self.assertEqual(1235, result.original_record_sequence_n)
         self.assertEqual('AGR', result.message_record_type)
         self.assertEqual('E', result.message_level)
         self.assertEqual(123, result.validation_n)
-        self.assertEqual('MESSAGE', result.text)
+        self.assertEqual('MESSAGE', result.message_text)

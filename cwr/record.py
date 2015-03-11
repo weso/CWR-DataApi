@@ -90,6 +90,7 @@ class TransactionRecord(Record):
 
         In both cases the sequence number should be equal or great than zero.
 
+        :param record_type: type of record
         :param transaction_sequence_n: position in the transactions sequence
         :param record_sequence_n: position in the records sequence
         """

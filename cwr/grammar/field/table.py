@@ -44,6 +44,7 @@ def original_transaction_type(name=None, compulsory=False):
     :param compulsory: indicates if the empty string is disallowed
     :return: an instance of the Original Transaction Type field rules
     """
+    # TODO: Is this really needed?
     if name is None:
         name = 'Original Transaction Type'
 
@@ -52,7 +53,7 @@ def original_transaction_type(name=None, compulsory=False):
         compulsory=compulsory,
         name=name)
     original_transaction_type_field = original_transaction_type_field.setResultsName(
-        'transaction_type')
+        'original_transaction_type')
 
     return original_transaction_type_field
 

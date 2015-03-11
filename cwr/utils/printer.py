@@ -90,15 +90,15 @@ class CWRPrinter():
     def print_group_header(self, header):
         print('CWR Group Header')
         print('Record Type: %s' % (header.record_type))
-        print('Group ID: %s' % (header.group_id))
-        print('Transaction Type: %s' % (header.transaction_type))
+        print('Group ID: %s' % (header.original_group_id))
+        print('Transaction Type: %s' % (header.original_transaction_type))
         print('Version Number: %s' % (header.version_number))
         print('Batch Request ID: %s' % (header.batch_request_id))
 
     def print_group_trailer(self, header):
         print('CWR Group Trailer')
         print('Record Type: %s' % (header.record_type))
-        print('Group ID: %s' % (header.group_id))
+        print('Group ID: %s' % (header.original_group_id))
         print('Transaction Count: %s' % (header.transaction_count))
         print('Record Count: %s' % (header.record_count))
 
@@ -280,7 +280,7 @@ class CWRPrinter():
     def print_workr(self, record):
         print('Submitter Work Number: %s' % (record.work_id))
         print('ISWC: %s' % (record.iswc))
-        print('Title: %s' % (record.title))
+        print('Title: %s' % (record.creation_title))
         print('CWR Work Type: %s' % (record.cwr_work_type))
         print('Catalogue Number: %s' % (record.catalogue_number))
         print('Opus Number: %s' % (record.opus_number))
@@ -305,9 +305,9 @@ class CWRPrinter():
         print('Contact Name: %s' % (record.contact_name))
 
     def print_com(self, record):
-        print('Submitter Given Number: %s' % (record.submitter_id))
+        print('Submitter Given Number: %s' % (record.submitter_creation_n))
         print('ISWC: %s' % (record.iswc))
-        print('Title: %s' % (record.title))
+        print('Title: %s' % (record.creation_title))
         print('Duration: %s' % (record.duration))
         print('First Name Writer 1: %s' % (record.first_name_1))
         print('Last Name Writer 1: %s' % (record.last_name_1))
@@ -321,7 +321,7 @@ class CWRPrinter():
     def print_authr(self, record):
         print('Work Number: %s' % (record.work_id))
         print('ISWC: %s' % (record.iswc))
-        print('Title: %s' % (record.title))
+        print('Title: %s' % (record.creation_title))
         print('Language: %s' % (record.language_code))
         print('Source: %s' % (record.source))
         print('First Name Writer 1: %s' % (record.first_name_1))
@@ -339,7 +339,7 @@ class CWRPrinter():
         print('Language: %s' % (record.language))
 
     def print_nat(self, record):
-        print('Title: %s' % (record.title))
+        print('Title: %s' % (record.creation_title))
         print('Title Type: %s' % (record.title_type))
         print('Language: %s' % (record.language))
 
@@ -385,7 +385,7 @@ class CWRPrinter():
         print('Last Name: %s' % (record.last_name))
 
     def print_nra(self, record):
-        print('Title: %s' % (record.title))
+        print('Title: %s' % (record.creation_title))
         print('Language: %s' % (record.language))
 
     def print_now(self, record):

@@ -29,7 +29,7 @@ Rules.
 acknowledgement = field_special.lineStart + field_record.record_prefix(_config.record_type('acknowledgement'),
                                                                        compulsory=True) + \
                   field_ack.creation_date_time + \
-                  field_ack.original_group_id + field_ack.original_transaction_n + field_table.original_transaction_type(
+                  field_ack.original_group_id + field_ack.original_transaction_sequence_n + field_table.original_transaction_type(
     compulsory=True) + field_ack.creation_title + \
                   field_ack.submitter_creation_n + field_ack.recipient_creation_n + field_ack.processing_date + field_table.transaction_status(
     compulsory=True) + \
@@ -62,10 +62,18 @@ def _to_acknowledgement_record(parsed):
     :param parsed: result of parsing an Acknowledgement record
     :return: a AcknowledgementRecord created from the parsed record
     """
-    return AcknowledgementRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                 parsed.group_id, parsed.transaction_n, parsed.transaction_type,
-                                 parsed.transaction_status, parsed.creation_date_time, parsed.processing_date,
-                                 parsed.title, parsed.submitter_id, parsed.recipient_id)
+    return AcknowledgementRecord(record_type=parsed.record_type,
+                                 transaction_sequence_n=parsed.transaction_sequence_n,
+                                 record_sequence_n=parsed.record_sequence_n,
+                                 original_group_id=parsed.group_id,
+                                 original_transaction_sequence_n=parsed.original_transaction_sequence_n,
+                                 original_transaction_type=parsed.original_transaction_type,
+                                 transaction_status=parsed.transaction_status,
+                                 creation_date_time=parsed.creation_date_time,
+                                 processing_date=parsed.processing_date,
+                                 creation_title=parsed.creation_title,
+                                 submitter_creation_n=parsed.submitter_creation_n,
+                                 recipient_creation_n=parsed.recipient_creation_n)
 
 
 def _to_message_record(parsed):
@@ -75,7 +83,12 @@ def _to_message_record(parsed):
     :param parsed: result of parsing a Message record
     :return: a MessageRecord created from the parsed record
     """
-    return MessageRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                         parsed.message_type,
-                         parsed.text, parsed.sequence_n, parsed.message_record_type, parsed.message_level,
-                         parsed.validation)
+    return MessageRecord(record_type=parsed.record_type,
+                         transaction_sequence_n=parsed.transaction_sequence_n,
+                         record_sequence_n=parsed.record_sequence_n,
+                         message_type=parsed.message_type,
+                         message_text=parsed.message_text,
+                         original_record_sequence_n=parsed.sequence_n,
+                         message_record_type=parsed.message_record_type,
+                         message_level=parsed.message_level,
+                         validation_n=parsed.validation)

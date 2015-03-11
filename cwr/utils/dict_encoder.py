@@ -133,7 +133,7 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['work_id'] = work.work_id
-        encoded['title'] = work.title
+        encoded['title'] = work.creation_title
         encoded['language_code'] = work.language_code
         encoded['source'] = work.source
         encoded['first_name_1'] = work.first_name_1
@@ -258,7 +258,7 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['work_id'] = work.work_id
-        encoded['title'] = work.title
+        encoded['title'] = work.creation_title
         encoded['language_code'] = work.language_code
         encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
         encoded['copyright_number'] = work.copyright_number
