@@ -28,13 +28,13 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
     The note field should be used sparingly.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, society_id, right_type, work_id='',
-                 subject=None, note=''):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, society_n, type_of_right, work_id='',
+                 subject_code=None, note=''):
         super(AdditionalRelatedInfoRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._society_id = society_id
-        self._right_type = right_type
+        self._society_n = society_n
+        self._type_of_right = type_of_right
         self._work_id = work_id
-        self._subject = subject
+        self._subject_code = subject_code
         self._note = note
 
     @property
@@ -49,18 +49,7 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
         return self._note
 
     @property
-    def right_type(self):
-        """
-        Type of Right field. Table Lookup (Type of Right).
-
-        Indicates to which type of right does this information relate.
-
-        :return: the type of right the information is for
-        """
-        return self._right_type
-
-    @property
-    def society_id(self):
+    def society_n(self):
         """
         Society Number field. Table Lookup (Society Code Table).
 
@@ -70,10 +59,10 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
 
         :return: the society number ID
         """
-        return self._society_id
+        return self._society_n
 
     @property
-    def subject(self):
+    def subject_code(self):
         """
         Subject Code field. Table Lookup (Subject Code).
 
@@ -81,7 +70,18 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
 
         :return: the subject code
         """
-        return self._subject
+        return self._subject_code
+
+    @property
+    def type_of_right(self):
+        """
+        Type of Right field. Table Lookup (Type of Right).
+
+        Indicates to which type of right does this information relate.
+
+        :return: the type of right the information is for
+        """
+        return self._type_of_right
 
     @property
     def work_id(self):

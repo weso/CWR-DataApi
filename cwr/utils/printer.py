@@ -201,9 +201,9 @@ class CWRPrinter():
 
     def print_ari(self, record):
         print('Work Number: %s' % (record.work_id))
-        print('Society Number: %s' % (record.society_id))
-        print('Subject Code: %s' % (record.subject))
-        print('Type of Right: %s' % (record.right_type))
+        print('Society Number: %s' % (record.society_n))
+        print('Subject Code: %s' % (record.subject_code))
+        print('Type of Right: %s' % (record.type_of_right))
         print('Note: %s' % (record.note))
 
     def print_npn(self, record):
