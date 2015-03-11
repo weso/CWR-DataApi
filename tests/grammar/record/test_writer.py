@@ -51,7 +51,7 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual(11, result.sr_society)
         self.assertEqual(23.12, result.sr_ownership_share)
         self.assertEqual('Y', result.reversionary)
-        self.assertEqual('Y', result.first_record_refusal)
+        self.assertEqual('Y', result.first_recording_refusal)
         self.assertEqual('Y', result.work_for_hire)
         self.assertEqual('I', result.writer.ipi_base_n.header)
         self.assertEqual(229, result.writer.ipi_base_n.id_code)

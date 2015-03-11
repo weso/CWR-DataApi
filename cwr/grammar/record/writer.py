@@ -37,7 +37,7 @@ writer = field_special.lineStart + field_record.record_prefix(
          field_society.pr_affiliation() + field_society.pr_share() + \
          field_society.mr_affiliation() + field_society.mr_share() + \
          field_society.sr_affiliation() + field_society.sr_share() + \
-         field_writer.reversionary + field_writer.refusal + field_writer.for_hire + field_special.blank(
+         field_writer.reversionary + field_writer.first_recording_refusal + field_writer.for_hire + field_special.blank(
     _config.field_size('writer', 'filler')) + \
          field_special.ipi_base_number() + field_writer.personal_number + field_table.usa_license() + field_special.lineEnd
 
@@ -76,6 +76,6 @@ def _to_writerrecord(parsed):
 
     return WriterRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n, writer_data,
                         parsed.writer_designation, parsed.work_for_hire, parsed.writer_unknown, parsed.reversionary,
-                        parsed.first_record_refusal, parsed.usa_license, parsed.pr_society,
+                        parsed.first_recording_refusal, parsed.usa_license, parsed.pr_society,
                         parsed.pr_share, parsed.mr_society, parsed.mr_share,
                         parsed.sr_society, parsed.sr_share)

@@ -35,7 +35,7 @@ publisher = field_special.lineStart + field_record.record_prefix(_config.record_
             society.pr_affiliation() + society.pr_share(maximum=50) + \
             society.mr_affiliation() + society.mr_share() + \
             society.sr_affiliation() + society.sr_share() + \
-            field_table.special_agreement() + field_publisher.first_refusal + field_special.blank(
+            field_table.special_agreement() + field_publisher.first_recording_refusal + field_special.blank(
     1) + field_publisher.ipi_base + field_publisher.international_code + \
             field_publisher.society_id + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
 
@@ -77,4 +77,4 @@ def _to_publisherrecord(parsed):
                            parsed.society_agreement_id, parsed.pr_society, parsed.pr_share,
                            parsed.mr_society, parsed.mr_share, parsed.sr_society,
                            parsed.sr_share, parsed.special_agreements,
-                           parsed.first_record_refusal, parsed.usa_license)
+                           parsed.first_recording_refusal, parsed.usa_license)

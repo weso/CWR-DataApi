@@ -209,7 +209,7 @@ class CWRPrinter():
     def print_npn(self, record):
         print('Interested Party Number: %s' % (record.ip_n))
         print('Publisher Sequence Number: %s' % (record.sequence_n))
-        print('Name: %s' % (record.name))
+        print('Name: %s' % (record.publisher_name))
         print('Language: %s' % (record.language))
 
     def print_ipter(self, record):
@@ -224,7 +224,7 @@ class CWRPrinter():
 
     def print_pubr(self, record):
         print('Publisher Number: %s' % (record.publisher.ip_n))
-        print('Name: %s' % (record.publisher.name))
+        print('Name: %s' % (record.publisher.publisher_name))
         print('Unknown: %s' % (record.publisher_unknown))
         print('IPI Base: %s' % (record.publisher.ipi_base_n))
         print('IPI Name: %s' % (record.publisher.ipi_name_n))
@@ -236,7 +236,7 @@ class CWRPrinter():
         print('Agreement Type: %s' % (record.agreement_type))
         print('ISAC: %s' % (record.isac))
         print('Special Agreements Indicator: %s' % (record.special_agreements))
-        print('First Record Refusal Indicator: %s' % (record.first_record_refusal))
+        print('First Record Refusal Indicator: %s' % (record.first_recording_refusal))
         print('USA License: %s' % (record.usa_license))
         print('PR Society: %s' % (record.pr_society))
         print('PR Owner Share: %s' % (record.pr_owner_share))
@@ -263,7 +263,7 @@ class CWRPrinter():
         print('writer Designation Code: %s' % (record.designation))
         print('Work For Hire Indicator: %s' % (record.work_for_hire))
         print('Reversionary Indicator: %s' % (record.reversionary))
-        print('First Record Refusal Indicator: %s' % (record.first_record_refusal))
+        print('First Record Refusal Indicator: %s' % (record.first_recording_refusal))
         print('USA License: %s' % (record.usa_license))
         print('PR Society: %s' % (record.pr_society))
         print('PR Owner Share: %s' % (record.pr_ownership_share))
@@ -391,13 +391,13 @@ class CWRPrinter():
 
     def print_now(self, record):
         print('First Name: %s' % (record.first_name))
-        print('Name: %s' % (record.name))
+        print('Name: %s' % (record.publisher_name))
         print('Position: %s' % (record.position))
         print('Language: %s' % (record.language))
 
     def print_npr(self, record):
         print('First Name: %s' % (record.first_name))
-        print('Name: %s' % (record.name))
+        print('Name: %s' % (record.publisher_name))
         print('IPI Name: %s' % (record.ipi_name_n))
         print('IPI Base: %s' % (record.ipi_base_n))
         print('Language: %s' % (record.language))

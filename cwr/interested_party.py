@@ -109,7 +109,7 @@ class InterestedPartyRecord(TransactionRecord):
         self._sr_society = sr_society
 
     @property
-    def first_record_refusal(self):
+    def first_recording_refusal(self):
         """
         First Recording Refusal Indicator field. Flag (Yes/No/Unknown).
 
@@ -202,7 +202,7 @@ class IPTerritoryRecord(TransactionRecord):
     @property
     def ie_indicator(self):
         """
-        Inclusion/ Exclusion Indicator field. Table Lookup ('E'/'I').
+        Inclusion/Exclusion Indicator field. Table Lookup ('E'/'I').
 
         This indicates if the territory is included or excluded.
 
@@ -310,12 +310,12 @@ class Publisher(InterestedParty):
     administrator.
     """
 
-    def __init__(self, publisher_id, name, ipi_base_n=None, tax_id=None, ipi_name=None):
+    def __init__(self, publisher_id, publisher_name, ipi_base_n=None, tax_id=None, ipi_name=None):
         super(Publisher, self).__init__(publisher_id, ipi_base_n, tax_id, ipi_name)
-        self._name = name
+        self._publisher_name = publisher_name
 
     @property
-    def name(self):
+    def publisher_name(self):
         """
         Publisher Name field. Alphanumeric.
 
@@ -323,7 +323,7 @@ class Publisher(InterestedParty):
 
         :return: the Publisher's name
         """
-        return self._name
+        return self._publisher_name
 
 
 class PublisherRecord(InterestedPartyRecord):

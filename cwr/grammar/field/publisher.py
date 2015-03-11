@@ -37,8 +37,9 @@ agreement_id = basic.alphanum(_config.field_size('publisher', 'submitter_agreeme
 agreement_id = agreement_id.setName('Submitter Agreement Number').setResultsName('submitter_agreement_id')
 
 # First Recording Refusal Indicator
-first_refusal = basic.lookup(('Y', 'N'), columns=1)
-first_refusal = first_refusal.setName('First Recording Refusal Indicator').setResultsName('first_record_refusal')
+# TODO: The writer record uses this same field
+first_recording_refusal = basic.lookup(('Y', 'N'), columns=1)
+first_recording_refusal = first_recording_refusal.setName('First Recording Refusal Indicator').setResultsName('first_recording_refusal')
 
 # Publisher IPI Base Number
 ipi_base = special.ipi_base_number()

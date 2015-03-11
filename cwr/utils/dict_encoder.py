@@ -200,7 +200,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['name'] = publisher.name
+        encoded['name'] = publisher.publisher_name
         encoded['ip_id'] = publisher.ip_n
         encoded['ipi_base_id'] = publisher.ipi_base_n
         encoded['ipi_name'] = publisher.ipi_name_n
@@ -241,7 +241,7 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['id'] = entity.code
-        encoded['name'] = entity.name
+        encoded['name'] = entity.publisher_name
 
         if entity.description is not None:
             encoded['description'] = entity.description
