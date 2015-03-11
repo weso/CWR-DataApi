@@ -52,7 +52,14 @@ def _to_ipa(parsed):
     :param parsed: result of parsing an IPA record
     :return: an AgreementInterestedParty created from the parsed record
     """
-    return AgreementInterestedParty(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                    parsed.ip_id, parsed.last_name, parsed.agreement_role_code, parsed.writer_name,
-                                    parsed.ipi_name, parsed.ipi_base, parsed.pr_society, parsed.pr_share,
-                                    parsed.mr_society, parsed.mr_share, parsed.sr_society, parsed.sr_share)
+    return AgreementInterestedParty(record_type=parsed.record_type,
+                                    transaction_sequence_n=parsed.transaction_sequence_n,
+                                    record_sequence_n=parsed.record_sequence_n,
+                                    ip_n=parsed.ip_id,
+                                    ip_last_name=parsed.last_name,
+                                    agreement_role_code=parsed.agreement_role_code,
+                                    ip_writer_first_name=parsed.writer_name,
+                                    ipi_name_n=parsed.ipi_name,ipi_base_n=parsed.ipi_base,
+                                    pr_society=parsed.pr_society, pr_share=parsed.pr_share,
+                                    mr_society=parsed.mr_society, mr_share=parsed.mr_share,
+                                    sr_society=parsed.sr_society, sr_share=parsed.sr_share)

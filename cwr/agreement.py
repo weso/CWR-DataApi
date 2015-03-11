@@ -23,16 +23,19 @@ class AgreementInterestedParty(TransactionRecord):
     to assign through the agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, last_name, agreement_role_code,
-                 writer_name='', ipi_name=None, ipi_base=None,
-                 pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 ip_n, ip_last_name, agreement_role_code,
+                 ip_writer_first_name='', ipi_name_n=None, ipi_base_n=None,
+                 pr_society=None, pr_share=0,
+                 mr_society=None, mr_share=0,
+                 sr_society=None, sr_share=0):
         """
         Constructs an AgreementInterestedParty.
 
         :param ip_id: the interested party ID
-        :param last_name: the writer last name or the publisher name
+        :param ip_last_name: the writer last name or the publisher name
         :param agreement_role_code: the role in the agreement
-        :param writer_name: the writer name
+        :param ip_writer_first_name: the writer name
         :param ipi_name: IPI Name number
         :param ipi_base: IPI Base number
         :param pr_society: performing rights society
@@ -44,14 +47,14 @@ class AgreementInterestedParty(TransactionRecord):
         """
         super(AgreementInterestedParty, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement and Interested Party relationship
-        self._ip_id = ip_id
+        self._ip_n = ip_n
         self._agreement_role_code = agreement_role_code
 
         # Interested Party info
-        self._ipi_name = ipi_name
-        self._ipi_base = ipi_base
-        self._last_name = last_name
-        self._writer_name = writer_name
+        self._ipi_name_n = ipi_name_n
+        self._ipi_base_n = ipi_base_n
+        self._ip_last_name = ip_last_name
+        self._ip_writer_first_name = ip_writer_first_name
 
         # Performing Rights info
         self._pr_society = pr_society
@@ -79,43 +82,7 @@ class AgreementInterestedParty(TransactionRecord):
         return self._agreement_role_code
 
     @property
-    def ip_id(self):
-        """
-        Interested Party Number field. Alphanumeric.
-
-        This is the unique ID given by the submitter to the Interested Party.
-
-        :return: ID for the interested party
-        """
-        return self._ip_id
-
-    @property
-    def ipi_base(self):
-        """
-        IPI Base Number field. Table Lookup (CISAC CIS).
-
-        The unique identifier associated with this interested party. IPI numbering is a sub-system of the CISAC
-        Common Information System.
-
-        :return: IPI base number for the interested party
-        """
-        return self._ipi_base
-
-    @property
-    def ipi_name(self):
-        """
-        Interested Party IPI Name number field. Table Lookup (IPI Database).
-
-        The IPI number assigned to this interested party with 2 leading zero’s or the IPI Name number.
-
-        These values reside in the IPI Database.
-
-        :return: the IPI name number for this interested party
-        """
-        return self._ipi_name
-
-    @property
-    def last_name(self):
+    def ip_last_name(self):
         """
         Interested Party Last Name field. Alphanumeric.
 
@@ -126,7 +93,54 @@ class AgreementInterestedParty(TransactionRecord):
 
         :return: the writer last name or the publisher name
         """
-        return self._last_name
+        return self._ip_last_name
+
+    @property
+    def ip_n(self):
+        """
+        Interested Party Number field. Alphanumeric.
+
+        This is the unique ID given by the submitter to the Interested Party.
+
+        :return: ID for the interested party
+        """
+        return self._ip_n
+
+    @property
+    def ip_writer_first_name(self):
+        """
+        Interested Party Writer First Name field. Alphanumeric.
+
+        If the interested party is a writer, provide his/her first and middle names.
+
+        :return: the Writer's first and middle names
+        """
+        return self._ip_writer_first_name
+
+    @property
+    def ipi_base_n(self):
+        """
+        IPI Base Number field. Table Lookup (CISAC CIS).
+
+        The unique identifier associated with this interested party. IPI numbering is a sub-system of the CISAC
+        Common Information System.
+
+        :return: IPI base number for the interested party
+        """
+        return self._ipi_base_n
+
+    @property
+    def ipi_name_n(self):
+        """
+        Interested Party IPI Name number field. Table Lookup (IPI Database).
+
+        The IPI number assigned to this interested party with 2 leading zero’s or the IPI Name number.
+
+        These values reside in the IPI Database.
+
+        :return: the IPI name number for this interested party
+        """
+        return self._ipi_name_n
 
     @property
     def mr_share(self):
@@ -207,17 +221,6 @@ class AgreementInterestedParty(TransactionRecord):
         :return: the Interested Party's synchronization rights society
         """
         return self._sr_society
-
-    @property
-    def writer_name(self):
-        """
-        Interested Party Writer First Name field. Alphanumeric.
-
-        If the interested party is a writer, provide his/her first and middle names.
-
-        :return: the Writer's first and middle names
-        """
-        return self._writer_name
 
 
 class NPARecord(NRARecord):

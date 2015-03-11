@@ -157,12 +157,12 @@ class CWRPrinter():
             self.print_nra(record)
 
     def print_ipa(self, record):
-        print('IP ID: %s' % (record.ip_id))
-        print('writer Name: %s' % (record.writer_name))
-        print('Last Name: %s' % (record.last_name))
+        print('IP ID: %s' % (record.ip_n))
+        print('writer Name: %s' % (record.ip_writer_first_name))
+        print('Last Name: %s' % (record.ip_last_name))
         print('Agreement Role Code: %s' % (record.agreement_role_code))
-        print('IPI Name: %s' % (record.ipi_name))
-        print('IPI Base: %s' % (record.ipi_base))
+        print('IPI Name: %s' % (record.ipi_name_n))
+        print('IPI Base: %s' % (record.ipi_base_n))
         print('PR Society: %s' % (record.pr_society))
         print('PR Shares: %s' % (record.pr_share))
         print('MR Shares: %s' % (record.mr_society))
@@ -171,7 +171,7 @@ class CWRPrinter():
         print('SR Shares: %s' % (record.sr_share))
 
     def print_npa(self, record):
-        print('IP ID: %s' % (record.ip_id))
+        print('IP ID: %s' % (record.ip_n))
         print('IP writer Name: %s' % (record.ip_writer_name))
         print('IP Name: %s' % (record.ip_name))
         print('Language: %s' % (record.language))
@@ -206,13 +206,13 @@ class CWRPrinter():
         print('Note: %s' % (record.note))
 
     def print_npn(self, record):
-        print('Interested Party Number: %s' % (record.ip_id))
+        print('Interested Party Number: %s' % (record.ip_n))
         print('Publisher Sequence Number: %s' % (record.sequence_n))
         print('Name: %s' % (record.name))
         print('Language: %s' % (record.language))
 
     def print_ipter(self, record):
-        print('Interested Party Number: %s' % (record.ip_id))
+        print('Interested Party Number: %s' % (record.ip_n))
         print('Inclusion/Exclusion Indicator: %s' % (record.ie_indicator))
         print('TIS: %s' % (record.tis_numeric_code))
         print('Sequence Number: %s' % (record.sequence_n))
@@ -222,11 +222,11 @@ class CWRPrinter():
         print('Shares Change: %s' % (record.shares_change))
 
     def print_pubr(self, record):
-        print('Publisher Number: %s' % (record.publisher.ip_id))
+        print('Publisher Number: %s' % (record.publisher.ip_n))
         print('Name: %s' % (record.publisher.name))
         print('Unknown: %s' % (record.publisher_unknown))
         print('IPI Base: %s' % (record.publisher.ipi_base_id))
-        print('IPI Name: %s' % (record.publisher.ipi_name))
+        print('IPI Name: %s' % (record.publisher.ipi_name_n))
         print('Tax ID: %s' % (record.publisher.tax_id))
         print('Sequence Number: %s' % (record.sequence_n))
         print('Publisher Type: %s' % (record.publisher_type))
@@ -251,13 +251,13 @@ class CWRPrinter():
         print('Society-Assigned Agreement Number: %s' % (record.society_agreement_id))
 
     def print_writr(self, record):
-        print('writer Number: %s' % (record.writer.ip_id))
+        print('writer Number: %s' % (record.writer.ip_n))
         print('Personal Number: %s' % (record.writer.personal_number))
         print('First Name: %s' % (record.writer.first_name))
-        print('Last Name: %s' % (record.writer.last_name))
+        print('Last Name: %s' % (record.writer.ip_last_name))
         print('Unknown: %s' % (record.writer_unknown))
         print('IPI Base: %s' % (record.writer.ipi_base_id))
-        print('IPI Name: %s' % (record.writer.ipi_name))
+        print('IPI Name: %s' % (record.writer.ipi_name_n))
         print('Tax ID: %s' % (record.writer.tax_id))
         print('writer Designation Code: %s' % (record.designation))
         print('Work For Hire Indicator: %s' % (record.work_for_hire))
@@ -272,9 +272,9 @@ class CWRPrinter():
         print('SR Owner Share: %s' % (record.sr_ownership_share))
 
     def print_nwn(self, record):
-        print('Interested Party Number: %s' % (record.ip_id))
+        print('Interested Party Number: %s' % (record.ip_n))
         print('First Name: %s' % (record.first_name))
-        print('Last Name: %s' % (record.last_name))
+        print('Last Name: %s' % (record.ip_last_name))
         print('Language: %s' % (record.language))
 
     def print_workr(self, record):
@@ -379,10 +379,10 @@ class CWRPrinter():
         print('V-ISAN: %s' % (record.visan))
 
     def print_per(self, record):
-        print('IPI Name: %s' % (record.ipi_name))
+        print('IPI Name: %s' % (record.ipi_name_n))
         print('IPI Base: %s' % (record.ipi_base_number))
         print('First Name: %s' % (record.first_name))
-        print('Last Name: %s' % (record.last_name))
+        print('Last Name: %s' % (record.ip_last_name))
 
     def print_nra(self, record):
         print('Title: %s' % (record.creation_title))
@@ -397,8 +397,8 @@ class CWRPrinter():
     def print_npr(self, record):
         print('First Name: %s' % (record.first_name))
         print('Name: %s' % (record.name))
-        print('IPI Name: %s' % (record.ipi_name))
-        print('IPI Base: %s' % (record.ipi_base))
+        print('IPI Name: %s' % (record.ipi_name_n))
+        print('IPI Base: %s' % (record.ipi_base_n))
         print('Language: %s' % (record.language))
         print('Performance Language: %s' % (record.performance_language))
         print('Performance Dialect: %s' % (record.performance_dialect))

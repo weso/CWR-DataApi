@@ -159,11 +159,11 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['agreement_role_code'] = agreement.agreement_role_code
-        encoded['ip_id'] = agreement.ip_id
-        encoded['ip_last_name'] = agreement.last_name
-        encoded['ip_ipi'] = agreement.ipi_base
-        encoded['ipi_name'] = agreement.ipi_name
-        encoded['ip_writer_name'] = agreement.writer_name
+        encoded['ip_id'] = agreement.ip_n
+        encoded['ip_last_name'] = agreement.ip_last_name
+        encoded['ip_ipi'] = agreement.ipi_base_n
+        encoded['ipi_name'] = agreement.ipi_name_n
+        encoded['ip_writer_name'] = agreement.ip_writer_first_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share
         encoded['mr_society'] = agreement.mr_society
@@ -184,8 +184,8 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['first_name'] = artist.first_name
-        encoded['last_name'] = artist.last_name
-        encoded['ipi_name'] = artist.ipi_name
+        encoded['last_name'] = artist.ip_last_name
+        encoded['ipi_name'] = artist.ipi_name_n
         encoded['ipi_base_number'] = artist.ipi_base_number
 
         return encoded
@@ -201,9 +201,9 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['name'] = publisher.name
-        encoded['ip_id'] = publisher.ip_id
+        encoded['ip_id'] = publisher.ip_n
         encoded['ipi_base_id'] = publisher.ipi_base_id
-        encoded['ipi_name'] = publisher.ipi_name
+        encoded['ipi_name'] = publisher.ipi_name_n
         encoded['tax_id'] = publisher.tax_id
 
         return encoded
@@ -325,9 +325,9 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['first_name'] = writer.first_name
-        encoded['last_name'] = writer.last_name
+        encoded['last_name'] = writer.ip_last_name
         encoded['personal_number'] = writer.personal_number
-        encoded['ip_id'] = writer.ip_id
+        encoded['ip_id'] = writer.ip_n
         encoded['ip_name'] = writer.ip_name
         encoded['ip_base_id'] = writer.ip_base_id
 

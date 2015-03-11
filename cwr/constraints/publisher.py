@@ -85,7 +85,7 @@ def controlled_publisher_has_id(publisher):
 
     :param publisher: the Publisher to validate
     """
-    if publisher.record_type == 'SPU' and publisher.publisher.ip_id is None:
+    if publisher.record_type == 'SPU' and publisher.publisher.ip_n is None:
         raise pp.ParseException('', msg='Publishers controlled by the submitter should have an ID')
 
 
