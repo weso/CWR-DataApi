@@ -28,7 +28,7 @@ publisher = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
         'writer_publisher'),
     compulsory=True) + field_writer_publisher.publisher_ip_id + field_writer_publisher.publisher_name + field_agreement.submitter_agreement_n + \
-            field_agreement.society_id + field_writer_publisher.writer_ip_id + field_special.lineEnd
+            field_agreement.society_assigned_agreement_n + field_writer_publisher.writer_ip_id + field_special.lineEnd
 
 """
 Parsing actions for the patterns.
@@ -51,5 +51,5 @@ def _to_publisher(parsed):
     :return: a WriterPublisherRecord created from the parsed record
     """
     return WriterPublisherRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                 parsed.publisher_id, parsed.writer_id, parsed.agreement_id,
-                                 parsed.society_agreement_number)
+                                 parsed.publisher_id, parsed.writer_id, parsed.submitter_agreement_n,
+                                 parsed.society_assigned_agreement_n)

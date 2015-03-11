@@ -80,13 +80,13 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['agreement_id'] = agreement.agreement_id
-        encoded['society_agreement_number'] = agreement.society_agreement_number
+        encoded['agreement_id'] = agreement.submitter_agreement_n
+        encoded['society_agreement_number'] = agreement.society_assigned_agreement_n
         encoded['international_standard_number'] = agreement.international_standard_code
         encoded['agreement_type'] = agreement.agreement_type
 
-        encoded['start_date'] = self._adapter.adapt(agreement.start_date)
-        encoded['end_date'] = self._adapter.adapt(agreement.end_date)
+        encoded['start_date'] = self._adapter.adapt(agreement.agreement_start_date)
+        encoded['end_date'] = self._adapter.adapt(agreement.agreement_end_date)
 
         encoded['prior_royalty_status'] = agreement.prior_royalty_status
         encoded['prior_royalty_start_date'] = self._adapter.adapt(agreement.prior_royalty_start_date)
@@ -94,8 +94,8 @@ class CWRDictionaryEncoder(object):
         encoded['post_term_collection_status'] = agreement.post_term_collection_status
         encoded['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)
 
-        encoded['signature_date'] = self._adapter.adapt(agreement.signature_date)
-        encoded['works_number'] = agreement.works_number
+        encoded['signature_date'] = self._adapter.adapt(agreement.date_of_signature)
+        encoded['works_number'] = agreement.number_of_works
         encoded['sales_manufacture_clause'] = agreement.sales_manufacture_clause
 
         encoded['international_standard_code'] = agreement.international_standard_code

@@ -178,14 +178,14 @@ class CWRPrinter():
         print('Language: %s' % (record.language))
 
     def print_agr(self, record):
-        print('Agreement ID: %s' % (record.agreement_id))
-        print('Society Agreement Number: %s' % (record.society_agreement_number))
+        print('Agreement ID: %s' % (record.submitter_agreement_n))
+        print('Society Agreement Number: %s' % (record.society_assigned_agreement_n))
         print('International Standard Code: %s' % (record.international_standard_code))
         print('Agreement Type: %s' % (record.agreement_type))
-        print('Start Date: %s' % (record.start_date))
-        print('End Date: %s' % (record.end_date))
-        print('Signature Date: %s' % (record.signature_date))
-        print('Works Number: %s' % (record.works_number))
+        print('Start Date: %s' % (record.agreement_start_date))
+        print('End Date: %s' % (record.agreement_end_date))
+        print('Signature Date: %s' % (record.date_of_signature))
+        print('Works Number: %s' % (record.number_of_works))
         print('Prior Royalty Status: %s' % (record.prior_royalty_status))
         print('Prior Royalty Start Date: %s' % (record.prior_royalty_start_date))
         print('Post-Term Collection Status: %s' % (record.post_term_collection_status))
@@ -231,7 +231,7 @@ class CWRPrinter():
         print('Tax ID: %s' % (record.publisher.tax_id))
         print('Sequence Number: %s' % (record.sequence_n))
         print('Publisher Type: %s' % (record.publisher_type))
-        print('Agreement Number: %s' % (record.agreement_id))
+        print('Agreement Number: %s' % (record.submitter_agreement_n))
         print('Society Agreement Number: %s' % (record.society_agreement_id))
         print('Agreement Type: %s' % (record.agreement_type))
         print('ISAC: %s' % (record.isac))
@@ -248,7 +248,7 @@ class CWRPrinter():
     def print_pwr(self, record):
         print('Publisher IP Number: %s' % (record.publisher_id))
         print('writer IP Number: %s' % (record.publisher_id))
-        print('Submitter Agreement Number: %s' % (record.agreement_id))
+        print('Submitter Agreement Number: %s' % (record.submitter_agreement_n))
         print('Society-Assigned Agreement Number: %s' % (record.society_agreement_id))
 
     def print_writr(self, record):

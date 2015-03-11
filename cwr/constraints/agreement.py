@@ -80,11 +80,11 @@ def retention_end_date_after_agreement_end_date(agreement):
     """
     if agreement.retention_end_date:
         # Retention End Date set
-        if not agreement.end_date:
+        if not agreement.agreement_end_date:
             # Agreement End Date not set
             raise pp.ParseException('',
                                     msg='Retention End Date requires the Agreement End Date to be set')
-        elif agreement.end_date >= agreement.retention_end_date:
+        elif agreement.agreement_end_date >= agreement.retention_end_date:
             # Agreement End Date after Retention End Date
             raise pp.ParseException('',
                                     msg='The Retention End Date must be after the Agreement End Date')
@@ -107,7 +107,7 @@ def prior_royalty_start_date_before_agreement_start_date(agreement):
 
     :param agreement: the agreement to validate
     """
-    if agreement.prior_royalty_start_date and agreement.prior_royalty_start_date >= agreement.start_date:
+    if agreement.prior_royalty_start_date and agreement.prior_royalty_start_date >= agreement.agreement_start_date:
         # Prior Royalty Start Date after Agreement Start Date
         raise pp.ParseException('',
                                 msg='The Prior Royalty Start Date must be before the Agreement Start Date')
@@ -141,9 +141,9 @@ def post_term_collection_end_date_after_end_dates(agreement):
                 # Retention End Date is after the Post Term Collection End Date
                 raise pp.ParseException('',
                                         msg='The Post Term Collection End Date must be after the Retention End Date')
-        elif agreement.end_date:
+        elif agreement.agreement_end_date:
             # Agreement End Date exists
-            if agreement.post_term_collection_end_date <= agreement.end_date:
+            if agreement.post_term_collection_end_date <= agreement.agreement_end_date:
                 # Agreement End Date is after the Post Term Collection End Date
                 raise pp.ParseException('',
                                         msg='The Post Term Collection End Date must be after the Agreement End Date')

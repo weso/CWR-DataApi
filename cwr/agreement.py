@@ -237,27 +237,29 @@ class AgreementRecord(TransactionRecord):
     registration. If a society has assigned an agreement number, then it too can be used as the link.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement_id, agreement_type, start_date,
-                 prior_royalty_status,
-                 post_term_collection_status, works_number, society_agreement_number='',
-                 international_standard_code='', sales_manufacture_clause='S',
-                 end_date=None, signature_date=None, retention_end_date=None, prior_royalty_start_date=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 submitter_agreement_n, agreement_type,
+                 agreement_start_date, number_of_works,
+                 prior_royalty_status, post_term_collection_status,
+                 international_standard_code='', society_assigned_agreement_n='', sales_manufacture_clause='S',
+                 agreement_end_date=None, date_of_signature=None, retention_end_date=None,
+                 prior_royalty_start_date=None,
                  post_term_collection_end_date=None,
                  shares_change=False, advance_given=False):
         """
         Constructs an Agreement Record.
 
-        :param agreement_id: the submitter's ID for the agreement
+        :param submitter_agreement_n: the submitter's ID for the agreement
         :param agreement_type: the type of agreement
-        :param start_date: starting date for the agreement
+        :param agreement_start_date: starting date for the agreement
         :param prior_royalty_status: the status of the royalties before the agreement
         :param post_term_collection_status: if and how the the acquirer can get royalties after the retention end
-        :param works_number: number of works in the agreement
-        :param society_agreement_number: ID given by a society for the agreement
+        :param number_of_works: number of works in the agreement
+        :param society_assigned_agreement_n: ID given by a society for the agreement
         :param international_standard_code: ISA ID for the agreement
         :param sales_manufacture_clause: indicates if the rights are for sale or manufacture
-        :param end_date: end date for the agreement
-        :param signature_date: date of signature of the agreement
+        :param agreement_end_date: end date for the agreement
+        :param date_of_signature: date of signature of the agreement
         :param retention_end_date: end date of the rights retention
         :param prior_royalty_start_date: royalties acquisition date previous to the start of the agreement
         :param post_term_collection_end_date: end of royalties after the agreement end
@@ -266,14 +268,14 @@ class AgreementRecord(TransactionRecord):
         """
         super(AgreementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement identification data
-        self._agreement_id = agreement_id
-        self._society_agreement_number = society_agreement_number
+        self._submitter_agreement_n = submitter_agreement_n
+        self._society_assigned_agreement_n = society_assigned_agreement_n
         self._international_standard_code = international_standard_code
         self._agreement_type = agreement_type
 
         # Agreement dates
-        self._start_date = start_date
-        self._end_date = end_date
+        self._agreement_start_date = agreement_start_date
+        self._agreement_end_date = agreement_end_date
 
         # Royalty info
         self._prior_royalty_status = prior_royalty_status
@@ -291,11 +293,11 @@ class AgreementRecord(TransactionRecord):
         self._advance_given = advance_given
 
         # Other dates
-        self._signature_date = signature_date
+        self._date_of_signature = date_of_signature
         self._retention_end_date = retention_end_date
 
         # Other info
-        self._works_number = works_number
+        self._number_of_works = number_of_works
 
     @property
     def advance_given(self):
@@ -309,15 +311,31 @@ class AgreementRecord(TransactionRecord):
         return self._advance_given
 
     @property
-    def agreement_id(self):
+    def agreement_end_date(self):
         """
-        Submitter Agreement Number field. Alphanumeric.
+        Agreement End Date field. Date.
 
-        This is the unique ID given by the submitter to the Agreement.
+        This is the date when the transfer of rights to the acquiring party ends.
 
-        :return: the submitter's ID for this Agreement
+        There may be provisions within the contract (as described in other attributes such as collection end date)
+        which have impact on entitlements.
+
+        This attribute is optional, and by default is None.
+
+        :return: the end date for the Agreement
         """
-        return self._agreement_id
+        return self._agreement_end_date
+
+    @property
+    def agreement_start_date(self):
+        """
+        Agreement Start Date field. Date.
+
+        The date on which the transfer of rights to the acquiring party becomes effective.
+
+        :return: date on which the Agreement starts
+        """
+        return self._agreement_start_date
 
     @property
     def agreement_type(self):
@@ -331,20 +349,15 @@ class AgreementRecord(TransactionRecord):
         return self._agreement_type
 
     @property
-    def end_date(self):
+    def date_of_signature(self):
         """
-        Agreement End Date field. Date.
+        Date of Signature of Agreement field. Date.
 
-        This is the date when the transfer of rights to the acquiring party ends.
+        The date when the written form of the agreement (the contract) was signed.
 
-        There may be provisions within the contract (as described in other attributes such as collection end date)
-        which have impact on entitlements.
-
-        This attribute is optional, and by default is None.
-
-        :return: the end date for the Agreement
+        :return the date when the agreement contract was signed
         """
-        return self._end_date
+        return self._date_of_signature
 
     @property
     def international_standard_code(self):
@@ -358,6 +371,17 @@ class AgreementRecord(TransactionRecord):
         :return: the ISA code for this Agreement
         """
         return self._international_standard_code
+
+    @property
+    def number_of_works(self):
+        """
+        Number of Works field. Numeric.
+
+        Number of works registered subject to this agreement specific to this file.
+
+        :return: number of works under this Agreement
+        """
+        return self._number_of_works
 
     @property
     def post_term_collection_end_date(self):
@@ -446,7 +470,7 @@ class AgreementRecord(TransactionRecord):
     @property
     def sales_manufacture_clause(self):
         """
-        Sales/ Manufacture Clause field. Table Lookup ('S'/'M').
+        Sales/Manufacture Clause field. Table Lookup ('S'/'M').
 
         A marker which shows whether the acquiring party has acquired rights either for products manufactured or for
         products sold in the territories in agreement.
@@ -475,20 +499,9 @@ class AgreementRecord(TransactionRecord):
         return self._shares_change
 
     @property
-    def signature_date(self):
+    def society_assigned_agreement_n(self):
         """
-        Date of Signature of Agreement field. Date.
-
-        The date when the written form of the agreement (the contract) was signed.
-
-        :return the date when the agreement contract was signed
-        """
-        return self._signature_date
-
-    @property
-    def society_agreement_number(self):
-        """
-        Society-assigned Agreement Number field. Alphanumeric.
+        Society-Assigned Agreement Number field. Alphanumeric.
 
         Identificator given by a Society to the Agreement.
 
@@ -496,29 +509,18 @@ class AgreementRecord(TransactionRecord):
 
         :return: the society given ID
         """
-        return self._society_agreement_number
+        return self._society_assigned_agreement_n
 
     @property
-    def start_date(self):
+    def submitter_agreement_n(self):
         """
-        Agreement Start Date field. Date.
+        Submitter Agreement Number field. Alphanumeric.
 
-        The date on which the transfer of rights to the acquiring party becomes effective.
+        This is the unique ID given by the submitter to the Agreement.
 
-        :return: date on which the Agreement starts
+        :return: the submitter's ID for this Agreement
         """
-        return self._start_date
-
-    @property
-    def works_number(self):
-        """
-        Number of Works field. Numeric.
-
-        Number of works registered subject to this agreement specific to this file.
-
-        :return: number of works under this Agreement
-        """
-        return self._works_number
+        return self._submitter_agreement_n
 
 
 class AgreementTerritoryRecord(TransactionRecord):
