@@ -36,4 +36,4 @@ class TestParseAgreementTerritory(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('I', result.inclusion_exclusion_indicator)
-        self.assertEqual(20, result.tis_code)
+        self.assertEqual(20, result.tis_numeric_code)

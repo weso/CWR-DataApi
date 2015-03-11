@@ -535,15 +535,16 @@ class AgreementTerritoryRecord(TransactionRecord):
     This is to be used in an Agreement Transaction.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, tis_code, ie_indicator):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 tis_numeric_code, ie_indicator):
         """
         Constructs an AgreementTerritory.
 
-        :param tis_code: the TIS code
+        :param tis_numeric_code: the TIS numeric code
         :param ie_indicator: indicates if it is included or not
         """
         super(AgreementTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._tis_code = tis_code
+        self._tis_numeric_code = tis_numeric_code
         self._ie_indicator = ie_indicator
 
     @property
@@ -562,15 +563,15 @@ class AgreementTerritoryRecord(TransactionRecord):
         return self._ie_indicator
 
     @property
-    def tis_code(self):
+    def tis_numeric_code(self):
         """
         TIS Numeric Code field. Table Lookup (TIS Numeric Code).
 
         Numeric identifier of a territory according to the new CISAC Territory Standard.
 
-        :return: the TIS code
+        :return: the TIS numeric code
         """
-        return self._tis_code
+        return self._tis_numeric_code
 
 
 class AgreementTransaction(TransactionRecord):

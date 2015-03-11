@@ -196,7 +196,7 @@ class CWRPrinter():
         print('Advance Given: %s' % (record.advance_given))
 
     def print_ter(self, record):
-        print('TIS Code: %s' % (record.tis_code))
+        print('TIS Code: %s' % (record.tis_numeric_code))
         print('Inclusion/Exclusion Indicator: %s' % (record.inclusion_exclusion_indicator))
 
     def print_ari(self, record):
