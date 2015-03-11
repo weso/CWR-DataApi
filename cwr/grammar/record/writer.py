@@ -32,7 +32,7 @@ Patterns.
 
 writer = field_special.lineStart + field_record.record_prefix(
     _config.record_type('writer'),
-    compulsory=True) + field_special.ip_id() + field_writer.writer_last_name + field_writer.writer_first_name + field_writer.unknown + \
+    compulsory=True) + field_special.ip_n() + field_writer.writer_last_name + field_writer.writer_first_name + field_writer.unknown + \
          field_table.writer_designation() + field_publisher.tax_id + field_special.ipi_name_number() + \
          field_society.pr_affiliation() + field_society.pr_share() + \
          field_society.mr_affiliation() + field_society.mr_share() + \
@@ -61,7 +61,8 @@ def _to_writer(parsed):
     :param parsed: result of parsing the Writer info in a Writer record
     :return: a Writer created from the parsed record
     """
-    return Writer(parsed.ip_id, parsed.personal_number, parsed.ipi_base, parsed.writer_first_name, parsed.writer_last_name,
+    return Writer(parsed.ip_n, parsed.personal_number, parsed.ipi_base, parsed.writer_first_name,
+                  parsed.writer_last_name,
                   parsed.tax_id, parsed.ipi_name)
 
 

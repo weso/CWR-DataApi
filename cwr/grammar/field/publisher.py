@@ -34,12 +34,14 @@ tax_id = tax_id.setName('Tax ID #').setResultsName('tax_id')
 
 # Submitter Agreement Number
 submitter_agreement_n = basic.alphanum(_config.field_size('publisher', 'submitter_agreement_id'))
-submitter_agreement_n = submitter_agreement_n.setName('Submitter Agreement Number').setResultsName('submitter_agreement_id')
+submitter_agreement_n = submitter_agreement_n.setName('Submitter Agreement Number').setResultsName(
+    'submitter_agreement_id')
 
 # First Recording Refusal Indicator
 # TODO: The writer record uses this same field
 first_recording_refusal = basic.lookup(('Y', 'N'), columns=1)
-first_recording_refusal = first_recording_refusal.setName('First Recording Refusal Indicator').setResultsName('first_recording_refusal')
+first_recording_refusal = first_recording_refusal.setName('First Recording Refusal Indicator').setResultsName(
+    'first_recording_refusal')
 
 # Publisher IPI Base Number
 ipi_base = special.ipi_base_number()
@@ -51,4 +53,5 @@ international_code = international_code.setName('International Standard Agreemen
 
 # Society-assigned Agreement Number
 society_assigned_agreement_n = basic.alphanum(_config.field_size('publisher', 'society_agreement_id'))
-society_assigned_agreement_n = society_assigned_agreement_n.setName('Society-assigned Agreement Number').setResultsName('society_assigned_agreement_n')
+society_assigned_agreement_n = society_assigned_agreement_n.setName('Society-assigned Agreement Number').setResultsName(
+    'society_assigned_agreement_n')

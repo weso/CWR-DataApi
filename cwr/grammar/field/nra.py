@@ -36,7 +36,7 @@ NPN fields.
 
 # Publisher Name
 publisher_name = basic.alphanum(_config.field_size('npn', 'name'), compulsory=True)
-publisher_name = publisher_name.setName('Publisher Name').setResultsName('name')
+publisher_name = publisher_name.setName('Publisher Name').setResultsName('publisher_name')
 publisher_name.leaveWhitespace()
 
 """
@@ -67,15 +67,16 @@ NPR fields.
 
 # Performing Artist Name
 performing_artist_name = basic.alphanum(_config.field_size('npr', 'performing_artist_name'))
-performing_artist_name = performing_artist_name.setName('Performing Artist Name').setResultsName('name')
+performing_artist_name = performing_artist_name.setName('Performing Artist Name').setResultsName(
+    'performing_artist_name')
 
 # Performing Artist Name
 performing_artist_first_name = basic.alphanum(_config.field_size('npr', 'performing_artist_first_name'))
 performing_artist_first_name = performing_artist_first_name.setName('Performing Artist First Name').setResultsName(
-    'first_name')
+    'performing_artist_first_name')
 
 # Performance Language
-performance_language = table.language()
+performance_language = table.language_code()
 performance_language = performance_language.setName('Performance Language').setResultsName('performance_language')
 
 # Dialect
@@ -96,11 +97,11 @@ NOW fields.
 
 # Writer Name
 writer_name = basic.alphanum(_config.field_size('now', 'name'))
-writer_name = writer_name.setName('Writer Name').setResultsName('name')
+writer_name = writer_name.setName('Writer Name').setResultsName('writer_name')
 
 # Writer Last Name
 writer_first_name_now = basic.alphanum(_config.field_size('now', 'last_name'))
-writer_first_name_now = writer_first_name_now.setName('Writer Last Name').setResultsName('first_name')
+writer_first_name_now = writer_first_name_now.setName('Writer Last Name').setResultsName('writer_first_name')
 
 # Writer Position
 writer_position = basic.numeric(_config.field_size('now', 'position'))

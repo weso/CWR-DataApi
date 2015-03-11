@@ -26,7 +26,7 @@ Work patterns.
 
 work_record = field_special.lineStart + field_record.record_prefix(_config.record_type('work'),
                                                                    compulsory=True) + field_work.work_title + \
-              field_table.language() + field_work.work_id + field_work.iswc + \
+              field_table.language_code() + field_work.work_id + field_work.iswc + \
               field_work.copyright_date + field_work.copyright_number + field_table.musical_distribution_category(
     compulsory=True) + field_work.duration + field_work.recorded + \
               field_table.text_music_relationship(
@@ -38,7 +38,7 @@ work_record = field_special.lineStart + field_record.record_prefix(_config.recor
 
 conflict = field_special.lineStart + field_record.record_prefix(_config.record_type('work_conflict'),
                                                                 compulsory=True) + field_work.work_title + \
-           field_table.language() + field_work.work_id + field_work.iswc + \
+           field_table.language_code() + field_work.work_id + field_work.iswc + \
            field_work.copyright_date + field_work.copyright_number + field_table.musical_distribution_category(
     compulsory=True) + field_work.duration + field_work.recorded + \
            field_table.text_music_relationship(
@@ -73,7 +73,7 @@ def _to_work(parsed):
                            parsed.work_id, parsed.title, parsed.version_type, parsed.musical_distribution_category,
                            printed_edition_publication_date=parsed.printed_edition_publication_date,
                            text_music_relationship=parsed.text_music_relationship,
-                           language_code=parsed.language,
+                           language_code=parsed.language_code,
                            copyright_number=parsed.copyright_number,
                            copyright_date=parsed.copyright_date,
                            music_arrangement=parsed.music_arrangement,

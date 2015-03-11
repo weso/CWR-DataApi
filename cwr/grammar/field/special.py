@@ -32,7 +32,7 @@ lineEnd.setName("End of line")
 # CONCRETE CASES FIELDS
 
 
-def ip_id(name=None, compulsory=False):
+def ip_n(name=None, compulsory=False):
     """
     IP Number field.
 
@@ -46,10 +46,10 @@ def ip_id(name=None, compulsory=False):
     if name is None:
         name = 'Interested Party Number Field'
 
-    field = basic.alphanum(_config.field_size('special', 'ip_id'), compulsory=compulsory)
+    field = basic.alphanum(_config.field_size('special', 'ip_n'), compulsory=compulsory)
     field.setName(name)
 
-    return field.setResultsName('ip_id')
+    return field.setResultsName('ip_n')
 
 
 def ipi_base_number(name=None, compulsory=False):

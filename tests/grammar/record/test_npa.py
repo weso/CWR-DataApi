@@ -37,10 +37,10 @@ class TestNPAGrammar(unittest.TestCase):
         self.assertEqual('NPA', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('012345678', result.ip_id)
+        self.assertEqual('012345678', result.ip_n)
         self.assertEqual('PARTY NAME', result.ip_name)
         self.assertEqual('PARTY WRITER NAME', result.ip_writer_name)
-        self.assertEqual('ES', result.language)
+        self.assertEqual('ES', result.language_code)
 
     def test_valid_min(self):
         """
@@ -55,7 +55,7 @@ class TestNPAGrammar(unittest.TestCase):
         self.assertEqual('NPA', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('000000000', result.ip_id)
+        self.assertEqual('000000000', result.ip_n)
         self.assertEqual('PARTY NAME', result.ip_name)
         self.assertEqual('PARTY WRITER NAME', result.ip_writer_name)
-        self.assertEqual(None, result.language)
+        self.assertEqual(None, result.language_code)

@@ -175,7 +175,7 @@ class CWRPrinter():
         print('IP ID: %s' % (record.ip_n))
         print('IP writer Name: %s' % (record.ip_writer_name))
         print('IP Name: %s' % (record.ip_name))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
 
     def print_agr(self, record):
         print('Agreement ID: %s' % (record.submitter_agreement_n))
@@ -210,7 +210,7 @@ class CWRPrinter():
         print('Interested Party Number: %s' % (record.ip_n))
         print('Publisher Sequence Number: %s' % (record.publisher_sequence_n))
         print('Name: %s' % (record.publisher_name))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
 
     def print_ipter(self, record):
         print('Interested Party Number: %s' % (record.ip_n))
@@ -276,7 +276,7 @@ class CWRPrinter():
         print('Interested Party Number: %s' % (record.ip_n))
         print('First Name: %s' % (record.writer_first_name))
         print('Last Name: %s' % (record.ip_last_name))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
 
     def print_workr(self, record):
         print('Submitter Work Number: %s' % (record.work_id))
@@ -337,12 +337,12 @@ class CWRPrinter():
     def print_alt(self, record):
         print('Alternate Title: %s' % (record.alternate_title))
         print('Title Type: %s' % (record.title_type))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
 
     def print_nat(self, record):
         print('Title: %s' % (record.creation_title))
         print('Title Type: %s' % (record.title_type))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
 
     def print_rec(self, record):
         print('EAN: %s' % (record.ean))
@@ -387,19 +387,19 @@ class CWRPrinter():
 
     def print_nra(self, record):
         print('Title: %s' % (record.creation_title))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
 
     def print_now(self, record):
         print('First Name: %s' % (record.writer_first_name))
         print('Name: %s' % (record.publisher_name))
         print('Position: %s' % (record.position))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
 
     def print_npr(self, record):
         print('First Name: %s' % (record.writer_first_name))
         print('Name: %s' % (record.publisher_name))
         print('IPI Name: %s' % (record.ipi_name_n))
         print('IPI Base: %s' % (record.ipi_base_n))
-        print('Language: %s' % (record.language))
+        print('Language: %s' % (record.language_code))
         print('Performance Language: %s' % (record.performance_language))
         print('Performance Dialect: %s' % (record.performance_dialect))

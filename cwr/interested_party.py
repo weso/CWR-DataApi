@@ -338,8 +338,10 @@ class PublisherRecord(InterestedPartyRecord):
     who are involved in the ownership and collection of a work. May they be under control of the submitter or not.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher, publisher_sequence_n, submitter_agreement_n='',
-                 publisher_type=None, publisher_unknown='N', agreement_type=None, isac='', society_assigned_agreement_n='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher, publisher_sequence_n,
+                 submitter_agreement_n='',
+                 publisher_type=None, publisher_unknown='N', agreement_type=None, isac='',
+                 society_assigned_agreement_n='',
                  pr_society=None, pr_ownership_share=0, mr_society=None, mr_ownership_share=0, sr_society=None,
                  sr_ownership_share=0, special_agreements=None, first_record_refusal='U', usa_license=''):
         """

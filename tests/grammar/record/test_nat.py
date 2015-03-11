@@ -39,4 +39,4 @@ class TestNPAGrammar(unittest.TestCase):
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('THE TITLE', result.title)
         self.assertEqual('AT', result.title_type)
-        self.assertEqual('ES', result.language)
+        self.assertEqual('ES', result.language_code)

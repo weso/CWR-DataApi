@@ -1026,11 +1026,11 @@ class AlternateTitleRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, alternate_title, title_type,
-                 language=None):
+                 language_code=None):
         super(AlternateTitleRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._alternate_title = alternate_title
         self._title_type = title_type
-        self._language = language
+        self._language_code = language_code
 
     @property
     def alternate_title(self):
@@ -1044,7 +1044,7 @@ class AlternateTitleRecord(TransactionRecord):
         return self._alternate_title
 
     @property
-    def language(self):
+    def language_code(self):
         """
         Language Code field. Table Lookup (Language Code Table).
 
@@ -1052,7 +1052,7 @@ class AlternateTitleRecord(TransactionRecord):
 
         :return: the Alternate Title language
         """
-        return self._language
+        return self._language_code
 
     @property
     def title_type(self):

@@ -40,18 +40,18 @@ Patterns.
 
 alternate = field_special.lineStart + field_record.record_prefix(_config.record_type('alternate_title'),
                                                                  compulsory=True) + \
-            field_work_detail.alternate_title + field_table.title_type() + field_table.language() + field_special.lineEnd
+            field_work_detail.alternate_title + field_table.title_type() + field_table.language_code() + field_special.lineEnd
 
 entire_title = field_special.lineStart + field_record.record_prefix(_config.record_type('entire_work_title'),
                                                                     compulsory=True) + \
-               field_work_detail.entire_work_title + field_work_detail.iswc + field_table.language() + field_work_detail.writer_1_last_name + \
+               field_work_detail.entire_work_title + field_work_detail.iswc + field_table.language_code() + field_work_detail.writer_1_last_name + \
                field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name + \
                field_work_detail.writer_1_ipi_base + field_work_detail.writer_2_last_name + \
                field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name + field_work_detail.writer_2_ipi_base + field_work.work_id + field_special.lineEnd
 
 version = field_special.lineStart + field_record.record_prefix(_config.record_type('original_work_title'),
                                                                compulsory=True) + \
-          field_work_detail.original_title + field_work_detail.iswc + field_table.language() + field_work_detail.writer_1_last_name + \
+          field_work_detail.original_title + field_work_detail.iswc + field_table.language_code() + field_work_detail.writer_1_last_name + \
           field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name + \
           field_work_detail.writer_1_ipi_base + field_work_detail.writer_2_last_name + \
           field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name + field_work_detail.writer_2_ipi_base + field_work.work_id + field_special.lineEnd
@@ -126,7 +126,7 @@ def _to_alternate_title(parsed):
     :return: a AlternateTitleRecord created from the parsed record
     """
     return AlternateTitleRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                parsed.title, parsed.title_type, parsed.language)
+                                parsed.title, parsed.title_type, parsed.language_code)
 
 
 def _to_entire_title(parsed):
@@ -140,7 +140,7 @@ def _to_entire_title(parsed):
                               parsed.title, parsed.work_id, parsed.first_name_1, parsed.last_name_1,
                               parsed.first_name_2, parsed.last_name_2, parsed.ipi_base_1,
                               parsed.ipi_name_1, parsed.ipi_base_2, parsed.ipi_name_2,
-                              parsed.source, parsed.language, parsed.iswc)
+                              parsed.source, parsed.language_code, parsed.iswc)
 
 
 def _to_version_title(parsed):
@@ -154,7 +154,7 @@ def _to_version_title(parsed):
                               parsed.title, parsed.work_id, parsed.first_name_1, parsed.last_name_1,
                               parsed.first_name_2, parsed.last_name_2, parsed.ipi_base_1,
                               parsed.ipi_name_1, parsed.ipi_base_2, parsed.ipi_name_2,
-                              parsed.source, parsed.language, parsed.iswc)
+                              parsed.source, parsed.language_code, parsed.iswc)
 
 
 def _to_performing_artist(parsed):

@@ -22,12 +22,12 @@ class NRARecord(TransactionRecord):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, language=None):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, language_code=None):
         super(NRARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._language = language
+        self._language_code = language_code
 
     @property
-    def language(self):
+    def language_code(self):
         """
         Language Code field. Table Lookup (Language Code Table).
 
@@ -35,7 +35,7 @@ class NRARecord(TransactionRecord):
 
         :return: the language code of the record
         """
-        return self._language
+        return self._language_code
 
 
 class NPARecord(NRARecord):
@@ -47,19 +47,16 @@ class NPARecord(NRARecord):
     record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer_name, ip_id='',
-                 language=None):
-        super(NPARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer_name, ip_n='',
+                 language_code=None):
+        super(NPARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # IP info
         self._ip_name = ip_name
         self._ip_writer_name = ip_writer_name
-        self._ip_id = ip_id
-
-        # Language info
-        self._language = language
+        self._ip_n = ip_n
 
     @property
-    def ip_id(self):
+    def ip_n(self):
         """
         Interested Party # field. Alphanumeric.
 
@@ -67,7 +64,7 @@ class NPARecord(NRARecord):
 
         :return: the Interested Party ID
         """
-        return self._ip_id
+        return self._ip_n
 
     @property
     def ip_name(self):
@@ -100,16 +97,17 @@ class NWNRecord(NRARecord):
     alphabet. This record can be used to identify the name of the writer in the preceding SWR/OWR record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name, last_name, ip_id='',
-                 language=None):
-        super(NWNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_last_name,
+                 ip_id='',
+                 language_code=None):
+        super(NWNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Writer info
-        self._first_name = first_name
-        self._last_name = last_name
-        self._ip_id = ip_id
+        self._writer_first_name = writer_first_name
+        self._writer_last_name = writer_last_name
+        self._ip_n = ip_id
 
     @property
-    def ip_id(self):
+    def ip_n(self):
         """
         Interested Party # field. Alphanumeric.
 
@@ -117,10 +115,10 @@ class NWNRecord(NRARecord):
 
         :return: the Interested Party ID
         """
-        return self._ip_id
+        return self._ip_n
 
     @property
-    def first_name(self):
+    def writer_first_name(self):
         """
         Writer First Name. Alphanumeric.
 
@@ -128,10 +126,10 @@ class NWNRecord(NRARecord):
 
         :return: the first name of this writer
         """
-        return self._first_name
+        return self._writer_first_name
 
     @property
-    def last_name(self):
+    def writer_last_name(self):
         """
         Writer Last Name. Alphanumeric.
 
@@ -139,7 +137,7 @@ class NWNRecord(NRARecord):
 
         :return: the last or single name of this writer
         """
-        return self._last_name
+        return self._writer_last_name
 
 
 class NATRecord(NRARecord):
@@ -151,8 +149,8 @@ class NATRecord(NRARecord):
     titles.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language=None):
-        super(NATRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language_code=None):
+        super(NATRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Title info
         self._title = title
         self._title_type = title_type
@@ -194,8 +192,8 @@ class NRARecordWork(NRARecord):
     titles.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language=None):
-        super(NRARecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None):
+        super(NRARecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         self._title = title
 
     @property
@@ -219,35 +217,14 @@ class NOWRecord(NRARecord):
     alphabet.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name, name, position=None,
-                 language=None):
-        super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_name,
+                 position=None,
+                 language_code=None):
+        super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Writer information
-        self._first_name = first_name
-        self._name = name
+        self._writer_first_name = writer_first_name
+        self._writer_name = writer_name
         self._position = position
-
-    @property
-    def first_name(self):
-        """
-        Writer First Name. Alphanumeric.
-
-        The first name of this writer.
-
-        :return: the first name of this writer
-        """
-        return self._first_name
-
-    @property
-    def name(self):
-        """
-        Writer Name. Alphanumeric.
-
-        The name of this writer.
-
-        :return: the name of this writer
-        """
-        return self._name
 
     @property
     def position(self):
@@ -260,6 +237,28 @@ class NOWRecord(NRARecord):
         """
         return self._position
 
+    @property
+    def writer_first_name(self):
+        """
+        Writer First Name. Alphanumeric.
+
+        The first name of this writer.
+
+        :return: the first name of this writer
+        """
+        return self._writer_first_name
+
+    @property
+    def writer_name(self):
+        """
+        Writer Name. Alphanumeric.
+
+        The name of this writer.
+
+        :return: the name of this writer
+        """
+        return self._writer_name
+
 
 class NPRRecord(NRARecord):
     """
@@ -270,63 +269,20 @@ class NPRRecord(NRARecord):
     such as Cantonese. Performance Dialect, if entered, must be a valid code from ISO 639-2(T).
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name='', name='', ipi_name=None,
-                 ipi_base=None, language=None, performance_language=None, performance_dialect=None):
-        super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, performing_artist_first_name='',
+                 performing_artist_name='', performing_artist_ipi_name_n_ipi_name=None,
+                 performing_artist_ipi_base_n=None, language_code=None, performance_language=None,
+                 performance_dialect=None):
+        super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Artist data
-        self._first_name = first_name
-        self._name = name
-        self._ipi_name = ipi_name
-        self._ipi_base = ipi_base
+        self._performing_artist_first_name = performing_artist_first_name
+        self._performing_artist_name = performing_artist_name
+        self._performing_artist_ipi_name_n = performing_artist_ipi_name_n_ipi_name
+        self._performing_artist_ipi_base_n = performing_artist_ipi_base_n
 
         # Language data
         self._performance_language = performance_language
         self._performance_dialect = performance_dialect
-
-    @property
-    def first_name(self):
-        """
-        Performing Artist First Name field. Alphanumeric.
-
-        First name of a person that has performed the work on a recording or in public.
-
-        :return: the performer's first name
-        """
-        return self._first_name
-
-    @property
-    def ipi_base(self):
-        """
-        Performing Artist IPI Base Number field. Table lookup (IPI database).
-
-        The IPI base number assigned to this performing artist.
-
-        :return: the performer's IPI base number
-        """
-        return self._ipi_base
-
-    @property
-    def ipi_name(self):
-        """
-        Performing Artist IPI Name # field. Table Lookup (IPI database).
-
-        The IPI Name # corresponding to this performing artist. Values reside in the IPI database.
-
-        :return: the IPI name number
-        """
-        return self._ipi_name
-
-    @property
-    def name(self):
-        """
-        Performing Artist Name. Alphanumeric.
-
-        Name of a person or full name of a group that has performed the work on a recording or in public. Note that if
-        the performer is known by a single name, it should be entered in this field.
-
-        :return: the performer's name
-        """
-        return self._name
 
     @property
     def performance_dialect(self):
@@ -342,6 +298,28 @@ class NPRRecord(NRARecord):
         return self._performance_dialect
 
     @property
+    def performing_artist_ipi_base_n(self):
+        """
+        Performing Artist IPI Base Number field. Table lookup (IPI database).
+
+        The IPI base number assigned to this performing artist.
+
+        :return: the performer's IPI base number
+        """
+        return self._performing_artist_ipi_base_n
+
+    @property
+    def performing_artist_ipi_name_n(self):
+        """
+        Performing Artist IPI Name # field. Table Lookup (IPI database).
+
+        The IPI Name # corresponding to this performing artist. Values reside in the IPI database.
+
+        :return: the IPI name number
+        """
+        return self._performing_artist_ipi_name_n
+
+    @property
     def performance_language(self):
         """
         Performance Language field. Table lookup (Language Code Table).
@@ -352,6 +330,29 @@ class NPRRecord(NRARecord):
         """
         return self._performance_language
 
+    @property
+    def performing_artist_first_name(self):
+        """
+        Performing Artist First Name field. Alphanumeric.
+
+        First name of a person that has performed the work on a recording or in public.
+
+        :return: the performer's first name
+        """
+        return self._performing_artist_first_name
+
+    @property
+    def performing_artist_name(self):
+        """
+        Performing Artist Name. Alphanumeric.
+
+        Name of a person or full name of a group that has performed the work on a recording or in public. Note that if
+        the performer is known by a single name, it should be entered in this field.
+
+        :return: the performer's name
+        """
+        return self._performing_artist_name
+
 
 class NPNRecord(NRARecord):
     """
@@ -361,15 +362,16 @@ class NPNRecord(NRARecord):
     the alphabet. This record can be used to identify the name of the publisher in the preceding SPU/OPU record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, sequence_n, ip_id, name, language=None):
-        super(NPNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_sequence_n, ip_n,
+                 publisher_name, language_code=None):
+        super(NPNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Publisher info
-        self._sequence_n = sequence_n
-        self._ip_id = ip_id
-        self._name = name
+        self._publisher_sequence_n = publisher_sequence_n
+        self._ip_n = ip_n
+        self._publisher_name = publisher_name
 
     @property
-    def ip_id(self):
+    def ip_n(self):
         """
         Interested Party # field. Alphanumeric.
 
@@ -377,10 +379,10 @@ class NPNRecord(NRARecord):
 
         :return: the Interested Party ID
         """
-        return self._ip_id
+        return self._ip_n
 
     @property
-    def name(self):
+    def publisher_name(self):
         """
         Publisher Name field. Alphanumeric.
 
@@ -388,10 +390,10 @@ class NPNRecord(NRARecord):
 
         :return: the name of this publishing company in non-roman alphabet
         """
-        return self._name
+        return self._publisher_name
 
     @property
-    def sequence_n(self):
+    def publisher_sequence_n(self):
         """
         Publisher Sequence # field. Numeric.
 
@@ -399,4 +401,4 @@ class NPNRecord(NRARecord):
 
         :return: the publisher sequential id
         """
-        return self._sequence_n
+        return self._publisher_sequence_n

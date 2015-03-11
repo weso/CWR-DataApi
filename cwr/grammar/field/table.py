@@ -199,7 +199,7 @@ def agreement_role_code(name=None, compulsory=False):
     return agreement_role_code_field
 
 
-def language(name=None, compulsory=False):
+def language_code(name=None, compulsory=False):
     """
     Language Code field.
 
@@ -211,9 +211,9 @@ def language(name=None, compulsory=False):
         name = 'Language Code'
 
     language_field = basic.lookup(_tables.language_codes(),
-        columns=_config.field_size('table', 'language'), compulsory=compulsory,
+        columns=_config.field_size('table', 'language_code'), compulsory=compulsory,
         name=name)
-    language_field = language_field.setResultsName('language')
+    language_field = language_field.setResultsName('language_code')
 
     return language_field
 

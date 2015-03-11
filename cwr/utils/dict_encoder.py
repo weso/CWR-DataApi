@@ -118,7 +118,7 @@ class CWRDictionaryEncoder(object):
 
         encoded['alternate_title'] = title.alternate_title
         encoded['title_type'] = title.title_type
-        encoded['language'] = title.language
+        encoded['language'] = title.language_code
 
         return encoded
 

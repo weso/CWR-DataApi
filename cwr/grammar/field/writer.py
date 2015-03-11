@@ -35,7 +35,8 @@ reversionary = reversionary.setName('Reversionary Indicator').setResultsName('re
 
 # First Recording Refusal Indicator
 first_recording_refusal = basic.flag()
-first_recording_refusal = first_recording_refusal.setName('First Recording Refusal Indicator').setResultsName('first_recording_refusal')
+first_recording_refusal = first_recording_refusal.setName('First Recording Refusal Indicator').setResultsName(
+    'first_recording_refusal')
 
 # Work For Hire Indicator
 for_hire = basic.flag()
