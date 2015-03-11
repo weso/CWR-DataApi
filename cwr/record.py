@@ -141,25 +141,3 @@ class TransactionRecord(Record):
         return self._transaction_sequence_n
 
 
-class NRARecord(TransactionRecord):
-    """
-    Represents a CWR Non-Roman Alphabet record.
-
-    These are the records to represent alternate names out of the ASCII table.
-    """
-    __metaclass__ = ABCMeta
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, language=None):
-        super(NRARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._language = language
-
-    @property
-    def language(self):
-        """
-        Language Code field. Table Lookup (Language Code Table).
-
-        The Language code of the record.
-
-        :return: the language code of the record
-        """
-        return self._language

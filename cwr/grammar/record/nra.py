@@ -6,9 +6,7 @@ from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import nra as field_nra
-from cwr.agreement import NPARecord
-from cwr.interested_party import NPNRecord, NWNRecord
-from cwr.work import NATRecord, NPRRecord, NRARecordWork, NOWRecord
+from cwr.nra import NPARecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord, NPNRecord
 
 
 """

@@ -2,7 +2,8 @@
 
 import sys
 
-from cwr.agreement import AgreementInterestedParty, NPARecord, AgreementRecord, AgreementTerritoryRecord
+from cwr.agreement import AgreementInterestedParty, AgreementRecord, AgreementTerritoryRecord
+from cwr.nra import NPARecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord, NPNRecord
 from cwr.info import AdditionalRelatedInfoRecord
 from cwr.interested_party import NPNRecord, IPTerritoryRecord, PublisherRecord, WriterPublisherRecord, WriterRecord, \
     NWNRecord

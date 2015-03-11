@@ -59,7 +59,7 @@ def _to_ipa(parsed):
                                     ip_last_name=parsed.last_name,
                                     agreement_role_code=parsed.agreement_role_code,
                                     ip_writer_first_name=parsed.writer_name,
-                                    ipi_name_n=parsed.ipi_name,ipi_base_n=parsed.ipi_base,
+                                    ipi_name_n=parsed.ipi_name, ipi_base_n=parsed.ipi_base,
                                     pr_society=parsed.pr_society, pr_share=parsed.pr_share,
                                     mr_society=parsed.mr_society, mr_share=parsed.mr_share,
                                     sr_society=parsed.sr_society, sr_share=parsed.sr_share)

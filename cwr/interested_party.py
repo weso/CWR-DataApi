@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from abc import ABCMeta
 
-from cwr.record import TransactionRecord, NRARecord
+from cwr.record import TransactionRecord
 
 
 """
@@ -165,55 +165,6 @@ class InterestedPartyRecord(TransactionRecord):
         :return: the first letter of the society with the USA rights
         """
         return self._usa_license
-
-
-class NPNRecord(NRARecord):
-    """
-    Represents a CWR Non-Roman Alphabet Publisher Name Record (NPN).
-
-    This record identifies publisher names in non-roman alphabets for this work. The language code is used to identify
-    the alphabet. This record can be used to identify the name of the publisher in the preceding SPU/OPU record.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, sequence_n, ip_id, name, language=None):
-        super(NPNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
-        # Publisher info
-        self._sequence_n = sequence_n
-        self._ip_id = ip_id
-        self._name = name
-
-    @property
-    def ip_id(self):
-        """
-        Interested Party # field. Alphanumeric.
-
-        Submitting publisher’s unique identifier for this Publisher.
-
-        :return: the Interested Party ID
-        """
-        return self._ip_id
-
-    @property
-    def name(self):
-        """
-        Publisher Name field. Alphanumeric.
-
-        The name of this publishing company in non-roman alphabet.
-
-        :return: the name of this publishing company in non-roman alphabet
-        """
-        return self._name
-
-    @property
-    def sequence_n(self):
-        """
-        Publisher Sequence # field. Numeric.
-
-        A sequential number assigned to the original publishers on this work.
-
-        :return: the publisher sequential id
-        """
-        return self._sequence_n
 
 
 class IPTerritoryRecord(TransactionRecord):
@@ -954,51 +905,3 @@ class WriterRecord(InterestedPartyRecord):
         return self._writer_unknown
 
 
-class NWNRecord(NRARecord):
-    """
-    Represents a CWR Non-Roman Alphabet Writer Name Record (NWN).
-
-    This record identifies writer names in non-roman alphabets for this work. The language code is used to identify the
-    alphabet. This record can be used to identify the name of the writer in the preceding SWR/OWR record.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name, last_name, ip_id='',
-                 language=None):
-        super(NWNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
-        # Writer info
-        self._first_name = first_name
-        self._last_name = last_name
-        self._ip_id = ip_id
-
-    @property
-    def ip_id(self):
-        """
-        Interested Party # field. Alphanumeric.
-
-        Submitting publisher’s unique identifier for this Publisher.
-
-        :return: the Interested Party ID
-        """
-        return self._ip_id
-
-    @property
-    def first_name(self):
-        """
-        Writer First Name. Alphanumeric.
-
-        The first name of this writer.
-
-        :return: the first name of this writer
-        """
-        return self._first_name
-
-    @property
-    def last_name(self):
-        """
-        Writer Last Name. Alphanumeric.
-
-        The last or single name of this writer.
-
-        :return: the last or single name of this writer
-        """
-        return self._last_name
