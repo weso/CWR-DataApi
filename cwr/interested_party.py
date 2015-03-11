@@ -316,7 +316,7 @@ class IPTerritoryRecord(TransactionRecord):
     @property
     def shares_change(self):
         """
-        Shares change field. Boolean.
+        Shares Change field. Boolean.
 
         If the shares for the writer interest change as a result of subpublication in this territory or for a similar
         reason, set this field to "Y"
@@ -828,8 +828,7 @@ class WriterRecord(InterestedPartyRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer, designation=None,
-                 work_for_hire=False, writer_unknown='F',
-                 reversionary='U', first_record_refusal='U', usa_license='',
+                 work_for_hire=False, writer_unknown='F', reversionary='U', first_record_refusal='U', usa_license='',
                  pr_society=None, pr_ownership_share=0,
                  mr_society=None, mr_ownership_share=0,
                  sr_society=None, sr_ownership_share=0):
@@ -866,6 +865,34 @@ class WriterRecord(InterestedPartyRecord):
         return self._designation
 
     @property
+    def mr_ownership_share(self):
+        """
+        MR Ownership Share field. Numeric Decimal.
+
+        Defines the percentage of the writer’s ownership of the mechanical rights to the work.
+
+        This value can range from 0 (0%) to 1 (100%).
+
+        :return: the MR ownership share
+        """
+        return self._mr_ownership_share
+
+    @property
+    def pr_ownership_share(self):
+        """
+        PR Ownership Share field. Numeric Decimal.
+
+        Defines the percentage of the writer’s ownership of the performance rights to the work.
+
+        This value can range from 0 (0%) to 1 (100%).
+
+        Note that writers both own and collect the performing right interest.
+
+        :return: the PR ownership share
+        """
+        return self._pr_ownership_share
+
+    @property
     def reversionary(self):
         """
         Reversionary Indicator field. Flag (Yes/No/Unknown).
@@ -877,6 +904,19 @@ class WriterRecord(InterestedPartyRecord):
         :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
         """
         return self._reversionary
+
+    @property
+    def sr_ownership_share(self):
+        """
+        SR Ownership Share field. Numeric Decimal.
+
+        Defines the percentage of the writer’s ownership of the synchronization rights to the work.
+
+        This value can range from 0 (0%) to 1 (100%).
+
+        :return: the SR ownership share
+        """
+        return self._sr_ownership_share
 
     @property
     def work_for_hire(self):
@@ -912,47 +952,6 @@ class WriterRecord(InterestedPartyRecord):
         :return: 'Y' if the Writer is unknown, 'F' otherwise, 'U' in special cases
         """
         return self._writer_unknown
-
-    @property
-    def mr_ownership_share(self):
-        """
-        MR Ownership Share field. Numeric Decimal.
-
-        Defines the percentage of the writer’s ownership of the mechanical rights to the work.
-
-        This value can range from 0 (0%) to 1 (100%).
-
-        :return: the MR ownership share
-        """
-        return self._mr_ownership_share
-
-    @property
-    def pr_ownership_share(self):
-        """
-        PR Ownership Share field. Numeric Decimal.
-
-        Defines the percentage of the writer’s ownership of the performance rights to the work.
-
-        This value can range from 0 (0%) to 1 (100%).
-
-        Note that writers both own and collect the performing right interest.
-
-        :return: the PR ownership share
-        """
-        return self._pr_ownership_share
-
-    @property
-    def sr_ownership_share(self):
-        """
-        SR Ownership Share field. Numeric Decimal.
-
-        Defines the percentage of the writer’s ownership of the synchronization rights to the work.
-
-        This value can range from 0 (0%) to 1 (100%).
-
-        :return: the SR ownership share
-        """
-        return self._sr_ownership_share
 
 
 class NWNRecord(NRARecord):

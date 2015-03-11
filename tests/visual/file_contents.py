@@ -44,8 +44,10 @@ def _read(file):
 if __name__ == '__main__':
     print("File contents parsing test")
     path = raw_input("Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ")
+    output = raw_input("Please enter the full path to the file where the results will be stored: ")
     print '\n'
     print "Reading file %s" % (path)
+    print "Storing output on %s" % (output)
     print '\n'
 
     start = time.clock()
@@ -67,5 +69,7 @@ if __name__ == '__main__':
     print 'In total the process took %s seconds' % (time_read + time_parse)
     print '\n'
 
+    output = codecs.open(output, 'w', 'latin-1')
+
     printer = CWRPrinter()
-    printer.print_transmission(data)
+    printer.print_transmission(data, output)

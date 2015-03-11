@@ -1247,65 +1247,6 @@ class RecordingDetailRecord(TransactionRecord):
         return self._recording_technique
 
 
-class InstrumentationRecord(TransactionRecord):
-    """
-    Represents a CWR Instrumentation (INS) record.
-
-    This record provides information on standard and non-standard instrumentation for serious works. If the Musical
-    Work Distribution Category is SER then instrumentation detail is required using one or more Standard Instrumentation
-    Type, one or more IND records, or one Instrumentation Description.
-
-    The Instrumentation Description is the least desirable, and should be used only if the other fields are not
-    available.
-
-    It is possible to use both a Standard Instrumentation Type and one or more IND records to describe, for example, a
-    wind quintet and a piano.  It is also possible to use both one or more Standard Instrumentation Type and one or more
-    IND records to describe, for example, a work written for two wind quintets and two pianos.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, number_voices=0, instr_type=None,
-                 description=''):
-        super(InstrumentationRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._number_voices = number_voices
-        self._instr_type = instr_type
-        self._description = description
-
-    @property
-    def description(self):
-        """
-        Instrumentation Description field. Alphanumeric.
-
-        Describes instrumentation if non-standard instrumentation is used on this work. Note that this field is required
-        if IND records are not entered and if Standard Instrumentation Type is blank.
-
-        :return: the description
-        """
-        return self._description
-
-    @property
-    def instr_type(self):
-        """
-        Standard Instrumentation Type field. Table Lookup (Standard Instrumentation table).
-
-        Describes instrumentation if standard instrumentation is used on this work.  Note that this field is required if
-        IND records are not entered and if Instrumentation Description is blank.
-
-        :return: the standard instrumentation type
-        """
-        return self._instr_type
-
-    @property
-    def number_voices(self):
-        """
-        Number of Voices field. Numeric.
-
-        Indicates the number of independent parts included in this work.
-
-        :return: the number of voices
-        """
-        return self._number_voices
-
-
 class InstrumentationDetailRecord(TransactionRecord):
     """
     Represents a CWR Instrumentation Detail (IND) record.
@@ -1360,8 +1301,7 @@ class WorkOriginRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, intended_purpose, production_title='',
-                 cd_identifier='', cut_number=0,
-                 library='', bltvr='', visan=None, production_id='', episode_title='',
+                 cd_identifier='', cut_number=0, library='', bltvr='', visan=None, production_id='', episode_title='',
                  episode_id='', production_year=0, avi=None):
         super(WorkOriginRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._intended_purpose = intended_purpose
@@ -1728,8 +1668,7 @@ class NPRRecord(NRARecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name='', name='', ipi_name=None,
-                 ipi_base=None,
-                 language=None, performance_language=None, performance_dialect=None):
+                 ipi_base=None, language=None, performance_language=None, performance_dialect=None):
         super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
         # Artist data
         self._first_name = first_name
