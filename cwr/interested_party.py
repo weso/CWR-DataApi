@@ -778,7 +778,7 @@ class WriterRecord(InterestedPartyRecord):
     These contain all the information available to the submitter for a Writer.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer, designation=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer, writer_designation=None,
                  work_for_hire=False, writer_unknown='F', reversionary='U', first_record_refusal='U', usa_license='',
                  pr_society=None, pr_ownership_share=0,
                  mr_society=None, mr_ownership_share=0,
@@ -790,7 +790,7 @@ class WriterRecord(InterestedPartyRecord):
         self._writer = writer
 
         # Writer role
-        self._designation = designation
+        self._writer_designation = writer_designation
         self._writer_unknown = writer_unknown
         self._work_for_hire = work_for_hire
 
@@ -801,19 +801,6 @@ class WriterRecord(InterestedPartyRecord):
 
         # Other info
         self._reversionary = reversionary
-
-    @property
-    def designation(self):
-        """
-        Writer Designation Code field. Table Lookup (Writer Designation Table).
-
-        Code defining the role the writer played in the composition of the work.
-
-        This attribute is required for record type SWR and optional for record type OWR.
-
-        :return: the Writer designation code
-        """
-        return self._designation
 
     @property
     def mr_ownership_share(self):
@@ -890,6 +877,19 @@ class WriterRecord(InterestedPartyRecord):
         :return: the Writer available information
         """
         return self._writer
+
+    @property
+    def writer_designation(self):
+        """
+        Writer Designation Code field. Table Lookup (Writer Designation Table).
+
+        Code defining the role the writer played in the composition of the work.
+
+        This attribute is required for record type SWR and optional for record type OWR.
+
+        :return: the Writer designation code
+        """
+        return self._writer_designation
 
     @property
     def writer_unknown(self):

@@ -260,7 +260,7 @@ class CWRPrinter():
         print('IPI Base: %s' % (record.writer.ipi_base_n))
         print('IPI Name: %s' % (record.writer.ipi_name_n))
         print('Tax ID: %s' % (record.writer.tax_id))
-        print('writer Designation Code: %s' % (record.designation))
+        print('writer Designation Code: %s' % (record.writer_designation))
         print('Work For Hire Indicator: %s' % (record.work_for_hire))
         print('Reversionary Indicator: %s' % (record.reversionary))
         print('First Record Refusal Indicator: %s' % (record.first_recording_refusal))

@@ -41,7 +41,7 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual('LAST NAME', result.writer.writer_last_name)
         self.assertEqual('FIRST NAME', result.writer.writer_first_name)
         self.assertEqual('N', result.writer_unknown)
-        self.assertEqual('A', result.designation)
+        self.assertEqual('A', result.writer_designation)
         self.assertEqual(923703412, result.writer.tax_id)
         self.assertEqual(14107338, result.writer.ipi_name_n)
         self.assertEqual(9, result.pr_society)
