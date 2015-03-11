@@ -338,27 +338,27 @@ class PublisherRecord(InterestedPartyRecord):
     who are involved in the ownership and collection of a work. May they be under control of the submitter or not.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher, sequence_n, agreement_id='',
-                 publisher_type=None, publisher_unknown='N', agreement_type=None, isac='', society_agreement_id='',
-                 pr_society=None, pr_owner_share=0, mr_society=None, mr_owner_share=0, sr_society=None,
-                 sr_owner_share=0, special_agreements=None, first_record_refusal='U', usa_license=''):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher, publisher_sequence_n, submitter_agreement_n='',
+                 publisher_type=None, publisher_unknown='N', agreement_type=None, isac='', society_assigned_agreement_n='',
+                 pr_society=None, pr_ownership_share=0, mr_society=None, mr_ownership_share=0, sr_society=None,
+                 sr_ownership_share=0, special_agreements=None, first_record_refusal='U', usa_license=''):
         """
         Constructs a PublisherRecord.
 
         :param publisher: the publisher information
-        :param sequence_n: the position in the Publisher Chain
-        :param agreement_id: the submitter's id for the agreement
+        :param publisher_sequence_n: the position in the Publisher Chain
+        :param submitter_agreement_n: the submitter's id for the agreement
         :param publisher_type: the publisher role in the agreement
         :param publisher_unknown: publisher unknown flag
         :param agreement_type: the type of agreement
         :param isac: ISAC for the publisher's agreement
-        :param society_agreement_id: ID for the Agreement given by a society
+        :param society_assigned_agreement_n: ID for the Agreement given by a society
         :param pr_society: Performing Rights society
-        :param pr_owner_share: Performing Rights share
+        :param pr_ownership_share: Performing Rights share
         :param mr_society: Mechanical Rights society
-        :param mr_owner_share: Mechanical Rights share
+        :param mr_ownership_share: Mechanical Rights share
         :param sr_society: Synchronization Rights society
-        :param sr_owner_share: Synchronization Rights share
+        :param sr_ownership_share: Synchronization Rights share
         """
         super(PublisherRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
                                               first_record_refusal, usa_license,
@@ -370,31 +370,19 @@ class PublisherRecord(InterestedPartyRecord):
         self._publisher_unknown = publisher_unknown
 
         # Agreement info
-        self._agreement_id = agreement_id
-        self._society_agreement_id = society_agreement_id
+        self._submitter_agreement_n = submitter_agreement_n
+        self._society_assigned_agreement_n = society_assigned_agreement_n
         self._agreement_type = agreement_type
         self._isac = isac
         self._special_agreements = special_agreements
 
         # Shares
-        self._pr_owner_share = pr_owner_share
-        self._mr_owner_share = mr_owner_share
-        self._sr_owner_share = sr_owner_share
+        self._pr_ownership_share = pr_ownership_share
+        self._mr_ownership_share = mr_ownership_share
+        self._sr_ownership_share = sr_ownership_share
 
         # Other info
-        self._sequence_n = sequence_n
-
-    @property
-    def agreement_id(self):
-        """
-        Submitter Agreement Number field.
-
-        This points to an agreement between this publisher and another publisher acting as a domestic or foreign
-        administrator and it is your internal number.
-
-        :return: the Submitter Agreement number
-        """
-        return self._agreement_id
+        self._publisher_sequence_n = publisher_sequence_n
 
     @property
     def agreement_type(self):
@@ -419,7 +407,7 @@ class PublisherRecord(InterestedPartyRecord):
         return self._isac
 
     @property
-    def mr_owner_share(self):
+    def mr_ownership_share(self):
         """
         Mechanical Rights Ownership Share field. Numeric decimal.
 
@@ -432,10 +420,10 @@ class PublisherRecord(InterestedPartyRecord):
 
         :return: the mechanical of the performing rights for the Publisher
         """
-        return self._mr_owner_share
+        return self._mr_ownership_share
 
     @property
-    def pr_owner_share(self):
+    def pr_ownership_share(self):
         """
         Performing Rights Ownership Share field. Numeric decimal.
 
@@ -448,7 +436,7 @@ class PublisherRecord(InterestedPartyRecord):
 
         :return: the percentage of the performing rights for the Publisher
         """
-        return self._pr_owner_share
+        return self._pr_ownership_share
 
     @property
     def publisher(self):
@@ -460,6 +448,17 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the publisher
         """
         return self._publisher
+
+    @property
+    def publisher_sequence_n(self):
+        """
+        Publisher Sequence Number field. Numeric.
+
+        Position in the Publisher Chain for this Publisher.
+
+        :return: the Publisher sequence number in the chain
+        """
+        return self._publisher_sequence_n
 
     @property
     def publisher_type(self):
@@ -488,17 +487,6 @@ class PublisherRecord(InterestedPartyRecord):
         return self._publisher_unknown
 
     @property
-    def sequence_n(self):
-        """
-        Publisher Sequence Number field. Numeric.
-
-        Position in the Publisher Chain for this Publisher.
-
-        :return: the Publisher sequence number in the chain
-        """
-        return self._sequence_n
-
-    @property
     def special_agreements(self):
         """
         Special Agreements Indicator. Table Lookup (Special Agreement Indicator Table).
@@ -512,7 +500,7 @@ class PublisherRecord(InterestedPartyRecord):
         return self._special_agreements
 
     @property
-    def sr_owner_share(self):
+    def sr_ownership_share(self):
         """
         Synchronization Rights Ownership Share field. Numeric decimal.
 
@@ -525,10 +513,22 @@ class PublisherRecord(InterestedPartyRecord):
 
         :return: the percentage of the synchronization rights for the Publisher
         """
-        return self._sr_owner_share
+        return self._sr_ownership_share
 
     @property
-    def society_agreement_id(self):
+    def submitter_agreement_n(self):
+        """
+        Submitter Agreement Number field.
+
+        This points to an agreement between this publisher and another publisher acting as a domestic or foreign
+        administrator and it is your internal number.
+
+        :return: the Submitter Agreement number
+        """
+        return self._submitter_agreement_n
+
+    @property
+    def society_assigned_agreement_n(self):
         """
         Society-assigned Agreement Number field. Alphanumeric.
 
@@ -536,7 +536,7 @@ class PublisherRecord(InterestedPartyRecord):
 
         :return: the society-assigned Agreement number
         """
-        return self._society_agreement_id
+        return self._society_assigned_agreement_n
 
 
 class PublisherChain(object):

@@ -26,13 +26,13 @@ def no_owner_has_no_shares(publisher):
         shares = 0
 
         if publisher.pr_society is not None:
-            shares += publisher.pr_owner_share
+            shares += publisher.pr_ownership_share
 
         if publisher.mr_society is not None:
-            shares += publisher.mr_owner_share
+            shares += publisher.mr_ownership_share
 
         if publisher.sr_society is not None:
-            shares += publisher.sr_owner_share
+            shares += publisher.sr_ownership_share
 
         if shares > 0:
             raise pp.ParseException('', msg='Publishers which do not own a work should have shares set for it')
@@ -51,13 +51,13 @@ def owner_has_shares(publisher):
         shares = 0
 
         if publisher.pr_society is not None:
-            shares += publisher.pr_owner_share
+            shares += publisher.pr_ownership_share
 
         if publisher.mr_society is not None:
-            shares += publisher.mr_owner_share
+            shares += publisher.mr_ownership_share
 
         if publisher.sr_society is not None:
-            shares += publisher.sr_owner_share
+            shares += publisher.sr_ownership_share
 
         if shares == 0:
             raise pp.ParseException('', msg='Acquiror should have shares set')
@@ -72,7 +72,7 @@ def sequence_above_zero(publisher):
 
     :param publisher: the Publisher to validate
     """
-    if publisher.sequence_n == 0:
+    if publisher.publisher_sequence_n == 0:
         raise pp.ParseException('', msg='Publisher sequence number should start at 1')
 
 

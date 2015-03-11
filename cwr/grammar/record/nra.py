@@ -43,7 +43,7 @@ npa = field_special.lineStart + field_record.record_prefix(
 
 npn = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
-        'npn'), compulsory=True) + field_publisher.sequence_n + field_special.ip_id(
+        'npn'), compulsory=True) + field_publisher.publisher_sequence_n + field_special.ip_id(
     compulsory=True) + field_nra.publisher_name + \
       field_table.language() + field_special.lineEnd
 
@@ -115,7 +115,7 @@ def _to_npn(parsed):
     :return: a NPNRecord created from the parsed record
     """
     return NPNRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.sequence_n, parsed.ip_id, parsed.name, parsed.language)
+                     parsed.publisher_sequence_n, parsed.ip_id, parsed.name, parsed.language)
 
 
 def _to_nwn(parsed):

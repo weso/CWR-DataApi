@@ -208,7 +208,7 @@ class CWRPrinter():
 
     def print_npn(self, record):
         print('Interested Party Number: %s' % (record.ip_n))
-        print('Publisher Sequence Number: %s' % (record.sequence_n))
+        print('Publisher Sequence Number: %s' % (record.publisher_sequence_n))
         print('Name: %s' % (record.publisher_name))
         print('Language: %s' % (record.language))
 
@@ -216,7 +216,7 @@ class CWRPrinter():
         print('Interested Party Number: %s' % (record.ip_n))
         print('Inclusion/Exclusion Indicator: %s' % (record.ie_indicator))
         print('TIS: %s' % (record.tis_numeric_code))
-        print('Sequence Number: %s' % (record.sequence_n))
+        print('Sequence Number: %s' % (record.publisher_sequence_n))
         print('PR collection share: %s' % (record.pr_col_share))
         print('MR collection share: %s' % (record.mr_col_share))
         print('SR collection share: %s' % (record.sr_col_share))
@@ -229,27 +229,27 @@ class CWRPrinter():
         print('IPI Base: %s' % (record.publisher.ipi_base_n))
         print('IPI Name: %s' % (record.publisher.ipi_name_n))
         print('Tax ID: %s' % (record.publisher.tax_id))
-        print('Sequence Number: %s' % (record.sequence_n))
+        print('Sequence Number: %s' % (record.publisher_sequence_n))
         print('Publisher Type: %s' % (record.publisher_type))
         print('Agreement Number: %s' % (record.submitter_agreement_n))
-        print('Society Agreement Number: %s' % (record.society_agreement_id))
+        print('Society Agreement Number: %s' % (record.society_assigned_agreement_n))
         print('Agreement Type: %s' % (record.agreement_type))
         print('ISAC: %s' % (record.isac))
         print('Special Agreements Indicator: %s' % (record.special_agreements))
         print('First Record Refusal Indicator: %s' % (record.first_recording_refusal))
         print('USA License: %s' % (record.usa_license))
         print('PR Society: %s' % (record.pr_society))
-        print('PR Owner Share: %s' % (record.pr_owner_share))
+        print('PR Owner Share: %s' % (record.pr_ownership_share))
         print('MR Society: %s' % (record.mr_society))
-        print('MR Owner Share: %s' % (record.mr_owner_share))
+        print('MR Owner Share: %s' % (record.mr_ownership_share))
         print('SR Society: %s' % (record.sr_society))
-        print('SR Owner Share: %s' % (record.sr_owner_share))
+        print('SR Owner Share: %s' % (record.sr_ownership_share))
 
     def print_pwr(self, record):
         print('Publisher IP Number: %s' % (record.publisher_id))
         print('writer IP Number: %s' % (record.publisher_id))
         print('Submitter Agreement Number: %s' % (record.submitter_agreement_n))
-        print('Society-Assigned Agreement Number: %s' % (record.society_agreement_id))
+        print('Society-Assigned Agreement Number: %s' % (record.society_assigned_agreement_n))
 
     def print_writr(self, record):
         print('writer Number: %s' % (record.writer.ip_n))
