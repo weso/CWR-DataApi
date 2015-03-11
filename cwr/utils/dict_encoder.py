@@ -202,7 +202,7 @@ class CWRDictionaryEncoder(object):
 
         encoded['name'] = publisher.name
         encoded['ip_id'] = publisher.ip_n
-        encoded['ipi_base_id'] = publisher.ipi_base_id
+        encoded['ipi_base_id'] = publisher.ipi_base_n
         encoded['ipi_name'] = publisher.ipi_name_n
         encoded['tax_id'] = publisher.tax_id
 

@@ -20,10 +20,10 @@ class InterestedParty(object):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, ip_id, ipi_base_id, tax_id, ipi_name):
+    def __init__(self, ip_n, ipi_base_n, tax_id, ipi_name):
         # IP info
-        self._ip_id = ip_id
-        self._ipi_base_id = ipi_base_id
+        self._ip_n = ip_n
+        self._ipi_base_n = ipi_base_n
 
         # Other info
         self._tax_id = tax_id
@@ -38,10 +38,10 @@ class InterestedParty(object):
 
         :return: the Publisher's ID
         """
-        return self._ip_id
+        return self._ip_n
 
     @property
-    def ipi_base_id(self):
+    def ipi_base_n(self):
         """
         Interested Party IPI Base Number field. Table Lookup (IPI System).
 
@@ -56,10 +56,10 @@ class InterestedParty(object):
 
         :return: the Publisher IPI base number
         """
-        return self._ipi_base_id
+        return self._ipi_base_n
 
     @property
-    def ipi_name(self):
+    def ipi_name_n(self):
         """
         Interested Party IPI Name # field. Table Lookup (IPI).
 
@@ -310,8 +310,8 @@ class Publisher(InterestedParty):
     administrator.
     """
 
-    def __init__(self, publisher_id, name, ipi_base_id=None, tax_id=None, ipi_name=None):
-        super(Publisher, self).__init__(publisher_id, ipi_base_id, tax_id, ipi_name)
+    def __init__(self, publisher_id, name, ipi_base_n=None, tax_id=None, ipi_name=None):
+        super(Publisher, self).__init__(publisher_id, ipi_base_n, tax_id, ipi_name)
         self._name = name
 
     @property
@@ -649,9 +649,9 @@ class Writer(InterestedParty):
     This can be a Writer Controlled by Submitter (SWR) or Other Writer (OWR).
     """
 
-    def __init__(self, writer_id, personal_number, ipi_base_id=None, first_name='', last_name='', tax_id=None,
+    def __init__(self, writer_id, personal_number, ipi_base_n=None, first_name='', last_name='', tax_id=None,
                  ipi_name=None):
-        super(Writer, self).__init__(writer_id, ipi_base_id, tax_id, ipi_name)
+        super(Writer, self).__init__(writer_id, ipi_base_n, tax_id, ipi_name)
 
         # Writer information
         self._first_name = first_name
