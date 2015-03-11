@@ -246,8 +246,8 @@ class CWRPrinter():
         print('SR Owner Share: %s' % (record.sr_ownership_share))
 
     def print_pwr(self, record):
-        print('Publisher IP Number: %s' % (record.publisher_id))
-        print('writer IP Number: %s' % (record.publisher_id))
+        print('Publisher IP Number: %s' % (record.publisher_ip_number))
+        print('writer IP Number: %s' % (record.publisher_ip_number))
         print('Submitter Agreement Number: %s' % (record.submitter_agreement_n))
         print('Society-Assigned Agreement Number: %s' % (record.society_assigned_agreement_n))
 

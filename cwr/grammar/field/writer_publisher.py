@@ -17,13 +17,13 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 
 # Publisher IP #
-publisher_ip_id = special.ip_id()
-publisher_ip_id = publisher_ip_id.setName('Publisher IP #').setResultsName('publisher_id')
+publisher_ip_number = special.ip_id()
+publisher_ip_number = publisher_ip_number.setName('Publisher IP #').setResultsName('publisher_ip_number')
 
 # Publisher Name
 publisher_name = basic.alphanum(_config.field_size('writer_publisher', 'publisher_name'))
 publisher_name = publisher_name.setName('Publisher Name').setResultsName('publisher_name')
 
 # Writer IP #
-writer_ip_id = special.ip_id()
-writer_ip_id = writer_ip_id.setName('Writer IP #').setResultsName('writer_id')
+writer_ip_n = special.ip_id()
+writer_ip_n = writer_ip_n.setName('Writer IP #').setResultsName('writer_ip_n')

@@ -712,30 +712,19 @@ class WriterPublisherRecord(TransactionRecord):
     publisher agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_id, writer_id,
-                 agreement_id=None, society_agreement_id=None):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_ip_number, writer_ip_n,
+                 submitter_agreement_n=None, society_assigned_agreement_n=None):
         super(WriterPublisherRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Parties IDs
-        self._publisher_id = publisher_id
-        self._writer_id = writer_id
+        self._publisher_ip_number = publisher_ip_number
+        self._writer_ip_n = writer_ip_n
 
         # Agreement IDs
-        self._agreement_id = agreement_id
-        self._society_agreement_id = society_agreement_id
+        self._submitter_agreement_n = submitter_agreement_n
+        self._society_assigned_agreement_n = society_assigned_agreement_n
 
     @property
-    def agreement_id(self):
-        """
-        Submitter Agreement Number field. Alphanumeric.
-
-        The Agreement's ID.
-
-        :return: the agreement ID
-        """
-        return self._agreement_id
-
-    @property
-    def publisher_id(self):
+    def publisher_ip_number(self):
         """
         Publisher IP Number field. Alphanumeric.
 
@@ -744,10 +733,10 @@ class WriterPublisherRecord(TransactionRecord):
 
         :return: the Publisher id
         """
-        return self._publisher_id
+        return self._publisher_ip_number
 
     @property
-    def society_agreement_id(self):
+    def society_assigned_agreement_n(self):
         """
         Society-Assigned Agreement Number field. Alphanumeric.
 
@@ -755,10 +744,21 @@ class WriterPublisherRecord(TransactionRecord):
 
         :return: the society-given agreement ID
         """
-        return self._society_agreement_id
+        return self._society_assigned_agreement_n
 
     @property
-    def writer_id(self):
+    def submitter_agreement_n(self):
+        """
+        Submitter Agreement Number field. Alphanumeric.
+
+        The Agreement's ID.
+
+        :return: the agreement ID
+        """
+        return self._submitter_agreement_n
+
+    @property
+    def writer_ip_n(self):
         """
         Writer IP Number field. Alphanumeric.
 
@@ -766,7 +766,7 @@ class WriterPublisherRecord(TransactionRecord):
 
         :return: the writer ID
         """
-        return self._writer_id
+        return self._writer_ip_n
 
 
 class WriterRecord(InterestedPartyRecord):
