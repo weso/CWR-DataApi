@@ -18,12 +18,12 @@ _config = CWRConfiguration()
 
 
 # Writer Last Name
-last_name = basic.alphanum(_config.field_size('writer', 'last_name'))
-last_name = last_name.setName('Writer Last Name').setResultsName('last_name')
+writer_last_name = basic.alphanum(_config.field_size('writer', 'last_name'))
+writer_last_name = writer_last_name.setName('Writer Last Name').setResultsName('writer_last_name')
 
 # Writer First Name
-first_name = basic.alphanum(_config.field_size('writer', 'first_name'))
-first_name = first_name.setName('Writer First Name').setResultsName('first_name')
+writer_first_name = basic.alphanum(_config.field_size('writer', 'first_name'))
+writer_first_name = writer_first_name.setName('Writer First Name').setResultsName('writer_first_name')
 
 # Writer Unknown Indicator
 unknown = basic.flag()

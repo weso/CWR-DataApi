@@ -254,7 +254,7 @@ class CWRPrinter():
     def print_writr(self, record):
         print('writer Number: %s' % (record.writer.ip_n))
         print('Personal Number: %s' % (record.writer.personal_number))
-        print('First Name: %s' % (record.writer.first_name))
+        print('First Name: %s' % (record.writer.writer_first_name))
         print('Last Name: %s' % (record.writer.ip_last_name))
         print('Unknown: %s' % (record.writer_unknown))
         print('IPI Base: %s' % (record.writer.ipi_base_n))
@@ -274,7 +274,7 @@ class CWRPrinter():
 
     def print_nwn(self, record):
         print('Interested Party Number: %s' % (record.ip_n))
-        print('First Name: %s' % (record.first_name))
+        print('First Name: %s' % (record.writer_first_name))
         print('Last Name: %s' % (record.ip_last_name))
         print('Language: %s' % (record.language))
 
@@ -382,7 +382,7 @@ class CWRPrinter():
     def print_per(self, record):
         print('IPI Name: %s' % (record.ipi_name_n))
         print('IPI Base: %s' % (record.ipi_base_number))
-        print('First Name: %s' % (record.first_name))
+        print('First Name: %s' % (record.writer_first_name))
         print('Last Name: %s' % (record.ip_last_name))
 
     def print_nra(self, record):
@@ -390,13 +390,13 @@ class CWRPrinter():
         print('Language: %s' % (record.language))
 
     def print_now(self, record):
-        print('First Name: %s' % (record.first_name))
+        print('First Name: %s' % (record.writer_first_name))
         print('Name: %s' % (record.publisher_name))
         print('Position: %s' % (record.position))
         print('Language: %s' % (record.language))
 
     def print_npr(self, record):
-        print('First Name: %s' % (record.first_name))
+        print('First Name: %s' % (record.writer_first_name))
         print('Name: %s' % (record.publisher_name))
         print('IPI Name: %s' % (record.ipi_name_n))
         print('IPI Base: %s' % (record.ipi_base_n))

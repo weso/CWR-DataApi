@@ -649,38 +649,15 @@ class Writer(InterestedParty):
     This can be a Writer Controlled by Submitter (SWR) or Other Writer (OWR).
     """
 
-    def __init__(self, writer_id, personal_number, ipi_base_n=None, first_name='', last_name='', tax_id=None,
-                 ipi_name=None):
+    def __init__(self, writer_id, personal_number, ipi_base_n=None, writer_first_name='', writer_last_name='',
+                 tax_id=None, ipi_name=None):
         super(Writer, self).__init__(writer_id, ipi_base_n, tax_id, ipi_name)
 
         # Writer information
-        self._first_name = first_name
-        self._last_name = last_name
+        self._writer_first_name = writer_first_name
+        self._writer_last_name = writer_last_name
         self._personal_number = personal_number
         self._tax_id = tax_id
-
-    @property
-    def first_name(self):
-        """
-        Writer First Name field. Alphanumeric.
-
-        The first name of the writer.
-
-        :return: the Writer first name
-        """
-        return self._first_name
-
-    @property
-    def last_name(self):
-        """
-        Writer Last Name field. Alphanumeric.
-
-        The last name of the writer. If you do not have the ability to separate the last name from the first name, then
-        you may include both the last and first name in this field—pr separated by a comma.
-
-        :return: the Writer last name
-        """
-        return self._last_name
 
     @property
     def personal_number(self):
@@ -693,6 +670,29 @@ class Writer(InterestedParty):
         :return: the Writer country-based personal number
         """
         return self._personal_number
+
+    @property
+    def writer_first_name(self):
+        """
+        Writer First Name field. Alphanumeric.
+
+        The first name of the writer.
+
+        :return: the Writer first name
+        """
+        return self._writer_first_name
+
+    @property
+    def writer_last_name(self):
+        """
+        Writer Last Name field. Alphanumeric.
+
+        The last name of the writer. If you do not have the ability to separate the last name from the first name, then
+        you may include both the last and first name in this field—pr separated by a comma.
+
+        :return: the Writer last name
+        """
+        return self._writer_last_name
 
 
 class WriterPublisherRecord(TransactionRecord):

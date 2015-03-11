@@ -183,7 +183,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['first_name'] = artist.first_name
+        encoded['first_name'] = artist.writer_first_name
         encoded['last_name'] = artist.ip_last_name
         encoded['ipi_name'] = artist.ipi_name_n
         encoded['ipi_base_number'] = artist.ipi_base_number
@@ -324,7 +324,7 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['first_name'] = writer.first_name
+        encoded['first_name'] = writer.writer_first_name
         encoded['last_name'] = writer.ip_last_name
         encoded['personal_number'] = writer.personal_number
         encoded['ip_id'] = writer.ip_n
