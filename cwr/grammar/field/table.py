@@ -297,7 +297,7 @@ def sender_type(name=None, compulsory=False):
     return sender_type_field
 
 
-def musical_distribution_category(name=None, compulsory=False):
+def musical_work_distribution_category(name=None, compulsory=False):
     """
     Musical Work Distribution Category field.
 
@@ -314,7 +314,7 @@ def musical_distribution_category(name=None, compulsory=False):
         compulsory=compulsory,
         name=name)
     musical_distribution_category_field = musical_distribution_category_field.setResultsName(
-        'musical_distribution_category')
+        'musical_work_distribution_category')
 
     return musical_distribution_category_field
 

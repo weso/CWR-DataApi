@@ -25,7 +25,7 @@ Patterns.
 """
 
 ari = field_special.lineStart + field_record.record_prefix(_config.record_type('ari'),
-                                                           compulsory=True) + field_table.society() + field_ari.work_number + \
+                                                           compulsory=True) + field_table.society() + field_ari.work_n + \
       field_table.types_of_right() + field_table.subject_codes() + field_ari.note + field_special.lineEnd
 
 """
@@ -49,5 +49,5 @@ def _to_ari(parsed):
     :return: a AdditionalRelatedInfoRecord created from the parsed record
     """
     return AdditionalRelatedInfoRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                       parsed.society, parsed.type_of_right, parsed.work_id, parsed.subject_code,
+                                       parsed.society, parsed.type_of_right, parsed.work_n, parsed.subject_code,
                                        parsed.note)

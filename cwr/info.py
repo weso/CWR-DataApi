@@ -28,12 +28,12 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
     The note field should be used sparingly.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, society_n, type_of_right, work_id='',
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, society_n, type_of_right, work_n='',
                  subject_code=None, note=''):
         super(AdditionalRelatedInfoRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._society_n = society_n
         self._type_of_right = type_of_right
-        self._work_id = work_id
+        self._work_n = work_n
         self._subject_code = subject_code
         self._note = note
 
@@ -84,7 +84,7 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
         return self._type_of_right
 
     @property
-    def work_id(self):
+    def work_n(self):
         """
         Work Number field. Alphanumeric.
 
@@ -94,4 +94,4 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
 
         :return: the work id
         """
-        return self._work_id
+        return self._work_n

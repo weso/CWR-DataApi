@@ -37,5 +37,5 @@ class TestInstrumentationDetailGrammar(unittest.TestCase):
         self.assertEqual('IND', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('ALT', result.code)
-        self.assertEqual(123, result.players)
+        self.assertEqual('ALT', result.instrument_code)
+        self.assertEqual(123, result.number_players)

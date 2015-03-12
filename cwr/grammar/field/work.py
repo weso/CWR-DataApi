@@ -21,8 +21,8 @@ work_title = basic.alphanum(_config.field_size('work', 'work_title'), compulsory
 work_title = work_title.setName('Work Title').setResultsName('title')
 
 # Submitter Work Number
-work_id = basic.alphanum(_config.field_size('work', 'work_id'), compulsory=True)
-work_id = work_id.setName('Submitter Work Number').setResultsName('work_id')
+submitter_work_n = basic.alphanum(_config.field_size('work', 'work_id'), compulsory=True)
+submitter_work_n = submitter_work_n.setName('Submitter Work Number').setResultsName('submitter_work_n')
 
 # ISWC
 iswc = special.iswc()
@@ -61,9 +61,9 @@ composite_count = basic.numeric(_config.field_size('work', 'composite_count'))
 composite_count = composite_count.setName('Composite Component Count').setResultsName('composite_component_count')
 
 # Date of Publication of Printed Edition
-printed_edition_publication_date = basic.date()
-printed_edition_publication_date = printed_edition_publication_date.setName(
-    'Date of Publication of Printed Edition').setResultsName('printed_edition_publication_date')
+date_publication_printed_edition = basic.date()
+date_publication_printed_edition = date_publication_printed_edition.setName(
+    'Date of Publication of Printed Edition').setResultsName('date_publication_printed_edition')
 
 # Exceptional Clause
 exceptional_clause = basic.flag()

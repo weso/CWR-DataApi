@@ -16,7 +16,7 @@ __status__ = 'Development'
 
 class TestAVIValid(unittest.TestCase):
     def setUp(self):
-        self.ean = special.avi()
+        self.ean = special.audio_visual_key()
 
     def test_common(self):
         """
@@ -36,12 +36,12 @@ class TestAVIResultName(unittest.TestCase):
     """
 
     def setUp(self):
-        self.ean = special.avi()
+        self.ean = special.audio_visual_key()
 
     def test_common(self):
         code = '012012345678901234'
 
         result = self.ean.parseString(code)
 
-        self.assertEqual(12, result.avi.society_code)
-        self.assertEqual('012345678901234', result.avi.av_number)
+        self.assertEqual(12, result.audio_visual_key.society_code)
+        self.assertEqual('012345678901234', result.audio_visual_key.av_number)

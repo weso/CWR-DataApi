@@ -149,8 +149,8 @@ def _to_npr(parsed):
     :return: a NPRRecord created from the parsed record
     """
     return NPRRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.performing_artist_first_name, parsed.performing_artist_name, parsed.ipi_name,
-                     parsed.ipi_base,
+                     parsed.performing_artist_first_name, parsed.performing_artist_name, parsed.ipi_name_n,
+                     parsed.ipi_base_n,
                      parsed.language_code, parsed.performance_language, parsed.dialect)
 
 

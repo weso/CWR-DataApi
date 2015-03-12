@@ -61,9 +61,9 @@ def _to_writer(parsed):
     :param parsed: result of parsing the Writer info in a Writer record
     :return: a Writer created from the parsed record
     """
-    return Writer(parsed.ip_n, parsed.personal_number, parsed.ipi_base, parsed.writer_first_name,
+    return Writer(parsed.ip_n, parsed.personal_number, parsed.ipi_base_n, parsed.writer_first_name,
                   parsed.writer_last_name,
-                  parsed.tax_id, parsed.ipi_name)
+                  parsed.tax_id, parsed.ipi_name_n)
 
 
 def _to_writerrecord(parsed):

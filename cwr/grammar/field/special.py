@@ -116,7 +116,7 @@ def ipi_base_number(name=None, compulsory=False):
     # White spaces are not removed
     field.leaveWhitespace()
 
-    return field.setResultsName('ipi_base')
+    return field.setResultsName('ipi_base_n')
 
 
 def _to_ipibasecode(code):
@@ -147,7 +147,7 @@ def ipi_name_number(name=None, compulsory=False):
     """
 
     if name is None:
-        name = 'IPI Base Number Field'
+        name = 'IPI Name Number Field'
 
     field = basic.numeric(11, compulsory=compulsory)
 
@@ -163,7 +163,7 @@ def ipi_name_number(name=None, compulsory=False):
 
     field.setName(name)
 
-    return field.setResultsName('ipi_name')
+    return field.setResultsName('ipi_name_n')
 
 
 def iswc(name=None, compulsory=False):
@@ -447,9 +447,9 @@ def _to_visan(parsed):
     return VISAN(parsed.version, parsed.isan, parsed.episode, parsed.check_digit)
 
 
-def avi(name=None, compulsory=False):
+def audio_visual_key(name=None, compulsory=False):
     """
-    Creates the grammar for an AVI code.
+    Creates the grammar for an Audio Visual Key code.
 
     This is a variation on the ISAN (International Standard Audiovisual Number)
 
@@ -483,7 +483,7 @@ def avi(name=None, compulsory=False):
         # Name
         field.setName(name)
 
-    return field.setResultsName('avi')
+    return field.setResultsName('audio_visual_key')
 
 
 def _to_avi(parsed):

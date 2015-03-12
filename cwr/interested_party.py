@@ -310,8 +310,8 @@ class Publisher(InterestedParty):
     administrator.
     """
 
-    def __init__(self, publisher_id, publisher_name, ipi_base_n=None, tax_id=None, ipi_name=None):
-        super(Publisher, self).__init__(publisher_id, ipi_base_n, tax_id, ipi_name)
+    def __init__(self, publisher_id, publisher_name, ipi_base_n=None, tax_id=None, ipi_name_n=None):
+        super(Publisher, self).__init__(publisher_id, ipi_base_n, tax_id, ipi_name_n)
         self._publisher_name = publisher_name
 
     @property
@@ -652,8 +652,8 @@ class Writer(InterestedParty):
     """
 
     def __init__(self, writer_id, personal_number, ipi_base_n=None, writer_first_name='', writer_last_name='',
-                 tax_id=None, ipi_name=None):
-        super(Writer, self).__init__(writer_id, ipi_base_n, tax_id, ipi_name)
+                 tax_id=None, ipi_name_n=None):
+        super(Writer, self).__init__(writer_id, ipi_base_n, tax_id, ipi_name_n)
 
         # Writer information
         self._writer_first_name = writer_first_name

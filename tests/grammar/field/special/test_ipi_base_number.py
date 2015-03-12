@@ -84,9 +84,9 @@ class TestIPIBaseNumberResultName(unittest.TestCase):
 
         result = self.ipi.parseString(code)
 
-        self.assertEqual('I', result.ipi_base.header)
-        self.assertEqual(229, result.ipi_base.id_code)
-        self.assertEqual(7, result.ipi_base.check_digit)
+        self.assertEqual('I', result.ipi_base_n.header)
+        self.assertEqual(229, result.ipi_base_n.id_code)
+        self.assertEqual(7, result.ipi_base_n.check_digit)
 
 
 class TestIPIBaseNumberCompulsoryValid(unittest.TestCase):

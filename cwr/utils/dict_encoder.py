@@ -132,18 +132,18 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['work_id'] = work.work_id
+        encoded['work_id'] = work.submitter_work_n
         encoded['title'] = work.creation_title
         encoded['language_code'] = work.language_code
         encoded['source'] = work.source
-        encoded['first_name_1'] = work.first_name_1
-        encoded['ipi_base_1'] = work.ipi_base_1
-        encoded['ipi_name_1'] = work.ipi_name_1
-        encoded['first_name_2'] = work.first_name_2
-        encoded['ipi_base_2'] = work.ipi_base_2
-        encoded['ipi_name_2'] = work.ipi_name_2
-        encoded['last_name_1'] = work.last_name_1
-        encoded['last_name_2'] = work.last_name_2
+        encoded['first_name_1'] = work.writer_1_first_name
+        encoded['ipi_base_1'] = work.writer_1_ipi_base
+        encoded['ipi_name_1'] = work.writer_1_ipi_name
+        encoded['first_name_2'] = work.writer_2_first_name
+        encoded['ipi_base_2'] = work.writer_2_ipi_base
+        encoded['ipi_name_2'] = work.writer_2_ipi_name
+        encoded['last_name_1'] = work.writer_1_last_name
+        encoded['last_name_2'] = work.writer_2_last_name
         encoded['iswc'] = work.iswc
 
         return encoded
@@ -186,7 +186,7 @@ class CWRDictionaryEncoder(object):
         encoded['first_name'] = artist.writer_first_name
         encoded['last_name'] = artist.ip_last_name
         encoded['ipi_name'] = artist.ipi_name_n
-        encoded['ipi_base_number'] = artist.ipi_base_number
+        encoded['ipi_base_number'] = artist.performing_artist_ipi_base_n
 
         return encoded
 
@@ -221,7 +221,7 @@ class CWRDictionaryEncoder(object):
         encoded['first_release_duration'] = details.first_release_duration
         encoded['first_album_title'] = details.first_album_title
         encoded['first_album_label'] = details.first_album_label
-        encoded['first_release_catalog_id'] = details.first_release_catalog_id
+        encoded['first_release_catalog_id'] = details.first_release_catalog_n
         encoded['ean'] = details.ean
         encoded['isrc'] = details.isrc
         encoded['recording_format'] = details.recording_format
@@ -240,11 +240,11 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['id'] = entity.code
+        encoded['id'] = entity.instrument_code
         encoded['name'] = entity.publisher_name
 
-        if entity.description is not None:
-            encoded['description'] = entity.description
+        if entity.instrumentation_description is not None:
+            encoded['description'] = entity.instrumentation_description
 
         return encoded
 
@@ -257,10 +257,10 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['work_id'] = work.work_id
+        encoded['work_id'] = work.submitter_work_n
         encoded['title'] = work.creation_title
         encoded['language_code'] = work.language_code
-        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
+        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.date_publication_printed_edition)
         encoded['copyright_number'] = work.copyright_number
         encoded['copyright_date'] = self._adapter.adapt(work.copyright_date)
         encoded['text_music_relationship'] = work.text_music_relationship
@@ -272,7 +272,7 @@ class CWRDictionaryEncoder(object):
         encoded['composite_component_count'] = work.composite_component_count
         encoded['iswc'] = work.iswc
         encoded['cwr_work_type'] = work.cwr_work_type
-        encoded['musical_distribution_category'] = work.musical_distribution_category
+        encoded['musical_distribution_category'] = work.musical_work_distribution_category
         encoded['duration'] = work.duration
         encoded['catalogue_number'] = work.catalogue_number
         encoded['opus_number'] = work.opus_number
@@ -305,10 +305,10 @@ class CWRDictionaryEncoder(object):
         encoded['visan_isan'] = origin.visan_isan
         encoded['visan_episode'] = origin.visan_episode
         encoded['visan_check_digit'] = origin.visan_check_digit
-        encoded['production_id'] = origin.production_id
+        encoded['production_id'] = origin.production_n
         encoded['episode_title'] = origin.episode_title
-        encoded['episode_id'] = origin.episode_id
-        encoded['production_year'] = origin.production_year
+        encoded['episode_id'] = origin.episode_n
+        encoded['production_year'] = origin.year_production
         encoded['avi_key_society'] = origin.avi_key_society
         encoded['avi_key_number'] = origin.avi_key_number
 

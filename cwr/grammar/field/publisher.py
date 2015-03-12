@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special, basic
+from cwr.grammar.field import basic
 
 
 """
@@ -42,9 +42,6 @@ submitter_agreement_n = submitter_agreement_n.setName('Submitter Agreement Numbe
 first_recording_refusal = basic.lookup(('Y', 'N'), columns=1)
 first_recording_refusal = first_recording_refusal.setName('First Recording Refusal Indicator').setResultsName(
     'first_recording_refusal')
-
-# Publisher IPI Base Number
-ipi_base = special.ipi_base_number()
 
 # International Standard Agreement Code
 international_code = basic.alphanum(_config.field_size('publisher', 'international_code'))

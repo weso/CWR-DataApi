@@ -33,7 +33,7 @@ class TestAdditionalRelatedInformationGrammar(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual(1, result.society_n)
-        self.assertEqual('ABCD0123456789', result.work_id)
+        self.assertEqual('ABCD0123456789', result.work_n)
         self.assertEqual('ALL', result.type_of_right)
         self.assertEqual('DW', result.subject_code)
         self.assertEqual('NOTE', result.note)

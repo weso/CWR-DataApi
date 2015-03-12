@@ -100,7 +100,7 @@ def controlled_or_known_publisher_has_name(publisher):
     :param publisher: the Publisher to validate
     """
     if publisher.record_type == 'SPU' and (
-            publisher.publisher.publisher_name is None or publisher.publisher.publisher_name == ''):
+                    publisher.publisher.publisher_name is None or publisher.publisher.publisher_name == ''):
         raise pp.ParseException('', msg='Publishers controlled by the submitter should have a name')
     elif publisher.record_type == 'OPU' and publisher.publisher_unknown == 'N':
         raise pp.ParseException('', msg='Known Publishers should have a name')

@@ -25,14 +25,14 @@ def ser_has_duration(work):
     :param work: the work to validate
     """
 
-    if work.musical_distribution_category == 'SER':
+    if work.musical_work_distribution_category == 'SER':
         # Musical Distribution Category is 'serious'
         if not work.duration or (work.duration.hour == 0 and work.duration.minute == 0 and work.duration.second == 0):
             # No duration has been set
             # Or
             # Duration is zero
             message = 'When the Musical Distribution Category is set to %s the duration should be higher than 0' % \
-                      work.musical_distribution_category
+                      work.musical_work_distribution_category
             raise pp.ParseException('', msg=message)
 
 

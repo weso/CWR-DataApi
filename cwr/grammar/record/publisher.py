@@ -36,7 +36,7 @@ publisher = field_special.lineStart + field_record.record_prefix(_config.record_
             society.mr_affiliation() + society.mr_share() + \
             society.sr_affiliation() + society.sr_share() + \
             field_table.special_agreement() + field_publisher.first_recording_refusal + field_special.blank(
-    1) + field_publisher.ipi_base + field_publisher.international_code + \
+    1) + field_special.ipi_base_number() + field_publisher.international_code + \
             field_publisher.society_assigned_agreement_n + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
 
 """
@@ -59,7 +59,7 @@ def _to_publisher(parsed):
     :param parsed: result of parsing the Publisher info in a Publisher record
     :return: a Publisher created from the parsed record
     """
-    return Publisher(parsed.ip_n, parsed.name, parsed.ipi_base, parsed.tax_id, parsed.ipi_name)
+    return Publisher(parsed.ip_n, parsed.name, parsed.ipi_base_n, parsed.tax_id, parsed.ipi_name_n)
 
 
 def _to_publisherrecord(parsed):

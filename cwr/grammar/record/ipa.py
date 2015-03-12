@@ -27,7 +27,7 @@ IPA patterns.
 ipa = field_special.lineStart + field_record.record_prefix(_config.record_type('ipa'), compulsory=True) + \
       field_table.agreement_role_code(compulsory=True) + \
       field_special.ipi_name_number() + field_special.ipi_base_number() + \
-      field_special.ip_n(compulsory=True) + field_ipa.ip_last_name + field_ipa.ip_name + \
+      field_special.ip_n(compulsory=True) + field_ipa.ip_last_name + field_ipa.ip_writer_first_name + \
       society.pr_affiliation() + society.pr_share() + \
       society.mr_affiliation() + society.mr_share() + \
       society.sr_affiliation() + society.sr_share() + field_special.lineEnd
@@ -56,10 +56,10 @@ def _to_ipa(parsed):
                                     transaction_sequence_n=parsed.transaction_sequence_n,
                                     record_sequence_n=parsed.record_sequence_n,
                                     ip_n=parsed.ip_n,
-                                    ip_last_name=parsed.last_name,
+                                    ip_last_name=parsed.ip_last_name,
                                     agreement_role_code=parsed.agreement_role_code,
-                                    ip_writer_first_name=parsed.writer_name,
-                                    ipi_name_n=parsed.ipi_name, ipi_base_n=parsed.ipi_base,
+                                    ip_writer_first_name=parsed.ip_writer_first_name,
+                                    ipi_name_n=parsed.ipi_name_n, ipi_base_n=parsed.ipi_base_n,
                                     pr_society=parsed.pr_society, pr_share=parsed.pr_share,
                                     mr_society=parsed.mr_society, mr_share=parsed.mr_share,
                                     sr_society=parsed.sr_society, sr_share=parsed.sr_share)
