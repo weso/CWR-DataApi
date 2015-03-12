@@ -1,13 +1,14 @@
 language: python
 env:
-  - TOXENV=py26-release
-  - TOXENV=py26-lowest
-  - TOXENV=py27-release
-  - TOXENV=py27-lowest
-  - TOXENV=py32-release
-  - TOXENV=py33-release
-  - TOXENV=py34-release
-  - TOXENV=pypy-release
+  - TOXENV=py26
+  - TOXENV=py27
+  - TOXENV=py32
+  - TOXENV=py33
+  - TOXENV=py34
+  - TOXENV=pypy
+env:
+  - REQUIREMENTS=lowest
+  - REQUIREMENTS=release
 before_install:
   # Setting up Jython
   - chmod +x ./.scripts/jython_env.sh
