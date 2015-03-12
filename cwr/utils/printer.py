@@ -32,6 +32,7 @@ class CWRPrinter():
     def print_transmission(self, transmission, file):
         # TODO: Add support for Acknowledgement
 
+        out_old = sys.stdout
         sys.stdout = file
 
         print('CWR Transmission begins')
@@ -68,6 +69,8 @@ class CWRPrinter():
                     print(' ')
                     self.print_transaction_record(record)
             i += 1
+
+        sys.stdout = out_old
 
     def print_transmission_header(self, header):
         print('CWR Transmission Header')

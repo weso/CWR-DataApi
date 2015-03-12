@@ -96,8 +96,8 @@ class TestAlphanumName(unittest.TestCase):
         """
         Tests that the field name does not change for creating a new one
         """
-        field1 = basic.alphanum(name='field1')
-        field2 = basic.alphanum(name='field2')
+        field1 = basic.alphanum(5, name='field1')
+        field2 = basic.alphanum(5, name='field2')
 
         self.assertEqual('field1', field1.name)
         self.assertEqual('field2', field2.name)
