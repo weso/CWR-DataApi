@@ -30,9 +30,9 @@ class InterestedParty(object):
         self._ipi_name = ipi_name
 
     @property
-    def ip_id(self):
+    def ip_n(self):
         """
-        Interested Party ID field. Alphanumeric.
+        Interested Party Number field. Alphanumeric.
 
         Unique ID given to the Interested Party by the submitter.
 
@@ -182,14 +182,14 @@ class IPTerritoryRecord(TransactionRecord):
     included in the Agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, ie_indicator, tis_numeric_code,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, ie_indicator, tis_numeric_code,
                  sequence_n, pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
         super(IPTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Territory information
         self._tis_numeric_code = tis_numeric_code
 
         # IP information
-        self._ip_id = ip_id
+        self._ip_n = ip_n
         self._ie_indicator = ie_indicator
         self._sequence_n = sequence_n
 
@@ -215,7 +215,7 @@ class IPTerritoryRecord(TransactionRecord):
         return self._ie_indicator
 
     @property
-    def ip_id(self):
+    def ip_n(self):
         """
         Interested Party # field. Alphanumeric.
 
@@ -223,7 +223,7 @@ class IPTerritoryRecord(TransactionRecord):
 
         :return: the Interested Party ID
         """
-        return self._ip_id
+        return self._ip_n
 
     @property
     def mr_col_share(self):

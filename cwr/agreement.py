@@ -31,19 +31,6 @@ class AgreementInterestedParty(TransactionRecord):
                  sr_society=None, sr_share=0):
         """
         Constructs an AgreementInterestedParty.
-
-        :param ip_id: the interested party ID
-        :param ip_last_name: the writer last name or the publisher name
-        :param agreement_role_code: the role in the agreement
-        :param ip_writer_first_name: the writer name
-        :param ipi_name: IPI Name number
-        :param ipi_base: IPI Base number
-        :param pr_society: performing rights society
-        :param pr_share: performing rights share
-        :param mr_society: mechanization rights society
-        :param mr_share: mechanization rights share
-        :param sr_society: synchronization rights society
-        :param sr_share: synchronization rights share
         """
         super(AgreementInterestedParty, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement and Interested Party relationship

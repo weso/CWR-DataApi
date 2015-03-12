@@ -3,13 +3,12 @@
 import sys
 
 from cwr.agreement import AgreementInterestedParty, AgreementRecord, AgreementTerritoryRecord
-from cwr.nra import NPARecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord, NPNRecord
 from cwr.info import AdditionalRelatedInfoRecord
-from cwr.interested_party import NPNRecord, IPTerritoryRecord, PublisherRecord, WriterPublisherRecord, WriterRecord, \
-    NWNRecord
-from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, NATRecord, \
+from cwr.interested_party import IPTerritoryRecord, PublisherRecord, WriterPublisherRecord, WriterRecord
+from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, \
     RecordingDetailRecord, InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, \
-    PerformingArtistRecord, NRARecordWork, NOWRecord, NPRRecord
+    PerformingArtistRecord
+from cwr.nra import NPARecord, NPNRecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord
 
 
 """
@@ -91,15 +90,15 @@ class CWRPrinter():
     def print_group_header(self, header):
         print('CWR Group Header')
         print('Record Type: %s' % (header.record_type))
-        print('Group ID: %s' % (header.original_group_id))
-        print('Transaction Type: %s' % (header.original_transaction_type))
+        print('Group ID: %s' % (header.group_id))
+        print('Transaction Type: %s' % (header.transaction_type))
         print('Version Number: %s' % (header.version_number))
         print('Batch Request ID: %s' % (header.batch_request_id))
 
     def print_group_trailer(self, header):
         print('CWR Group Trailer')
         print('Record Type: %s' % (header.record_type))
-        print('Group ID: %s' % (header.original_group_id))
+        print('Group ID: %s' % (header.group_id))
         print('Transaction Count: %s' % (header.transaction_count))
         print('Record Count: %s' % (header.record_count))
 
@@ -216,7 +215,7 @@ class CWRPrinter():
         print('Interested Party Number: %s' % (record.ip_n))
         print('Inclusion/Exclusion Indicator: %s' % (record.ie_indicator))
         print('TIS: %s' % (record.tis_numeric_code))
-        print('Sequence Number: %s' % (record.publisher_sequence_n))
+        print('Sequence Number: %s' % (record.sequence_n))
         print('PR collection share: %s' % (record.pr_col_share))
         print('MR collection share: %s' % (record.mr_col_share))
         print('SR collection share: %s' % (record.sr_col_share))
@@ -255,7 +254,7 @@ class CWRPrinter():
         print('writer Number: %s' % (record.writer.ip_n))
         print('Personal Number: %s' % (record.writer.personal_number))
         print('First Name: %s' % (record.writer.writer_first_name))
-        print('Last Name: %s' % (record.writer.ip_last_name))
+        print('Last Name: %s' % (record.writer.writer_last_name))
         print('Unknown: %s' % (record.writer_unknown))
         print('IPI Base: %s' % (record.writer.ipi_base_n))
         print('IPI Name: %s' % (record.writer.ipi_name_n))
@@ -281,7 +280,7 @@ class CWRPrinter():
     def print_workr(self, record):
         print('Submitter Work Number: %s' % (record.submitter_work_n))
         print('ISWC: %s' % (record.iswc))
-        print('Title: %s' % (record.creation_title))
+        print('Title: %s' % (record.title))
         print('CWR Work Type: %s' % (record.cwr_work_type))
         print('Catalogue Number: %s' % (record.catalogue_number))
         print('Opus Number: %s' % (record.opus_number))
@@ -322,7 +321,7 @@ class CWRPrinter():
     def print_authr(self, record):
         print('Work Number: %s' % (record.submitter_work_n))
         print('ISWC: %s' % (record.iswc))
-        print('Title: %s' % (record.creation_title))
+        print('Title: %s' % (record.title))
         print('Language: %s' % (record.language_code))
         print('Source: %s' % (record.source))
         print('First Name Writer 1: %s' % (record.writer_1_first_name))
@@ -380,10 +379,10 @@ class CWRPrinter():
         print('V-ISAN: %s' % (record.visan))
 
     def print_per(self, record):
-        print('IPI Name: %s' % (record.ipi_name_n))
+        print('IPI Name: %s' % (record.performing_artist_ipi_name_n))
         print('IPI Base: %s' % (record.performing_artist_ipi_base_n))
-        print('First Name: %s' % (record.writer_first_name))
-        print('Last Name: %s' % (record.ip_last_name))
+        print('First Name: %s' % (record.performing_artist_first_name))
+        print('Last Name: %s' % (record.performing_artist_last_name))
 
     def print_nra(self, record):
         print('Title: %s' % (record.creation_title))

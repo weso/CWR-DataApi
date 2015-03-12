@@ -37,7 +37,7 @@ class TestSWTGrammar(unittest.TestCase):
         self.assertEqual('SWT', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('A12345678', result.ip_id)
+        self.assertEqual('A12345678', result.ip_n)
         self.assertEqual(10.12, result.pr_col_share)
         self.assertEqual(50, result.mr_col_share)
         self.assertEqual(25.2, result.sr_col_share)

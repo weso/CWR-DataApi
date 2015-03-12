@@ -37,7 +37,7 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual('SWR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('A12345678', result.writer.ip_id)
+        self.assertEqual('A12345678', result.writer.ip_n)
         self.assertEqual('LAST NAME', result.writer.writer_last_name)
         self.assertEqual('FIRST NAME', result.writer.writer_first_name)
         self.assertEqual('N', result.writer_unknown)

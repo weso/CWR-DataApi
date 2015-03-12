@@ -72,7 +72,7 @@ def transaction_status(name=None, compulsory=False):
     transaction_status_field = basic.lookup(_tables.transaction_status(),
         columns=_config.field_size('table', 'transaction_status'),
         compulsory=compulsory,
-        name='Transaction Status')
+        name=name)
     transaction_status_field = transaction_status_field.setResultsName(
         'transaction_status')
 
@@ -152,7 +152,7 @@ def ie_indicator(name=None, compulsory=False):
 
     ie_indicator_field = basic.lookup(_tables.ie_indicator(), compulsory=compulsory,
         columns=_config.field_size('table', 'ie_indicator_field'),
-        name='Inclusion/Exclusion Indicator')
+        name=name)
     ie_indicator_field = ie_indicator_field.setResultsName('ie_indicator')
 
     return ie_indicator_field
@@ -633,7 +633,7 @@ def intended_purposes(name=None, compulsory=False):
 
     intended_purpose_field = basic.lookup(_tables.intended_purposes(),
         columns=_config.field_size('table', 'intended_purpose'),
-        compulsory=compulsory, name='Intended Purpose')
+        compulsory=compulsory, name=name)
     intended_purpose_field = intended_purpose_field.setResultsName('intended_purpose')
 
     return intended_purpose_field
@@ -671,7 +671,7 @@ def instruments(name=None, compulsory=False):
 
     instruments_field = basic.lookup(_tables.instruments(),
         columns=_config.field_size('table', 'instruments'),
-        compulsory=compulsory, name='Instrument')
+        compulsory=compulsory, name=name)
     instruments_field = instruments_field.setResultsName('instruments')
 
     return instruments_field
