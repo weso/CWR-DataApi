@@ -13,6 +13,7 @@ The following cases are tested (all tests are done for default and compulsory fi
 
 - Default name is set correctly
 - Given name is set correctly
+- Creating a new field does not change the existing ones names
 
 - Accepts values with the correct number of characters
 - Cuts strings which are longer than the required size
@@ -49,9 +50,9 @@ __status__ = 'Development'
 
 class TestAlphanumName(unittest.TestCase):
     """
-    Tests that the alphanumeric field name is set correctly.
+    Tests that the Alphanumeric field name is set correctly.
 
-    The following cases are tested (most tests are done for default and compulsory fields):
+    The following cases are tested:
 
     - Default name is set correctly
     - Given name is set correctly
@@ -91,10 +92,20 @@ class TestAlphanumName(unittest.TestCase):
 
         self.assertEqual(name, field.name)
 
+    def test_name_set_no_changes(self):
+        """
+        Tests that the field name does not change for creating a new one
+        """
+        field1 = basic.alphanum(name='field1')
+        field2 = basic.alphanum(name='field2')
+
+        self.assertEqual('field1', field1.name)
+        self.assertEqual('field2', field2.name)
+
 
 class _BaseAlphanumValid():
     """
-    Base test for valid alphanumeric fields.
+    Base test for valid Alphanumeric fields.
 
     The following cases are tested:
 
@@ -175,7 +186,7 @@ class _BaseAlphanumValid():
 
 class TestAlphanumValid(unittest.TestCase, _BaseAlphanumValid):
     """
-    Tests that the alphanumeric field accepts and parse valid values.
+    Tests that the Alphanumeric field accepts and parse valid values.
 
     Implements the basic Alphanumeric test case for valid numbers.
 
@@ -197,7 +208,7 @@ class TestAlphanumValid(unittest.TestCase, _BaseAlphanumValid):
 
 class TestAlphanumCompulsoryValid(unittest.TestCase, _BaseAlphanumValid):
     """
-    Tests that the compulsory alphanumeric field accepts and parse valid values.
+    Tests that the compulsory Alphanumeric field accepts and parse valid values.
 
     Implements the basic Alphanumeric test case for valid numbers.
     """
@@ -208,7 +219,7 @@ class TestAlphanumCompulsoryValid(unittest.TestCase, _BaseAlphanumValid):
 
 class TestAlphanumExtendedValid(unittest.TestCase, _BaseAlphanumValid):
     """
-    Tests that the alphanumeric field accepts and parse valid values.
+    Tests that the Alphanumeric field accepts and parse valid values.
 
     Implements the basic Alphanumeric test case for valid numbers.
 
@@ -232,7 +243,7 @@ class TestAlphanumExtendedValid(unittest.TestCase, _BaseAlphanumValid):
 
 class TestAlphanumHugeValid(unittest.TestCase):
     """
-    Tests that the alphanumeric field accepts and parse very long valid values.
+    Tests that the Alphanumeric field accepts and parse very long valid values.
 
     The following cases are tested:
     - Accepts a huge field with whitespaces
@@ -272,7 +283,7 @@ class TestAlphanumHugeValid(unittest.TestCase):
 
 class TestAlphanumEmptyValid(unittest.TestCase):
     """
-    Tests that the alphanumeric field accepts and parse valid values when empty.
+    Tests that the Alphanumeric field accepts and parse valid values when empty.
     """
 
     def setUp(self):
@@ -288,7 +299,7 @@ class TestAlphanumEmptyValid(unittest.TestCase):
 
 class TestAlphanumConstructorException(unittest.TestCase):
     """
-    Tests that the alphanumeric field constructor throws exceptions for erroneous values.
+    Tests that the Alphanumeric field constructor throws exceptions for erroneous values.
 
     Adds the following cases:
 
@@ -305,7 +316,7 @@ class TestAlphanumConstructorException(unittest.TestCase):
 
 class _BaseAlphanumException():
     """
-    Base test for alphanumeric fields exceptions.
+    Base test for Alphanumeric fields exceptions.
 
     The following cases are tested:
     - An exception is thrown when the field is empty and it shouldn't be

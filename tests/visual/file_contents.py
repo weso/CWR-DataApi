@@ -50,6 +50,8 @@ if __name__ == '__main__':
     print "Storing output on %s" % (output)
     print '\n'
 
+    start_all = time.clock()
+    start_parsing = time.clock()
     start = time.clock()
     file = _read(path)
     end = time.clock()
@@ -63,13 +65,19 @@ if __name__ == '__main__':
     end = time.clock()
     time_parse = (end - start)
 
+    end_parsing = time.clock()
+
     print 'Parsed the file in %s seconds' % (time_parse)
     print '\n'
 
-    print 'In total the process took %s seconds' % (time_read + time_parse)
+    print 'In total the reading and parsing process took %s seconds' % (end_parsing - start_parsing)
     print '\n'
 
     output = codecs.open(output, 'w', 'latin-1')
 
     printer = CWRPrinter()
     printer.print_transmission(data, output)
+
+    end_all = time.clock()
+    print 'In total the full process took %s seconds' % (end_all - start_all)
+    print '\n'

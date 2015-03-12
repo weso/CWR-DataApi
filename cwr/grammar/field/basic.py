@@ -462,7 +462,7 @@ def date(name=None, compulsory=False):
         field = field | optional | empty
 
         # Name
-        field.setName('Date Field')
+        field.setName(name)
 
     # White spaces are not removed
     field.leaveWhitespace()
