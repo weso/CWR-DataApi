@@ -8,6 +8,12 @@ python:
 env:
   - REQUIREMENTS=lowest
   - REQUIREMENTS=release
+matrix:
+  exclude:
+    - python: 3.3
+      env: REQUIREMENTS=lowest
+    - python: 3.4
+      env: REQUIREMENTS=lowest
 before_install:
   # Setting up Jython
   - chmod +x ./.scripts/jython_env.sh
@@ -16,3 +22,4 @@ install:
   - pip install tox
 script:
   - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS
+  - tox -e
