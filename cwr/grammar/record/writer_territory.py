@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import table as field_table
@@ -32,7 +32,7 @@ Patterns.
 territory = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
         'writer_territory'),
-    compulsory=True) + field_special.ip_id() + field_society.pr_share() + field_society.mr_share() + field_society.sr_share() + \
+    compulsory=True) + field_special.ip_n() + field_society.pr_share() + field_society.mr_share() + field_society.sr_share() + \
             field_table.ie_indicator() + field_table.tis_code() + field_writer_territory.shares_change + field_writer_territory.sequence_n + field_special.lineEnd
 
 """
@@ -56,5 +56,5 @@ def _to_writerterritory(parsed):
     :return: an IPTerritoryRecord created from the parsed record
     """
     return IPTerritoryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                             parsed.ip_id, parsed.ie_indicator, parsed.tis_code, parsed.sequence_n,
+                             parsed.ip_n, parsed.ie_indicator, parsed.tis_code, parsed.sequence_n,
                              parsed.pr_share, parsed.mr_share, parsed.sr_share, parsed.shares_change)

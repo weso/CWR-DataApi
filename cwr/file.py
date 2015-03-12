@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 CWR file structure and information model.
@@ -183,7 +183,7 @@ class TransactionGroup(object):
     The type of the group is indicated by the header.
     """
 
-    def __init__(self, grh, grt, transactions):
+    def __init__(self, group_header, group_trailer, transactions):
         """
         Constructs a TransactionGroup.
 
@@ -195,41 +195,41 @@ class TransactionGroup(object):
 
         The transactions is a collection of entities representing the transactions.
 
-        :param grh: the group header
-        :param grt: the group trailer
+        :param group_header: the group header
+        :param group_trailer: the group trailer
         :param transactions: the group transactions
         """
-        self._grh = grh
-        self._grt = grt
+        self._group_header = group_header
+        self._group_trailer = group_trailer
         self._transactions = transactions
 
     def __str__(self):
         return '%s to %s [%s]' % (
-            self._grh, self._grt, self._transactions)
+            self._group_header, self._group_trailer, self._transactions)
 
     def __repr__(self):
         return '<class %s>(grh=%r, grt=%r, transactions=%r)' % (
-            'TransactionGroup', self._grh,
-            self._grt,
+            'TransactionGroup', self._group_header,
+            self._group_trailer,
             self._transactions)
 
     @property
-    def grh(self):
+    def group_header(self):
         """
         The group's header. This is a GroupHeader.
 
         :return: group's header
         """
-        return self._grh
+        return self._group_header
 
     @property
-    def grt(self):
+    def group_trailer(self):
         """
         The group's trailer. This is a GroupTrailer.
 
         :return: group's trailer
         """
-        return self._grt
+        return self._group_trailer
 
     @property
     def transactions(self):
@@ -253,31 +253,32 @@ class Transmission(object):
     following the structure [HDR, [GRH,GRT]*, TRL].
     """
 
-    def __init__(self, hdr, trl, groups):
+    def __init__(self, header, trailer, groups):
         """
         Constructs a Transmission.
 
         The transaction groups should be a collection of TransactionGroup instances. While the header should be a
         TransmissionHeader and the trailer a TransmissionTrailer.
 
-        :param hdr: the transmission header
-        :param trl: the transmission trailer
+        :param header: the transmission header
+        :param trailer: the transmission trailer
         :param groups: the transaction groups
         """
-        self._hdr = hdr
-        self._trl = trl
+        self._header = header
+        self._trailer = trailer
         self._groups = groups
 
     def __str__(self):
         return '%s to %s [%s]' % (
-            self._hdr, self._trl, self._groups)
+            self._header, self._trailer, self._groups)
 
     def __repr__(self):
         return '<class %s>(hdr=%r, trl=%r, groups=%r)' % (
-            'Transmission', self._hdr,
-            self._trl,
+            'Transmission', self._header,
+            self._trailer,
             self._groups)
 
+    @property
     def groups(self):
         """
         The transmission groups. This is a collection of TransactionGroups.
@@ -286,18 +287,20 @@ class Transmission(object):
         """
         return self._groups
 
-    def hdr(self):
+    @property
+    def header(self):
         """
         The transmission header. This is a TransmissionHeader.
 
         :return: the transmission header
         """
-        return self._hdr
+        return self._header
 
-    def trl(self):
+    @property
+    def trailer(self):
         """
         The transmission trailer. This is a TransmissionTrailer.
 
         :return: the transmission trailer
         """
-        return self._trl
+        return self._trailer

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special, basic
@@ -48,12 +48,14 @@ PER fields.
 """
 
 # Performing Artist Last Name
-performer_last_name = basic.alphanum(_config.field_size('performing_artist', 'performer_last_name'))
-performer_last_name = performer_last_name.setName('Performing Artist Last Name').setResultsName('last_name')
+performing_artist_last_name = basic.alphanum(_config.field_size('performing_artist', 'performer_last_name'))
+performing_artist_last_name = performing_artist_last_name.setName('Performing Artist Last Name').setResultsName(
+    'performing_artist_last_name')
 
 # Performing Artist First Name
-performer_first_name = basic.alphanum(_config.field_size('performing_artist', 'performer_first_name'))
-performer_first_name = performer_first_name.setName('Performing Artist First Name').setResultsName('first_name')
+performing_artist_first_name = basic.alphanum(_config.field_size('performing_artist', 'performer_first_name'))
+performing_artist_first_name = performing_artist_first_name.setName('Performing Artist First Name').setResultsName(
+    'performing_artist_first_name')
 
 """
 REC fields.
@@ -77,8 +79,9 @@ first_label = basic.alphanum(_config.field_size('recording_detail', 'first_album
 first_label = first_label.setName('First Album Label').setResultsName('first_album_label')
 
 # First Release Catalog #
-first_catalog = basic.alphanum(_config.field_size('recording_detail', 'first_release_catalog_id'))
-first_catalog = first_catalog.setName('First Release Catalog #').setResultsName('first_release_catalog_id')
+first_release_catalog_n = basic.alphanum(_config.field_size('recording_detail', 'first_release_catalog_id'))
+first_release_catalog_n = first_release_catalog_n.setName('First Release Catalog #').setResultsName(
+    'first_release_catalog_n')
 
 """
 ORN fields.
@@ -106,7 +109,7 @@ bltvr = bltvr.setName('BLTVR').setResultsName('bltvr')
 
 # Production #
 production_n = basic.alphanum(_config.field_size('work_origin', 'production_n'))
-production_n = production_n.setName('Production #').setResultsName('production_id')
+production_n = production_n.setName('Production #').setResultsName('production_n')
 
 # Episode Title
 episode_title = basic.alphanum(_config.field_size('work_origin', 'episode_title'))
@@ -114,11 +117,11 @@ episode_title = episode_title.setName('Episode Title').setResultsName('episode_t
 
 # Episode #
 episode_n = basic.alphanum(_config.field_size('work_origin', 'episode_n'))
-episode_n = episode_n.setName('Episode #').setResultsName('episode_id')
+episode_n = episode_n.setName('Episode #').setResultsName('episode_n')
 
 # Year of Production
 year_production = basic.numeric(_config.field_size('work_origin', 'production_year'))
-year_production = year_production.setName('Year of Production').setResultsName('production_year')
+year_production = year_production.setName('Year of Production').setResultsName('year_production')
 
 """
 INS fields.
@@ -126,19 +129,20 @@ INS fields.
 
 # Number of voices
 number_voices = basic.numeric(_config.field_size('instrumentation_summary', 'voices'))
-number_voices = number_voices.setName('Number of voices').setResultsName('voices')
+number_voices = number_voices.setName('Number of voices').setResultsName('number_voices')
 
 # Instrumentation Description
-instr_description = basic.alphanum(_config.field_size('instrumentation_summary', 'description'))
-instr_description = instr_description.setName('Instrumentation Description').setResultsName('description')
+instrumentation_description = basic.alphanum(_config.field_size('instrumentation_summary', 'description'))
+instrumentation_description = instrumentation_description.setName('Instrumentation Description').setResultsName(
+    'instrumentation_description')
 
 """
 IND fields.
 """
 
 # Number of players
-players_n = basic.numeric(_config.field_size('instrumentation_detail', 'players'))
-players_n = players_n.setName('Number of players').setResultsName('players')
+number_players = basic.numeric(_config.field_size('instrumentation_detail', 'players'))
+number_players = number_players.setName('Number of players').setResultsName('number_players')
 
 """
 COM fields.
@@ -159,37 +163,37 @@ Author fields
 # Writer 1 Last Name
 writer_1_last_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_last_name'))
 writer_1_last_name = writer_1_last_name.setName('Writer 1 Last Name').setResultsName(
-    'last_name_1')
+    'writer_1_last_name')
 
 # Writer 1 First Name
 writer_1_first_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_first_name'))
 writer_1_first_name = writer_1_first_name.setName('Writer 1 Last Name').setResultsName(
-    'first_name_1')
+    'writer_1_first_name')
 
 # Writer 1 IPI Name #
-writer_1_ipi_name = special.ipi_name_number()
-writer_1_ipi_name = writer_1_ipi_name.setName('Writer 1 IPI Name #').setResultsName('ipi_name_1')
+writer_1_ipi_name_n = special.ipi_name_number()
+writer_1_ipi_name_n = writer_1_ipi_name_n.setName('Writer 1 IPI Name #').setResultsName('writer_1_ipi_name_n')
 
 # Writer 1 IPI Base #
-writer_1_ipi_base = special.ipi_base_number()
-writer_1_ipi_base = writer_1_ipi_base.setName('Writer 1 IPI Base #').setResultsName('ipi_base_1')
+writer_1_ipi_base_n = special.ipi_base_number()
+writer_1_ipi_base_n = writer_1_ipi_base_n.setName('Writer 1 IPI Base #').setResultsName('writer_1_ipi_base_n')
 
 # Writer 2 Last Name
 writer_2_last_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_last_name'))
 writer_2_last_name = writer_2_last_name.setName('Writer 2 Last Name').setResultsName(
-    'last_name_2')
+    'writer_2_last_name')
 
 # Writer 2 First Name
 writer_2_first_name = basic.alphanum(_config.field_size('entire_work_title', 'writer_first_name'))
-writer_2_first_name = writer_2_first_name.setName('Writer 2 Last Name').setResultsName('first_name_2')
+writer_2_first_name = writer_2_first_name.setName('Writer 2 Last Name').setResultsName('writer_2_first_name')
 
 # Writer 2 IPI Name #
-writer_2_ipi_name = special.ipi_name_number()
-writer_2_ipi_name = writer_2_ipi_name.setName('Writer 1 IPI Name #').setResultsName('ipi_name_2')
+writer_2_ipi_name_n = special.ipi_name_number()
+writer_2_ipi_name_n = writer_2_ipi_name_n.setName('Writer 1 IPI Name #').setResultsName('writer_2_ipi_name_n')
 
 # Writer 2 IPI Base #
-writer_2_ipi_base = special.ipi_base_number()
-writer_2_ipi_base = writer_2_ipi_base.setName('Writer 1 IPI Base #').setResultsName('ipi_base_2')
+writer_2_ipi_base_n = special.ipi_base_number()
+writer_2_ipi_base_n = writer_2_ipi_base_n.setName('Writer 1 IPI Base #').setResultsName('writer_2_ipi_base_n')
 
 # Source
 source = basic.alphanum(_config.field_size('entire_work_title', 'source'))

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from pyparsing import ParseException
@@ -14,6 +14,52 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
+
+
+class TestNumericFloatName(unittest.TestCase):
+    def test_name_default(self):
+        """
+        Tests that the default field name is correct for optional fields.
+        """
+        field = basic.numeric_float(4, 2)
+
+        self.assertEqual('Numeric Field', field.name)
+
+    def test_name_default_compulsory(self):
+        """
+        Tests that the default field name is correct for optional fields, for compulsory fields.
+        """
+        field = basic.numeric_float(4, 2, compulsory=True)
+
+        self.assertEqual('Numeric Field', field.name)
+
+    def test_name_set(self):
+        """
+        Tests that the given field name is set correctly for optional fields.
+        """
+        name = "Field Name"
+        field = basic.numeric_float(4, 2, name=name)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_compulsory(self):
+        """
+        Tests that the given field name is set correctly for optional fields, for compulsory fields.
+        """
+        name = "Field Name"
+        field = basic.numeric_float(4, 2, name=name, compulsory=True)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_no_changes(self):
+        """
+        Tests that the field name does not change for creating a new one
+        """
+        field1 = basic.numeric_float(4, 2, name='field1')
+        field2 = basic.numeric_float(4, 2, name='field2')
+
+        self.assertEqual('field1', field1.name)
+        self.assertEqual('field2', field2.name)
 
 
 class TestNumericFloatValidEven(unittest.TestCase):

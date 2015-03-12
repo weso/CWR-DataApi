@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import table as field_table
@@ -32,12 +32,12 @@ Patterns.
 
 writer = field_special.lineStart + field_record.record_prefix(
     _config.record_type('writer'),
-    compulsory=True) + field_special.ip_id() + field_writer.last_name + field_writer.first_name + field_writer.unknown + \
+    compulsory=True) + field_special.ip_n() + field_writer.writer_last_name + field_writer.writer_first_name + field_writer.unknown + \
          field_table.writer_designation() + field_publisher.tax_id + field_special.ipi_name_number() + \
          field_society.pr_affiliation() + field_society.pr_share() + \
          field_society.mr_affiliation() + field_society.mr_share() + \
          field_society.sr_affiliation() + field_society.sr_share() + \
-         field_writer.reversionary + field_writer.refusal + field_writer.for_hire + field_special.blank(
+         field_writer.reversionary + field_writer.first_recording_refusal + field_writer.for_hire + field_special.blank(
     _config.field_size('writer', 'filler')) + \
          field_special.ipi_base_number() + field_writer.personal_number + field_table.usa_license() + field_special.lineEnd
 
@@ -61,8 +61,9 @@ def _to_writer(parsed):
     :param parsed: result of parsing the Writer info in a Writer record
     :return: a Writer created from the parsed record
     """
-    return Writer(parsed.ip_id, parsed.personal_number, parsed.ipi_base, parsed.first_name, parsed.last_name,
-                  parsed.tax_id, parsed.ipi_name)
+    return Writer(parsed.ip_n, parsed.personal_number, parsed.ipi_base_n, parsed.writer_first_name,
+                  parsed.writer_last_name,
+                  parsed.tax_id, parsed.ipi_name_n)
 
 
 def _to_writerrecord(parsed):
@@ -76,6 +77,6 @@ def _to_writerrecord(parsed):
 
     return WriterRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n, writer_data,
                         parsed.writer_designation, parsed.work_for_hire, parsed.writer_unknown, parsed.reversionary,
-                        parsed.first_record_refusal, parsed.usa_license, parsed.pr_society,
+                        parsed.first_recording_refusal, parsed.usa_license, parsed.pr_society,
                         parsed.pr_share, parsed.mr_society, parsed.mr_share,
                         parsed.sr_society, parsed.sr_share)

@@ -199,7 +199,7 @@ table:
         size: 4
     agreement_role_code:
         size: 2
-    language:
+    language_code:
         size: 2
     publisher_type:
         size: 2
@@ -372,7 +372,7 @@ ari:
         size: 160
 
 special:
-    ip_id:
+    ip_n:
         size: 9
     shares:
         size: 5

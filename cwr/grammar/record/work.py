@@ -1,6 +1,6 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-from data.accessor import CWRTables, CWRConfiguration
+from data.accessor import CWRConfiguration
 from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
@@ -18,7 +18,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 """
@@ -27,24 +26,26 @@ Work patterns.
 
 work_record = field_special.lineStart + field_record.record_prefix(_config.record_type('work'),
                                                                    compulsory=True) + field_work.work_title + \
-              field_table.language() + field_work.work_id + field_work.iswc + \
-              field_work.copyright_date + field_work.copyright_number + field_table.musical_distribution_category(
-    True) + field_work.duration + field_work.recorded + \
-              field_table.text_music_relationship(True) + field_table.composite_type() + field_table.version_type(
-    True) + field_table.excerpt_type(True) + field_table.music_arrangement() + \
+              field_table.language_code() + field_work.submitter_work_n + field_work.iswc + \
+              field_work.copyright_date + field_work.copyright_number + field_table.musical_work_distribution_category(
+    compulsory=True) + field_work.duration + field_work.recorded + \
+              field_table.text_music_relationship(
+                  compulsory=True) + field_table.composite_type() + field_table.version_type(
+    compulsory=True) + field_table.excerpt_type(compulsory=True) + field_table.music_arrangement() + \
               field_table.lyric_adaptation() + field_work.contact_name + field_work.contact_id + field_table.work_type() + field_work.gr_indicator + field_work.composite_count + \
-              field_work.printed_edition_publication_date + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
+              field_work.date_publication_printed_edition + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
               field_special.lineEnd
 
 conflict = field_special.lineStart + field_record.record_prefix(_config.record_type('work_conflict'),
                                                                 compulsory=True) + field_work.work_title + \
-           field_table.language() + field_work.work_id + field_work.iswc + \
-           field_work.copyright_date + field_work.copyright_number + field_table.musical_distribution_category(
-    True) + field_work.duration + field_work.recorded + \
-           field_table.text_music_relationship(True) + field_table.composite_type() + field_table.version_type(
-    True) + field_table.excerpt_type(True) + field_table.music_arrangement() + \
+           field_table.language_code() + field_work.submitter_work_n + field_work.iswc + \
+           field_work.copyright_date + field_work.copyright_number + field_table.musical_work_distribution_category(
+    compulsory=True) + field_work.duration + field_work.recorded + \
+           field_table.text_music_relationship(
+               compulsory=True) + field_table.composite_type() + field_table.version_type(
+    compulsory=True) + field_table.excerpt_type(compulsory=True) + field_table.music_arrangement() + \
            field_table.lyric_adaptation() + field_work.contact_name + field_work.contact_id + field_table.work_type() + field_work.gr_indicator + field_work.composite_count + \
-           field_work.printed_edition_publication_date + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
+           field_work.date_publication_printed_edition + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
            field_special.lineEnd
 
 """
@@ -69,10 +70,11 @@ def _to_work(parsed):
     :return: a WorkRecord created from the parsed record
     """
     return work.WorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                           parsed.work_id, parsed.title, parsed.version_type, parsed.musical_distribution_category,
-                           printed_edition_publication_date=parsed.printed_edition_publication_date,
+                           parsed.submitter_work_n, parsed.title, parsed.version_type,
+                           parsed.musical_work_distribution_category,
+                           date_publication_printed_edition=parsed.date_publication_printed_edition,
                            text_music_relationship=parsed.text_music_relationship,
-                           language_code=parsed.language,
+                           language_code=parsed.language_code,
                            copyright_number=parsed.copyright_number,
                            copyright_date=parsed.copyright_date,
                            music_arrangement=parsed.music_arrangement,

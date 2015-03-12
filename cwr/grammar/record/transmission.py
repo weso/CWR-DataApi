@@ -1,6 +1,6 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-from data.accessor import CWRTables, CWRConfiguration
+from data.accessor import CWRConfiguration
 from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
@@ -37,7 +37,6 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
-_tables = CWRTables()
 _config = CWRConfiguration()
 
 """
@@ -50,14 +49,16 @@ These are the grammatical structures for the Transmission Header and Transmissio
 transmission_header = field_special.lineStart + field_record.record_type(_config.record_type('transmission_header'),
                                                                          compulsory=True) + \
                       field_table.sender_type(
-                          True) + field_transmission.sender_id + field_transmission.sender_name + field_transmission.edi_version + \
+                          compulsory=True) + field_transmission.sender_id + field_transmission.sender_name + field_transmission.edi_version + \
                       field_transmission.creation_date_time + field_transmission.transmission_date + field_transmission.character_set + field_special.lineEnd
+transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + field_record.record_type(_config.record_type('transmission_trailer'),
                                                                           compulsory=True) + \
                        field_record.group_count(compulsory=True) + field_record.transaction_count(compulsory=True) + \
-                       field_record.record_count(compulsory=True) + field_special.lineEnd
+                       field_record.record_count(compulsory=True)
+transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()
 """

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from cwr.grammar.record import writer
@@ -37,13 +37,13 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual('SWR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('A12345678', result.writer.ip_id)
-        self.assertEqual('LAST NAME', result.writer.last_name)
-        self.assertEqual('FIRST NAME', result.writer.first_name)
+        self.assertEqual('A12345678', result.writer.ip_n)
+        self.assertEqual('LAST NAME', result.writer.writer_last_name)
+        self.assertEqual('FIRST NAME', result.writer.writer_first_name)
         self.assertEqual('N', result.writer_unknown)
-        self.assertEqual('A', result.designation)
+        self.assertEqual('A', result.writer_designation)
         self.assertEqual(923703412, result.writer.tax_id)
-        self.assertEqual(14107338, result.writer.ipi_name)
+        self.assertEqual(14107338, result.writer.ipi_name_n)
         self.assertEqual(9, result.pr_society)
         self.assertEqual(20.5, result.pr_ownership_share)
         self.assertEqual(10, result.mr_society)
@@ -51,10 +51,10 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual(11, result.sr_society)
         self.assertEqual(23.12, result.sr_ownership_share)
         self.assertEqual('Y', result.reversionary)
-        self.assertEqual('Y', result.first_record_refusal)
+        self.assertEqual('Y', result.first_recording_refusal)
         self.assertEqual('Y', result.work_for_hire)
-        self.assertEqual('I', result.writer.ipi_base_id.header)
-        self.assertEqual(229, result.writer.ipi_base_id.id_code)
-        self.assertEqual(7, result.writer.ipi_base_id.check_digit)
+        self.assertEqual('I', result.writer.ipi_base_n.header)
+        self.assertEqual(229, result.writer.ipi_base_n.id_code)
+        self.assertEqual(7, result.writer.ipi_base_n.check_digit)
         self.assertEqual(12345678901, result.writer.personal_number)
         self.assertEqual('B', result.usa_license)

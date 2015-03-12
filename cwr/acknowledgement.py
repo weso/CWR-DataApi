@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from cwr.record import TransactionRecord
 
@@ -18,33 +18,55 @@ class AcknowledgementRecord(TransactionRecord):
     Represents a CWR Acknowledgement of Transaction (ACK).
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, group_id, transaction_n,
-                 transaction_type, transaction_status, creation_date_time,
-                 processing_date, title='', submitter_id='', recipient_id=''):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 original_group_id, original_transaction_sequence_n, original_transaction_type,
+                 transaction_status, creation_date_time, processing_date,
+                 creation_title='', submitter_creation_n='', recipient_creation_n=''):
         super(AcknowledgementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._group_id = group_id
-        self._transaction_n = transaction_n
-        self._transaction_type = transaction_type
+        # Record information
+        self._original_group_id = original_group_id
+        self._original_transaction_sequence_n = original_transaction_sequence_n
+
+        # Transaction information
+        self._original_transaction_type = original_transaction_type
         self._transaction_status = transaction_status
+
+        # Transmission information
         self._creation_date_time = creation_date_time
         self._processing_date = processing_date
-        self._title = title
-        self._submitter_id = submitter_id
-        self._recipient_id = recipient_id
+        self._creation_title = creation_title
+        self._submitter_creation_n = submitter_creation_n
+        self._recipient_creation_n = recipient_creation_n
 
     @property
     def creation_date_time(self):
         """
-        Creation Date and Time field. Date and Time.
+        Creation Date and Time field. Date and Time combined.
 
         The date and time in which the file containing the transaction was created.
+
+        Note that these are two different fields on the CWR field, but are combined for easing its use.
 
         :return: the date and time in which the file was created
         """
         return self._creation_date_time
 
     @property
-    def group_id(self):
+    def creation_title(self):
+        """
+        Creation Title field. Alphanumeric.
+
+        The creation title as delivered by the submitter (i.e. the title of the musical work or audio visual
+        production).
+
+        This field is required if the ACK is in response to an NWR or REV transaction.
+
+        :return: the creation title
+        """
+        return self._creation_title
+
+    @property
+    def original_group_id(self):
         """
         Original Group ID field. Numeric.
 
@@ -54,7 +76,34 @@ class AcknowledgementRecord(TransactionRecord):
 
         :return: the original transaction group id
         """
-        return self._group_id
+        return self._original_group_id
+
+    @property
+    def original_transaction_sequence_n(self):
+        """
+        Original Transaction Sequence Number field. Numeric.
+
+        The Transaction Sequence number of the original transaction to which this ACK applies.
+
+        Note that if the ACK is a result of a HDR or TRL record problem this attribute is zero.
+
+        :return: the original transaction sequence number
+        """
+        return self._original_transaction_sequence_n
+
+    @property
+    def original_transaction_type(self):
+        """
+        Original Transaction Type. Table Lookup (Transaction Type table).
+
+        The Transaction Type of the original transaction to which this ACK applies.
+
+        Note that if the ACK is a result of a HDR or TRL record problem, set this field to HDR or TRL (whichever is
+        applicable).
+
+        :return: the original transaction type
+        """
+        return self._original_transaction_type
 
     @property
     def processing_date(self):
@@ -68,7 +117,7 @@ class AcknowledgementRecord(TransactionRecord):
         return self._processing_date
 
     @property
-    def recipient_id(self):
+    def recipient_creation_n(self):
         """
         Recipient Creation Number field. Alphanumeric.
 
@@ -79,10 +128,10 @@ class AcknowledgementRecord(TransactionRecord):
 
         :return: the recipient ID for this work
         """
-        return self._recipient_id
+        return self._recipient_creation_n
 
     @property
-    def submitter_id(self):
+    def submitter_creation_n(self):
         """
         Submitter Creation Number field. Alphanumeric.
 
@@ -92,34 +141,7 @@ class AcknowledgementRecord(TransactionRecord):
 
         :return: the submitter ID for the work
         """
-        return self._submitter_id
-
-    @property
-    def title(self):
-        """
-        Creation Title field. Alphanumeric.
-
-        The creation title as delivered by the submitter (i.e. the title of the musical work or audio visual
-        production).
-
-        This field is required if the ACK is in response to an NWR or REV transaction.
-
-        :return: the creation title
-        """
-        return self._title
-
-    @property
-    def transaction_n(self):
-        """
-        Original Transaction Sequence Number field. Numeric.
-
-        The Transaction Sequence number of the original transaction to which this ACK applies.
-
-        Note that if the ACK is a result of a HDR or TRL record problem this attribute is zero.
-
-        :return: the original transaction sequence number
-        """
-        return self._transaction_n
+        return self._submitter_creation_n
 
     @property
     def transaction_status(self):
@@ -131,20 +153,6 @@ class AcknowledgementRecord(TransactionRecord):
         :return: the transaction status
         """
         return self._transaction_status
-
-    @property
-    def transaction_type(self):
-        """
-        Original Transaction Type. Table Lookup (Transaction Type table).
-
-        The Transaction Type of the original transaction to which this ACK applies.
-
-        Note that if the ACK is a result of a HDR or TRL record problem, set this field to HDR or TRL (whichever is
-        applicable).
-
-        :return: the original transaction type
-        """
-        return self._transaction_type
 
 
 class AcknowledgementTransaction(TransactionRecord):
@@ -175,8 +183,9 @@ class AcknowledgementTransaction(TransactionRecord):
     [ACK, MSG*, AGR|NWR|REV|EXC]
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ack, agr=None, nwr=None, rev=None,
-                 exc=None, messages=None):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 ack, agr=None, nwr=None, rev=None, exc=None,
+                 messages=None):
         super(AcknowledgementTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._ack = ack
         self._agr = agr
@@ -272,15 +281,22 @@ class MessageRecord(TransactionRecord):
     For example, if Message Type is equal to T, then the entire work registration has been rejected.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, message_type, text, sequence_n,
-                 message_record_type, message_level, validation_n):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 message_level, validation_n,
+                 message_type, message_text,
+                 original_record_sequence_n, message_record_type):
         super(MessageRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+        # Message info
         self._message_type = message_type
-        self._sequence_n = sequence_n
-        self._message_record_type = message_record_type
+        self._message_text = message_text
+
+        # Message identification
         self._message_level = message_level
         self._validation_n = validation_n
-        self._text = text
+
+        # Record info
+        self._original_record_sequence_n = original_record_sequence_n
+        self._message_record_type = message_record_type
 
     @property
     def message_level(self):
@@ -330,7 +346,7 @@ class MessageRecord(TransactionRecord):
         return self._message_type
 
     @property
-    def sequence_n(self):
+    def original_record_sequence_n(self):
         """
         Original Record Sequence # field. Numeric.
 
@@ -339,10 +355,10 @@ class MessageRecord(TransactionRecord):
 
         :return: the original record sequence number
         """
-        return self._sequence_n
+        return self._original_record_sequence_n
 
     @property
-    def text(self):
+    def message_text(self):
         """
         Message Text field. Alphanumeric.
 
@@ -350,7 +366,7 @@ class MessageRecord(TransactionRecord):
 
         :return: the message text
         """
-        return self._text
+        return self._message_text
 
     @property
     def validation_n(self):

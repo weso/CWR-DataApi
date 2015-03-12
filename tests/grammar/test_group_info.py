@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from cwr.grammar import file
@@ -88,7 +88,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + self._agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
     def test_agreement_small_pair(self):
         header = 'GRHAGR0000102.100130400001  '
@@ -96,7 +96,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + self._agreement_short() + '\n' + self._agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
     def test_agreement_full(self):
         header = 'GRHACK0123402.100123456789  '
@@ -109,42 +109,47 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + agreement_record_1 + '\n' + agreement_record_2 + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
-        self.assertEqual(44, len(result))
+        self.assertEqual('GRH', result.group_header.record_type)
 
-        self.assertEqual('GRH', result[0].record_type)
+        self.assertEqual('GRT', result.group_trailer.record_type)
 
-        self.assertEqual('AGR', result[1].record_type)
+        transactions = result.transactions
 
-        self.assertEqual('TER', result[2].record_type)
-        self.assertEqual('TER', result[3].record_type)
+        self.assertEqual(2, len(transactions))
 
-        self.assertEqual('IPA', result[4].record_type)
-        self.assertEqual('NPA', result[5].record_type)
+        transaction = transactions[0]
+        self.assertEqual(21, len(transaction))
 
-        self.assertEqual('IPA', result[6].record_type)
-        self.assertEqual('NPA', result[7].record_type)
+        self.assertEqual('AGR', transaction[0].record_type)
 
-        self.assertEqual('IPA', result[8].record_type)
-        self.assertEqual('NPA', result[9].record_type)
+        self.assertEqual('TER', transaction[1].record_type)
+        self.assertEqual('TER', transaction[2].record_type)
 
-        self.assertEqual('IPA', result[10].record_type)
-        self.assertEqual('NPA', result[11].record_type)
+        self.assertEqual('IPA', transaction[3].record_type)
+        self.assertEqual('NPA', transaction[4].record_type)
 
-        self.assertEqual('TER', result[12].record_type)
-        self.assertEqual('TER', result[13].record_type)
+        self.assertEqual('IPA', transaction[5].record_type)
+        self.assertEqual('NPA', transaction[6].record_type)
 
-        self.assertEqual('IPA', result[14].record_type)
-        self.assertEqual('NPA', result[15].record_type)
+        self.assertEqual('IPA', transaction[7].record_type)
+        self.assertEqual('NPA', transaction[8].record_type)
 
-        self.assertEqual('IPA', result[16].record_type)
-        self.assertEqual('NPA', result[17].record_type)
+        self.assertEqual('IPA', transaction[9].record_type)
+        self.assertEqual('NPA', transaction[10].record_type)
 
-        self.assertEqual('IPA', result[18].record_type)
-        self.assertEqual('NPA', result[19].record_type)
+        self.assertEqual('TER', transaction[11].record_type)
+        self.assertEqual('TER', transaction[12].record_type)
 
-        self.assertEqual('IPA', result[20].record_type)
-        self.assertEqual('NPA', result[21].record_type)
+        self.assertEqual('IPA', transaction[13].record_type)
+        self.assertEqual('NPA', transaction[14].record_type)
 
-        self.assertEqual('GRT', result[43].record_type)
+        self.assertEqual('IPA', transaction[15].record_type)
+        self.assertEqual('NPA', transaction[16].record_type)
+
+        self.assertEqual('IPA', transaction[17].record_type)
+        self.assertEqual('NPA', transaction[18].record_type)
+
+        self.assertEqual('IPA', transaction[19].record_type)
+        self.assertEqual('NPA', transaction[20].record_type)
