@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import basic
@@ -18,12 +18,12 @@ _config = CWRConfiguration()
 
 
 # Writer Last Name
-last_name = basic.alphanum(_config.field_size('writer', 'last_name'))
-last_name = last_name.setName('Writer Last Name').setResultsName('last_name')
+writer_last_name = basic.alphanum(_config.field_size('writer', 'last_name'))
+writer_last_name = writer_last_name.setName('Writer Last Name').setResultsName('writer_last_name')
 
 # Writer First Name
-first_name = basic.alphanum(_config.field_size('writer', 'first_name'))
-first_name = first_name.setName('Writer First Name').setResultsName('first_name')
+writer_first_name = basic.alphanum(_config.field_size('writer', 'first_name'))
+writer_first_name = writer_first_name.setName('Writer First Name').setResultsName('writer_first_name')
 
 # Writer Unknown Indicator
 unknown = basic.flag()
@@ -34,8 +34,9 @@ reversionary = basic.flag()
 reversionary = reversionary.setName('Reversionary Indicator').setResultsName('reversionary')
 
 # First Recording Refusal Indicator
-refusal = basic.flag()
-refusal = refusal.setName('First Recording Refusal Indicator').setResultsName('first_record_refusal')
+first_recording_refusal = basic.flag()
+first_recording_refusal = first_recording_refusal.setName('First Recording Refusal Indicator').setResultsName(
+    'first_recording_refusal')
 
 # Work For Hire Indicator
 for_hire = basic.flag()

@@ -1,6 +1,6 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-from cwr.record import TransactionRecord, NRARecord
+from cwr.record import TransactionRecord
 
 """
 Agreement model classes.
@@ -23,35 +23,25 @@ class AgreementInterestedParty(TransactionRecord):
     to assign through the agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_id, last_name, agreement_role_code,
-                 writer_name='', ipi_name=None, ipi_base=None,
-                 pr_society=None, pr_share=0, mr_society=None, mr_share=0, sr_society=None, sr_share=0):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 ip_n, ip_last_name, agreement_role_code,
+                 ip_writer_first_name='', ipi_name_n=None, ipi_base_n=None,
+                 pr_society=None, pr_share=0,
+                 mr_society=None, mr_share=0,
+                 sr_society=None, sr_share=0):
         """
         Constructs an AgreementInterestedParty.
-
-        :param ip_id: the interested party ID
-        :param last_name: the writer last name or the publisher name
-        :param agreement_role_code: the role in the agreement
-        :param writer_name: the writer name
-        :param ipi_name: IPI Name number
-        :param ipi_base: IPI Base number
-        :param pr_society: performing rights society
-        :param pr_share: performing rights share
-        :param mr_society: mechanization rights society
-        :param mr_share: mechanization rights share
-        :param sr_society: synchronization rights society
-        :param sr_share: synchronization rights share
         """
         super(AgreementInterestedParty, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement and Interested Party relationship
-        self._ip_id = ip_id
+        self._ip_n = ip_n
         self._agreement_role_code = agreement_role_code
 
         # Interested Party info
-        self._ipi_name = ipi_name
-        self._ipi_base = ipi_base
-        self._last_name = last_name
-        self._writer_name = writer_name
+        self._ipi_name_n = ipi_name_n
+        self._ipi_base_n = ipi_base_n
+        self._ip_last_name = ip_last_name
+        self._ip_writer_first_name = ip_writer_first_name
 
         # Performing Rights info
         self._pr_society = pr_society
@@ -79,43 +69,7 @@ class AgreementInterestedParty(TransactionRecord):
         return self._agreement_role_code
 
     @property
-    def ip_id(self):
-        """
-        Interested Party Number field. Alphanumeric.
-
-        This is the unique ID given by the submitter to the Interested Party.
-
-        :return: ID for the interested party
-        """
-        return self._ip_id
-
-    @property
-    def ipi_base(self):
-        """
-        IPI Base Number field. Table Lookup (CISAC CIS).
-
-        The unique identifier associated with this interested party. IPI numbering is a sub-system of the CISAC
-        Common Information System.
-
-        :return: IPI base number for the interested party
-        """
-        return self._ipi_base
-
-    @property
-    def ipi_name(self):
-        """
-        Interested Party IPI Name number field. Table Lookup (IPI Database).
-
-        The IPI number assigned to this interested party with 2 leading zero’s or the IPI Name number.
-
-        These values reside in the IPI Database.
-
-        :return: the IPI name number for this interested party
-        """
-        return self._ipi_name
-
-    @property
-    def last_name(self):
+    def ip_last_name(self):
         """
         Interested Party Last Name field. Alphanumeric.
 
@@ -126,7 +80,54 @@ class AgreementInterestedParty(TransactionRecord):
 
         :return: the writer last name or the publisher name
         """
-        return self._last_name
+        return self._ip_last_name
+
+    @property
+    def ip_n(self):
+        """
+        Interested Party Number field. Alphanumeric.
+
+        This is the unique ID given by the submitter to the Interested Party.
+
+        :return: ID for the interested party
+        """
+        return self._ip_n
+
+    @property
+    def ip_writer_first_name(self):
+        """
+        Interested Party Writer First Name field. Alphanumeric.
+
+        If the interested party is a writer, provide his/her first and middle names.
+
+        :return: the Writer's first and middle names
+        """
+        return self._ip_writer_first_name
+
+    @property
+    def ipi_base_n(self):
+        """
+        IPI Base Number field. Table Lookup (CISAC CIS).
+
+        The unique identifier associated with this interested party. IPI numbering is a sub-system of the CISAC
+        Common Information System.
+
+        :return: IPI base number for the interested party
+        """
+        return self._ipi_base_n
+
+    @property
+    def ipi_name_n(self):
+        """
+        Interested Party IPI Name number field. Table Lookup (IPI Database).
+
+        The IPI number assigned to this interested party with 2 leading zero’s or the IPI Name number.
+
+        These values reside in the IPI Database.
+
+        :return: the IPI name number for this interested party
+        """
+        return self._ipi_name_n
 
     @property
     def mr_share(self):
@@ -208,71 +209,6 @@ class AgreementInterestedParty(TransactionRecord):
         """
         return self._sr_society
 
-    @property
-    def writer_name(self):
-        """
-        Interested Party Writer First Name field. Alphanumeric.
-
-        If the interested party is a writer, provide his/her first and middle names.
-
-        :return: the Writer's first and middle names
-        """
-        return self._writer_name
-
-
-class NPARecord(NRARecord):
-    """
-    Represents a CWR Non-Roman Alphabet Agreement Party Name Record (NPA).
-
-    This record identifies names in a non-roman alphabet for the acquiring parties of this agreement. The language code
-    is used to identify the alphabet. This record can be used to identify the name of the party in the preceding IPA
-    record.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer_name, ip_id='',
-                 language=None):
-        super(NPARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
-        # IP info
-        self._ip_name = ip_name
-        self._ip_writer_name = ip_writer_name
-        self._ip_id = ip_id
-
-        # Language info
-        self._language = language
-
-    @property
-    def ip_id(self):
-        """
-        Interested Party # field. Alphanumeric.
-
-        Submitting publisher’s unique identifier for this Writer.
-
-        :return: the Interested Party ID
-        """
-        return self._ip_id
-
-    @property
-    def ip_name(self):
-        """
-        Interested Party Name field. Alphanumeric.
-
-        The last of a writer or the publisher name.
-
-        :return: the last name of a writer of the publisher name
-        """
-        return self._ip_name
-
-    @property
-    def ip_writer_name(self):
-        """
-        Interested Party Writer Name field. Alphanumeric.
-
-        The first name of a writer.
-
-        :return: the first name of a writer
-        """
-        return self._ip_writer_name
-
 
 class AgreementRecord(TransactionRecord):
     """
@@ -288,27 +224,29 @@ class AgreementRecord(TransactionRecord):
     registration. If a society has assigned an agreement number, then it too can be used as the link.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement_id, agreement_type, start_date,
-                 prior_royalty_status,
-                 post_term_collection_status, works_number, society_agreement_number='',
-                 international_standard_code='', sales_manufacture_clause='S',
-                 end_date=None, signature_date=None, retention_end_date=None, prior_royalty_start_date=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 submitter_agreement_n, agreement_type,
+                 agreement_start_date, number_of_works,
+                 prior_royalty_status, post_term_collection_status,
+                 international_standard_code='', society_assigned_agreement_n='', sales_manufacture_clause='S',
+                 agreement_end_date=None, date_of_signature=None, retention_end_date=None,
+                 prior_royalty_start_date=None,
                  post_term_collection_end_date=None,
                  shares_change=False, advance_given=False):
         """
         Constructs an Agreement Record.
 
-        :param agreement_id: the submitter's ID for the agreement
+        :param submitter_agreement_n: the submitter's ID for the agreement
         :param agreement_type: the type of agreement
-        :param start_date: starting date for the agreement
+        :param agreement_start_date: starting date for the agreement
         :param prior_royalty_status: the status of the royalties before the agreement
         :param post_term_collection_status: if and how the the acquirer can get royalties after the retention end
-        :param works_number: number of works in the agreement
-        :param society_agreement_number: ID given by a society for the agreement
+        :param number_of_works: number of works in the agreement
+        :param society_assigned_agreement_n: ID given by a society for the agreement
         :param international_standard_code: ISA ID for the agreement
         :param sales_manufacture_clause: indicates if the rights are for sale or manufacture
-        :param end_date: end date for the agreement
-        :param signature_date: date of signature of the agreement
+        :param agreement_end_date: end date for the agreement
+        :param date_of_signature: date of signature of the agreement
         :param retention_end_date: end date of the rights retention
         :param prior_royalty_start_date: royalties acquisition date previous to the start of the agreement
         :param post_term_collection_end_date: end of royalties after the agreement end
@@ -317,14 +255,14 @@ class AgreementRecord(TransactionRecord):
         """
         super(AgreementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement identification data
-        self._agreement_id = agreement_id
-        self._society_agreement_number = society_agreement_number
+        self._submitter_agreement_n = submitter_agreement_n
+        self._society_assigned_agreement_n = society_assigned_agreement_n
         self._international_standard_code = international_standard_code
         self._agreement_type = agreement_type
 
         # Agreement dates
-        self._start_date = start_date
-        self._end_date = end_date
+        self._agreement_start_date = agreement_start_date
+        self._agreement_end_date = agreement_end_date
 
         # Royalty info
         self._prior_royalty_status = prior_royalty_status
@@ -342,11 +280,11 @@ class AgreementRecord(TransactionRecord):
         self._advance_given = advance_given
 
         # Other dates
-        self._signature_date = signature_date
+        self._date_of_signature = date_of_signature
         self._retention_end_date = retention_end_date
 
         # Other info
-        self._works_number = works_number
+        self._number_of_works = number_of_works
 
     @property
     def advance_given(self):
@@ -360,15 +298,31 @@ class AgreementRecord(TransactionRecord):
         return self._advance_given
 
     @property
-    def agreement_id(self):
+    def agreement_end_date(self):
         """
-        Submitter Agreement Number field. Alphanumeric.
+        Agreement End Date field. Date.
 
-        This is the unique ID given by the submitter to the Agreement.
+        This is the date when the transfer of rights to the acquiring party ends.
 
-        :return: the submitter's ID for this Agreement
+        There may be provisions within the contract (as described in other attributes such as collection end date)
+        which have impact on entitlements.
+
+        This attribute is optional, and by default is None.
+
+        :return: the end date for the Agreement
         """
-        return self._agreement_id
+        return self._agreement_end_date
+
+    @property
+    def agreement_start_date(self):
+        """
+        Agreement Start Date field. Date.
+
+        The date on which the transfer of rights to the acquiring party becomes effective.
+
+        :return: date on which the Agreement starts
+        """
+        return self._agreement_start_date
 
     @property
     def agreement_type(self):
@@ -382,20 +336,15 @@ class AgreementRecord(TransactionRecord):
         return self._agreement_type
 
     @property
-    def end_date(self):
+    def date_of_signature(self):
         """
-        Agreement End Date field. Date.
+        Date of Signature of Agreement field. Date.
 
-        This is the date when the transfer of rights to the acquiring party ends.
+        The date when the written form of the agreement (the contract) was signed.
 
-        There may be provisions within the contract (as described in other attributes such as collection end date)
-        which have impact on entitlements.
-
-        This attribute is optional, and by default is None.
-
-        :return: the end date for the Agreement
+        :return the date when the agreement contract was signed
         """
-        return self._end_date
+        return self._date_of_signature
 
     @property
     def international_standard_code(self):
@@ -409,6 +358,17 @@ class AgreementRecord(TransactionRecord):
         :return: the ISA code for this Agreement
         """
         return self._international_standard_code
+
+    @property
+    def number_of_works(self):
+        """
+        Number of Works field. Numeric.
+
+        Number of works registered subject to this agreement specific to this file.
+
+        :return: number of works under this Agreement
+        """
+        return self._number_of_works
 
     @property
     def post_term_collection_end_date(self):
@@ -497,7 +457,7 @@ class AgreementRecord(TransactionRecord):
     @property
     def sales_manufacture_clause(self):
         """
-        Sales/ Manufacture Clause field. Table Lookup ('S'/'M').
+        Sales/Manufacture Clause field. Table Lookup ('S'/'M').
 
         A marker which shows whether the acquiring party has acquired rights either for products manufactured or for
         products sold in the territories in agreement.
@@ -526,20 +486,9 @@ class AgreementRecord(TransactionRecord):
         return self._shares_change
 
     @property
-    def signature_date(self):
+    def society_assigned_agreement_n(self):
         """
-        Date of Signature of Agreement field. Date.
-
-        The date when the written form of the agreement (the contract) was signed.
-
-        :return the date when the agreement contract was signed
-        """
-        return self._signature_date
-
-    @property
-    def society_agreement_number(self):
-        """
-        Society-assigned Agreement Number field. Alphanumeric.
+        Society-Assigned Agreement Number field. Alphanumeric.
 
         Identificator given by a Society to the Agreement.
 
@@ -547,29 +496,18 @@ class AgreementRecord(TransactionRecord):
 
         :return: the society given ID
         """
-        return self._society_agreement_number
+        return self._society_assigned_agreement_n
 
     @property
-    def start_date(self):
+    def submitter_agreement_n(self):
         """
-        Agreement Start Date field. Date.
+        Submitter Agreement Number field. Alphanumeric.
 
-        The date on which the transfer of rights to the acquiring party becomes effective.
+        This is the unique ID given by the submitter to the Agreement.
 
-        :return: date on which the Agreement starts
+        :return: the submitter's ID for this Agreement
         """
-        return self._start_date
-
-    @property
-    def works_number(self):
-        """
-        Number of Works field. Numeric.
-
-        Number of works registered subject to this agreement specific to this file.
-
-        :return: number of works under this Agreement
-        """
-        return self._works_number
+        return self._submitter_agreement_n
 
 
 class AgreementTerritoryRecord(TransactionRecord):
@@ -584,15 +522,16 @@ class AgreementTerritoryRecord(TransactionRecord):
     This is to be used in an Agreement Transaction.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, tis_code, ie_indicator):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 tis_numeric_code, ie_indicator):
         """
         Constructs an AgreementTerritory.
 
-        :param tis_code: the TIS code
+        :param tis_numeric_code: the TIS numeric code
         :param ie_indicator: indicates if it is included or not
         """
         super(AgreementTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._tis_code = tis_code
+        self._tis_numeric_code = tis_numeric_code
         self._ie_indicator = ie_indicator
 
     @property
@@ -611,15 +550,15 @@ class AgreementTerritoryRecord(TransactionRecord):
         return self._ie_indicator
 
     @property
-    def tis_code(self):
+    def tis_numeric_code(self):
         """
         TIS Numeric Code field. Table Lookup (TIS Numeric Code).
 
         Numeric identifier of a territory according to the new CISAC Territory Standard.
 
-        :return: the TIS code
+        :return: the TIS numeric code
         """
-        return self._tis_code
+        return self._tis_numeric_code
 
 
 class AgreementTransaction(TransactionRecord):

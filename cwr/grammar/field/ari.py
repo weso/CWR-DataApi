@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import basic
@@ -17,8 +17,8 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 
 # Work #
-work_number = basic.alphanum(_config.field_size('ari', 'work_number'))
-work_number = work_number.setName('Work #').setResultsName('work_id')
+work_n = basic.alphanum(_config.field_size('ari', 'work_number'))
+work_n = work_n.setName('Work #').setResultsName('work_n')
 
 # Note
 note = basic.alphanum(_config.field_size('ari', 'note'))

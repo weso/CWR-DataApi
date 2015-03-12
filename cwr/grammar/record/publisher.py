@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import table as field_table, society
@@ -29,15 +29,15 @@ Publisher patterns.
 """
 
 publisher = field_special.lineStart + field_record.record_prefix(_config.record_type('publisher'),
-                                                                 compulsory=True) + field_publisher.sequence_n + \
-            field_special.ip_id() + field_publisher.name + field_publisher.unknown + \
-            field_table.publisher_type() + field_publisher.tax_id + field_special.ipi_name_number() + field_publisher.agreement_id + \
+                                                                 compulsory=True) + field_publisher.publisher_sequence_n + \
+            field_special.ip_n() + field_publisher.name + field_publisher.unknown + \
+            field_table.publisher_type() + field_publisher.tax_id + field_special.ipi_name_number() + field_publisher.submitter_agreement_n + \
             society.pr_affiliation() + society.pr_share(maximum=50) + \
             society.mr_affiliation() + society.mr_share() + \
             society.sr_affiliation() + society.sr_share() + \
-            field_table.special_agreement() + field_publisher.first_refusal + field_special.blank(
-    1) + field_publisher.ipi_base + field_publisher.international_code + \
-            field_publisher.society_id + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
+            field_table.special_agreement() + field_publisher.first_recording_refusal + field_special.blank(
+    1) + field_special.ipi_base_number() + field_publisher.international_code + \
+            field_publisher.society_assigned_agreement_n + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
 
 """
 Parsing actions for the patterns.
@@ -59,7 +59,7 @@ def _to_publisher(parsed):
     :param parsed: result of parsing the Publisher info in a Publisher record
     :return: a Publisher created from the parsed record
     """
-    return Publisher(parsed.ip_id, parsed.name, parsed.ipi_base, parsed.tax_id, parsed.ipi_name)
+    return Publisher(parsed.ip_n, parsed.name, parsed.ipi_base_n, parsed.tax_id, parsed.ipi_name_n)
 
 
 def _to_publisherrecord(parsed):
@@ -72,9 +72,10 @@ def _to_publisherrecord(parsed):
     publisher_data = _to_publisher(parsed)
 
     return PublisherRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                           publisher_data, parsed.sequence_n, parsed.submitter_agreement_id, parsed.publisher_type,
+                           publisher_data, parsed.publisher_sequence_n, parsed.submitter_agreement_id,
+                           parsed.publisher_type,
                            parsed.publisher_unknown, parsed.agreement_type, parsed.isac,
-                           parsed.society_agreement_id, parsed.pr_society, parsed.pr_share,
+                           parsed.society_assigned_agreement_n, parsed.pr_society, parsed.pr_share,
                            parsed.mr_society, parsed.mr_share, parsed.sr_society,
                            parsed.sr_share, parsed.special_agreements,
-                           parsed.first_record_refusal, parsed.usa_license)
+                           parsed.first_recording_refusal, parsed.usa_license)

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from cwr.grammar.record import nra
@@ -33,12 +33,12 @@ class TestNPRGrammar(unittest.TestCase):
         self.assertEqual('NPR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('NAME', result.name)
-        self.assertEqual('FIRST NAME', result.first_name)
-        self.assertEqual(14107338, result.ipi_name)
-        self.assertEqual('I', result.ipi_base.header)
-        self.assertEqual(229, result.ipi_base.id_code)
-        self.assertEqual(7, result.ipi_base.check_digit)
-        self.assertEqual('ES', result.language)
+        self.assertEqual('NAME', result.performing_artist_name)
+        self.assertEqual('FIRST NAME', result.performing_artist_first_name)
+        self.assertEqual(14107338, result.performing_artist_ipi_name_n)
+        self.assertEqual('I', result.performing_artist_ipi_base_n.header)
+        self.assertEqual(229, result.performing_artist_ipi_base_n.id_code)
+        self.assertEqual(7, result.performing_artist_ipi_base_n.check_digit)
+        self.assertEqual('ES', result.language_code)
         self.assertEqual('EN', result.performance_language)
         self.assertEqual('CAN', result.performance_dialect)

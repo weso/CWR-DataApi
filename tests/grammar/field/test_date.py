@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from pyparsing import ParseException
@@ -8,6 +8,28 @@ from cwr.grammar.field import basic
 
 """
 Tests for Date (D) fields.
+
+The following cases are tested (most tests are done for default and compulsory fields):
+
+- Default name is set correctly
+- Given name is set correctly
+- Creating a new field does not change the existing ones names
+
+- Accepts a year ending in several zeros
+- Accepts a year ending in a single zero
+- Accepts a valid date
+- Accepts a date composed of zeros (empty date) (if not compulsory)
+- Accepts a year beginning with zeros
+- Accepts the smallest possible date
+
+- An exception is thrown when the day is too high
+- An exception is thrown when the day is too low
+- An exception is thrown when the month is too high
+- An exception is thrown when the month is too low
+- An exception is thrown when the date begins with empty spaces
+- An exception is thrown when the date contains letters
+- An exception is thrown when the date is the empty string
+- An exception is thrown when the date is composed of zeros (empty date) (if compulsory)
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -16,19 +38,77 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
+class TestDateName(unittest.TestCase):
+    """
+    Tests that the field name is set correctly.
+
+    The following cases are tested:
+
+    - Default name is set correctly
+    - Given name is set correctly
+    """
+
+    def test_name_default(self):
+        """
+        Tests that the default field name is correct for optional fields.
+        """
+        field = basic.date()
+
+        self.assertEqual('Date Field', field.name)
+
+    def test_name_default_compulsory(self):
+        """
+        Tests that the default field name is correct for optional fields, for compulsory fields.
+        """
+        field = basic.date(compulsory=True)
+
+        self.assertEqual('Date Field', field.name)
+
+    def test_name_set(self):
+        """
+        Tests that the given field name is set correctly for optional fields.
+        """
+        name = "Field Name"
+        field = basic.date(name=name)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_compulsory(self):
+        """
+        Tests that the given field name is set correctly for optional fields, for compulsory fields.
+        """
+        name = "Field Name"
+        field = basic.date(name=name, compulsory=True)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_no_changes(self):
+        """
+        Tests that the field name does not change for creating a new one
+        """
+        field1 = basic.date(name='field1')
+        field2 = basic.date(name='field2')
+
+        self.assertEqual('field1', field1.name)
+        self.assertEqual('field2', field2.name)
+
+
 class TestDateValid(unittest.TestCase):
     """
     Tests that the date field accepts and parse valid values.
+
+    The following cases are tested:
+
+    - Accepts a year ending in several zeros
+    - Accepts a year ending in a single zero
+    - Accepts a valid date
+    - Accepts a date composed of zeros (empty date)
+    - Accepts a year beginning with zeros
+    - Accepts the smallest possible date
     """
 
     def setUp(self):
         self.date = basic.date()
-
-    def test_name(self):
-        """
-        Tests that the field is named correctly
-        """
-        self.assertEqual('Date Field', self.date.name)
 
     def test_year_ends_zero_several(self):
         """
@@ -80,7 +160,7 @@ class TestDateValid(unittest.TestCase):
 
     def test_minimum(self):
         """
-        Tests that the date field accepts a valid date.
+        Tests that the date field accepts the smallest valid date.
         """
         result = self.date.parseString('00010101')[0]
 
@@ -91,17 +171,19 @@ class TestDateValid(unittest.TestCase):
 
 class TestCompulsoryValid(unittest.TestCase):
     """
-    Tests that the date field accepts and parse valid values.
+    Tests that the date field accepts and parse valid values if it is compulsory.
+
+    The following cases are tested:
+
+    - Accepts a year ending in several zeros
+    - Accepts a year ending in a single zero
+    - Accepts a valid date
+    - Accepts a year beginning with zeros
+    - Accepts the smallest possible date
     """
 
     def setUp(self):
         self.date = basic.date(compulsory=True)
-
-    def test_name(self):
-        """
-        Tests that the field is named correctly
-        """
-        self.assertEqual('Date Field', self.date.name)
 
     def test_common(self):
         """
@@ -135,7 +217,7 @@ class TestCompulsoryValid(unittest.TestCase):
 
     def test_minimum(self):
         """
-        Tests that the date field accepts a valid date.
+        Tests that the date field accepts the smallest valid date.
         """
         result = self.date.parseString('00010101')[0]
 
@@ -147,6 +229,16 @@ class TestCompulsoryValid(unittest.TestCase):
 class TestDateException(unittest.TestCase):
     """
     Tests that exceptions are thrown when using invalid values
+
+    The following cases are tested:
+
+    - An exception is thrown when the day is too high
+    - An exception is thrown when the day is too low
+    - An exception is thrown when the month is too high
+    - An exception is thrown when the month is too low
+    - An exception is thrown when the date begins with empty spaces
+    - An exception is thrown when the date contains letters
+    - An exception is thrown when the date is the empty string
     """
 
     def setUp(self):
@@ -154,25 +246,25 @@ class TestDateException(unittest.TestCase):
 
     def test_wrong_day_too_high(self):
         """
-        Tests that an exception is thrown when the day is invalid.
+        Tests that an exception is thrown when the day is too high.
         """
         self.assertRaises(ParseException, self.date.parseString, '20121133')
 
     def test_wrong_day_too_low(self):
         """
-        Tests that an exception is thrown when the day is invalid.
+        Tests that an exception is thrown when the day is too low.
         """
         self.assertRaises(ParseException, self.date.parseString, '20121100')
 
     def test_wrong_month_too_high(self):
         """
-        Tests that an exception is thrown when the month is invalid.
+        Tests that an exception is thrown when the month is too high.
         """
         self.assertRaises(ParseException, self.date.parseString, '20121312')
 
     def test_wrong_month_too_low(self):
         """
-        Tests that an exception is thrown when the month is invalid.
+        Tests that an exception is thrown when the month is too low.
         """
         self.assertRaises(ParseException, self.date.parseString, '20120012')
 
@@ -182,7 +274,7 @@ class TestDateException(unittest.TestCase):
         """
         self.assertRaises(ParseException, self.date.parseString, ' 20121121')
 
-    def test_spaces_letters(self):
+    def test_letters(self):
         """
         Tests that an exception is thrown when the string contains letters.
         """
@@ -198,6 +290,17 @@ class TestDateException(unittest.TestCase):
 class TestDateCompulsoryException(unittest.TestCase):
     """
     Tests that exceptions are thrown when using invalid values
+
+    The following cases are tested:
+
+    - An exception is thrown when the day is too high
+    - An exception is thrown when the day is too low
+    - An exception is thrown when the month is too high
+    - An exception is thrown when the month is too low
+    - An exception is thrown when the date begins with empty spaces
+    - An exception is thrown when the date contains letters
+    - An exception is thrown when the date is the empty string
+    - An exception is thrown when the date is composed of zeros (empty date) (if compulsory)
     """
 
     def setUp(self):

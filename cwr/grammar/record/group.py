@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.group import GroupHeader, GroupTrailer
@@ -51,14 +51,16 @@ These are the grammatical structures for the Group Header and Group Trailer.
 # Group Header pattern
 group_header = field_special.lineStart + field_record.record_type(
     _config.record_type('group_header'), compulsory=True) + field_table.transaction_type(
-    True) + field_group.group_id + field_group.version_number + \
+    compulsory=True) + field_group.group_id + field_group.version_number + \
                field_group.batch_request_id + field_group.sd_type + field_special.lineEnd
+group_header = group_header.setName('Group Header').setResultsName('group_header')
 
 # Group Trailer pattern
 group_trailer = field_special.lineStart + field_record.record_type(
     _config.record_type('group_trailer'), compulsory=True) + field_group.group_id + field_record.transaction_count(
     compulsory=True) + field_record.record_count(compulsory=True) + \
                 field_group.currency_indicator + field_group.total_monetary_value + field_special.lineEnd
+group_trailer = group_trailer.setName('Group Trailer').setResultsName('group_trailer')
 
 """
 Parsing actions for the patterns.

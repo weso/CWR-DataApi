@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from abc import ABCMeta
 import datetime
 
-from cwr.record import TransactionRecord, NRARecord
+from cwr.record import TransactionRecord
 
 
 """
@@ -85,9 +85,9 @@ class WorkRecord(BaseWorkRecord):
     structure, because they are all meant to hold a Work's information for a Work Transaction.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, work_id, title, version_type,
-                 musical_distribution_category,
-                 printed_edition_publication_date=None, text_music_relationship=None, language_code=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, submitter_work_n, title, version_type,
+                 musical_work_distribution_category,
+                 date_publication_printed_edition=None, text_music_relationship=None, language_code=None,
                  copyright_number='', copyright_date=None, music_arrangement=None, lyric_adaptation=None,
                  excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, cwr_work_type=None,
                  duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
@@ -95,9 +95,9 @@ class WorkRecord(BaseWorkRecord):
         super(WorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title, language_code,
                                          iswc)
         # Work identifying info
-        self._work_id = work_id
+        self._submitter_work_n = submitter_work_n
         self._title = title
-        self._printed_edition_publication_date = printed_edition_publication_date
+        self._date_publication_printed_edition = date_publication_printed_edition
 
         # Copyright
         self._copyright_date = copyright_date
@@ -115,7 +115,7 @@ class WorkRecord(BaseWorkRecord):
         self._opus_number = opus_number
 
         # Distribution and publication info
-        self._musical_distribution_category = musical_distribution_category
+        self._musical_work_distribution_category = musical_work_distribution_category
         self._grand_rights_indicator = grand_rights_indicator
         self._recorded_indicator = recorded_indicator
         self._exceptional_clause = exceptional_clause
@@ -231,6 +231,20 @@ class WorkRecord(BaseWorkRecord):
         return self._cwr_work_type
 
     @property
+    def date_publication_printed_edition(self):
+        """
+        Date of Publication of Printed Edition field. Date.
+
+        The date that the printed, new edition published by the submitting Publisher appeared.
+
+        This is meant for registrations with GEMA, and is especially relevant for the notification of sub published
+        works.
+
+        :return: the date of the new edition
+        """
+        return self._date_publication_printed_edition
+
+    @property
     def duration(self):
         """
         Duration field. Time (hours, minute, seconds).
@@ -312,7 +326,7 @@ class WorkRecord(BaseWorkRecord):
         return self._music_arrangement
 
     @property
-    def musical_distribution_category(self):
+    def musical_work_distribution_category(self):
         """
         Musical Work Distribution Category field. Table Lookup (Musical Work Distribution Category Table).
 
@@ -321,7 +335,7 @@ class WorkRecord(BaseWorkRecord):
 
         :return: the distribution category for this work
         """
-        return self._musical_distribution_category
+        return self._musical_work_distribution_category
 
     @property
     def opus_number(self):
@@ -334,20 +348,6 @@ class WorkRecord(BaseWorkRecord):
         :return: opus number for the work
         """
         return self._opus_number
-
-    @property
-    def printed_edition_publication_date(self):
-        """
-        Date of Publication of Printed Edition field. Date.
-
-        The date that the printed, new edition published by the submitting Publisher appeared.
-
-        This is meant for registrations with GEMA, and is especially relevant for the notification of sub published
-        works.
-
-        :return: the date of the new edition
-        """
-        return self._printed_edition_publication_date
 
     @property
     def priority_flag(self):
@@ -371,6 +371,17 @@ class WorkRecord(BaseWorkRecord):
         :return: 'Y' if there is a public recording of this work, 'F' otherwise, 'U' if there is no information
         """
         return self._recorded_indicator
+
+    @property
+    def submitter_work_n(self):
+        """
+        Submitter Work Number field.
+
+        This is the unique ID given by the submitter to the Work.
+
+        :return: the submitter's ID for this Work
+        """
+        return self._submitter_work_n
 
     @property
     def text_music_relationship(self):
@@ -397,17 +408,6 @@ class WorkRecord(BaseWorkRecord):
         :return: the Work's version type
         """
         return self._version_type
-
-    @property
-    def work_id(self):
-        """
-        Submitter Work Number field.
-
-        This is the unique ID given by the submitter to the Work.
-
-        :return: the submitter's ID for this Work
-        """
-        return self._work_id
 
 
 class WorkTransaction(TransactionRecord):
@@ -456,13 +456,13 @@ class WorkTransaction(TransactionRecord):
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, entire_work_title=None,
                  original_work_title=None, recording=None, alternate_titles=None,
                  publishers_controlled=None, publishers_other=None, writers_controlled=None,
-                 writers_other=None, performers=None, origins=None, inst_summaries=None,
-                 inst_details=None, components=None, info=None):
+                 writers_other=None, performing_artists=None, work_origins=None, instrumentation_summaries=None,
+                 instrumentation_details=None, components=None, additional_info=None):
         super(WorkTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._entire_work_title = entire_work_title
         self._original_work_title = original_work_title
         self._recording = recording
-        self._info = info
+        self._additional_info = additional_info
 
         if alternate_titles is None:
             self._alternate_titles = []
@@ -489,30 +489,43 @@ class WorkTransaction(TransactionRecord):
         else:
             self._writers_other = writers_other
 
-        if performers is None:
-            self._performers = []
+        if performing_artists is None:
+            self._performing_artists = []
         else:
-            self._performers = performers
+            self._performing_artists = performing_artists
 
-        if origins is None:
-            self._origins = []
+        if work_origins is None:
+            self._work_origins = []
         else:
-            self._origins = origins
+            self._work_origins = work_origins
 
-        if inst_summaries is None:
-            self._inst_summaries = []
+        if instrumentation_summaries is None:
+            self._instrumentation_summaries = []
         else:
-            self._inst_summaries = inst_summaries
+            self._instrumentation_summaries = instrumentation_summaries
 
-        if inst_details is None:
-            self._inst_details = []
+        if instrumentation_details is None:
+            self._instrumentation_details = []
         else:
-            self._inst_details = inst_details
+            self._instrumentation_details = instrumentation_details
 
         if components is None:
             self._components = []
         else:
             self._components = components
+
+    @property
+    def additional_info(self):
+        """
+        Additional Info field.
+
+        Contains information such as comments or the Society number.
+
+        This is a collection of strings.
+
+        :return: additional info for the work
+        """
+        return self._additional_info
 
     @property
     def alternate_titles(self):
@@ -548,20 +561,7 @@ class WorkTransaction(TransactionRecord):
         return self._entire_work_title
 
     @property
-    def info(self):
-        """
-        Additional Info field.
-
-        Contains information such as comments or the Society number.
-
-        This is a collection of strings.
-
-        :return: additional info for the work
-        """
-        return self._info
-
-    @property
-    def inst_details(self):
+    def instrumentation_details(self):
         """
         Instrumentation Details field.
 
@@ -569,10 +569,10 @@ class WorkTransaction(TransactionRecord):
 
         :return: the Work Instrumentation Details
         """
-        return self._inst_details
+        return self._instrumentation_details
 
     @property
-    def inst_summaries(self):
+    def instrumentation_summaries(self):
         """
         Instrumentation Summaries field.
 
@@ -580,7 +580,7 @@ class WorkTransaction(TransactionRecord):
 
         :return: the Work Instrumentation Summaries
         """
-        return self._inst_summaries
+        return self._instrumentation_summaries
 
     @property
     def original_work_title(self):
@@ -594,18 +594,7 @@ class WorkTransaction(TransactionRecord):
         return self._original_work_title
 
     @property
-    def origins(self):
-        """
-        Work Origins field.
-
-        Returns the Work Origins.
-
-        :return: the Work Origins
-        """
-        return self._origins
-
-    @property
-    def performers(self):
+    def performing_artists(self):
         """
         Performing Artists field.
 
@@ -613,7 +602,7 @@ class WorkTransaction(TransactionRecord):
 
         :return: the Performing Artists
         """
-        return self._performers
+        return self._performing_artists
 
     @property
     def publishers_controlled(self):
@@ -654,6 +643,17 @@ class WorkTransaction(TransactionRecord):
         return self._recording
 
     @property
+    def work_origins(self):
+        """
+        Work Origins field.
+
+        Returns the Work Origins.
+
+        :return: the Work Origins
+        """
+        return self._work_origins
+
+    @property
     def writers_controlled(self):
         """
         Writers Controlled by Submitter field.
@@ -688,28 +688,29 @@ class ComponentRecord(TransactionRecord):
     composite.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, last_name_1, submitter_id='',
-                 first_name_1='', first_name_2='', last_name_2='',
-                 ipi_base_1=None, ipi_name_1=None, ipi_base_2=None, ipi_name_2=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, writer_1_last_name,
+                 submitter_work_n='',
+                 writer_1_first_name='', writer_2_first_name='', writer_2_last_name='',
+                 writer_1_ipi_base=None, writer_1_ipi_name=None, writer_2_ipi_base=None, writer_2_ipi_name=None,
                  iswc='', duration=None):
         super(ComponentRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Work's info
-        self._submitter_id = submitter_id
+        self._submitter_work_n = submitter_work_n
         self._title = title
         self._iswc = iswc
         self._duration = duration
 
         # First writer's info
-        self._first_name_1 = first_name_1
-        self._last_name_1 = last_name_1
-        self._ipi_base_1 = ipi_base_1
-        self._ipi_name_1 = ipi_name_1
+        self._writer_1_first_name = writer_1_first_name
+        self._writer_1_last_name = writer_1_last_name
+        self._writer_1_ipi_base = writer_1_ipi_base
+        self._writer_1_ipi_name = writer_1_ipi_name
 
         # Second writer's info
-        self._first_name_2 = first_name_2
-        self._last_name_2 = last_name_2
-        self._ipi_base_2 = ipi_base_2
-        self._ipi_name_2 = ipi_name_2
+        self._writer_2_first_name = writer_2_first_name
+        self._writer_2_last_name = writer_2_last_name
+        self._writer_2_ipi_base = writer_2_ipi_base
+        self._writer_2_ipi_name = writer_2_ipi_name
 
     @property
     def duration(self):
@@ -723,7 +724,41 @@ class ComponentRecord(TransactionRecord):
         return self._duration
 
     @property
-    def first_name_1(self):
+    def iswc(self):
+        """
+        ISWC of Component field. Alphanumeric.
+
+        The International Standard Work Code assigned to the original work from which a portion was taken and included
+        in this composite work.
+
+        :return: the International Standard Work Code
+        """
+        return self._iswc
+
+    @property
+    def submitter_work_n(self):
+        """
+        Submitter Work Number field. Alphanumeric.
+
+        The unique number that you have assigned to the entire work.
+
+        :return: the Work's ID
+        """
+        return self._submitter_work_n
+
+    @property
+    def title(self):
+        """
+        Title field. Alphanumeric.
+
+        The title of the original work from which a portion was taken and included in the composite work.
+
+        :return: the title of the original work
+        """
+        return self._title
+
+    @property
+    def writer_1_first_name(self):
         """
         Writer 1 First Name field. Alphanumeric.
 
@@ -731,21 +766,10 @@ class ComponentRecord(TransactionRecord):
 
         :return: the first name of the first Writer
         """
-        return self._first_name_1
+        return self._writer_1_first_name
 
     @property
-    def first_name_2(self):
-        """
-        Writer 2 First Name field. Alphanumeric.
-
-        The first name of the second writer.
-
-        :return: the first name of the second Writer
-        """
-        return self._first_name_2
-
-    @property
-    def ipi_base_1(self):
+    def writer_1_ipi_base(self):
         """
         Writer 1 IPI Base Number field. Table Lookup (IPI DB).
 
@@ -756,24 +780,10 @@ class ComponentRecord(TransactionRecord):
 
         :return: the first Writer's IP base number
         """
-        return self._ipi_base_1
+        return self._writer_1_ipi_base
 
     @property
-    def ipi_base_2(self):
-        """
-        Writer 2 IP Base Number field. Table Lookup (IPI DB).
-
-        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
-        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
-        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
-        adapted from ISO 7064). You can find more information on the CISAC web site.
-
-        :return: the second Writer's IP base number
-        """
-        return self._ipi_base_2
-
-    @property
-    def ipi_name_1(self):
+    def writer_1_ipi_name(self):
         """
         Writer 1 IPI Name # field.
 
@@ -784,10 +794,46 @@ class ComponentRecord(TransactionRecord):
 
         :return: the first Writer's IP name field
         """
-        return self._ipi_name_1
+        return self._writer_1_ipi_name
 
     @property
-    def ipi_name_2(self):
+    def writer_1_last_name(self):
+        """
+        Writer 1 Last Name field. Alphanumeric.
+
+        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+
+        :return: the first Writer's last name
+        """
+        return self._writer_1_last_name
+
+    @property
+    def writer_2_first_name(self):
+        """
+        Writer 2 First Name field. Alphanumeric.
+
+        The first name of the second writer.
+
+        :return: the first name of the second Writer
+        """
+        return self._writer_2_first_name
+
+    @property
+    def writer_2_ipi_base(self):
+        """
+        Writer 2 IP Base Number field. Table Lookup (IPI DB).
+
+        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
+        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
+        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
+        adapted from ISO 7064). You can find more information on the CISAC web site.
+
+        :return: the second Writer's IP base number
+        """
+        return self._writer_2_ipi_base
+
+    @property
+    def writer_2_ipi_name(self):
         """
         Writer 2 IPI Name # field.
 
@@ -798,33 +844,10 @@ class ComponentRecord(TransactionRecord):
 
         :return: the second Writer's IP name field
         """
-        return self._ipi_name_2
+        return self._writer_2_ipi_name
 
     @property
-    def iswc(self):
-        """
-        ISWC field. Alphanumeric.
-
-        If the International Standard Work Code has been notified to you, you may include it in your registration
-        or revision.
-
-        :return: the International Standard Work Code
-        """
-        return self._iswc
-
-    @property
-    def last_name_1(self):
-        """
-        Writer 1 Last Name field. Alphanumeric.
-
-        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
-
-        :return: the first Writer's last name
-        """
-        return self._last_name_1
-
-    @property
-    def last_name_2(self):
+    def writer_2_last_name(self):
         """
         Writer 2 Last Name field. Alphanumeric.
 
@@ -832,32 +855,7 @@ class ComponentRecord(TransactionRecord):
 
         :return: the second Writer's last name
         """
-        return self._last_name_2
-
-    @property
-    def submitter_id(self):
-        """
-        Submitter entity Number field. Alphanumeric.
-
-        The unique number that you have assigned to the entire work.
-
-        :return: the entity's ID
-        """
-        return self._submitter_id
-
-    @property
-    def title(self):
-        """
-        Work Title field. Alphanumeric.
-
-        The title by which the work is best known.
-
-        Do not store additional information in the title field e.g. “instrumental” or “background”.
-        Such information should be stored in the designated field.
-
-        :return: the title by which the work is best known
-        """
-        return self._title
+        return self._writer_2_last_name
 
 
 class AuthoredWorkRecord(BaseWorkRecord):
@@ -867,128 +865,28 @@ class AuthoredWorkRecord(BaseWorkRecord):
     It also indicates the original source of the work.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, work_id='',
-                 first_name_1='', last_name_1='', first_name_2='', last_name_2='',
-                 ipi_base_1=None, ipi_name_1=None, ipi_base_2=None, ipi_name_2=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, submitter_work_n='',
+                 writer_1_first_name='', writer_1_last_name='', writer_2_first_name='', writer_2_last_name='',
+                 writer_1_ipi_base=None, writer_1_ipi_name=None, writer_2_ipi_base=None, writer_2_ipi_name=None,
                  source=None, language_code=None, iswc=None):
         super(AuthoredWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title,
                                                  language_code, iswc)
 
         # Work's info
-        self._work_id = work_id
+        self._submitter_work_n = submitter_work_n
         self._source = source
 
         # First writer's info
-        self._first_name_1 = first_name_1
-        self._last_name_1 = last_name_1
-        self._ipi_base_1 = ipi_base_1
-        self._ipi_name_1 = ipi_name_1
+        self._writer_1_first_name = writer_1_first_name
+        self._writer_1_last_name = writer_1_last_name
+        self._writer_1_ipi_base = writer_1_ipi_base
+        self._writer_1_ipi_name = writer_1_ipi_name
 
         # Second writer's info
-        self._first_name_2 = first_name_2
-        self._last_name_2 = last_name_2
-        self._ipi_base_2 = ipi_base_2
-        self._ipi_name_2 = ipi_name_2
-
-    @property
-    def first_name_1(self):
-        """
-        Writer 1 First Name field. Alphanumeric.
-
-        The first name of the first writer.
-
-        :return: the first name of the first Writer
-        """
-        return self._first_name_1
-
-    @property
-    def first_name_2(self):
-        """
-        Writer 2 First Name field. Alphanumeric.
-
-        The first name of the second writer.
-
-        :return: the first name of the second Writer
-        """
-        return self._first_name_2
-
-    @property
-    def ipi_base_1(self):
-        """
-        Writer 1 IPI Base Number field. Table Lookup (CISAC)
-
-        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
-        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
-        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
-        adapted from ISO 7064). You can find more information on the CISAC web site.
-
-        :return: the first Writer's IPI base number
-        """
-        return self._ipi_base_1
-
-    @property
-    def ipi_base_2(self):
-        """
-        Writer 2 IPI Base Number field. Table Lookup (CISAC)
-
-        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
-        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
-        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
-        adapted from ISO 7064). You can find more information on the CISAC web site.
-
-        :return: the second Writer's IPI base number
-        """
-        return self._ipi_base_2
-
-    @property
-    def ipi_name_1(self):
-        """
-        Writer 1 IP Name # field. Table Lookup (CISAC)
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the first Writer's IP name field
-        """
-        return self._ipi_name_1
-
-    @property
-    def ipi_name_2(self):
-        """
-        Writer 2 IP Name # field. Table Lookup (CISAC)
-
-        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
-        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
-        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
-        be changed in case of spelling corrections.
-
-        :return: the second Writer's IP name field
-        """
-        return self._ipi_name_2
-
-    @property
-    def last_name_1(self):
-        """
-        Writer 1 Last Name field. Alphanumeric.
-
-        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
-
-        :return: the first Writer's last name
-        """
-        return self._last_name_1
-
-    @property
-    def last_name_2(self):
-        """
-        Writer 2 Last Name field. Alphanumeric.
-
-        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
-
-        :return: the second Writer's last name
-        """
-        return self._last_name_2
+        self._writer_2_first_name = writer_2_first_name
+        self._writer_2_last_name = writer_2_last_name
+        self._writer_2_ipi_base = writer_2_ipi_base
+        self._writer_2_ipi_name = writer_2_ipi_name
 
     @property
     def source(self):
@@ -1002,7 +900,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
         return self._source
 
     @property
-    def work_id(self):
+    def submitter_work_n(self):
         """
         Submitter Work Number field. Alphanumeric.
 
@@ -1010,7 +908,107 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
         :return: the Work ID
         """
-        return self._work_id
+        return self._submitter_work_n
+
+    @property
+    def writer_1_first_name(self):
+        """
+        Writer 1 First Name field. Alphanumeric.
+
+        The first name of the first writer.
+
+        :return: the first name of the first Writer
+        """
+        return self._writer_1_first_name
+
+    @property
+    def writer_1_ipi_base(self):
+        """
+        Writer 1 IPI Base Number field. Table Lookup (CISAC)
+
+        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
+        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
+        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
+        adapted from ISO 7064). You can find more information on the CISAC web site.
+
+        :return: the first Writer's IPI base number
+        """
+        return self._writer_1_ipi_base
+
+    @property
+    def writer_1_ipi_name(self):
+        """
+        Writer 1 IP Name # field. Table Lookup (CISAC)
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the first Writer's IP name field
+        """
+        return self._writer_1_ipi_name
+
+    @property
+    def writer_1_last_name(self):
+        """
+        Writer 1 Last Name field. Alphanumeric.
+
+        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+
+        :return: the first Writer's last name
+        """
+        return self._writer_1_last_name
+
+    @property
+    def writer_2_first_name(self):
+        """
+        Writer 2 First Name field. Alphanumeric.
+
+        The first name of the second writer.
+
+        :return: the first name of the second Writer
+        """
+        return self._writer_2_first_name
+
+    @property
+    def writer_2_ipi_base(self):
+        """
+        Writer 2 IPI Base Number field. Table Lookup (CISAC)
+
+        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
+        (IP), being either a natural person or legal entity. The number consists of 13 characters: letter i (I),
+        hyphen (-), nine digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus 10, I weight = 2,
+        adapted from ISO 7064). You can find more information on the CISAC web site.
+
+        :return: the second Writer's IPI base number
+        """
+        return self._writer_2_ipi_base
+
+    @property
+    def writer_2_ipi_name(self):
+        """
+        Writer 2 IP Name # field. Table Lookup (CISAC)
+
+        The IP Name Number is a unique identifier allocated automatically by the IPI System to each name. It is based on
+        the IPI number and consists of 11 digits 99999999999 (modulus 101). The last two digits are check-digits. An IP
+        may have more than one IP name. New IP names will get new IP Name Numbers. A name of an IP name number may only
+        be changed in case of spelling corrections.
+
+        :return: the second Writer's IP name field
+        """
+        return self._writer_2_ipi_name
+
+    @property
+    def writer_2_last_name(self):
+        """
+        Writer 2 Last Name field. Alphanumeric.
+
+        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+
+        :return: the second Writer's last name
+        """
+        return self._writer_2_last_name
 
 
 class AlternateTitleRecord(TransactionRecord):
@@ -1026,11 +1024,11 @@ class AlternateTitleRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, alternate_title, title_type,
-                 language=None):
+                 language_code=None):
         super(AlternateTitleRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._alternate_title = alternate_title
         self._title_type = title_type
-        self._language = language
+        self._language_code = language_code
 
     @property
     def alternate_title(self):
@@ -1044,7 +1042,7 @@ class AlternateTitleRecord(TransactionRecord):
         return self._alternate_title
 
     @property
-    def language(self):
+    def language_code(self):
         """
         Language Code field. Table Lookup (Language Code Table).
 
@@ -1052,7 +1050,7 @@ class AlternateTitleRecord(TransactionRecord):
 
         :return: the Alternate Title language
         """
-        return self._language
+        return self._language_code
 
     @property
     def title_type(self):
@@ -1066,44 +1064,6 @@ class AlternateTitleRecord(TransactionRecord):
         return self._title_type
 
 
-class NATRecord(NRARecord):
-    """
-    Represents a CWR Non-Roman Alphabet Title (NAT) record.
-
-    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
-    This record can be used to describe the original title of a work, and it can also be used to describe alternate
-    titles.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language=None):
-        super(NATRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
-        # Title info
-        self._title = title
-        self._title_type = title_type
-
-    @property
-    def title(self):
-        """
-        Title field. Alphanumeric.
-
-        The work title in non-Roman alphabet.
-
-        :return: the work title in non-Roman alphabet
-        """
-        return self._title
-
-    @property
-    def title_type(self):
-        """
-        Title Type field. Table Lookup (Title Type Table).
-
-        Indicates the type of title presented on this record (original, alternate etc.).
-
-        :return: the type of the title
-        """
-        return self._title_type
-
-
 class RecordingDetailRecord(TransactionRecord):
     """
     Represents a CWR Recording Detail (REC).
@@ -1113,7 +1073,7 @@ class RecordingDetailRecord(TransactionRecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_release_date=None,
                  first_release_duration=None, first_album_title='',
-                 first_album_label='', first_release_catalog_id='', ean=None,
+                 first_album_label='', first_release_catalog_n='', ean=None,
                  isrc=None, recording_format=None, recording_technique=None, media_type=None):
         super(RecordingDetailRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._first_release_date = first_release_date
@@ -1125,7 +1085,7 @@ class RecordingDetailRecord(TransactionRecord):
 
         self._first_album_title = first_album_title
         self._first_album_label = first_album_label
-        self._first_release_catalog_id = first_release_catalog_id
+        self._first_release_catalog_n = first_release_catalog_n
         self._ean = ean
         self._isrc = isrc
         self._recording_format = recording_format
@@ -1167,7 +1127,7 @@ class RecordingDetailRecord(TransactionRecord):
         return self._first_album_title
 
     @property
-    def first_release_catalog_id(self):
+    def first_release_catalog_n(self):
         """
         First Release Catalog Number field. Alphanumeric.
 
@@ -1176,7 +1136,7 @@ class RecordingDetailRecord(TransactionRecord):
 
         :return: the first release catalog id
         """
-        return self._first_release_catalog_id
+        return self._first_release_catalog_n
 
     @property
     def first_release_date(self):
@@ -1247,65 +1207,6 @@ class RecordingDetailRecord(TransactionRecord):
         return self._recording_technique
 
 
-class InstrumentationRecord(TransactionRecord):
-    """
-    Represents a CWR Instrumentation (INS) record.
-
-    This record provides information on standard and non-standard instrumentation for serious works. If the Musical
-    Work Distribution Category is SER then instrumentation detail is required using one or more Standard Instrumentation
-    Type, one or more IND records, or one Instrumentation Description.
-
-    The Instrumentation Description is the least desirable, and should be used only if the other fields are not
-    available.
-
-    It is possible to use both a Standard Instrumentation Type and one or more IND records to describe, for example, a
-    wind quintet and a piano.  It is also possible to use both one or more Standard Instrumentation Type and one or more
-    IND records to describe, for example, a work written for two wind quintets and two pianos.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, number_voices=0, instr_type=None,
-                 description=''):
-        super(InstrumentationRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._number_voices = number_voices
-        self._instr_type = instr_type
-        self._description = description
-
-    @property
-    def description(self):
-        """
-        Instrumentation Description field. Alphanumeric.
-
-        Describes instrumentation if non-standard instrumentation is used on this work. Note that this field is required
-        if IND records are not entered and if Standard Instrumentation Type is blank.
-
-        :return: the description
-        """
-        return self._description
-
-    @property
-    def instr_type(self):
-        """
-        Standard Instrumentation Type field. Table Lookup (Standard Instrumentation table).
-
-        Describes instrumentation if standard instrumentation is used on this work.  Note that this field is required if
-        IND records are not entered and if Instrumentation Description is blank.
-
-        :return: the standard instrumentation type
-        """
-        return self._instr_type
-
-    @property
-    def number_voices(self):
-        """
-        Number of Voices field. Numeric.
-
-        Indicates the number of independent parts included in this work.
-
-        :return: the number of voices
-        """
-        return self._number_voices
-
-
 class InstrumentationDetailRecord(TransactionRecord):
     """
     Represents a CWR Instrumentation Detail (IND) record.
@@ -1316,13 +1217,13 @@ class InstrumentationDetailRecord(TransactionRecord):
     records as well as IND records to describe the individual instruments (if any).
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, code, players=0):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, instrument_code, number_players=0):
         super(InstrumentationDetailRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._code = code
-        self._players = players
+        self._instrument_code = instrument_code
+        self._number_players = number_players
 
     @property
-    def code(self):
+    def instrument_code(self):
         """
         Instrument Code field. Table Lookup (Instrument table).
 
@@ -1330,10 +1231,10 @@ class InstrumentationDetailRecord(TransactionRecord):
 
         :return: the instrument code
         """
-        return self._code
+        return self._instrument_code
 
     @property
-    def players(self):
+    def number_players(self):
         """
         Number of Players field. Numeric.
 
@@ -1341,7 +1242,7 @@ class InstrumentationDetailRecord(TransactionRecord):
 
         :return: the number of players
         """
-        return self._players
+        return self._number_players
 
 
 class WorkOriginRecord(TransactionRecord):
@@ -1360,9 +1261,8 @@ class WorkOriginRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, intended_purpose, production_title='',
-                 cd_identifier='', cut_number=0,
-                 library='', bltvr='', visan=None, production_id='', episode_title='',
-                 episode_id='', production_year=0, avi=None):
+                 cd_identifier='', cut_number=0, library='', bltvr='', visan=None, production_n='', episode_title='',
+                 episode_n='', year_production=0, audio_visual_key=None):
         super(WorkOriginRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._intended_purpose = intended_purpose
         self._production_title = production_title
@@ -1371,20 +1271,20 @@ class WorkOriginRecord(TransactionRecord):
         self._library = library
         self._bltvr = bltvr
         self._visan = visan
-        self._production_id = production_id
+        self._production_n = production_n
         self._episode_title = episode_title
-        self._episode_id = episode_id
-        self._production_year = production_year
-        self._avi = avi
+        self._episode_n = episode_n
+        self._year_production = year_production
+        self._audio_visual_key = audio_visual_key
 
     @property
-    def avi(self):
+    def audio_visual_key(self):
         """
         Audio-Visual Key.
 
         :return: the audio-visual key
         """
-        return self._avi
+        return self._audio_visual_key
 
     @property
     def bltvr(self):
@@ -1424,7 +1324,7 @@ class WorkOriginRecord(TransactionRecord):
         return self._cut_number
 
     @property
-    def episode_id(self):
+    def episode_n(self):
         """
         Episode Number field. Alphanumeric.
 
@@ -1432,7 +1332,7 @@ class WorkOriginRecord(TransactionRecord):
 
         :return: the episode number
         """
-        return self._episode_id
+        return self._episode_n
 
     @property
     def episode_title(self):
@@ -1468,7 +1368,7 @@ class WorkOriginRecord(TransactionRecord):
         return self._library
 
     @property
-    def production_id(self):
+    def production_n(self):
         """
         Production Number field. Alphanumeric.
 
@@ -1476,7 +1376,7 @@ class WorkOriginRecord(TransactionRecord):
 
         :return: the production number field
         """
-        return self._production_id
+        return self._production_n
 
     @property
     def production_title(self):
@@ -1490,7 +1390,18 @@ class WorkOriginRecord(TransactionRecord):
         return self._production_title
 
     @property
-    def production_year(self):
+    def visan(self):
+        """
+        V-ISAN.
+
+        This is expected to be a VISAN object instance.
+
+        :return: the V-ISAN
+        """
+        return self._visan
+
+    @property
+    def year_production(self):
         """
         Year of Production field. Numeric.
 
@@ -1498,18 +1409,7 @@ class WorkOriginRecord(TransactionRecord):
 
         :return: the year of production
         """
-        return self._production_year
-
-    @property
-    def visan(self):
-        """
-        V-ISAN.
-
-        This is expected to be a VISAN object.
-
-        :return: the V-ISAN
-        """
-        return self._visan
+        return self._year_production
 
 
 class InstrumentationSummaryRecord(TransactionRecord):
@@ -1530,15 +1430,16 @@ class InstrumentationSummaryRecord(TransactionRecord):
     for example, a work written for two wind quintets and two pianos.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, voices=0, inst_type=None,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, number_voices=0,
+                 standard_instrumentation_type=None,
                  description=''):
         super(InstrumentationSummaryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._voices = voices
-        self._inst_type = inst_type
-        self._description = description
+        self._number_voices = number_voices
+        self._standard_instrumentation_type = standard_instrumentation_type
+        self._instrumentation_description = description
 
     @property
-    def description(self):
+    def instrumentation_description(self):
         """
         Instrumentation Description field. Alphanumeric.
 
@@ -1547,10 +1448,21 @@ class InstrumentationSummaryRecord(TransactionRecord):
 
         :return: the instrumentation description
         """
-        return self._description
+        return self._instrumentation_description
 
     @property
-    def inst_type(self):
+    def number_voices(self):
+        """
+        Number of Voices field. Numeric.
+
+        Indicates the number of independent parts included in this work.
+
+        :return: the number of voices
+        """
+        return self._number_voices
+
+    @property
+    def standard_instrumentation_type(self):
         """
         Standard Instrumentation Type field. Table Lookup (Standard Instrumentation table).
 
@@ -1559,18 +1471,7 @@ class InstrumentationSummaryRecord(TransactionRecord):
 
         :return: the Standard Instrumentation Type
         """
-        return self._inst_type
-
-    @property
-    def voices(self):
-        """
-        Number of Voices field. Numeric.
-
-        Indicates the number of independent parts included in this work.
-
-        :return: the number of voices
-        """
-        return self._voices
+        return self._standard_instrumentation_type
 
 
 class PerformingArtistRecord(TransactionRecord):
@@ -1580,16 +1481,17 @@ class PerformingArtistRecord(TransactionRecord):
     Contains the info of a person or group performing this work either in public or on a recording.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, last_name, first_name='', ipi_name=None,
-                 ipi_base_number=None):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, performing_artist_last_name,
+                 performing_artist_first_name='', performing_artist_ipi_name=None,
+                 performing_artist_ipi_base_number=None):
         super(PerformingArtistRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
-        self._first_name = first_name
-        self._last_name = last_name
-        self._ipi_name = ipi_name
-        self._ipi_base_number = ipi_base_number
+        self._performing_artist_first_name = performing_artist_first_name
+        self._performing_artist_last_name = performing_artist_last_name
+        self._performing_artist_ipi_name = performing_artist_ipi_name
+        self._performing_artist_ipi_base_number = performing_artist_ipi_base_number
 
     @property
-    def first_name(self):
+    def performing_artist_first_name(self):
         """
         Performing Artist First Name field. Alphanumeric.
 
@@ -1597,10 +1499,10 @@ class PerformingArtistRecord(TransactionRecord):
 
         :return: the Performing Artist first name
         """
-        return self._first_name
+        return self._performing_artist_first_name
 
     @property
-    def ipi_base_number(self):
+    def performing_artist_ipi_base_n(self):
         """
         Performing Artist IPI Base Number field. Table Lookup (IPI DB).
 
@@ -1608,10 +1510,10 @@ class PerformingArtistRecord(TransactionRecord):
 
         :return: the IPI base number
         """
-        return self._ipi_base_number
+        return self._performing_artist_ipi_base_number
 
     @property
-    def ipi_name(self):
+    def performing_artist_ipi_name_n(self):
         """
         Performing Artist IPI Name Number field. Table Lookup (IPI).
 
@@ -1621,10 +1523,10 @@ class PerformingArtistRecord(TransactionRecord):
 
         :return: the Performing Artist IPI name number
         """
-        return self._ipi_name
+        return self._performing_artist_ipi_name
 
     @property
-    def last_name(self):
+    def performing_artist_last_name(self):
         """
         Performing Artist Last Name field. Alphanumeric.
 
@@ -1634,178 +1536,6 @@ class PerformingArtistRecord(TransactionRecord):
 
         :return: the Performing Artist last name
         """
-        return self._last_name
+        return self._performing_artist_last_name
 
 
-class NRARecordWork(NRARecord):
-    """
-    Represents a Non-Roman Alphabet record used for Work details.
-
-    This represents the following records:
-    - Non-Roman Alphabet Entire Work Title for Excerpts (NET).
-    - Non-Roman Alphabet Title for Components (NCT).
-    - Non-Roman Alphabet Original Title for Version (NVT).
-
-    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
-    This record can be used to describe the original title of a work, and it can also be used to describe alternate
-    titles.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language=None):
-        super(NRARecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
-        self._title = title
-
-    @property
-    def title(self):
-        """
-        Title field. Alphanumeric.
-
-        The title in non-Roman alphabet.
-
-        :return: the title in non-Roman alphabet
-        """
-        return self._title
-
-
-class NOWRecord(NRARecord):
-    """
-    Represents a CWR Non-Roman Alphabet Other Writer Name (NOW) record.
-
-    This record identifies writer names in non-roman alphabets for the work named in an EWT (entire work for an
-    excerpt), VER (original work for a version), or COM (component) record. The language code is used to identify the
-    alphabet.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name, name, position=None,
-                 language=None):
-        super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
-        # Writer information
-        self._first_name = first_name
-        self._name = name
-        self._position = position
-
-    @property
-    def first_name(self):
-        """
-        Writer First Name. Alphanumeric.
-
-        The first name of this writer.
-
-        :return: the first name of this writer
-        """
-        return self._first_name
-
-    @property
-    def name(self):
-        """
-        Writer Name. Alphanumeric.
-
-        The name of this writer.
-
-        :return: the name of this writer
-        """
-        return self._name
-
-    @property
-    def position(self):
-        """
-        Writer Position field. List lookup (previous record).
-
-        The position of the writer in the corresponding EWT, VER, or COM record.
-
-        :return: the position of the writer in the previous record
-        """
-        return self._position
-
-
-class NPRRecord(NRARecord):
-    """
-    Represents a CWR Performance Data in non-roman alphabet (NPR) record.
-
-    This record contains either the non-roman alphabet name of a person or group performing this work either in public
-    or on a recording, or the language/dialect of the performance. This is particularly important for Chinese dialects
-    such as Cantonese. Performance Dialect, if entered, must be a valid code from ISO 639-2(T).
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_name='', name='', ipi_name=None,
-                 ipi_base=None,
-                 language=None, performance_language=None, performance_dialect=None):
-        super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language)
-        # Artist data
-        self._first_name = first_name
-        self._name = name
-        self._ipi_name = ipi_name
-        self._ipi_base = ipi_base
-
-        # Language data
-        self._performance_language = performance_language
-        self._performance_dialect = performance_dialect
-
-    @property
-    def first_name(self):
-        """
-        Performing Artist First Name field. Alphanumeric.
-
-        First name of a person that has performed the work on a recording or in public.
-
-        :return: the performer's first name
-        """
-        return self._first_name
-
-    @property
-    def ipi_base(self):
-        """
-        Performing Artist IPI Base Number field. Table lookup (IPI database).
-
-        The IPI base number assigned to this performing artist.
-
-        :return: the performer's IPI base number
-        """
-        return self._ipi_base
-
-    @property
-    def ipi_name(self):
-        """
-        Performing Artist IPI Name # field. Table Lookup (IPI database).
-
-        The IPI Name # corresponding to this performing artist. Values reside in the IPI database.
-
-        :return: the IPI name number
-        """
-        return self._ipi_name
-
-    @property
-    def name(self):
-        """
-        Performing Artist Name. Alphanumeric.
-
-        Name of a person or full name of a group that has performed the work on a recording or in public. Note that if
-        the performer is known by a single name, it should be entered in this field.
-
-        :return: the performer's name
-        """
-        return self._name
-
-    @property
-    def performance_dialect(self):
-        """
-        Performance Dialect field. Table Lookup (639-2(T)).
-
-        The dialect used in the performance.
-
-        e.g. if the performance is in Mandarin, YUE Cantonese, MIN NAN or HAKKA, then use: CHN, YUH, CFR or HAK.
-
-        :return: the dialect used in the performance
-        """
-        return self._performance_dialect
-
-    @property
-    def performance_language(self):
-        """
-        Performance Language field. Table lookup (Language Code Table).
-
-        The language used in the performance.
-
-        :return: the language used in the performance
-        """
-        return self._performance_language

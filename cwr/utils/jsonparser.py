@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from cwr.agreement import AgreementRecord, AgreementInterestedParty
 from cwr.interested_party import Publisher, Writer
 from cwr.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
@@ -23,15 +23,15 @@ def parse_agreement(json_item):
     """
     # TODO Optional fields may be missing on the JSON
     agreement = AgreementRecord(record_type='', transaction_sequence_n=0, record_sequence_n=0,
-                                agreement_id=json_item['submitter_agreement_number'],
-                                society_agreement_number=json_item['society_agreement_number'],
+                                submitter_agreement_n=json_item['submitter_agreement_number'],
+                                society_assigned_agreement_n=json_item['society_agreement_number'],
                                 agreement_type=json_item['agreement_type'],
-                                start_date=json_item['start_date'],
-                                end_date=json_item['end_date'],
+                                agreement_start_date=json_item['start_date'],
+                                agreement_end_date=json_item['end_date'],
                                 prior_royalty_status=json_item['prior_royalty_status'],
                                 post_term_collection_status=json_item['post_term_collection_status'],
-                                signature_date=json_item['signature_date'],
-                                works_number=json_item['works_number'],
+                                date_of_signature=json_item['signature_date'],
+                                number_of_works=json_item['works_number'],
                                 sales_manufacture_clause=json_item['sales_manufacture_clause'],
                                 international_standard_code=json_item['international_standard_code'],
                                 retention_end_date=json_item['retention_end_date'],
@@ -64,18 +64,18 @@ def parse_authored_work(json_item):
     :param json_item: JSON object to parse
     :return: an AuthoredWork parsed from the JSON
     """
-    title = AuthoredWorkRecord('', 0, 0, work_id=json_item['work_id'],
+    title = AuthoredWorkRecord('', 0, 0, submitter_work_n=json_item['work_id'],
                                title=json_item['title'],
                                language_code=json_item['language_code'],
                                source=json_item['source'],
-                               first_name_1=json_item['first_name_1'],
-                               ipi_base_1=json_item['ipi_base_1'],
-                               ipi_name_1=json_item['ipi_name_1'],
-                               first_name_2=json_item['first_name_2'],
-                               ipi_base_2=json_item['ipi_base_2'],
-                               ipi_name_2=json_item['ipi_name_2'],
-                               last_name_1=json_item['last_name_1'],
-                               last_name_2=json_item['last_name_2'],
+                               writer_1_first_name=json_item['first_name_1'],
+                               writer_1_ipi_base=json_item['ipi_base_1'],
+                               writer_1_ipi_name=json_item['ipi_name_1'],
+                               writer_2_first_name=json_item['first_name_2'],
+                               writer_2_ipi_base=json_item['ipi_base_2'],
+                               writer_2_ipi_name=json_item['ipi_name_2'],
+                               writer_1_last_name=json_item['last_name_1'],
+                               writer_2_last_name=json_item['last_name_2'],
                                iswc=json_item['iswc'])
 
     return title
@@ -157,9 +157,9 @@ def parse_work(json_item):
     :param json_item: JSON object to parse
     :return: a Work parsed from the JSON and with the specified id
     """
-    work = WorkRecord('', 0, 0, work_id=json_item['work_id'], title=json_item['title'],
+    work = WorkRecord('', 0, 0, submitter_work_n=json_item['work_id'], title=json_item['title'],
                       language_code=json_item['language_code'],
-                      printed_edition_publication_date=json_item['printed_edition_publication_date'],
+                      date_publication_printed_edition=json_item['printed_edition_publication_date'],
                       copyright_number=json_item['copyright_number'],
                       copyright_date=json_item['copyright_date'],
                       text_music_relationship=json_item['text_music_relationship'],
@@ -169,7 +169,7 @@ def parse_work(json_item):
                       composite_type=json_item['composite_type'],
                       composite_component_count=json_item['composite_component_count'], iswc=json_item['iswc'],
                       cwr_work_type=json_item['cwr_work_type'],
-                      musical_distribution_category=json_item['musical_distribution_category'],
+                      musical_work_distribution_category=json_item['musical_distribution_category'],
                       duration=json_item['duration'], catalogue_number=json_item['catalogue_number'],
                       opus_number=json_item['opus_number'],
                       contact_id=json_item['contact_id'], contact_name=json_item['contact_name'],

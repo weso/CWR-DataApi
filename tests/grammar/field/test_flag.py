@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from pyparsing import ParseException
@@ -16,6 +16,52 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
+class TestFlagName(unittest.TestCase):
+    def test_name_default(self):
+        """
+        Tests that the default field name is correct for optional fields.
+        """
+        field = basic.flag()
+
+        self.assertEqual('Flag Field', field.name)
+
+    def test_name_default_compulsory(self):
+        """
+        Tests that the default field name is correct for optional fields, for compulsory fields.
+        """
+        field = basic.flag(compulsory=True)
+
+        self.assertEqual('Flag Field', field.name)
+
+    def test_name_set(self):
+        """
+        Tests that the given field name is set correctly for optional fields.
+        """
+        name = "Field Name"
+        field = basic.flag(name=name)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_compulsory(self):
+        """
+        Tests that the given field name is set correctly for optional fields, for compulsory fields.
+        """
+        name = "Field Name"
+        field = basic.flag(name=name, compulsory=True)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_no_changes(self):
+        """
+        Tests that the field name does not change for creating a new one
+        """
+        field1 = basic.flag(name='field1')
+        field2 = basic.flag(name='field2')
+
+        self.assertEqual('field1', field1.name)
+        self.assertEqual('field2', field2.name)
+
+
 class TestFlagValid(unittest.TestCase):
     """
     Tests that the flag field accepts and parses valid values.
@@ -23,12 +69,6 @@ class TestFlagValid(unittest.TestCase):
 
     def setUp(self):
         self.flag = basic.flag()
-
-    def test_name(self):
-        """
-        Tests that the field is named correctly
-        """
-        self.assertEqual('Flag Field', self.flag.name)
 
     def test_true(self):
         """
@@ -66,12 +106,6 @@ class TestFlagCompulsoryValid(unittest.TestCase):
 
     def setUp(self):
         self.flag = basic.flag(compulsory=True)
-
-    def test_name(self):
-        """
-        Tests that the field is named correctly
-        """
-        self.assertEqual('Flag Field', self.flag.name)
 
     def test_true(self):
         """

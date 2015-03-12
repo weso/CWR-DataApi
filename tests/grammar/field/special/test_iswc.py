@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from pyparsing import ParseException
@@ -69,6 +69,24 @@ class TestISWCValid(unittest.TestCase):
         self.assertEqual('T', result.header)
         self.assertEqual(000000000, result.id_code)
         self.assertEqual(0, result.check_digit)
+
+
+class TestISWCResultName(unittest.TestCase):
+    """
+    Tests that the IPI Base Number accepts and parses valid values.
+    """
+
+    def setUp(self):
+        self.iswc = special.iswc()
+
+    def test_common(self):
+        code = 'T0345246801'
+
+        result = self.iswc.parseString(code)
+
+        self.assertEqual('T', result.iswc.header)
+        self.assertEqual(34524680, result.iswc.id_code)
+        self.assertEqual(1, result.iswc.check_digit)
 
 
 class TestISWCCompulsoryValid(unittest.TestCase):

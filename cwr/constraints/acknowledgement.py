@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import pyparsing as pp
 
@@ -25,9 +25,9 @@ def title_when_record_requires(acknowledgement):
     :param acknowledgement: the agreement to validate
     """
 
-    if acknowledgement.transaction_type in ('NWR', 'REV') and len(acknowledgement.title) == 0:
+    if acknowledgement.original_transaction_type in ('NWR', 'REV') and len(acknowledgement.creation_title) == 0:
         # The Transaction is of a type which requires the title
         # And
         # No title has been set
-        message = 'When the Transaction Type is %s the Creation Title must be set' % acknowledgement.transaction_type
+        message = 'When the Transaction Type is %s the Creation Title must be set' % acknowledgement.original_transaction_type
         raise pp.ParseException('', msg=message)

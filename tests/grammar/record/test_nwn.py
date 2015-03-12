@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from cwr.grammar.record import nra
@@ -37,7 +37,7 @@ class TestNWNGrammar(unittest.TestCase):
         self.assertEqual('NWN', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('A12345678', result.ip_id)
-        self.assertEqual('LAST NAME', result.last_name)
-        self.assertEqual('FIRST NAME', result.first_name)
-        self.assertEqual('ES', result.language)
+        self.assertEqual('A12345678', result.ip_n)
+        self.assertEqual('LAST NAME', result.writer_last_name)
+        self.assertEqual('FIRST NAME', result.writer_first_name)
+        self.assertEqual('ES', result.language_code)

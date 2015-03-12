@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import datetime
 
@@ -80,13 +80,13 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['agreement_id'] = agreement.agreement_id
-        encoded['society_agreement_number'] = agreement.society_agreement_number
+        encoded['agreement_id'] = agreement.submitter_agreement_n
+        encoded['society_agreement_number'] = agreement.society_assigned_agreement_n
         encoded['international_standard_number'] = agreement.international_standard_code
         encoded['agreement_type'] = agreement.agreement_type
 
-        encoded['start_date'] = self._adapter.adapt(agreement.start_date)
-        encoded['end_date'] = self._adapter.adapt(agreement.end_date)
+        encoded['start_date'] = self._adapter.adapt(agreement.agreement_start_date)
+        encoded['end_date'] = self._adapter.adapt(agreement.agreement_end_date)
 
         encoded['prior_royalty_status'] = agreement.prior_royalty_status
         encoded['prior_royalty_start_date'] = self._adapter.adapt(agreement.prior_royalty_start_date)
@@ -94,8 +94,8 @@ class CWRDictionaryEncoder(object):
         encoded['post_term_collection_status'] = agreement.post_term_collection_status
         encoded['post_term_collection_end_date'] = self._adapter.adapt(agreement.post_term_collection_end_date)
 
-        encoded['signature_date'] = self._adapter.adapt(agreement.signature_date)
-        encoded['works_number'] = agreement.works_number
+        encoded['signature_date'] = self._adapter.adapt(agreement.date_of_signature)
+        encoded['works_number'] = agreement.number_of_works
         encoded['sales_manufacture_clause'] = agreement.sales_manufacture_clause
 
         encoded['international_standard_code'] = agreement.international_standard_code
@@ -118,7 +118,7 @@ class CWRDictionaryEncoder(object):
 
         encoded['alternate_title'] = title.alternate_title
         encoded['title_type'] = title.title_type
-        encoded['language'] = title.language
+        encoded['language'] = title.language_code
 
         return encoded
 
@@ -132,18 +132,18 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['work_id'] = work.work_id
-        encoded['title'] = work.title
+        encoded['work_id'] = work.submitter_work_n
+        encoded['title'] = work.creation_title
         encoded['language_code'] = work.language_code
         encoded['source'] = work.source
-        encoded['first_name_1'] = work.first_name_1
-        encoded['ipi_base_1'] = work.ipi_base_1
-        encoded['ipi_name_1'] = work.ipi_name_1
-        encoded['first_name_2'] = work.first_name_2
-        encoded['ipi_base_2'] = work.ipi_base_2
-        encoded['ipi_name_2'] = work.ipi_name_2
-        encoded['last_name_1'] = work.last_name_1
-        encoded['last_name_2'] = work.last_name_2
+        encoded['first_name_1'] = work.writer_1_first_name
+        encoded['ipi_base_1'] = work.writer_1_ipi_base
+        encoded['ipi_name_1'] = work.writer_1_ipi_name
+        encoded['first_name_2'] = work.writer_2_first_name
+        encoded['ipi_base_2'] = work.writer_2_ipi_base
+        encoded['ipi_name_2'] = work.writer_2_ipi_name
+        encoded['last_name_1'] = work.writer_1_last_name
+        encoded['last_name_2'] = work.writer_2_last_name
         encoded['iswc'] = work.iswc
 
         return encoded
@@ -159,11 +159,11 @@ class CWRDictionaryEncoder(object):
         encoded = {}
 
         encoded['agreement_role_code'] = agreement.agreement_role_code
-        encoded['ip_id'] = agreement.ip_id
-        encoded['ip_last_name'] = agreement.last_name
-        encoded['ip_ipi'] = agreement.ipi_base
-        encoded['ipi_name'] = agreement.ipi_name
-        encoded['ip_writer_name'] = agreement.writer_name
+        encoded['ip_id'] = agreement.ip_n
+        encoded['ip_last_name'] = agreement.ip_last_name
+        encoded['ip_ipi'] = agreement.ipi_base_n
+        encoded['ipi_name'] = agreement.ipi_name_n
+        encoded['ip_writer_name'] = agreement.ip_writer_first_name
         encoded['pr_society'] = agreement.pr_society
         encoded['pr_share'] = agreement.pr_share
         encoded['mr_society'] = agreement.mr_society
@@ -183,10 +183,10 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['first_name'] = artist.first_name
-        encoded['last_name'] = artist.last_name
-        encoded['ipi_name'] = artist.ipi_name
-        encoded['ipi_base_number'] = artist.ipi_base_number
+        encoded['first_name'] = artist.writer_first_name
+        encoded['last_name'] = artist.ip_last_name
+        encoded['ipi_name'] = artist.ipi_name_n
+        encoded['ipi_base_number'] = artist.performing_artist_ipi_base_n
 
         return encoded
 
@@ -200,10 +200,10 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['name'] = publisher.name
-        encoded['ip_id'] = publisher.ip_id
-        encoded['ipi_base_id'] = publisher.ipi_base_id
-        encoded['ipi_name'] = publisher.ipi_name
+        encoded['name'] = publisher.publisher_name
+        encoded['ip_id'] = publisher.ip_n
+        encoded['ipi_base_id'] = publisher.ipi_base_n
+        encoded['ipi_name'] = publisher.ipi_name_n
         encoded['tax_id'] = publisher.tax_id
 
         return encoded
@@ -221,7 +221,7 @@ class CWRDictionaryEncoder(object):
         encoded['first_release_duration'] = details.first_release_duration
         encoded['first_album_title'] = details.first_album_title
         encoded['first_album_label'] = details.first_album_label
-        encoded['first_release_catalog_id'] = details.first_release_catalog_id
+        encoded['first_release_catalog_id'] = details.first_release_catalog_n
         encoded['ean'] = details.ean
         encoded['isrc'] = details.isrc
         encoded['recording_format'] = details.recording_format
@@ -240,11 +240,11 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['id'] = entity.code
-        encoded['name'] = entity.name
+        encoded['id'] = entity.instrument_code
+        encoded['name'] = entity.publisher_name
 
-        if entity.description is not None:
-            encoded['description'] = entity.description
+        if entity.instrumentation_description is not None:
+            encoded['description'] = entity.instrumentation_description
 
         return encoded
 
@@ -257,10 +257,10 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['work_id'] = work.work_id
-        encoded['title'] = work.title
+        encoded['work_id'] = work.submitter_work_n
+        encoded['title'] = work.creation_title
         encoded['language_code'] = work.language_code
-        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.printed_edition_publication_date)
+        encoded['printed_edition_publication_date'] = self._adapter.adapt(work.date_publication_printed_edition)
         encoded['copyright_number'] = work.copyright_number
         encoded['copyright_date'] = self._adapter.adapt(work.copyright_date)
         encoded['text_music_relationship'] = work.text_music_relationship
@@ -272,7 +272,7 @@ class CWRDictionaryEncoder(object):
         encoded['composite_component_count'] = work.composite_component_count
         encoded['iswc'] = work.iswc
         encoded['cwr_work_type'] = work.cwr_work_type
-        encoded['musical_distribution_category'] = work.musical_distribution_category
+        encoded['musical_distribution_category'] = work.musical_work_distribution_category
         encoded['duration'] = work.duration
         encoded['catalogue_number'] = work.catalogue_number
         encoded['opus_number'] = work.opus_number
@@ -305,10 +305,10 @@ class CWRDictionaryEncoder(object):
         encoded['visan_isan'] = origin.visan_isan
         encoded['visan_episode'] = origin.visan_episode
         encoded['visan_check_digit'] = origin.visan_check_digit
-        encoded['production_id'] = origin.production_id
+        encoded['production_id'] = origin.production_n
         encoded['episode_title'] = origin.episode_title
-        encoded['episode_id'] = origin.episode_id
-        encoded['production_year'] = origin.production_year
+        encoded['episode_id'] = origin.episode_n
+        encoded['production_year'] = origin.year_production
         encoded['avi_key_society'] = origin.avi_key_society
         encoded['avi_key_number'] = origin.avi_key_number
 
@@ -324,10 +324,10 @@ class CWRDictionaryEncoder(object):
         """
         encoded = {}
 
-        encoded['first_name'] = writer.first_name
-        encoded['last_name'] = writer.last_name
+        encoded['first_name'] = writer.writer_first_name
+        encoded['last_name'] = writer.ip_last_name
         encoded['personal_number'] = writer.personal_number
-        encoded['ip_id'] = writer.ip_id
+        encoded['ip_id'] = writer.ip_n
         encoded['ip_name'] = writer.ip_name
         encoded['ip_base_id'] = writer.ip_base_id
 

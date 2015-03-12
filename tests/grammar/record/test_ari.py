@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from cwr.grammar.record import ari
@@ -32,8 +32,8 @@ class TestAdditionalRelatedInformationGrammar(unittest.TestCase):
         self.assertEqual('ARI', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual(1, result.society_id)
-        self.assertEqual('ABCD0123456789', result.work_id)
-        self.assertEqual('ALL', result.right_type)
-        self.assertEqual('DW', result.subject)
+        self.assertEqual(1, result.society_n)
+        self.assertEqual('ABCD0123456789', result.work_n)
+        self.assertEqual('ALL', result.type_of_right)
+        self.assertEqual('DW', result.subject_code)
         self.assertEqual('NOTE', result.note)

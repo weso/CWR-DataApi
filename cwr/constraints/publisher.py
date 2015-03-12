@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import pyparsing as pp
 
@@ -26,13 +26,13 @@ def no_owner_has_no_shares(publisher):
         shares = 0
 
         if publisher.pr_society is not None:
-            shares += publisher.pr_owner_share
+            shares += publisher.pr_ownership_share
 
         if publisher.mr_society is not None:
-            shares += publisher.mr_owner_share
+            shares += publisher.mr_ownership_share
 
         if publisher.sr_society is not None:
-            shares += publisher.sr_owner_share
+            shares += publisher.sr_ownership_share
 
         if shares > 0:
             raise pp.ParseException('', msg='Publishers which do not own a work should have shares set for it')
@@ -51,13 +51,13 @@ def owner_has_shares(publisher):
         shares = 0
 
         if publisher.pr_society is not None:
-            shares += publisher.pr_owner_share
+            shares += publisher.pr_ownership_share
 
         if publisher.mr_society is not None:
-            shares += publisher.mr_owner_share
+            shares += publisher.mr_ownership_share
 
         if publisher.sr_society is not None:
-            shares += publisher.sr_owner_share
+            shares += publisher.sr_ownership_share
 
         if shares == 0:
             raise pp.ParseException('', msg='Acquiror should have shares set')
@@ -72,7 +72,7 @@ def sequence_above_zero(publisher):
 
     :param publisher: the Publisher to validate
     """
-    if publisher.sequence_n == 0:
+    if publisher.publisher_sequence_n == 0:
         raise pp.ParseException('', msg='Publisher sequence number should start at 1')
 
 
@@ -85,7 +85,7 @@ def controlled_publisher_has_id(publisher):
 
     :param publisher: the Publisher to validate
     """
-    if publisher.record_type == 'SPU' and publisher.publisher.ip_id is None:
+    if publisher.record_type == 'SPU' and publisher.publisher.ip_n is None:
         raise pp.ParseException('', msg='Publishers controlled by the submitter should have an ID')
 
 
@@ -99,7 +99,8 @@ def controlled_or_known_publisher_has_name(publisher):
 
     :param publisher: the Publisher to validate
     """
-    if publisher.record_type == 'SPU' and (publisher.publisher.name is None or publisher.publisher.name == ''):
+    if publisher.record_type == 'SPU' and (
+                    publisher.publisher.publisher_name is None or publisher.publisher.publisher_name == ''):
         raise pp.ParseException('', msg='Publishers controlled by the submitter should have a name')
     elif publisher.record_type == 'OPU' and publisher.publisher_unknown == 'N':
         raise pp.ParseException('', msg='Known Publishers should have a name')
@@ -155,7 +156,8 @@ def other_unknown_has_no_name(publisher):
 
     :param publisher: the Publisher to validate
     """
-    if publisher.record_type == 'OPU' and publisher.publisher_unknown == 'Y' and len(publisher.publisher.name) > 0:
+    if publisher.record_type == 'OPU' and publisher.publisher_unknown == 'Y' and len(
+            publisher.publisher.publisher_name) > 0:
         raise pp.ParseException('', msg='Unknown publishers should not have a name')
 
 

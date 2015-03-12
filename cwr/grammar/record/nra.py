@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import publisher as field_publisher
@@ -6,9 +6,7 @@ from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import nra as field_nra
-from cwr.agreement import NPARecord
-from cwr.interested_party import NPNRecord, NWNRecord
-from cwr.work import NATRecord, NPRRecord, NRARecordWork, NOWRecord
+from cwr.nra import NPARecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord, NPNRecord
 
 
 """
@@ -41,37 +39,38 @@ NRA patterns.
 npa = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
         'npa'),
-    compulsory=True) + field_special.ip_id() + field_nra.ip_name + field_nra.ip_writer_name + field_table.language() + field_special.lineEnd
+    compulsory=True) + field_special.ip_n() + field_nra.ip_name + field_nra.ip_writer_name + field_table.language_code() + field_special.lineEnd
 
 npn = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
-        'npn'), compulsory=True) + field_publisher.sequence_n + field_special.ip_id(
+        'npn'), compulsory=True) + field_publisher.publisher_sequence_n + field_special.ip_n(
     compulsory=True) + field_nra.publisher_name + \
-      field_table.language() + field_special.lineEnd
+      field_table.language_code() + field_special.lineEnd
 
 nwn = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
-        'nwn'), compulsory=True) + field_special.ip_id() + field_nra.writer_last_name + field_nra.writer_first_name + \
-      field_table.language() + field_special.lineEnd
+        'nwn'), compulsory=True) + field_special.ip_n() + field_nra.writer_last_name + field_nra.writer_first_name + \
+      field_table.language_code() + field_special.lineEnd
 
 nat = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
         'nat'),
-    compulsory=True) + field_nra.nat_title + field_table.title_type() + field_table.language() + field_special.lineEnd
+    compulsory=True) + field_nra.nat_title + field_table.title_type() + field_table.language_code() + field_special.lineEnd
 
 npr = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
         'npr'),
     compulsory=True) + field_nra.performing_artist_name + field_nra.performing_artist_first_name + field_special.ipi_name_number() + \
-      field_special.ipi_base_number() + field_table.language() + field_nra.performance_language + field_nra.dialect + field_special.lineEnd
+      field_special.ipi_base_number() + field_table.language_code() + field_nra.performance_language + field_nra.dialect + field_special.lineEnd
 
 nra_work = field_special.lineStart + field_record.record_prefix(
-    _config.record_type('nra_work'), compulsory=True) + field_nra.title + field_table.language() + field_special.lineEnd
+    _config.record_type('nra_work'),
+    compulsory=True) + field_nra.title + field_table.language_code() + field_special.lineEnd
 
 now = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
         'now'),
-    compulsory=True) + field_nra.writer_name + field_nra.writer_first_name_now + field_table.language() + field_nra.writer_position + field_special.lineEnd
+    compulsory=True) + field_nra.writer_name + field_nra.writer_first_name_now + field_table.language_code() + field_nra.writer_position + field_special.lineEnd
 
 """
 Parsing actions for the patterns.
@@ -106,7 +105,7 @@ def _to_npa(parsed):
     :return: a NPARecord created from the parsed record
     """
     return NPARecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.ip_name, parsed.ip_writer_name, parsed.ip_id, parsed.language)
+                     parsed.ip_name, parsed.ip_writer_name, parsed.ip_n, parsed.language_code)
 
 
 def _to_npn(parsed):
@@ -117,7 +116,7 @@ def _to_npn(parsed):
     :return: a NPNRecord created from the parsed record
     """
     return NPNRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.sequence_n, parsed.ip_id, parsed.name, parsed.language)
+                     parsed.publisher_sequence_n, parsed.ip_n, parsed.publisher_name, parsed.language_code)
 
 
 def _to_nwn(parsed):
@@ -128,7 +127,7 @@ def _to_nwn(parsed):
     :return: a NWNRecord created from the parsed record
     """
     return NWNRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.writer_first_name, parsed.writer_last_name, parsed.ip_id, parsed.language)
+                     parsed.writer_first_name, parsed.writer_last_name, parsed.ip_n, parsed.language_code)
 
 
 def _to_nat(parsed):
@@ -139,7 +138,7 @@ def _to_nat(parsed):
     :return: a NATRecord created from the parsed record
     """
     return NATRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.title, parsed.title_type, parsed.language)
+                     parsed.title, parsed.title_type, parsed.language_code)
 
 
 def _to_npr(parsed):
@@ -150,8 +149,9 @@ def _to_npr(parsed):
     :return: a NPRRecord created from the parsed record
     """
     return NPRRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.first_name, parsed.name, parsed.ipi_name, parsed.ipi_base,
-                     parsed.language, parsed.performance_language, parsed.dialect)
+                     parsed.performing_artist_first_name, parsed.performing_artist_name, parsed.ipi_name_n,
+                     parsed.ipi_base_n,
+                     parsed.language_code, parsed.performance_language, parsed.dialect)
 
 
 def _to_nra_work(parsed):
@@ -162,7 +162,7 @@ def _to_nra_work(parsed):
     :return: a NRARecordWork created from the parsed record
     """
     return NRARecordWork(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                         parsed.title, parsed.language)
+                         parsed.title, parsed.language_code)
 
 
 def _to_now(parsed):
@@ -173,4 +173,4 @@ def _to_now(parsed):
     :return: a NOWRecord created from the parsed record
     """
     return NOWRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                     parsed.first_name, parsed.name, parsed.position, parsed.language)
+                     parsed.writer_first_name, parsed.writer_name, parsed.position, parsed.language_code)

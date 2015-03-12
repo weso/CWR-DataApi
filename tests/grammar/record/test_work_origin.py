@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from cwr.grammar.record import work_detail
@@ -38,9 +38,9 @@ class TestWorkOriginGrammar(unittest.TestCase):
         self.assertEqual(123456789012, result.visan.isan)
         self.assertEqual(1234, result.visan.episode)
         self.assertEqual(1, result.visan.check_digit)
-        self.assertEqual('ABDFE', result.production_id)
+        self.assertEqual('ABDFE', result.production_n)
         self.assertEqual('EPISODE TITLE', result.episode_title)
-        self.assertEqual('ABD12345', result.episode_id)
-        self.assertEqual(2012, result.production_year)
-        self.assertEqual(123, result.avi.society_code)
-        self.assertEqual('ABDEFG', result.avi.av_number)
+        self.assertEqual('ABD12345', result.episode_n)
+        self.assertEqual(2012, result.year_production)
+        self.assertEqual(123, result.audio_visual_key.society_code)
+        self.assertEqual('ABDEFG', result.audio_visual_key.av_number)

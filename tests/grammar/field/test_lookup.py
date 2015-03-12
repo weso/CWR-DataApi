@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 
 from pyparsing import ParseException
@@ -17,31 +17,49 @@ __status__ = 'Development'
 
 
 class TestLookupName(unittest.TestCase):
-    def test_default_name(self):
+    def test_name_default(self):
         """
-        Tests that the field is named correctly
+        Tests that the default field name is correct for optional fields.
         """
-        lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
 
-        self.assertEqual('Lookup Field', lookup.name)
+        self.assertEqual('Lookup Field', field.name)
 
-    def test_default_name_compulsory(self):
+    def test_name_default_compulsory(self):
         """
-        Tests that the field is named correctly
+        Tests that the default field name is correct for optional fields, for compulsory fields.
         """
-        lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
+        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
 
-        self.assertEqual('Lookup Field', lookup.name)
+        self.assertEqual('Lookup Field', field.name)
 
-    def test_give_name_factory_no_changes(self):
+    def test_name_set(self):
+        """
+        Tests that the given field name is set correctly for optional fields.
+        """
+        name = "Field Name"
+        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name=name)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_compulsory(self):
+        """
+        Tests that the given field name is set correctly for optional fields, for compulsory fields.
+        """
+        name = "Field Name"
+        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name=name, compulsory=True)
+
+        self.assertEqual(name, field.name)
+
+    def test_name_set_no_changes(self):
         """
         Tests that the field name does not change for creating a new one
         """
-        lookup1 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field1')
-        lookup2 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field2')
+        field1 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field1')
+        field2 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field2')
 
-        self.assertEqual('field1', lookup1.name)
-        self.assertEqual('field2', lookup2.name)
+        self.assertEqual('field1', field1.name)
+        self.assertEqual('field2', field2.name)
 
 
 class TestLookupValid(unittest.TestCase):
