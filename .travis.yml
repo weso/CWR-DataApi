@@ -20,15 +20,6 @@ matrix:
       env: REQUIREMENTS=lowest
     - python: "pypy3"
       env: REQUIREMENTS=lowest
-  include:
-    - python: "2.7"
-      env:
-        - JYTHON=true
-        - REQUIREMENTS=lowest
-    - python: "2.7"
-      env:
-        - JYTHON=true
-        - REQUIREMENTS=release
 
 before_install:
   # Setting up Jython
@@ -37,8 +28,4 @@ before_install:
 install:
   - pip install tox
 script:
-  - echo "Python interpreter"
-  - echo $PYTHON_EXE
-  - echo "Python version"
-  - echo python -V
   - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS
