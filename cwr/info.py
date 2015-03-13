@@ -7,7 +7,6 @@ CWR information model.
 
 __author__ = 'Benardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
