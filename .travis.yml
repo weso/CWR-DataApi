@@ -39,4 +39,6 @@ install:
 script:
   - echo 'Python interpreter is ' | $PYTHON_EXE
   - echo 'Python version is ' | python -V
+  - echo Python version is | python -V
+  - echo python -V
   - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS
