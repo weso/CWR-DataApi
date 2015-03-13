@@ -18,9 +18,17 @@ matrix:
       env: REQUIREMENTS=lowest
     - python: "3.4"
       env: REQUIREMENTS=lowest
+    - python: "pypy3"
+      env: REQUIREMENTS=lowest
   include:
     - python: "2.7"
-      env: JYTHON=true
+      env:
+        - JYTHON=true
+        - REQUIREMENTS=lowest
+    - python: "2.7"
+      env:
+        - JYTHON=true
+        - REQUIREMENTS=release
 
 before_install:
   # Setting up Jython
