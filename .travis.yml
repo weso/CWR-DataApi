@@ -38,4 +38,5 @@ install:
   - pip install tox
 script:
   - echo 'Python interpreter is '  $PYTHON_EXE
+  - echo 'Python version is '  python -V
   - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS
