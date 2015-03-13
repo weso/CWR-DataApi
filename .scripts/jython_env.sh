@@ -6,6 +6,7 @@ if [[ $JYTHON ]]; then
   echo "Jython testing active"
 
   sudo apt-get install jython
-  export PYTHON_EXE=jython; jython -c "print ''"
+  export PYTHON_EXE=jython
+  jython -c "print ''"
 
 fi
