@@ -1,0 +1,31 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "pypy"
+  - "pypy3"
+env:
+  - REQUIREMENTS=lowest
+  - REQUIREMENTS=release
+matrix:
+  exclude:
+    - python: "3.2"
+      env: REQUIREMENTS=lowest
+    - python: "3.3"
+      env: REQUIREMENTS=lowest
+    - python: "3.4"
+      env: REQUIREMENTS=lowest
+    - python: "pypy3"
+      env: REQUIREMENTS=lowest
+
+before_install:
+  # Setting up Jython
+  - chmod +x ./.scripts/jython_env.sh
+  - ./.scripts/jython_env.sh
+install:
+  - pip install tox
+script:
+  - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS

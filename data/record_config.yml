@@ -1,0 +1,378 @@
+record_prefix:
+    record_sequence_n:
+        size: 8
+    transaction_sequence_n:
+        size: 8
+
+trailer_record:
+    group_count:
+        size: 5
+    transaction_count:
+        size: 8
+    record_count:
+        size: 8
+
+transmission_header:
+    type: 'HDR'
+    edi_version:
+        value: '01.10'
+    character_set:
+        size: 15
+    sender_id:
+        size: 9
+    sender_name:
+        size: 45
+
+transmission_trailer:
+    type: 'TRL'
+
+group_header:
+    type: 'GRH'
+    batch_request_id:
+        size: 10
+    group_id:
+        size: 5
+    sd_type:
+        size: 2
+    version_number:
+        value: '02.10'
+
+group_trailer:
+    type: 'GRT'
+    currency_indicator:
+        size: 3
+    total_monetary_value:
+        size: 10
+
+agreement:
+    type: 'AGR'
+    agreement_id:
+        size: 14
+    international_standard_code:
+        size: 14
+    number_works:
+        size: 5
+    society_agreement_number:
+        size: 14
+
+work:
+    type:
+        - 'NWR'
+        - 'REV'
+        - 'ISW'
+    work_title:
+        size: 60
+    work_id:
+        size: 14
+    copyright_number:
+        size: 12
+    contact_name:
+        size: 30
+    contact_id:
+        size: 10
+    composite_count:
+        size: 3
+    opus_number:
+        size: 25
+    catalogue:
+        size: 25
+
+work_conflict:
+    type: 'EXC'
+
+acknowledgement:
+    type: 'ACK'
+    transaction_n:
+        size: 8
+    title:
+        size: 60
+    submitter_id:
+        size: 20
+    recipient_id:
+        size: 20
+
+agreement_territory:
+    type: 'TER'
+
+ipa:
+    type: 'IPA'
+    ip_last_name:
+        size: 45
+    ip_name:
+        size: 30
+
+nra:
+    name:
+        size: 160
+
+npa:
+    type: 'NPA'
+
+npn:
+    type: 'NPN'
+    name:
+        size: 480
+
+nwn:
+    type: 'NWN'
+
+publisher:
+    type:
+        - 'SPU'
+        - 'OPU'
+    sequence_n:
+        size: 2
+    name:
+        size: 45
+    tax_id:
+        size: 9
+    submitter_agreement_id:
+        size: 14
+    pr_society:
+        size: 3
+    international_code:
+        size: 14
+    society_agreement_id:
+        size: 14
+
+publisher_territory:
+    type: 'SPT'
+    constant:
+        size: 6
+    sequence_n:
+        size: 3
+
+writer:
+    type:
+        - 'SWR'
+        - 'OWR'
+    first_name:
+        size: 30
+    last_name:
+        size: 45
+    filler:
+        size: 1
+    personal_number:
+        size: 12
+
+writer_territory:
+    type: 'SWT'
+    sequence_n:
+        size: 3
+
+writer_publisher:
+    type: 'PWR'
+    publisher_name:
+        size: 45
+
+alternate_title:
+    type: 'ALT'
+    alternate_title:
+        size: 60
+
+table:
+    title_type:
+        size: 2
+    composite_type:
+        size: 3
+    music_arrangement:
+        size: 3
+    lyric_adaptation:
+        size: 3
+    work_type:
+        size: 2
+    writer_designation:
+        size: 2
+    original_transaction_type:
+        size: 3
+    transaction_status:
+        size: 2
+    prior_royalty_status:
+        size: 1
+    post_term_collection_status:
+        size: 1
+    sm_clause:
+        size: 1
+    ie_indicator_field:
+        size: 1
+    tis_code:
+        size: 4
+    agreement_role_code:
+        size: 2
+    language_code:
+        size: 2
+    publisher_type:
+        size: 2
+    special_agreement:
+        size: 1
+    transaction_type:
+        size: 3
+    sender_type:
+        size: 2
+    sender_type:
+        size: 2
+    musical_distribution_category:
+        size: 3
+    text_music_relationship:
+        size: 3
+    text_music_relationship:
+        size: 3
+    version_type:
+        size: 3
+    excerpt_type:
+        size: 3
+    usa_license:
+        size: 1
+    agreement_type:
+        size: 2
+    society:
+        size: 3
+    recording_format:
+        size: 1
+    recording_technique:
+        size: 1
+    media_type:
+        size: 3
+    intended_purpose:
+        size: 3
+    standard_instrumentations:
+        size: 3
+    instruments:
+        size: 3
+    message_type:
+        size: 3
+    message_level:
+        size: 3
+    record_type:
+        size: 3
+    type_of_right:
+        size: 3
+    subject_code:
+        size: 2
+
+nat:
+    type: 'NAT'
+    title:
+        size: 640
+
+entire_work_title:
+    type: 'EWT'
+    entire_work_title:
+        size: 60
+    writer_last_name:
+        size: 45
+    writer_first_name:
+        size: 30
+    source:
+        size: 60
+
+original_work_title:
+    type: 'VER'
+    original_title:
+        size: 60
+
+performing_artist:
+    type: 'PER'
+    performer_last_name:
+        size: 45
+    performer_first_name:
+        size: 30
+
+npr:
+    type: 'NPR'
+    performing_artist_name:
+        size: 160
+    performing_artist_first_name:
+        size: 160
+    dialect:
+        size: 3
+
+recording_detail:
+    type: 'REC'
+    constant_1:
+        size: 60
+    constant_2:
+        size: 5
+    first_album_title:
+        size: 60
+    first_album_label:
+        size: 60
+    first_release_catalog_id:
+        size: 18
+
+work_origin:
+    type: 'ORN'
+    production_title:
+        size: 60
+    cd_identifier:
+        size: 15
+    cut_number:
+        size: 4
+    library:
+        size: 60
+    bltvr:
+        size: 1
+    production_n:
+        size: 12
+    episode_title:
+        size: 60
+    episode_n:
+        size: 20
+    production_year:
+        size: 4
+
+instrumentation_summary:
+    type: 'INS'
+    voices:
+        size: 3
+    description:
+        size: 50
+
+instrumentation_detail:
+    type: 'IND'
+    players:
+        size: 3
+
+component:
+    type: 'COM'
+    title:
+        size: 60
+
+message:
+    type: 'MSG'
+    original_record:
+        size: 8
+    validation:
+        size: 3
+    text:
+        size: 150
+
+nra_work:
+    type:
+        - 'NCT'
+        - 'NET'
+        - 'NVT'
+    title:
+        size: 640
+
+now:
+    type: 'NOW'
+    name:
+        size: 160
+    last_name:
+        size: 160
+    position:
+        size: 1
+
+ari:
+    type: 'ARI'
+    work_number:
+        size: 14
+    note:
+        size: 160
+
+special:
+    ip_n:
+        size: 9
+    shares:
+        size: 5

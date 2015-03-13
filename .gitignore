@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
+*.pyo
 
 # C extensions
 *.so
@@ -21,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -52,3 +55,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Idea PyCharm
+.idea/
+.idea_modules/
+out/
