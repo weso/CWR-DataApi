@@ -36,7 +36,6 @@ Additionally, it contains the following unused fields, which can be safely ignor
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources

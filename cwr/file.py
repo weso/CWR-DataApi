@@ -20,7 +20,6 @@ standard in the file name, with FileTag, which stores the information used to id
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

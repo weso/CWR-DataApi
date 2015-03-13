@@ -18,7 +18,6 @@ This have been created from the BNF description included in the CWR specificatio
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 """

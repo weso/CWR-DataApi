@@ -15,7 +15,6 @@ These are miscellany fields and nodes, such as line limiters, or the character e
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources

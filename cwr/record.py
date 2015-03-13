@@ -12,7 +12,6 @@ difference is that the transaction ones also indicate their position in the file
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

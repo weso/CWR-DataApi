@@ -28,7 +28,6 @@ There are two parsing patterns offered, one for the new format and one for the o
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources

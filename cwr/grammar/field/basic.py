@@ -29,7 +29,6 @@ Each of these fields is parsed into a value as follows:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 # BASIC FIELDS
