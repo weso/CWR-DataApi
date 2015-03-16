@@ -10,7 +10,6 @@ Offers methods to create model objects from JSON objects.
 
 __author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

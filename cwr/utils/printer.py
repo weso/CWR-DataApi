@@ -12,12 +12,11 @@ from cwr.nra import NPARecord, NPNRecord, NWNRecord, NATRecord, NRARecordWork, N
 
 
 """
-This is a small tool to print(a CWR file contents on the console.
+This is a small tool to print a CWR file contents on the console.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -83,12 +82,12 @@ class CWRPrinter():
         print('EDI standard: %s' % (header.edi_standard))
         print('Character set: %s' % (header.character_set))
 
-    def print_transmission_trailer(self, header):
+    def print_transmission_trailer(self, trailer):
         print('CWR Transmission Trailer')
-        print('Record Type: %s' % (header.record_type))
-        print('Group Count: %s' % (header.group_count))
-        print('Transaction Count: %s' % (header.transaction_count))
-        print('Record Count: %s' % (header.record_count))
+        print('Record Type: %s' % (trailer.record_type))
+        print('Group Count: %s' % (trailer.group_count))
+        print('Transaction Count: %s' % (trailer.transaction_count))
+        print('Record Count: %s' % (trailer.record_count))
 
     def print_group_header(self, header):
         print('CWR Group Header')
@@ -98,12 +97,12 @@ class CWRPrinter():
         print('Version Number: %s' % (header.version_number))
         print('Batch Request ID: %s' % (header.batch_request_id))
 
-    def print_group_trailer(self, header):
+    def print_group_trailer(self, trailer):
         print('CWR Group Trailer')
-        print('Record Type: %s' % (header.record_type))
-        print('Group ID: %s' % (header.group_id))
-        print('Transaction Count: %s' % (header.transaction_count))
-        print('Record Count: %s' % (header.record_count))
+        print('Record Type: %s' % (trailer.record_type))
+        print('Group ID: %s' % (trailer.group_id))
+        print('Transaction Count: %s' % (trailer.transaction_count))
+        print('Record Count: %s' % (trailer.record_count))
 
     def print_transaction_record(self, record):
         print('Record Type: %s' % (record.record_type))
@@ -160,12 +159,12 @@ class CWRPrinter():
             self.print_nra(record)
 
     def print_ipa(self, record):
-        print('IP ID: %s' % (record.ip_n))
-        print('writer Name: %s' % (record.ip_writer_first_name))
+        print('IP Number: %s' % (record.ip_n))
+        print('Writer Name: %s' % (record.ip_writer_first_name))
         print('Last Name: %s' % (record.ip_last_name))
         print('Agreement Role Code: %s' % (record.agreement_role_code))
-        print('IPI Name: %s' % (record.ipi_name_n))
-        print('IPI Base: %s' % (record.ipi_base_n))
+        print('IPI Name Number: %s' % (record.ipi_name_n))
+        print('IPI Base Number: %s' % (record.ipi_base_n))
         print('PR Society: %s' % (record.pr_society))
         print('PR Shares: %s' % (record.pr_share))
         print('MR Shares: %s' % (record.mr_society))
@@ -174,14 +173,14 @@ class CWRPrinter():
         print('SR Shares: %s' % (record.sr_share))
 
     def print_npa(self, record):
-        print('IP ID: %s' % (record.ip_n))
-        print('IP writer Name: %s' % (record.ip_writer_name))
-        print('IP Name: %s' % (record.ip_name))
+        print('IP Number: %s' % (record.ip_n))
+        print('Writer Name: %s' % (record.ip_writer_name))
+        print('Name: %s' % (record.ip_name))
         print('Language: %s' % (record.language_code))
 
     def print_agr(self, record):
-        print('Agreement ID: %s' % (record.submitter_agreement_n))
-        print('Society Agreement Number: %s' % (record.society_assigned_agreement_n))
+        print('Agreement Number: %s' % (record.submitter_agreement_n))
+        print('Society Assigned Agreement Number: %s' % (record.society_assigned_agreement_n))
         print('International Standard Code: %s' % (record.international_standard_code))
         print('Agreement Type: %s' % (record.agreement_type))
         print('Start Date: %s' % (record.agreement_start_date))

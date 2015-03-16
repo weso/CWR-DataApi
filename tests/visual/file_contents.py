@@ -42,13 +42,13 @@ def _read(file):
 
 
 if __name__ == '__main__':
-    print("File contents parsing test")
-    path = raw_input("Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ")
-    output = raw_input("Please enter the full path to the file where the results will be stored: ")
-    print '\n'
-    print "Reading file %s" % (path)
-    print "Storing output on %s" % (output)
-    print '\n'
+    print('File contents parsing test')
+    path = raw_input('Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
+    output = raw_input('Please enter the full path to the file where the results will be stored: ')
+    print('\n')
+    print('Reading file %s' % (path))
+    print('Storing output on %s' % (output))
+    print('\n')
 
     start_all = time.clock()
     start_parsing = time.clock()
@@ -57,8 +57,8 @@ if __name__ == '__main__':
     end = time.clock()
     time_read = (end - start)
 
-    print 'Read the file in %s seconds' % (time_read)
-    print '\n'
+    print('Read the file in %s seconds' % (time_read))
+    print('\n')
 
     start = time.clock()
     data = rule_file.cwr_transmission.parseString(file)[0]
@@ -67,11 +67,11 @@ if __name__ == '__main__':
 
     end_parsing = time.clock()
 
-    print 'Parsed the file in %s seconds' % (time_parse)
-    print '\n'
+    print('Parsed the file in %s seconds' % (time_parse))
+    print('\n')
 
-    print 'In total the reading and parsing process took %s seconds' % (end_parsing - start_parsing)
-    print '\n'
+    print('In total the reading and parsing process took %s seconds' % (end_parsing - start_parsing))
+    print('\n')
 
     output = codecs.open(output, 'w', 'latin-1')
 
@@ -79,5 +79,5 @@ if __name__ == '__main__':
     printer.print_transmission(data, output)
 
     end_all = time.clock()
-    print 'In total the full process took %s seconds' % (end_all - start_all)
-    print '\n'
+    print('In total the full process took %s seconds' % (end_all - start_all))
+    print('\n')
