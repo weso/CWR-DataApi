@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.utils.file import CWRFileNameEncoder
+from cwr.parser.encoder import CWRFileNameEncoder, CWRFileNameEncoderOld
 from cwr.file import FileTag
 
 
@@ -57,29 +57,29 @@ class TestFileNameCWREncodeValidOld(unittest.TestCase):
     """
 
     def setUp(self):
-        self._parser = CWRFileNameEncoder()
+        self._parser = CWRFileNameEncoderOld()
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self._parser.encode_old(FileTag(2012, 23, '11', '22', 2.1))
+        data = self._parser.encode(FileTag(2012, 23, '11', '22', 2.1))
 
         self.assertEqual("CW122311_22.V21", data)
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self._parser.encode_old(FileTag(2013, 1, 'ABC', '23', 2.2))
+        data = self._parser.encode(FileTag(2013, 1, 'ABC', '23', 2.2))
 
         self.assertEqual("CW1301ABC_23.V22", data)
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self._parser.encode_old(FileTag(2099, 0, '22', 'DEC', 0))
+        data = self._parser.encode(FileTag(2099, 0, '22', 'DEC', 0))
 
         self.assertEqual("CW990022_DEC.V00", data)
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self._parser.encode_old(FileTag(2000, 12, 'AB2', '234', 0.2))
+        data = self._parser.encode(FileTag(2000, 12, 'AB2', '234', 0.2))
 
         self.assertEqual("CW0012AB2_234.V02", data)
 
