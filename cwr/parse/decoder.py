@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
+from abc import ABCMeta, abstractmethod
 
 from cwr.grammar.file import cwr_transmission as rule_file
 from cwr.grammar.filename import cwr_filename as rule_filename
 from cwr.file import CWRFile
+from cwr.utils.reader import UTF8AdapterReader
 
 
 """
@@ -15,12 +17,33 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class GrammarDecoder(object):
+class Decoder(object):
+    """
+    Interface for decoders. These are parsers which transform an input into a graph of model classes.
+    """
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def decode(self, data):
+        """
+        Decodes the data, creating a graph of model classes.
+
+        :param data: the data to decode
+        :return: a graph of model classes
+        """
+        pass
+
+
+class GrammarDecoder(Decoder):
     """
     Parses a string based on a Pyparsing grammar rules set.
     """
 
     def __init__(self, grammar):
+        super(GrammarDecoder, self).__init__()
         self._grammar = grammar
 
     @property
@@ -36,9 +59,13 @@ class GrammarFileDecoder(GrammarDecoder):
     Parses the contents of a file based on a Pyparsing grammar rules set.
     """
 
-    def __init__(self, grammar, reader):
+    def __init__(self, grammar, reader=None):
         super(GrammarFileDecoder, self).__init__(grammar)
-        self._reader = reader
+
+        if reader is None:
+            self._reader = UTF8AdapterReader()
+        else:
+            self._reader = reader
 
     def decode(self, path):
         return super(GrammarFileDecoder, self).decode(self.reader.read(path))

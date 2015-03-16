@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from abc import ABCMeta, abstractmethod
 import codecs
 
 import chardet
@@ -13,24 +14,45 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class Reader():
+class FileReader():
+    """
+    Reads a file contents.
+
+    This is interface serves to add any additional operation which may be needed for the reading process, such as
+    changing the file's encoding.
+    """
+    __metaclass__ = ABCMeta
+
     def __init__(self):
         pass
 
-    def read(self, contents):
-        cwr = open(contents, 'rt')
+    @abstractmethod
+    def read(self, file):
+        pass
+
+
+class UTF8AdapterReader(FileReader):
+    """
+    Reads a file's contents and transforms them into the UTF8 encoding.
+    """
+
+    def __init__(self):
+        super(UTF8AdapterReader, self).__init__()
+
+    def read(self, file):
+        cwr = open(file, 'rt')
 
         rawdata = cwr.readline()
         result = chardet.detect(rawdata)
         charenc = result['encoding']
 
-        cwr = codecs.open(contents, 'r', 'latin-1')
-        contents = cwr.readline()
+        cwr = codecs.open(file, 'r', 'latin-1')
+        file = cwr.readline()
 
         if charenc == 'UTF-8-SIG':
-            contents = contents[3:]
+            file = file[3:]
 
         for line in cwr:
-            contents += line
+            file += line
 
-        return contents
+        return file
