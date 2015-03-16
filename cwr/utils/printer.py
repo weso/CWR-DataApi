@@ -28,13 +28,34 @@ class CWRPrinter():
     def __init__(self):
         pass
 
-    def print_transmission(self, transmission, file):
-        # TODO: Add support for Acknowledgement
-
+    def print_file(self, cwrfile, file):
         out_old = sys.stdout
         sys.stdout = file
 
+        self._print_tag(cwrfile.tag)
+        print(' ')
+        print('------------------------------')
+        print('******************************')
+        print('------------------------------')
+        print(' ')
+        self._print_transmission(cwrfile.transmission)
+
+        sys.stdout = out_old
+
+    def _print_tag(self, tag):
+        print('CWR Filename Tag information')
+        print('------------------------------')
+        print('Year: %s' % (tag.year))
+        print('Sender: %s' % (tag.sender))
+        print('Receiver: %s' % (tag.receiver))
+        print('Sequence Number: %s' % (tag.sequence_n))
+        print('Version: %s' % (tag.version))
+
+    def _print_transmission(self, transmission):
+        # TODO: Add support for Acknowledgement
+
         print('CWR Transmission begins')
+        print('------------------------------')
         print('Contains %s groups' % (len(transmission.groups)))
         print('------------------------------')
         self.print_transmission_header(transmission.header)
@@ -68,8 +89,6 @@ class CWRPrinter():
                     print(' ')
                     self.print_transaction_record(record)
             i += 1
-
-        sys.stdout = out_old
 
     def print_transmission_header(self, header):
         print('CWR Transmission Header')

@@ -5,6 +5,7 @@ import codecs
 
 import chardet
 
+
 """
 This is a small tool to read the contents of a file, trying to convert its contents to UTF-8.
 """

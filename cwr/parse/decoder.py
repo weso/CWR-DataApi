@@ -3,7 +3,7 @@ import os
 from abc import ABCMeta, abstractmethod
 
 from cwr.grammar.file import cwr_transmission as rule_file
-from cwr.grammar.filename import cwr_filename as rule_filename
+from cwr.grammar.filename import cwr_filename_old as rule_filename
 from cwr.file import CWRFile
 from cwr.utils.reader import UTF8AdapterReader
 

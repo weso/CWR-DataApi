@@ -56,6 +56,7 @@ class CWRFile(object):
             'CWRFile', self._tag,
             self._transmission)
 
+    @property
     def tag(self):
         """
         The file's metadata tag.
@@ -66,6 +67,7 @@ class CWRFile(object):
         """
         return self._tag
 
+    @property
     def transmission(self):
         """
         The file's transmission.
