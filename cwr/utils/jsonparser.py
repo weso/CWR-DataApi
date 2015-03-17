@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from cwr.agreement import AgreementRecord, AgreementInterestedParty
+from cwr.agreement import AgreementRecord, InterestedPartyForAgreementRecord
 from cwr.interested_party import Publisher, Writer
 from cwr.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
     RecordingDetailRecord, WorkOriginRecord, PerformingArtistRecord
@@ -8,7 +8,7 @@ from cwr.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
 Offers methods to create model objects from JSON objects.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
 __license__ = 'MIT'
 __status__ = 'Development'
 
@@ -87,12 +87,13 @@ def parse_ipa(json_item):
     :param json_item: JSON object to parse
     :return: an IPA parsed from the JSON
     """
-    agreement = AgreementInterestedParty('', 0, 0, json_item['ip_id'], json_item['ip_last_name'],
-                                         json_item['agreement_role_code'], json_item['ip_writer_name'],
-                                         json_item['ip_ipi'], json_item['ipi_name'], json_item['pr_society'],
-                                         json_item['pr_share'],
-                                         json_item['mr_society'], json_item['mr_share'], json_item['sr_society'],
-                                         json_item['sr_share'])
+    agreement = InterestedPartyForAgreementRecord('', 0, 0, json_item['ip_id'], json_item['ip_last_name'],
+                                                  json_item['agreement_role_code'], json_item['ip_writer_name'],
+                                                  json_item['ip_ipi'], json_item['ipi_name'], json_item['pr_society'],
+                                                  json_item['pr_share'],
+                                                  json_item['mr_society'], json_item['mr_share'],
+                                                  json_item['sr_society'],
+                                                  json_item['sr_share'])
 
     return agreement
 

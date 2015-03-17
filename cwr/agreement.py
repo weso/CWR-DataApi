@@ -9,12 +9,12 @@ These classes are used to represent an Agreement Transaction (AGR), which consis
 details of this Agreement, and a collection of Territories and their Interested parties.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
 __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class AgreementInterestedParty(TransactionRecord):
+class InterestedPartyForAgreementRecord(TransactionRecord):
     """
     Represents a CWR Interested Party for the Agreement (IPA).
 
@@ -31,7 +31,7 @@ class AgreementInterestedParty(TransactionRecord):
         """
         Constructs an AgreementInterestedParty.
         """
-        super(AgreementInterestedParty, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+        super(InterestedPartyForAgreementRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Agreement and Interested Party relationship
         self._ip_n = ip_n
         self._agreement_role_code = agreement_role_code
@@ -522,16 +522,16 @@ class AgreementTerritoryRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
-                 tis_numeric_code, ie_indicator):
+                 tis_numeric_code, inclusion_exclusion_indicator):
         """
         Constructs an AgreementTerritory.
 
         :param tis_numeric_code: the TIS numeric code
-        :param ie_indicator: indicates if it is included or not
+        :param inclusion_exclusion_indicator: indicates if it is included or not
         """
         super(AgreementTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._tis_numeric_code = tis_numeric_code
-        self._ie_indicator = ie_indicator
+        self._inclusion_exclusion_indicator = inclusion_exclusion_indicator
 
     @property
     def inclusion_exclusion_indicator(self):
@@ -546,7 +546,7 @@ class AgreementTerritoryRecord(TransactionRecord):
 
         :return: a code indicating if the territory is included or excluded
         """
-        return self._ie_indicator
+        return self._inclusion_exclusion_indicator
 
     @property
     def tis_numeric_code(self):
@@ -560,7 +560,7 @@ class AgreementTerritoryRecord(TransactionRecord):
         return self._tis_numeric_code
 
 
-class AgreementTransaction(TransactionRecord):
+class AgreementTransaction(object):
     """
     Represents a CWR Agreement Supporting Work Registration Transaction (AGR).
 
@@ -582,14 +582,14 @@ class AgreementTransaction(TransactionRecord):
     share.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, agreement, territories):
+    def __init__(self, agreement, territories):
         """
         Constructs an AgreementTransaction.
 
         :param agreement: the Agreement record
         :param territories: the Territories and their IPAs
         """
-        super(AgreementTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+        super(AgreementTransaction, self).__init__()
         self._agreement = agreement
         self._territories = territories
 

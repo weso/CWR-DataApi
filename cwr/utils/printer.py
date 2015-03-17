@@ -2,7 +2,7 @@
 
 import sys
 
-from cwr.agreement import AgreementInterestedParty, AgreementRecord, AgreementTerritoryRecord
+from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
 from cwr.info import AdditionalRelatedInfoRecord
 from cwr.interested_party import IPTerritoryRecord, PublisherRecord, WriterPublisherRecord, WriterRecord
 from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, \
@@ -128,7 +128,7 @@ class CWRPrinter():
         print('Transaction Sequence Number: %s' % (record.transaction_sequence_n))
         print('Record Sequence Number: %s' % (record.record_sequence_n))
 
-        if (isinstance(record, AgreementInterestedParty)):
+        if (isinstance(record, InterestedPartyForAgreementRecord)):
             self.print_ipa(record)
         elif (isinstance(record, NPARecord)):
             self.print_npa(record)

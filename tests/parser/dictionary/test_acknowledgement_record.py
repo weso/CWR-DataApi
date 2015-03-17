@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-
 import datetime
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
@@ -19,8 +18,8 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-class TestAcknowledgementRecordDictionaryEncoding(unittest.TestCase):
 
+class TestAcknowledgementRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
         self._encoder = CWRDictionaryEncoder()
 

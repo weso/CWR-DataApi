@@ -6,7 +6,7 @@ Table value entity model classes.
 These represent the values for the Table Lookup fields.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
 __license__ = 'MIT'
 __status__ = 'Development'
 

@@ -9,7 +9,7 @@ from cwr.record import TransactionRecord
 Work entity model classes.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
 __license__ = 'MIT'
 __status__ = 'Development'
 

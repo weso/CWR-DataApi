@@ -2,8 +2,6 @@
 
 import unittest
 
-import datetime
-
 from cwr.parser.dictionary import CWRDictionaryEncoder
 from cwr.acknowledgement import MessageRecord
 
@@ -19,21 +17,21 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-class TestMessageRecordDictionaryEncoding(unittest.TestCase):
 
+class TestMessageRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
         data = MessageRecord(record_type='MSG',
-                                     transaction_sequence_n=3,
-                                     record_sequence_n=15,
-                                     message_level='F',
-                                     validation_n='AB3',
-                                     message_type='G',
-                                     message_text='THE MESSAGE',
-                                     original_record_sequence_n=124,
-                                     message_record_type='AGR')
+                             transaction_sequence_n=3,
+                             record_sequence_n=15,
+                             message_level='F',
+                             validation_n='AB3',
+                             message_type='G',
+                             message_text='THE MESSAGE',
+                             original_record_sequence_n=124,
+                             message_record_type='AGR')
 
         encoded = self._encoder.encode(data)
 
