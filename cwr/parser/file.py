@@ -45,15 +45,17 @@ class CWRFileNameDecoder(Decoder):
         self._filename_decoder_new = GrammarDecoder(rule_filename_new)
 
     def decode(self, path):
+        filename = os.path.basename(path)
+        
         try:
-            filename = self._filename_decoder_new.decode(os.path.basename(path))
+            filetag = self._filename_decoder_new.decode(filename)
         except:
             try:
-                filename = self._filename_decoder_old.decode(os.path.basename(path))
+                filetag = self._filename_decoder_old.decode(filename)
             except:
-                filename = FileTag(0, 0, '', '', '')
+                filetag = FileTag(0, 0, '', '', '')
 
-        return filename
+        return filetag
 
 
 class _CWRFileTagEncoder(Encoder):

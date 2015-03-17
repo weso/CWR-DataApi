@@ -48,7 +48,7 @@ class GrammarDecoder(Decoder):
         return self._grammar
 
     def decode(self, text):
-        return self._grammar().parseString(text)[0]
+        return self._grammar.parseString(text)[0]
 
 
 class GrammarFileDecoder(GrammarDecoder):
