@@ -34,7 +34,7 @@ class GroupHeader(Record):
     A group can only contain one type of transaction and this is indicated in the Transaction Type field.
     """
 
-    def __init__(self, record_type, group_id, transaction_type, version_number="02.10", batch_request_id=0):
+    def __init__(self, record_type, group_id, transaction_type, version_number='02.10', batch_request_id=0):
         super(GroupHeader, self).__init__(record_type)
         self._group_id = group_id
         self._transaction_type = transaction_type

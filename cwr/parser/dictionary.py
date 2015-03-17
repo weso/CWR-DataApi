@@ -2,6 +2,7 @@
 
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
+from cwr.group import GroupHeader, GroupTrailer
 
 from cwr.parser.common import Encoder
 
@@ -27,14 +28,25 @@ class CWRDictionaryEncoder(Encoder):
 
     def encode(self, object):
         if isinstance(object, AcknowledgementRecord):
+            # Acknowledgement
             encoded = self.__encode_acknowledgement_record(object)
         elif isinstance(object, AgreementRecord):
+            # Agreement
             encoded = self.__encode_agreement_record(object)
         elif isinstance(object, AgreementTerritoryRecord):
+            # Agreement Territory
             encoded = self.__encode_agreement_territory_record(object)
+        elif isinstance(object, GroupHeader):
+            # Group Header
+            encoded = self.__encode_group_header(object)
+        elif isinstance(object, GroupTrailer):
+            # Group Trailer
+            encoded = self.__encode_group_trailer(object)
         elif isinstance(object, InterestedPartyForAgreementRecord):
+            # Interested Party for Agreement
             encoded = self.__encode_interested_party_agreement_record(object)
         elif isinstance(object, MessageRecord):
+            # Message
             encoded = self.__encode_message_record(object)
         else:
             encoded = None
@@ -95,6 +107,39 @@ class CWRDictionaryEncoder(Encoder):
 
         encoded['inclusion_exclusion_indicator'] = record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
+
+        return encoded
+
+    def __encode_group_header(self, record):
+        """
+        Creates a dictionary from an GroupHeader.
+
+        :param record: the GroupHeader to transform into a dictionary
+        :return: a dictionary created from the GroupHeader
+        """
+        encoded = {}
+
+        encoded['batch_request_id'] = record.batch_request_id
+        encoded['group_id'] = record.group_id
+        encoded['record_type'] = record.record_type
+        encoded['transaction_type'] = record.transaction_type
+        encoded['version_number'] = record.version_number
+
+        return encoded
+
+    def __encode_group_trailer(self, record):
+        """
+        Creates a dictionary from an GroupTrailer.
+
+        :param record: the GroupTrailer to transform into a dictionary
+        :return: a dictionary created from the GroupTrailer
+        """
+        encoded = {}
+
+        encoded['group_id'] = record.group_id
+        encoded['record_count'] = record.record_count
+        encoded['record_type'] = record.record_type
+        encoded['transaction_count'] = record.transaction_count
 
         return encoded
 
