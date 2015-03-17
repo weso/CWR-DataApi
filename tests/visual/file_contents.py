@@ -2,7 +2,7 @@
 import codecs
 import time
 
-from cwr.parse.decoder import CWRFileDecoder
+from cwr.parser.file import CWRFileDecoder
 from cwr.utils.printer import CWRPrinter
 
 

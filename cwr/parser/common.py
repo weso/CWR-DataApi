@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
-import os
+
 from abc import ABCMeta, abstractmethod
 
-from cwr.grammar.file import cwr_transmission as rule_file
-from cwr.grammar.filename import cwr_filename_old as rule_filename
-from cwr.file import CWRFile
 from cwr.utils.reader import UTF8AdapterReader
 
 
 """
-Offers classes to parse data into CWR model instances.
+Offers base classes to parse data from CWR model instances.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -75,17 +72,21 @@ class GrammarFileDecoder(GrammarDecoder):
         return self._reader
 
 
-class CWRFileDecoder(object):
+class Encoder(object):
     """
-    Parses a CWR file, both its contents and the file name, to create a CWRFile instance.
+    Interface for encoders. These are parsers which transform a a model class into another data.
     """
+    __metaclass__ = ABCMeta
 
     def __init__(self):
-        self._filename_decoder = GrammarDecoder(rule_filename)
-        self._file_decoder = GrammarFileDecoder(rule_file)
+        pass
 
-    def decode(self, path):
-        filename = self._filename_decoder.decode(os.path.basename(path))
-        transmission = self._file_decoder.decode(path)
+    @abstractmethod
+    def encode(self, data):
+        """
+        Encodes the data, creating an structure from a model object instance.
 
-        return CWRFile(filename, transmission)
+        :param data: the data to encode
+        :return: a data structure created from the received data
+        """
+        pass

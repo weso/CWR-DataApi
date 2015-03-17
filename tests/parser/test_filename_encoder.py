@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder import CWRFileNameEncoder, CWRFileNameEncoderOld
+from cwr.parser.file import CWRFileNameEncoder, CWRFileNameEncoderOld
 from cwr.file import FileTag
 
 

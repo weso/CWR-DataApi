@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+import os
+from abc import ABCMeta
 
-from abc import ABCMeta, abstractmethod
+from cwr.grammar.file import cwr_transmission as rule_file
+from cwr.grammar.filename import cwr_filename_old as rule_filename
+from cwr.file import CWRFile
+from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
 
 
 """
-Offers classes to parse data from CWR model instances.
+Offers classes to parse data into CWR model instances.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -12,27 +17,23 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class Encoder(object):
+class CWRFileDecoder(object):
     """
-    Interface for encoders. These are parsers which transform a a model class into another data.
+    Parses a CWR file, both its contents and the file name, to create a CWRFile instance.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
-        pass
+        self._filename_decoder = GrammarDecoder(rule_filename)
+        self._file_decoder = GrammarFileDecoder(rule_file)
 
-    @abstractmethod
-    def encode(self, data):
-        """
-        Encodes the data, creating an structure from a model object instance.
+    def decode(self, path):
+        filename = self._filename_decoder.decode(os.path.basename(path))
+        transmission = self._file_decoder.decode(path)
 
-        :param data: the data to encode
-        :return: a data structure created from the received data
-        """
-        pass
+        return CWRFile(filename, transmission)
 
 
-class CWRFileTagEncoder(Encoder):
+class _CWRFileTagEncoder(Encoder):
     """
     Parses a CWR file name from a FileTag class.
 
@@ -59,7 +60,7 @@ class CWRFileTagEncoder(Encoder):
     _sequence_l_old = 2
 
     def __init__(self):
-        super(CWRFileTagEncoder, self).__init__()
+        super(_CWRFileTagEncoder, self).__init__()
 
     def _encode(self, tag, sequence_l):
         """
@@ -89,7 +90,7 @@ class CWRFileTagEncoder(Encoder):
         return self._header + year + sequence + sender + self._ip_delimiter + receiver + ".V" + version
 
 
-class CWRFileNameEncoder(CWRFileTagEncoder):
+class CWRFileNameEncoder(_CWRFileTagEncoder):
     # Sequence length
     _sequence_l = 4
 
@@ -112,7 +113,7 @@ class CWRFileNameEncoder(CWRFileTagEncoder):
         return self._encode(tag, self._sequence_l)
 
 
-class CWRFileNameEncoderOld(CWRFileTagEncoder):
+class CWRFileNameEncoderOld(_CWRFileTagEncoder):
     # Sequence lengths
     _sequence_l = 2
 
