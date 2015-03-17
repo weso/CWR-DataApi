@@ -18,7 +18,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TesGroupTrailerDictionaryEncoding(unittest.TestCase):
+class TestGroupTrailerDictionaryEncoding(unittest.TestCase):
     def setUp(self):
         self._encoder = CWRDictionaryEncoder()
 

@@ -3,7 +3,6 @@ import os
 from abc import ABCMeta
 
 from cwr.grammar.file import cwr_transmission as rule_file
-
 from cwr.grammar.filename import cwr_filename_old as rule_filename_old
 from cwr.grammar.filename import cwr_filename as rule_filename_new
 from cwr.file import CWRFile, FileTag
@@ -46,7 +45,7 @@ class CWRFileNameDecoder(Decoder):
 
     def decode(self, path):
         filename = os.path.basename(path)
-        
+
         try:
             filetag = self._filename_decoder_new.decode(filename)
         except:

@@ -3,6 +3,7 @@
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
 from cwr.group import GroupHeader, GroupTrailer
+from cwr.info import AdditionalRelatedInfoRecord
 
 from cwr.parser.common import Encoder
 
@@ -30,6 +31,9 @@ class CWRDictionaryEncoder(Encoder):
         if isinstance(object, AcknowledgementRecord):
             # Acknowledgement
             encoded = self.__encode_acknowledgement_record(object)
+        elif isinstance(object, AdditionalRelatedInfoRecord):
+            # Additional Related Info
+            encoded = self.__encode_additional_related_info_record(object)
         elif isinstance(object, AgreementRecord):
             # Agreement
             encoded = self.__encode_agreement_record(object)
@@ -65,6 +69,44 @@ class CWRDictionaryEncoder(Encoder):
         encoded['record_type'] = record.record_type
         encoded['transaction_sequence_n'] = record.transaction_sequence_n
         encoded['record_sequence_n'] = record.record_sequence_n
+
+        return encoded
+
+    def __encode_acknowledgement_record(self, record):
+        """
+        Creates a dictionary from an AcknowledgementRecord.
+
+        :param record: the AcknowledgementRecord to transform into a dictionary
+        :return: a dictionary created from the AcknowledgementRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['creation_date_time'] = record.creation_date_time
+        encoded['creation_title'] = record.creation_title
+        encoded['original_group_id'] = record.original_group_id
+        encoded['original_transaction_sequence_n'] = record.original_transaction_sequence_n
+        encoded['original_transaction_type'] = record.original_transaction_type
+        encoded['processing_date'] = record.processing_date
+        encoded['recipient_creation_n'] = record.recipient_creation_n
+        encoded['submitter_creation_n'] = record.submitter_creation_n
+        encoded['transaction_status'] = record.transaction_status
+
+        return encoded
+
+    def __encode_additional_related_info_record(self, record):
+        """
+        Creates a dictionary from an AdditionalRelatedInfoRecord.
+
+        :param record: the AdditionalRelatedInfoRecord to transform into a dictionary
+        :return: a dictionary created from the AdditionalRelatedInfoRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['note'] = record.note
+        encoded['society_n'] = record.society_n
+        encoded['subject_code'] = record.subject_code
+        encoded['type_of_right'] = record.type_of_right
+        encoded['work_n'] = record.work_n
 
         return encoded
 
@@ -164,27 +206,6 @@ class CWRDictionaryEncoder(Encoder):
         encoded['pr_share'] = record.pr_share
         encoded['sr_society'] = record.sr_society
         encoded['sr_share'] = record.sr_share
-
-        return encoded
-
-    def __encode_acknowledgement_record(self, record):
-        """
-        Creates a dictionary from an AcknowledgementRecord.
-
-        :param record: the AcknowledgementRecord to transform into a dictionary
-        :return: a dictionary created from the AcknowledgementRecord
-        """
-        encoded = self.__encode_transaction_record_head(record)
-
-        encoded['creation_date_time'] = record.creation_date_time
-        encoded['creation_title'] = record.creation_title
-        encoded['original_group_id'] = record.original_group_id
-        encoded['original_transaction_sequence_n'] = record.original_transaction_sequence_n
-        encoded['original_transaction_type'] = record.original_transaction_type
-        encoded['processing_date'] = record.processing_date
-        encoded['recipient_creation_n'] = record.recipient_creation_n
-        encoded['submitter_creation_n'] = record.submitter_creation_n
-        encoded['transaction_status'] = record.transaction_status
 
         return encoded
 
