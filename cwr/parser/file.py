@@ -3,8 +3,10 @@ import os
 from abc import ABCMeta
 
 from cwr.grammar.file import cwr_transmission as rule_file
-from cwr.grammar.filename import cwr_filename_old as rule_filename
-from cwr.file import CWRFile
+
+from cwr.grammar.filename import cwr_filename_old as rule_filename_old
+from cwr.grammar.filename import cwr_filename as rule_filename_new
+from cwr.file import CWRFile, FileTag
 from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
 from cwr.parser.common import Decoder
 
@@ -25,14 +27,33 @@ class CWRFileDecoder(Decoder):
 
     def __init__(self):
         super(CWRFileDecoder, self).__init__()
-        self._filename_decoder = GrammarDecoder(rule_filename)
+        self._filename_decoder = CWRFileNameDecoder()
         self._file_decoder = GrammarFileDecoder(rule_file)
 
     def decode(self, path):
         filename = self._filename_decoder.decode(os.path.basename(path))
+
         transmission = self._file_decoder.decode(path)
 
         return CWRFile(filename, transmission)
+
+
+class CWRFileNameDecoder(Decoder):
+    def __init__(self):
+        super(CWRFileNameDecoder, self).__init__()
+        self._filename_decoder_old = GrammarDecoder(rule_filename_old)
+        self._filename_decoder_new = GrammarDecoder(rule_filename_new)
+
+    def decode(self, path):
+        try:
+            filename = self._filename_decoder_new.decode(os.path.basename(path))
+        except:
+            try:
+                filename = self._filename_decoder_old.decode(os.path.basename(path))
+            except:
+                filename = FileTag(0, 0, '', '', '')
+
+        return filename
 
 
 class _CWRFileTagEncoder(Encoder):
