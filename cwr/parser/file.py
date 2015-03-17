@@ -6,6 +6,7 @@ from cwr.grammar.file import cwr_transmission as rule_file
 from cwr.grammar.filename import cwr_filename_old as rule_filename
 from cwr.file import CWRFile
 from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
+from cwr.parser.common import Decoder
 
 
 """
@@ -17,12 +18,13 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class CWRFileDecoder(object):
+class CWRFileDecoder(Decoder):
     """
     Parses a CWR file, both its contents and the file name, to create a CWRFile instance.
     """
 
     def __init__(self):
+        super(CWRFileDecoder, self).__init__()
         self._filename_decoder = GrammarDecoder(rule_filename)
         self._file_decoder = GrammarFileDecoder(rule_file)
 
