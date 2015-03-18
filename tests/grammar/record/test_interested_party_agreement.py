@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import ipa
+from cwr.grammar.record import interested_party_agreement
 
 
 """
@@ -22,7 +22,7 @@ class TestIPAGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = ipa.ipa
+        self.grammar = interested_party_agreement.interested_party_agreement
 
     def test_valid_full(self):
         """
@@ -109,7 +109,7 @@ class TestIPAGrammar(unittest.TestCase):
 
 class TestIPAGrammarException(unittest.TestCase):
     def setUp(self):
-        self.grammar = ipa.ipa
+        self.grammar = interested_party_agreement.interested_party_agreement
 
     def test_acquiror_missing_shares(self):
         """

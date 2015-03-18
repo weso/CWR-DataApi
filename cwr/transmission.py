@@ -236,3 +236,66 @@ class TransmissionTrailer(Record):
         :return: the total transaction count
         """
         return self._transaction_count
+
+
+class Transmission(object):
+    """
+    Represents a CWR file Transmission.
+
+    As a Transmission wraps all the file's data, this in practise equals to the file content.
+
+    It is composed by a Transmission Header and a Transmission Trailer, and in-between a collection of groups,
+    following the structure [HDR, [GRH,GRT]*, TRL].
+    """
+
+    def __init__(self, header, trailer, groups):
+        """
+        Constructs a Transmission.
+
+        The transaction groups should be a collection of TransactionGroup instances. While the header should be a
+        TransmissionHeader and the trailer a TransmissionTrailer.
+
+        :param header: the transmission header
+        :param trailer: the transmission trailer
+        :param groups: the transaction groups
+        """
+        self._header = header
+        self._trailer = trailer
+        self._groups = groups
+
+    def __str__(self):
+        return '%s to %s [%s]' % (
+            self._header, self._trailer, self._groups)
+
+    def __repr__(self):
+        return '<class %s>(hdr=%r, trl=%r, groups=%r)' % (
+            'Transmission', self._header,
+            self._trailer,
+            self._groups)
+
+    @property
+    def groups(self):
+        """
+        The transmission groups. This is a collection of TransactionGroups.
+
+        :return: a collection with transaction groups
+        """
+        return self._groups
+
+    @property
+    def header(self):
+        """
+        The transmission header. This is a TransmissionHeader.
+
+        :return: the transmission header
+        """
+        return self._header
+
+    @property
+    def trailer(self):
+        """
+        The transmission trailer. This is a TransmissionTrailer.
+
+        :return: the transmission trailer
+        """
+        return self._trailer

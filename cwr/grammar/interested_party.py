@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from cwr.grammar.record import publisher, nra, publisher_territory, writer, writer_territory, writer_publisher, \
-    agreement_territory, ipa
+    agreement_territory, interested_party_agreement
 
 
 """
@@ -37,7 +37,7 @@ controlled_publisher_information = original_publisher_information + pp.Optional(
     pp.OneOrMore(publisher.publisher))
 
 # IPA
-ipa_information = ipa.ipa + pp.Optional(nra.npa)
+ipa_information = interested_party_agreement.interested_party_agreement + pp.Optional(nra.npa)
 
 # Territory
 territory_information = pp.OneOrMore(agreement_territory.territory_in_agreement) + ipa_information * 2 + \
