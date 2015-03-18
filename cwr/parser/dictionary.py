@@ -2,13 +2,14 @@
 
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
-from cwr.group import GroupHeader, GroupTrailer
+from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.info import AdditionalRelatedInfoRecord
 from cwr.interested_party import IPTerritoryOfControlRecord
 
 from cwr.parser.common import Encoder
 from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
 from cwr.nra import NRAWorkRecord, NATRecord, NOWRecord, NPARecord, NPNRecord, NPRRecord, NWNRecord
+from cwr.transmission import TransmissionHeader, TransmissionTrailer, Transmission
 
 
 """
@@ -43,6 +44,9 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, AgreementTerritoryRecord):
             # Agreement Territory
             encoded = self.__encode_agreement_territory_record(object)
+        elif isinstance(object, Group):
+            # Group
+            encoded = self.__encode_group(object)
         elif isinstance(object, GroupHeader):
             # Group Header
             encoded = self.__encode_group_header(object)
@@ -88,6 +92,15 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, PublisherRecord):
             # Publisher
             encoded = self.__encode_publisher_record(object)
+        elif isinstance(object, Transmission):
+            # Transmission
+            encoded = self.__encode_transmission(object)
+        elif isinstance(object, TransmissionHeader):
+            # Transmission Header
+            encoded = self.__encode_transmission_header(object)
+        elif isinstance(object, TransmissionTrailer):
+            # Transmission Trailer
+            encoded = self.__encode_transmission_trailer(object)
         elif isinstance(object, Writer):
             # Writer IP
             encoded = self.__encode_writer(object)
@@ -240,6 +253,26 @@ class CWRDictionaryEncoder(Encoder):
 
         encoded['inclusion_exclusion_indicator'] = record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
+
+        return encoded
+
+    def __encode_group(self, record):
+        """
+        Creates a dictionary from an Group.
+
+        :param record: the Group to transform into a dictionary
+        :return: a dictionary created from the Group
+        """
+        encoded = {}
+
+        encoded['group_header'] = self.__encode_group_header(record.group_header)
+        encoded['group_trailer'] = self.__encode_group_header(record.group_trailer)
+
+        transactions = []
+        for t in record.transactions:
+            transactions.append(self.encode(t))
+
+        encoded['transactions'] = transactions
 
         return encoded
 
@@ -493,6 +526,62 @@ class CWRDictionaryEncoder(Encoder):
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
         encoded['publisher'] = self.__encode_publisher(record.publisher)
+
+        return encoded
+
+    def __encode_transmission(self, record):
+        """
+        Creates a dictionary from a Transmission.
+
+        :param record: the Transmission to transform into a dictionary
+        :return: a dictionary created from the Transmission
+        """
+        encoded = {}
+
+        encoded['header'] = self.__encode_transmission_header(record.header)
+        encoded['trailer'] = self.__encode_transmission_trailer(record.trailer)
+
+        groups = []
+        for g in record.groups:
+            groups.append(self.__encode_group(g))
+
+        encoded['groups'] = groups
+
+        return encoded
+
+    def __encode_transmission_header(self, record):
+        """
+        Creates a dictionary from a TransmissionHeader.
+
+        :param record: the TransmissionHeader to transform into a dictionary
+        :return: a dictionary created from the TransmissionHeader
+        """
+        encoded = {}
+
+        encoded['record_type'] = record.record_type
+        encoded['sender_id'] = record.sender_id
+        encoded['sender_name'] = record.sender_name
+        encoded['sender_type'] = record.sender_type
+        encoded['creation_date_time'] = record.creation_date_time
+        encoded['transmission_date'] = record.transmission_date
+        encoded['edi_standard'] = record.edi_standard
+        encoded['character_set'] = record.character_set
+
+        return encoded
+
+    def __encode_transmission_trailer(self, record):
+        """
+        Creates a dictionary from a TransmissionTrailer.
+
+        :param record: the TransmissionTrailer to transform into a dictionary
+        :return: a dictionary created from the TransmissionTrailer
+        """
+        encoded = {}
+
+        encoded['record_type'] = record.record_type
+        encoded['group_count'] = record.group_count
+        encoded['transaction_count'] = record.transaction_count
+        encoded['record_count'] = record.record_count
 
         return encoded
 

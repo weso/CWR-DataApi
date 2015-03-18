@@ -5,7 +5,7 @@ import pyparsing as pp
 from cwr.grammar.record import transmission, group
 from cwr.grammar.field import special
 from cwr.grammar import transaction
-from cwr.group import TransactionGroup
+from cwr.group import Group
 from cwr.transmission import Transmission
 
 
@@ -75,4 +75,4 @@ def _to_group(parsed):
     :param parsed: result of parsing a Transactions Group
     :return: a TransactionGroup created from the parsed record
     """
-    return TransactionGroup(parsed.group_header, parsed.group_trailer, parsed.transactions)
+    return Group(parsed.group_header, parsed.group_trailer, parsed.transactions)

@@ -171,7 +171,7 @@ class GroupTrailer(Record):
         return self._transaction_count
 
 
-class TransactionGroup(object):
+class Group(object):
     """
     Represents a CWR file group of transactions inside a transmission.
 
