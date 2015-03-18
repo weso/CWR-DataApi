@@ -37,7 +37,7 @@ class NRARecord(TransactionRecord):
         return self._language_code
 
 
-class NRARecordWork(NRARecord):
+class NRAWorkRecord(NRARecord):
     """
     Represents a Non-Roman Alphabet record used for Work details.
 
@@ -52,7 +52,7 @@ class NRARecordWork(NRARecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None):
-        super(NRARecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NRAWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         self._title = title
 
     @property
@@ -114,7 +114,8 @@ class NOWRecord(NRARecord):
     alphabet.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_name,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 writer_first_name, writer_name,
                  position=None,
                  language_code=None):
         super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
@@ -268,14 +269,14 @@ class NPRRecord(NRARecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, performing_artist_first_name='',
-                 performing_artist_name='', performing_artist_ipi_name_n_ipi_name=None,
+                 performing_artist_name='', performing_artist_ipi_name_n=None,
                  performing_artist_ipi_base_n=None, language_code=None, performance_language=None,
                  performance_dialect=None):
         super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Artist data
         self._performing_artist_first_name = performing_artist_first_name
         self._performing_artist_name = performing_artist_name
-        self._performing_artist_ipi_name_n = performing_artist_ipi_name_n_ipi_name
+        self._performing_artist_ipi_name_n = performing_artist_ipi_name_n
         self._performing_artist_ipi_base_n = performing_artist_ipi_base_n
 
         # Language data
@@ -361,13 +362,13 @@ class NWNRecord(NRARecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_last_name,
-                 ip_id='',
+                 ip_n='',
                  language_code=None):
         super(NWNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Writer info
         self._writer_first_name = writer_first_name
         self._writer_last_name = writer_last_name
-        self._ip_n = ip_id
+        self._ip_n = ip_n
 
     @property
     def ip_n(self):

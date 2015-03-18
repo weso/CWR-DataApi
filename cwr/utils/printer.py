@@ -8,7 +8,7 @@ from cwr.interested_party import IPTerritoryOfControlRecord, PublisherRecord, Pu
 from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, \
     RecordingDetailRecord, InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, \
     PerformingArtistRecord
-from cwr.nra import NPARecord, NPNRecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord
+from cwr.nra import NPARecord, NPNRecord, NWNRecord, NATRecord, NRAWorkRecord, NOWRecord, NPRRecord
 
 
 """
@@ -174,7 +174,7 @@ class CWRPrinter():
             self.print_now(record)
         elif (isinstance(record, NPRRecord)):
             self.print_npr(record)
-        elif (isinstance(record, NRARecordWork)):
+        elif (isinstance(record, NRAWorkRecord)):
             self.print_nra(record)
 
     def print_ipa(self, record):

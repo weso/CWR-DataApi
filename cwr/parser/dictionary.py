@@ -8,6 +8,7 @@ from cwr.interested_party import IPTerritoryOfControlRecord
 
 from cwr.parser.common import Encoder
 from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
+from cwr.nra import NRAWorkRecord, NATRecord, NOWRecord, NPARecord, NPNRecord, NPRRecord, NWNRecord
 
 
 """
@@ -57,6 +58,27 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, MessageRecord):
             # Message
             encoded = self.__encode_message_record(object)
+        elif isinstance(object, NATRecord):
+            # NAT Record
+            encoded = self.__encode_nat_record(object)
+        elif isinstance(object, NOWRecord):
+            # NOW Record
+            encoded = self.__encode_now_record(object)
+        elif isinstance(object, NPARecord):
+            # NPA Record
+            encoded = self.__encode_npa_record(object)
+        elif isinstance(object, NPNRecord):
+            # NPN Record
+            encoded = self.__encode_npn_record(object)
+        elif isinstance(object, NPRRecord):
+            # NPR Record
+            encoded = self.__encode_npr_record(object)
+        elif isinstance(object, NRAWorkRecord):
+            # NRA Record for Works
+            encoded = self.__encode_nra_work_record(object)
+        elif isinstance(object, NWNRecord):
+            # NWN Record for Works
+            encoded = self.__encode_nwn_record(object)
         elif isinstance(object, Publisher):
             # Publisher IP
             encoded = self.__encode_publisher(object)
@@ -125,6 +147,19 @@ class CWRDictionaryEncoder(Encoder):
         encoded['sr_society'] = record.sr_society
         encoded['sr_ownership_share'] = record.sr_ownership_share
         encoded['usa_license'] = record.usa_license
+
+        return encoded
+
+    def __encode_nra_record(self, record):
+        """
+        Creates a dictionary from a NRARecord.
+
+        :param record: the NRARecord to transform into a dictionary
+        :return: a dictionary created from the NRARecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['language_code'] = record.language_code
 
         return encoded
 
@@ -303,6 +338,96 @@ class CWRDictionaryEncoder(Encoder):
 
         return encoded
 
+    def __encode_nat_record(self, record):
+        """
+        Creates a dictionary from a NATRecord.
+
+        :param record: the NATRecord to transform into a dictionary
+        :return: a dictionary created from the NATRecord
+        """
+        encoded = self.__encode_nra_record(record)
+
+        encoded['title'] = record.title
+        encoded['title_type'] = record.title_type
+
+        return encoded
+
+    def __encode_now_record(self, record):
+        """
+        Creates a dictionary from a NOWRecord.
+
+        :param record: the NOWRecord to transform into a dictionary
+        :return: a dictionary created from the NOWRecord
+        """
+        encoded = self.__encode_nra_record(record)
+
+        encoded['position'] = record.position
+        encoded['writer_first_name'] = record.writer_first_name
+        encoded['writer_name'] = record.writer_name
+
+        return encoded
+
+    def __encode_npa_record(self, record):
+        """
+        Creates a dictionary from a NPARecord.
+
+        :param record: the NPARecord to transform into a dictionary
+        :return: a dictionary created from the NPARecord
+        """
+        encoded = self.__encode_nra_record(record)
+
+        encoded['ip_name'] = record.ip_name
+        encoded['ip_writer_name'] = record.ip_writer_name
+        encoded['ip_n'] = record.ip_n
+
+        return encoded
+
+    def __encode_npn_record(self, record):
+        """
+        Creates a dictionary from a NPNRecord.
+
+        :param record: the NPNRecord to transform into a dictionary
+        :return: a dictionary created from the NPNRecord
+        """
+        encoded = self.__encode_nra_record(record)
+
+        encoded['ip_n'] = record.ip_n
+        encoded['publisher_name'] = record.publisher_name
+        encoded['publisher_sequence_n'] = record.publisher_sequence_n
+
+        return encoded
+
+    def __encode_npr_record(self, record):
+        """
+        Creates a dictionary from a NPRRecord.
+
+        :param record: the NPRRecord to transform into a dictionary
+        :return: a dictionary created from the NPRRecord
+        """
+        encoded = self.__encode_nra_record(record)
+
+        encoded['performance_dialect'] = record.performance_dialect
+        encoded['performance_language'] = record.performance_language
+        encoded['performing_artist_first_name'] = record.performing_artist_first_name
+        encoded['performing_artist_ipi_base_n'] = record.performing_artist_ipi_base_n
+        encoded['performing_artist_ipi_name_n'] = record.performing_artist_ipi_name_n
+        encoded['performing_artist_name'] = record.performing_artist_name
+
+        return encoded
+
+    def __encode_nra_work_record(self, record):
+        """
+        Creates a dictionary from a NRAWorkRecord.
+
+        :param record: the NRAWorkRecord to transform into a dictionary
+        :return: a dictionary created from the NRAWorkRecord
+        """
+        encoded = self.__encode_nra_record(record)
+
+        encoded['title'] = record.title
+
+        return encoded
+
     def __encode_publisher(self, record):
         """
         Creates a dictionary from a Publisher.
@@ -313,6 +438,21 @@ class CWRDictionaryEncoder(Encoder):
         encoded = self.__encode_interested_party(record)
 
         encoded['publisher_name'] = record.publisher_name
+
+        return encoded
+
+    def __encode_nwn_record(self, record):
+        """
+        Creates a dictionary from a NWNRecord.
+
+        :param record: the NWNRecord to transform into a dictionary
+        :return: a dictionary created from the NWNRecord
+        """
+        encoded = self.__encode_nra_record(record)
+
+        encoded['writer_first_name'] = record.writer_first_name
+        encoded['writer_last_name'] = record.writer_last_name
+        encoded['ip_n'] = record.ip_n
 
         return encoded
 

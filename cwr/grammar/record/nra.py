@@ -6,7 +6,7 @@ from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import nra as field_nra
-from cwr.nra import NPARecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord, NPNRecord
+from cwr.nra import NPARecord, NWNRecord, NATRecord, NRAWorkRecord, NOWRecord, NPRRecord, NPNRecord
 
 
 """
@@ -160,7 +160,7 @@ def _to_nra_work(parsed):
     :param parsed: result of parsing an Work NRA transaction
     :return: a NRARecordWork created from the parsed record
     """
-    return NRARecordWork(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+    return NRAWorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                          parsed.title, parsed.language_code)
 
 
