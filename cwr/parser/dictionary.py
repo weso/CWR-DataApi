@@ -126,28 +126,6 @@ class CWRDictionaryEncoder(Encoder):
         encoded['sr_ownership_share'] = record.sr_ownership_share
         encoded['usa_license'] = record.usa_license
 
-        encoded['publisher'] = self.__encode_publisher(record.publisher)
-
-        return encoded
-
-    def __encode_interested_party_record(self, record):
-        """
-        Creates a dictionary from an InterestedPartyRecord.
-
-        :param record: the InterestedPartyRecord to transform into a dictionary
-        :return: a dictionary created from the InterestedPartyRecord
-        """
-        encoded = self.__encode_transaction_record_head(record)
-
-        encoded['first_recording_refusal'] = record.first_recording_refusal
-        encoded['usa_license'] = record.usa_license
-        encoded['pr_ownership_share'] = record.pr_ownership_share
-        encoded['pr_society'] = record.pr_society
-        encoded['mr_ownership_share'] = record.mr_ownership_share
-        encoded['mr_society'] = record.mr_society
-        encoded['sr_ownership_share'] = record.sr_ownership_share
-        encoded['sr_society'] = record.sr_society
-
         return encoded
 
     def __encode_acknowledgement_record(self, record):
