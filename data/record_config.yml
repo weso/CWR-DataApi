@@ -1,3 +1,12 @@
+# Structural records
+
+ari:
+    type: 'ARI'
+    work_number:
+        size: 14
+    note:
+        size: 160
+
 record_prefix:
     record_sequence_n:
         size: 8
@@ -44,41 +53,7 @@ group_trailer:
     total_monetary_value:
         size: 10
 
-agreement:
-    type: 'AGR'
-    agreement_id:
-        size: 14
-    international_standard_code:
-        size: 14
-    number_works:
-        size: 5
-    society_agreement_number:
-        size: 14
-
-work:
-    type:
-        - 'NWR'
-        - 'REV'
-        - 'ISW'
-    work_title:
-        size: 60
-    work_id:
-        size: 14
-    copyright_number:
-        size: 12
-    contact_name:
-        size: 30
-    contact_id:
-        size: 10
-    composite_count:
-        size: 3
-    opus_number:
-        size: 25
-    catalogue:
-        size: 25
-
-work_conflict:
-    type: 'EXC'
+# Transaction records
 
 acknowledgement:
     type: 'ACK'
@@ -91,8 +66,52 @@ acknowledgement:
     recipient_id:
         size: 20
 
+agreement:
+    type: 'AGR'
+    agreement_id:
+        size: 14
+    international_standard_code:
+        size: 14
+    number_works:
+        size: 5
+    society_agreement_number:
+        size: 14
+
 agreement_territory:
     type: 'TER'
+
+alternate_title:
+    type: 'ALT'
+    alternate_title:
+        size: 60
+
+component:
+    type: 'COM'
+    title:
+        size: 60
+
+entire_work_title:
+    type: 'EWT'
+    entire_work_title:
+        size: 60
+    writer_last_name:
+        size: 45
+    writer_first_name:
+        size: 30
+    source:
+        size: 60
+
+instrumentation_detail:
+    type: 'IND'
+    players:
+        size: 3
+
+instrumentation_summary:
+    type: 'INS'
+    voices:
+        size: 3
+    description:
+        size: 50
 
 ipa:
     type: 'IPA'
@@ -101,20 +120,35 @@ ipa:
     ip_name:
         size: 30
 
-nra:
+message:
+    type: 'MSG'
+    original_record:
+        size: 8
+    validation:
+        size: 3
+    text:
+        size: 150
+
+now:
+    type: 'NOW'
     name:
         size: 160
+    last_name:
+        size: 160
+    position:
+        size: 1
 
-npa:
-    type: 'NPA'
+original_work_title:
+    type: 'VER'
+    original_title:
+        size: 60
 
-npn:
-    type: 'NPN'
-    name:
-        size: 480
-
-nwn:
-    type: 'NWN'
+performing_artist:
+    type: 'PER'
+    performer_last_name:
+        size: 45
+    performer_first_name:
+        size: 30
 
 publisher:
     type:
@@ -142,6 +176,65 @@ publisher_territory:
     sequence_n:
         size: 3
 
+recording_detail:
+    type: 'REC'
+    constant_1:
+        size: 60
+    constant_2:
+        size: 5
+    first_album_title:
+        size: 60
+    first_album_label:
+        size: 60
+    first_release_catalog_id:
+        size: 18
+
+work:
+    type:
+        - 'NWR'
+        - 'REV'
+        - 'ISW'
+    work_title:
+        size: 60
+    work_id:
+        size: 14
+    copyright_number:
+        size: 12
+    contact_name:
+        size: 30
+    contact_id:
+        size: 10
+    composite_count:
+        size: 3
+    opus_number:
+        size: 25
+    catalogue:
+        size: 25
+
+work_conflict:
+    type: 'EXC'
+
+work_origin:
+    type: 'ORN'
+    production_title:
+        size: 60
+    cd_identifier:
+        size: 15
+    cut_number:
+        size: 4
+    library:
+        size: 60
+    bltvr:
+        size: 1
+    production_n:
+        size: 12
+    episode_title:
+        size: 60
+    episode_n:
+        size: 20
+    production_year:
+        size: 4
+
 writer:
     type:
         - 'SWR'
@@ -165,118 +258,32 @@ writer_publisher:
     publisher_name:
         size: 45
 
-alternate_title:
-    type: 'ALT'
-    alternate_title:
-        size: 60
-
-table:
-    title_type:
-        size: 2
-    composite_type:
-        size: 3
-    music_arrangement:
-        size: 3
-    lyric_adaptation:
-        size: 3
-    work_type:
-        size: 2
-    writer_designation:
-        size: 2
-    original_transaction_type:
-        size: 3
-    transaction_status:
-        size: 2
-    prior_royalty_status:
-        size: 1
-    post_term_collection_status:
-        size: 1
-    sm_clause:
-        size: 1
-    ie_indicator_field:
-        size: 1
-    tis_code:
-        size: 4
-    agreement_role_code:
-        size: 2
-    language_code:
-        size: 2
-    publisher_type:
-        size: 2
-    special_agreement:
-        size: 1
-    transaction_type:
-        size: 3
-    sender_type:
-        size: 2
-    sender_type:
-        size: 2
-    musical_distribution_category:
-        size: 3
-    text_music_relationship:
-        size: 3
-    text_music_relationship:
-        size: 3
-    version_type:
-        size: 3
-    excerpt_type:
-        size: 3
-    usa_license:
-        size: 1
-    agreement_type:
-        size: 2
-    society:
-        size: 3
-    recording_format:
-        size: 1
-    recording_technique:
-        size: 1
-    media_type:
-        size: 3
-    intended_purpose:
-        size: 3
-    standard_instrumentations:
-        size: 3
-    instruments:
-        size: 3
-    message_type:
-        size: 3
-    message_level:
-        size: 3
-    record_type:
-        size: 3
-    type_of_right:
-        size: 3
-    subject_code:
-        size: 2
+# Non-Roman Alphabet records
 
 nat:
     type: 'NAT'
     title:
         size: 640
 
-entire_work_title:
-    type: 'EWT'
-    entire_work_title:
-        size: 60
-    writer_last_name:
-        size: 45
-    writer_first_name:
-        size: 30
-    source:
-        size: 60
+nra:
+    name:
+        size: 160
 
-original_work_title:
-    type: 'VER'
-    original_title:
-        size: 60
+nra_work:
+    type:
+        - 'NCT'
+        - 'NET'
+        - 'NVT'
+    title:
+        size: 640
 
-performing_artist:
-    type: 'PER'
-    performer_last_name:
-        size: 45
-    performer_first_name:
-        size: 30
+npa:
+    type: 'NPA'
+
+npn:
+    type: 'NPN'
+    name:
+        size: 480
 
 npr:
     type: 'NPR'
@@ -287,89 +294,88 @@ npr:
     dialect:
         size: 3
 
-recording_detail:
-    type: 'REC'
-    constant_1:
-        size: 60
-    constant_2:
-        size: 5
-    first_album_title:
-        size: 60
-    first_album_label:
-        size: 60
-    first_release_catalog_id:
-        size: 18
+nwn:
+    type: 'NWN'
 
-work_origin:
-    type: 'ORN'
-    production_title:
-        size: 60
-    cd_identifier:
-        size: 15
-    cut_number:
-        size: 4
-    library:
-        size: 60
-    bltvr:
+# Tables
+
+table:
+    agreement_role_code:
+        size: 2
+    agreement_type:
+        size: 2
+    composite_type:
+        size: 3
+    excerpt_type:
+        size: 3
+    ie_indicator_field:
         size: 1
-    production_n:
-        size: 12
-    episode_title:
-        size: 60
-    episode_n:
-        size: 20
-    production_year:
-        size: 4
-
-instrumentation_summary:
-    type: 'INS'
-    voices:
+    instruments:
         size: 3
-    description:
-        size: 50
-
-instrumentation_detail:
-    type: 'IND'
-    players:
+    intended_purpose:
         size: 3
-
-component:
-    type: 'COM'
-    title:
-        size: 60
-
-message:
-    type: 'MSG'
-    original_record:
-        size: 8
-    validation:
+    language_code:
+        size: 2
+    lyric_adaptation:
         size: 3
-    text:
-        size: 150
-
-nra_work:
-    type:
-        - 'NCT'
-        - 'NET'
-        - 'NVT'
-    title:
-        size: 640
-
-now:
-    type: 'NOW'
-    name:
-        size: 160
-    last_name:
-        size: 160
-    position:
+    media_type:
+        size: 3
+    message_level:
+        size: 3
+    message_type:
+        size: 3
+    music_arrangement:
+        size: 3
+    musical_distribution_category:
+        size: 3
+    original_transaction_type:
+        size: 3
+    post_term_collection_status:
         size: 1
+    prior_royalty_status:
+        size: 1
+    publisher_type:
+        size: 2
+    record_type:
+        size: 3
+    recording_format:
+        size: 1
+    recording_technique:
+        size: 1
+    sender_type:
+        size: 2
+    sm_clause:
+        size: 1
+    society:
+        size: 3
+    subject_code:
+        size: 2
+    special_agreement:
+        size: 1
+    standard_instrumentations:
+        size: 3
+    text_music_relationship:
+        size: 3
+    tis_code:
+        size: 4
+    title_type:
+        size: 2
+    type_of_right:
+        size: 3
+    transaction_status:
+        size: 2
+    transaction_type:
+        size: 3
+    usa_license:
+        size: 1
+    version_type:
+        size: 3
+    work_type:
+        size: 2
+    writer_designation:
+        size: 2
 
-ari:
-    type: 'ARI'
-    work_number:
-        size: 14
-    note:
-        size: 160
+# Special fields
 
 special:
     ip_n:

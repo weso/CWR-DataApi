@@ -34,7 +34,7 @@ class GroupHeader(Record):
     A group can only contain one type of transaction and this is indicated in the Transaction Type field.
     """
 
-    def __init__(self, record_type, group_id, transaction_type, version_number="02.10", batch_request_id=0):
+    def __init__(self, record_type, group_id, transaction_type, version_number='02.10', batch_request_id=0):
         super(GroupHeader, self).__init__(record_type)
         self._group_id = group_id
         self._transaction_type = transaction_type
@@ -169,3 +169,74 @@ class GroupTrailer(Record):
         :return: the number of transactions
         """
         return self._transaction_count
+
+
+class Group(object):
+    """
+    Represents a CWR file group of transactions inside a transmission.
+
+    All transactions of the same type should be contained in the same group (i.e. all NWR transactions should
+    appear in one single NWR group), and each group type can only be used once per file (i.e there can only be one NWR
+    and one REV group per file).
+
+    The type of the group is indicated by the header.
+    """
+
+    def __init__(self, group_header, group_trailer, transactions):
+        """
+        Constructs a TransactionGroup.
+
+        This stores all the transaction of a kind in the file, containing only transactions of that kind.
+
+        A file can not contain two groups with the same type of transaction.
+
+        The group header should be a GroupHeader, and the trailer a GroupTrailer.
+
+        The transactions is a collection of entities representing the transactions.
+
+        :param group_header: the group header
+        :param group_trailer: the group trailer
+        :param transactions: the group transactions
+        """
+        self._group_header = group_header
+        self._group_trailer = group_trailer
+        self._transactions = transactions
+
+    def __str__(self):
+        return '%s to %s [%s]' % (
+            self._group_header, self._group_trailer, self._transactions)
+
+    def __repr__(self):
+        return '<class %s>(grh=%r, grt=%r, transactions=%r)' % (
+            'TransactionGroup', self._group_header,
+            self._group_trailer,
+            self._transactions)
+
+    @property
+    def group_header(self):
+        """
+        The group's header. This is a GroupHeader.
+
+        :return: group's header
+        """
+        return self._group_header
+
+    @property
+    def group_trailer(self):
+        """
+        The group's trailer. This is a GroupTrailer.
+
+        :return: group's trailer
+        """
+        return self._group_trailer
+
+    @property
+    def transactions(self):
+        """
+        The group transactions.
+
+        This is a collection of entities representing instances of one type of transaction.
+
+        :return: the group transactions
+        """
+        return self._transactions

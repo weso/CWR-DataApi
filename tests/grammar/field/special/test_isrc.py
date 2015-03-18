@@ -39,7 +39,7 @@ class TestISRCValid(unittest.TestCase):
         self.assertEqual('', result)
 
 
-class TestEAN13ResultName(unittest.TestCase):
+class TestISRCResultName(unittest.TestCase):
     """
     Tests that the IPI Base Number accepts and parses valid values.
     """

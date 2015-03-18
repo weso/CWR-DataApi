@@ -154,7 +154,7 @@ class AcknowledgementRecord(TransactionRecord):
         return self._transaction_status
 
 
-class AcknowledgementTransaction(TransactionRecord):
+class AcknowledgementTransaction(object):
     """
     Represents a CWR Acknowledgment Transaction (ACK).
 
@@ -182,10 +182,7 @@ class AcknowledgementTransaction(TransactionRecord):
     [ACK, MSG*, AGR|NWR|REV|EXC]
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
-                 ack, agr=None, nwr=None, rev=None, exc=None,
-                 messages=None):
-        super(AcknowledgementTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+    def __init__(self, ack, agr=None, nwr=None, rev=None, exc=None, messages=None):
         self._ack = ack
         self._agr = agr
         self._nwr = nwr
@@ -281,8 +278,7 @@ class MessageRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
-                 message_level, validation_n,
-                 message_type, message_text,
+                 message_level, validation_n, message_type, message_text,
                  original_record_sequence_n, message_record_type):
         super(MessageRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Message info

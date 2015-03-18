@@ -17,7 +17,7 @@ _config = CWRConfiguration()
 
 # Publisher IP #
 publisher_ip_number = special.ip_n()
-publisher_ip_number = publisher_ip_number.setName('Publisher IP #').setResultsName('publisher_ip_number')
+publisher_ip_number = publisher_ip_number.setName('Publisher IP #').setResultsName('publisher_ip_n')
 
 # Publisher Name
 publisher_name = basic.alphanum(_config.field_size('writer_publisher', 'publisher_name'))

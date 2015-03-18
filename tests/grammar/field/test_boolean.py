@@ -66,7 +66,7 @@ class TestBooleanName(unittest.TestCase):
 
         self.assertEqual(name, field.name)
 
-    def test_name_set(self):
+    def test_name_set_compulsory(self):
         """
         Tests that the given field name is set correctly for optional fields for compulsory fields.
         """

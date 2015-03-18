@@ -46,4 +46,4 @@ def _to_agreementterritory(parsed):
                                     transaction_sequence_n=parsed.transaction_sequence_n,
                                     record_sequence_n=parsed.record_sequence_n,
                                     tis_numeric_code=parsed.tis_code,
-                                    ie_indicator=parsed.ie_indicator)
+                                    inclusion_exclusion_indicator=parsed.ie_indicator)
