@@ -10,6 +10,8 @@ from cwr.parser.common import Encoder
 from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
 from cwr.nra import NRAWorkRecord, NATRecord, NOWRecord, NPARecord, NPNRecord, NPRRecord, NWNRecord
 from cwr.transmission import TransmissionHeader, TransmissionTrailer, Transmission
+from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, RecordingDetailRecord, \
+    InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, PerformingArtistRecord
 
 
 """
@@ -44,6 +46,15 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, AgreementTerritoryRecord):
             # Agreement Territory
             encoded = self.__encode_agreement_territory_record(object)
+        elif isinstance(object, AlternateTitleRecord):
+            # Alternate Title
+            encoded = self.__encode_alternate_title_record(object)
+        elif isinstance(object, AuthoredWorkRecord):
+            # Authored Work
+            encoded = self.__encode_authored_work_record(object)
+        elif isinstance(object, ComponentRecord):
+            # Component
+            encoded = self.__encode_component_record(object)
         elif isinstance(object, Group):
             # Group
             encoded = self.__encode_group(object)
@@ -53,6 +64,12 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, GroupTrailer):
             # Group Trailer
             encoded = self.__encode_group_trailer(object)
+        elif isinstance(object, InstrumentationDetailRecord):
+            # Instrumentation Detail
+            encoded = self.__encode_instrumentation_detail_record(object)
+        elif isinstance(object, InstrumentationSummaryRecord):
+            # Instrumentation Summary
+            encoded = self.__encode_instrumentation_summary_record(object)
         elif isinstance(object, InterestedPartyForAgreementRecord):
             # Interested Party for Agreement
             encoded = self.__encode_interested_party_agreement_record(object)
@@ -83,6 +100,9 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, NWNRecord):
             # NWN Record for Works
             encoded = self.__encode_nwn_record(object)
+        elif isinstance(object, PerformingArtistRecord):
+            # Performing Artist
+            encoded = self.__encode_performing_artist_record(object)
         elif isinstance(object, Publisher):
             # Publisher IP
             encoded = self.__encode_publisher(object)
@@ -92,6 +112,9 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, PublisherRecord):
             # Publisher
             encoded = self.__encode_publisher_record(object)
+        elif isinstance(object, RecordingDetailRecord):
+            # Recording Detail
+            encoded = self.__encode_recording_detail_record(object)
         elif isinstance(object, Transmission):
             # Transmission
             encoded = self.__encode_transmission(object)
@@ -101,6 +124,12 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, TransmissionTrailer):
             # Transmission Trailer
             encoded = self.__encode_transmission_trailer(object)
+        elif isinstance(object, WorkRecord):
+            # Work
+            encoded = self.__encode_work_record(object)
+        elif isinstance(object, WorkOriginRecord):
+            # Work Origin
+            encoded = self.__encode_work_origin_record(object)
         elif isinstance(object, Writer):
             # Writer IP
             encoded = self.__encode_writer(object)
@@ -173,6 +202,21 @@ class CWRDictionaryEncoder(Encoder):
         encoded = self.__encode_transaction_record_head(record)
 
         encoded['language_code'] = record.language_code
+
+        return encoded
+
+    def __encode_base_work_record(self, record):
+        """
+        Creates a dictionary from a BaseWorkRecord.
+
+        :param record: the BaseWorkRecord to transform into a dictionary
+        :return: a dictionary created from the BaseWorkRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['iswc'] = record.iswc
+        encoded['language_code'] = record.language_code
+        encoded['title'] = record.title
 
         return encoded
 
@@ -256,6 +300,70 @@ class CWRDictionaryEncoder(Encoder):
 
         return encoded
 
+    def __encode_alternate_title_record(self, record):
+        """
+        Creates a dictionary from an AlternateTitleRecord.
+
+        :param record: the AlternateTitleRecord to transform into a dictionary
+        :return: a dictionary created from the AlternateTitleRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['alternate_title'] = record.alternate_title
+        encoded['title_type'] = record.title_type
+        encoded['language_code'] = record.language_code
+
+        return encoded
+
+    def __encode_authored_work_record(self, record):
+        """
+        Creates a dictionary from an AuthoredWorkRecord.
+
+        :param record: the AuthoredWorkRecord to transform into a dictionary
+        :return: a dictionary created from the AuthoredWorkRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['iswc'] = record.iswc
+        encoded['language_code'] = record.language_code
+        encoded['source'] = record.source
+        encoded['submitter_work_n'] = record.submitter_work_n
+        encoded['title'] = record.title
+        encoded['writer_1_first_name'] = record.writer_1_first_name
+        encoded['writer_2_first_name'] = record.writer_2_first_name
+        encoded['writer_1_ipi_base_n'] = record.writer_1_ipi_base_n
+        encoded['writer_2_ipi_base_n'] = record.writer_2_ipi_base_n
+        encoded['writer_1_ipi_name_n'] = record.writer_1_ipi_name_n
+        encoded['writer_2_ipi_name_n'] = record.writer_2_ipi_name_n
+        encoded['writer_1_last_name'] = record.writer_1_last_name
+        encoded['writer_2_last_name'] = record.writer_2_last_name
+
+        return encoded
+
+    def __encode_component_record(self, record):
+        """
+        Creates a dictionary from an ComponentRecord.
+
+        :param record: the ComponentRecord to transform into a dictionary
+        :return: a dictionary created from the ComponentRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['duration'] = record.duration
+        encoded['iswc'] = record.iswc
+        encoded['submitter_work_n'] = record.submitter_work_n
+        encoded['title'] = record.title
+        encoded['writer_1_first_name'] = record.writer_1_first_name
+        encoded['writer_2_first_name'] = record.writer_2_first_name
+        encoded['writer_2_ipi_base_n'] = record.writer_2_ipi_base_n
+        encoded['writer_2_ipi_name_n'] = record.writer_2_ipi_name_n
+        encoded['writer_1_ipi_base_n'] = record.writer_1_ipi_base_n
+        encoded['writer_1_ipi_name_n'] = record.writer_1_ipi_name_n
+        encoded['writer_1_last_name'] = record.writer_1_last_name
+        encoded['writer_2_last_name'] = record.writer_2_last_name
+
+        return encoded
+
     def __encode_group(self, record):
         """
         Creates a dictionary from an Group.
@@ -306,6 +414,35 @@ class CWRDictionaryEncoder(Encoder):
         encoded['record_count'] = record.record_count
         encoded['record_type'] = record.record_type
         encoded['transaction_count'] = record.transaction_count
+
+        return encoded
+
+    def __encode_instrumentation_detail_record(self, record):
+        """
+        Creates a dictionary from an InstrumentationDetailRecord.
+
+        :param record: the InstrumentationDetailRecord to transform into a dictionary
+        :return: a dictionary created from the InstrumentationDetailRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['instrument_code'] = record.instrument_code
+        encoded['number_players'] = record.number_players
+
+        return encoded
+
+    def __encode_instrumentation_summary_record(self, record):
+        """
+        Creates a dictionary from an InstrumentationSummaryRecord.
+
+        :param record: the InstrumentationSummaryRecord to transform into a dictionary
+        :return: a dictionary created from the InstrumentationSummaryRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['instrumentation_description'] = record.instrumentation_description
+        encoded['number_voices'] = record.number_voices
+        encoded['standard_instrumentation_type'] = record.standard_instrumentation_type
 
         return encoded
 
@@ -489,6 +626,22 @@ class CWRDictionaryEncoder(Encoder):
 
         return encoded
 
+    def __encode_performing_artist_record(self, record):
+        """
+        Creates a dictionary from a PerformingArtistRecord.
+
+        :param record: the PerformingArtistRecord to transform into a dictionary
+        :return: a dictionary created from the PerformingArtistRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['performing_artist_first_name'] = record.performing_artist_first_name
+        encoded['performing_artist_ipi_base_n'] = record.performing_artist_ipi_base_n
+        encoded['performing_artist_ipi_name_n'] = record.performing_artist_ipi_name_n
+        encoded['performing_artist_last_name'] = record.performing_artist_last_name
+
+        return encoded
+
     def __encode_publisher_for_writer_record(self, record):
         """
         Creates a dictionary from a PublisherForWriterRecord.
@@ -526,6 +679,28 @@ class CWRDictionaryEncoder(Encoder):
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
         encoded['publisher'] = self.__encode_publisher(record.publisher)
+
+        return encoded
+
+    def __encode_recording_detail_record(self, record):
+        """
+        Creates a dictionary from a RecordingDetailRecord.
+
+        :param record: the RecordingDetailRecord to transform into a dictionary
+        :return: a dictionary created from the RecordingDetailRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['ean'] = record.ean
+        encoded['first_album_label'] = record.first_album_label
+        encoded['first_album_title'] = record.first_album_title
+        encoded['first_release_catalog_n'] = record.first_release_catalog_n
+        encoded['first_release_date'] = record.first_release_date
+        encoded['first_release_duration'] = record.first_release_duration
+        encoded['isrc'] = record.isrc
+        encoded['media_type'] = record.media_type
+        encoded['recording_format'] = record.recording_format
+        encoded['recording_technique'] = record.recording_technique
 
         return encoded
 
@@ -582,6 +757,64 @@ class CWRDictionaryEncoder(Encoder):
         encoded['group_count'] = record.group_count
         encoded['transaction_count'] = record.transaction_count
         encoded['record_count'] = record.record_count
+
+        return encoded
+
+    def __encode_work_record(self, record):
+        """
+        Creates a dictionary from a WorkRecord.
+
+        :param record: the WorkRecord to transform into a dictionary
+        :return: a dictionary created from the WorkRecord
+        """
+        encoded = self.__encode_base_work_record(record)
+
+        encoded['catalogue_number'] = record.catalogue_number
+        encoded['composite_component_count'] = record.composite_component_count
+        encoded['composite_type'] = record.composite_type
+        encoded['contact_id'] = record.contact_id
+        encoded['contact_name'] = record.contact_name
+        encoded['copyright_date'] = record.copyright_date
+        encoded['copyright_number'] = record.copyright_number
+        encoded['cwr_work_type'] = record.cwr_work_type
+        encoded['date_publication_printed_edition'] = record.date_publication_printed_edition
+        encoded['duration'] = record.duration
+        encoded['exceptional_clause'] = record.exceptional_clause
+        encoded['excerpt_type'] = record.excerpt_type
+        encoded['grand_rights_indicator'] = record.grand_rights_indicator
+        encoded['lyric_adaptation'] = record.lyric_adaptation
+        encoded['music_arrangement'] = record.music_arrangement
+        encoded['musical_work_distribution_category'] = record.musical_work_distribution_category
+        encoded['opus_number'] = record.opus_number
+        encoded['priority_flag'] = record.priority_flag
+        encoded['recorded_indicator'] = record.recorded_indicator
+        encoded['submitter_work_n'] = record.submitter_work_n
+        encoded['text_music_relationship'] = record.text_music_relationship
+        encoded['version_type'] = record.version_type
+
+        return encoded
+
+    def __encode_work_origin_record(self, record):
+        """
+        Creates a dictionary from a WorkOriginRecord.
+
+        :param record: the WorkOriginRecord to transform into a dictionary
+        :return: a dictionary created from the WorkOriginRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['audio_visual_key'] = record.audio_visual_key
+        encoded['bltvr'] = record.bltvr
+        encoded['cd_identifier'] = record.cd_identifier
+        encoded['cut_number'] = record.cut_number
+        encoded['episode_n'] = record.episode_n
+        encoded['episode_title'] = record.episode_title
+        encoded['intended_purpose'] = record.intended_purpose
+        encoded['library'] = record.library
+        encoded['production_n'] = record.production_n
+        encoded['production_title'] = record.production_title
+        encoded['visan'] = record.visan
+        encoded['year_production'] = record.year_production
 
         return encoded
 

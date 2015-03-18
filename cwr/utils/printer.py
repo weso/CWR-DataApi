@@ -332,12 +332,12 @@ class CWRPrinter():
         print('Duration: %s' % (record.duration))
         print('First Name Writer 1: %s' % (record.writer_1_first_name))
         print('Last Name Writer 1: %s' % (record.writer_1_last_name))
-        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base))
-        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name))
+        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base_n))
+        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name_n))
         print('First Name Writer 2: %s' % (record.writer_2_first_name))
         print('Last Name Writer 2: %s' % (record.writer_2_last_name))
-        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base))
-        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name))
+        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base_n))
+        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name_n))
 
     def print_authr(self, record):
         print('Work Number: %s' % (record.submitter_work_n))
@@ -347,12 +347,12 @@ class CWRPrinter():
         print('Source: %s' % (record.source))
         print('First Name Writer 1: %s' % (record.writer_1_first_name))
         print('Last Name Writer 1: %s' % (record.writer_1_last_name))
-        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base))
-        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name))
+        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base_n))
+        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name_n))
         print('First Name Writer 2: %s' % (record.writer_2_first_name))
         print('Last Name Writer 2: %s' % (record.writer_2_last_name))
-        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base))
-        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name))
+        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base_n))
+        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name_n))
 
     def print_alt(self, record):
         print('Alternate Title: %s' % (record.alternate_title))
