@@ -5,7 +5,7 @@ from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import agreement as field_agreement
 from cwr.grammar.field import writer_publisher as field_writer_publisher
-from cwr.interested_party import WriterPublisherRecord
+from cwr.interested_party import PublisherForWriterRecord
 
 
 """
@@ -49,6 +49,6 @@ def _to_publisher(parsed):
     :param parsed: result of parsing a Writer Publisher record
     :return: a WriterPublisherRecord created from the parsed record
     """
-    return WriterPublisherRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                 parsed.publisher_ip_number, parsed.writer_ip_n, parsed.submitter_agreement_n,
-                                 parsed.society_assigned_agreement_n)
+    return PublisherForWriterRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                                    parsed.publisher_ip_n, parsed.writer_ip_n, parsed.submitter_agreement_n,
+                                    parsed.society_assigned_agreement_n)

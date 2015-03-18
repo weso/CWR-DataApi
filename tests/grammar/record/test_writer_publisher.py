@@ -37,7 +37,7 @@ class TestWriterPublisherGrammar(unittest.TestCase):
         self.assertEqual('PWR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('A12345678', result.publisher_ip_number)
+        self.assertEqual('A12345678', result.publisher_ip_n)
         # self.assertEqual('THE PUBLISHER', result.publisher_name)
         self.assertEqual('C1234567890123', result.submitter_agreement_n)
         self.assertEqual('D1234567890123', result.society_assigned_agreement_n)

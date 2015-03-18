@@ -5,7 +5,7 @@ from cwr.grammar.field import table as field_table, society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import publisher_territory as field_territory
-from cwr.interested_party import IPTerritoryRecord
+from cwr.interested_party import IPTerritoryOfControlRecord
 
 
 """
@@ -53,6 +53,6 @@ def _to_publisherterritory(parsed):
     :param parsed: result of parsing the Territory record
     :return: an IPTerritoryRecord created from the parsed record
     """
-    return IPTerritoryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                             parsed.ip_n, parsed.ie_indicator, parsed.tis_code, parsed.sequence_n,
-                             parsed.pr_share, parsed.mr_share, parsed.sr_share, parsed.shares_change)
+    return IPTerritoryOfControlRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
+                                      parsed.ip_n, parsed.ie_indicator, parsed.tis_code, parsed.sequence_n,
+                                      parsed.pr_share, parsed.mr_share, parsed.sr_share, parsed.shares_change)

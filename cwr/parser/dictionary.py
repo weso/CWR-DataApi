@@ -4,8 +4,10 @@ from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
 from cwr.group import GroupHeader, GroupTrailer
 from cwr.info import AdditionalRelatedInfoRecord
+from cwr.interested_party import IPTerritoryOfControlRecord
 
 from cwr.parser.common import Encoder
+from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
 
 
 """
@@ -49,9 +51,27 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, InterestedPartyForAgreementRecord):
             # Interested Party for Agreement
             encoded = self.__encode_interested_party_agreement_record(object)
+        elif isinstance(object, IPTerritoryOfControlRecord):
+            # Interested Party (Writer/Publisher) Territory of Control
+            encoded = self.__encode_interested_party_territory_control_record(object)
         elif isinstance(object, MessageRecord):
             # Message
             encoded = self.__encode_message_record(object)
+        elif isinstance(object, Publisher):
+            # Publisher IP
+            encoded = self.__encode_publisher(object)
+        elif isinstance(object, PublisherForWriterRecord):
+            # Publisher For Writer
+            encoded = self.__encode_publisher_for_writer_record(object)
+        elif isinstance(object, PublisherRecord):
+            # Publisher
+            encoded = self.__encode_publisher_record(object)
+        elif isinstance(object, Writer):
+            # Writer IP
+            encoded = self.__encode_writer(object)
+        elif isinstance(object, WriterRecord):
+            # Writer
+            encoded = self.__encode_writer_record(object)
         else:
             encoded = None
 
@@ -69,6 +89,64 @@ class CWRDictionaryEncoder(Encoder):
         encoded['record_type'] = record.record_type
         encoded['transaction_sequence_n'] = record.transaction_sequence_n
         encoded['record_sequence_n'] = record.record_sequence_n
+
+        return encoded
+
+    def __encode_interested_party(self, record):
+        """
+        Creates a dictionary from an InterestedParty.
+
+        :param record: the InterestedParty to transform into a dictionary
+        :return: a dictionary created from the InterestedParty
+        """
+        encoded = {}
+
+        encoded['ip_n'] = record.ip_n
+        encoded['ipi_base_n'] = record.ipi_base_n
+        encoded['ipi_name_n'] = record.ipi_name_n
+        encoded['tax_id'] = record.tax_id
+
+        return encoded
+
+    def __encode_interested_party_record(self, record):
+        """
+        Creates a dictionary from a InterestedPartyRecord.
+
+        :param record: the InterestedPartyRecord to transform into a dictionary
+        :return: a dictionary created from the InterestedPartyRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['first_recording_refusal'] = record.first_recording_refusal
+        encoded['pr_society'] = record.pr_society
+        encoded['pr_ownership_share'] = record.pr_ownership_share
+        encoded['mr_society'] = record.mr_society
+        encoded['mr_ownership_share'] = record.mr_ownership_share
+        encoded['sr_society'] = record.sr_society
+        encoded['sr_ownership_share'] = record.sr_ownership_share
+        encoded['usa_license'] = record.usa_license
+
+        encoded['publisher'] = self.__encode_publisher(record.publisher)
+
+        return encoded
+
+    def __encode_interested_party_record(self, record):
+        """
+        Creates a dictionary from an InterestedPartyRecord.
+
+        :param record: the InterestedPartyRecord to transform into a dictionary
+        :return: a dictionary created from the InterestedPartyRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['first_recording_refusal'] = record.first_recording_refusal
+        encoded['usa_license'] = record.usa_license
+        encoded['pr_ownership_share'] = record.pr_ownership_share
+        encoded['pr_society'] = record.pr_society
+        encoded['mr_ownership_share'] = record.mr_ownership_share
+        encoded['mr_society'] = record.mr_society
+        encoded['sr_ownership_share'] = record.sr_ownership_share
+        encoded['sr_society'] = record.sr_society
 
         return encoded
 
@@ -209,6 +287,26 @@ class CWRDictionaryEncoder(Encoder):
 
         return encoded
 
+    def __encode_interested_party_territory_control_record(self, record):
+        """
+        Creates a dictionary from an IPTerritoryOfControlRecord.
+
+        :param record: the IPTerritoryOfControlRecord to transform into a dictionary
+        :return: a dictionary created from the IPTerritoryOfControlRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['ip_n'] = record.ip_n
+        encoded['ie_indicator'] = record.ie_indicator
+        encoded['tis_numeric_code'] = record.tis_numeric_code
+        encoded['sequence_n'] = record.sequence_n
+        encoded['pr_col_share'] = record.pr_col_share
+        encoded['mr_col_share'] = record.mr_col_share
+        encoded['sr_col_share'] = record.sr_col_share
+        encoded['shares_change'] = record.shares_change
+
+        return encoded
+
     def __encode_message_record(self, record):
         """
         Creates a dictionary from a MessageRecord.
@@ -224,5 +322,91 @@ class CWRDictionaryEncoder(Encoder):
         encoded['message_type'] = record.message_type
         encoded['original_record_sequence_n'] = record.original_record_sequence_n
         encoded['validation_n'] = record.validation_n
+
+        return encoded
+
+    def __encode_publisher(self, record):
+        """
+        Creates a dictionary from a Publisher.
+
+        :param record: the Publisher to transform into a dictionary
+        :return: a dictionary created from the Publisher
+        """
+        encoded = self.__encode_interested_party(record)
+
+        encoded['publisher_name'] = record.publisher_name
+
+        return encoded
+
+    def __encode_publisher_for_writer_record(self, record):
+        """
+        Creates a dictionary from a PublisherForWriterRecord.
+
+        :param record: the PublisherForWriterRecord to transform into a dictionary
+        :return: a dictionary created from the PublisherForWriterRecord
+        """
+        encoded = self.__encode_transaction_record_head(record)
+
+        encoded['publisher_ip_n'] = record.publisher_ip_n
+        encoded['society_assigned_agreement_n'] = record.society_assigned_agreement_n
+        encoded['submitter_agreement_n'] = record.submitter_agreement_n
+        encoded['writer_ip_n'] = record.writer_ip_n
+
+        return encoded
+
+    def __encode_publisher_record(self, record):
+        """
+        Creates a dictionary from a PublisherRecord.
+
+        :param record: the PublisherRecord to transform into a dictionary
+        :return: a dictionary created from the PublisherRecord
+        """
+        encoded = self.__encode_interested_party_record(record)
+
+        encoded['agreement_type'] = record.agreement_type
+        encoded['isac'] = record.isac
+        encoded['pr_society'] = record.pr_society
+        encoded['pr_ownership_share'] = record.pr_ownership_share
+        encoded['publisher_sequence_n'] = record.publisher_sequence_n
+        encoded['publisher_type'] = record.publisher_type
+        encoded['publisher_unknown'] = record.publisher_unknown
+        encoded['society_assigned_agreement_n'] = record.society_assigned_agreement_n
+        encoded['special_agreements'] = record.special_agreements
+        encoded['submitter_agreement_n'] = record.submitter_agreement_n
+
+        encoded['publisher'] = self.__encode_publisher(record.publisher)
+
+        return encoded
+
+    def __encode_writer(self, record):
+        """
+        Creates a dictionary from a Writer.
+
+        :param record: the Writer to transform into a dictionary
+        :return: a dictionary created from the Writer
+        """
+        encoded = self.__encode_interested_party(record)
+
+        encoded['personal_number'] = record.personal_number
+        encoded['writer_first_name'] = record.writer_first_name
+        encoded['writer_last_name'] = record.writer_last_name
+
+        return encoded
+
+    def __encode_writer_record(self, record):
+        """
+        Creates a dictionary from a WriterRecord.
+
+        :param record: the WriterRecord to transform into a dictionary
+        :return: a dictionary created from the WriterRecord
+        """
+        encoded = self.__encode_interested_party_record(record)
+
+        encoded['reversionary'] = record.reversionary
+        encoded['writer_designation'] = record.writer_designation
+        encoded['writer_unknown'] = record.writer_unknown
+        encoded['work_for_hire'] = record.work_for_hire
+
+        encoded['writer'] = self.__encode_writer(record.writer)
 
         return encoded

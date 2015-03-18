@@ -87,6 +87,18 @@ class TestFileNameCWREncodeValid(unittest.TestCase):
 
         self.assertEqual("CW000012AB2_234.V02", data)
 
+    def test_s3_r3_old_year(self):
+        # Sender with 3 digits and receiver with 3 digits
+        data = self._parser.encode(FileTag(1960, 12, 'AB2', '234', 0.2))
+
+        self.assertEqual("CW600012AB2_234.V02", data)
+
+    def test_s3_r3_short_year(self):
+        # Sender with 3 digits and receiver with 3 digits
+        data = self._parser.encode(FileTag(60, 12, 'AB2', '234', 0.2))
+
+        self.assertEqual("CW600012AB2_234.V02", data)
+
 
 class TestFileNameCWREncodeValidOld(unittest.TestCase):
     """

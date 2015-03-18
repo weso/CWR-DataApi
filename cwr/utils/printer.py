@@ -4,7 +4,7 @@ import sys
 
 from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
 from cwr.info import AdditionalRelatedInfoRecord
-from cwr.interested_party import IPTerritoryRecord, PublisherRecord, WriterPublisherRecord, WriterRecord
+from cwr.interested_party import IPTerritoryOfControlRecord, PublisherRecord, PublisherForWriterRecord, WriterRecord
 from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, \
     RecordingDetailRecord, InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, \
     PerformingArtistRecord
@@ -140,11 +140,11 @@ class CWRPrinter():
             self.print_ari(record)
         elif (isinstance(record, NPNRecord)):
             self.print_npn(record)
-        elif (isinstance(record, IPTerritoryRecord)):
+        elif (isinstance(record, IPTerritoryOfControlRecord)):
             self.print_ipter(record)
         elif (isinstance(record, PublisherRecord)):
             self.print_pubr(record)
-        elif (isinstance(record, WriterPublisherRecord)):
+        elif (isinstance(record, PublisherForWriterRecord)):
             self.print_pwr(record)
         elif (isinstance(record, WriterRecord)):
             self.print_writr(record)
@@ -266,8 +266,8 @@ class CWRPrinter():
         print('SR Owner Share: %s' % (record.sr_ownership_share))
 
     def print_pwr(self, record):
-        print('Publisher IP Number: %s' % (record.publisher_ip_number))
-        print('writer IP Number: %s' % (record.publisher_ip_number))
+        print('Publisher IP Number: %s' % (record.publisher_ip_n))
+        print('writer IP Number: %s' % (record.publisher_ip_n))
         print('Submitter Agreement Number: %s' % (record.submitter_agreement_n))
         print('Society-Assigned Agreement Number: %s' % (record.society_assigned_agreement_n))
 
