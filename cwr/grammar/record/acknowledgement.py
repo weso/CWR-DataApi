@@ -3,7 +3,6 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import acknowledgement as field_ack
 from cwr.grammar.field import message as field_message
-from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
@@ -31,14 +30,16 @@ acknowledgement = field_special.lineStart + field_record.record_prefix(_config.r
                                                                        compulsory=True) + \
                   field_ack.creation_date_time + \
                   field_ack.original_group_id + field_ack.original_transaction_sequence_n + \
-                  _lookup_factory.get_field('original_transaction_type') + field_ack.creation_title + \
-                  field_ack.submitter_creation_n + field_ack.recipient_creation_n + field_ack.processing_date + field_table.transaction_status(
-    compulsory=True) + \
+                  _lookup_factory.get_field('original_transaction_type', compulsory=True) + field_ack.creation_title + \
+                  field_ack.submitter_creation_n + field_ack.recipient_creation_n + field_ack.processing_date + \
+                  _lookup_factory.get_field('transaction_status', compulsory=True) + \
                   field_special.lineEnd
 
 message = field_special.lineStart + field_record.record_prefix(_config.record_type('message'),
-                                                               compulsory=True) + field_table.message_types() + \
-          field_message.sequence_n + field_message.record_message + field_table.message_levels() + field_message.validation + field_message.message_text + \
+                                                               compulsory=True) + \
+          _lookup_factory.get_field('message_type') + \
+          field_message.sequence_n + _lookup_factory.get_field('message_record_type') + \
+          _lookup_factory.get_field('message_level') + field_message.validation + field_message.message_text + \
           field_special.lineEnd
 
 """

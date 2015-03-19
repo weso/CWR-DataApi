@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table, basic
+from cwr.grammar.field import basic
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -14,6 +15,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 NPA fields.
@@ -73,10 +75,6 @@ performing_artist_name = performing_artist_name.setName('Performing Artist Name'
 performing_artist_first_name = basic.alphanum(_config.field_size('npr', 'performing_artist_first_name'))
 performing_artist_first_name = performing_artist_first_name.setName('Performing Artist First Name').setResultsName(
     'performing_artist_first_name')
-
-# Performance Language
-performance_language = table.language_code()
-performance_language = performance_language.setName('Performance Language').setResultsName('performance_language')
 
 # Dialect
 dialect = basic.alphanum(_config.field_size('npr', 'dialect'))

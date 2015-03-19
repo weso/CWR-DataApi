@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table, society
+from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import interested_party_agreement as field_ipa
 from cwr.agreement import InterestedPartyForAgreementRecord
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -18,6 +19,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 IPA patterns.
@@ -25,13 +27,13 @@ IPA patterns.
 
 interested_party_agreement = field_special.lineStart + field_record.record_prefix(_config.record_type('ipa'),
                                                                                   compulsory=True) + \
-                             field_table.agreement_role_code(compulsory=True) + \
+                             _lookup_factory.get_field('agreement_role_code', compulsory=True) + \
                              field_special.ipi_name_number() + field_special.ipi_base_number() + \
                              field_special.ip_n(
                                  compulsory=True) + field_ipa.ip_last_name + field_ipa.ip_writer_first_name + \
-                             society.pr_affiliation() + society.pr_share() + \
-                             society.mr_affiliation() + society.mr_share() + \
-                             society.sr_affiliation() + society.sr_share() + field_special.lineEnd
+                             _lookup_factory.get_field('pr_affiliation') + society.pr_share() + \
+                             _lookup_factory.get_field('mr_affiliation') + society.mr_share() + \
+                             _lookup_factory.get_field('sr_affiliation') + society.sr_share() + field_special.lineEnd
 
 """
 Parsing actions for the patterns.
@@ -61,6 +63,6 @@ def _to_interested_party_agreement(parsed):
                                              agreement_role_code=parsed.agreement_role_code,
                                              ip_writer_first_name=parsed.ip_writer_first_name,
                                              ipi_name_n=parsed.ipi_name_n, ipi_base_n=parsed.ipi_base_n,
-                                             pr_society=parsed.pr_society, pr_share=parsed.pr_share,
-                                             mr_society=parsed.mr_society, mr_share=parsed.mr_share,
-                                             sr_society=parsed.sr_society, sr_share=parsed.sr_share)
+                                             pr_society=parsed.pr_affiliation, pr_share=parsed.pr_share,
+                                             mr_society=parsed.mr_affiliation, mr_share=parsed.mr_share,
+                                             sr_society=parsed.sr_affiliation, sr_share=parsed.sr_share)

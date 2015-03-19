@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table, society
+from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import publisher_territory as field_territory
 from cwr.interested_party import IPTerritoryOfControlRecord
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -18,6 +19,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 General fields.
@@ -31,7 +33,8 @@ territory = field_special.lineStart + field_record.record_prefix(
     _config.record_type(
         'publisher_territory'), compulsory=True) + field_special.ip_n(compulsory=True) + field_territory.constant + \
             society.pr_share(maximum=50) + society.mr_share() + society.sr_share() + \
-            field_table.ie_indicator() + field_table.tis_code() + field_territory.shares_change + field_territory.sequence_n + field_special.lineEnd
+            _lookup_factory.get_field('ie_indicator') + _lookup_factory.get_field('tis_code') + \
+            field_territory.shares_change + field_territory.sequence_n + field_special.lineEnd
 
 """
 Parsing actions for the patterns.

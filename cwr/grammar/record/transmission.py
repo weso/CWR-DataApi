@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import transmission as field_transmission
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -37,6 +37,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 Transmission patterns.
@@ -47,8 +48,8 @@ These are the grammatical structures for the Transmission Header and Transmissio
 # Transmission Header pattern
 transmission_header = field_special.lineStart + field_record.record_type(_config.record_type('transmission_header'),
                                                                          compulsory=True) + \
-                      field_table.sender_type(
-                          compulsory=True) + field_transmission.sender_id + field_transmission.sender_name + field_transmission.edi_version + \
+                      _lookup_factory.get_field('sender_type', compulsory=True) + field_transmission.sender_id + \
+                      field_transmission.sender_name + field_transmission.edi_version + \
                       field_transmission.creation_date_time + field_transmission.transmission_date + field_transmission.character_set + field_special.lineEnd
 transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 

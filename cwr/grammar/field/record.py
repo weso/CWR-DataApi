@@ -36,7 +36,7 @@ def record_type(values, compulsory=False):
     :param compulsory: indicates if the empty string is disallowed
     :return: grammar for the record type field
     """
-    field = basic.lookup(values, columns=_config.field_size('table', 'record_type'),
+    field = basic.lookup(values, columns=_config.field_size('record', 'record_type'),
                          compulsory=compulsory,
                          name='Record Type (one of ' + str(values) + ')')
 

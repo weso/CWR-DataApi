@@ -2,10 +2,10 @@
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import ari as field_ari
-from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.info import AdditionalRelatedInfoRecord
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -18,14 +18,17 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 Patterns.
 """
 
 ari = field_special.lineStart + field_record.record_prefix(_config.record_type('ari'),
-                                                           compulsory=True) + field_table.society() + field_ari.work_n + \
-      field_table.types_of_right() + field_table.subject_codes() + field_ari.note + field_special.lineEnd
+                                                           compulsory=True) + _lookup_factory.get_field('society') + \
+      field_ari.work_n + \
+      _lookup_factory.get_field('type_of_right') + _lookup_factory.get_field('subject_code') + field_ari.note + \
+      field_special.lineEnd
 
 """
 Parsing actions for the patterns.

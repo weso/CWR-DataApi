@@ -264,7 +264,7 @@ class CWRTables(object):
     _type_of_rights = None
     _subject_codes = None
 
-    def agreement_roles(self):
+    def agreement_role_code(self):
         """
         Roles for Agreements.
 
@@ -275,7 +275,7 @@ class CWRTables(object):
 
         return self._agreement_roles
 
-    def agreement_types(self):
+    def agreement_type(self):
         """
         Types of Agreement.
 
@@ -301,7 +301,7 @@ class CWRTables(object):
 
         return self._character_sets
 
-    def composite_types(self):
+    def composite_type(self):
         """
         Composite Types.
 
@@ -312,7 +312,7 @@ class CWRTables(object):
 
         return self._composite_types
 
-    def excerpt_types(self):
+    def excerpt_type(self):
         """
         CWR Excerpt Types.
 
@@ -334,7 +334,7 @@ class CWRTables(object):
 
         return self._ie_indicator
 
-    def instruments(self):
+    def instrument(self):
         """
         CWR Instrument codes.
 
@@ -345,7 +345,7 @@ class CWRTables(object):
 
         return self._instruments
 
-    def intended_purposes(self):
+    def intended_purpose(self):
         """
         CWR Intended Purpose codes.
 
@@ -356,7 +356,7 @@ class CWRTables(object):
 
         return self._intended_purposes
 
-    def language_codes(self):
+    def language_code(self):
         """
         Allowed language codes.
 
@@ -367,7 +367,7 @@ class CWRTables(object):
 
         return self._language_codes
 
-    def lyric_adaptations(self):
+    def lyric_adaptation(self):
         """
         Lyric Adaptation codes.
 
@@ -378,7 +378,7 @@ class CWRTables(object):
 
         return self._lyric_adaptations
 
-    def media_types(self):
+    def media_type(self):
         """
         Media Type codes.
 
@@ -389,7 +389,7 @@ class CWRTables(object):
 
         return self._media_types
 
-    def message_levels(self):
+    def message_level(self):
         """
         Message Level codes.
 
@@ -400,7 +400,7 @@ class CWRTables(object):
 
         return self._message_levels
 
-    def message_types(self):
+    def message_type(self):
         """
         Message Type codes.
 
@@ -411,7 +411,7 @@ class CWRTables(object):
 
         return self._message_types
 
-    def music_arrangements(self):
+    def music_arrangement(self):
         """
         Music Arrangement codes.
 
@@ -422,7 +422,7 @@ class CWRTables(object):
 
         return self._music_arrangement
 
-    def musical_work_distribution_categories(self):
+    def musical_work_distribution_category(self):
         """
         Musical Work Distribution Categories.
 
@@ -457,7 +457,7 @@ class CWRTables(object):
 
         return self._prior_royalty_status
 
-    def publisher_types(self):
+    def publisher_type(self):
         """
         Publisher Types.
 
@@ -468,7 +468,7 @@ class CWRTables(object):
 
         return self._publisher_type
 
-    def record_types(self):
+    def record_type(self):
         """
         Types of records.
 
@@ -481,7 +481,7 @@ class CWRTables(object):
 
         return self._record_types
 
-    def recording_formats(self):
+    def recording_format(self):
         """
         Types of recordings.
 
@@ -492,7 +492,7 @@ class CWRTables(object):
 
         return self._recording_formats
 
-    def recording_techniques(self):
+    def recording_technique(self):
         """
         Types of recording techniques.
 
@@ -514,7 +514,7 @@ class CWRTables(object):
 
         return self._sales_manufacture_clause
 
-    def sender_types(self):
+    def sender_type(self):
         """
         Types of sender.
 
@@ -527,7 +527,7 @@ class CWRTables(object):
 
         return self._sender_types
 
-    def society_codes(self):
+    def society(self):
         """
         Society Codes.
 
@@ -536,9 +536,15 @@ class CWRTables(object):
         if self._society_codes is None:
             self._society_codes = self._reader.read_csv_file(self._file_society_codes)
 
+            for code in self._society_codes:
+                if len(code) > 1 and code[0] == '0':
+                    self._society_codes.append(code[1:])
+                    if len(code) > 2 and code[1] == '0':
+                        self._society_codes.append(code[2:])
+
         return self._society_codes
 
-    def special_agreement_indicators(self):
+    def special_agreement_indicator(self):
         """
         Special Agreement Indicators.
 
@@ -549,7 +555,7 @@ class CWRTables(object):
 
         return self._special_agreement_indicator
 
-    def standard_instrumentation_types(self):
+    def standard_instrumentation_type(self):
         """
         Standard Instrumentation Types.
 
@@ -560,7 +566,7 @@ class CWRTables(object):
 
         return self._standard_instrumentation_types
 
-    def subject_codes(self):
+    def subject_code(self):
         """
         Subject Codes.
 
@@ -571,7 +577,7 @@ class CWRTables(object):
 
         return self._subject_codes
 
-    def text_music_relationships(self):
+    def text_music_relationship(self):
         """
         Text-Music Relationships.
 
@@ -584,7 +590,7 @@ class CWRTables(object):
 
         return self._tmr
 
-    def tis_codes(self):
+    def tis_code(self):
         """
         TIS codes.
 
@@ -601,7 +607,7 @@ class CWRTables(object):
 
         return self._tis
 
-    def title_types(self):
+    def title_type(self):
         """
         Title Types.
 
@@ -612,7 +618,7 @@ class CWRTables(object):
 
         return self._title_types
 
-    def type_of_rights(self):
+    def type_of_right(self):
         """
         Type of Right.
 
@@ -634,7 +640,7 @@ class CWRTables(object):
 
         return self._transaction_status
 
-    def transaction_types(self):
+    def transaction_type(self):
         """
         Types of transactions.
 
@@ -647,7 +653,7 @@ class CWRTables(object):
 
         return self._transaction_types
 
-    def usa_license_indicators(self):
+    def usa_license_indicator(self):
         """
         USA License Indicator.
 
@@ -658,7 +664,7 @@ class CWRTables(object):
 
         return self._usa_license_indicators
 
-    def version_types(self):
+    def version_type(self):
         """
         Version Types.
 
@@ -669,7 +675,7 @@ class CWRTables(object):
 
         return self._version_types
 
-    def work_types(self):
+    def work_type(self):
         """
         Work Type codes.
 
@@ -680,7 +686,7 @@ class CWRTables(object):
 
         return self._work_types
 
-    def writer_designation_codes(self):
+    def writer_designation_code(self):
         """
         Writer Designation codes.
 

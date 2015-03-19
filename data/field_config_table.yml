@@ -1,5 +1,183 @@
+agreement_role_code:
+  size: 2
+  name: Agreement Role Code
+
+agreement_type:
+  size: 2
+  name: Agreement Type
+
+composite_type:
+  size: 3
+  name: Composite Type
+
+excerpt_type:
+  size: 3
+  name: Excerpt Type
+
+ie_indicator:
+  size: 1
+  name: Inclusion/Exclusion Indicator
+
+instrument:
+  size: 3
+  name: Instrument
+
+intended_purpose:
+  size: 3
+  name: Intended Purpose
+
+language_code:
+  size: 2
+  name: Language Code
+
+lyric_adaptation:
+  size: 3
+  name: Lyric Adaptation
+
+media_type:
+  size: 3
+  name: Media Type
+
+message_level:
+  size: 3
+  name: Message Level
+
+message_record_type:
+  size: 3
+  name: Message Record Type
+  values: record_type
+
+message_type:
+  size: 3
+  name: Message Type
+
+mr_affiliation:
+  size: 3
+  name: Mechanical Rights Affiliation Society
+  values: society
+  actions:
+    - to_int
+
+music_arrangement:
+  size: 3
+  name: Music Arrangement
+
+musical_work_distribution_category:
+  size: 3
+  name: Musical Work Distribution Category
+
 original_transaction_type:
   size: 3
   name: Original Transaction Type
-  compulsory: True
-  values: transaction_types
+  values: transaction_type
+
+performance_language:
+  size: 2
+  name: Performance Language
+  values: language_code
+
+post_term_collection_status:
+  size: 1
+  name: Post Term Collection Status
+
+pr_affiliation:
+  size: 3
+  name: Performing Rights Affiliation Society
+  values: society
+  actions:
+    - to_int
+
+publisher_type:
+  size: 2
+  name: Publisher Type
+
+prior_royalty_status:
+  size: 1
+  name: Prior Royalty Status
+
+record_type:
+  size: 3
+  name: Record Type
+
+recording_format:
+  size: 1
+  name: Recording Format
+
+recording_technique:
+  size: 1
+  name: Recording Technique
+
+sales_manufacture_clause:
+  size: 1
+  name: Sales/Manufacture Clause
+
+sender_type:
+  size: 2
+  name: Sender Type
+
+society:
+  size: 3
+  name: Society ID Field
+  actions:
+    - to_int
+
+special_agreement_indicator:
+  size: 1
+  name: Special Agreements Indicator
+
+sr_affiliation:
+  size: 3
+  name: Synchronization Rights Affiliation Society
+  values: society
+  actions:
+    - to_int
+
+standard_instrumentation_type:
+  size: 3
+  name: Standard Instrumentation Type
+
+subject_code:
+  size: 2
+  name: Subject Code
+
+text_music_relationship:
+  size: 3
+  name: Text Music Relationship
+
+tis_code:
+  size: 4
+  name: TIS Numeric Code
+  actions:
+    - to_int
+
+title_type:
+  size: 2
+  name: Title Type
+
+transaction_status:
+  size: 2
+  name: Transaction Status
+
+transaction_type:
+  size: 3
+  name: Transaction Type
+
+type_of_right:
+  size: 3
+  name: Type of Right
+
+usa_license_indicator:
+  size: 1
+  name: USA License Indicator
+
+version_type:
+  size: 3
+  name: Version Type
+
+work_type:
+  size: 2
+  name: Work Type
+
+writer_designation_code:
+  size: 2
+  name: Writer Designation

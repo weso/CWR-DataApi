@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table
 from cwr.grammar.field import agreement as field_agreement
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.agreement import AgreementRecord
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -18,6 +18,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 Agreement patterns.
@@ -26,12 +27,16 @@ Agreement patterns.
 # Agreement Pattern
 agreement = field_special.lineStart + field_record.record_prefix(
     _config.record_type('agreement'),
-    compulsory=True) + field_agreement.submitter_agreement_n + field_agreement.is_code + field_table.agreement_type() + \
-            field_agreement.agreement_start_date + field_agreement.agreement_end_date + field_agreement.retention_end_date + field_table.prior_royalty_status(
-    compulsory=True) + \
-            field_agreement.prior_royalty_start_date + field_table.post_term_collection_status(
-    compulsory=True) + field_agreement.post_term_collection_end_date + \
-            field_agreement.date_of_signature + field_agreement.number_works + field_table.sm_clause() + \
+    compulsory=True) + field_agreement.submitter_agreement_n + field_agreement.is_code + \
+            _lookup_factory.get_field('agreement_type') + \
+            field_agreement.agreement_start_date + field_agreement.agreement_end_date \
+            + field_agreement.retention_end_date + _lookup_factory.get_field('prior_royalty_status', compulsory=True) \
+            + \
+            field_agreement.prior_royalty_start_date + \
+            _lookup_factory.get_field('post_term_collection_status', compulsory=True) + \
+            field_agreement.post_term_collection_end_date + \
+            field_agreement.date_of_signature + field_agreement.number_works + _lookup_factory.get_field(
+    'sales_manufacture_clause') + \
             field_agreement.sales_change + field_agreement.advance_given + field_agreement.society_assigned_agreement_n + \
             field_special.lineEnd
 

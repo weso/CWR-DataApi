@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import society as field_society
 from cwr.grammar.field import writer as field_writer
 from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Writer, WriterRecord
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -24,6 +24,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 Patterns.
@@ -32,13 +33,15 @@ Patterns.
 writer = field_special.lineStart + field_record.record_prefix(
     _config.record_type('writer'),
     compulsory=True) + field_special.ip_n() + field_writer.writer_last_name + field_writer.writer_first_name + field_writer.unknown + \
-         field_table.writer_designation() + field_publisher.tax_id + field_special.ipi_name_number() + \
-         field_society.pr_affiliation() + field_society.pr_share() + \
-         field_society.mr_affiliation() + field_society.mr_share() + \
-         field_society.sr_affiliation() + field_society.sr_share() + \
+         _lookup_factory.get_field(
+             'writer_designation_code') + field_publisher.tax_id + field_special.ipi_name_number() + \
+         _lookup_factory.get_field('pr_affiliation') + field_society.pr_share() + \
+         _lookup_factory.get_field('mr_affiliation') + field_society.mr_share() + \
+         _lookup_factory.get_field('sr_affiliation') + field_society.sr_share() + \
          field_writer.reversionary + field_writer.first_recording_refusal + field_writer.for_hire + field_special.blank(
     _config.field_size('writer', 'filler')) + \
-         field_special.ipi_base_number() + field_writer.personal_number + field_table.usa_license() + field_special.lineEnd
+         field_special.ipi_base_number() + field_writer.personal_number + _lookup_factory.get_field(
+    'usa_license_indicator') + field_special.lineEnd
 
 """
 Parsing actions for the patterns.
@@ -75,7 +78,8 @@ def _to_writerrecord(parsed):
     writer_data = _to_writer(parsed)
 
     return WriterRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n, writer_data,
-                        parsed.writer_designation, parsed.work_for_hire, parsed.writer_unknown, parsed.reversionary,
-                        parsed.first_recording_refusal, parsed.usa_license, parsed.pr_society,
-                        parsed.pr_share, parsed.mr_society, parsed.mr_share,
-                        parsed.sr_society, parsed.sr_share)
+                        parsed.writer_designation_code, parsed.work_for_hire, parsed.writer_unknown,
+                        parsed.reversionary,
+                        parsed.first_recording_refusal, parsed.usa_license_indicator, parsed.pr_affiliation,
+                        parsed.pr_share, parsed.mr_affiliation, parsed.mr_share,
+                        parsed.sr_affiliation, parsed.sr_share)

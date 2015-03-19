@@ -2,12 +2,12 @@
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import work as field_work
-from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import work_detail as field_work_detail
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
     WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord, ComponentRecord
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -32,6 +32,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 Patterns.
@@ -39,18 +40,23 @@ Patterns.
 
 alternate = field_special.lineStart + field_record.record_prefix(_config.record_type('alternate_title'),
                                                                  compulsory=True) + \
-            field_work_detail.alternate_title + field_table.title_type() + field_table.language_code() + field_special.lineEnd
+            field_work_detail.alternate_title + _lookup_factory.get_field('title_type') + \
+            _lookup_factory.get_field('language_code') \
+            + field_special.lineEnd
 
 entire_title = field_special.lineStart + field_record.record_prefix(_config.record_type('entire_work_title'),
                                                                     compulsory=True) + \
-               field_work_detail.entire_work_title + field_work_detail.iswc + field_table.language_code() + field_work_detail.writer_1_last_name + \
+               field_work_detail.entire_work_title + field_work_detail.iswc + _lookup_factory.get_field('language_code') \
+               + field_work_detail.writer_1_last_name + \
                field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
                field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
-               field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_2_ipi_base_n + field_work.submitter_work_n + field_special.lineEnd
+               field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n \
+               + field_work_detail.writer_2_ipi_base_n + field_work.submitter_work_n + field_special.lineEnd
 
 version = field_special.lineStart + field_record.record_prefix(_config.record_type('original_work_title'),
                                                                compulsory=True) + \
-          field_work_detail.original_title + field_work_detail.iswc + field_table.language_code() + field_work_detail.writer_1_last_name + \
+          field_work_detail.original_title + field_work_detail.iswc + _lookup_factory.get_field(
+    'language_code') + field_work_detail.writer_1_last_name + \
           field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
           field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
           field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_2_ipi_base_n + field_work.submitter_work_n + field_special.lineEnd
@@ -66,21 +72,24 @@ recording = field_special.lineStart + field_record.record_prefix(_config.record_
             field_work_detail.first_release_duration + field_special.blank(
     _config.field_size('recording_detail', 'constant_2')) + \
             field_work_detail.first_title + field_work_detail.first_label + field_work_detail.first_release_catalog_n + \
-            field_special.ean_13() + field_special.isrc() + field_table.recording_formats() + \
-            field_table.recording_techniques() + field_table.media_types() + field_special.lineEnd
+            field_special.ean_13() + field_special.isrc() + _lookup_factory.get_field('recording_format') + \
+            _lookup_factory.get_field('recording_technique') + \
+            _lookup_factory.get_field('media_type') + field_special.lineEnd
 
 origin = field_special.lineStart + field_record.record_prefix(_config.record_type('work_origin'),
-                                                              compulsory=True) + field_table.intended_purposes() + \
+                                                              compulsory=True) + \
+         _lookup_factory.get_field('intended_purpose') + \
          field_work_detail.production_title + field_work_detail.cd_identifier + field_work_detail.cut_number + field_work_detail.library + field_work_detail.bltvr + field_special.visan() + field_work_detail.production_n + \
          field_work_detail.episode_title + field_work_detail.episode_n + field_work_detail.year_production + field_special.audio_visual_key() + field_special.lineEnd
 
 inst_summary = field_special.lineStart + field_record.record_prefix(
     _config.record_type('instrumentation_summary'), compulsory=True) + field_work_detail.number_voices + \
-               field_table.standard_instrumentations() + field_work_detail.instrumentation_description + field_special.lineEnd
+               _lookup_factory.get_field(
+                   'standard_instrumentation_type') + field_work_detail.instrumentation_description + field_special.lineEnd
 
 inst_detail = field_special.lineStart + field_record.record_prefix(_config.record_type('instrumentation_detail'),
                                                                    compulsory=True) + \
-              field_table.instruments() + field_work_detail.number_players + field_special.lineEnd
+              _lookup_factory.get_field('instrument') + field_work_detail.number_players + field_special.lineEnd
 
 component = field_special.lineStart + field_record.record_prefix(_config.record_type('component'),
                                                                  compulsory=True) + field_work_detail.component_title + \
@@ -204,7 +213,7 @@ def _to_instrumentation_summary(parsed):
     :return: a InstrumentationSummaryRecord created from the parsed record
     """
     return InstrumentationSummaryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                        parsed.number_voices, parsed.standard_instrumentation,
+                                        parsed.number_voices, parsed.standard_instrumentation_type,
                                         parsed.instrumentation_description)
 
 
@@ -216,7 +225,7 @@ def _to_instrumentation_detail(parsed):
     :return: a InstrumentationDetailRecord created from the parsed record
     """
     return InstrumentationDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                       parsed.instruments, parsed.number_players)
+                                       parsed.instrument, parsed.number_players)
 
 
 def _to_component(parsed):

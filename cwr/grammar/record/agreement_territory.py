@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table, special, record
+from cwr.grammar.field import special, record
 from cwr.agreement import AgreementTerritoryRecord
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -15,14 +16,15 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 Territory in Agreement patterns.
 """
 
 territory_in_agreement = special.lineStart + record.record_prefix(
-    _config.record_type('agreement_territory'), compulsory=True) + table.ie_indicator(compulsory=True) + table.tis_code(
-    compulsory=True) + special.lineEnd
+    _config.record_type('agreement_territory'), compulsory=True) + _lookup_factory.get_field('ie_indicator') + \
+                         _lookup_factory.get_field('tis_code') + special.lineEnd
 
 """
 Parsing actions for the patterns.

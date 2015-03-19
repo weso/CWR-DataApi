@@ -297,84 +297,6 @@ npr:
 nwn:
     type: 'NWN'
 
-# Tables
-
-table:
-    agreement_role_code:
-        size: 2
-    agreement_type:
-        size: 2
-    composite_type:
-        size: 3
-    excerpt_type:
-        size: 3
-    ie_indicator_field:
-        size: 1
-    instruments:
-        size: 3
-    intended_purpose:
-        size: 3
-    language_code:
-        size: 2
-    lyric_adaptation:
-        size: 3
-    media_type:
-        size: 3
-    message_level:
-        size: 3
-    message_type:
-        size: 3
-    music_arrangement:
-        size: 3
-    musical_distribution_category:
-        size: 3
-    original_transaction_type:
-        size: 3
-    post_term_collection_status:
-        size: 1
-    prior_royalty_status:
-        size: 1
-    publisher_type:
-        size: 2
-    record_type:
-        size: 3
-    recording_format:
-        size: 1
-    recording_technique:
-        size: 1
-    sender_type:
-        size: 2
-    sm_clause:
-        size: 1
-    society:
-        size: 3
-    subject_code:
-        size: 2
-    special_agreement:
-        size: 1
-    standard_instrumentations:
-        size: 3
-    text_music_relationship:
-        size: 3
-    tis_code:
-        size: 4
-    title_type:
-        size: 2
-    type_of_right:
-        size: 3
-    transaction_status:
-        size: 2
-    transaction_type:
-        size: 3
-    usa_license:
-        size: 1
-    version_type:
-        size: 3
-    work_type:
-        size: 2
-    writer_designation:
-        size: 2
-
 # Special fields
 
 special:
@@ -382,3 +304,7 @@ special:
         size: 9
     shares:
         size: 5
+
+record:
+    record_type:
+        size: 3

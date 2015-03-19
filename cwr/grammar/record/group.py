@@ -3,9 +3,9 @@
 from data.accessor import CWRConfiguration
 from cwr.group import GroupHeader, GroupTrailer
 from cwr.grammar.field import group as field_group
-from cwr.grammar.field import table as field_table
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
+from cwr.grammar.factory.field import LookupFieldFactory
 
 
 """
@@ -40,6 +40,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_lookup_factory = LookupFieldFactory()
 
 """
 Group patterns.
@@ -49,8 +50,9 @@ These are the grammatical structures for the Group Header and Group Trailer.
 
 # Group Header pattern
 group_header = field_special.lineStart + field_record.record_type(
-    _config.record_type('group_header'), compulsory=True) + field_table.transaction_type(
-    compulsory=True) + field_group.group_id + field_group.version_number + \
+    _config.record_type('group_header'), compulsory=True) + _lookup_factory.get_field('transaction_type',
+                                                                                      compulsory=True) \
+               + field_group.group_id + field_group.version_number + \
                field_group.batch_request_id + field_group.sd_type + field_special.lineEnd
 group_header = group_header.setName('Group Header').setResultsName('group_header')
 
