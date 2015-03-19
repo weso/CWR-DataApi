@@ -73,10 +73,12 @@ class CWRConfiguration(object):
     # Files containing the CWR info
     _file_record_config = 'record_config.yml'
     _file_defaults = 'default_values.yml'
+    _file_field_config_table = 'field_config_table.yml'
 
     # CWR configuration information
     _record_config = None
     _cwr_defaults = None
+    _field_config_table = None
 
     # Singleton control object
     __shared_state = {}
@@ -110,6 +112,19 @@ class CWRConfiguration(object):
 
         return self._cwr_defaults
 
+    def _load_field_config_table(self):
+        """
+        Loads the table fields configuration.
+
+        The file will only be loaded once.
+
+        :return: the table fields configuration
+        """
+        if self._field_config_table is None:
+            self._field_config_table = self._reader.read_yaml_file(self._file_field_config_table)
+
+        return self._field_config_table
+
     def default_version(self):
         """
         The current version of the CWR standard.
@@ -141,6 +156,15 @@ class CWRConfiguration(object):
         :return: the expected value for the field on the record
         """
         return self._load_record_config()[record][field]['value']
+
+    def lookup_field_data(self, field):
+        """
+        Returns the configuration data for the lookup fields.
+
+        :param field: the id for the field
+        :return: the configuration for that field
+        """
+        return self._load_field_config_table()[field]
 
     def record_type(self, record):
         """

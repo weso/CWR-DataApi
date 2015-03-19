@@ -1,0 +1,5 @@
+original_transaction_type:
+  size: 3
+  name: Original Transaction Type
+  compulsory: True
+  values: transaction_types
