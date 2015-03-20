@@ -5,7 +5,7 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import basic
+from cwr.grammar.factory.field import DefaultFieldFactory
 
 
 """
@@ -18,40 +18,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_ack_factory = DefaultFieldFactory(_config.load_field_config('acknowledgement'))
 
 # Creation Date
-creation_date = basic.date(compulsory=True)
-creation_date = creation_date.setName('Creation Date').setResultsName('creation_date')
+creation_date = _ack_factory.get_field('creation_date')
 
 # Creation Time
-creation_time = basic.time(compulsory=True)
-creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
-
-# Original Group ID
-original_group_id = basic.numeric(_config.field_size('group_header', 'group_id'), compulsory=True)
-original_group_id = original_group_id.setName('Original Group ID').setResultsName('group_id')
-
-# Original Transaction Sequence #
-original_transaction_sequence_n = basic.numeric(_config.field_size('acknowledgement', 'transaction_n'), compulsory=True)
-original_transaction_sequence_n = original_transaction_sequence_n.setName(
-    'Original Transaction Sequence #').setResultsName(
-    'original_transaction_sequence_n')
-
-# Creation Title
-creation_title = basic.alphanum(_config.field_size('acknowledgement', 'title'))
-creation_title = creation_title.setName('Creation Title').setResultsName('creation_title')
-
-# Submitter Creation #
-submitter_creation_n = basic.alphanum(_config.field_size('acknowledgement', 'submitter_id'))
-submitter_creation_n = submitter_creation_n.setName('Submitter Creation #').setResultsName('submitter_creation_n')
-
-# Recipient Creation #
-recipient_creation_n = basic.alphanum(_config.field_size('acknowledgement', 'recipient_id'))
-recipient_creation_n = recipient_creation_n.setName('Recipient Creation #').setResultsName('recipient_creation_n')
-
-# Processing Date
-processing_date = basic.date(compulsory=True)
-processing_date = processing_date.setName('Processing Date').setResultsName('processing_date')
+creation_time = _ack_factory.get_field('creation_time')
 
 # Creation date and time pattern
 creation_date_time = pp.Group(creation_date + creation_time)

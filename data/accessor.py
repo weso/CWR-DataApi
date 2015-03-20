@@ -74,12 +74,13 @@ class CWRConfiguration(object):
         # Files containing the CWR info
         self._file_record_config = 'record_config.yml'
         self._file_defaults = 'default_values.yml'
-        self._file_field_config_table = 'field_config_table.yml'
 
         # CWR configuration information
         self._record_config = None
         self._cwr_defaults = None
         self._field_config_table = None
+
+        self._field_configs = {}
 
     def _load_record_config(self):
         """
@@ -107,18 +108,17 @@ class CWRConfiguration(object):
 
         return self._cwr_defaults
 
-    def load_field_config_table(self):
+    def load_field_config(self, id):
         """
-        Loads the table fields configuration.
+        Loads the configuration fields file for the id.
 
-        The file will only be loaded once.
-
-        :return: the table fields configuration
+        :param id: the id for the field
+        :return: the fields configuration
         """
-        if self._field_config_table is None:
-            self._field_config_table = self._reader.read_yaml_file(self._file_field_config_table)
+        if id not in self._field_configs:
+            self._field_configs[id] = self._reader.read_yaml_file('field_config_%s.yml' % id)
 
-        return self._field_config_table
+        return self._field_configs[id]
 
     def default_version(self):
         """

@@ -198,11 +198,10 @@ class DefaultFieldFactory(OptionFieldFactory):
         else:
             values_id = None
 
-        values = self.__get_field_values(id, values_id)
-
         constructor_method = getattr(self._field_rules, config['type'])
         # TODO: This check is just a patch
         if config['type'] == 'lookup':
+            values = self.__get_field_values(id, values_id)
             field = constructor_method(values, name=config['name'], compulsory=True)
         elif config['type'] == 'boolean':
             field = constructor_method(name=config['name'], compulsory=True)
@@ -213,7 +212,7 @@ class DefaultFieldFactory(OptionFieldFactory):
         elif config['type'] == 'time':
             field = constructor_method(name=config['name'], compulsory=True)
         else:
-            field = constructor_method(columns=config['columns'], name=config['name'], compulsory=True)
+            field = constructor_method(columns=config['size'], name=config['name'], compulsory=True)
 
         field = field.setResultsName(id)
 
@@ -232,11 +231,11 @@ class DefaultFieldFactory(OptionFieldFactory):
         :return: the list of values allowed to the field
         """
         if values_id is None:
-            table = id
+            values = id
         else:
-            table = values_id
+            values = values_id
 
-        return self._field_values.get_data(table)
+        return self._field_values.get_data(values)
 
     def __add_actions(self, field, actions):
         """

@@ -20,19 +20,25 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config_table(), CWRTables())
+_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_ack_factory = DefaultFieldFactory(_config.load_field_config('acknowledgement'))
 
 """
 Rules.
 """
 
 # Acknowledgment Pattern
-acknowledgement = field_special.lineStart + field_record.record_prefix(_config.record_type('acknowledgement'),
-                                                                       compulsory=True) + \
+acknowledgement = field_special.lineStart + \
+                  field_record.record_prefix(_config.record_type('acknowledgement'),
+                                             compulsory=True) + \
                   field_ack.creation_date_time + \
-                  field_ack.original_group_id + field_ack.original_transaction_sequence_n + \
-                  _lookup_factory.get_field('original_transaction_type', compulsory=True) + field_ack.creation_title + \
-                  field_ack.submitter_creation_n + field_ack.recipient_creation_n + field_ack.processing_date + \
+                  _ack_factory.get_field('original_group_id') + \
+                  _ack_factory.get_field('original_transaction_sequence_n') + \
+                  _lookup_factory.get_field('original_transaction_type', compulsory=True) + \
+                  _ack_factory.get_field('creation_title') + \
+                  _ack_factory.get_field('submitter_creation_n') + \
+                  _ack_factory.get_field('recipient_creation_n') + \
+                  _ack_factory.get_field('processing_date') + \
                   _lookup_factory.get_field('transaction_status', compulsory=True) + \
                   field_special.lineEnd
 
@@ -68,7 +74,7 @@ def _to_acknowledgement_record(parsed):
     return AcknowledgementRecord(record_type=parsed.record_type,
                                  transaction_sequence_n=parsed.transaction_sequence_n,
                                  record_sequence_n=parsed.record_sequence_n,
-                                 original_group_id=parsed.group_id,
+                                 original_group_id=parsed.original_group_id,
                                  original_transaction_sequence_n=parsed.original_transaction_sequence_n,
                                  original_transaction_type=parsed.original_transaction_type,
                                  transaction_status=parsed.transaction_status,

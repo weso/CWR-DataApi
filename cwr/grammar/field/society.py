@@ -16,7 +16,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 # Acquires data sources
-_lookup_factory = DefaultFieldFactory(CWRConfiguration().load_field_config_table(), CWRTables())
+_lookup_factory = DefaultFieldFactory(CWRConfiguration().load_field_config('table'), CWRTables())
 
 
 # Performing Rights Share

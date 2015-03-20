@@ -16,7 +16,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(CWRConfiguration().load_field_config_table(), CWRTables())
+_lookup_factory = DefaultFieldFactory(CWRConfiguration().load_field_config('table'), CWRTables())
 
 """
 NPA fields.
