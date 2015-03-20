@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import CWRConfiguration, CWRTables
+from data.accessor import CWRConfiguration, DefaultCWRTables
 
 
 """
@@ -26,7 +26,7 @@ Configuration classes.
 """
 
 # Acquires data sources
-_tables = CWRTables()
+_tables = DefaultCWRTables()
 _config = CWRConfiguration()
 
 """

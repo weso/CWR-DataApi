@@ -168,8 +168,12 @@ class CWRConfiguration(object):
         """
         return self._load_record_config()[record]['type']
 
-
 class CWRTables(object):
+
+    def __init__(self):
+        self._file_values = {}
+
+class DefaultCWRTables(object):
     """
     Offers methods to access the CWR Lookup Tables data.
     """

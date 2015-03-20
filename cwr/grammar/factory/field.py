@@ -6,7 +6,7 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import basic
-from data.accessor import CWRConfiguration, CWRTables
+from data.accessor import CWRConfiguration, DefaultCWRTables
 
 
 """
@@ -22,7 +22,7 @@ Configuration classes.
 """
 
 # Acquires data sources
-_tables = CWRTables()
+_tables = DefaultCWRTables()
 _config = CWRConfiguration()
 
 
@@ -59,20 +59,23 @@ class OptionFieldFactory(FieldFactory):
     This factory gives support to optional field rules.
 
     An optional field is one where a string composed only of white characters is valid.
+
+    Field rules will be created only once. If the same one is required again, then the one created the first time will
+    be returned.
     """
     __metaclass__ = ABCMeta
 
-    # Fields already created
-    _fields = {}
-    # Fields already wrapped with the optional wrapper
-    _fields_optional = {}
-    # Logger
-    _logger = logging.getLogger(__name__)
-    # Configuration for creating the fields
-    _field_configs = _config.load_field_config_table()
-
     def __init__(self):
         super(OptionFieldFactory, self).__init__()
+
+        # Fields already created
+        self._fields = {}
+        # Fields already wrapped with the optional wrapper
+        self._fields_optional = {}
+        # Logger
+        self._logger = logging.getLogger(__name__)
+        # Configuration for creating the fields
+        self._field_configs = _config.load_field_config_table()
 
     def get_field(self, id, compulsory=False):
         """
@@ -171,13 +174,20 @@ class LookupFieldFactory(OptionFieldFactory):
     Factory for acquiring lookup fields rules.
 
     These rules only allow strings from a fixed set of them.
-
-    Field rules will be created only once. If the same one is required again, then the one created the first time will
-    be returned.
     """
+
+    _field_rules = basic
+    _field_values = _tables
+    _instance = None
 
     def __init__(self):
         super(LookupFieldFactory, self).__init__()
+
+    def __new__(self, *args, **kwargs):
+        if not self._instance:
+            self._instance = super(LookupFieldFactory, self).__new__(
+                                self, *args, **kwargs)
+        return self._instance
 
     def create_field(self, id, config):
         """
@@ -194,7 +204,7 @@ class LookupFieldFactory(OptionFieldFactory):
 
         values = self.__get_field_values(id, values_id)
 
-        field = basic.lookup(values, name=config['name'], compulsory=True)
+        field = self._field_rules.lookup(values, name=config['name'], compulsory=True)
 
         field = field.setResultsName(id)
 
@@ -217,7 +227,7 @@ class LookupFieldFactory(OptionFieldFactory):
         else:
             table = values_id
 
-        values_method = getattr(_tables, table)
+        values_method = getattr(self._field_values, table)
 
         return values_method()
 
@@ -232,7 +242,6 @@ class LookupFieldFactory(OptionFieldFactory):
             action_method = getattr(self, action)
 
             field.setParseAction(lambda p: action_method(p))
-
 
     def to_int(self, parsed):
         value = parsed[0]
