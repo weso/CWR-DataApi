@@ -112,7 +112,7 @@ class CWRConfiguration(object):
 
         return self._cwr_defaults
 
-    def _load_field_config_table(self):
+    def load_field_config_table(self):
         """
         Loads the table fields configuration.
 
@@ -156,15 +156,6 @@ class CWRConfiguration(object):
         :return: the expected value for the field on the record
         """
         return self._load_record_config()[record][field]['value']
-
-    def lookup_field_data(self, field):
-        """
-        Returns the configuration data for the lookup fields.
-
-        :param field: the id for the field
-        :return: the configuration for that field
-        """
-        return self._load_field_config_table()[field]
 
     def record_type(self, record):
         """

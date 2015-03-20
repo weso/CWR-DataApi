@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 import time
+import logging
 
 from cwr.parser.file import CWRFileDecoder
 from cwr.utils.printer import CWRPrinter
@@ -23,10 +24,17 @@ if __name__ == '__main__':
     print('File contents parsing test')
     path = raw_input('Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
     output = raw_input('Please enter the full path to the file where the results will be stored: ')
+    log = raw_input('Please enter the full path to the file where parsing log will be saved: ')
     print('\n')
     print('Reading file %s' % (path))
     print('Storing output on %s' % (output))
+    print('Saving long on %s' % (log))
     print('\n')
+
+    logging.basicConfig(filename=log,
+                    level=logging.DEBUG,
+                    )
+    logger = logging.getLogger(__name__)
 
     decoder = CWRFileDecoder()
 
@@ -37,6 +45,8 @@ if __name__ == '__main__':
 
     print('Parsed the file in %s seconds' % (time_parse))
     print('\n')
+
+    logger.info('Finished parsing n %s seconds' % time_parse)
 
     output = codecs.open(output, 'w', 'latin-1')
 

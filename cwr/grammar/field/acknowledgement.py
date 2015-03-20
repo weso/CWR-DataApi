@@ -5,7 +5,6 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import group
 from cwr.grammar.field import basic
 
 
@@ -29,8 +28,8 @@ creation_time = basic.time(compulsory=True)
 creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
 
 # Original Group ID
-original_group_id = group.group_id
-original_group_id = original_group_id.setName('Original Group ID')
+original_group_id = basic.numeric(_config.field_size('group_header', 'group_id'), compulsory=True)
+original_group_id = original_group_id.setName('Original Group ID').setResultsName('group_id')
 
 # Original Transaction Sequence #
 original_transaction_sequence_n = basic.numeric(_config.field_size('acknowledgement', 'transaction_n'), compulsory=True)
