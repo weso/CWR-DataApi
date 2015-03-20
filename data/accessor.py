@@ -170,12 +170,36 @@ class CWRConfiguration(object):
 
 
 class CWRTables(object):
+    """
+    Accesses the data inside CWR table files.
+
+    This is used on the Lookup fields, to know which values are valid.
+
+    The files are read only once, and then the data is stored to be returned each time it is required.
+    """
+
+    _instance = None
+
     def __init__(self):
         self._file_values = {}
         # Reader for the files
         self._reader = _FileReader()
 
+    def __new__(self, *args, **kwargs):
+        if not self._instance:
+            self._instance = super(CWRTables, self).__new__(
+                self, *args, **kwargs)
+        return self._instance
+
     def get_data(self, id):
+        """
+        Acquires the data from the table identified by the id.
+
+        The file is read only once, consecutive calls to this method will return the sale collection.
+
+        :param id: identifier for the table
+        :return: all the values from the table
+        """
         if not id in self._file_values:
             file = 'cwr_%s.csv' % id
             self._file_values[id] = self._reader.read_csv_file(file)
