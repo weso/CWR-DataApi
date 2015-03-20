@@ -32,8 +32,8 @@ if __name__ == '__main__':
     print('\n')
 
     logging.basicConfig(filename=log,
-                    level=logging.DEBUG,
-                    )
+                        level=logging.DEBUG,
+                        )
     logger = logging.getLogger(__name__)
 
     decoder = CWRFileDecoder()

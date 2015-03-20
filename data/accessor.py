@@ -168,8 +168,8 @@ class CWRConfiguration(object):
         """
         return self._load_record_config()[record]['type']
 
-class CWRTables(object):
 
+class CWRTables(object):
     def __init__(self):
         self._file_values = {}
         # Reader for the files
@@ -180,47 +180,4 @@ class CWRTables(object):
             file = 'cwr_%s.csv' % id
             self._file_values[id] = self._reader.read_csv_file(file)
 
-            if id == 'society_code':
-                self._file_values[id] = self.society(self._file_values[id])
-            elif id == 'tis_code':
-                self._file_values[id] = self.tis_code(self._file_values[id])
-
         return self._file_values[id]
-
-    def tis_code(self, codes):
-        """
-        This is for fixing TIS codes.
-
-        These can have zeroes or whitespaces, which give problems when checking for the correct value.
-
-        :param codes: the codes to fix
-        :return: the codes fixed
-        """
-        result = []
-        for code in codes:
-            value = code
-            while len(value) < 4:
-                value = '0' + value
-            result.append(value)
-        result.extend(codes)
-
-        return result
-
-    def society(self, codes):
-        """
-        This is for fixing society codes.
-
-        These can have zeroes or whitespaces, which give problems when checking for the correct value.
-
-        :param codes: the codes to fix
-        :return: the codes fixed
-        """
-        result = []
-        for code in codes:
-            if len(code) > 1 and code[0] == '0':
-                result.append(code[1:])
-                if len(code) > 2 and code[1] == '0':
-                    result.append(code[2:])
-        result.extend(codes)
-
-        return result
