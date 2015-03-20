@@ -7,7 +7,8 @@ from cwr.grammar.field import society as field_society
 from cwr.grammar.field import writer as field_writer
 from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Writer, WriterRecord
-from cwr.grammar.factory.field import LookupFieldFactory
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
 
 
 """
@@ -24,7 +25,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = LookupFieldFactory()
+_lookup_factory = DefaultFieldFactory(CWRTables())
 
 """
 Patterns.

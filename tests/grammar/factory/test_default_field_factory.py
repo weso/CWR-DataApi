@@ -3,11 +3,12 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar.factory.field import LookupFieldFactory
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
 
 
 """
-Tests for EAN 13 fields.
+Tests for the DefaultFieldFactory.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -18,7 +19,7 @@ __status__ = 'Development'
 
 class TestLookupFieldFactoryValid(unittest.TestCase):
     def setUp(self):
-        self.factory = LookupFieldFactory()
+        self.factory = DefaultFieldFactory(CWRTables())
 
     def test_creation(self):
         id = 'original_transaction_type'
@@ -60,7 +61,7 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
         self.assertEqual(result1, result2)
 
     def test_returns_same_two_instances(self):
-        factory2 = LookupFieldFactory()
+        factory2 = DefaultFieldFactory(CWRTables())
 
         id = 'original_transaction_type'
 
@@ -72,7 +73,7 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
 
 class TestLookupFieldFactoryException(unittest.TestCase):
     def setUp(self):
-        self.factory = LookupFieldFactory()
+        self.factory = DefaultFieldFactory(CWRTables())
 
     def test_whitespace_compulsory(self):
         """
@@ -80,7 +81,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = LookupFieldFactory().get_field(id, compulsory=True)
+        field = DefaultFieldFactory(CWRTables()).get_field(id, compulsory=True)
 
         self.assertRaises(ParseException, field.parseString, '   ')
 
@@ -90,7 +91,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = LookupFieldFactory().get_field(id, compulsory=True)
+        field = DefaultFieldFactory(CWRTables()).get_field(id, compulsory=True)
 
         self.assertRaises(ParseException, field.parseString, '')
 
@@ -100,7 +101,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = LookupFieldFactory().get_field(id)
+        field = DefaultFieldFactory(CWRTables()).get_field(id)
 
         self.assertRaises(ParseException, field.parseString, '')
 
@@ -110,7 +111,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = LookupFieldFactory().get_field(id)
+        field = DefaultFieldFactory(CWRTables()).get_field(id)
 
         self.assertRaises(ParseException, field.parseString, '123')
 
@@ -120,6 +121,6 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = LookupFieldFactory().get_field(id)
+        field = DefaultFieldFactory(CWRTables()).get_field(id)
 
         self.assertRaises(ParseException, field.parseString, '12 ')

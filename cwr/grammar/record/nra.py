@@ -6,7 +6,8 @@ from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import nra as field_nra
 from cwr.nra import NPARecord, NWNRecord, NATRecord, NRAWorkRecord, NOWRecord, NPRRecord, NPNRecord
-from cwr.grammar.factory.field import LookupFieldFactory
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
 
 
 """
@@ -30,7 +31,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = LookupFieldFactory()
+_lookup_factory = DefaultFieldFactory(CWRTables())
 
 """
 NRA patterns.

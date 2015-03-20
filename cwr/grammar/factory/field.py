@@ -6,7 +6,7 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import basic
-from data.accessor import CWRConfiguration, CWRTables
+from data.accessor import CWRConfiguration
 
 
 """
@@ -168,31 +168,31 @@ class OptionFieldFactory(FieldFactory):
         return field
 
 
-class LookupFieldFactory(OptionFieldFactory):
+class DefaultFieldFactory(OptionFieldFactory):
     """
-    Factory for acquiring lookup fields rules.
-
-    These rules only allow strings from a fixed set of them.
+    Factory for acquiring fields rules using the default configuration.
     """
 
     _instance = None
 
-    def __init__(self, field_rules=None, field_values=None):
-        super(LookupFieldFactory, self).__init__()
+    def __init__(self, field_values, field_rules=None, actions=None):
+        super(DefaultFieldFactory, self).__init__()
+
+        self._field_values = field_values
 
         if field_rules is None:
             self._field_rules = basic
         else:
             self._field_rules = field_rules
 
-        if field_values is None:
-            self._field_values = CWRTables()
+        if actions is None:
+            self._actions = ActionsSource()
         else:
-            self._field_values = field_values
+            self._actions = actions
 
     def __new__(self, *args, **kwargs):
         if not self._instance:
-            self._instance = super(LookupFieldFactory, self).__new__(
+            self._instance = super(DefaultFieldFactory, self).__new__(
                 self, *args, **kwargs)
         return self._instance
 
@@ -211,7 +211,8 @@ class LookupFieldFactory(OptionFieldFactory):
 
         values = self.__get_field_values(id, values_id)
 
-        field = self._field_rules.lookup(values, name=config['name'], compulsory=True)
+        constructor_method = getattr(self._field_rules, config['type'])
+        field = constructor_method(values, name=config['name'], compulsory=True)
 
         field = field.setResultsName(id)
 
@@ -244,9 +245,14 @@ class LookupFieldFactory(OptionFieldFactory):
         :param actions: identifiers for the actions to add
         """
         for action in actions:
-            action_method = getattr(self, action)
+            action_method = getattr(self._actions, action)
 
             field.setParseAction(lambda p: action_method(p))
+
+
+class ActionsSource():
+    def __init__(self):
+        pass
 
     def to_int(self, parsed):
         value = parsed[0]

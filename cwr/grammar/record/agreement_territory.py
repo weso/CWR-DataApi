@@ -3,7 +3,8 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special, record
 from cwr.agreement import AgreementTerritoryRecord
-from cwr.grammar.factory.field import LookupFieldFactory
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
 
 
 """
@@ -16,7 +17,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = LookupFieldFactory()
+_lookup_factory = DefaultFieldFactory(CWRTables())
 
 """
 Territory in Agreement patterns.

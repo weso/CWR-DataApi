@@ -6,7 +6,8 @@ from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Publisher, PublisherRecord
-from cwr.grammar.factory.field import LookupFieldFactory
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
 
 
 """
@@ -23,7 +24,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = LookupFieldFactory()
+_lookup_factory = DefaultFieldFactory(CWRTables())
 
 """
 Publisher patterns.
