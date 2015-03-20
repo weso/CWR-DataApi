@@ -65,16 +65,6 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
 
         self.assertEqual(result1, result2)
 
-    def test_returns_same_two_instances(self):
-        factory2 = DefaultFieldFactory(_config.load_field_config_table(), CWRTables())
-
-        id = 'original_transaction_type'
-
-        result1 = self.factory.get_field(id)
-        result2 = factory2.get_field(id)
-
-        self.assertEqual(result1, result2)
-
 
 class TestLookupFieldFactoryException(unittest.TestCase):
     def setUp(self):

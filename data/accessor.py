@@ -67,8 +67,6 @@ class CWRConfiguration(object):
     Offers methods to access the CWR configuration data.
     """
 
-    _instance = None
-
     def __init__(self):
         # Reader for the files
         self._reader = _FileReader()
@@ -82,12 +80,6 @@ class CWRConfiguration(object):
         self._record_config = None
         self._cwr_defaults = None
         self._field_config_table = None
-
-    def __new__(self, *args, **kwargs):
-        if not self._instance:
-            self._instance = super(CWRConfiguration, self).__new__(
-                self, *args, **kwargs)
-        return self._instance
 
     def _load_record_config(self):
         """
@@ -181,18 +173,10 @@ class CWRTables(object):
     The files are read only once, and then the data is stored to be returned each time it is required.
     """
 
-    _instance = None
-
     def __init__(self):
         self._file_values = {}
         # Reader for the files
         self._reader = _FileReader()
-
-    def __new__(self, *args, **kwargs):
-        if not self._instance:
-            self._instance = super(CWRTables, self).__new__(
-                self, *args, **kwargs)
-        return self._instance
 
     def get_data(self, id):
         """

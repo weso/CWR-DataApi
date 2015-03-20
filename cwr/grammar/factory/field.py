@@ -169,8 +169,6 @@ class DefaultFieldFactory(OptionFieldFactory):
     Factory for acquiring fields rules using the default configuration.
     """
 
-    _instance = None
-
     def __init__(self, field_configs, field_values=None, field_rules=None, actions=None):
         super(DefaultFieldFactory, self).__init__(field_configs)
 
@@ -186,12 +184,6 @@ class DefaultFieldFactory(OptionFieldFactory):
             self._actions = ActionsSource()
         else:
             self._actions = actions
-
-    def __new__(self, *args, **kwargs):
-        if not self._instance:
-            self._instance = super(DefaultFieldFactory, self).__new__(
-                self, *args, **kwargs)
-        return self._instance
 
     def create_field(self, id, config):
         """
