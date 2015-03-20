@@ -104,7 +104,7 @@ def _check_not_empty(string):
     string = string.strip()
 
     if len(string) == 0:
-        raise pp.ParseException(string, "The field should not be empty")
+        raise pp.ParseException(string)
 
 
 """
