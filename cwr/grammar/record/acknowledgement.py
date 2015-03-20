@@ -29,16 +29,15 @@ Rules.
 
 # Acknowledgment Pattern
 acknowledgement = field_special.lineStart + \
-                  field_record.record_prefix(_config.record_type('acknowledgement'),
-                                             compulsory=True) + \
+                  field_record.record_prefix(_config.record_type('acknowledgement'), compulsory=True) + \
                   field_ack.creation_date_time + \
                   _ack_factory.get_field('original_group_id') + \
-                  _ack_factory.get_field('original_transaction_sequence_n') + \
+                  _ack_factory.get_field('original_transaction_sequence_n', compulsory=True) + \
                   _lookup_factory.get_field('original_transaction_type', compulsory=True) + \
                   _ack_factory.get_field('creation_title') + \
                   _ack_factory.get_field('submitter_creation_n') + \
                   _ack_factory.get_field('recipient_creation_n') + \
-                  _ack_factory.get_field('processing_date') + \
+                  _ack_factory.get_field('processing_date', compulsory=True) + \
                   _lookup_factory.get_field('transaction_status', compulsory=True) + \
                   field_special.lineEnd
 

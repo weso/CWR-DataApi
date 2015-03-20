@@ -1,0 +1,59 @@
+advance_given:
+  type: boolean
+  size: 1
+  name: Advance Given
+
+agreement_end_date:
+  type: date
+  size: 8
+  name: Agreement End Date
+
+agreement_start_date:
+  type: date
+  size: 8
+  name: Agreement Start Date
+
+date_of_signature:
+  type: date
+  size: 8
+  name: Date of Signature of Agreement
+
+international_standard_code:
+  type: alphanum
+  size: 14
+  name: International Standard Agreement Code
+
+number_of_works:
+  type: numeric
+  size: 5
+  name: Number of Works
+
+post_term_collection_end_date:
+  type: date
+  size: 8
+  name: Post Term Collection End Date
+
+prior_royalty_start_date:
+  type: date
+  size: 8
+  name: Prior Royalty Start Date
+
+retention_end_date:
+  type: date
+  size: 8
+  name: Retention End Date
+
+shares_change:
+  type: boolean
+  size: 1
+  name: Shares Change
+
+society_assigned_agreement_n:
+  type: alphanum
+  size: 14
+  name: Society Given Agreement Number
+
+submitter_agreement_n:
+  type: alphanum
+  size: 14
+  name: Submitters Agreement Number

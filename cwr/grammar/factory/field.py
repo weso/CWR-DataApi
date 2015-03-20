@@ -111,10 +111,48 @@ class OptionFieldFactory(FieldFactory):
             else:
                 # It is not compulsory, the wrapped is added
                 self._logger.info('Wrapped field %s already exists, using saved instance' % id)
-                field = self.__not_compulsory_wrapper(field, config['name'], config['size'])
+                # TODO: This is a patch
+                if config['type'] == 'date':
+                    field = self.__not_compulsory_wrapper_date(field, config['name'], config['size'])
+                else:
+                    field = self.__not_compulsory_wrapper(field, config['name'], config['size'])
 
                 # Wrapped field is saved
                 self._fields_optional[id] = field
+
+        return field
+
+    def __not_compulsory_wrapper_date(self, field, name, columns):
+        """
+        Adds a wrapper rule to the field to accept empty strings.
+
+        This empty string should be of the same size as the columns parameter. One smaller or bigger will be rejected.
+
+        This wrapper will return None if the field is empty.
+
+        :param field: the field to wrap
+        :param name: name of the field
+        :param columns: number of columns it takes
+        :return: the field with an additional rule to allow empty strings
+        """
+        # Regular expression accepting as many whitespaces as columns
+        field_option = pp.Regex('[0]{8}|[ ]{' + str(columns) + '}')
+
+        field_option.setName(name)
+
+        # Whitespaces are not removed
+        field_option.leaveWhitespace()
+
+        # None is returned by this rule
+        field_option.setParseAction(pp.replaceWith(None))
+
+        field_option = field_option.setResultsName(field.resultsName)
+
+        field = field | field_option
+
+        field.setName(name)
+
+        field.leaveWhitespace()
 
         return field
 

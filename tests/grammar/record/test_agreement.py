@@ -85,7 +85,7 @@ class TestGrammarAgreement(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('C1234567890123', result.submitter_agreement_n)
-        self.assertEqual('', result.international_standard_code)
+        self.assertEqual(None, result.international_standard_code)
         self.assertEqual('OG', result.agreement_type)
         self.assertEqual(2012, result.agreement_start_date.year)
         self.assertEqual(1, result.agreement_start_date.month)
@@ -101,7 +101,7 @@ class TestGrammarAgreement(unittest.TestCase):
         self.assertEqual(None, result.sales_manufacture_clause)
         self.assertEqual(False, result.shares_change)
         self.assertEqual(False, result.advance_given)
-        self.assertEqual('', result.society_assigned_agreement_n)
+        self.assertEqual(None, result.society_assigned_agreement_n)
 
 
 class TestGrammarGroupHeaderException(unittest.TestCase):
