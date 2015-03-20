@@ -6,7 +6,7 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import basic
-from data.accessor import CWRConfiguration, DefaultCWRTables
+from data.accessor import CWRConfiguration, CWRTables
 
 
 """
@@ -22,7 +22,6 @@ Configuration classes.
 """
 
 # Acquires data sources
-_tables = DefaultCWRTables()
 _config = CWRConfiguration()
 
 
@@ -176,17 +175,25 @@ class LookupFieldFactory(OptionFieldFactory):
     These rules only allow strings from a fixed set of them.
     """
 
-    _field_rules = basic
-    _field_values = _tables
     _instance = None
 
-    def __init__(self):
+    def __init__(self, field_rules=None, field_values=None):
         super(LookupFieldFactory, self).__init__()
+
+        if field_rules is None:
+            self._field_rules = basic
+        else:
+            self._field_rules = field_rules
+
+        if field_values is None:
+            self._field_values = CWRTables()
+        else:
+            self._field_values = field_values
 
     def __new__(self, *args, **kwargs):
         if not self._instance:
             self._instance = super(LookupFieldFactory, self).__new__(
-                                self, *args, **kwargs)
+                self, *args, **kwargs)
         return self._instance
 
     def create_field(self, id, config):
@@ -227,9 +234,7 @@ class LookupFieldFactory(OptionFieldFactory):
         else:
             table = values_id
 
-        values_method = getattr(self._field_values, table)
-
-        return values_method()
+        return self._field_values.get_data(table)
 
     def __add_actions(self, field, actions):
         """

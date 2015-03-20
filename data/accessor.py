@@ -172,522 +172,55 @@ class CWRTables(object):
 
     def __init__(self):
         self._file_values = {}
+        # Reader for the files
+        self._reader = _FileReader()
 
-class DefaultCWRTables(object):
-    """
-    Offers methods to access the CWR Lookup Tables data.
-    """
+    def get_data(self, id):
+        if not id in self._file_values:
+            file = 'cwr_%s.csv' % id
+            self._file_values[id] = self._reader.read_csv_file(file)
 
-    # Reader for the files
-    _reader = _FileReader()
+            if id == 'society_code':
+                self._file_values[id] = self.society(self._file_values[id])
+            elif id == 'tis_code':
+                self._file_values[id] = self.tis_code(self._file_values[id])
 
-    # Files for the tables
-    _file_record_types = 'cwr_record_type.csv'
-    _file_sender_types = 'cwr_sender_type.csv'
-    _file_agreement_types = 'cwr_agreement_type.csv'
-    _file_agreement_roles = 'cwr_agreement_role.csv'
-    _file_transaction_types = 'cwr_transaction_type.csv'
-    _file_composite_type = 'cwr_composite_type.csv'
-    _file_work_type = 'cwr_work_type.csv'
-    _file_lyric_adaptation = 'cwr_lyric_adaptation.csv'
-    _file_music_arrangement = 'cwr_music_arrangement.csv'
-    _file_version_type = 'cwr_version_type.csv'
-    _file_excerpt_type = 'cwr_excerpt_type.csv'
-    _file_tmr = 'cwr_text_music_relationship.csv'
-    _file_mwdc = 'cwr_musical_work_distribution_category.csv'
-    _file_language_codes = 'cwr_language_code.csv'
-    _file_character_sets = 'cwr_character_set.csv'
-    _file_transaction_status = 'cwr_transaction_status.csv'
-    _file_tis = 'cwr_tis.csv'
-    _file_society_codes = 'cwr_society_code.csv'
-    _file_publisher_type = 'cwr_publisher_type.csv'
-    _file_special_agreement_indicator = 'cwr_special_agreement_indicator.csv'
-    _file_usa_license_indicators = 'cwr_usa_license_indicator.csv'
-    _file_writer_designation_codes = 'cwr_writer_designation_code.csv'
-    _file_title_types = 'cwr_title_type.csv'
-    _file_prior_royalty_status = 'cwr_prior_royalty_status.csv'
-    _file_post_term_collection_status = 'cwr_post_term_collection_status.csv'
-    _file_sales_manufacture_clause = 'cwr_sales_manufacture_clause.csv'
-    _file_ie_indicator = 'cwr_ie_indicator.csv'
-    _file_recording_format = 'cwr_recording_format.csv'
-    _file_recording_technique = 'cwr_recording_technique.csv'
-    _file_media_type = 'cwr_media_type.csv'
-    _file_intended_purpose = 'cwr_intended_purpose.csv'
-    _file_standard_instrumentation_type = 'cwr_standard_instrumentation_type.csv'
-    _file_instrument = 'cwr_instrument.csv'
-    _file_message_type = 'cwr_message_type.csv'
-    _file_message_level = 'cwr_message_level.csv'
-    _file_type_of_right = 'cwr_type_of_right.csv'
-    _file_subject_code = 'cwr_subject_code.csv'
+        return self._file_values[id]
 
-    # Data loaded from the tables
-    _composite_types = None
-    _work_types = None
-    _lyric_adaptations = None
-    _music_arrangement = None
-    _record_types = None
-    _sender_types = None
-    _agreement_types = None
-    _agreement_roles = None
-    _transaction_types = None
-    _version_types = None
-    _excerpt_types = None
-    _tmr = None
-    _mwdc = None
-    _language_codes = None
-    _character_sets = None
-    _transaction_status = None
-    _tis = None
-    _society_codes = None
-    _publisher_type = None
-    _special_agreement_indicator = None
-    _usa_license_indicators = None
-    _writer_designation_codes = None
-    _title_types = None
-    _prior_royalty_status = None
-    _post_term_collection_status = None
-    _sales_manufacture_clause = None
-    _ie_indicator = None
-    _recording_formats = None
-    _recording_techniques = None
-    _media_types = None
-    _intended_purposes = None
-    _standard_instrumentation_types = None
-    _instruments = None
-    _message_types = None
-    _message_levels = None
-    _type_of_rights = None
-    _subject_codes = None
-
-    def agreement_role_code(self):
-        """
-        Roles for Agreements.
-
-        :return: the allowed CWR Agreement role codes
-        """
-        if self._agreement_roles is None:
-            self._agreement_roles = self._reader.read_csv_file(self._file_agreement_roles)
-
-        return self._agreement_roles
-
-    def agreement_type(self):
-        """
-        Types of Agreement.
-
-        These are the allowed Agreement types.
-
-        :return: the allowed CWR Agreement type codes
-        """
-        if self._agreement_types is None:
-            self._agreement_types = self._reader.read_csv_file(self._file_agreement_types)
-
-        return self._agreement_types
-
-    def character_sets(self):
-        """
-        Allowed character sets.
-
-        These are the type of character sets which a file may have.
-
-        :return: the allowed character sets
-        """
-        if self._character_sets is None:
-            self._character_sets = self._reader.read_csv_file(self._file_character_sets)
-
-        return self._character_sets
-
-    def composite_type(self):
-        """
-        Composite Types.
-
-        :return: the allowed CWR Composite Type codes
-        """
-        if self._composite_types is None:
-            self._composite_types = self._reader.read_csv_file(self._file_composite_type)
-
-        return self._composite_types
-
-    def excerpt_type(self):
-        """
-        CWR Excerpt Types.
-
-        :return: the allowed Excerpt Type codes
-        """
-        if self._excerpt_types is None:
-            self._excerpt_types = self._reader.read_csv_file(self._file_excerpt_type)
-
-        return self._excerpt_types
-
-    def ie_indicator(self):
-        """
-        CWR I/E Indicator codes.
-
-        :return: the allowed I/E Indicator codes
-        """
-        if self._ie_indicator is None:
-            self._ie_indicator = self._reader.read_csv_file(self._file_ie_indicator)
-
-        return self._ie_indicator
-
-    def instrument(self):
-        """
-        CWR Instrument codes.
-
-        :return: the allowed Instrument codes
-        """
-        if self._instruments is None:
-            self._instruments = self._reader.read_csv_file(self._file_instrument)
-
-        return self._instruments
-
-    def intended_purpose(self):
-        """
-        CWR Intended Purpose codes.
-
-        :return: the allowed Intended Purpose codes
-        """
-        if self._intended_purposes is None:
-            self._intended_purposes = self._reader.read_csv_file(self._file_intended_purpose)
-
-        return self._intended_purposes
-
-    def language_code(self):
-        """
-        Allowed language codes.
-
-        :return: the allowed language codes
-        """
-        if self._language_codes is None:
-            self._language_codes = self._reader.read_csv_file(self._file_language_codes)
-
-        return self._language_codes
-
-    def lyric_adaptation(self):
-        """
-        Lyric Adaptation codes.
-
-        :return: the allowed CWR Lyric Adaptation codes
-        """
-        if self._lyric_adaptations is None:
-            self._lyric_adaptations = self._reader.read_csv_file(self._file_lyric_adaptation)
-
-        return self._lyric_adaptations
-
-    def media_type(self):
-        """
-        Media Type codes.
-
-        :return: the allowed Media Type codes
-        """
-        if self._media_types is None:
-            self._media_types = self._reader.read_csv_file(self._file_media_type)
-
-        return self._media_types
-
-    def message_level(self):
-        """
-        Message Level codes.
-
-        :return: the allowed Message Level codes
-        """
-        if self._message_levels is None:
-            self._message_levels = self._reader.read_csv_file(self._file_message_level)
-
-        return self._message_levels
-
-    def message_type(self):
-        """
-        Message Type codes.
-
-        :return: the allowed Message Type codes
-        """
-        if self._message_types is None:
-            self._message_types = self._reader.read_csv_file(self._file_message_type)
-
-        return self._message_types
-
-    def music_arrangement(self):
-        """
-        Music Arrangement codes.
-
-        :return: the allowed Music Arrangement codes
-        """
-        if self._music_arrangement is None:
-            self._music_arrangement = self._reader.read_csv_file(self._file_music_arrangement)
-
-        return self._music_arrangement
-
-    def musical_work_distribution_category(self):
-        """
-        Musical Work Distribution Categories.
-
-        These are the allowed Musical Work Distribution Categories.
-
-        :return: the allowed Musical Work Distribution Categories codes
-        """
-        if self._mwdc is None:
-            self._mwdc = self._reader.read_csv_file(self._file_mwdc)
-
-        return self._mwdc
-
-    def post_term_collection_status(self):
-        """
-        Post-Term Collection Status codes.
-
-        :return: the allowed Post-Term Collection Status codes
-        """
-        if self._post_term_collection_status is None:
-            self._post_term_collection_status = self._reader.read_csv_file(self._file_post_term_collection_status)
-
-        return self._post_term_collection_status
-
-    def prior_royalty_status(self):
-        """
-        Prior Royalty Status codes.
-
-        :return: the allowed Prior Royalty Status codes
-        """
-        if self._prior_royalty_status is None:
-            self._prior_royalty_status = self._reader.read_csv_file(self._file_prior_royalty_status)
-
-        return self._prior_royalty_status
-
-    def publisher_type(self):
-        """
-        Publisher Types.
-
-        :return: the allowed Publisher Type codes
+    def tis_code(self, codes):
         """
-        if self._publisher_type is None:
-            self._publisher_type = self._reader.read_csv_file(self._file_publisher_type)
+        This is for fixing TIS codes.
 
-        return self._publisher_type
+        These can have zeroes or whitespaces, which give problems when checking for the correct value.
 
-    def record_type(self):
+        :param codes: the codes to fix
+        :return: the codes fixed
         """
-        Types of records.
+        result = []
+        for code in codes:
+            value = code
+            while len(value) < 4:
+                value = '0' + value
+            result.append(value)
+        result.extend(codes)
 
-        These are the initial three digit alphanumeric codes of the records.
+        return result
 
-        :return: the allowed CWR record type codes
+    def society(self, codes):
         """
-        if self._record_types is None:
-            self._record_types = self._reader.read_csv_file(self._file_record_types)
+        This is for fixing society codes.
 
-        return self._record_types
-
-    def recording_format(self):
-        """
-        Types of recordings.
-
-        :return: the allowed CWR recording format codes
-        """
-        if self._recording_formats is None:
-            self._recording_formats = self._reader.read_csv_file(self._file_recording_format)
-
-        return self._recording_formats
-
-    def recording_technique(self):
-        """
-        Types of recording techniques.
-
-        :return: the allowed CWR recording technique codes
-        """
-        if self._recording_techniques is None:
-            self._recording_techniques = self._reader.read_csv_file(self._file_recording_technique)
-
-        return self._recording_techniques
-
-    def sales_manufacture_clause(self):
-        """
-        Sales/Manufacture Clause.
-
-        :return: the allowed CWR Sales/Manufacture Clause codes
-        """
-        if self._sales_manufacture_clause is None:
-            self._sales_manufacture_clause = self._reader.read_csv_file(self._file_sales_manufacture_clause)
-
-        return self._sales_manufacture_clause
-
-    def sender_type(self):
-        """
-        Types of sender.
-
-        These are the codes identifying file senders.
-
-        :return: the allowed CWR file sender codes
-        """
-        if self._sender_types is None:
-            self._sender_types = self._reader.read_csv_file(self._file_sender_types)
-
-        return self._sender_types
-
-    def society(self):
-        """
-        Society Codes.
-
-        :return: the allowed rights societies codes
-        """
-        if self._society_codes is None:
-            self._society_codes = self._reader.read_csv_file(self._file_society_codes)
-
-            for code in self._society_codes:
-                if len(code) > 1 and code[0] == '0':
-                    self._society_codes.append(code[1:])
-                    if len(code) > 2 and code[1] == '0':
-                        self._society_codes.append(code[2:])
-
-        return self._society_codes
-
-    def special_agreement_indicator(self):
-        """
-        Special Agreement Indicators.
-
-        :return: the allowed Special Agreement Indicator codes
-        """
-        if self._special_agreement_indicator is None:
-            self._special_agreement_indicator = self._reader.read_csv_file(self._file_special_agreement_indicator)
-
-        return self._special_agreement_indicator
-
-    def standard_instrumentation_type(self):
-        """
-        Standard Instrumentation Types.
-
-        :return: the allowed Standard Instrumentation Type codes
-        """
-        if self._standard_instrumentation_types is None:
-            self._standard_instrumentation_types = self._reader.read_csv_file(self._file_standard_instrumentation_type)
-
-        return self._standard_instrumentation_types
-
-    def subject_code(self):
-        """
-        Subject Codes.
-
-        :return: the allowed Subject Code codes
-        """
-        if self._subject_codes is None:
-            self._subject_codes = self._reader.read_csv_file(self._file_subject_code)
-
-        return self._subject_codes
-
-    def text_music_relationship(self):
-        """
-        Text-Music Relationships.
-
-        These are the allowed Text-Music Relationship code.
-
-        :return: the allowed Text-Music Relationship codes
-        """
-        if self._tmr is None:
-            self._tmr = self._reader.read_csv_file(self._file_tmr)
-
-        return self._tmr
-
-    def tis_code(self):
-        """
-        TIS codes.
-
-        :return: the allowed TIS codes
-        """
-        if self._tis is None:
-            values = self._reader.read_csv_file(self._file_tis)
-            self._tis = []
-            for code in values:
-                value = code
-                while len(value) < 4:
-                    value = '0' + value
-                self._tis.append(value)
-
-        return self._tis
-
-    def title_type(self):
-        """
-        Title Types.
-
-        :return: the allowed Title Type codes
-        """
-        if self._title_types is None:
-            self._title_types = self._reader.read_csv_file(self._file_title_types)
-
-        return self._title_types
-
-    def type_of_right(self):
-        """
-        Type of Right.
-
-        :return: the allowed Type of Right codes.
-        """
-        if self._type_of_rights is None:
-            self._type_of_rights = self._reader.read_csv_file(self._file_type_of_right)
-
-        return self._type_of_rights
-
-    def transaction_status(self):
-        """
-        Transaction Status codes
-
-        :return: the allowed CWR file transaction status codes
-        """
-        if self._transaction_status is None:
-            self._transaction_status = self._reader.read_csv_file(self._file_transaction_status)
-
-        return self._transaction_status
-
-    def transaction_type(self):
-        """
-        Types of transactions.
-
-        These are the codes identifying group transactions.
-
-        :return: the allowed CWR file transaction codes
-        """
-        if self._transaction_types is None:
-            self._transaction_types = self._reader.read_csv_file(self._file_transaction_types)
-
-        return self._transaction_types
-
-    def usa_license_indicator(self):
-        """
-        USA License Indicator.
-
-        :return: the allowed CWR USA License Indicator codes
-        """
-        if self._usa_license_indicators is None:
-            self._usa_license_indicators = self._reader.read_csv_file(self._file_usa_license_indicators)
-
-        return self._usa_license_indicators
-
-    def version_type(self):
-        """
-        Version Types.
-
-        :return: the allowed Version Type codes
-        """
-        if self._version_types is None:
-            self._version_types = self._reader.read_csv_file(self._file_version_type)
-
-        return self._version_types
-
-    def work_type(self):
-        """
-        Work Type codes.
-
-        :return: the allowed CWR Work Type codes
-        """
-        if self._work_types is None:
-            self._work_types = self._reader.read_csv_file(self._file_work_type)
-
-        return self._work_types
-
-    def writer_designation_code(self):
-        """
-        Writer Designation codes.
+        These can have zeroes or whitespaces, which give problems when checking for the correct value.
 
-        :return: the allowed CWR Writer Designation codes
+        :param codes: the codes to fix
+        :return: the codes fixed
         """
-        if self._writer_designation_codes is None:
-            self._writer_designation_codes = self._reader.read_csv_file(self._file_writer_designation_codes)
+        result = []
+        for code in codes:
+            if len(code) > 1 and code[0] == '0':
+                result.append(code[1:])
+                if len(code) > 2 and code[1] == '0':
+                    result.append(code[2:])
+        result.extend(codes)
 
-        return self._writer_designation_codes
+        return result

@@ -54,7 +54,7 @@ message_type:
 mr_affiliation:
   size: 3
   name: Mechanical Rights Affiliation Society
-  values: society
+  values: society_code
   actions:
     - to_int
 
@@ -83,7 +83,7 @@ post_term_collection_status:
 pr_affiliation:
   size: 3
   name: Performing Rights Affiliation Society
-  values: society
+  values: society_code
   actions:
     - to_int
 
@@ -115,7 +115,7 @@ sender_type:
   size: 2
   name: Sender Type
 
-society:
+society_code:
   size: 3
   name: Society ID Field
   actions:
@@ -128,7 +128,7 @@ special_agreement_indicator:
 sr_affiliation:
   size: 3
   name: Synchronization Rights Affiliation Society
-  values: society
+  values: society_code
   actions:
     - to_int
 

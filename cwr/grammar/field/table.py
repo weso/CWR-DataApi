@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import CWRConfiguration, DefaultCWRTables
+from data.accessor import CWRConfiguration, CWRTables
 
 
 """
@@ -26,7 +26,7 @@ Configuration classes.
 """
 
 # Acquires data sources
-_tables = DefaultCWRTables()
+_tables = CWRTables()
 _config = CWRConfiguration()
 
 """
@@ -49,7 +49,7 @@ def char_code(columns, name=None, compulsory=False):
         raise BaseException()
 
     char_sets = None
-    for char_set in _tables.character_sets():
+    for char_set in _tables.get_data('character_set'):
         regex = '[ ]{' + str(15 - len(char_set)) + '}' + char_set
         if char_sets is None:
             char_sets = regex
