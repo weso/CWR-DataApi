@@ -67,24 +67,27 @@ class CWRConfiguration(object):
     Offers methods to access the CWR configuration data.
     """
 
-    # Reader for the files
-    _reader = _FileReader()
-
-    # Files containing the CWR info
-    _file_record_config = 'record_config.yml'
-    _file_defaults = 'default_values.yml'
-    _file_field_config_table = 'field_config_table.yml'
-
-    # CWR configuration information
-    _record_config = None
-    _cwr_defaults = None
-    _field_config_table = None
-
-    # Singleton control object
-    __shared_state = {}
+    _instance = None
 
     def __init__(self):
-        self.__dict__ = self.__shared_state
+        # Reader for the files
+        self._reader = _FileReader()
+
+        # Files containing the CWR info
+        self._file_record_config = 'record_config.yml'
+        self._file_defaults = 'default_values.yml'
+        self._file_field_config_table = 'field_config_table.yml'
+
+        # CWR configuration information
+        self._record_config = None
+        self._cwr_defaults = None
+        self._field_config_table = None
+
+    def __new__(self, *args, **kwargs):
+        if not self._instance:
+            self._instance = super(CWRConfiguration, self).__new__(
+                self, *args, **kwargs)
+        return self._instance
 
     def _load_record_config(self):
         """
