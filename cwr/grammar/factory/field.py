@@ -6,7 +6,6 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import basic
-from data.accessor import CWRConfiguration
 
 
 """
@@ -20,9 +19,6 @@ __status__ = 'Development'
 """
 Configuration classes.
 """
-
-# Acquires data sources
-_config = CWRConfiguration()
 
 
 class FieldFactory(object):
@@ -64,7 +60,7 @@ class OptionFieldFactory(FieldFactory):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self):
+    def __init__(self, field_configs):
         super(OptionFieldFactory, self).__init__()
 
         # Fields already created
@@ -74,7 +70,7 @@ class OptionFieldFactory(FieldFactory):
         # Logger
         self._logger = logging.getLogger(__name__)
         # Configuration for creating the fields
-        self._field_configs = _config.load_field_config_table()
+        self._field_configs = field_configs
 
     def get_field(self, id, compulsory=False):
         """
@@ -175,9 +171,10 @@ class DefaultFieldFactory(OptionFieldFactory):
 
     _instance = None
 
-    def __init__(self, field_values, field_rules=None, actions=None):
-        super(DefaultFieldFactory, self).__init__()
+    def __init__(self, field_configs, field_values=None, field_rules=None, actions=None):
+        super(DefaultFieldFactory, self).__init__(field_configs)
 
+        # Field values are optional
         self._field_values = field_values
 
         if field_rules is None:
@@ -212,7 +209,19 @@ class DefaultFieldFactory(OptionFieldFactory):
         values = self.__get_field_values(id, values_id)
 
         constructor_method = getattr(self._field_rules, config['type'])
-        field = constructor_method(values, name=config['name'], compulsory=True)
+        # TODO: This check is just a patch
+        if config['type'] == 'lookup':
+            field = constructor_method(values, name=config['name'], compulsory=True)
+        elif config['type'] == 'boolean':
+            field = constructor_method(name=config['name'], compulsory=True)
+        elif config['type'] == 'flag':
+            field = constructor_method(name=config['name'], compulsory=True)
+        elif config['type'] == 'date':
+            field = constructor_method(name=config['name'], compulsory=True)
+        elif config['type'] == 'time':
+            field = constructor_method(name=config['name'], compulsory=True)
+        else:
+            field = constructor_method(columns=config['columns'], name=config['name'], compulsory=True)
 
         field = field.setResultsName(id)
 

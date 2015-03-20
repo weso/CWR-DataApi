@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from data.accessor import CWRConfiguration
 from cwr.grammar.field import basic
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from data.accessor import CWRConfiguration
 
 
 """
@@ -16,7 +16,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(CWRTables())
+_lookup_factory = DefaultFieldFactory(CWRConfiguration().load_field_config_table(), CWRTables())
 
 """
 NPA fields.

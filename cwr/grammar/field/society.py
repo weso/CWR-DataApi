@@ -4,6 +4,7 @@
 from cwr.grammar.field import special
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from data.accessor import CWRConfiguration
 
 
 """
@@ -15,7 +16,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 # Acquires data sources
-_lookup_factory = DefaultFieldFactory(CWRTables())
+_lookup_factory = DefaultFieldFactory(CWRConfiguration().load_field_config_table(), CWRTables())
 
 
 # Performing Rights Share
