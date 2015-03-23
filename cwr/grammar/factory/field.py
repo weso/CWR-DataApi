@@ -44,7 +44,7 @@ class FieldFactory(object):
         :param compulsory: indicates if the empty string is rejected or not
         :return: the rule of a field
         """
-        pass
+        raise NotImplementedError("The get_field method is not implemented")
 
 
 class OptionFieldFactory(FieldFactory):
@@ -165,7 +165,7 @@ class OptionFieldFactory(FieldFactory):
         :param config: configuration info for the field
         :return: the basic rule for the field
         """
-        pass
+        raise NotImplementedError("The create_field method is not implemented")
 
     def __not_compulsory_wrapper(self, field, name, columns):
         """
