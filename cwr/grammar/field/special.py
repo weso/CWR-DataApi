@@ -303,29 +303,6 @@ def shares(maximum=100, name=None, compulsory=False):
     return field
 
 
-def blank(columns, name=None):
-    """
-    Creates the grammar for a group of blank spaces.
-
-    These are for constant empty strings which should be ignored, as they are used just as fillers.
-
-    :param columns: the number of blank spaces
-    :param name: name for the field
-    :return: grammar for a group of blank spaces
-    """
-
-    if name is None:
-        name = 'Blank Field'
-
-    field = pp.Regex('[ ]{' + str(columns) + '}')
-    field.leaveWhitespace()
-    field.suppress()
-
-    field.setName(name)
-
-    return field
-
-
 def ean_13(name=None, compulsory=False):
     """
     Creates the grammar for an EAN 13 code.

@@ -2,7 +2,6 @@
 
 from data.accessor import CWRConfiguration
 from cwr.group import GroupHeader, GroupTrailer
-from cwr.grammar.field import group as field_group
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.factory.field import DefaultFieldFactory
@@ -55,7 +54,7 @@ group_header = field_special.lineStart + \
                field_record.record_type(_config.record_type('group_header'), compulsory=True) + \
                _lookup_factory.get_field('transaction_type', compulsory=True) + \
                _group_factory.get_field('group_id', compulsory=True) + \
-               field_group.version_number + \
+               _group_factory.get_field('version_number', compulsory=True) + \
                _group_factory.get_field('batch_request_id') + \
                _group_factory.get_field('sd_type') + \
                field_special.lineEnd

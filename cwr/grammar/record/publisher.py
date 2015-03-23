@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Publisher, PublisherRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -48,8 +47,8 @@ publisher = field_special.lineStart + \
             _lookup_factory.get_field('sr_affiliation') + \
             society.sr_share() + \
             _lookup_factory.get_field('special_agreement_indicator') + \
-            field_publisher.first_recording_refusal + \
-            field_special.blank(1) + \
+            _publisher_factory.get_field('first_recording_refusal') + \
+            _publisher_factory.get_field('blank') + \
             field_special.ipi_base_number() + \
             _publisher_factory.get_field('international_code') + \
             _publisher_factory.get_field('society_assigned_agreement_n') + \

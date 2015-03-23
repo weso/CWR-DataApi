@@ -22,3 +22,10 @@ total_monetary_value:
   type: alphanum
   size: 10
   name: Total Monetary Value
+
+version_number:
+  type: lookup
+  size: 5
+  name: Version Number
+  values:
+    - '02.10'

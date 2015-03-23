@@ -1,3 +1,8 @@
+constant:
+  type: blank
+  size: 6
+  name: Constant
+
 shares_change:
   type: boolean
   size: 1

@@ -49,7 +49,7 @@ writer = field_special.lineStart + \
          _writer_factory.get_field('reversionary') + \
          _writer_factory.get_field('first_recording_refusal') + \
          _writer_factory.get_field('work_for_hire') + \
-         field_special.blank(_config.field_size('writer', 'filler')) + \
+         _writer_factory.get_field('filler') + \
          field_special.ipi_base_number() + \
          _writer_factory.get_field('personal_number') + \
          _lookup_factory.get_field('usa_license_indicator') + \

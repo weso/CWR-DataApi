@@ -92,13 +92,14 @@ performing = field_special.lineStart + \
 recording = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('recording_detail'), compulsory=True) + \
             _work_detail_factory.get_field('first_release_date') + \
-            field_special.blank(_config.field_size('recording_detail', 'constant_1')) + \
+            _work_detail_factory.get_field('constant_1') + \
             _work_detail_factory.get_field('first_release_duration') + \
-            field_special.blank(_config.field_size('recording_detail', 'constant_2')) + \
+            _work_detail_factory.get_field('constant_2') + \
             _work_detail_factory.get_field('first_album_title') + \
             _work_detail_factory.get_field('first_album_label') + \
             _work_detail_factory.get_field('first_release_catalog_n') + \
-            field_special.ean_13() + field_special.isrc() + \
+            field_special.ean_13() + \
+            field_special.isrc() + \
             _lookup_factory.get_field('recording_format') + \
             _lookup_factory.get_field('recording_technique') + \
             _lookup_factory.get_field('media_type') + \

@@ -25,6 +25,9 @@ Each of these fields is parsed into a value as follows:
 - Flag (F). String
 - Date (D). datetime.date.
 - Time (T). datetime.time.
+
+Additionally, other fields used on the CWR files, but not defined as basic fields, are included:
+- Blank. A line composed only of whitespaces.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -558,3 +561,32 @@ def lookup(values, columns=1, name=None, compulsory=False):
         lookup_field.leaveWhitespace()
 
     return lookup_field
+
+
+"""
+Blank field.
+
+This accepts only a line composed of whitespaces.
+"""
+
+
+def blank(columns=1, name=None):
+    """
+    Creates the grammar for a blank field.
+
+    These are for constant empty strings which should be ignored, as they are used just as fillers.
+
+    :param columns: number of columns, which is the required number of whitespaces
+    :param name: name for the field
+    :return: grammar for the blank field
+    """
+    if name is None:
+        name = 'Blank Field'
+
+    field = pp.Regex('[ ]{' + str(columns) + '}')
+    field.leaveWhitespace()
+    field.suppress()
+
+    field.setName(name)
+
+    return field

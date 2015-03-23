@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import publisher_territory as field_territory
 from cwr.interested_party import IPTerritoryOfControlRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -34,7 +33,7 @@ SPT patterns.
 territory = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('publisher_territory'), compulsory=True) + \
             field_special.ip_n(compulsory=True) + \
-            field_territory.constant + \
+            _pter_factory.get_field('constant') + \
             society.pr_share(maximum=50) + \
             society.mr_share() + \
             society.sr_share() + \

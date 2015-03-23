@@ -231,15 +231,20 @@ class DefaultFieldFactory(OptionFieldFactory):
         :param config: configuration info for the field
         :return: the basic rule for the field
         """
-        if 'values' in config:
-            values_id = config['values']
-        else:
-            values_id = None
 
         constructor_method = getattr(self._field_rules, config['type'])
         # TODO: This check is just a patch
         if config['type'] == 'lookup':
-            values = self.__get_field_values(id, values_id)
+
+            if 'values' in config:
+                values = config['values']
+            else:
+                if 'source' in config:
+                    values_id = config['source']
+                else:
+                    values_id = id
+                values = self._field_values.get_data(values_id)
+
             field = constructor_method(values, name=config['name'], compulsory=True)
         elif config['type'] == 'boolean':
             field = constructor_method(name=config['name'], compulsory=True)
@@ -249,6 +254,8 @@ class DefaultFieldFactory(OptionFieldFactory):
             field = constructor_method(name=config['name'], compulsory=True)
         elif config['type'] == 'time':
             field = constructor_method(name=config['name'], compulsory=True)
+        elif config['type'] == 'blank':
+            field = constructor_method(columns=config['size'], name=config['name'])
         else:
             field = constructor_method(columns=config['size'], name=config['name'], compulsory=True)
 
@@ -262,21 +269,6 @@ class DefaultFieldFactory(OptionFieldFactory):
             self.__add_actions(field, config['actions'])
 
         return field
-
-    def __get_field_values(self, id, values_id=None):
-        """
-        Returns the allowed values for the lookup field.
-
-        :param id: id for the field
-        :param values_id: id for the values
-        :return: the list of values allowed to the field
-        """
-        if values_id is None:
-            values = id
-        else:
-            values = values_id
-
-        return self._field_values.get_data(values)
 
     def __add_actions(self, field, actions):
         """

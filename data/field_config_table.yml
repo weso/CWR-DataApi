@@ -57,7 +57,7 @@ message_record_type:
   type: lookup
   size: 3
   name: Message Record Type
-  values: record_type
+  source: record_type
 
 message_type:
   type: lookup
@@ -68,7 +68,7 @@ mr_affiliation:
   type: lookup
   size: 3
   name: Mechanical Rights Affiliation Society
-  values: society_code
+  source: society_code
   actions:
     - to_int
 
@@ -86,13 +86,13 @@ original_transaction_type:
   type: lookup
   size: 3
   name: Original Transaction Type
-  values: transaction_type
+  source: transaction_type
 
 performance_language:
   type: lookup
   size: 2
   name: Performance Language
-  values: language_code
+  source: language_code
 
 post_term_collection_status:
   type: lookup
@@ -103,7 +103,7 @@ pr_affiliation:
   type: lookup
   size: 3
   name: Performing Rights Affiliation Society
-  values: society_code
+  source: society_code
   actions:
     - to_int
 
@@ -158,7 +158,7 @@ sr_affiliation:
   type: lookup
   size: 3
   name: Synchronization Rights Affiliation Society
-  values: society_code
+  source: society_code
   actions:
     - to_int
 

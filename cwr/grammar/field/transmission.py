@@ -5,7 +5,8 @@ import datetime
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table, basic
+
+from cwr.grammar.field import table
 from cwr.grammar.factory.field import DefaultFieldFactory
 
 

@@ -8,6 +8,16 @@ cd_identifier:
   size: 15
   name: CD Identifier
 
+constant_1:
+  type: blank
+  size: 60
+  name: First Constant
+
+constant_2:
+  type: blank
+  size: 5
+  name: Second Constant
+
 component_duration:
   type: time
   size: 8

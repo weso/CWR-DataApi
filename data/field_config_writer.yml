@@ -1,3 +1,8 @@
+filler:
+  type: blank
+  size: 1
+  name: Filler
+
 first_recording_refusal:
   type: flag
   size: 1
