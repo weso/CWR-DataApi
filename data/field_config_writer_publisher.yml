@@ -1,0 +1,4 @@
+publisher_name:
+  type: alphanum
+  size: 45
+  name: Publisher Name

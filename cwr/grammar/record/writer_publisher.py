@@ -19,6 +19,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _agr_factory = DefaultFieldFactory(_config.load_field_config('agreement'))
+_writer_publisher_factory = DefaultFieldFactory(_config.load_field_config('writer_publisher'))
 
 """
 Patterns.
@@ -27,7 +28,7 @@ Patterns.
 publisher = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('writer_publisher'), compulsory=True) + \
             field_writer_publisher.publisher_ip_number + \
-            field_writer_publisher.publisher_name + \
+            _writer_publisher_factory.get_field('publisher_name') + \
             _agr_factory.get_field('submitter_agreement_n', compulsory=True) + \
             _agr_factory.get_field('society_assigned_agreement_n') + \
             field_writer_publisher.writer_ip_n + \
