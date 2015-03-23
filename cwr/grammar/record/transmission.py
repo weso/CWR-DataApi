@@ -39,6 +39,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_trans_factory = DefaultFieldFactory(_config.load_field_config('transmission'))
 
 """
 Transmission patterns.
@@ -47,17 +48,23 @@ These are the grammatical structures for the Transmission Header and Transmissio
 """
 
 # Transmission Header pattern
-transmission_header = field_special.lineStart + field_record.record_type(_config.record_type('transmission_header'),
-                                                                         compulsory=True) + \
-                      _lookup_factory.get_field('sender_type', compulsory=True) + field_transmission.sender_id + \
-                      field_transmission.sender_name + field_transmission.edi_version + \
-                      field_transmission.creation_date_time + field_transmission.transmission_date + field_transmission.character_set + field_special.lineEnd
+transmission_header = field_special.lineStart + \
+                      field_record.record_type(_config.record_type('transmission_header'), compulsory=True) + \
+                      _lookup_factory.get_field('sender_type', compulsory=True) + \
+                      _trans_factory.get_field('sender_id', compulsory=True) + \
+                      _trans_factory.get_field('sender_name', compulsory=True) + \
+                      field_transmission.edi_version + \
+                      field_transmission.creation_date_time + \
+                      _trans_factory.get_field('transmission_date', compulsory=True) + \
+                      field_transmission.character_set + \
+                      field_special.lineEnd
 transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 
 # Transmission Header pattern
-transmission_trailer = field_special.lineStart + field_record.record_type(_config.record_type('transmission_trailer'),
-                                                                          compulsory=True) + \
-                       field_record.group_count(compulsory=True) + field_record.transaction_count(compulsory=True) + \
+transmission_trailer = field_special.lineStart + \
+                       field_record.record_type(_config.record_type('transmission_trailer'), compulsory=True) + \
+                       field_record.group_count(compulsory=True) + \
+                       field_record.transaction_count(compulsory=True) + \
                        field_record.record_count(compulsory=True)
 transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 

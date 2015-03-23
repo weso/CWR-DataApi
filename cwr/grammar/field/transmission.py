@@ -34,14 +34,6 @@ These fields are:
 - Character Set. Alphanumeric.
 """
 
-# Sender ID
-sender_id = basic.numeric(_config.field_size('transmission_header', 'sender_id'), compulsory=True)
-sender_id = sender_id.setName('Sender ID').setResultsName('sender_id')
-
-# Sender Name
-sender_name = basic.alphanum(_config.field_size('transmission_header', 'sender_name'), compulsory=True)
-sender_name = sender_name.setName('Sender Name').setResultsName('sender_name')
-
 # EDI Version
 edi_version = pp.Literal(_config.field_value('transmission_header', 'edi_version'))
 edi_version = edi_version.setName('EDI Version').setResultsName('edi_version')
@@ -53,10 +45,6 @@ creation_date = creation_date.setName('Creation Date').setResultsName('creation_
 # Creation Time
 creation_time = basic.time()
 creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
-
-# Transmission Date
-transmission_date = basic.date(compulsory=True)
-transmission_date = transmission_date.setName('Transmission Date').setResultsName('transmission_date')
 
 # Character Set
 character_set = table.char_code(_config.field_size('transmission_header', 'character_set'))

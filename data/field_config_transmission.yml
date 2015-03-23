@@ -1,0 +1,14 @@
+sender_id:
+  type: numeric
+  size: 9
+  name: Sender ID
+
+sender_name:
+  type: alphanum
+  size: 45
+  name: Sender Name
+
+transmission_date:
+  type: date
+  size: 8
+  name: Transmission Date
