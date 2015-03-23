@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import work as field_work
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import work_detail as field_work_detail
@@ -34,6 +33,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_work_factory = DefaultFieldFactory(_config.load_field_config('work'))
 
 """
 Patterns.
@@ -52,7 +52,8 @@ entire_title = field_special.lineStart + field_record.record_prefix(_config.reco
                field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
                field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
                field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n \
-               + field_work_detail.writer_2_ipi_base_n + field_work.submitter_work_n + field_special.lineEnd
+               + field_work_detail.writer_2_ipi_base_n + _work_factory.get_field(
+    'submitter_work_n') + field_special.lineEnd
 
 version = field_special.lineStart + field_record.record_prefix(_config.record_type('original_work_title'),
                                                                compulsory=True) + \
@@ -60,7 +61,8 @@ version = field_special.lineStart + field_record.record_prefix(_config.record_ty
     'language_code') + field_work_detail.writer_1_last_name + \
           field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
           field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
-          field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_2_ipi_base_n + field_work.submitter_work_n + field_special.lineEnd
+          field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_2_ipi_base_n + _work_factory.get_field(
+    'submitter_work_n') + field_special.lineEnd
 
 performing = field_special.lineStart + field_record.record_prefix(_config.record_type('performing_artist'),
                                                                   compulsory=True) + \
@@ -94,7 +96,8 @@ inst_detail = field_special.lineStart + field_record.record_prefix(_config.recor
 
 component = field_special.lineStart + field_record.record_prefix(_config.record_type('component'),
                                                                  compulsory=True) + field_work_detail.component_title + \
-            field_work_detail.iswc + field_work.submitter_work_n + field_work_detail.component_duration + field_work_detail.writer_1_last_name + field_work_detail.writer_1_first_name + field_work_detail.writer_1_ipi_name_n + \
+            field_work_detail.iswc + _work_factory.get_field(
+    'submitter_work_n') + field_work_detail.component_duration + field_work_detail.writer_1_last_name + field_work_detail.writer_1_first_name + field_work_detail.writer_1_ipi_name_n + \
             field_work_detail.writer_2_last_name + field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_1_ipi_base_n + \
             field_work_detail.writer_2_ipi_base_n + field_special.lineEnd
 

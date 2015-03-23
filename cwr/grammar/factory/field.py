@@ -252,7 +252,10 @@ class DefaultFieldFactory(OptionFieldFactory):
         else:
             field = constructor_method(columns=config['size'], name=config['name'], compulsory=True)
 
-        field = field.setResultsName(id)
+        if 'results_name' in config:
+            field = field.setResultsName(config['results_name'])
+        else:
+            field = field.setResultsName(id)
 
         # Actions are added
         if 'actions' in config:

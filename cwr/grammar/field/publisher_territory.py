@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special, basic
+from cwr.grammar.field import special
 
 
 """

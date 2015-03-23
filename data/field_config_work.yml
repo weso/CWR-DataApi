@@ -1,0 +1,75 @@
+catalogue_number:
+  type: alphanum
+  size: 25
+  name: Catalogue Number
+
+composite_component_count:
+  type: numeric
+  size: 3
+  name: Composite Component Count
+
+contact_id:
+  type: alphanum
+  size: 10
+  name: Contact Id
+
+contact_name:
+  type: alphanum
+  size: 30
+  name: Contact Name
+
+copyright_date:
+  type: date
+  size: 8
+  name: Copyright Date
+
+copyright_number:
+  type: alphanum
+  size: 12
+  name: Copyright Number
+
+date_publication_printed_edition:
+  type: date
+  size: 8
+  name: Date of Publication of Printed Edition
+
+duration:
+  type: time
+  size: 8
+  name: Duration
+
+exceptional_clause:
+  type: flag
+  size: 1
+  name: Exceptional Clause
+
+grand_rights_indicator:
+  type: boolean
+  size: 1
+  name: Grand Rights Indicator
+
+opus_number:
+  type: alphanum
+  size: 25
+  name: Opus Number
+
+priority_flag:
+  type: flag
+  size: 1
+  name: Priority Flag
+
+recorded_indicator:
+  type: flag
+  size: 1
+  name: Recorded Indicator
+
+submitter_work_n:
+  type: alphanum
+  size: 14
+  name: Submitter Work Number
+
+work_title:
+  type: alphanum
+  size: 60
+  name: Work Title
+  results_name: title
