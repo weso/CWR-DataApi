@@ -34,72 +34,120 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
 _work_factory = DefaultFieldFactory(_config.load_field_config('work'))
+_work_detail_factory = DefaultFieldFactory(_config.load_field_config('work_detail'))
 
 """
 Patterns.
 """
 
-alternate = field_special.lineStart + field_record.record_prefix(_config.record_type('alternate_title'),
-                                                                 compulsory=True) + \
-            field_work_detail.alternate_title + _lookup_factory.get_field('title_type') + \
-            _lookup_factory.get_field('language_code') \
-            + field_special.lineEnd
+alternate = field_special.lineStart + \
+            field_record.record_prefix(_config.record_type('alternate_title'), compulsory=True) + \
+            field_work_detail.alternate_title + \
+            _lookup_factory.get_field('title_type') + \
+            _lookup_factory.get_field('language_code') + \
+            field_special.lineEnd
 
-entire_title = field_special.lineStart + field_record.record_prefix(_config.record_type('entire_work_title'),
-                                                                    compulsory=True) + \
-               field_work_detail.entire_work_title + field_work_detail.iswc + _lookup_factory.get_field('language_code') \
-               + field_work_detail.writer_1_last_name + \
-               field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
-               field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
-               field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n \
-               + field_work_detail.writer_2_ipi_base_n + _work_factory.get_field(
-    'submitter_work_n') + field_special.lineEnd
+entire_title = field_special.lineStart + \
+               field_record.record_prefix(_config.record_type('entire_work_title'), compulsory=True) + \
+               _work_detail_factory.get_field('entire_work_title') + \
+               field_work_detail.iswc + \
+               _lookup_factory.get_field('language_code') + \
+               _work_detail_factory.get_field('writer_1_last_name') + \
+               _work_detail_factory.get_field('writer_1_first_name') + \
+               field_work_detail.source + \
+               field_work_detail.writer_1_ipi_name_n + \
+               field_work_detail.writer_1_ipi_base_n + \
+               _work_detail_factory.get_field('writer_2_last_name') + \
+               _work_detail_factory.get_field('writer_2_first_name') + \
+               field_work_detail.writer_2_ipi_name_n +\
+               field_work_detail.writer_2_ipi_base_n + \
+               _work_factory.get_field('submitter_work_n') + \
+               field_special.lineEnd
 
-version = field_special.lineStart + field_record.record_prefix(_config.record_type('original_work_title'),
-                                                               compulsory=True) + \
-          field_work_detail.original_title + field_work_detail.iswc + _lookup_factory.get_field(
-    'language_code') + field_work_detail.writer_1_last_name + \
-          field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
-          field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
-          field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_2_ipi_base_n + _work_factory.get_field(
-    'submitter_work_n') + field_special.lineEnd
+version = field_special.lineStart + \
+          field_record.record_prefix(_config.record_type('original_work_title'), compulsory=True) + \
+          _work_detail_factory.get_field('original_title') + \
+          field_work_detail.iswc + \
+          _lookup_factory.get_field('language_code') + \
+          _work_detail_factory.get_field('writer_1_last_name') + \
+          _work_detail_factory.get_field('writer_1_first_name') + \
+          field_work_detail.source + \
+          field_work_detail.writer_1_ipi_name_n + \
+          field_work_detail.writer_1_ipi_base_n + \
+          _work_detail_factory.get_field('writer_2_last_name') + \
+          _work_detail_factory.get_field('writer_2_first_name') + \
+          field_work_detail.writer_2_ipi_name_n + \
+          field_work_detail.writer_2_ipi_base_n + \
+          _work_factory.get_field('submitter_work_n') + \
+          field_special.lineEnd
 
-performing = field_special.lineStart + field_record.record_prefix(_config.record_type('performing_artist'),
-                                                                  compulsory=True) + \
-             field_work_detail.performing_artist_last_name + field_work_detail.performing_artist_first_name + field_special.ipi_name_number() + \
-             field_special.ipi_base_number() + field_special.lineEnd
+performing = field_special.lineStart + \
+             field_record.record_prefix(_config.record_type('performing_artist'), compulsory=True) + \
+             _work_detail_factory.get_field('performing_artist_last_name') + \
+             _work_detail_factory.get_field('performing_artist_first_name') + \
+             field_special.ipi_name_number() + \
+             field_special.ipi_base_number() + \
+             field_special.lineEnd
 
-recording = field_special.lineStart + field_record.record_prefix(_config.record_type('recording_detail'),
-                                                                 compulsory=True) + field_work_detail.first_release + \
+recording = field_special.lineStart + \
+            field_record.record_prefix(_config.record_type('recording_detail'), compulsory=True) + \
+            _work_detail_factory.get_field('first_release_date') + \
             field_special.blank(_config.field_size('recording_detail', 'constant_1')) + \
-            field_work_detail.first_release_duration + field_special.blank(
-    _config.field_size('recording_detail', 'constant_2')) + \
-            field_work_detail.first_title + field_work_detail.first_label + field_work_detail.first_release_catalog_n + \
-            field_special.ean_13() + field_special.isrc() + _lookup_factory.get_field('recording_format') + \
+            _work_detail_factory.get_field('first_release_duration') + \
+            field_special.blank(_config.field_size('recording_detail', 'constant_2')) + \
+            _work_detail_factory.get_field('first_album_title') + \
+            _work_detail_factory.get_field('first_album_label') + \
+            _work_detail_factory.get_field('first_release_catalog_n') + \
+            field_special.ean_13() + field_special.isrc() + \
+            _lookup_factory.get_field('recording_format') + \
             _lookup_factory.get_field('recording_technique') + \
-            _lookup_factory.get_field('media_type') + field_special.lineEnd
+            _lookup_factory.get_field('media_type') + \
+            field_special.lineEnd
 
-origin = field_special.lineStart + field_record.record_prefix(_config.record_type('work_origin'),
-                                                              compulsory=True) + \
+origin = field_special.lineStart + \
+         field_record.record_prefix(_config.record_type('work_origin'), compulsory=True) + \
          _lookup_factory.get_field('intended_purpose') + \
-         field_work_detail.production_title + field_work_detail.cd_identifier + field_work_detail.cut_number + field_work_detail.library + field_work_detail.bltvr + field_special.visan() + field_work_detail.production_n + \
-         field_work_detail.episode_title + field_work_detail.episode_n + field_work_detail.year_production + field_special.audio_visual_key() + field_special.lineEnd
+         _work_detail_factory.get_field('production_title') + \
+         _work_detail_factory.get_field('cd_identifier') + \
+         _work_detail_factory.get_field('cut_number') + \
+         _work_detail_factory.get_field('library') + \
+         _work_detail_factory.get_field('bltvr') + \
+         field_special.visan() + \
+         _work_detail_factory.get_field('production_n') + \
+         _work_detail_factory.get_field('episode_title') + \
+         _work_detail_factory.get_field('episode_n') + \
+         _work_detail_factory.get_field('year_production') + \
+         field_special.audio_visual_key() + \
+         field_special.lineEnd
 
-inst_summary = field_special.lineStart + field_record.record_prefix(
-    _config.record_type('instrumentation_summary'), compulsory=True) + field_work_detail.number_voices + \
-               _lookup_factory.get_field(
-                   'standard_instrumentation_type') + field_work_detail.instrumentation_description + field_special.lineEnd
+inst_summary = field_special.lineStart + \
+               field_record.record_prefix(_config.record_type('instrumentation_summary'), compulsory=True) + \
+               field_work_detail.number_voices + \
+               _lookup_factory.get_field('standard_instrumentation_type') + \
+               field_work_detail.instrumentation_description + \
+               field_special.lineEnd
 
-inst_detail = field_special.lineStart + field_record.record_prefix(_config.record_type('instrumentation_detail'),
-                                                                   compulsory=True) + \
-              _lookup_factory.get_field('instrument') + field_work_detail.number_players + field_special.lineEnd
+inst_detail = field_special.lineStart + \
+              field_record.record_prefix(_config.record_type('instrumentation_detail'), compulsory=True) + \
+              _lookup_factory.get_field('instrument') + \
+              _work_detail_factory.get_field('number_players') + \
+              field_special.lineEnd
 
-component = field_special.lineStart + field_record.record_prefix(_config.record_type('component'),
-                                                                 compulsory=True) + field_work_detail.component_title + \
-            field_work_detail.iswc + _work_factory.get_field(
-    'submitter_work_n') + field_work_detail.component_duration + field_work_detail.writer_1_last_name + field_work_detail.writer_1_first_name + field_work_detail.writer_1_ipi_name_n + \
-            field_work_detail.writer_2_last_name + field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_1_ipi_base_n + \
-            field_work_detail.writer_2_ipi_base_n + field_special.lineEnd
+component = field_special.lineStart + \
+            field_record.record_prefix(_config.record_type('component'), compulsory=True) + \
+            _work_detail_factory.get_field('component_title') + \
+            field_work_detail.iswc + \
+            _work_factory.get_field('submitter_work_n') + \
+            _work_detail_factory.get_field('component_duration') + \
+            _work_detail_factory.get_field('writer_1_last_name') + \
+            _work_detail_factory.get_field('writer_1_first_name') + \
+            field_work_detail.writer_1_ipi_name_n + \
+            _work_detail_factory.get_field('writer_2_last_name') + \
+            _work_detail_factory.get_field('writer_2_first_name') + \
+            field_work_detail.writer_2_ipi_name_n + \
+            field_work_detail.writer_1_ipi_base_n + \
+            field_work_detail.writer_2_ipi_base_n + \
+            field_special.lineEnd
 
 """
 Parsing actions for the patterns.
