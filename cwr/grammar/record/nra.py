@@ -30,7 +30,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_nra_factory = DefaultFieldFactory(_config.load_field_config('nra'), CWRTables())
+_nra_factory = DefaultFieldFactory(_config.load_field_config('nra'))
 _publisher_factory = DefaultFieldFactory(_config.load_field_config('publisher'))
 
 """

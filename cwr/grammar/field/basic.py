@@ -536,6 +536,9 @@ def lookup(values, columns=1, name=None, compulsory=False):
     if name is None:
         name = 'Lookup Field'
 
+    if values is None:
+        raise ValueError('The values can no be None')
+
     # Only the specified values are allowed
     lookup_field = pp.oneOf(values)
 

@@ -6,6 +6,8 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import basic
+from cwr.grammar.factory.builder import AlphanumBuilder, ExtendedAlphanumBuilder, NumericBuilder, LookupBuilder, \
+    BooleanBuilder, BlankBuilder, DateBuilder, FlagBuilder, TimeBuilder
 
 
 """
@@ -29,8 +31,15 @@ class FieldFactory(object):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self):
-        pass
+    def __init__(self, field_configs):
+        # Fields already created
+        self._fields = {}
+        # Field builders being used
+        self._builders = {}
+        # Logger
+        self._logger = logging.getLogger(__name__)
+        # Configuration for creating the fields
+        self._field_configs = field_configs
 
     @abstractmethod
     def get_field(self, id, compulsory=False):
@@ -61,16 +70,10 @@ class OptionFieldFactory(FieldFactory):
     __metaclass__ = ABCMeta
 
     def __init__(self, field_configs):
-        super(OptionFieldFactory, self).__init__()
+        super(OptionFieldFactory, self).__init__(field_configs)
 
-        # Fields already created
-        self._fields = {}
         # Fields already wrapped with the optional wrapper
         self._fields_optional = {}
-        # Logger
-        self._logger = logging.getLogger(__name__)
-        # Configuration for creating the fields
-        self._field_configs = field_configs
 
     def get_field(self, id, compulsory=False):
         """
@@ -210,6 +213,17 @@ class DefaultFieldFactory(OptionFieldFactory):
     def __init__(self, field_configs, field_values=None, field_rules=None, actions=None):
         super(DefaultFieldFactory, self).__init__(field_configs)
 
+        # TODO: Don't do this manually
+        self._builders['alphanum'] = AlphanumBuilder()
+        self._builders['alphanum_ext'] = ExtendedAlphanumBuilder()
+        self._builders['numeric'] = NumericBuilder()
+        self._builders['boolean'] = BooleanBuilder()
+        self._builders['flag'] = FlagBuilder()
+        self._builders['date'] = DateBuilder()
+        self._builders['time'] = TimeBuilder()
+        self._builders['blank'] = BlankBuilder()
+        self._builders['lookup'] = LookupBuilder()
+
         # Field values are optional
         self._field_values = field_values
 
@@ -232,32 +246,30 @@ class DefaultFieldFactory(OptionFieldFactory):
         :return: the basic rule for the field
         """
 
-        constructor_method = getattr(self._field_rules, config['type'])
-        # TODO: This check is just a patch
-        if config['type'] == 'lookup':
+        builder = self._builders[config['type']]
 
-            if 'values' in config:
-                values = config['values']
-            else:
-                if 'source' in config:
-                    values_id = config['source']
-                else:
-                    values_id = id
-                values = self._field_values.get_data(values_id)
-
-            field = constructor_method(values, name=config['name'], compulsory=True)
-        elif config['type'] == 'boolean':
-            field = constructor_method(name=config['name'], compulsory=True)
-        elif config['type'] == 'flag':
-            field = constructor_method(name=config['name'], compulsory=True)
-        elif config['type'] == 'date':
-            field = constructor_method(name=config['name'], compulsory=True)
-        elif config['type'] == 'time':
-            field = constructor_method(name=config['name'], compulsory=True)
-        elif config['type'] == 'blank':
-            field = constructor_method(columns=config['size'], name=config['name'])
+        if 'name' in config:
+            name = config['name']
         else:
-            field = constructor_method(columns=config['size'], name=config['name'], compulsory=True)
+            name = None
+
+        if 'size' in config:
+            columns = config['size']
+        else:
+            columns = None
+
+        if 'values' in config:
+            values = config['values']
+        elif self._field_values:
+            if 'source' in config:
+                values_id = config['source']
+            else:
+                values_id = id
+            values = self._field_values.get_data(values_id)
+        else:
+            values = None
+
+        field = builder.get_field(name, columns, values)
 
         if 'results_name' in config:
             field = field.setResultsName(config['results_name'])
