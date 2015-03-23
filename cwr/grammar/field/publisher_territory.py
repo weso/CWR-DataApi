@@ -17,11 +17,3 @@ _config = CWRConfiguration()
 
 # Constant
 constant = special.blank(_config.field_size('publisher_territory', 'constant'))
-
-# Shares Change
-shares_change = basic.boolean()
-shares_change = shares_change.setName('Shares Change').setResultsName('shares_change')
-
-# Sequence #
-sequence_n = basic.numeric(_config.field_size('publisher_territory', 'sequence_n'))
-sequence_n = sequence_n.setName('Sequence #').setResultsName('sequence_n')

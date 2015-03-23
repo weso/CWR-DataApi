@@ -21,6 +21,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_pter_factory = DefaultFieldFactory(_config.load_field_config('publisher_territory'))
 
 """
 General fields.
@@ -30,12 +31,18 @@ General fields.
 SPT patterns.
 """
 
-territory = field_special.lineStart + field_record.record_prefix(
-    _config.record_type(
-        'publisher_territory'), compulsory=True) + field_special.ip_n(compulsory=True) + field_territory.constant + \
-            society.pr_share(maximum=50) + society.mr_share() + society.sr_share() + \
-            _lookup_factory.get_field('ie_indicator') + _lookup_factory.get_field('tis_code') + \
-            field_territory.shares_change + field_territory.sequence_n + field_special.lineEnd
+territory = field_special.lineStart + \
+            field_record.record_prefix(_config.record_type('publisher_territory'), compulsory=True) + \
+            field_special.ip_n(compulsory=True) + \
+            field_territory.constant + \
+            society.pr_share(maximum=50) + \
+            society.mr_share() + \
+            society.sr_share() + \
+            _lookup_factory.get_field('ie_indicator') + \
+            _lookup_factory.get_field('tis_code') + \
+            _pter_factory.get_field('shares_change') + \
+            _pter_factory.get_field('sequence_n') + \
+            field_special.lineEnd
 
 """
 Parsing actions for the patterns.
