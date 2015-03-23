@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import ari as field_ari
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.info import AdditionalRelatedInfoRecord
@@ -20,16 +19,19 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_ari_factory = DefaultFieldFactory(_config.load_field_config('ari'))
 
 """
 Patterns.
 """
 
-ari = field_special.lineStart + field_record.record_prefix(_config.record_type('ari'),
-                                                           compulsory=True) + _lookup_factory.get_field(
-    'society_code') + \
-      field_ari.work_n + \
-      _lookup_factory.get_field('type_of_right') + _lookup_factory.get_field('subject_code') + field_ari.note + \
+ari = field_special.lineStart + \
+      field_record.record_prefix(_config.record_type('ari'), compulsory=True) + \
+      _lookup_factory.get_field('society_code') + \
+      _ari_factory.get_field('work_n') + \
+      _lookup_factory.get_field('type_of_right') + \
+      _lookup_factory.get_field('subject_code') + \
+      _ari_factory.get_field('note') + \
       field_special.lineEnd
 
 """

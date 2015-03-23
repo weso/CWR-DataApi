@@ -1,0 +1,9 @@
+note:
+  type: alphanum
+  size: 160
+  name: Note
+
+work_n:
+  type: alphanum
+  size: 14
+  name: Work #
