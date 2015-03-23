@@ -1,0 +1,9 @@
+group_id:
+  type: numeric
+  size: 5
+  name: Group ID
+
+batch_request_id:
+  type: numeric
+  size: 10
+  name: Batch Request ID

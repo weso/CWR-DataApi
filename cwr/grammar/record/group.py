@@ -42,6 +42,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_group_factory = DefaultFieldFactory(_config.load_field_config('group'))
 
 """
 Group patterns.
@@ -50,18 +51,25 @@ These are the grammatical structures for the Group Header and Group Trailer.
 """
 
 # Group Header pattern
-group_header = field_special.lineStart + field_record.record_type(
-    _config.record_type('group_header'), compulsory=True) + _lookup_factory.get_field('transaction_type',
-                                                                                      compulsory=True) \
-               + field_group.group_id + field_group.version_number + \
-               field_group.batch_request_id + field_group.sd_type + field_special.lineEnd
+group_header = field_special.lineStart + \
+               field_record.record_type(_config.record_type('group_header'), compulsory=True) + \
+               _lookup_factory.get_field('transaction_type', compulsory=True) + \
+               _group_factory.get_field('group_id', compulsory=True) + \
+               field_group.version_number + \
+               _group_factory.get_field('batch_request_id') + \
+               field_group.sd_type + \
+               field_special.lineEnd
 group_header = group_header.setName('Group Header').setResultsName('group_header')
 
 # Group Trailer pattern
-group_trailer = field_special.lineStart + field_record.record_type(
-    _config.record_type('group_trailer'), compulsory=True) + field_group.group_id + field_record.transaction_count(
-    compulsory=True) + field_record.record_count(compulsory=True) + \
-                field_group.currency_indicator + field_group.total_monetary_value + field_special.lineEnd
+group_trailer = field_special.lineStart + \
+                field_record.record_type(_config.record_type('group_trailer'), compulsory=True) + \
+                _group_factory.get_field('group_id', compulsory=True) + \
+                field_record.transaction_count(compulsory=True) + \
+                field_record.record_count(compulsory=True) + \
+                field_group.currency_indicator + \
+                field_group.total_monetary_value + \
+                field_special.lineEnd
 group_trailer = group_trailer.setName('Group Trailer').setResultsName('group_trailer')
 
 """

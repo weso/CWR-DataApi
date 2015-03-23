@@ -27,17 +27,9 @@ These fields are:
 - Batch Request ID. Numeric.
 """
 
-# Group ID
-group_id = basic.numeric(_config.field_size('group_header', 'group_id'), compulsory=True)
-group_id = group_id.setName('Group ID').setResultsName('group_id')
-
 # Version Number
 version_number = pp.Literal(_config.field_value('group_header', 'version_number'))
 version_number = version_number.setName('Version Number').setResultsName('version_number')
-
-# Batch Request ID
-batch_request_id = basic.numeric(_config.field_size('group_header', 'batch_request_id'))
-batch_request_id = batch_request_id.setName('Batch Request ID').setResultsName('batch_request_id')
 
 """
 Unused fields.
