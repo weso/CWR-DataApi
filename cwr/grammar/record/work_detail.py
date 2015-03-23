@@ -59,7 +59,7 @@ entire_title = field_special.lineStart + \
                field_work_detail.writer_1_ipi_base_n + \
                _work_detail_factory.get_field('writer_2_last_name') + \
                _work_detail_factory.get_field('writer_2_first_name') + \
-               field_work_detail.writer_2_ipi_name_n +\
+               field_work_detail.writer_2_ipi_name_n + \
                field_work_detail.writer_2_ipi_base_n + \
                _work_factory.get_field('submitter_work_n') + \
                field_special.lineEnd

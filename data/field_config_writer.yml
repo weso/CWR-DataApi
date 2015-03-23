@@ -1,0 +1,34 @@
+first_recording_refusal:
+  type: flag
+  size: 1
+  name: First Recording Refusal Indicator
+
+personal_number:
+  type: numeric
+  size: 12
+  name: Personal Number
+
+reversionary:
+  type: flag
+  size: 1
+  name: Reversionary Indicator
+
+writer_first_name:
+  type: alphanum
+  size: 30
+  name: Writer First Name
+
+work_for_hire:
+  type: flag
+  size: 1
+  name: Work For Hire Indicator
+
+writer_last_name:
+  type: alphanum
+  size: 45
+  name: Writer Last Name
+
+writer_unknown:
+  type: flag
+  size: 1
+  name: Writer Unknown Indicator
