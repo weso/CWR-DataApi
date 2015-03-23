@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.field import publisher as field_publisher
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import nra as field_nra
 from cwr.nra import NPARecord, NWNRecord, NATRecord, NRAWorkRecord, NOWRecord, NPRRecord, NPNRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -32,50 +31,67 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_nra_factory = DefaultFieldFactory(_config.load_field_config('nra'), CWRTables())
 
 """
 NRA patterns.
 """
 
-npa = field_special.lineStart + field_record.record_prefix(
-    _config.record_type(
-        'npa'),
-    compulsory=True) + field_special.ip_n() + field_nra.ip_name + field_nra.ip_writer_name + _lookup_factory.get_field(
-    'language_code') + field_special.lineEnd
+npa = field_special.lineStart + \
+      field_record.record_prefix(_config.record_type('npa'), compulsory=True) + \
+      field_special.ip_n() + \
+      _nra_factory.get_field('ip_name', compulsory=True) + \
+      _nra_factory.get_field('ip_writer_name', compulsory=True) + \
+      _lookup_factory.get_field('language_code') + \
+      field_special.lineEnd
 
-npn = field_special.lineStart + field_record.record_prefix(
-    _config.record_type(
-        'npn'), compulsory=True) + field_publisher.publisher_sequence_n + field_special.ip_n(
-    compulsory=True) + field_nra.publisher_name + \
-      _lookup_factory.get_field('language_code') + field_special.lineEnd
+npn = field_special.lineStart + \
+      field_record.record_prefix(_config.record_type('npn'), compulsory=True) + \
+      field_publisher.publisher_sequence_n + \
+      field_special.ip_n(compulsory=True) + \
+      _nra_factory.get_field('publisher_name', compulsory=True) + \
+      _lookup_factory.get_field('language_code') + \
+      field_special.lineEnd
 
-nwn = field_special.lineStart + field_record.record_prefix(
-    _config.record_type(
-        'nwn'), compulsory=True) + field_special.ip_n() + field_nra.writer_last_name + field_nra.writer_first_name + \
-      _lookup_factory.get_field('language_code') + field_special.lineEnd
+nwn = field_special.lineStart + \
+      field_record.record_prefix(_config.record_type('nwn'), compulsory=True) + \
+      field_special.ip_n() + \
+      _nra_factory.get_field('writer_last_name', compulsory=True) + \
+      _nra_factory.get_field('writer_first_name', compulsory=True) + \
+      _lookup_factory.get_field('language_code') + \
+      field_special.lineEnd
 
-nat = field_special.lineStart + field_record.record_prefix(
-    _config.record_type(
-        'nat'),
-    compulsory=True) + field_nra.nat_title + _lookup_factory.get_field('title_type') + _lookup_factory.get_field(
-    'language_code') + field_special.lineEnd
+nat = field_special.lineStart + \
+      field_record.record_prefix(_config.record_type('nat'), compulsory=True) + \
+      _nra_factory.get_field('title', compulsory=True) + \
+      _lookup_factory.get_field('title_type') + \
+      _lookup_factory.get_field('language_code') + \
+      field_special.lineEnd
 
-npr = field_special.lineStart + field_record.record_prefix(
-    _config.record_type(
-        'npr'),
-    compulsory=True) + field_nra.performing_artist_name + field_nra.performing_artist_first_name + field_special.ipi_name_number() + \
-      field_special.ipi_base_number() + _lookup_factory.get_field('language_code') + _lookup_factory.get_field(
-    'performance_language') + field_nra.dialect + field_special.lineEnd
+npr = field_special.lineStart + \
+      field_record.record_prefix(_config.record_type('npr'), compulsory=True) + \
+      _nra_factory.get_field('performing_artist_name') + \
+      _nra_factory.get_field('performing_artist_first_name') + \
+      field_special.ipi_name_number() + \
+      field_special.ipi_base_number() + \
+      _lookup_factory.get_field('language_code') + \
+      _lookup_factory.get_field('performance_language') + \
+      _nra_factory.get_field('dialect') + \
+      field_special.lineEnd
 
-nra_work = field_special.lineStart + field_record.record_prefix(
-    _config.record_type('nra_work'),
-    compulsory=True) + field_nra.title + _lookup_factory.get_field('language_code') + field_special.lineEnd
+nra_work = field_special.lineStart + \
+           field_record.record_prefix(_config.record_type('nra_work'), compulsory=True) + \
+           _nra_factory.get_field('title') + \
+           _lookup_factory.get_field('language_code') + \
+           field_special.lineEnd
 
-now = field_special.lineStart + field_record.record_prefix(
-    _config.record_type(
-        'now'),
-    compulsory=True) + field_nra.writer_name + field_nra.writer_first_name_now + _lookup_factory.get_field(
-    'language_code') + field_nra.writer_position + field_special.lineEnd
+now = field_special.lineStart + \
+      field_record.record_prefix(_config.record_type('now'), compulsory=True) + \
+      _nra_factory.get_field('writer_name') + \
+      _nra_factory.get_field('writer_first_name') + \
+      _lookup_factory.get_field('language_code') + \
+      _nra_factory.get_field('position') + \
+      field_special.lineEnd
 
 """
 Parsing actions for the patterns.

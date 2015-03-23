@@ -1,0 +1,54 @@
+dialect:
+  type: alphanum
+  size: 3
+  name: Dialect
+
+ip_name:
+  type: alphanum
+  size: 160
+  name: Interested Party Name
+
+ip_writer_name:
+  type: alphanum
+  size: 160
+  name: Interested Party Writer First Name
+
+performing_artist_first_name:
+  type: alphanum
+  size: 160
+  name: Performing Artist First Name
+
+performing_artist_name:
+  type: alphanum
+  size: 160
+  name: Performing Artist Name
+
+title:
+  type: alphanum
+  size: 640
+  name: Title
+
+publisher_name:
+  type: alphanum
+  size: 480
+  name: Publisher Name
+
+writer_first_name:
+  type: alphanum
+  size: 160
+  name: Writer First Name
+
+writer_last_name:
+  type: alphanum
+  size: 160
+  name: Writer Last Name
+
+writer_name:
+  type: alphanum
+  size: 160
+  name: Writer Name
+
+position:
+  type: numeric
+  size: 1
+  name: Writer Position
