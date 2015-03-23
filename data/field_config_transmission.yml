@@ -8,6 +8,11 @@ creation_time:
   size: 8
   name: Creation Time
 
+group_count:
+  type: numeric
+  size: 5
+  name: Group Count
+
 sender_id:
   type: numeric
   size: 9

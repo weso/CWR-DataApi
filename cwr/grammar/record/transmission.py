@@ -40,6 +40,7 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
 _trans_factory = DefaultFieldFactory(_config.load_field_config('transmission'))
+_record_factory = DefaultFieldFactory(_config.load_field_config('record'))
 
 """
 Transmission patterns.
@@ -63,9 +64,9 @@ transmission_header = transmission_header.setName('Transmission Header').setResu
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + \
                        field_record.record_type(_config.record_type('transmission_trailer'), compulsory=True) + \
-                       field_record.group_count(compulsory=True) + \
-                       field_record.transaction_count(compulsory=True) + \
-                       field_record.record_count(compulsory=True)
+                       _trans_factory.get_field('group_count', compulsory=True) + \
+                       _record_factory.get_field('transaction_count', compulsory=True) + \
+                       _record_factory.get_field('record_count', compulsory=True)
 transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()

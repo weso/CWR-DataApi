@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from cwr.grammar.field import record
 from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
 
 
 """
@@ -14,7 +14,8 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_record_factory = DefaultFieldFactory(_config.load_field_config('record'))
 
 # Original Record Sequence #
-sequence_n = record.record_seq_n(compulsory=True)
+sequence_n = _record_factory.get_field('record_sequence_n', compulsory=True)
 sequence_n = sequence_n.setName('Original Record Sequence #').setResultsName('sequence_n')

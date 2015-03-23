@@ -1,0 +1,19 @@
+record_count:
+  type: numeric
+  size: 8
+  name: Record Count
+
+record_sequence_n:
+  type: numeric
+  size: 8
+  name: Record Sequence Number
+
+transaction_count:
+  type: numeric
+  size: 8
+  name: Transaction Count
+
+transaction_sequence_n:
+  type: numeric
+  size: 8
+  name: Transaction Sequence Number

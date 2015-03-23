@@ -42,6 +42,7 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
 _group_factory = DefaultFieldFactory(_config.load_field_config('group'))
+_record_factory = DefaultFieldFactory(_config.load_field_config('record'))
 
 """
 Group patterns.
@@ -64,8 +65,8 @@ group_header = group_header.setName('Group Header').setResultsName('group_header
 group_trailer = field_special.lineStart + \
                 field_record.record_type(_config.record_type('group_trailer'), compulsory=True) + \
                 _group_factory.get_field('group_id', compulsory=True) + \
-                field_record.transaction_count(compulsory=True) + \
-                field_record.record_count(compulsory=True) + \
+                _record_factory.get_field('transaction_count', compulsory=True) + \
+                _record_factory.get_field('record_count', compulsory=True) + \
                 _group_factory.get_field('currency_indicator') + \
                 _group_factory.get_field('total_monetary_value') + \
                 field_special.lineEnd
