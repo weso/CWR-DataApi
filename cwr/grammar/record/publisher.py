@@ -25,24 +25,37 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_publisher_factory = DefaultFieldFactory(_config.load_field_config('publisher'))
 
 """
 Publisher patterns.
 """
 
-publisher = field_special.lineStart + field_record.record_prefix(_config.record_type('publisher'),
-                                                                 compulsory=True) + field_publisher.publisher_sequence_n + \
-            field_special.ip_n() + field_publisher.name + field_publisher.unknown + \
-            _lookup_factory.get_field('publisher_type') + field_publisher.tax_id + field_special.ipi_name_number() + \
-            field_publisher.submitter_agreement_n + \
-            _lookup_factory.get_field('pr_affiliation') + society.pr_share(maximum=50) + \
-            _lookup_factory.get_field('mr_affiliation') + society.mr_share() + \
-            _lookup_factory.get_field('sr_affiliation') + society.sr_share() + \
-            _lookup_factory.get_field('special_agreement_indicator') + field_publisher.first_recording_refusal + \
-            field_special.blank(1) + field_special.ipi_base_number() + field_publisher.international_code + \
-            field_publisher.society_assigned_agreement_n + \
+publisher = field_special.lineStart + \
+            field_record.record_prefix(_config.record_type('publisher'), compulsory=True) + \
+            _publisher_factory.get_field('publisher_sequence_n', compulsory=True) + \
+            field_special.ip_n() + \
+            _publisher_factory.get_field('name') + \
+            _publisher_factory.get_field('publisher_unknown') + \
+            _lookup_factory.get_field('publisher_type') + \
+            _publisher_factory.get_field('tax_id') + \
+            field_special.ipi_name_number() + \
+            _publisher_factory.get_field('submitter_agreement_id') + \
+            _lookup_factory.get_field('pr_affiliation') + \
+            society.pr_share(maximum=50) + \
+            _lookup_factory.get_field('mr_affiliation') + \
+            society.mr_share() + \
+            _lookup_factory.get_field('sr_affiliation') + \
+            society.sr_share() + \
+            _lookup_factory.get_field('special_agreement_indicator') + \
+            field_publisher.first_recording_refusal + \
+            field_special.blank(1) + \
+            field_special.ipi_base_number() + \
+            _publisher_factory.get_field('international_code') + \
+            _publisher_factory.get_field('society_assigned_agreement_n') + \
             _lookup_factory.get_field('agreement_type') + \
-            _lookup_factory.get_field('usa_license_indicator') + field_special.lineEnd
+            _lookup_factory.get_field('usa_license_indicator') + \
+            field_special.lineEnd
 
 """
 Parsing actions for the patterns.
@@ -79,7 +92,7 @@ def _to_publisherrecord(parsed):
     return PublisherRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                            publisher_data, parsed.publisher_sequence_n, parsed.submitter_agreement_id,
                            parsed.publisher_type,
-                           parsed.publisher_unknown, parsed.agreement_type, parsed.isac,
+                           parsed.publisher_unknown, parsed.agreement_type, parsed.international_code,
                            parsed.society_assigned_agreement_n, parsed.pr_affiliation, parsed.pr_share,
                            parsed.mr_affiliation, parsed.mr_share, parsed.sr_affiliation,
                            parsed.sr_share, parsed.special_agreement_indicator,

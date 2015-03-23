@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import publisher as field_publisher
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.nra import NPARecord, NWNRecord, NATRecord, NRAWorkRecord, NOWRecord, NPRRecord, NPNRecord
@@ -32,6 +31,7 @@ __status__ = 'Development'
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
 _nra_factory = DefaultFieldFactory(_config.load_field_config('nra'), CWRTables())
+_publisher_factory = DefaultFieldFactory(_config.load_field_config('publisher'))
 
 """
 NRA patterns.
@@ -47,7 +47,7 @@ npa = field_special.lineStart + \
 
 npn = field_special.lineStart + \
       field_record.record_prefix(_config.record_type('npn'), compulsory=True) + \
-      field_publisher.publisher_sequence_n + \
+      _publisher_factory.get_field('publisher_sequence_n') + \
       field_special.ip_n(compulsory=True) + \
       _nra_factory.get_field('publisher_name', compulsory=True) + \
       _lookup_factory.get_field('language_code') + \

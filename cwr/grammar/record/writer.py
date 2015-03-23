@@ -5,7 +5,6 @@ from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.grammar.field import society as field_society
 from cwr.grammar.field import writer as field_writer
-from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Writer, WriterRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -26,6 +25,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_publisher_factory = DefaultFieldFactory(_config.load_field_config('publisher'))
 
 """
 Patterns.
@@ -35,7 +35,7 @@ writer = field_special.lineStart + field_record.record_prefix(
     _config.record_type('writer'),
     compulsory=True) + field_special.ip_n() + field_writer.writer_last_name + field_writer.writer_first_name + field_writer.unknown + \
          _lookup_factory.get_field(
-             'writer_designation_code') + field_publisher.tax_id + field_special.ipi_name_number() + \
+             'writer_designation_code') + _publisher_factory.get_field('tax_id') + field_special.ipi_name_number() + \
          _lookup_factory.get_field('pr_affiliation') + field_society.pr_share() + \
          _lookup_factory.get_field('mr_affiliation') + field_society.mr_share() + \
          _lookup_factory.get_field('sr_affiliation') + field_society.sr_share() + \

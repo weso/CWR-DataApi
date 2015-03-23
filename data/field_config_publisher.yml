@@ -1,0 +1,34 @@
+international_code:
+  type: alphanum
+  size: 14
+  name: International Standard Agreement Code
+
+name:
+  type: alphanum
+  size: 45
+  name: Publisher Name
+
+publisher_sequence_n:
+  type: numeric
+  size: 2
+  name: Publisher Sequence #
+
+publisher_unknown:
+  type: flag
+  size: 1
+  name: Publisher Unknown Indicator
+
+society_assigned_agreement_n:
+  type: alphanum
+  size: 14
+  name: Society-Assigned Agreement Number
+
+submitter_agreement_id:
+  type: alphanum
+  size: 14
+  name: Submitter Agreement Number
+
+tax_id:
+  type: numeric
+  size: 9
+  name: Tax ID #
