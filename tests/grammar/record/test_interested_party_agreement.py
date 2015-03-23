@@ -98,7 +98,7 @@ class TestIPAGrammar(unittest.TestCase):
         self.assertEqual(0, result.ipi_name_n)
         self.assertEqual('A12345678', result.ip_n)
         self.assertEqual('LAST NAME', result.ip_last_name)
-        self.assertEqual('', result.ip_writer_first_name)
+        self.assertEqual(None, result.ip_writer_first_name)
         self.assertEqual(None, result.pr_society)
         self.assertEqual(0, result.pr_share)
         self.assertEqual(None, result.mr_society)

@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import interested_party_agreement as field_ipa
 from cwr.agreement import InterestedPartyForAgreementRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -21,20 +20,27 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+_ipa_factory = DefaultFieldFactory(_config.load_field_config('interested_party_agreement'))
 
 """
 IPA patterns.
 """
 
-interested_party_agreement = field_special.lineStart + field_record.record_prefix(_config.record_type('ipa'),
-                                                                                  compulsory=True) + \
+interested_party_agreement = field_special.lineStart + \
+                             field_record.record_prefix(_config.record_type('ipa'), compulsory=True) + \
                              _lookup_factory.get_field('agreement_role_code', compulsory=True) + \
-                             field_special.ipi_name_number() + field_special.ipi_base_number() + \
-                             field_special.ip_n(
-                                 compulsory=True) + field_ipa.ip_last_name + field_ipa.ip_writer_first_name + \
-                             _lookup_factory.get_field('pr_affiliation') + society.pr_share() + \
-                             _lookup_factory.get_field('mr_affiliation') + society.mr_share() + \
-                             _lookup_factory.get_field('sr_affiliation') + society.sr_share() + field_special.lineEnd
+                             field_special.ipi_name_number() + \
+                             field_special.ipi_base_number() + \
+                             field_special.ip_n(compulsory=True) + \
+                             _ipa_factory.get_field('ip_last_name', compulsory=True) + \
+                             _ipa_factory.get_field('ip_writer_first_name') + \
+                             _lookup_factory.get_field('pr_affiliation') + \
+                             society.pr_share() + \
+                             _lookup_factory.get_field('mr_affiliation') + \
+                             society.mr_share() + \
+                             _lookup_factory.get_field('sr_affiliation') + \
+                             society.sr_share() + \
+                             field_special.lineEnd
 
 """
 Parsing actions for the patterns.
