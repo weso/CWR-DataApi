@@ -25,19 +25,6 @@ alternate_title = alternate_title.setName('Alternate Title').setResultsName(
     'title')
 
 """
-INS fields.
-"""
-
-# Number of voices
-number_voices = basic.numeric(_config.field_size('instrumentation_summary', 'voices'))
-number_voices = number_voices.setName('Number of voices').setResultsName('number_voices')
-
-# Instrumentation Description
-instrumentation_description = basic.alphanum(_config.field_size('instrumentation_summary', 'description'))
-instrumentation_description = instrumentation_description.setName('Instrumentation Description').setResultsName(
-    'instrumentation_description')
-
-"""
 Author fields
 """
 
@@ -56,10 +43,6 @@ writer_2_ipi_name_n = writer_2_ipi_name_n.setName('Writer 1 IPI Name #').setResu
 # Writer 2 IPI Base #
 writer_2_ipi_base_n = special.ipi_base_number()
 writer_2_ipi_base_n = writer_2_ipi_base_n.setName('Writer 1 IPI Base #').setResultsName('writer_2_ipi_base_n')
-
-# Source
-source = basic.alphanum(_config.field_size('entire_work_title', 'source'))
-source = source.setName('Source').setResultsName('source')
 
 # ISWC
 iswc = special.iswc()

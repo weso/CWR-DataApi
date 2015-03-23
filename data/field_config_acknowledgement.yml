@@ -13,6 +13,11 @@ creation_title:
   size: 60
   name: Creation Title
 
+message_text:
+  type: alphanum
+  size: 150
+  name: Message Text
+
 original_group_id:
   type: numeric
   size: 5
@@ -37,3 +42,8 @@ submitter_creation_n:
   type: alphanum
   size: 20
   name: Submitter Creation #
+
+validation:
+  type: numeric
+  size: 3
+  name: Validation Number

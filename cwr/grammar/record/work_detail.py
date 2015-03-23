@@ -54,7 +54,7 @@ entire_title = field_special.lineStart + \
                _lookup_factory.get_field('language_code') + \
                _work_detail_factory.get_field('writer_1_last_name') + \
                _work_detail_factory.get_field('writer_1_first_name') + \
-               field_work_detail.source + \
+               _work_detail_factory.get_field('source') + \
                field_work_detail.writer_1_ipi_name_n + \
                field_work_detail.writer_1_ipi_base_n + \
                _work_detail_factory.get_field('writer_2_last_name') + \
@@ -71,7 +71,7 @@ version = field_special.lineStart + \
           _lookup_factory.get_field('language_code') + \
           _work_detail_factory.get_field('writer_1_last_name') + \
           _work_detail_factory.get_field('writer_1_first_name') + \
-          field_work_detail.source + \
+          _work_detail_factory.get_field('source') + \
           field_work_detail.writer_1_ipi_name_n + \
           field_work_detail.writer_1_ipi_base_n + \
           _work_detail_factory.get_field('writer_2_last_name') + \
@@ -122,9 +122,9 @@ origin = field_special.lineStart + \
 
 inst_summary = field_special.lineStart + \
                field_record.record_prefix(_config.record_type('instrumentation_summary'), compulsory=True) + \
-               field_work_detail.number_voices + \
+               _work_detail_factory.get_field('number_voices') + \
                _lookup_factory.get_field('standard_instrumentation_type') + \
-               field_work_detail.instrumentation_description + \
+               _work_detail_factory.get_field('instrumentation_description') + \
                field_special.lineEnd
 
 inst_detail = field_special.lineStart + \

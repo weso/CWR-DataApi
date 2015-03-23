@@ -3,7 +3,22 @@ batch_request_id:
   size: 10
   name: Batch Request ID
 
+currency_indicator:
+  type: alphanum
+  size: 3
+  name: Currency Indicator
+
 group_id:
   type: numeric
   size: 5
   name: Group ID
+
+sd_type:
+  type: alphanum
+  size: 2
+  name: SD Type
+
+total_monetary_value:
+  type: alphanum
+  size: 10
+  name: Total Monetary Value

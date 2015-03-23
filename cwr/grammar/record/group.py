@@ -57,7 +57,7 @@ group_header = field_special.lineStart + \
                _group_factory.get_field('group_id', compulsory=True) + \
                field_group.version_number + \
                _group_factory.get_field('batch_request_id') + \
-               field_group.sd_type + \
+               _group_factory.get_field('sd_type') + \
                field_special.lineEnd
 group_header = group_header.setName('Group Header').setResultsName('group_header')
 
@@ -67,8 +67,8 @@ group_trailer = field_special.lineStart + \
                 _group_factory.get_field('group_id', compulsory=True) + \
                 field_record.transaction_count(compulsory=True) + \
                 field_record.record_count(compulsory=True) + \
-                field_group.currency_indicator + \
-                field_group.total_monetary_value + \
+                _group_factory.get_field('currency_indicator') + \
+                _group_factory.get_field('total_monetary_value') + \
                 field_special.lineEnd
 group_trailer = group_trailer.setName('Group Trailer').setResultsName('group_trailer')
 

@@ -3,7 +3,6 @@
 import pyparsing as pp
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import basic
 
 
 """
@@ -30,31 +29,3 @@ These fields are:
 # Version Number
 version_number = pp.Literal(_config.field_value('group_header', 'version_number'))
 version_number = version_number.setName('Version Number').setResultsName('version_number')
-
-"""
-Unused fields.
-
-These are fields which exist in the standard but are unused and ignored.
-
-They are:
-- SD Type
-- Currency Indicator
-- Total Monetary Value
-"""
-
-# SD Type
-sd_type = basic.alphanum(_config.field_size('group_header', 'sd_type'))
-sd_type = sd_type.setName('SD Type').setResultsName('sd_type')
-sd_type.leaveWhitespace()
-
-# Currency Indicator
-currency_indicator = pp.Word(pp.alphanums + ' ',
-                             exact=_config.field_size('group_trailer', 'currency_indicator'))
-currency_indicator = currency_indicator.setName('Currency Indicator').setResultsName('currency_indicator')
-currency_indicator.leaveWhitespace()
-
-# Total Monetary Value
-total_monetary_value = pp.Word(pp.alphanums + ' ',
-                               exact=_config.field_size('group_trailer', 'total_monetary_value'))
-total_monetary_value = total_monetary_value.setName('Total Monetary Value').setResultsName('total_monetary_value')
-total_monetary_value.leaveWhitespace()

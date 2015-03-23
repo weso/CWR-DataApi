@@ -41,11 +41,14 @@ acknowledgement = field_special.lineStart + \
                   _lookup_factory.get_field('transaction_status', compulsory=True) + \
                   field_special.lineEnd
 
-message = field_special.lineStart + field_record.record_prefix(_config.record_type('message'),
-                                                               compulsory=True) + \
+message = field_special.lineStart + \
+          field_record.record_prefix(_config.record_type('message'), compulsory=True) + \
           _lookup_factory.get_field('message_type') + \
-          field_message.sequence_n + _lookup_factory.get_field('message_record_type') + \
-          _lookup_factory.get_field('message_level') + field_message.validation + field_message.message_text + \
+          field_message.sequence_n + \
+          _lookup_factory.get_field('message_record_type') + \
+          _lookup_factory.get_field('message_level') + \
+          _ack_factory.get_field('validation') + \
+          _ack_factory.get_field('message_text') + \
           field_special.lineEnd
 
 """
