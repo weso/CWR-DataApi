@@ -1,3 +1,13 @@
+creation_date:
+  type: date
+  size: 8
+  name: Creation Date
+
+creation_time:
+  type: time
+  size: 8
+  name: Creation Time
+
 sender_id:
   type: numeric
   size: 9

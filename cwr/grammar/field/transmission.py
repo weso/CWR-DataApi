@@ -6,6 +6,7 @@ import pyparsing as pp
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import table, basic
+from cwr.grammar.factory.field import DefaultFieldFactory
 
 
 """
@@ -18,6 +19,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_transmission_factory = DefaultFieldFactory(_config.load_field_config('transmission'))
 
 """
 Transmission fields.
@@ -39,12 +41,10 @@ edi_version = pp.Literal(_config.field_value('transmission_header', 'edi_version
 edi_version = edi_version.setName('EDI Version').setResultsName('edi_version')
 
 # Creation Date
-creation_date = basic.date(compulsory=True)
-creation_date = creation_date.setName('Creation Date').setResultsName('creation_date')
+creation_date = _transmission_factory.get_field('creation_date', compulsory=True)
 
 # Creation Time
-creation_time = basic.time()
-creation_time = creation_time.setName('Creation Time').setResultsName('creation_time')
+creation_time = _transmission_factory.get_field('creation_time')
 
 # Character Set
 character_set = table.char_code(_config.field_size('transmission_header', 'character_set'))
