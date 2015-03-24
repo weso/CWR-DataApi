@@ -1,0 +1,225 @@
+agreement_role_code:
+  type: lookup
+  size: 2
+  name: Agreement Role Code
+
+agreement_type:
+  type: lookup
+  size: 2
+  name: Agreement Type
+
+composite_type:
+  type: lookup
+  size: 3
+  name: Composite Type
+
+excerpt_type:
+  type: lookup
+  size: 3
+  name: Excerpt Type
+
+ie_indicator:
+  type: lookup
+  size: 1
+  name: Inclusion/Exclusion Indicator
+
+instrument:
+  type: lookup
+  size: 3
+  name: Instrument
+
+intended_purpose:
+  type: lookup
+  size: 3
+  name: Intended Purpose
+
+language_code:
+  type: lookup
+  size: 2
+  name: Language Code
+
+lyric_adaptation:
+  type: lookup
+  size: 3
+  name: Lyric Adaptation
+
+media_type:
+  type: lookup
+  size: 3
+  name: Media Type
+
+message_level:
+  type: lookup
+  size: 3
+  name: Message Level
+
+message_record_type:
+  type: lookup
+  size: 3
+  name: Message Record Type
+  source: record_type
+
+message_type:
+  type: lookup
+  size: 3
+  name: Message Type
+
+mr_affiliation:
+  type: lookup
+  size: 3
+  name: Mechanical Rights Affiliation Society
+  source: society_code
+  actions:
+    - to_int
+
+music_arrangement:
+  type: lookup
+  size: 3
+  name: Music Arrangement
+
+musical_work_distribution_category:
+  type: lookup
+  size: 3
+  name: Musical Work Distribution Category
+
+original_transaction_type:
+  type: lookup
+  size: 3
+  name: Original Transaction Type
+  source: transaction_type
+
+performance_language:
+  type: lookup
+  size: 2
+  name: Performance Language
+  source: language_code
+
+post_term_collection_status:
+  type: lookup
+  size: 1
+  name: Post Term Collection Status
+
+pr_affiliation:
+  type: lookup
+  size: 3
+  name: Performing Rights Affiliation Society
+  source: society_code
+  actions:
+    - to_int
+
+publisher_type:
+  type: lookup
+  size: 2
+  name: Publisher Type
+
+prior_royalty_status:
+  type: lookup
+  size: 1
+  name: Prior Royalty Status
+
+record_type:
+  type: lookup
+  size: 3
+  name: Record Type
+
+recording_format:
+  type: lookup
+  size: 1
+  name: Recording Format
+
+recording_technique:
+  type: lookup
+  size: 1
+  name: Recording Technique
+
+sales_manufacture_clause:
+  type: lookup
+  size: 1
+  name: Sales/Manufacture Clause
+
+sender_type:
+  type: lookup
+  size: 2
+  name: Sender Type
+
+society_code:
+  type: lookup
+  size: 3
+  name: Society ID Field
+  actions:
+    - to_int
+
+special_agreement_indicator:
+  type: lookup
+  size: 1
+  name: Special Agreements Indicator
+
+sr_affiliation:
+  type: lookup
+  size: 3
+  name: Synchronization Rights Affiliation Society
+  source: society_code
+  actions:
+    - to_int
+
+standard_instrumentation_type:
+  type: lookup
+  size: 3
+  name: Standard Instrumentation Type
+
+subject_code:
+  type: lookup
+  size: 2
+  name: Subject Code
+
+text_music_relationship:
+  type: lookup
+  size: 3
+  name: Text Music Relationship
+
+tis_code:
+  type: lookup
+  size: 4
+  name: TIS Numeric Code
+  actions:
+    - to_int
+
+title_type:
+  type: lookup
+  size: 2
+  name: Title Type
+
+transaction_status:
+  type: lookup
+  size: 2
+  name: Transaction Status
+
+transaction_type:
+  type: lookup
+  size: 3
+  name: Transaction Type
+
+type_of_right:
+  type: lookup
+  size: 3
+  name: Type of Right
+
+usa_license_indicator:
+  type: lookup
+  size: 1
+  name: USA License Indicator
+
+version_type:
+  type: lookup
+  size: 3
+  name: Version Type
+
+work_type:
+  type: lookup
+  size: 2
+  name: Work Type
+
+writer_designation_code:
+  type: lookup
+  size: 2
+  name: Writer Designation

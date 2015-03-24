@@ -25,29 +25,12 @@ class TestLookupName(unittest.TestCase):
 
         self.assertEqual('Lookup Field', field.name)
 
-    def test_name_default_compulsory(self):
-        """
-        Tests that the default field name is correct for optional fields, for compulsory fields.
-        """
-        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
-
-        self.assertEqual('Lookup Field', field.name)
-
     def test_name_set(self):
         """
         Tests that the given field name is set correctly for optional fields.
         """
         name = "Field Name"
         field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name=name)
-
-        self.assertEqual(name, field.name)
-
-    def test_name_set_compulsory(self):
-        """
-        Tests that the given field name is set correctly for optional fields, for compulsory fields.
-        """
-        name = "Field Name"
-        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name=name, compulsory=True)
 
         self.assertEqual(name, field.name)
 
@@ -77,50 +60,10 @@ class TestLookupValid(unittest.TestCase):
         result = self.lookup.parseString('CD2')
         self.assertEqual('CD2', result[0])
 
-    def test_empty(self):
-        """
-        Tests that the field accepts the empty string
-        """
-        result = self.lookup.parseString('   ')
-        self.assertEqual(None, result[0])
-
-
-class TestLookupValidCompulsory(unittest.TestCase):
-    """
-    Tests that the lookup field accepts and parse valid values.
-    """
-
-    def setUp(self):
-        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
-
-    def test_valid(self):
-        """
-        Tests that the field accepts a valid value
-        """
-        result = self.lookup.parseString('CD2')
-        self.assertEqual('CD2', result[0])
-
-
-class TestLookupException(unittest.TestCase):
-    def setUp(self):
-        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
-
-    def test_invalid(self):
-        """
-        Tests that an exception is thrown when parsing an invalid value
-        """
-        self.assertRaises(ParseException, self.lookup.parseString, 'AEI')
-
-    def test_empty(self):
-        """
-        Tests that an exception is thrown when parsing an invalid value
-        """
-        self.assertRaises(ParseException, self.lookup.parseString, '')
-
 
 class TestLookupExceptionCompulsory(unittest.TestCase):
     def setUp(self):
-        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, compulsory=True)
+        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
 
     def test_invalid(self):
         """

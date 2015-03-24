@@ -24,6 +24,39 @@ class TestWriterGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = writer.writer
 
+    def test_valid_common(self):
+        """
+        Tests that Writer grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'SWR00000179000005481178518  SURNAME                                      NAME                           C          0026169554761 0050061 0000061 00000    0000000000000             '
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('SWR', result.record_type)
+        self.assertEqual(179, result.transaction_sequence_n)
+        self.assertEqual(548, result.record_sequence_n)
+        self.assertEqual('1178518', result.writer.ip_n)
+        self.assertEqual('SURNAME', result.writer.writer_last_name)
+        self.assertEqual('NAME', result.writer.writer_first_name)
+        self.assertEqual(None, result.writer_unknown)
+        self.assertEqual('C', result.writer_designation)
+        self.assertEqual(None, result.writer.tax_id)
+        self.assertEqual(261695547, result.writer.ipi_name_n)
+        self.assertEqual(61, result.pr_society)
+        self.assertEqual(5, result.pr_ownership_share)
+        self.assertEqual(61, result.mr_society)
+        self.assertEqual(0, result.mr_ownership_share)
+        self.assertEqual(61, result.sr_society)
+        self.assertEqual(0, result.sr_ownership_share)
+        self.assertEqual(None, result.reversionary)
+        self.assertEqual(None, result.first_recording_refusal)
+        self.assertEqual(None, result.work_for_hire)
+        self.assertEqual(0, result.writer.ipi_base_n)
+        self.assertEqual(None, result.writer.personal_number)
+        self.assertEqual(None, result.usa_license)
+
     def test_valid_full(self):
         """
         Tests that Writer grammar decodes correctly formatted record prefixes.

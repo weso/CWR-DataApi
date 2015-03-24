@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-from abc import ABCMeta
 
 from cwr.grammar.file import cwr_transmission as rule_file
 from cwr.grammar.filename import cwr_filename_old as rule_filename_old
@@ -72,7 +71,6 @@ class _CWRFileTagEncoder(Encoder):
     rrr - Receiver. 2 or 3 digits.
     xx - Version of the CWR standard (version x.x).
     """
-    __metaclass__ = ABCMeta
 
     # Delimiters
     _header = 'CW'

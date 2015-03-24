@@ -15,7 +15,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestAcknowledgementTransactionValid(unittest.TestCase):
+class TestWorkTransactionValid(unittest.TestCase):
     def setUp(self):
         self.grammar = transaction.work_transaction
 

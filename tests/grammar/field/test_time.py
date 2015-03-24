@@ -25,29 +25,12 @@ class TestTimeName(unittest.TestCase):
 
         self.assertEqual('Time Field', field.name)
 
-    def test_name_default_compulsory(self):
-        """
-        Tests that the default field name is correct for optional fields, for compulsory fields.
-        """
-        field = basic.time(compulsory=True)
-
-        self.assertEqual('Time Field', field.name)
-
     def test_name_set(self):
         """
         Tests that the given field name is set correctly for optional fields.
         """
         name = "Field Name"
         field = basic.time(name=name)
-
-        self.assertEqual(name, field.name)
-
-    def test_name_set_compulsory(self):
-        """
-        Tests that the given field name is set correctly for optional fields, for compulsory fields.
-        """
-        name = "Field Name"
-        field = basic.time(name=name, compulsory=True)
 
         self.assertEqual(name, field.name)
 
