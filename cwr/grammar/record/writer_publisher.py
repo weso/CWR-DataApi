@@ -3,7 +3,6 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import writer_publisher as field_writer_publisher
 from cwr.interested_party import PublisherForWriterRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 
@@ -27,11 +26,11 @@ Patterns.
 
 publisher = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('writer_publisher'), compulsory=True) + \
-            field_writer_publisher.publisher_ip_number + \
+            _writer_publisher_factory.get_field('publisher_ip_n') + \
             _writer_publisher_factory.get_field('publisher_name') + \
             _agr_factory.get_field('submitter_agreement_n', compulsory=True) + \
             _agr_factory.get_field('society_assigned_agreement_n') + \
-            field_writer_publisher.writer_ip_n + \
+            _writer_publisher_factory.get_field('writer_ip_n') + \
             field_special.lineEnd
 
 """

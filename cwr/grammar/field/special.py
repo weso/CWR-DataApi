@@ -41,6 +41,7 @@ def ip_n(name=None, compulsory=False):
     :param compulsory: indicates if empty strings are disallowed
     :return: a parser for the IP Number field
     """
+    # TODO: This is just an alphanum field. Remove
 
     if name is None:
         name = 'Interested Party Number Field'
