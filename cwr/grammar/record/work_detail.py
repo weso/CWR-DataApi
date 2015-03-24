@@ -42,7 +42,7 @@ Patterns.
 
 alternate = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('alternate_title'), compulsory=True) + \
-            field_work_detail.alternate_title + \
+            _work_detail_factory.get_field('alternate_title') + \
             _lookup_factory.get_field('title_type') + \
             _lookup_factory.get_field('language_code') + \
             field_special.lineEnd

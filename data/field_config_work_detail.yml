@@ -1,3 +1,9 @@
+alternate_title:
+  type: alphanum_ext
+  size: 60
+  name: Alternate Title
+  results_name: title
+
 bltvr:
   type: alphanum
   size: 1
