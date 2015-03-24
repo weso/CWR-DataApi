@@ -254,6 +254,16 @@ ip_writer_name:
   size: 160
   name: Interested Party Writer First Name
 
+ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: IPI Base Number
+
+ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: IPI Name Number
+
 iswc:
   type: iswc
   size: 11
@@ -550,6 +560,16 @@ writer_1_first_name:
   size: 30
   name: Writer 1 First Name
 
+writer_1_ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: Writer 1 IPI Base Number
+
+writer_1_ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: Writer 1 IPI Name Number
+
 writer_1_last_name:
   type: alphanum
   size: 45
@@ -559,6 +579,16 @@ writer_2_first_name:
   type: alphanum
   size: 30
   name: Writer 2 First Name
+
+writer_2_ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: Writer 2 IPI Base Number
+
+writer_2_ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: Writer 2 IPI Name Number
 
 writer_2_last_name:
   type: alphanum
