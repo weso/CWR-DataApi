@@ -52,17 +52,17 @@ Each of these fields is parsed into a value as follows:
 """
 
 # Sequence Number old
-sequence_old = basic.numeric(2)
-sequence_old = sequence_old.setName('Sequence Number').setResultsName('sequence_n')
+sequence_old = basic.numeric(2, 'Sequence Number')
+sequence_old = sequence_old.setResultsName('sequence_n')
 
 # Sequence Number new
-sequence_new = basic.numeric(4)
-sequence_new = sequence_new.setName('Sequence Number').setResultsName('sequence_n')
+sequence_new = basic.numeric(4, 'Sequence Number')
+sequence_new = sequence_new.setResultsName('sequence_n')
 
 # Year
-year = basic.numeric(2)
-year.setParseAction(lambda y: _to_year(y))
-year = year.setName('Year').setResultsName('year')
+year = basic.numeric(2, 'Year')
+year.addParseAction(lambda y: _to_year(y[0]))
+year = year.setResultsName('year')
 
 
 def _to_year(parsed):
@@ -71,10 +71,7 @@ def _to_year(parsed):
 
     :param parsed: the parsed value
     """
-    if len(parsed) > 0:
-        return 2000 + parsed[0]
-    else:
-        return None
+    return 2000 + parsed
 
 # Sender
 sender = pp.Word(pp.alphanums, min=2, max=3)
@@ -85,8 +82,8 @@ receiver = pp.Word(pp.alphanums, min=2, max=3)
 receiver = receiver.setName('Received').setResultsName('receiver')
 
 # Version number
-version_num = basic.numeric_float(2, 1)
-version_num = version_num.setName('Version').setResultsName('version')
+version_num = basic.numeric_float(2, 1, 'Version')
+version_num = version_num.setResultsName('version')
 
 """
 Delimiters.

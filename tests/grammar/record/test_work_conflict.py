@@ -104,7 +104,7 @@ class TestWorkValid(unittest.TestCase):
         self.assertEqual('THE CONTACT', result.contact_name)
         self.assertEqual('A123456789', result.contact_id)
         self.assertEqual(None, result.cwr_work_type)
-        self.assertEqual(False, result.grand_rights_indicator)
+        self.assertEqual(None, result.grand_rights_indicator)
         self.assertEqual(0, result.composite_component_count)
         self.assertEqual(2, result.date_publication_printed_edition.day)
         self.assertEqual(3, result.date_publication_printed_edition.month)

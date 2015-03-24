@@ -49,14 +49,6 @@ class TestBooleanName(unittest.TestCase):
 
         self.assertEqual('Boolean Field', field.name)
 
-    def test_name_default_compulsory(self):
-        """
-        Tests that the default field name is correct for optional fields for compulsory fields.
-        """
-        field = basic.boolean(compulsory=True)
-
-        self.assertEqual('Boolean Field', field.name)
-
     def test_name_set(self):
         """
         Tests that the given field name is set correctly for optional fields.
@@ -65,13 +57,6 @@ class TestBooleanName(unittest.TestCase):
         field = basic.boolean(name=name)
 
         self.assertEqual(name, field.name)
-
-    def test_name_set_compulsory(self):
-        """
-        Tests that the given field name is set correctly for optional fields for compulsory fields.
-        """
-        name = "Field Name"
-        field = basic.boolean(name=name, compulsory=True)
 
         self.assertEqual(name, field.name)
 
@@ -88,42 +73,6 @@ class TestBooleanName(unittest.TestCase):
 
 class TestBooleanValid(unittest.TestCase):
     """
-    Tests that the Boolean field accepts and parse valid values.
-
-    The following cases are tested:
-
-    - Accepts a value of true ('Y')
-    - Accepts a value of false ('N')
-    - Accepts an empty string
-    """
-
-    def setUp(self):
-        self.field = basic.boolean()
-
-    def test_true(self):
-        """
-        Tests that the Boolean field accepts true ('Y').
-        """
-        result = self.field.parseString('Y')
-        self.assertEqual(True, result[0])
-
-    def test_false(self):
-        """
-        Tests that the Boolean field accepts false ('N').
-        """
-        result = self.field.parseString('N')
-        self.assertEqual(False, result[0])
-
-    def test_whitespace(self):
-        """
-        Tests that the optional Boolean field accepts empty strings.
-        """
-        result = self.field.parseString(' ')
-        self.assertEqual(False, result[0])
-
-
-class TestBooleanCompulsoryValid(unittest.TestCase):
-    """
     Tests that the compulsory Boolean field accepts and parse valid values.
 
     The following cases are tested:
@@ -133,7 +82,7 @@ class TestBooleanCompulsoryValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.field = basic.boolean(compulsory=True)
+        self.field = basic.boolean()
 
     def test_true(self):
         """
@@ -152,45 +101,6 @@ class TestBooleanCompulsoryValid(unittest.TestCase):
 
 class TestBooleanException(unittest.TestCase):
     """
-    Tests that exceptions are thrown when using invalid values
-
-    The following cases are tested:
-
-    - An exception is thrown when the values are in lower case
-    - An exception is thrown when the value is the empty string
-    - An exception is thrown when the value is an invalid character
-    """
-
-    def setUp(self):
-        self.field = basic.boolean()
-
-    def test_true_lower(self):
-        """
-        Tests that an exception is thrown when the true code is in lower letters.
-        """
-        self.assertRaises(ParseException, self.field.parseString, 'y')
-
-    def test_false_lower(self):
-        """
-        Tests that an exception is thrown when the false code is in lower letters.
-        """
-        self.assertRaises(ParseException, self.field.parseString, 'n')
-
-    def test_empty(self):
-        """
-        Tests that an exception is thrown when the string is empty.
-        """
-        self.assertRaises(ParseException, self.field.parseString, '')
-
-    def test_invalid(self):
-        """
-        Tests that an exception is thrown when the string is invalid.
-        """
-        self.assertRaises(ParseException, self.field.parseString, 'W')
-
-
-class TestBooleanCompulsoryException(unittest.TestCase):
-    """
     Tests that exceptions are thrown when using invalid values on a compulsory field.
 
     The following cases are tested:
@@ -202,7 +112,7 @@ class TestBooleanCompulsoryException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.field = basic.boolean(compulsory=True)
+        self.field = basic.boolean()
 
     def test_true_lower(self):
         """

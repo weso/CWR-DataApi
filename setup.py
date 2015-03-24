@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import ast
 import re
-
-from setuptools import setup, find_packages
 from codecs import open
 from os import path
+
+from setuptools import setup, find_packages
 
 
 """
