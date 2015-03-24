@@ -71,8 +71,8 @@ npr = field_special.lineStart + \
       field_record.record_prefix(_config.record_type('npr'), compulsory=True) + \
       _common_factory.get_field('performing_artist_name') + \
       _common_factory.get_field('performing_artist_first_name_long') + \
-      field_special.ipi_name_number() + \
-      field_special.ipi_base_number() + \
+      _common_factory.get_field('ipi_name_n') + \
+      _common_factory.get_field('ipi_base_n') + \
       _lookup_factory.get_field('language_code') + \
       _lookup_factory.get_field('performance_language') + \
       _common_factory.get_field('dialect') + \

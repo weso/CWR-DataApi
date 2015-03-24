@@ -38,7 +38,7 @@ publisher = field_special.lineStart + \
             _common_factory.get_field('publisher_unknown') + \
             _lookup_factory.get_field('publisher_type') + \
             _common_factory.get_field('tax_id') + \
-            field_special.ipi_name_number() + \
+            _common_factory.get_field('ipi_name_n') + \
             _common_factory.get_field('submitter_agreement_n') + \
             _lookup_factory.get_field('pr_affiliation') + \
             society.pr_share(maximum=50) + \
@@ -49,7 +49,7 @@ publisher = field_special.lineStart + \
             _lookup_factory.get_field('special_agreement_indicator') + \
             _common_factory.get_field('first_recording_refusal') + \
             _common_factory.get_field('blank') + \
-            field_special.ipi_base_number() + \
+            _common_factory.get_field('ipi_base_n') + \
             _common_factory.get_field('international_standard_code') + \
             _common_factory.get_field('society_assigned_agreement_n') + \
             _lookup_factory.get_field('agreement_type') + \

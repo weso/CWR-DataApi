@@ -29,8 +29,8 @@ IPA patterns.
 interested_party_agreement = field_special.lineStart + \
                              field_record.record_prefix(_config.record_type('ipa'), compulsory=True) + \
                              _lookup_factory.get_field('agreement_role_code', compulsory=True) + \
-                             field_special.ipi_name_number() + \
-                             field_special.ipi_base_number() + \
+                             _common_factory.get_field('ipi_name_n') + \
+                             _common_factory.get_field('ipi_base_n') + \
                              _common_factory.get_field('ip_n', compulsory=True) + \
                              _common_factory.get_field('ip_last_name', compulsory=True) + \
                              _common_factory.get_field('ip_writer_first_name') + \
