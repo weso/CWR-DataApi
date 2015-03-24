@@ -54,7 +54,7 @@ transmission_header = field_special.lineStart + \
                       _lookup_factory.get_field('sender_type', compulsory=True) + \
                       _trans_factory.get_field('sender_id', compulsory=True) + \
                       _trans_factory.get_field('sender_name', compulsory=True) + \
-                      field_transmission.edi_version + \
+                      _trans_factory.get_field('edi_version', compulsory=True) + \
                       field_transmission.creation_date_time + \
                       _trans_factory.get_field('transmission_date', compulsory=True) + \
                       field_transmission.character_set + \

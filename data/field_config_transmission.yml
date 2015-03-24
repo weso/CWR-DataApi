@@ -8,6 +8,13 @@ creation_time:
   size: 8
   name: Creation Time
 
+edi_version:
+  type: lookup
+  size: 5
+  name: EDI Version
+  values:
+    - '01.10'
+
 group_count:
   type: numeric
   size: 5

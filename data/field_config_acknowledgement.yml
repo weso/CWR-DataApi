@@ -28,6 +28,11 @@ original_transaction_sequence_n:
   size: 8
   name: Original Transaction Sequence #
 
+original_record_sequence_n:
+  type: numeric
+  size: 8
+  name: Original Record Sequence #
+
 processing_date:
   type: date
   size: 8

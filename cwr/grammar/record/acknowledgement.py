@@ -2,7 +2,6 @@
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import acknowledgement as field_ack
-from cwr.grammar.field import message as field_message
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
@@ -44,7 +43,7 @@ acknowledgement = field_special.lineStart + \
 message = field_special.lineStart + \
           field_record.record_prefix(_config.record_type('message'), compulsory=True) + \
           _lookup_factory.get_field('message_type') + \
-          field_message.sequence_n + \
+          _ack_factory.get_field('original_record_sequence_n') + \
           _lookup_factory.get_field('message_record_type') + \
           _lookup_factory.get_field('message_level') + \
           _ack_factory.get_field('validation') + \
@@ -99,7 +98,7 @@ def _to_message_record(parsed):
                          record_sequence_n=parsed.record_sequence_n,
                          message_type=parsed.message_type,
                          message_text=parsed.message_text,
-                         original_record_sequence_n=parsed.sequence_n,
+                         original_record_sequence_n=parsed.original_record_sequence_n,
                          message_record_type=parsed.message_record_type,
                          message_level=parsed.message_level,
                          validation_n=parsed.validation)

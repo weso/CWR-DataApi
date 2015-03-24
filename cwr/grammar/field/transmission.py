@@ -36,10 +36,6 @@ These fields are:
 - Character Set. Alphanumeric.
 """
 
-# EDI Version
-edi_version = pp.Literal(_config.field_value('transmission_header', 'edi_version'))
-edi_version = edi_version.setName('EDI Version').setResultsName('edi_version')
-
 # Creation Date
 creation_date = _transmission_factory.get_field('creation_date', compulsory=True)
 
