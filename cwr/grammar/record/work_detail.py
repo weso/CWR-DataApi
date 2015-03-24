@@ -50,7 +50,7 @@ alternate = field_special.lineStart + \
 entire_title = field_special.lineStart + \
                field_record.record_prefix(_config.record_type('entire_work_title'), compulsory=True) + \
                _work_detail_factory.get_field('entire_work_title') + \
-               field_work_detail.iswc + \
+               _work_detail_factory.get_field('iswc') + \
                _lookup_factory.get_field('language_code') + \
                _work_detail_factory.get_field('writer_1_last_name') + \
                _work_detail_factory.get_field('writer_1_first_name') + \
@@ -67,7 +67,7 @@ entire_title = field_special.lineStart + \
 version = field_special.lineStart + \
           field_record.record_prefix(_config.record_type('original_work_title'), compulsory=True) + \
           _work_detail_factory.get_field('original_title') + \
-          field_work_detail.iswc + \
+          _work_detail_factory.get_field('iswc') + \
           _lookup_factory.get_field('language_code') + \
           _work_detail_factory.get_field('writer_1_last_name') + \
           _work_detail_factory.get_field('writer_1_first_name') + \
@@ -137,7 +137,7 @@ inst_detail = field_special.lineStart + \
 component = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('component'), compulsory=True) + \
             _work_detail_factory.get_field('component_title') + \
-            field_work_detail.iswc + \
+            _work_detail_factory.get_field('iswc') + \
             _work_factory.get_field('submitter_work_n') + \
             _work_detail_factory.get_field('component_duration') + \
             _work_detail_factory.get_field('writer_1_last_name') + \

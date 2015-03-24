@@ -3,7 +3,6 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import work as field_work
 from cwr import work
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -31,7 +30,7 @@ work_record = field_special.lineStart + \
               _work_factory.get_field('work_title', compulsory=True) + \
               _lookup_factory.get_field('language_code') + \
               _work_factory.get_field('submitter_work_n', compulsory=True) + \
-              field_work.iswc + \
+              _work_factory.get_field('iswc') + \
               _work_factory.get_field('copyright_date') + \
               _work_factory.get_field('copyright_number') + \
               _lookup_factory.get_field('musical_work_distribution_category', compulsory=True) + \
@@ -60,7 +59,7 @@ conflict = field_special.lineStart + \
            _work_factory.get_field('work_title') + \
            _lookup_factory.get_field('language_code') + \
            _work_factory.get_field('submitter_work_n') + \
-           field_work.iswc + \
+           _work_factory.get_field('iswc') + \
            _work_factory.get_field('copyright_date') + \
            _work_factory.get_field('copyright_number') + \
            _lookup_factory.get_field('musical_work_distribution_category', compulsory=True) + \

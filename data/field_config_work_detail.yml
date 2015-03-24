@@ -87,6 +87,11 @@ instrumentation_description:
   size: 50
   name: Instrumentation Description
 
+iswc:
+  type: iswc
+  size: 11
+  name: ISWC
+
 library:
   type: alphanum
   size: 60

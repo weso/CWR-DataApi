@@ -34,7 +34,3 @@ writer_2_ipi_name_n = writer_2_ipi_name_n.setName('Writer 1 IPI Name #').setResu
 # Writer 2 IPI Base #
 writer_2_ipi_base_n = special.ipi_base_number()
 writer_2_ipi_base_n = writer_2_ipi_base_n.setName('Writer 1 IPI Base #').setResultsName('writer_2_ipi_base_n')
-
-# ISWC
-iswc = special.iswc()
-iswc = iswc.setResultsName('iswc')

@@ -2,7 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 
-from cwr.grammar.field import basic
+from cwr.grammar.field import basic, special
 
 
 """
@@ -132,3 +132,11 @@ class LookupAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.lookup(values, columns, name, True)
+
+
+class ISWCAdapter(FieldAdapter):
+    def __init__(self):
+        super(ISWCAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.iswc(name, True)
