@@ -9,7 +9,7 @@ from cwr.grammar.field import basic
 from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
     BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter, ISWCAdapter, IPIBaseNumberAdapter, \
     IPINameNumberAdapter, PercentageAdapter, EAN13Adapter, ISRCAdapter, VISANAdapter, AudioVisualKeydapter, \
-    DateTimeAdapter
+    DateTimeAdapter, CharSetAdapter
 
 
 """
@@ -234,6 +234,7 @@ class DefaultFieldFactory(OptionFieldFactory):
         self._builders['isrc'] = ISRCAdapter()
         self._builders['visan'] = VISANAdapter()
         self._builders['avi'] = AudioVisualKeydapter()
+        self._builders['charset'] = CharSetAdapter()
 
         # Field values are optional
         self._field_values = field_values

@@ -3,7 +3,6 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import transmission as field_transmission
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -56,7 +55,7 @@ transmission_header = field_special.lineStart + \
                       _common_factory.get_field('edi_version', compulsory=True) + \
                       _common_factory.get_field('creation_date_time', compulsory=True) + \
                       _common_factory.get_field('transmission_date', compulsory=True) + \
-                      field_transmission.character_set + \
+                      _common_factory.get_field('character_set') + \
                       field_special.lineEnd
 transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 

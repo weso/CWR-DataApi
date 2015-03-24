@@ -2,7 +2,7 @@
 
 from abc import ABCMeta, abstractmethod
 
-from cwr.grammar.field import basic, special
+from cwr.grammar.field import basic, special, table
 
 """
 CWR fields grammar adapters.
@@ -208,3 +208,11 @@ class AudioVisualKeydapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         return special.audio_visual_key(name=name)
+
+
+class CharSetAdapter(FieldAdapter):
+    def __init__(self):
+        super(CharSetAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return table.char_code(columns=columns, name=name)

@@ -101,6 +101,11 @@ copyright_number:
   size: 12
   name: Copyright Number
 
+character_set:
+  type: charset
+  size: 15
+  name: Character Set
+
 creation_date_time:
   type: date_time
   size: 16
