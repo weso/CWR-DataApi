@@ -32,7 +32,7 @@ Patterns.
 
 territory = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('writer_territory'), compulsory=True) + \
-            field_special.ip_n() + \
+            _common_factory.get_field('ip_n') + \
             field_society.pr_share() + \
             field_society.mr_share() + \
             field_society.sr_share() + \

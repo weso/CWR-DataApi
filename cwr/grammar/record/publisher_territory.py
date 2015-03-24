@@ -32,7 +32,7 @@ SPT patterns.
 
 territory = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('publisher_territory'), compulsory=True) + \
-            field_special.ip_n(compulsory=True) + \
+            _common_factory.get_field('ip_n',compulsory=True) + \
             _common_factory.get_field('constant') + \
             society.pr_share(maximum=50) + \
             society.mr_share() + \

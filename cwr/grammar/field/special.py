@@ -31,27 +31,6 @@ lineEnd.setName("End of line")
 # CONCRETE CASES FIELDS
 
 
-def ip_n(name=None, compulsory=False):
-    """
-    IP Number field.
-
-    On the CWR standard an Interested Party can have an alphanumeric ID of up to 9 digits.
-
-    :param name: name for the field
-    :param compulsory: indicates if empty strings are disallowed
-    :return: a parser for the IP Number field
-    """
-    # TODO: This is just an alphanum field. Remove
-
-    if name is None:
-        name = 'Interested Party Number Field'
-
-    field = basic.alphanum(_config.field_size('special', 'ip_n'), compulsory=compulsory)
-    field.setName(name)
-
-    return field.setResultsName('ip_n')
-
-
 def ipi_base_number(name=None, compulsory=False):
     """
     IPI Base Number field.

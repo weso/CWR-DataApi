@@ -33,7 +33,7 @@ Publisher patterns.
 publisher = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('publisher'), compulsory=True) + \
             _common_factory.get_field('publisher_sequence_n', compulsory=True) + \
-            field_special.ip_n() + \
+            _common_factory.get_field('ip_n') + \
             _common_factory.get_field('name') + \
             _common_factory.get_field('publisher_unknown') + \
             _lookup_factory.get_field('publisher_type') + \

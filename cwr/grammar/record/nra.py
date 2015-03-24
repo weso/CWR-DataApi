@@ -38,7 +38,7 @@ NRA patterns.
 
 npa = field_special.lineStart + \
       field_record.record_prefix(_config.record_type('npa'), compulsory=True) + \
-      field_special.ip_n() + \
+      _common_factory.get_field('ip_n') + \
       _common_factory.get_field('ip_name', compulsory=True) + \
       _common_factory.get_field('ip_writer_name', compulsory=True) + \
       _lookup_factory.get_field('language_code') + \
@@ -47,14 +47,14 @@ npa = field_special.lineStart + \
 npn = field_special.lineStart + \
       field_record.record_prefix(_config.record_type('npn'), compulsory=True) + \
       _common_factory.get_field('publisher_sequence_n') + \
-      field_special.ip_n(compulsory=True) + \
+      _common_factory.get_field('ip_n',compulsory=True) + \
       _common_factory.get_field('publisher_name_long', compulsory=True) + \
       _lookup_factory.get_field('language_code') + \
       field_special.lineEnd
 
 nwn = field_special.lineStart + \
       field_record.record_prefix(_config.record_type('nwn'), compulsory=True) + \
-      field_special.ip_n() + \
+      _common_factory.get_field('ip_n') + \
       _common_factory.get_field('writer_last_name_long', compulsory=True) + \
       _common_factory.get_field('writer_first_name_long', compulsory=True) + \
       _lookup_factory.get_field('language_code') + \

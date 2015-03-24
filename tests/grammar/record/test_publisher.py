@@ -102,7 +102,7 @@ class TestPublisherRecordValid(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual(19, result.publisher_sequence_n)
-        self.assertEqual('', result.publisher.ip_n)
+        self.assertEqual(None, result.publisher.ip_n)
         self.assertEqual(None, result.publisher.publisher_name)
         self.assertEqual('Y', result.publisher_unknown)
         self.assertEqual(None, result.publisher_type)

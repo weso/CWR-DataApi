@@ -157,7 +157,7 @@ entire_work_title:
 episode_n:
   type: alphanum
   size: 20
-  name: Episode #
+  name: Episode Number
 
 episode_title:
   type: alphanum
@@ -192,7 +192,7 @@ first_recording_refusal:
 first_release_catalog_n:
   type: alphanum
   size: 18
-  name: First Release Catalog #
+  name: First Release Catalog Number
 
 first_release_date:
   type: date
@@ -233,6 +233,11 @@ ip_last_name:
   type: alphanum
   size: 45
   name: Interested Party Last Name
+  
+ip_n:
+  type: alphanum
+  size: 9
+  name: Interested Party Number
 
 ip_name:
   type: alphanum
@@ -308,12 +313,12 @@ original_title:
 original_transaction_sequence_n:
   type: numeric
   size: 8
-  name: Original Transaction Sequence #
+  name: Original Transaction Sequence Number
 
 original_record_sequence_n:
   type: numeric
   size: 8
-  name: Original Record Sequence #
+  name: Original Record Sequence Number
 
 performing_artist_first_name:
   type: alphanum
@@ -369,7 +374,7 @@ processing_date:
 production_n:
   type: alphanum
   size: 12
-  name: Production #
+  name: Production Number
 
 production_title:
   type: alphanum
@@ -379,7 +384,7 @@ production_title:
 publisher_ip_n:
   type: alphanum
   size: 9
-  name: Publisher IP #
+  name: Publisher IP Number
 
 publisher_name:
   type: alphanum
@@ -395,7 +400,7 @@ publisher_name_long:
 publisher_sequence_n:
   type: numeric
   size: 2
-  name: Publisher Sequence #
+  name: Publisher Sequence Number
 
 publisher_unknown:
   type: flag
@@ -405,7 +410,7 @@ publisher_unknown:
 recipient_creation_n:
   type: alphanum
   size: 20
-  name: Recipient Creation #
+  name: Recipient Creation Number
 
 record_count:
   type: numeric
@@ -440,7 +445,7 @@ sd_type:
 sequence_n:
   type: numeric
   size: 3
-  name: Sequence #
+  name: Sequence Number
 
 sender_id:
   type: numeric
@@ -475,7 +480,7 @@ submitter_agreement_n:
 submitter_creation_n:
   type: alphanum
   size: 20
-  name: Submitter Creation #
+  name: Submitter Creation Number
 
 submitter_work_n:
   type: alphanum
@@ -485,7 +490,7 @@ submitter_work_n:
 tax_id:
   type: numeric
   size: 9
-  name: Tax ID #
+  name: Tax ID Number
 
 title:
   type: alphanum
@@ -527,7 +532,7 @@ version_number:
 work_n:
   type: alphanum
   size: 14
-  name: Work #
+  name: Work Number
 
 work_for_hire:
   type: flag
@@ -574,7 +579,7 @@ writer_first_name_long:
 writer_ip_n:
   type: alphanum
   size: 9
-  name: Writer IP #
+  name: Writer IP Number
 
 writer_last_name:
   type: alphanum
