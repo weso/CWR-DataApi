@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.interested_party import Publisher, PublisherRecord
@@ -41,11 +40,11 @@ publisher = field_special.lineStart + \
             _common_factory.get_field('ipi_name_n') + \
             _common_factory.get_field('submitter_agreement_n') + \
             _lookup_factory.get_field('pr_affiliation') + \
-            society.pr_share(maximum=50) + \
+            _common_factory.get_field('pr_share_50', compulsory=True) + \
             _lookup_factory.get_field('mr_affiliation') + \
-            society.mr_share() + \
+            _common_factory.get_field('mr_share', compulsory=True) + \
             _lookup_factory.get_field('sr_affiliation') + \
-            society.sr_share() + \
+            _common_factory.get_field('sr_share', compulsory=True) + \
             _lookup_factory.get_field('special_agreement_indicator') + \
             _common_factory.get_field('first_recording_refusal') + \
             _common_factory.get_field('blank') + \

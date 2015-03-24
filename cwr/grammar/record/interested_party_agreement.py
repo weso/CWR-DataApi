@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.agreement import InterestedPartyForAgreementRecord
@@ -35,11 +34,11 @@ interested_party_agreement = field_special.lineStart + \
                              _common_factory.get_field('ip_last_name', compulsory=True) + \
                              _common_factory.get_field('ip_writer_first_name') + \
                              _lookup_factory.get_field('pr_affiliation') + \
-                             society.pr_share() + \
+                             _common_factory.get_field('pr_share', compulsory=True) + \
                              _lookup_factory.get_field('mr_affiliation') + \
-                             society.mr_share() + \
+                             _common_factory.get_field('mr_share', compulsory=True) + \
                              _lookup_factory.get_field('sr_affiliation') + \
-                             society.sr_share() + \
+                             _common_factory.get_field('sr_share', compulsory=True) + \
                              field_special.lineEnd
 
 """

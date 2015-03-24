@@ -24,6 +24,28 @@ class TestNPNGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = publisher_territory.territory
 
+    def test_valid_common(self):
+        """
+        Tests that Publisher Territory of Control grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'SPT000001790000054770             013330133301333I0484Y001'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('SPT', result.record_type)
+        self.assertEqual(179, result.transaction_sequence_n)
+        self.assertEqual(547, result.record_sequence_n)
+        self.assertEqual('70', result.ip_n)
+        self.assertEqual(13.33, result.pr_col_share)
+        self.assertEqual(13.33, result.mr_col_share)
+        self.assertEqual(13.33, result.sr_col_share)
+        self.assertEqual('I', result.ie_indicator)
+        self.assertEqual(484, result.tis_numeric_code)
+        self.assertEqual(True, result.shares_change)
+        self.assertEqual(1, result.sequence_n)
+
     def test_valid_full(self):
         """
         Tests that Publisher Territory of Control grammar decodes correctly formatted record prefixes.

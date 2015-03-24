@@ -271,8 +271,8 @@ def _check_above_value_float(string, minimum):
     value = float(string)
 
     if value <= minimum:
-        message = "The Numeric Field value should be above %s" % minimum
-        raise pp.ParseException(string, message)
+        message = 'The Numeric Field value should be above %s' % minimum
+        raise pp.ParseException(string, 0, message)
 
 
 """

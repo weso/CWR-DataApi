@@ -3,7 +3,6 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import society as field_society
 from cwr.interested_party import Writer, WriterRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -40,11 +39,11 @@ writer = field_special.lineStart + \
          _common_factory.get_field('tax_id') + \
          _common_factory.get_field('ipi_name_n') + \
          _lookup_factory.get_field('pr_affiliation') + \
-         field_society.pr_share() + \
+         _common_factory.get_field('pr_share', compulsory=True) + \
          _lookup_factory.get_field('mr_affiliation') + \
-         field_society.mr_share() + \
+         _common_factory.get_field('mr_share', compulsory=True) + \
          _lookup_factory.get_field('sr_affiliation') + \
-         field_society.sr_share() + \
+         _common_factory.get_field('sr_share', compulsory=True) + \
          _common_factory.get_field('reversionary') + \
          _common_factory.get_field('first_recording_refusal') + \
          _common_factory.get_field('work_for_hire') + \

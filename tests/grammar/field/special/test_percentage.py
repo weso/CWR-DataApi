@@ -245,9 +245,3 @@ class TestPercentageCompulsoryException(unittest.TestCase):
         Tests that an exception is thrown when the value is set higher than the maximum value.
         """
         self.assertRaises(ParseException, self.perc.parseString, '')
-
-    def test_zero(self):
-        """
-        Tests that an exception is thrown when the value is zero.
-        """
-        self.assertRaises(ParseException, self.perc.parseString, '00000')

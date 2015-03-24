@@ -24,6 +24,32 @@ class TestIPAGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = interested_party_agreement.interested_party_agreement
 
+    def test_valid_common(self):
+        """
+        Tests that IPA grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'IPA0000000000000002AC00250165006000000000000066       SOCIETY MUSIC                                                              61 0500061 1000061 10000'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('IPA', result.record_type)
+        self.assertEqual(0, result.transaction_sequence_n)
+        self.assertEqual(2, result.record_sequence_n)
+        self.assertEqual('AC', result.agreement_role_code)
+        self.assertEqual(0, result.ipi_base_n)
+        self.assertEqual(250165006, result.ipi_name_n)
+        self.assertEqual('66', result.ip_n)
+        self.assertEqual('SOCIETY MUSIC', result.ip_last_name)
+        self.assertEqual(None, result.ip_writer_first_name)
+        self.assertEqual(61, result.pr_society)
+        self.assertEqual(50, result.pr_share)
+        self.assertEqual(61, result.mr_society)
+        self.assertEqual(100, result.mr_share)
+        self.assertEqual(61, result.sr_society)
+        self.assertEqual(100, result.sr_share)
+
     def test_valid_full(self):
         """
         Tests that IPA grammar decodes correctly formatted record prefixes.

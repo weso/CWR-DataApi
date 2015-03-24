@@ -3,7 +3,6 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import society as field_society
 from cwr.interested_party import IPTerritoryOfControlRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -33,9 +32,9 @@ Patterns.
 territory = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('writer_territory'), compulsory=True) + \
             _common_factory.get_field('ip_n') + \
-            field_society.pr_share() + \
-            field_society.mr_share() + \
-            field_society.sr_share() + \
+            _common_factory.get_field('pr_share') + \
+            _common_factory.get_field('mr_share') + \
+            _common_factory.get_field('sr_share') + \
             _lookup_factory.get_field('ie_indicator') + \
             _lookup_factory.get_field('tis_code') + \
             _common_factory.get_field('shares_change') + \

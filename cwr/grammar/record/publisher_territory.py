@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import society
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.interested_party import IPTerritoryOfControlRecord
@@ -34,9 +33,9 @@ territory = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('publisher_territory'), compulsory=True) + \
             _common_factory.get_field('ip_n', compulsory=True) + \
             _common_factory.get_field('constant') + \
-            society.pr_share(maximum=50) + \
-            society.mr_share() + \
-            society.sr_share() + \
+            _common_factory.get_field('pr_share_50') + \
+            _common_factory.get_field('mr_share') + \
+            _common_factory.get_field('sr_share') + \
             _lookup_factory.get_field('ie_indicator') + \
             _lookup_factory.get_field('tis_code') + \
             _common_factory.get_field('shares_change') + \

@@ -156,3 +156,16 @@ class IPINameNumberAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         return special.ipi_name_number(name, True)
+
+
+class PercentageAdapter(FieldAdapter):
+    def __init__(self):
+        super(PercentageAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        if values is not None and len(values) > 0:
+            max = int(values[0])
+        else:
+            max = 100
+
+        return special.percentage(columns=columns, maximum=max, name=name)

@@ -279,6 +279,11 @@ message_text:
   size: 150
   name: Message Text
 
+mr_share:
+  type: percentage
+  size: 5
+  name: Mechanical Rights Share
+
 name:
   type: alphanum
   size: 45
@@ -365,6 +370,19 @@ post_term_collection_end_date:
   type: date
   size: 8
   name: Post Term Collection End Date
+
+pr_share:
+  type: percentage
+  size: 5
+  name: Performing Rights Share
+
+pr_share_50:
+  type: percentage
+  size: 5
+  name: Performing Rights Share
+  results_name: pr_share
+  values:
+    - 50
 
 prior_royalty_start_date:
   type: date
@@ -481,6 +499,11 @@ source:
   type: alphanum
   size: 60
   name: Source
+
+sr_share:
+  type: percentage
+  size: 5
+  name: Synchronization Rights Share
 
 submitter_agreement_n:
   type: alphanum

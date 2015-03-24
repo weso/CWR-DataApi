@@ -237,9 +237,9 @@ def percentage(columns, maximum=100, name=None, compulsory=False):
         name = 'Percentage Field'
 
     if columns < 3:
-        raise BaseException()
+        raise ValueError('The values can not be lower than 3')
 
-    field = basic.numeric_float(columns, 3, compulsory=compulsory)
+    field = basic.numeric_float(columns, 3, compulsory=False)
 
     field.addParseAction(lambda v: _assert_is_percentage(v[0], maximum))
 
@@ -256,7 +256,9 @@ def _assert_is_percentage(value, maximum=100):
     """
 
     if value < 0 or value > maximum:
-        raise pp.ParseException('', 'The value on a percentage field should be between 0 and 100')
+        string = str(value)
+        message = 'The value on a percentage field should be between 0 and %s' % maximum
+        raise pp.ParseException(string, 0, message)
 
 
 def shares(maximum=100, name=None, compulsory=False):
