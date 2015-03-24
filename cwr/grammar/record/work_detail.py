@@ -3,7 +3,6 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
-from cwr.grammar.field import work_detail as field_work_detail
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
     WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord, ComponentRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
@@ -54,12 +53,12 @@ entire_title = field_special.lineStart + \
                _common_factory.get_field('writer_1_last_name') + \
                _common_factory.get_field('writer_1_first_name') + \
                _common_factory.get_field('source') + \
-               field_work_detail.writer_1_ipi_name_n + \
-               field_work_detail.writer_1_ipi_base_n + \
+               _common_factory.get_field('writer_1_ipi_name_n') + \
+               _common_factory.get_field('writer_1_ipi_base_n') + \
                _common_factory.get_field('writer_2_last_name') + \
                _common_factory.get_field('writer_2_first_name') + \
-               field_work_detail.writer_2_ipi_name_n + \
-               field_work_detail.writer_2_ipi_base_n + \
+               _common_factory.get_field('writer_2_ipi_name_n') + \
+               _common_factory.get_field('writer_2_ipi_base_n') + \
                _common_factory.get_field('submitter_work_n') + \
                field_special.lineEnd
 
@@ -71,12 +70,12 @@ version = field_special.lineStart + \
           _common_factory.get_field('writer_1_last_name') + \
           _common_factory.get_field('writer_1_first_name') + \
           _common_factory.get_field('source') + \
-          field_work_detail.writer_1_ipi_name_n + \
-          field_work_detail.writer_1_ipi_base_n + \
+          _common_factory.get_field('writer_1_ipi_name_n') + \
+          _common_factory.get_field('writer_1_ipi_base_n') + \
           _common_factory.get_field('writer_2_last_name') + \
           _common_factory.get_field('writer_2_first_name') + \
-          field_work_detail.writer_2_ipi_name_n + \
-          field_work_detail.writer_2_ipi_base_n + \
+          _common_factory.get_field('writer_2_ipi_name_n') + \
+          _common_factory.get_field('writer_2_ipi_base_n') + \
           _common_factory.get_field('submitter_work_n') + \
           field_special.lineEnd
 
@@ -84,8 +83,8 @@ performing = field_special.lineStart + \
              field_record.record_prefix(_config.record_type('performing_artist'), compulsory=True) + \
              _common_factory.get_field('performing_artist_last_name') + \
              _common_factory.get_field('performing_artist_first_name') + \
-             field_special.ipi_name_number() + \
-             field_special.ipi_base_number() + \
+             _common_factory.get_field('ipi_name_n') + \
+             _common_factory.get_field('ipi_base_n') + \
              field_special.lineEnd
 
 recording = field_special.lineStart + \
@@ -141,12 +140,12 @@ component = field_special.lineStart + \
             _common_factory.get_field('component_duration') + \
             _common_factory.get_field('writer_1_last_name') + \
             _common_factory.get_field('writer_1_first_name') + \
-            field_work_detail.writer_1_ipi_name_n + \
+            _common_factory.get_field('writer_1_ipi_name_n') + \
             _common_factory.get_field('writer_2_last_name') + \
             _common_factory.get_field('writer_2_first_name') + \
-            field_work_detail.writer_2_ipi_name_n + \
-            field_work_detail.writer_1_ipi_base_n + \
-            field_work_detail.writer_2_ipi_base_n + \
+            _common_factory.get_field('writer_2_ipi_name_n') + \
+            _common_factory.get_field('writer_1_ipi_base_n') + \
+            _common_factory.get_field('writer_2_ipi_base_n') + \
             field_special.lineEnd
 
 """

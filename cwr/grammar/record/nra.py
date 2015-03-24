@@ -47,7 +47,7 @@ npa = field_special.lineStart + \
 npn = field_special.lineStart + \
       field_record.record_prefix(_config.record_type('npn'), compulsory=True) + \
       _common_factory.get_field('publisher_sequence_n') + \
-      _common_factory.get_field('ip_n',compulsory=True) + \
+      _common_factory.get_field('ip_n', compulsory=True) + \
       _common_factory.get_field('publisher_name_long', compulsory=True) + \
       _lookup_factory.get_field('language_code') + \
       field_special.lineEnd

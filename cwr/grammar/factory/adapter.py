@@ -140,3 +140,19 @@ class ISWCAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         return special.iswc(name, True)
+
+
+class IPIBaseNumberAdapter(FieldAdapter):
+    def __init__(self):
+        super(IPIBaseNumberAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.ipi_base_number(name, True)
+
+
+class IPINameNumberAdapter(FieldAdapter):
+    def __init__(self):
+        super(IPINameNumberAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.ipi_name_number(name, True)

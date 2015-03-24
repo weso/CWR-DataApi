@@ -31,7 +31,7 @@ interested_party_agreement = field_special.lineStart + \
                              _lookup_factory.get_field('agreement_role_code', compulsory=True) + \
                              field_special.ipi_name_number() + \
                              field_special.ipi_base_number() + \
-                             _common_factory.get_field('ip_n',compulsory=True) + \
+                             _common_factory.get_field('ip_n', compulsory=True) + \
                              _common_factory.get_field('ip_last_name', compulsory=True) + \
                              _common_factory.get_field('ip_writer_first_name') + \
                              _lookup_factory.get_field('pr_affiliation') + \
