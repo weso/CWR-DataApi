@@ -261,30 +261,6 @@ def _assert_is_percentage(value, maximum=100):
         raise pp.ParseException(string, 0, message)
 
 
-def shares(maximum=100, name=None, compulsory=False):
-    """
-    Creates the grammar for a shares field.
-
-    Shares are a numeric field composed of five digits, three are for the integer value, and three are for the
-    decimal one.
-
-    They range from 00000, for 0%, to 100000, for 100%.
-
-    :param maximum: the maximum value for the shares
-    :param name: name for the field
-    :param compulsory: indicates if the empty string is disallowed
-    :return: grammar for the society ID field
-    """
-
-    if name is None:
-        name = 'Shares Field'
-
-    field = percentage(_config.field_size('special', 'shares'), maximum=maximum, compulsory=compulsory)
-    field.setName(name)
-
-    return field
-
-
 def ean_13(name=None, compulsory=False):
     """
     Creates the grammar for an EAN 13 code.
@@ -297,7 +273,7 @@ def ean_13(name=None, compulsory=False):
     """
 
     if name is None:
-        name = 'Shares Field'
+        name = 'EAN 13 Field'
 
     field = basic.numeric(13, compulsory=compulsory)
 

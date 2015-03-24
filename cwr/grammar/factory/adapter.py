@@ -169,3 +169,35 @@ class PercentageAdapter(FieldAdapter):
             max = 100
 
         return special.percentage(columns=columns, maximum=max, name=name)
+
+
+class EAN13Adapter(FieldAdapter):
+    def __init__(self):
+        super(EAN13Adapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.ean_13(name=name)
+
+
+class ISRCAdapter(FieldAdapter):
+    def __init__(self):
+        super(ISRCAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.isrc(name=name)
+
+
+class VISANAdapter(FieldAdapter):
+    def __init__(self):
+        super(VISANAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.visan(name=name)
+
+
+class AudioVisualKeydapter(FieldAdapter):
+    def __init__(self):
+        super(AudioVisualKeydapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.audio_visual_key(name=name)

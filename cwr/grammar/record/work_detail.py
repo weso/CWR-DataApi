@@ -96,8 +96,8 @@ recording = field_special.lineStart + \
             _common_factory.get_field('first_album_title') + \
             _common_factory.get_field('first_album_label') + \
             _common_factory.get_field('first_release_catalog_n') + \
-            field_special.ean_13() + \
-            field_special.isrc() + \
+            _common_factory.get_field('ean13') + \
+            _common_factory.get_field('isrc') + \
             _lookup_factory.get_field('recording_format') + \
             _lookup_factory.get_field('recording_technique') + \
             _lookup_factory.get_field('media_type') + \
@@ -111,12 +111,12 @@ origin = field_special.lineStart + \
          _common_factory.get_field('cut_number') + \
          _common_factory.get_field('library') + \
          _common_factory.get_field('bltvr') + \
-         field_special.visan() + \
+         _common_factory.get_field('visan') + \
          _common_factory.get_field('production_n') + \
          _common_factory.get_field('episode_title') + \
          _common_factory.get_field('episode_n') + \
          _common_factory.get_field('year_production') + \
-         field_special.audio_visual_key() + \
+         _common_factory.get_field('audio_visual_key') + \
          field_special.lineEnd
 
 inst_summary = field_special.lineStart + \
@@ -239,7 +239,7 @@ def _to_recording_detail(parsed):
     """
     return RecordingDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                                  parsed.first_release_date, parsed.first_release_duration, parsed.first_album_title,
-                                 parsed.first_album_label, parsed.first_release_catalog_n, parsed.ean_13, parsed.isrc,
+                                 parsed.first_album_label, parsed.first_release_catalog_n, parsed.ean13, parsed.isrc,
                                  parsed.recording_format, parsed.recording_technique, parsed.media_type)
 
 

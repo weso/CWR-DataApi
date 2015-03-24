@@ -19,6 +19,11 @@ alternate_title:
   name: Alternate Title
   results_name: title
 
+audio_visual_key:
+  type: avi
+  size: 18
+  name: AVI Field
+
 batch_request_id:
   type: numeric
   size: 10
@@ -140,6 +145,11 @@ duration:
   type: time
   size: 8
   name: Duration
+
+ean13:
+  type: ean13
+  size: 13
+  name: EAN 13
 
 edi_version:
   type: lookup
@@ -263,6 +273,11 @@ ipi_name_n:
   type: ipi_name_n
   size: 11
   name: IPI Name Number
+
+isrc:
+  type: isrc
+  size: 12
+  name: ISRC
 
 iswc:
   type: iswc
@@ -561,6 +576,11 @@ version_number:
   name: Version Number
   values:
     - '02.10'
+
+visan:
+  type: visan
+  size: 25
+  name: VISAN
 
 work_n:
   type: alphanum

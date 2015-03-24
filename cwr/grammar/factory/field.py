@@ -8,7 +8,7 @@ import pyparsing as pp
 from cwr.grammar.field import basic
 from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
     BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter, ISWCAdapter, IPIBaseNumberAdapter, \
-    IPINameNumberAdapter, PercentageAdapter
+    IPINameNumberAdapter, PercentageAdapter, EAN13Adapter, ISRCAdapter, VISANAdapter, AudioVisualKeydapter
 
 
 """
@@ -228,6 +228,10 @@ class DefaultFieldFactory(OptionFieldFactory):
         self._builders['ipi_name_n'] = IPINameNumberAdapter()
         self._builders['ipi_base_n'] = IPIBaseNumberAdapter()
         self._builders['percentage'] = PercentageAdapter()
+        self._builders['ean13'] = EAN13Adapter()
+        self._builders['isrc'] = ISRCAdapter()
+        self._builders['visan'] = VISANAdapter()
+        self._builders['avi'] = AudioVisualKeydapter()
 
         # Field values are optional
         self._field_values = field_values
