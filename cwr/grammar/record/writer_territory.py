@@ -20,7 +20,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_writer_territory_factory = DefaultFieldFactory(_config.load_field_config('writer_territory'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 """
 General fields.
@@ -38,8 +38,8 @@ territory = field_special.lineStart + \
             field_society.sr_share() + \
             _lookup_factory.get_field('ie_indicator') + \
             _lookup_factory.get_field('tis_code') + \
-            _writer_territory_factory.get_field('shares_change') + \
-            _writer_territory_factory.get_field('sequence_n') + \
+            _common_factory.get_field('shares_change') + \
+            _common_factory.get_field('sequence_n') + \
             field_special.lineEnd
 
 """

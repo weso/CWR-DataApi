@@ -16,7 +16,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_record_factory = DefaultFieldFactory(_config.load_field_config('record'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 # RECORD FIELDS
 
@@ -54,8 +54,8 @@ def record_prefix(required_type, compulsory=False):
     :return: the record prefix
     """
     field = record_type(required_type, compulsory=compulsory) + \
-            _record_factory.get_field('transaction_sequence_n', compulsory=compulsory) + \
-            _record_factory.get_field('record_sequence_n', compulsory=compulsory)
+            _common_factory.get_field('transaction_sequence_n', compulsory=compulsory) + \
+            _common_factory.get_field('record_sequence_n', compulsory=compulsory)
     field.leaveWhitespace()
 
     return field

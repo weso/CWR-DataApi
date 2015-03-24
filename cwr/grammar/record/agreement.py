@@ -19,7 +19,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_agr_factory = DefaultFieldFactory(_config.load_field_config('agreement'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 """
 Agreement patterns.
@@ -28,22 +28,22 @@ Agreement patterns.
 # Agreement Pattern
 agreement = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('agreement'), compulsory=True) + \
-            _agr_factory.get_field('submitter_agreement_n', compulsory=True) + \
-            _agr_factory.get_field('international_standard_code') + \
+            _common_factory.get_field('submitter_agreement_n', compulsory=True) + \
+            _common_factory.get_field('international_standard_code') + \
             _lookup_factory.get_field('agreement_type') + \
-            _agr_factory.get_field('agreement_start_date', compulsory=True) + \
-            _agr_factory.get_field('agreement_end_date') + \
-            _agr_factory.get_field('retention_end_date') + \
+            _common_factory.get_field('agreement_start_date', compulsory=True) + \
+            _common_factory.get_field('agreement_end_date') + \
+            _common_factory.get_field('retention_end_date') + \
             _lookup_factory.get_field('prior_royalty_status', compulsory=True) + \
-            _agr_factory.get_field('prior_royalty_start_date') + \
+            _common_factory.get_field('prior_royalty_start_date') + \
             _lookup_factory.get_field('post_term_collection_status', compulsory=True) + \
-            _agr_factory.get_field('post_term_collection_end_date') + \
-            _agr_factory.get_field('date_of_signature') + \
-            _agr_factory.get_field('number_of_works', compulsory=True) + \
+            _common_factory.get_field('post_term_collection_end_date') + \
+            _common_factory.get_field('date_of_signature') + \
+            _common_factory.get_field('number_of_works', compulsory=True) + \
             _lookup_factory.get_field('sales_manufacture_clause') + \
-            _agr_factory.get_field('shares_change') + \
-            _agr_factory.get_field('advance_given') + \
-            _agr_factory.get_field('society_assigned_agreement_n') + \
+            _common_factory.get_field('shares_change') + \
+            _common_factory.get_field('advance_given') + \
+            _common_factory.get_field('society_assigned_agreement_n') + \
             field_special.lineEnd
 
 """

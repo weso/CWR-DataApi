@@ -1,9 +1,0 @@
-ip_last_name:
-  type: alphanum
-  size: 45
-  name: Interested Party Last Name
-
-ip_writer_first_name:
-  type: alphanum
-  size: 30
-  name: Interested Party Writer First Name

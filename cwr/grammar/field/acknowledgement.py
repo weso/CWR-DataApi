@@ -18,13 +18,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_ack_factory = DefaultFieldFactory(_config.load_field_config('acknowledgement'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 # Creation Date
-creation_date = _ack_factory.get_field('creation_date', compulsory=True)
+creation_date = _common_factory.get_field('creation_date', compulsory=True)
 
 # Creation Time
-creation_time = _ack_factory.get_field('creation_time', compulsory=True)
+creation_time = _common_factory.get_field('creation_time', compulsory=True)
 
 # Creation date and time pattern
 creation_date_time = pp.Group(creation_date + creation_time)

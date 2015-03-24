@@ -1,9 +1,0 @@
-sequence_n:
-  type: numeric
-  size: 3
-  name: Sequence #
-
-shares_change:
-  type: boolean
-  size: 1
-  name: Shares Change

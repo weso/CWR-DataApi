@@ -20,7 +20,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_ipa_factory = DefaultFieldFactory(_config.load_field_config('interested_party_agreement'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 """
 IPA patterns.
@@ -32,8 +32,8 @@ interested_party_agreement = field_special.lineStart + \
                              field_special.ipi_name_number() + \
                              field_special.ipi_base_number() + \
                              field_special.ip_n(compulsory=True) + \
-                             _ipa_factory.get_field('ip_last_name', compulsory=True) + \
-                             _ipa_factory.get_field('ip_writer_first_name') + \
+                             _common_factory.get_field('ip_last_name', compulsory=True) + \
+                             _common_factory.get_field('ip_writer_first_name') + \
                              _lookup_factory.get_field('pr_affiliation') + \
                              society.pr_share() + \
                              _lookup_factory.get_field('mr_affiliation') + \

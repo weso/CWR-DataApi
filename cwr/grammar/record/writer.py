@@ -24,8 +24,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_publisher_factory = DefaultFieldFactory(_config.load_field_config('publisher'))
-_writer_factory = DefaultFieldFactory(_config.load_field_config('writer'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 """
 Patterns.
@@ -34,11 +33,11 @@ Patterns.
 writer = field_special.lineStart + \
          field_record.record_prefix(_config.record_type('writer'), compulsory=True) + \
          field_special.ip_n() + \
-         _writer_factory.get_field('writer_last_name') + \
-         _writer_factory.get_field('writer_first_name') + \
-         _writer_factory.get_field('writer_unknown') + \
+         _common_factory.get_field('writer_last_name') + \
+         _common_factory.get_field('writer_first_name') + \
+         _common_factory.get_field('writer_unknown') + \
          _lookup_factory.get_field('writer_designation_code') + \
-         _publisher_factory.get_field('tax_id') + \
+         _common_factory.get_field('tax_id') + \
          field_special.ipi_name_number() + \
          _lookup_factory.get_field('pr_affiliation') + \
          field_society.pr_share() + \
@@ -46,12 +45,12 @@ writer = field_special.lineStart + \
          field_society.mr_share() + \
          _lookup_factory.get_field('sr_affiliation') + \
          field_society.sr_share() + \
-         _writer_factory.get_field('reversionary') + \
-         _writer_factory.get_field('first_recording_refusal') + \
-         _writer_factory.get_field('work_for_hire') + \
-         _writer_factory.get_field('filler') + \
+         _common_factory.get_field('reversionary') + \
+         _common_factory.get_field('first_recording_refusal') + \
+         _common_factory.get_field('work_for_hire') + \
+         _common_factory.get_field('filler') + \
          field_special.ipi_base_number() + \
-         _writer_factory.get_field('personal_number') + \
+         _common_factory.get_field('personal_number') + \
          _lookup_factory.get_field('usa_license_indicator') + \
          field_special.lineEnd
 

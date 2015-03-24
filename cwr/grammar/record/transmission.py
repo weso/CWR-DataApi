@@ -39,8 +39,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_trans_factory = DefaultFieldFactory(_config.load_field_config('transmission'))
-_record_factory = DefaultFieldFactory(_config.load_field_config('record'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 """
 Transmission patterns.
@@ -52,11 +51,11 @@ These are the grammatical structures for the Transmission Header and Transmissio
 transmission_header = field_special.lineStart + \
                       field_record.record_type(_config.record_type('transmission_header'), compulsory=True) + \
                       _lookup_factory.get_field('sender_type', compulsory=True) + \
-                      _trans_factory.get_field('sender_id', compulsory=True) + \
-                      _trans_factory.get_field('sender_name', compulsory=True) + \
-                      _trans_factory.get_field('edi_version', compulsory=True) + \
+                      _common_factory.get_field('sender_id', compulsory=True) + \
+                      _common_factory.get_field('sender_name', compulsory=True) + \
+                      _common_factory.get_field('edi_version', compulsory=True) + \
                       field_transmission.creation_date_time + \
-                      _trans_factory.get_field('transmission_date', compulsory=True) + \
+                      _common_factory.get_field('transmission_date', compulsory=True) + \
                       field_transmission.character_set + \
                       field_special.lineEnd
 transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
@@ -64,9 +63,9 @@ transmission_header = transmission_header.setName('Transmission Header').setResu
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + \
                        field_record.record_type(_config.record_type('transmission_trailer'), compulsory=True) + \
-                       _trans_factory.get_field('group_count', compulsory=True) + \
-                       _record_factory.get_field('transaction_count', compulsory=True) + \
-                       _record_factory.get_field('record_count', compulsory=True)
+                       _common_factory.get_field('group_count', compulsory=True) + \
+                       _common_factory.get_field('transaction_count', compulsory=True) + \
+                       _common_factory.get_field('record_count', compulsory=True)
 transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()

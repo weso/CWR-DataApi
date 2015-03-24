@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_transmission_factory = DefaultFieldFactory(_config.load_field_config('transmission'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 """
 Transmission fields.
@@ -37,10 +37,10 @@ These fields are:
 """
 
 # Creation Date
-creation_date = _transmission_factory.get_field('creation_date', compulsory=True)
+creation_date = _common_factory.get_field('creation_date', compulsory=True)
 
 # Creation Time
-creation_time = _transmission_factory.get_field('creation_time')
+creation_time = _common_factory.get_field('creation_time')
 
 # Character Set
 character_set = table.char_code(_config.field_size('transmission_header', 'character_set'))

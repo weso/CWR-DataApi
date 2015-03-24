@@ -19,7 +19,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 _lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_work_factory = DefaultFieldFactory(_config.load_field_config('work'))
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 """
 Work patterns.
@@ -27,60 +27,60 @@ Work patterns.
 
 work_record = field_special.lineStart + \
               field_record.record_prefix(_config.record_type('work'), compulsory=True) + \
-              _work_factory.get_field('work_title', compulsory=True) + \
+              _common_factory.get_field('work_title', compulsory=True) + \
               _lookup_factory.get_field('language_code') + \
-              _work_factory.get_field('submitter_work_n', compulsory=True) + \
-              _work_factory.get_field('iswc') + \
-              _work_factory.get_field('copyright_date') + \
-              _work_factory.get_field('copyright_number') + \
+              _common_factory.get_field('submitter_work_n', compulsory=True) + \
+              _common_factory.get_field('iswc') + \
+              _common_factory.get_field('copyright_date') + \
+              _common_factory.get_field('copyright_number') + \
               _lookup_factory.get_field('musical_work_distribution_category', compulsory=True) + \
-              _work_factory.get_field('duration') + \
-              _work_factory.get_field('recorded_indicator') + \
+              _common_factory.get_field('duration') + \
+              _common_factory.get_field('recorded_indicator') + \
               _lookup_factory.get_field('text_music_relationship', compulsory=True) + \
               _lookup_factory.get_field('composite_type') + \
               _lookup_factory.get_field('version_type', compulsory=True) + \
               _lookup_factory.get_field('excerpt_type') + \
               _lookup_factory.get_field('music_arrangement') + \
               _lookup_factory.get_field('lyric_adaptation') + \
-              _work_factory.get_field('contact_name') + \
-              _work_factory.get_field('contact_id') + \
+              _common_factory.get_field('contact_name') + \
+              _common_factory.get_field('contact_id') + \
               _lookup_factory.get_field('work_type') + \
-              _work_factory.get_field('grand_rights_indicator') + \
-              _work_factory.get_field('composite_component_count') + \
-              _work_factory.get_field('date_publication_printed_edition') + \
-              _work_factory.get_field('exceptional_clause') + \
-              _work_factory.get_field('opus_number') + \
-              _work_factory.get_field('catalogue_number') + \
-              _work_factory.get_field('priority_flag') + \
+              _common_factory.get_field('grand_rights_indicator') + \
+              _common_factory.get_field('composite_component_count') + \
+              _common_factory.get_field('date_publication_printed_edition') + \
+              _common_factory.get_field('exceptional_clause') + \
+              _common_factory.get_field('opus_number') + \
+              _common_factory.get_field('catalogue_number') + \
+              _common_factory.get_field('priority_flag') + \
               field_special.lineEnd
 
 conflict = field_special.lineStart + \
            field_record.record_prefix(_config.record_type('work_conflict'), compulsory=True) + \
-           _work_factory.get_field('work_title') + \
+           _common_factory.get_field('work_title') + \
            _lookup_factory.get_field('language_code') + \
-           _work_factory.get_field('submitter_work_n') + \
-           _work_factory.get_field('iswc') + \
-           _work_factory.get_field('copyright_date') + \
-           _work_factory.get_field('copyright_number') + \
+           _common_factory.get_field('submitter_work_n') + \
+           _common_factory.get_field('iswc') + \
+           _common_factory.get_field('copyright_date') + \
+           _common_factory.get_field('copyright_number') + \
            _lookup_factory.get_field('musical_work_distribution_category', compulsory=True) + \
-           _work_factory.get_field('duration') + \
-           _work_factory.get_field('recorded_indicator') + \
+           _common_factory.get_field('duration') + \
+           _common_factory.get_field('recorded_indicator') + \
            _lookup_factory.get_field('text_music_relationship', compulsory=True) + \
            _lookup_factory.get_field('composite_type') + \
            _lookup_factory.get_field('version_type', compulsory=True) + \
            _lookup_factory.get_field('excerpt_type', compulsory=True) + \
            _lookup_factory.get_field('music_arrangement') + \
            _lookup_factory.get_field('lyric_adaptation') + \
-           _work_factory.get_field('contact_name') + \
-           _work_factory.get_field('contact_id') + \
+           _common_factory.get_field('contact_name') + \
+           _common_factory.get_field('contact_id') + \
            _lookup_factory.get_field('work_type') + \
-           _work_factory.get_field('grand_rights_indicator') + \
-           _work_factory.get_field('composite_component_count') + \
-           _work_factory.get_field('date_publication_printed_edition') + \
-           _work_factory.get_field('exceptional_clause') + \
-           _work_factory.get_field('opus_number') + \
-           _work_factory.get_field('catalogue_number') + \
-           _work_factory.get_field('priority_flag') + \
+           _common_factory.get_field('grand_rights_indicator') + \
+           _common_factory.get_field('composite_component_count') + \
+           _common_factory.get_field('date_publication_printed_edition') + \
+           _common_factory.get_field('exceptional_clause') + \
+           _common_factory.get_field('opus_number') + \
+           _common_factory.get_field('catalogue_number') + \
+           _common_factory.get_field('priority_flag') + \
            field_special.lineEnd
 
 """
