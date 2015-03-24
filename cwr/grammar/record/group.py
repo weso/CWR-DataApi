@@ -51,7 +51,7 @@ These are the grammatical structures for the Group Header and Group Trailer.
 
 # Group Header pattern
 group_header = field_special.lineStart + \
-               field_record.record_type(_config.record_type('group_header'), compulsory=True) + \
+               field_record.record_type(_config.record_type('group_header')) + \
                _lookup_factory.get_field('transaction_type', compulsory=True) + \
                _common_factory.get_field('group_id', compulsory=True) + \
                _common_factory.get_field('version_number', compulsory=True) + \
@@ -62,7 +62,7 @@ group_header = group_header.setName('Group Header').setResultsName('group_header
 
 # Group Trailer pattern
 group_trailer = field_special.lineStart + \
-                field_record.record_type(_config.record_type('group_trailer'), compulsory=True) + \
+                field_record.record_type(_config.record_type('group_trailer')) + \
                 _common_factory.get_field('group_id', compulsory=True) + \
                 _common_factory.get_field('transaction_count', compulsory=True) + \
                 _common_factory.get_field('record_count', compulsory=True) + \

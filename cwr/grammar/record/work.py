@@ -26,7 +26,7 @@ Work patterns.
 """
 
 work_record = field_special.lineStart + \
-              field_record.record_prefix(_config.record_type('work'), compulsory=True) + \
+              field_record.record_prefix(_config.record_type('work')) + \
               _common_factory.get_field('work_title', compulsory=True) + \
               _lookup_factory.get_field('language_code') + \
               _common_factory.get_field('submitter_work_n', compulsory=True) + \
@@ -55,7 +55,7 @@ work_record = field_special.lineStart + \
               field_special.lineEnd
 
 conflict = field_special.lineStart + \
-           field_record.record_prefix(_config.record_type('work_conflict'), compulsory=True) + \
+           field_record.record_prefix(_config.record_type('work_conflict')) + \
            _common_factory.get_field('work_title') + \
            _lookup_factory.get_field('language_code') + \
            _common_factory.get_field('submitter_work_n') + \

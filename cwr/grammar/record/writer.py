@@ -30,7 +30,7 @@ Patterns.
 """
 
 writer = field_special.lineStart + \
-         field_record.record_prefix(_config.record_type('writer'), compulsory=True) + \
+         field_record.record_prefix(_config.record_type('writer')) + \
          _common_factory.get_field('ip_n') + \
          _common_factory.get_field('writer_last_name') + \
          _common_factory.get_field('writer_first_name') + \

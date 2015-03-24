@@ -26,7 +26,7 @@ IPA patterns.
 """
 
 interested_party_agreement = field_special.lineStart + \
-                             field_record.record_prefix(_config.record_type('ipa'), compulsory=True) + \
+                             field_record.record_prefix(_config.record_type('ipa')) + \
                              _lookup_factory.get_field('agreement_role_code', compulsory=True) + \
                              _common_factory.get_field('ipi_name_n') + \
                              _common_factory.get_field('ipi_base_n') + \

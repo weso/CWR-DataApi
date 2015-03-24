@@ -24,7 +24,7 @@ Patterns.
 """
 
 publisher = field_special.lineStart + \
-            field_record.record_prefix(_config.record_type('writer_publisher'), compulsory=True) + \
+            field_record.record_prefix(_config.record_type('writer_publisher')) + \
             _common_factory.get_field('publisher_ip_n') + \
             _common_factory.get_field('publisher_name') + \
             _common_factory.get_field('submitter_agreement_n', compulsory=True) + \

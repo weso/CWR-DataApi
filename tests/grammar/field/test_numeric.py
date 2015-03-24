@@ -25,29 +25,12 @@ class TestNumericName(unittest.TestCase):
 
         self.assertEqual('Numeric Field', field.name)
 
-    def test_name_default_compulsory(self):
-        """
-        Tests that the default field name is correct for optional fields, for compulsory fields.
-        """
-        field = basic.numeric(5, compulsory=True)
-
-        self.assertEqual('Numeric Field', field.name)
-
     def test_name_set(self):
         """
         Tests that the given field name is set correctly for optional fields.
         """
         name = "Field Name"
         field = basic.numeric(5, name=name)
-
-        self.assertEqual(name, field.name)
-
-    def test_name_set_compulsory(self):
-        """
-        Tests that the given field name is set correctly for optional fields, for compulsory fields.
-        """
-        name = "Field Name"
-        field = basic.numeric(5, name=name, compulsory=True)
 
         self.assertEqual(name, field.name)
 
@@ -62,50 +45,13 @@ class TestNumericName(unittest.TestCase):
         self.assertEqual('field2', field2.name)
 
 
-class TestNumericValid(unittest.TestCase):
-    """
-    Tests that the numeric field accepts and parse valid values.
-    """
-
-    def setUp(self):
-        self.num = basic.numeric(5)
-
-    def test_numeric(self):
-        """
-        Tests that the numeric field accepts values of the correct number of characters.
-        """
-        result = self.num.parseString('12340')
-        self.assertEqual(12340, result[0])
-
-    def test_numeric_zeros(self):
-        """
-        Tests that the numeric field accepts zeros.
-        """
-        result = self.num.parseString('00000')
-        self.assertEqual(0, result[0])
-
-    def test_numeric_head_zeros(self):
-        """
-        Tests that the numeric field accepts values starting with zeros.
-        """
-        result = self.num.parseString('00123')
-        self.assertEqual(123, result[0])
-
-    def test_whitespaces(self):
-        """
-        Tests that the numeric field accepts whitespaces.
-        """
-        result = self.num.parseString('     ')
-        self.assertEqual(None, result[0])
-
-
 class TestNumericCompulsoryValid(unittest.TestCase):
     """
     Tests that the numeric field accepts and parse valid values.
     """
 
     def setUp(self):
-        self.num = basic.numeric(5, compulsory=True)
+        self.num = basic.numeric(5)
 
     def test_numeric(self):
         """
@@ -148,52 +94,13 @@ class TestNumericConstructorException(unittest.TestCase):
         self.assertRaises(BaseException, basic.numeric, 0, True)
 
 
-class TestNumericException(unittest.TestCase):
-    """
-    Tests that exceptions are thrown when using invalid values
-    """
-
-    def setUp(self):
-        self.num = basic.numeric(5)
-
-    def test_numeric_wrong_size_empty(self):
-        """
-        Tests that an exception is thrown when the field is empty and it shouldn't be.
-        """
-        self.assertRaises(ParseException, self.num.parseString, '')
-
-    def test_numeric_wrong_size_too_small(self):
-        """
-        Tests that an exception is thrown when the field is smaller than expected.
-        """
-        self.assertRaises(ParseException, self.num.parseString, '123')
-
-    def test_numeric_negative(self):
-        """
-        Tests that an exception is thrown when the field is smaller than expected.
-        """
-        self.assertRaises(ParseException, self.num.parseString, '-1234')
-
-    def test_numeric_alphanumeric(self):
-        """
-        Tests that an exception is thrown when the field contains letters.
-        """
-        self.assertRaises(ParseException, self.num.parseString, '123ab')
-
-    def test_spaces_between(self):
-        """
-        Tests that an exception is thrown when the field contains whitespaces between the numbers.
-        """
-        self.assertRaises(ParseException, self.num.parseString, '12 34')
-
-
 class TestNumericCompulsoryException(unittest.TestCase):
     """
     Tests that exceptions are thrown when using invalid values
     """
 
     def setUp(self):
-        self.num = basic.numeric(5, compulsory=True)
+        self.num = basic.numeric(5)
 
     def test_numeric_wrong_size_empty(self):
         """

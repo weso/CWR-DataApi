@@ -24,7 +24,7 @@ Territory in Agreement patterns.
 """
 
 territory_in_agreement = special.lineStart + record.record_prefix(
-    _config.record_type('agreement_territory'), compulsory=True) + _lookup_factory.get_field('ie_indicator') + \
+    _config.record_type('agreement_territory')) + _lookup_factory.get_field('ie_indicator') + \
                          _lookup_factory.get_field('tis_code') + special.lineEnd
 
 """

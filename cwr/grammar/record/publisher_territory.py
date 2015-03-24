@@ -30,7 +30,7 @@ SPT patterns.
 """
 
 territory = field_special.lineStart + \
-            field_record.record_prefix(_config.record_type('publisher_territory'), compulsory=True) + \
+            field_record.record_prefix(_config.record_type('publisher_territory')) + \
             _common_factory.get_field('ip_n', compulsory=True) + \
             _common_factory.get_field('constant') + \
             _common_factory.get_field('pr_share_50') + \

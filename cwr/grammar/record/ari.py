@@ -26,7 +26,7 @@ Patterns.
 """
 
 ari = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('ari'), compulsory=True) + \
+      field_record.record_prefix(_config.record_type('ari')) + \
       _lookup_factory.get_field('society_code') + \
       _common_factory.get_field('work_n') + \
       _lookup_factory.get_field('type_of_right') + \

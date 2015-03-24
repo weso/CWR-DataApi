@@ -34,12 +34,11 @@ Fields.
 """
 
 
-def char_code(columns, name=None, compulsory=False):
+def char_code(columns, name=None):
     """
     Character set code field.
 
     :param name: name for the field
-    :param compulsory: indicates if the empty string is disallowed
     :return: an instance of the Character set code field rules
     """
     if name is None:
@@ -61,25 +60,19 @@ def char_code(columns, name=None, compulsory=False):
     _unicode_1_16b = pp.Regex('U\+0[0-8,A-F]{3}[ ]{' + str(columns - 6) + '}')
     _unicode_2_21b = pp.Regex('U\+0[0-8,A-F]{4}[ ]{' + str(columns - 7) + '}')
 
+    _empty = pp.Regex('[ ]{' + str(columns) + '}')
+    _empty.setParseAction(pp.replaceWith(None))
+    _empty.leaveWhitespace()
+
     # Basic field
     char_code_field = (_character_sets | _unicode_1_16b | _unicode_2_21b)
 
     # Parse action
     char_code_field = char_code_field.setParseAction(lambda s: s[0].strip())
 
+    char_code_field = char_code_field | _empty
+
     # Name
     char_code_field.setName(name)
-
-    if not compulsory:
-        char_code_field_empty = pp.Regex('[ ]{' + str(columns) + '}')
-        char_code_field_empty.setName(name)
-
-        char_code_field_empty.leaveWhitespace()
-
-        char_code_field_empty.setParseAction(pp.replaceWith(None))
-
-        char_code_field = char_code_field | char_code_field_empty
-
-        char_code_field.setName(name)
 
     return char_code_field

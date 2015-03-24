@@ -37,7 +37,7 @@ NRA patterns.
 """
 
 npa = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('npa'), compulsory=True) + \
+      field_record.record_prefix(_config.record_type('npa')) + \
       _common_factory.get_field('ip_n') + \
       _common_factory.get_field('ip_name', compulsory=True) + \
       _common_factory.get_field('ip_writer_name', compulsory=True) + \
@@ -45,7 +45,7 @@ npa = field_special.lineStart + \
       field_special.lineEnd
 
 npn = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('npn'), compulsory=True) + \
+      field_record.record_prefix(_config.record_type('npn')) + \
       _common_factory.get_field('publisher_sequence_n') + \
       _common_factory.get_field('ip_n', compulsory=True) + \
       _common_factory.get_field('publisher_name_long', compulsory=True) + \
@@ -53,7 +53,7 @@ npn = field_special.lineStart + \
       field_special.lineEnd
 
 nwn = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('nwn'), compulsory=True) + \
+      field_record.record_prefix(_config.record_type('nwn')) + \
       _common_factory.get_field('ip_n') + \
       _common_factory.get_field('writer_last_name_long', compulsory=True) + \
       _common_factory.get_field('writer_first_name_long', compulsory=True) + \
@@ -61,14 +61,14 @@ nwn = field_special.lineStart + \
       field_special.lineEnd
 
 nat = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('nat'), compulsory=True) + \
+      field_record.record_prefix(_config.record_type('nat')) + \
       _common_factory.get_field('title', compulsory=True) + \
       _lookup_factory.get_field('title_type') + \
       _lookup_factory.get_field('language_code') + \
       field_special.lineEnd
 
 npr = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('npr'), compulsory=True) + \
+      field_record.record_prefix(_config.record_type('npr')) + \
       _common_factory.get_field('performing_artist_name') + \
       _common_factory.get_field('performing_artist_first_name_long') + \
       _common_factory.get_field('ipi_name_n') + \
@@ -79,13 +79,13 @@ npr = field_special.lineStart + \
       field_special.lineEnd
 
 nra_work = field_special.lineStart + \
-           field_record.record_prefix(_config.record_type('nra_work'), compulsory=True) + \
+           field_record.record_prefix(_config.record_type('nra_work')) + \
            _common_factory.get_field('title') + \
            _lookup_factory.get_field('language_code') + \
            field_special.lineEnd
 
 now = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('now'), compulsory=True) + \
+      field_record.record_prefix(_config.record_type('now')) + \
       _common_factory.get_field('writer_name') + \
       _common_factory.get_field('writer_first_name_long') + \
       _lookup_factory.get_field('language_code') + \

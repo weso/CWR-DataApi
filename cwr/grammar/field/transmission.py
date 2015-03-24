@@ -43,8 +43,8 @@ creation_date = _common_factory.get_field('creation_date', compulsory=True)
 creation_time = _common_factory.get_field('creation_time')
 
 # Character Set
-character_set = table.char_code(_config.field_size('transmission_header', 'character_set'))
-character_set = character_set.setName('Character Set').setResultsName('character_set')
+character_set = table.char_code(_config.field_size('transmission_header', 'character_set'), name='Character Set')
+character_set = character_set.setResultsName('character_set')
 
 """
 Rules

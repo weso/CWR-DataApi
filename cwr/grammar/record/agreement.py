@@ -27,7 +27,7 @@ Agreement patterns.
 
 # Agreement Pattern
 agreement = field_special.lineStart + \
-            field_record.record_prefix(_config.record_type('agreement'), compulsory=True) + \
+            field_record.record_prefix(_config.record_type('agreement')) + \
             _common_factory.get_field('submitter_agreement_n', compulsory=True) + \
             _common_factory.get_field('international_standard_code') + \
             _lookup_factory.get_field('agreement_type') + \

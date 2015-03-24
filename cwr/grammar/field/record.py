@@ -23,7 +23,7 @@ _common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 # Prefix fields
 
 
-def record_type(values, compulsory=False):
+def record_type(values):
     """
     Creates a record type field.
 
@@ -39,23 +39,22 @@ def record_type(values, compulsory=False):
     :return: grammar for the record type field
     """
     field = basic.lookup(values, columns=_config.field_size('record', 'record_type'),
-                         compulsory=compulsory,
                          name='Record Type (one of ' + str(values) + ')')
 
     return field.setResultsName('record_type')
 
 
 # Record prefix
-def record_prefix(required_type, compulsory=False):
+def record_prefix(required_type):
     """
     Creates a record prefix for the specified record type.
 
     :param required_type: the type of the record using this prefix
     :return: the record prefix
     """
-    field = record_type(required_type, compulsory=compulsory) + \
-            _common_factory.get_field('transaction_sequence_n', compulsory=compulsory) + \
-            _common_factory.get_field('record_sequence_n', compulsory=compulsory)
+    field = record_type(required_type) + \
+            _common_factory.get_field('transaction_sequence_n') + \
+            _common_factory.get_field('record_sequence_n')
     field.leaveWhitespace()
 
     return field

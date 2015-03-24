@@ -30,7 +30,7 @@ Publisher patterns.
 """
 
 publisher = field_special.lineStart + \
-            field_record.record_prefix(_config.record_type('publisher'), compulsory=True) + \
+            field_record.record_prefix(_config.record_type('publisher')) + \
             _common_factory.get_field('publisher_sequence_n', compulsory=True) + \
             _common_factory.get_field('ip_n') + \
             _common_factory.get_field('name') + \

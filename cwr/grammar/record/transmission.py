@@ -49,7 +49,7 @@ These are the grammatical structures for the Transmission Header and Transmissio
 
 # Transmission Header pattern
 transmission_header = field_special.lineStart + \
-                      field_record.record_type(_config.record_type('transmission_header'), compulsory=True) + \
+                      field_record.record_type(_config.record_type('transmission_header')) + \
                       _lookup_factory.get_field('sender_type', compulsory=True) + \
                       _common_factory.get_field('sender_id', compulsory=True) + \
                       _common_factory.get_field('sender_name', compulsory=True) + \
@@ -62,7 +62,7 @@ transmission_header = transmission_header.setName('Transmission Header').setResu
 
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + \
-                       field_record.record_type(_config.record_type('transmission_trailer'), compulsory=True) + \
+                       field_record.record_type(_config.record_type('transmission_trailer')) + \
                        _common_factory.get_field('group_count', compulsory=True) + \
                        _common_factory.get_field('transaction_count', compulsory=True) + \
                        _common_factory.get_field('record_count', compulsory=True)

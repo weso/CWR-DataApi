@@ -56,7 +56,7 @@ class AlphanumAdapter(FieldAdapter):
         super(AlphanumAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.alphanum(columns, name, True, extended=False)
+        return basic.alphanum(columns, name, extended=False)
 
 
 class ExtendedAlphanumAdapter(FieldAdapter):
@@ -75,7 +75,7 @@ class ExtendedAlphanumAdapter(FieldAdapter):
         super(ExtendedAlphanumAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.alphanum(columns, name, True, extended=True)
+        return basic.alphanum(columns, name, extended=True)
 
 
 class NumericAdapter(FieldAdapter):
@@ -83,7 +83,7 @@ class NumericAdapter(FieldAdapter):
         super(NumericAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.numeric(columns, name, True)
+        return basic.numeric(columns, name)
 
 
 class BooleanAdapter(FieldAdapter):
@@ -91,7 +91,7 @@ class BooleanAdapter(FieldAdapter):
         super(BooleanAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.boolean(name, True)
+        return basic.boolean(name)
 
 
 class FlagAdapter(FieldAdapter):
@@ -99,7 +99,7 @@ class FlagAdapter(FieldAdapter):
         super(FlagAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.flag(name, True)
+        return basic.flag(name)
 
 
 class DateAdapter(FieldAdapter):
@@ -107,7 +107,7 @@ class DateAdapter(FieldAdapter):
         super(DateAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.date(name, True)
+        return basic.date(name)
 
 
 class TimeAdapter(FieldAdapter):
@@ -115,7 +115,7 @@ class TimeAdapter(FieldAdapter):
         super(TimeAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.time(name, True)
+        return basic.time(name)
 
 
 class BlankAdapter(FieldAdapter):
@@ -131,7 +131,7 @@ class LookupAdapter(FieldAdapter):
         super(LookupAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.lookup(values, columns, name, True)
+        return basic.lookup(values, columns, name)
 
 
 class ISWCAdapter(FieldAdapter):
@@ -139,7 +139,7 @@ class ISWCAdapter(FieldAdapter):
         super(ISWCAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return special.iswc(name, True)
+        return special.iswc(name)
 
 
 class IPIBaseNumberAdapter(FieldAdapter):
@@ -147,7 +147,7 @@ class IPIBaseNumberAdapter(FieldAdapter):
         super(IPIBaseNumberAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return special.ipi_base_number(name, True)
+        return special.ipi_base_number(name)
 
 
 class IPINameNumberAdapter(FieldAdapter):
@@ -155,7 +155,7 @@ class IPINameNumberAdapter(FieldAdapter):
         super(IPINameNumberAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return special.ipi_name_number(name, True)
+        return special.ipi_name_number(name, )
 
 
 class PercentageAdapter(FieldAdapter):
@@ -164,11 +164,11 @@ class PercentageAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         if values is not None and len(values) > 0:
-            max = int(values[0])
+            maximum = int(values[0])
         else:
-            max = 100
+            maximum = 100
 
-        return special.percentage(columns=columns, maximum=max, name=name)
+        return special.percentage(columns=columns, maximum=maximum, name=name)
 
 
 class EAN13Adapter(FieldAdapter):
