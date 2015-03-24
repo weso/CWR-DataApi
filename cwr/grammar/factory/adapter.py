@@ -4,7 +4,6 @@ from abc import ABCMeta, abstractmethod
 
 from cwr.grammar.field import basic, special
 
-
 """
 CWR fields grammar adapters.
 
@@ -116,6 +115,14 @@ class TimeAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.time(name)
+
+
+class DateTimeAdapter(FieldAdapter):
+    def __init__(self):
+        super(DateTimeAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.date_time(name)
 
 
 class BlankAdapter(FieldAdapter):

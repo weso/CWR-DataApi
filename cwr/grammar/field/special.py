@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+
 import pyparsing as pp
 
 from cwr.other import ISWCCode, IPIBaseNumber, VISAN, AVIKey
@@ -358,3 +360,33 @@ def _to_avi(parsed):
     :return: an AVIKey instance created from the data
     """
     return AVIKey(parsed.society_code, parsed.av_number)
+
+
+def date_time(name=None):
+    if name is None:
+        name = 'Date and Time Field'
+
+    date = basic.date('Date')
+    time = basic.time('Time')
+
+    date = date.setResultsName('date')
+    time = time.setResultsName('time')
+
+    field = pp.Group(date + time)
+
+    field.setParseAction(lambda d: _combine_date_time(d[0]))
+
+    field.setName(name)
+
+    return field.setResultsName('date_time')
+
+
+def _combine_date_time(data):
+    """
+    Combines the received date and time.
+
+    :param date: date to combine
+    :param time: time to combine
+    :return: the date and time combined
+    """
+    return datetime.datetime.combine(data.date, data.time)

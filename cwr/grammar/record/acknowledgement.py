@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import acknowledgement as field_ack
 from cwr.grammar.field import special as field_special
 from cwr.grammar.field import record as field_record
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
@@ -29,7 +28,7 @@ Rules.
 # Acknowledgment Pattern
 acknowledgement = field_special.lineStart + \
                   field_record.record_prefix(_config.record_type('acknowledgement')) + \
-                  field_ack.creation_date_time + \
+                  _common_factory.get_field('creation_date_time') + \
                   _common_factory.get_field('original_group_id') + \
                   _common_factory.get_field('original_transaction_sequence_n', compulsory=True) + \
                   _lookup_factory.get_field('original_transaction_type', compulsory=True) + \

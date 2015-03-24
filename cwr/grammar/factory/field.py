@@ -8,7 +8,8 @@ import pyparsing as pp
 from cwr.grammar.field import basic
 from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
     BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter, ISWCAdapter, IPIBaseNumberAdapter, \
-    IPINameNumberAdapter, PercentageAdapter, EAN13Adapter, ISRCAdapter, VISANAdapter, AudioVisualKeydapter
+    IPINameNumberAdapter, PercentageAdapter, EAN13Adapter, ISRCAdapter, VISANAdapter, AudioVisualKeydapter, \
+    DateTimeAdapter
 
 
 """
@@ -222,6 +223,7 @@ class DefaultFieldFactory(OptionFieldFactory):
         self._builders['flag'] = FlagAdapter()
         self._builders['date'] = DateAdapter()
         self._builders['time'] = TimeAdapter()
+        self._builders['date_time'] = DateTimeAdapter()
         self._builders['blank'] = BlankAdapter()
         self._builders['lookup'] = LookupAdapter()
         self._builders['iswc'] = ISWCAdapter()

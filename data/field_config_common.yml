@@ -101,15 +101,10 @@ copyright_number:
   size: 12
   name: Copyright Number
 
-creation_date:
-  type: date
-  size: 8
-  name: Creation Date
-
-creation_time:
-  type: time
-  size: 8
-  name: Creation Time
+creation_date_time:
+  type: date_time
+  size: 16
+  name: Creation Date and Time
 
 creation_title:
   type: alphanum
