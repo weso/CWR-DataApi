@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from cwr.grammar.factory.common import FieldBuilder
+from abc import ABCMeta, abstractmethod
+
 from cwr.grammar.field import basic
 
 
 """
-CWR fields grammar builders.
+CWR fields grammar adapters.
+
+These classes allow the factories to create rules in an homogeneous way.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -13,7 +16,31 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class AlphanumBuilder(FieldBuilder):
+class FieldAdapter(object):
+    """
+    Instances of this class generate field rules.
+
+    This serves as an adapter so the different field rules use the same parameters.
+    """
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def get_field(self, name=None, columns=None, values=None):
+        """
+        Generates the rules for the field, applying the received parameters.
+
+        :param name: the name of the field
+        :param columns: number of columns
+        :param values: allowed values for the field
+        :return: the rules for the field
+        """
+        raise NotImplementedError("The get_field method is not implemented")
+
+
+class AlphanumAdapter(FieldAdapter):
     """
     Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
 
@@ -26,13 +53,13 @@ class AlphanumBuilder(FieldBuilder):
     """
 
     def __init__(self):
-        super(AlphanumBuilder, self).__init__()
+        super(AlphanumAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.alphanum(columns, name, True, extended=False)
 
 
-class ExtendedAlphanumBuilder(FieldBuilder):
+class ExtendedAlphanumAdapter(FieldAdapter):
     """
     Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
 
@@ -45,63 +72,63 @@ class ExtendedAlphanumBuilder(FieldBuilder):
     """
 
     def __init__(self):
-        super(ExtendedAlphanumBuilder, self).__init__()
+        super(ExtendedAlphanumAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.alphanum(columns, name, True, extended=True)
 
 
-class NumericBuilder(FieldBuilder):
+class NumericAdapter(FieldAdapter):
     def __init__(self):
-        super(NumericBuilder, self).__init__()
+        super(NumericAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.numeric(columns, name, True)
 
 
-class BooleanBuilder(FieldBuilder):
+class BooleanAdapter(FieldAdapter):
     def __init__(self):
-        super(BooleanBuilder, self).__init__()
+        super(BooleanAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.boolean(name, True)
 
 
-class FlagBuilder(FieldBuilder):
+class FlagAdapter(FieldAdapter):
     def __init__(self):
-        super(FlagBuilder, self).__init__()
+        super(FlagAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.flag(name, True)
 
 
-class DateBuilder(FieldBuilder):
+class DateAdapter(FieldAdapter):
     def __init__(self):
-        super(DateBuilder, self).__init__()
+        super(DateAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.date(name, True)
 
 
-class TimeBuilder(FieldBuilder):
+class TimeAdapter(FieldAdapter):
     def __init__(self):
-        super(TimeBuilder, self).__init__()
+        super(TimeAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.time(name, True)
 
 
-class BlankBuilder(FieldBuilder):
+class BlankAdapter(FieldAdapter):
     def __init__(self):
-        super(BlankBuilder, self).__init__()
+        super(BlankAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.blank(columns, name)
 
 
-class LookupBuilder(FieldBuilder):
+class LookupAdapter(FieldAdapter):
     def __init__(self):
-        super(LookupBuilder, self).__init__()
+        super(LookupAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.lookup(values, columns, name, True)

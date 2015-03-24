@@ -6,8 +6,8 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import basic
-from cwr.grammar.factory.builder import AlphanumBuilder, ExtendedAlphanumBuilder, NumericBuilder, LookupBuilder, \
-    BooleanBuilder, BlankBuilder, DateBuilder, FlagBuilder, TimeBuilder
+from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
+    BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter
 
 
 """
@@ -214,15 +214,15 @@ class DefaultFieldFactory(OptionFieldFactory):
         super(DefaultFieldFactory, self).__init__(field_configs)
 
         # TODO: Don't do this manually
-        self._builders['alphanum'] = AlphanumBuilder()
-        self._builders['alphanum_ext'] = ExtendedAlphanumBuilder()
-        self._builders['numeric'] = NumericBuilder()
-        self._builders['boolean'] = BooleanBuilder()
-        self._builders['flag'] = FlagBuilder()
-        self._builders['date'] = DateBuilder()
-        self._builders['time'] = TimeBuilder()
-        self._builders['blank'] = BlankBuilder()
-        self._builders['lookup'] = LookupBuilder()
+        self._builders['alphanum'] = AlphanumAdapter()
+        self._builders['alphanum_ext'] = ExtendedAlphanumAdapter()
+        self._builders['numeric'] = NumericAdapter()
+        self._builders['boolean'] = BooleanAdapter()
+        self._builders['flag'] = FlagAdapter()
+        self._builders['date'] = DateAdapter()
+        self._builders['time'] = TimeAdapter()
+        self._builders['blank'] = BlankAdapter()
+        self._builders['lookup'] = LookupAdapter()
 
         # Field values are optional
         self._field_values = field_values
