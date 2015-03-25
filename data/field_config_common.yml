@@ -565,7 +565,7 @@ transmission_date:
   size: 8
   name: Transmission Date
 
-validation:
+validation_n:
   type: numeric
   size: 3
   name: Validation Number

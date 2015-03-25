@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.agreement import InterestedPartyForAgreementRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -18,28 +17,20 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 IPA patterns.
 """
 
-interested_party_agreement = field_special.lineStart + \
-                             field_record.record_prefix(_config.record_type('ipa')) + \
-                             _lookup_factory.get_field('agreement_role_code', compulsory=True) + \
-                             _common_factory.get_field('ipi_name_n') + \
-                             _common_factory.get_field('ipi_base_n') + \
-                             _common_factory.get_field('ip_n', compulsory=True) + \
-                             _common_factory.get_field('ip_last_name', compulsory=True) + \
-                             _common_factory.get_field('ip_writer_first_name') + \
-                             _lookup_factory.get_field('pr_affiliation') + \
-                             _common_factory.get_field('pr_share', compulsory=True) + \
-                             _lookup_factory.get_field('mr_affiliation') + \
-                             _common_factory.get_field('mr_share', compulsory=True) + \
-                             _lookup_factory.get_field('sr_affiliation') + \
-                             _common_factory.get_field('sr_share', compulsory=True) + \
-                             field_special.lineEnd
+interested_party_agreement = _factory_record.get_transaction_record('interested_party_agreement')
 
 """
 Parsing actions for the patterns.

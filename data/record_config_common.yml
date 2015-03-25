@@ -1,0 +1,400 @@
+acknowledgement:
+  - name: creation_date_time
+  - name: original_group_id
+  - name: original_transaction_sequence_n
+    compulsory: true
+  - name: original_transaction_type
+    compulsory: true
+  - name: creation_title
+  - name: submitter_creation_n
+  - name: recipient_creation_n
+  - name: processing_date
+    compulsory: true
+  - name: transaction_status
+    compulsory: true
+
+alternate_title:
+  - name: alternate_title
+  - name: title_type
+  - name: language_code
+
+ari:
+  - name: society_code
+  - name: work_n
+  - name: type_of_right
+  - name: subject_code
+  - name: note
+
+agreement:
+  - name: submitter_agreement_n
+    compulsory: true
+  - name: international_standard_code
+  - name: agreement_type
+  - name: agreement_start_date
+    compulsory: true
+  - name: agreement_end_date
+  - name: retention_end_date
+  - name: prior_royalty_status
+    compulsory: true
+  - name: prior_royalty_start_date
+  - name: post_term_collection_status
+    compulsory: true
+  - name: post_term_collection_end_date
+  - name: date_of_signature
+  - name: number_of_works
+    compulsory: true
+  - name: sales_manufacture_clause
+  - name: shares_change
+  - name: advance_given
+  - name: society_assigned_agreement_n
+
+component:
+  - name: component_title
+  - name: iswc
+  - name: submitter_work_n
+  - name: component_duration
+  - name: writer_1_last_name
+  - name: writer_1_first_name
+  - name: writer_1_ipi_name_n
+  - name: writer_2_last_name
+  - name: writer_2_first_name
+  - name: writer_2_ipi_name_n
+  - name: writer_1_ipi_base_n
+  - name: writer_2_ipi_base_n
+
+entire_work_title:
+  - name: entire_work_title
+  - name: iswc
+  - name: language_code
+  - name: writer_1_last_name
+  - name: writer_1_first_name
+  - name: source
+  - name: writer_1_ipi_name_n
+  - name: writer_1_ipi_base_n
+  - name: writer_2_last_name
+  - name: writer_2_first_name
+  - name: writer_2_ipi_name_n
+  - name: writer_2_ipi_base_n
+  - name: submitter_work_n
+
+group_header:
+  - name: transaction_type
+    compulsory: true
+  - name: group_id
+    compulsory: true
+  - name: version_number
+    compulsory: true
+  - name: batch_request_id
+  - name: sd_type
+
+group_trailer:
+  - name: group_id
+  - name: transaction_count
+  - name: record_count
+  - name: currency_indicator
+  - name: total_monetary_value
+
+instrumentation_detail:
+  - name: instrument
+  - name: number_players
+
+instrumentation_summary:
+  - name: number_voices
+  - name: standard_instrumentation_type
+  - name: instrumentation_description
+
+interested_party_agreement:
+  - name: agreement_role_code
+    compulsory: true
+  - name: ipi_name_n
+  - name: ipi_base_n
+  - name: ip_n
+    compulsory: true
+  - name: ip_last_name
+    compulsory: true
+  - name: ip_writer_first_name
+  - name: pr_affiliation
+  - name: pr_share
+    compulsory: true
+  - name: mr_affiliation
+  - name: mr_share
+    compulsory: true
+  - name: sr_affiliation
+  - name: sr_share
+    compulsory: true
+
+message:
+  - name: message_type
+  - name: original_record_sequence_n
+  - name: message_record_type
+  - name: message_level
+  - name: validation_n
+  - name: message_text
+
+nat:
+  - name: title
+  - name: title_type
+  - name: language_code
+
+now:
+  - name: writer_name
+  - name: writer_first_name_long
+  - name: language_code
+  - name: position
+
+npa:
+  - name: ip_n
+  - name: ip_name
+    compulsory: true
+  - name: ip_writer_name
+    compulsory: true
+  - name: language_code
+
+npn:
+  - name: publisher_sequence_n
+  - name: ip_n
+    compulsory: true
+  - name: publisher_name_long
+    compulsory: true
+  - name: language_code
+
+npr:
+  - name: performing_artist_name
+  - name: performing_artist_first_name_long
+  - name: ipi_name_n
+  - name: ipi_base_n
+  - name: language_code
+  - name: performance_language
+  - name: dialect
+
+nra_work:
+  - name: title
+  - name: language_code
+
+nwn:
+  - name: ip_n
+  - name: writer_last_name_long
+  - name: writer_first_name_long
+  - name: language_code
+
+original_work_title:
+  - name: original_title
+  - name: iswc
+  - name: language_code
+  - name: writer_1_last_name
+  - name: writer_1_first_name
+  - name: source
+  - name: writer_1_ipi_name_n
+  - name: writer_1_ipi_base_n
+  - name: writer_2_last_name
+  - name: writer_2_first_name
+  - name: writer_2_ipi_name_n
+  - name: writer_2_ipi_base_n
+  - name: submitter_work_n
+
+performing_artist:
+  - name: performing_artist_last_name
+  - name: performing_artist_first_name
+  - name: ipi_name_n
+  - name: ipi_base_n
+
+publisher:
+  - name: publisher_sequence_n
+    compulsory: true
+  - name: ip_n
+  - name: name
+  - name: publisher_unknown
+  - name: publisher_type
+  - name: tax_id
+  - name: ipi_name_n
+  - name: submitter_agreement_n
+  - name: pr_affiliation
+  - name: pr_share_50
+    compulsory: true
+  - name: mr_affiliation
+  - name: mr_share
+    compulsory: true
+  - name: sr_affiliation
+  - name: sr_share
+    compulsory: true
+  - name: special_agreement_indicator
+  - name: first_recording_refusal
+  - name: blank
+  - name: ipi_base_n
+  - name: international_standard_code
+  - name: society_assigned_agreement_n
+  - name: agreement_type
+  - name: usa_license_indicator
+
+publisher_territory:
+  - name: ip_n
+    compulsory: true
+  - name: constant
+  - name: pr_share_50
+  - name: mr_share
+  - name: sr_share
+  - name: ie_indicator
+  - name: tis_code
+  - name: shares_change
+  - name: sequence_n
+
+recording_detail:
+  - name: first_release_date
+  - name: constant_1
+  - name: first_release_duration
+  - name: constant_2
+  - name: first_album_title
+  - name: first_album_label
+  - name: first_release_catalog_n
+  - name: ean13
+  - name: isrc
+  - name: recording_format
+  - name: recording_technique
+  - name: media_type
+
+territory_in_agreement:
+  - name: ie_indicator
+  - name: tis_code
+
+transmission_header:
+  - name: sender_type
+    compulsory: true
+  - name: sender_id
+    compulsory: true
+  - name: sender_name
+    compulsory: true
+  - name: edi_version
+    compulsory: true
+  - name: creation_date_time
+    compulsory: true
+  - name: transmission_date
+    compulsory: true
+  - name: character_set
+
+transmission_trailer:
+  - name: group_count
+    compulsory: true
+  - name: transaction_count
+    compulsory: true
+  - name: record_count
+    compulsory: true
+
+work:
+  - name: work_title
+    compulsory: true
+  - name: language_code
+  - name: submitter_work_n
+    compulsory: true
+  - name: iswc
+  - name: copyright_date
+  - name: copyright_number
+  - name: musical_work_distribution_category
+    compulsory: true
+  - name: duration
+  - name: recorded_indicator
+  - name: text_music_relationship
+    compulsory: true
+  - name: composite_type
+  - name: version_type
+    compulsory: true
+  - name: excerpt_type
+  - name: music_arrangement
+  - name: lyric_adaptation
+  - name: contact_name
+  - name: contact_id
+  - name: work_type
+  - name: grand_rights_indicator
+  - name: composite_component_count
+  - name: date_publication_printed_edition
+  - name: exceptional_clause
+  - name: opus_number
+  - name: catalogue_number
+  - name: priority_flag
+
+work_conflict:
+  - name: work_title
+  - name: language_code
+  - name: submitter_work_n
+  - name: iswc
+  - name: copyright_date
+  - name: copyright_number
+  - name: musical_work_distribution_category
+    compulsory: true
+  - name: duration
+  - name: recorded_indicator
+  - name: text_music_relationship
+    compulsory: true
+  - name: composite_type
+  - name: version_type
+    compulsory: true
+  - name: excerpt_type
+    compulsory: true
+  - name: music_arrangement
+  - name: lyric_adaptation
+  - name: contact_name
+  - name: contact_id
+  - name: work_type
+  - name: grand_rights_indicator
+  - name: composite_component_count
+  - name: date_publication_printed_edition
+  - name: exceptional_clause
+  - name: opus_number
+  - name: catalogue_number
+  - name: priority_flag
+
+work_origin:
+  - name: intended_purpose
+  - name: production_title
+  - name: cd_identifier
+  - name: cut_number
+  - name: library
+  - name: bltvr
+  - name: visan
+  - name: production_n
+  - name: episode_title
+  - name: episode_n
+  - name: year_production
+  - name: audio_visual_key
+
+writer:
+  - name: ip_n
+  - name: writer_last_name
+  - name: writer_first_name
+  - name: writer_unknown
+  - name: writer_designation_code
+  - name: tax_id
+  - name: ipi_name_n
+  - name: pr_affiliation
+  - name: pr_share
+    compulsory: true
+  - name: mr_affiliation
+  - name: mr_share
+    compulsory: true
+  - name: sr_affiliation
+  - name: sr_share
+    compulsory: true
+  - name: reversionary
+  - name: first_recording_refusal
+  - name: work_for_hire
+  - name: filler
+  - name: ipi_base_n
+  - name: personal_number
+  - name: usa_license_indicator
+
+writer_publisher:
+  - name: publisher_ip_n
+  - name: publisher_name
+  - name: submitter_agreement_n
+    compulsory: true
+  - name: society_assigned_agreement_n
+  - name: writer_ip_n
+
+writer_territory:
+  - name: ip_n
+  - name: pr_share
+  - name: mr_share
+  - name: sr_share
+  - name: ie_indicator
+  - name: tis_code
+  - name: shares_change
+  - name: sequence_n

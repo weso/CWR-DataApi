@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.info import AdditionalRelatedInfoRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -18,21 +17,20 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Patterns.
 """
 
-ari = field_special.lineStart + \
-      field_record.record_prefix(_config.record_type('ari')) + \
-      _lookup_factory.get_field('society_code') + \
-      _common_factory.get_field('work_n') + \
-      _lookup_factory.get_field('type_of_right') + \
-      _lookup_factory.get_field('subject_code') + \
-      _common_factory.get_field('note') + \
-      field_special.lineEnd
+ari = _factory_record.get_transaction_record('ari')
 
 """
 Parsing actions for the patterns.

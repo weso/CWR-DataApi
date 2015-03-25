@@ -4,7 +4,7 @@ import pyparsing as pp
 
 from cwr.grammar.record import transmission, group
 from cwr.grammar.field import special
-from cwr.grammar import transaction
+from cwr.grammar.transaction import transaction
 from cwr.group import Group
 from cwr.transmission import Transmission
 

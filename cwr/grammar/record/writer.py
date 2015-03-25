@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.interested_party import Writer, WriterRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -22,36 +21,20 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Patterns.
 """
 
-writer = field_special.lineStart + \
-         field_record.record_prefix(_config.record_type('writer')) + \
-         _common_factory.get_field('ip_n') + \
-         _common_factory.get_field('writer_last_name') + \
-         _common_factory.get_field('writer_first_name') + \
-         _common_factory.get_field('writer_unknown') + \
-         _lookup_factory.get_field('writer_designation_code') + \
-         _common_factory.get_field('tax_id') + \
-         _common_factory.get_field('ipi_name_n') + \
-         _lookup_factory.get_field('pr_affiliation') + \
-         _common_factory.get_field('pr_share', compulsory=True) + \
-         _lookup_factory.get_field('mr_affiliation') + \
-         _common_factory.get_field('mr_share', compulsory=True) + \
-         _lookup_factory.get_field('sr_affiliation') + \
-         _common_factory.get_field('sr_share', compulsory=True) + \
-         _common_factory.get_field('reversionary') + \
-         _common_factory.get_field('first_recording_refusal') + \
-         _common_factory.get_field('work_for_hire') + \
-         _common_factory.get_field('filler') + \
-         _common_factory.get_field('ipi_base_n') + \
-         _common_factory.get_field('personal_number') + \
-         _lookup_factory.get_field('usa_license_indicator') + \
-         field_special.lineEnd
+writer = _factory_record.get_transaction_record('writer')
 
 """
 Parsing actions for the patterns.

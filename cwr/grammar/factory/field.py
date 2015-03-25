@@ -3,8 +3,6 @@
 from abc import ABCMeta, abstractmethod
 import logging
 
-import pyparsing as pp
-
 from cwr.grammar.field import basic
 from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
     BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter, ISWCAdapter, IPIBaseNumberAdapter, \
@@ -28,8 +26,6 @@ Configuration classes.
 class FieldFactory(object):
     """
     Factory for acquiring field rules.
-
-    This is meant to be implemented to fit the needs of the general ruleset.
     """
     __metaclass__ = ABCMeta
 
@@ -37,14 +33,13 @@ class FieldFactory(object):
         # Fields already created
         self._fields = {}
         # Field builders being used
-        self._builders = {}
+        self._adapters = {}
         # Logger
         self._logger = logging.getLogger(__name__)
         # Configuration for creating the fields
         self._field_configs = field_configs
 
-    @abstractmethod
-    def get_field(self, id, compulsory=False):
+    def get_field(self, id):
         """
         Returns the rule for the field identified by the id.
 
@@ -55,7 +50,36 @@ class FieldFactory(object):
         :param compulsory: indicates if the empty string is rejected or not
         :return: the rule of a field
         """
-        raise NotImplementedError("The get_field method is not implemented")
+        self._logger.info('Acquiring field %s' % id)
+
+        # Field configuration info
+        config = self._field_configs[id]
+
+        if id in self._fields:
+            # Field already exists
+            self._logger.info('Field %s already exists, using saved instance' % id)
+            field = self._fields[id]
+        else:
+            # Field does not exist
+            # It is created
+            self._logger.info('Field %s does not exist, creating new instance' % id)
+            field = self.create_field(id, config)
+
+            # Field is saved
+            self._fields[id] = field
+
+        return field
+
+    @abstractmethod
+    def create_field(self, id, config):
+        """
+        Creates the field with the specified parameters.
+
+        :param id: identifier for the field
+        :param config: configuration info for the field
+        :return: the basic rule for the field
+        """
+        raise NotImplementedError("The create_field method is not implemented")
 
 
 class OptionFieldFactory(FieldFactory):
@@ -92,87 +116,30 @@ class OptionFieldFactory(FieldFactory):
         """
         self._logger.info('Acquiring field %s' % id)
 
-        # Field configuration info
-        config = self._field_configs[id]
-
-        if id in self._fields:
-            # Field already exists
-            self._logger.info('Field %s already exists, using saved instance' % id)
-            field = self._fields[id]
-        else:
-            # Field does not exist
-            # It is created
-            self._logger.info('Field %s does not exist, creating new instance' % id)
-            field = self.create_field(id, config)
-
-            # Field is saved
-            self._fields[id] = field
-
         if not compulsory:
             if id in self._fields_optional:
                 # Wrapped field already exists
                 self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
                 field = self._fields_optional[id]
             else:
+                # Field configuration info
+                config = self._field_configs[id]
+
+                field = super(OptionFieldFactory, self).get_field(id)
+
                 # It is not compulsory, the wrapped is added
                 self._logger.info('Wrapped field %s already exists, using saved instance' % id)
-                # TODO: This is a patch
-                if config['type'] == 'date':
-                    field = self.__not_compulsory_wrapper_date(field, config['name'], config['size'])
-                else:
-                    field = self.__not_compulsory_wrapper(field, config['name'], config['size'])
+                field = self.not_compulsory_wrapper(field, config['type'], config['name'], config['size'])
 
                 # Wrapped field is saved
                 self._fields_optional[id] = field
-
-        return field
-
-    def __not_compulsory_wrapper_date(self, field, name, columns):
-        """
-        Adds a wrapper rule to the field to accept empty strings.
-
-        This empty string should be of the same size as the columns parameter. One smaller or bigger will be rejected.
-
-        This wrapper will return None if the field is empty.
-
-        :param field: the field to wrap
-        :param name: name of the field
-        :param columns: number of columns it takes
-        :return: the field with an additional rule to allow empty strings
-        """
-        # Regular expression accepting as many whitespaces as columns
-        field_option = pp.Regex('[0]{8}|[ ]{' + str(columns) + '}')
-
-        field_option.setName(name)
-
-        # Whitespaces are not removed
-        field_option.leaveWhitespace()
-
-        # None is returned by this rule
-        field_option.setParseAction(pp.replaceWith(None))
-
-        field_option = field_option.setResultsName(field.resultsName)
-
-        field = field | field_option
-
-        field.setName(name)
-
-        field.leaveWhitespace()
+        else:
+            field = super(OptionFieldFactory, self).get_field(id)
 
         return field
 
     @abstractmethod
-    def create_field(self, id, config):
-        """
-        Creates the field with the specified parameters.
-
-        :param id: identifier for the field
-        :param config: configuration info for the field
-        :return: the basic rule for the field
-        """
-        raise NotImplementedError("The create_field method is not implemented")
-
-    def __not_compulsory_wrapper(self, field, name, columns):
+    def not_compulsory_wrapper(self, field, type, name, columns):
         """
         Adds a wrapper rule to the field to accept empty strings.
 
@@ -185,26 +152,7 @@ class OptionFieldFactory(FieldFactory):
         :param columns: number of columns it takes
         :return: the field with an additional rule to allow empty strings
         """
-        # Regular expression accepting as many whitespaces as columns
-        field_option = pp.Regex('[ ]{' + str(columns) + '}')
-
-        field_option.setName(name)
-
-        # Whitespaces are not removed
-        field_option.leaveWhitespace()
-
-        # None is returned by this rule
-        field_option.setParseAction(pp.replaceWith(None))
-
-        field_option = field_option.setResultsName(field.resultsName)
-
-        field = field | field_option
-
-        field.setName(name)
-
-        field.leaveWhitespace()
-
-        return field
+        raise NotImplementedError("The create_field method is not implemented")
 
 
 class DefaultFieldFactory(OptionFieldFactory):
@@ -216,25 +164,25 @@ class DefaultFieldFactory(OptionFieldFactory):
         super(DefaultFieldFactory, self).__init__(field_configs)
 
         # TODO: Don't do this manually
-        self._builders['alphanum'] = AlphanumAdapter()
-        self._builders['alphanum_ext'] = ExtendedAlphanumAdapter()
-        self._builders['numeric'] = NumericAdapter()
-        self._builders['boolean'] = BooleanAdapter()
-        self._builders['flag'] = FlagAdapter()
-        self._builders['date'] = DateAdapter()
-        self._builders['time'] = TimeAdapter()
-        self._builders['date_time'] = DateTimeAdapter()
-        self._builders['blank'] = BlankAdapter()
-        self._builders['lookup'] = LookupAdapter()
-        self._builders['iswc'] = ISWCAdapter()
-        self._builders['ipi_name_n'] = IPINameNumberAdapter()
-        self._builders['ipi_base_n'] = IPIBaseNumberAdapter()
-        self._builders['percentage'] = PercentageAdapter()
-        self._builders['ean13'] = EAN13Adapter()
-        self._builders['isrc'] = ISRCAdapter()
-        self._builders['visan'] = VISANAdapter()
-        self._builders['avi'] = AudioVisualKeydapter()
-        self._builders['charset'] = CharSetAdapter()
+        self._adapters['alphanum'] = AlphanumAdapter()
+        self._adapters['alphanum_ext'] = ExtendedAlphanumAdapter()
+        self._adapters['numeric'] = NumericAdapter()
+        self._adapters['boolean'] = BooleanAdapter()
+        self._adapters['flag'] = FlagAdapter()
+        self._adapters['date'] = DateAdapter()
+        self._adapters['time'] = TimeAdapter()
+        self._adapters['date_time'] = DateTimeAdapter()
+        self._adapters['blank'] = BlankAdapter()
+        self._adapters['lookup'] = LookupAdapter()
+        self._adapters['iswc'] = ISWCAdapter()
+        self._adapters['ipi_name_n'] = IPINameNumberAdapter()
+        self._adapters['ipi_base_n'] = IPIBaseNumberAdapter()
+        self._adapters['percentage'] = PercentageAdapter()
+        self._adapters['ean13'] = EAN13Adapter()
+        self._adapters['isrc'] = ISRCAdapter()
+        self._adapters['visan'] = VISANAdapter()
+        self._adapters['avi'] = AudioVisualKeydapter()
+        self._adapters['charset'] = CharSetAdapter()
 
         # Field values are optional
         self._field_values = field_values
@@ -258,7 +206,7 @@ class DefaultFieldFactory(OptionFieldFactory):
         :return: the basic rule for the field
         """
 
-        builder = self._builders[config['type']]
+        adapter = self._adapters[config['type']]
 
         if 'name' in config:
             name = config['name']
@@ -272,16 +220,13 @@ class DefaultFieldFactory(OptionFieldFactory):
 
         if 'values' in config:
             values = config['values']
-        elif self._field_values:
-            if 'source' in config:
-                values_id = config['source']
-            else:
-                values_id = id
+        elif self._field_values and 'source' in config:
+            values_id = config['source']
             values = self._field_values.get_data(values_id)
         else:
             values = None
 
-        field = builder.get_field(name, columns, values)
+        field = adapter.get_field(name, columns, values)
 
         if 'results_name' in config:
             field = field.setResultsName(config['results_name'])
@@ -293,6 +238,12 @@ class DefaultFieldFactory(OptionFieldFactory):
             self.__add_actions(field, config['actions'])
 
         return field
+
+    def not_compulsory_wrapper(self, field, type, name, columns):
+
+        adapter = self._adapters[type]
+
+        return adapter.wrap_as_optional(field, name, columns)
 
     def __add_actions(self, field, actions):
         """
