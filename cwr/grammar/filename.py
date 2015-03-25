@@ -98,25 +98,25 @@ This the grammatical structure for the old and new filename templates.
 """
 
 # CWR filename patterns
-cwr_filename_old = special.lineStart  + \
-                   _filename_factory.get_field('header',compulsory=True).suppress()  + \
+cwr_filename_old = special.lineStart + \
+                   _filename_factory.get_field('header', compulsory=True).suppress() + \
                    year + \
                    _filename_factory.get_field('sequence_n_old', compulsory=True) + \
                    sender + \
-                   _filename_factory.get_field('delimiter_ip',compulsory=True).suppress() + \
+                   _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
                    receiver + \
-                   ((_filename_factory.get_field('delimiter_version',compulsory=True).suppress() +
-                       version_num) |
-                      delimiter_zip) + \
+                   ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
+                     version_num) |
+                    delimiter_zip) + \
                    special.lineEnd
 cwr_filename = special.lineStart + \
-               _filename_factory.get_field('header',compulsory=True).suppress() + \
+               _filename_factory.get_field('header', compulsory=True).suppress() + \
                year + \
                _filename_factory.get_field('sequence_n_new', compulsory=True) + \
                sender + \
-               _filename_factory.get_field('delimiter_ip',compulsory=True).suppress() + \
+               _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
                receiver + \
-               ((_filename_factory.get_field('delimiter_version',compulsory=True).suppress() +
+               ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
                  version_num) |
                 delimiter_zip) + \
                special.lineEnd
