@@ -1,0 +1,14 @@
+acknowledgement:
+  - name: creation_date_time
+  - name: original_group_id
+  - name: original_transaction_sequence_n
+    compulsory: true
+  - name: original_transaction_type
+    compulsory: true
+  - name: creation_title
+  - name: submitter_creation_n
+  - name: recipient_creation_n
+  - name: processing_date
+    compulsory: true
+  - name: transaction_status
+    compulsory: true

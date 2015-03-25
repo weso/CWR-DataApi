@@ -82,6 +82,7 @@ class CWRConfiguration(object):
         self._cwr_defaults = None
 
         self._field_configs = {}
+        self._record_configs = {}
 
     def _load_record_config(self):
         """
@@ -134,6 +135,18 @@ class CWRConfiguration(object):
 
         return self._field_configs[id]
 
+    def load_record_config(self, id):
+        """
+        Loads the configuration fields file for the id.
+
+        :param id: the id for the field
+        :return: the fields configuration
+        """
+        if id not in self._record_configs:
+            self._record_configs[id] = self._reader.read_yaml_file('record_config_%s.yml' % id)
+
+        return self._record_configs[id]
+
     def default_version(self):
         """
         The current version of the CWR standard.
@@ -164,6 +177,9 @@ class CWRConfiguration(object):
         :return: the expected record type on the record prefix
         """
         return self._load_record_type()[record]
+
+    def record_types(self):
+        return self._load_record_type()
 
 
 class CWRTables(object):

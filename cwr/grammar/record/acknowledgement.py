@@ -6,6 +6,7 @@ from cwr.grammar.field import record as field_record
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -22,34 +23,26 @@ _config = CWRConfiguration()
 _data = _config.load_field_config('table')
 _data.update(_config.load_field_config('common'))
 
-_factory = DefaultFieldFactory(_data, CWRTables())
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Rules.
 """
 
 # Acknowledgment Pattern
-acknowledgement = field_special.lineStart + \
-                  field_record.record_prefix(_config.record_type('acknowledgement')) + \
-                  _factory.get_field('creation_date_time') + \
-                  _factory.get_field('original_group_id') + \
-                  _factory.get_field('original_transaction_sequence_n', compulsory=True) + \
-                  _factory.get_field('original_transaction_type', compulsory=True) + \
-                  _factory.get_field('creation_title') + \
-                  _factory.get_field('submitter_creation_n') + \
-                  _factory.get_field('recipient_creation_n') + \
-                  _factory.get_field('processing_date', compulsory=True) + \
-                  _factory.get_field('transaction_status', compulsory=True) + \
-                  field_special.lineEnd
+acknowledgement = _factory_record.get_record('acknowledgement')
 
 message = field_special.lineStart + \
           field_record.record_prefix(_config.record_type('message')) + \
-          _factory.get_field('message_type') + \
-          _factory.get_field('original_record_sequence_n') + \
-          _factory.get_field('message_record_type') + \
-          _factory.get_field('message_level') + \
-          _factory.get_field('validation') + \
-          _factory.get_field('message_text') + \
+          _factory_field.get_field('message_type') + \
+          _factory_field.get_field('original_record_sequence_n') + \
+          _factory_field.get_field('message_record_type') + \
+          _factory_field.get_field('message_level') + \
+          _factory_field.get_field('validation') + \
+          _factory_field.get_field('message_text') + \
           field_special.lineEnd
 
 """

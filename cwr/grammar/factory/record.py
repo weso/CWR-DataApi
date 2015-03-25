@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 import logging
+
 import pyparsing as pp
+
+from cwr.grammar.field import record as field_record
 
 
 """
@@ -17,6 +20,15 @@ __status__ = 'Development'
 Configuration classes.
 """
 
+
+class PrefixBuilder(object):
+    def __init__(self, config):
+        self._config = config
+
+    def get_prefix(self, id):
+        return field_record.record_prefix(self._config[id])
+
+
 class RecordFactory(object):
     """
     Factory for acquiring record rules.
@@ -29,7 +41,7 @@ class RecordFactory(object):
     _lineEnd = pp.lineEnd.suppress()
     _lineEnd.setName("End of line")
 
-    def __init__(self, record_configs, factory):
+    def __init__(self, record_configs, prefixer, field_factory):
         # records already created
         self._records = {}
         # Logger
@@ -37,10 +49,34 @@ class RecordFactory(object):
         # Configuration for creating the record
         self._record_configs = record_configs
         # Fields factory
-        self._factory = factory
+        self._field_factory = field_factory
+        # Prefix builder
+        self._prefixer = prefixer
 
     def get_record(self, id):
-        return self._lineStart + self._lineEnd
+        record = self._lineStart + \
+                 self._prefixer.get_prefix(id) + \
+                 self._build_record(id) + \
+                 self._lineEnd
+
+        return record
 
     def _build_record(self, id):
-        pass
+        field_config = self._record_configs[id]
+
+        fields = []
+        for config in field_config:
+            fields.append(self._field_factory.get_field(config['name']))
+
+        if len(fields) > 0:
+            first = True
+            for field in fields:
+                if first:
+                    record = field
+                    first = False
+                else:
+                    record += field
+        else:
+            record = None
+
+        return record
