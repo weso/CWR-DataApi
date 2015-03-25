@@ -38,10 +38,8 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 
-_table_data = _config.load_field_config('table')
-_common_data = _config.load_field_config('common')
-
-_data = dict(_table_data.items() + _common_data.items())
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
 
 _factory = DefaultFieldFactory(_data, CWRTables())
 
