@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -18,36 +17,23 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Rules.
 """
 
 # Acknowledgment Pattern
-acknowledgement = field_special.lineStart + \
-                  field_record.record_prefix(_config.record_type('acknowledgement')) + \
-                  _common_factory.get_field('creation_date_time') + \
-                  _common_factory.get_field('original_group_id') + \
-                  _common_factory.get_field('original_transaction_sequence_n', compulsory=True) + \
-                  _lookup_factory.get_field('original_transaction_type', compulsory=True) + \
-                  _common_factory.get_field('creation_title') + \
-                  _common_factory.get_field('submitter_creation_n') + \
-                  _common_factory.get_field('recipient_creation_n') + \
-                  _common_factory.get_field('processing_date', compulsory=True) + \
-                  _lookup_factory.get_field('transaction_status', compulsory=True) + \
-                  field_special.lineEnd
+acknowledgement = _factory_record.get_transaction_record('acknowledgement')
 
-message = field_special.lineStart + \
-          field_record.record_prefix(_config.record_type('message')) + \
-          _lookup_factory.get_field('message_type') + \
-          _common_factory.get_field('original_record_sequence_n') + \
-          _lookup_factory.get_field('message_record_type') + \
-          _lookup_factory.get_field('message_level') + \
-          _common_factory.get_field('validation') + \
-          _common_factory.get_field('message_text') + \
-          field_special.lineEnd
+message = _factory_record.get_transaction_record('message')
 
 """
 Parsing actions for the patterns.

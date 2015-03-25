@@ -1,0 +1,45 @@
+delimiter_ip:
+  type: lookup
+  size: 1
+  name: IPs separator
+  values:
+    - _
+
+delimiter_version:
+  type: lookup
+  size: 2
+  name: Version Separator
+  values:
+    - .V
+
+delimiter_zip:
+  type: lookup
+  size: 4
+  name: ZIP extension
+  results_name: version
+  values:
+    - .zip
+
+header:
+  type: lookup
+  size: 2
+  name: Filename Header
+  values:
+    - CW
+
+sequence_n_new:
+  type: numeric
+  size: 4
+  name: Sequence Number
+  results_name: sequence_n
+
+sequence_n_old:
+  type: numeric
+  size: 2
+  name: Sequence Number
+  results_name: sequence_n
+
+year:
+  type: numeric
+  size: 2
+  name: Year
