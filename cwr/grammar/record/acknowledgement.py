@@ -5,6 +5,7 @@ from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import AcknowledgementDictionaryDecoder, MessageDictionaryDecoder
 
 
 """
@@ -57,18 +58,8 @@ def _to_acknowledgement_record(parsed):
     :param parsed: result of parsing an Acknowledgement record
     :return: a AcknowledgementRecord created from the parsed record
     """
-    return AcknowledgementRecord(record_type=parsed.record_type,
-                                 transaction_sequence_n=parsed.transaction_sequence_n,
-                                 record_sequence_n=parsed.record_sequence_n,
-                                 original_group_id=parsed.original_group_id,
-                                 original_transaction_sequence_n=parsed.original_transaction_sequence_n,
-                                 original_transaction_type=parsed.original_transaction_type,
-                                 transaction_status=parsed.transaction_status,
-                                 creation_date_time=parsed.creation_date_time,
-                                 processing_date=parsed.processing_date,
-                                 creation_title=parsed.creation_title,
-                                 submitter_creation_n=parsed.submitter_creation_n,
-                                 recipient_creation_n=parsed.recipient_creation_n)
+    decoder = AcknowledgementDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_message_record(parsed):
@@ -78,12 +69,5 @@ def _to_message_record(parsed):
     :param parsed: result of parsing a Message record
     :return: a MessageRecord created from the parsed record
     """
-    return MessageRecord(record_type=parsed.record_type,
-                         transaction_sequence_n=parsed.transaction_sequence_n,
-                         record_sequence_n=parsed.record_sequence_n,
-                         message_type=parsed.message_type,
-                         message_text=parsed.message_text,
-                         original_record_sequence_n=parsed.original_record_sequence_n,
-                         message_record_type=parsed.message_record_type,
-                         message_level=parsed.message_level,
-                         validation_n=parsed.validation)
+    decoder = MessageDictionaryDecoder()
+    return decoder.decode(parsed)

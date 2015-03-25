@@ -45,6 +45,23 @@ class AcknowledgementDictionaryDecoder(Decoder):
                                  recipient_creation_n=data['recipient_creation_n'])
 
 
+class MessageDictionaryDecoder(Decoder):
+
+    def __init__(self):
+        super(MessageDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return MessageRecord(record_type=data['record_type'],
+                                 transaction_sequence_n=data['transaction_sequence_n'],
+                                 record_sequence_n=data['record_sequence_n'],
+                                 message_type=data['message_type'],
+                                 message_text=data['message_text'],
+                                 original_record_sequence_n=data['original_record_sequence_n'],
+                                 message_record_type=data['message_record_type'],
+                                 message_level=data['message_level'],
+                                 validation_n=data['validation_n'])
+
+
 class CWRDictionaryEncoder(Encoder):
     """
     Encodes CWR model classes into dictionaries.

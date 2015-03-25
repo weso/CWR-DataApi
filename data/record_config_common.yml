@@ -128,7 +128,7 @@ message:
   - name: original_record_sequence_n
   - name: message_record_type
   - name: message_level
-  - name: validation
+  - name: validation_n
   - name: message_text
 
 nat:
