@@ -66,10 +66,16 @@ class RecordFactory(object):
 
         fields = []
         for config in field_config:
-            fields.append(self._field_factory.get_field(config['name']))
+            if 'compulsory' in field_config:
+                compulsory = field_config['compulsory']
+            else:
+                compulsory = False
+
+            fields.append(self._field_factory.get_field(config['name'], compulsory=compulsory))
 
         if len(fields) > 0:
             first = True
+            record = None
             for field in fields:
                 if first:
                     record = field
