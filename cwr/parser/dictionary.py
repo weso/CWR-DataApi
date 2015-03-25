@@ -6,7 +6,7 @@ from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.info import AdditionalRelatedInfoRecord
 from cwr.interested_party import IPTerritoryOfControlRecord
 
-from cwr.parser.common import Encoder
+from cwr.parser.common import Encoder, Decoder
 from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
 from cwr.nra import NRAWorkRecord, NATRecord, NOWRecord, NPARecord, NPNRecord, NPRRecord, NWNRecord
 from cwr.transmission import TransmissionHeader, TransmissionTrailer, Transmission
@@ -23,6 +23,26 @@ This helps for example to create JSON or Mongo objects.
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __status__ = 'Development'
+
+
+class AcknowledgementDictionaryDecoder(Decoder):
+
+    def __init__(self):
+        super(AcknowledgementDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return AcknowledgementRecord(record_type=data['record_type'],
+                                 transaction_sequence_n=data['transaction_sequence_n'],
+                                 record_sequence_n=data['record_sequence_n'],
+                                 original_group_id=data['original_group_id'],
+                                 original_transaction_sequence_n=data['original_transaction_sequence_n'],
+                                 original_transaction_type=data['original_transaction_type'],
+                                 transaction_status=data['transaction_status'],
+                                 creation_date_time=data['creation_date_time'],
+                                 processing_date=data['processing_date'],
+                                 creation_title=data['creation_title'],
+                                 submitter_creation_n=data['submitter_creation_n'],
+                                 recipient_creation_n=data['recipient_creation_n'])
 
 
 class CWRDictionaryEncoder(Encoder):

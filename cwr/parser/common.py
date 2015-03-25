@@ -31,7 +31,7 @@ class Decoder(object):
         :param data: the data to decode
         :return: a graph of model classes
         """
-        pass
+        raise NotImplementedError('The decode method must be implemented')
 
 
 class GrammarDecoder(Decoder):
@@ -89,4 +89,4 @@ class Encoder(object):
         :param data: the data to encode
         :return: a data structure created from the received data
         """
-        pass
+        raise NotImplementedError('The encode method must be implemented')
