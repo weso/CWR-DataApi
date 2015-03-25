@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar import transaction
+from cwr.grammar.transaction import transaction
 
 """
 CWR Administrator Information grammar tests.

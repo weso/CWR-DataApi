@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar import work_detail
+from cwr.grammar.transaction import work_detail
 
 """
 CWR Information for Versions grammar tests.

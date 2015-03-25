@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar import interested_party
+from cwr.grammar.transaction import interested_party
 
 """
 CWR Acquirer Information grammar tests.

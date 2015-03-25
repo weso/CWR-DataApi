@@ -3,7 +3,7 @@
 import pyparsing as pp
 
 from cwr.grammar.record import publisher, nra, writer, agreement, work, acknowledgement, ari
-from cwr.grammar import work_detail, interested_party
+from cwr.grammar.transaction import interested_party, work_detail
 from cwr.grammar.record import work_detail as rule_work_detail
 
 

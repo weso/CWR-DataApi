@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from cwr.grammar.file import cwr_transmission as rule_file
+from cwr.grammar.transaction.file import cwr_transmission as rule_file
 from cwr.grammar.filename import cwr_filename_old as rule_filename_old
 from cwr.grammar.filename import cwr_filename as rule_filename_new
 from cwr.file import CWRFile, FileTag

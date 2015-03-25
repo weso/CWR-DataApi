@@ -154,18 +154,6 @@ class CWRConfiguration(object):
         """
         return self._load_record_config()[record][field]['size']
 
-    def field_value(self, record, field):
-        """
-        Returns the expected value for a record's field.
-
-        The record and field are the internal name used to identify a record type.
-
-        :param record: the id for the record type
-        :param field: the id for the field
-        :return: the expected value for the field on the record
-        """
-        return self._load_record_config()[record][field]['value']
-
     def record_type(self, record):
         """
         Returns the expected record type for the received record.
