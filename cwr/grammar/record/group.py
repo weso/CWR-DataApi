@@ -40,8 +40,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_table_data = _config.load_field_config('table')
+_common_data = _config.load_field_config('common')
+
+_data = dict(_table_data.items() + _common_data.items())
+
+_factory = DefaultFieldFactory(_data, CWRTables())
 
 """
 Group patterns.
@@ -52,22 +57,22 @@ These are the grammatical structures for the Group Header and Group Trailer.
 # Group Header pattern
 group_header = field_special.lineStart + \
                field_record.record_type(_config.record_type('group_header')) + \
-               _lookup_factory.get_field('transaction_type', compulsory=True) + \
-               _common_factory.get_field('group_id', compulsory=True) + \
-               _common_factory.get_field('version_number', compulsory=True) + \
-               _common_factory.get_field('batch_request_id') + \
-               _common_factory.get_field('sd_type') + \
+               _factory.get_field('transaction_type', compulsory=True) + \
+               _factory.get_field('group_id', compulsory=True) + \
+               _factory.get_field('version_number', compulsory=True) + \
+               _factory.get_field('batch_request_id') + \
+               _factory.get_field('sd_type') + \
                field_special.lineEnd
 group_header = group_header.setName('Group Header').setResultsName('group_header')
 
 # Group Trailer pattern
 group_trailer = field_special.lineStart + \
                 field_record.record_type(_config.record_type('group_trailer')) + \
-                _common_factory.get_field('group_id', compulsory=True) + \
-                _common_factory.get_field('transaction_count', compulsory=True) + \
-                _common_factory.get_field('record_count', compulsory=True) + \
-                _common_factory.get_field('currency_indicator') + \
-                _common_factory.get_field('total_monetary_value') + \
+                _factory.get_field('group_id', compulsory=True) + \
+                _factory.get_field('transaction_count', compulsory=True) + \
+                _factory.get_field('record_count', compulsory=True) + \
+                _factory.get_field('currency_indicator') + \
+                _factory.get_field('total_monetary_value') + \
                 field_special.lineEnd
 group_trailer = group_trailer.setName('Group Trailer').setResultsName('group_trailer')
 

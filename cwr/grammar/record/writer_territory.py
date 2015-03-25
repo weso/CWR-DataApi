@@ -18,8 +18,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_table_data = _config.load_field_config('table')
+_common_data = _config.load_field_config('common')
+
+_data = dict(_table_data.items() + _common_data.items())
+
+_factory = DefaultFieldFactory(_data, CWRTables())
 
 """
 General fields.
@@ -31,14 +36,14 @@ Patterns.
 
 territory = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('writer_territory')) + \
-            _common_factory.get_field('ip_n') + \
-            _common_factory.get_field('pr_share') + \
-            _common_factory.get_field('mr_share') + \
-            _common_factory.get_field('sr_share') + \
-            _lookup_factory.get_field('ie_indicator') + \
-            _lookup_factory.get_field('tis_code') + \
-            _common_factory.get_field('shares_change') + \
-            _common_factory.get_field('sequence_n') + \
+            _factory.get_field('ip_n') + \
+            _factory.get_field('pr_share') + \
+            _factory.get_field('mr_share') + \
+            _factory.get_field('sr_share') + \
+            _factory.get_field('ie_indicator') + \
+            _factory.get_field('tis_code') + \
+            _factory.get_field('shares_change') + \
+            _factory.get_field('sequence_n') + \
             field_special.lineEnd
 
 """

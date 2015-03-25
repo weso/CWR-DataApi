@@ -22,8 +22,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_table_data = _config.load_field_config('table')
+_common_data = _config.load_field_config('common')
+
+_data = dict(_table_data.items() + _common_data.items())
+
+_factory = DefaultFieldFactory(_data, CWRTables())
 
 """
 Publisher patterns.
@@ -31,28 +36,28 @@ Publisher patterns.
 
 publisher = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('publisher')) + \
-            _common_factory.get_field('publisher_sequence_n', compulsory=True) + \
-            _common_factory.get_field('ip_n') + \
-            _common_factory.get_field('name') + \
-            _common_factory.get_field('publisher_unknown') + \
-            _lookup_factory.get_field('publisher_type') + \
-            _common_factory.get_field('tax_id') + \
-            _common_factory.get_field('ipi_name_n') + \
-            _common_factory.get_field('submitter_agreement_n') + \
-            _lookup_factory.get_field('pr_affiliation') + \
-            _common_factory.get_field('pr_share_50', compulsory=True) + \
-            _lookup_factory.get_field('mr_affiliation') + \
-            _common_factory.get_field('mr_share', compulsory=True) + \
-            _lookup_factory.get_field('sr_affiliation') + \
-            _common_factory.get_field('sr_share', compulsory=True) + \
-            _lookup_factory.get_field('special_agreement_indicator') + \
-            _common_factory.get_field('first_recording_refusal') + \
-            _common_factory.get_field('blank') + \
-            _common_factory.get_field('ipi_base_n') + \
-            _common_factory.get_field('international_standard_code') + \
-            _common_factory.get_field('society_assigned_agreement_n') + \
-            _lookup_factory.get_field('agreement_type') + \
-            _lookup_factory.get_field('usa_license_indicator') + \
+            _factory.get_field('publisher_sequence_n', compulsory=True) + \
+            _factory.get_field('ip_n') + \
+            _factory.get_field('name') + \
+            _factory.get_field('publisher_unknown') + \
+            _factory.get_field('publisher_type') + \
+            _factory.get_field('tax_id') + \
+            _factory.get_field('ipi_name_n') + \
+            _factory.get_field('submitter_agreement_n') + \
+            _factory.get_field('pr_affiliation') + \
+            _factory.get_field('pr_share_50', compulsory=True) + \
+            _factory.get_field('mr_affiliation') + \
+            _factory.get_field('mr_share', compulsory=True) + \
+            _factory.get_field('sr_affiliation') + \
+            _factory.get_field('sr_share', compulsory=True) + \
+            _factory.get_field('special_agreement_indicator') + \
+            _factory.get_field('first_recording_refusal') + \
+            _factory.get_field('blank') + \
+            _factory.get_field('ipi_base_n') + \
+            _factory.get_field('international_standard_code') + \
+            _factory.get_field('society_assigned_agreement_n') + \
+            _factory.get_field('agreement_type') + \
+            _factory.get_field('usa_license_indicator') + \
             field_special.lineEnd
 
 """

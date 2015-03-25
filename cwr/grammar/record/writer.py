@@ -22,8 +22,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_table_data = _config.load_field_config('table')
+_common_data = _config.load_field_config('common')
+
+_data = dict(_table_data.items() + _common_data.items())
+
+_factory = DefaultFieldFactory(_data, CWRTables())
 
 """
 Patterns.
@@ -31,26 +36,26 @@ Patterns.
 
 writer = field_special.lineStart + \
          field_record.record_prefix(_config.record_type('writer')) + \
-         _common_factory.get_field('ip_n') + \
-         _common_factory.get_field('writer_last_name') + \
-         _common_factory.get_field('writer_first_name') + \
-         _common_factory.get_field('writer_unknown') + \
-         _lookup_factory.get_field('writer_designation_code') + \
-         _common_factory.get_field('tax_id') + \
-         _common_factory.get_field('ipi_name_n') + \
-         _lookup_factory.get_field('pr_affiliation') + \
-         _common_factory.get_field('pr_share', compulsory=True) + \
-         _lookup_factory.get_field('mr_affiliation') + \
-         _common_factory.get_field('mr_share', compulsory=True) + \
-         _lookup_factory.get_field('sr_affiliation') + \
-         _common_factory.get_field('sr_share', compulsory=True) + \
-         _common_factory.get_field('reversionary') + \
-         _common_factory.get_field('first_recording_refusal') + \
-         _common_factory.get_field('work_for_hire') + \
-         _common_factory.get_field('filler') + \
-         _common_factory.get_field('ipi_base_n') + \
-         _common_factory.get_field('personal_number') + \
-         _lookup_factory.get_field('usa_license_indicator') + \
+         _factory.get_field('ip_n') + \
+         _factory.get_field('writer_last_name') + \
+         _factory.get_field('writer_first_name') + \
+         _factory.get_field('writer_unknown') + \
+         _factory.get_field('writer_designation_code') + \
+         _factory.get_field('tax_id') + \
+         _factory.get_field('ipi_name_n') + \
+         _factory.get_field('pr_affiliation') + \
+         _factory.get_field('pr_share', compulsory=True) + \
+         _factory.get_field('mr_affiliation') + \
+         _factory.get_field('mr_share', compulsory=True) + \
+         _factory.get_field('sr_affiliation') + \
+         _factory.get_field('sr_share', compulsory=True) + \
+         _factory.get_field('reversionary') + \
+         _factory.get_field('first_recording_refusal') + \
+         _factory.get_field('work_for_hire') + \
+         _factory.get_field('filler') + \
+         _factory.get_field('ipi_base_n') + \
+         _factory.get_field('personal_number') + \
+         _factory.get_field('usa_license_indicator') + \
          field_special.lineEnd
 
 """

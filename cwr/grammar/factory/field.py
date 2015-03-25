@@ -222,11 +222,8 @@ class DefaultFieldFactory(OptionFieldFactory):
 
         if 'values' in config:
             values = config['values']
-        elif self._field_values:
-            if 'source' in config:
-                values_id = config['source']
-            else:
-                values_id = id
+        elif self._field_values and 'source' in config:
+            values_id = config['source']
             values = self._field_values.get_data(values_id)
         else:
             values = None

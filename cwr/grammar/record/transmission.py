@@ -37,8 +37,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_table_data = _config.load_field_config('table')
+_common_data = _config.load_field_config('common')
+
+_data = dict(_table_data.items() + _common_data.items())
+
+_factory = DefaultFieldFactory(_data, CWRTables())
 
 """
 Transmission patterns.
@@ -49,22 +54,22 @@ These are the grammatical structures for the Transmission Header and Transmissio
 # Transmission Header pattern
 transmission_header = field_special.lineStart + \
                       field_record.record_type(_config.record_type('transmission_header')) + \
-                      _lookup_factory.get_field('sender_type', compulsory=True) + \
-                      _common_factory.get_field('sender_id', compulsory=True) + \
-                      _common_factory.get_field('sender_name', compulsory=True) + \
-                      _common_factory.get_field('edi_version', compulsory=True) + \
-                      _common_factory.get_field('creation_date_time', compulsory=True) + \
-                      _common_factory.get_field('transmission_date', compulsory=True) + \
-                      _common_factory.get_field('character_set') + \
+                      _factory.get_field('sender_type', compulsory=True) + \
+                      _factory.get_field('sender_id', compulsory=True) + \
+                      _factory.get_field('sender_name', compulsory=True) + \
+                      _factory.get_field('edi_version', compulsory=True) + \
+                      _factory.get_field('creation_date_time', compulsory=True) + \
+                      _factory.get_field('transmission_date', compulsory=True) + \
+                      _factory.get_field('character_set') + \
                       field_special.lineEnd
 transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 
 # Transmission Header pattern
 transmission_trailer = field_special.lineStart + \
                        field_record.record_type(_config.record_type('transmission_trailer')) + \
-                       _common_factory.get_field('group_count', compulsory=True) + \
-                       _common_factory.get_field('transaction_count', compulsory=True) + \
-                       _common_factory.get_field('record_count', compulsory=True)
+                       _factory.get_field('group_count', compulsory=True) + \
+                       _factory.get_field('transaction_count', compulsory=True) + \
+                       _factory.get_field('record_count', compulsory=True)
 transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()

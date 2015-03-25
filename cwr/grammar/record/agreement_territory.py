@@ -17,15 +17,23 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+
+_table_data = _config.load_field_config('table')
+_common_data = _config.load_field_config('common')
+
+_data = dict(_table_data.items() + _common_data.items())
+
+_factory = DefaultFieldFactory(_data, CWRTables())
 
 """
 Territory in Agreement patterns.
 """
 
-territory_in_agreement = special.lineStart + record.record_prefix(
-    _config.record_type('agreement_territory')) + _lookup_factory.get_field('ie_indicator') + \
-                         _lookup_factory.get_field('tis_code') + special.lineEnd
+territory_in_agreement = special.lineStart + \
+                         record.record_prefix(_config.record_type('agreement_territory')) + \
+                         _factory.get_field('ie_indicator') + \
+                         _factory.get_field('tis_code') + \
+                         special.lineEnd
 
 """
 Parsing actions for the patterns.

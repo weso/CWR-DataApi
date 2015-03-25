@@ -18,8 +18,13 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_lookup_factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_table_data = _config.load_field_config('table')
+_common_data = _config.load_field_config('common')
+
+_data = dict(_table_data.items() + _common_data.items())
+
+_factory = DefaultFieldFactory(_data, CWRTables())
 
 """
 Agreement patterns.
@@ -28,22 +33,22 @@ Agreement patterns.
 # Agreement Pattern
 agreement = field_special.lineStart + \
             field_record.record_prefix(_config.record_type('agreement')) + \
-            _common_factory.get_field('submitter_agreement_n', compulsory=True) + \
-            _common_factory.get_field('international_standard_code') + \
-            _lookup_factory.get_field('agreement_type') + \
-            _common_factory.get_field('agreement_start_date', compulsory=True) + \
-            _common_factory.get_field('agreement_end_date') + \
-            _common_factory.get_field('retention_end_date') + \
-            _lookup_factory.get_field('prior_royalty_status', compulsory=True) + \
-            _common_factory.get_field('prior_royalty_start_date') + \
-            _lookup_factory.get_field('post_term_collection_status', compulsory=True) + \
-            _common_factory.get_field('post_term_collection_end_date') + \
-            _common_factory.get_field('date_of_signature') + \
-            _common_factory.get_field('number_of_works', compulsory=True) + \
-            _lookup_factory.get_field('sales_manufacture_clause') + \
-            _common_factory.get_field('shares_change') + \
-            _common_factory.get_field('advance_given') + \
-            _common_factory.get_field('society_assigned_agreement_n') + \
+            _factory.get_field('submitter_agreement_n', compulsory=True) + \
+            _factory.get_field('international_standard_code') + \
+            _factory.get_field('agreement_type') + \
+            _factory.get_field('agreement_start_date', compulsory=True) + \
+            _factory.get_field('agreement_end_date') + \
+            _factory.get_field('retention_end_date') + \
+            _factory.get_field('prior_royalty_status', compulsory=True) + \
+            _factory.get_field('prior_royalty_start_date') + \
+            _factory.get_field('post_term_collection_status', compulsory=True) + \
+            _factory.get_field('post_term_collection_end_date') + \
+            _factory.get_field('date_of_signature') + \
+            _factory.get_field('number_of_works', compulsory=True) + \
+            _factory.get_field('sales_manufacture_clause') + \
+            _factory.get_field('shares_change') + \
+            _factory.get_field('advance_given') + \
+            _factory.get_field('society_assigned_agreement_n') + \
             field_special.lineEnd
 
 """
