@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -41,7 +40,10 @@ _config = CWRConfiguration()
 _data = _config.load_field_config('table')
 _data.update(_config.load_field_config('common'))
 
-_factory = DefaultFieldFactory(_data, CWRTables())
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Transmission patterns.
@@ -50,24 +52,11 @@ These are the grammatical structures for the Transmission Header and Transmissio
 """
 
 # Transmission Header pattern
-transmission_header = field_special.lineStart + \
-                      field_record.record_type(_config.record_type('transmission_header')) + \
-                      _factory.get_field('sender_type', compulsory=True) + \
-                      _factory.get_field('sender_id', compulsory=True) + \
-                      _factory.get_field('sender_name', compulsory=True) + \
-                      _factory.get_field('edi_version', compulsory=True) + \
-                      _factory.get_field('creation_date_time', compulsory=True) + \
-                      _factory.get_field('transmission_date', compulsory=True) + \
-                      _factory.get_field('character_set') + \
-                      field_special.lineEnd
+transmission_header = _factory_record.get_record('transmission_header')
 transmission_header = transmission_header.setName('Transmission Header').setResultsName('transmission_header')
 
 # Transmission Header pattern
-transmission_trailer = field_special.lineStart + \
-                       field_record.record_type(_config.record_type('transmission_trailer')) + \
-                       _factory.get_field('group_count', compulsory=True) + \
-                       _factory.get_field('transaction_count', compulsory=True) + \
-                       _factory.get_field('record_count', compulsory=True)
+transmission_trailer = _factory_record.get_record('transmission_trailer')
 transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()

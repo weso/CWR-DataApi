@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.interested_party import PublisherForWriterRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -17,20 +16,17 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_config.load_field_config('common'))
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Patterns.
 """
 
-publisher = field_special.lineStart + \
-            field_record.record_prefix(_config.record_type('writer_publisher')) + \
-            _factory.get_field('publisher_ip_n') + \
-            _factory.get_field('publisher_name') + \
-            _factory.get_field('submitter_agreement_n', compulsory=True) + \
-            _factory.get_field('society_assigned_agreement_n') + \
-            _factory.get_field('writer_ip_n') + \
-            field_special.lineEnd
+publisher = _factory_record.get_transaction_record('writer_publisher')
 
 """
 Parsing actions for the patterns.

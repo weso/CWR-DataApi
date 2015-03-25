@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -33,17 +31,9 @@ Rules.
 """
 
 # Acknowledgment Pattern
-acknowledgement = _factory_record.get_record('acknowledgement')
+acknowledgement = _factory_record.get_transaction_record('acknowledgement')
 
-message = field_special.lineStart + \
-          field_record.record_prefix(_config.record_type('message')) + \
-          _factory_field.get_field('message_type') + \
-          _factory_field.get_field('original_record_sequence_n') + \
-          _factory_field.get_field('message_record_type') + \
-          _factory_field.get_field('message_level') + \
-          _factory_field.get_field('validation') + \
-          _factory_field.get_field('message_text') + \
-          field_special.lineEnd
+message = _factory_record.get_transaction_record('message')
 
 """
 Parsing actions for the patterns.

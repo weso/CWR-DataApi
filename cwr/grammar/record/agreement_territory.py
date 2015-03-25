@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special, record
 from cwr.agreement import AgreementTerritoryRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -21,17 +21,16 @@ _config = CWRConfiguration()
 _data = _config.load_field_config('table')
 _data.update(_config.load_field_config('common'))
 
-_factory = DefaultFieldFactory(_data, CWRTables())
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Territory in Agreement patterns.
 """
 
-territory_in_agreement = special.lineStart + \
-                         record.record_prefix(_config.record_type('agreement_territory')) + \
-                         _factory.get_field('ie_indicator') + \
-                         _factory.get_field('tis_code') + \
-                         special.lineEnd
+territory_in_agreement = _factory_record.get_transaction_record('territory_in_agreement')
 
 """
 Parsing actions for the patterns.

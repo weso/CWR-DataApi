@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.interested_party import IPTerritoryOfControlRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -22,7 +21,10 @@ _config = CWRConfiguration()
 _data = _config.load_field_config('table')
 _data.update(_config.load_field_config('common'))
 
-_factory = DefaultFieldFactory(_data, CWRTables())
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 General fields.
@@ -32,17 +34,7 @@ General fields.
 Patterns.
 """
 
-territory = field_special.lineStart + \
-            field_record.record_prefix(_config.record_type('writer_territory')) + \
-            _factory.get_field('ip_n') + \
-            _factory.get_field('pr_share') + \
-            _factory.get_field('mr_share') + \
-            _factory.get_field('sr_share') + \
-            _factory.get_field('ie_indicator') + \
-            _factory.get_field('tis_code') + \
-            _factory.get_field('shares_change') + \
-            _factory.get_field('sequence_n') + \
-            field_special.lineEnd
+territory = _factory_record.get_transaction_record('writer_territory')
 
 """
 Parsing actions for the patterns.

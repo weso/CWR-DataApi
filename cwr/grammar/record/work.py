@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr import work
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -22,69 +21,18 @@ _config = CWRConfiguration()
 _data = _config.load_field_config('table')
 _data.update(_config.load_field_config('common'))
 
-_factory = DefaultFieldFactory(_data, CWRTables())
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Work patterns.
 """
 
-work_record = field_special.lineStart + \
-              field_record.record_prefix(_config.record_type('work')) + \
-              _factory.get_field('work_title', compulsory=True) + \
-              _factory.get_field('language_code') + \
-              _factory.get_field('submitter_work_n', compulsory=True) + \
-              _factory.get_field('iswc') + \
-              _factory.get_field('copyright_date') + \
-              _factory.get_field('copyright_number') + \
-              _factory.get_field('musical_work_distribution_category', compulsory=True) + \
-              _factory.get_field('duration') + \
-              _factory.get_field('recorded_indicator') + \
-              _factory.get_field('text_music_relationship', compulsory=True) + \
-              _factory.get_field('composite_type') + \
-              _factory.get_field('version_type', compulsory=True) + \
-              _factory.get_field('excerpt_type') + \
-              _factory.get_field('music_arrangement') + \
-              _factory.get_field('lyric_adaptation') + \
-              _factory.get_field('contact_name') + \
-              _factory.get_field('contact_id') + \
-              _factory.get_field('work_type') + \
-              _factory.get_field('grand_rights_indicator') + \
-              _factory.get_field('composite_component_count') + \
-              _factory.get_field('date_publication_printed_edition') + \
-              _factory.get_field('exceptional_clause') + \
-              _factory.get_field('opus_number') + \
-              _factory.get_field('catalogue_number') + \
-              _factory.get_field('priority_flag') + \
-              field_special.lineEnd
+work_record = _factory_record.get_transaction_record('work')
 
-conflict = field_special.lineStart + \
-           field_record.record_prefix(_config.record_type('work_conflict')) + \
-           _factory.get_field('work_title') + \
-           _factory.get_field('language_code') + \
-           _factory.get_field('submitter_work_n') + \
-           _factory.get_field('iswc') + \
-           _factory.get_field('copyright_date') + \
-           _factory.get_field('copyright_number') + \
-           _factory.get_field('musical_work_distribution_category', compulsory=True) + \
-           _factory.get_field('duration') + \
-           _factory.get_field('recorded_indicator') + \
-           _factory.get_field('text_music_relationship', compulsory=True) + \
-           _factory.get_field('composite_type') + \
-           _factory.get_field('version_type', compulsory=True) + \
-           _factory.get_field('excerpt_type', compulsory=True) + \
-           _factory.get_field('music_arrangement') + \
-           _factory.get_field('lyric_adaptation') + \
-           _factory.get_field('contact_name') + \
-           _factory.get_field('contact_id') + \
-           _factory.get_field('work_type') + \
-           _factory.get_field('grand_rights_indicator') + \
-           _factory.get_field('composite_component_count') + \
-           _factory.get_field('date_publication_printed_edition') + \
-           _factory.get_field('exceptional_clause') + \
-           _factory.get_field('opus_number') + \
-           _factory.get_field('catalogue_number') + \
-           _factory.get_field('priority_flag') + \
-           field_special.lineEnd
+conflict = _factory_record.get_transaction_record('work_conflict')
 
 """
 Parsing actions for the patterns.

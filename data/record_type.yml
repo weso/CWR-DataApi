@@ -23,9 +23,6 @@ acknowledgement:
 agreement:
   - 'AGR'
 
-agreement_territory:
-  - 'TER'
-
 alternate_title:
   - 'ALT'
 
@@ -41,7 +38,7 @@ instrumentation_detail:
 instrumentation_summary:
   - 'INS'
 
-ipa:
+interested_party_agreement:
   - 'IPA'
 
 message:
@@ -62,6 +59,9 @@ publisher_territory:
 
 recording_detail:
   - 'REC'
+
+territory_in_agreement:
+  - 'TER'
 
 work:
   - 'NWR'

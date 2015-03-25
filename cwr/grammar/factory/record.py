@@ -26,6 +26,9 @@ class PrefixBuilder(object):
         self._config = config
 
     def get_prefix(self, id):
+        return field_record.record_type(self._config[id])
+
+    def get_transaction_prefix(self, id):
         return field_record.record_prefix(self._config[id])
 
 
@@ -53,6 +56,14 @@ class RecordFactory(object):
         # Prefix builder
         self._prefixer = prefixer
 
+    def get_transaction_record(self, id):
+        record = self._lineStart + \
+                 self._prefixer.get_transaction_prefix(id) + \
+                 self._build_record(id) + \
+                 self._lineEnd
+
+        return record
+
     def get_record(self, id):
         record = self._lineStart + \
                  self._prefixer.get_prefix(id) + \
@@ -66,8 +77,8 @@ class RecordFactory(object):
 
         fields = []
         for config in field_config:
-            if 'compulsory' in field_config:
-                compulsory = field_config['compulsory']
+            if 'compulsory' in config:
+                compulsory = config['compulsory']
             else:
                 compulsory = False
 
