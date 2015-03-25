@@ -26,8 +26,6 @@ Configuration classes.
 class FieldFactory(object):
     """
     Factory for acquiring field rules.
-
-    This is meant to be implemented to fit the needs of the general ruleset.
     """
     __metaclass__ = ABCMeta
 
