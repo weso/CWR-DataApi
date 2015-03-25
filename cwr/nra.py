@@ -37,6 +37,127 @@ class NRARecord(TransactionRecord):
         return self._language_code
 
 
+class NRAWorkRecord(NRARecord):
+    """
+    Represents a Non-Roman Alphabet record used for Work details.
+
+    This represents the following records:
+    - Non-Roman Alphabet Entire Work Title for Excerpts (NET).
+    - Non-Roman Alphabet Title for Components (NCT).
+    - Non-Roman Alphabet Original Title for Version (NVT).
+
+    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
+    This record can be used to describe the original title of a work, and it can also be used to describe alternate
+    titles.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None):
+        super(NRAWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        self._title = title
+
+    @property
+    def title(self):
+        """
+        Title field. Alphanumeric.
+
+        The title in non-Roman alphabet.
+
+        :return: the title in non-Roman alphabet
+        """
+        return self._title
+
+
+class NATRecord(NRARecord):
+    """
+    Represents a CWR Non-Roman Alphabet Title (NAT) record.
+
+    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
+    This record can be used to describe the original title of a work, and it can also be used to describe alternate
+    titles.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language_code=None):
+        super(NATRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        # Title info
+        self._title = title
+        self._title_type = title_type
+
+    @property
+    def title(self):
+        """
+        Title field. Alphanumeric.
+
+        The work title in non-Roman alphabet.
+
+        :return: the work title in non-Roman alphabet
+        """
+        return self._title
+
+    @property
+    def title_type(self):
+        """
+        Title Type field. Table Lookup (Title Type Table).
+
+        Indicates the type of title presented on this record (original, alternate etc.).
+
+        :return: the type of the title
+        """
+        return self._title_type
+
+
+class NOWRecord(NRARecord):
+    """
+    Represents a CWR Non-Roman Alphabet Other Writer Name (NOW) record.
+
+    This record identifies writer names in non-roman alphabets for the work named in an EWT (entire work for an
+    excerpt), VER (original work for a version), or COM (component) record. The language code is used to identify the
+    alphabet.
+    """
+
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 writer_first_name, writer_name,
+                 position=None,
+                 language_code=None):
+        super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        # Writer information
+        self._writer_first_name = writer_first_name
+        self._writer_name = writer_name
+        self._position = position
+
+    @property
+    def position(self):
+        """
+        Writer Position field. List lookup (previous record).
+
+        The position of the writer in the corresponding EWT, VER, or COM record.
+
+        :return: the position of the writer in the previous record
+        """
+        return self._position
+
+    @property
+    def writer_first_name(self):
+        """
+        Writer First Name. Alphanumeric.
+
+        The first name of this writer.
+
+        :return: the first name of this writer
+        """
+        return self._writer_first_name
+
+    @property
+    def writer_name(self):
+        """
+        Writer Name. Alphanumeric.
+
+        The name of this writer.
+
+        :return: the name of this writer
+        """
+        return self._writer_name
+
+
 class NPARecord(NRARecord):
     """
     Represents a CWR Non-Roman Alphabet Agreement Party Name Record (NPA).
@@ -88,22 +209,21 @@ class NPARecord(NRARecord):
         return self._ip_writer_name
 
 
-class NWNRecord(NRARecord):
+class NPNRecord(NRARecord):
     """
-    Represents a CWR Non-Roman Alphabet Writer Name Record (NWN).
+    Represents a CWR Non-Roman Alphabet Publisher Name Record (NPN).
 
-    This record identifies writer names in non-roman alphabets for this work. The language code is used to identify the
-    alphabet. This record can be used to identify the name of the writer in the preceding SWR/OWR record.
+    This record identifies publisher names in non-roman alphabets for this work. The language code is used to identify
+    the alphabet. This record can be used to identify the name of the publisher in the preceding SPU/OPU record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_last_name,
-                 ip_id='',
-                 language_code=None):
-        super(NWNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
-        # Writer info
-        self._writer_first_name = writer_first_name
-        self._writer_last_name = writer_last_name
-        self._ip_n = ip_id
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_sequence_n, ip_n,
+                 publisher_name, language_code=None):
+        super(NPNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        # Publisher info
+        self._publisher_sequence_n = publisher_sequence_n
+        self._ip_n = ip_n
+        self._publisher_name = publisher_name
 
     @property
     def ip_n(self):
@@ -117,146 +237,26 @@ class NWNRecord(NRARecord):
         return self._ip_n
 
     @property
-    def writer_first_name(self):
+    def publisher_name(self):
         """
-        Writer First Name. Alphanumeric.
+        Publisher Name field. Alphanumeric.
 
-        The first name of this writer.
+        The name of this publishing company in non-roman alphabet.
 
-        :return: the first name of this writer
+        :return: the name of this publishing company in non-roman alphabet
         """
-        return self._writer_first_name
+        return self._publisher_name
 
     @property
-    def writer_last_name(self):
+    def publisher_sequence_n(self):
         """
-        Writer Last Name. Alphanumeric.
+        Publisher Sequence # field. Numeric.
 
-        The last or single name of this writer.
+        A sequential number assigned to the original publishers on this work.
 
-        :return: the last or single name of this writer
+        :return: the publisher sequential id
         """
-        return self._writer_last_name
-
-
-class NATRecord(NRARecord):
-    """
-    Represents a CWR Non-Roman Alphabet Title (NAT) record.
-
-    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
-    This record can be used to describe the original title of a work, and it can also be used to describe alternate
-    titles.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language_code=None):
-        super(NATRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
-        # Title info
-        self._title = title
-        self._title_type = title_type
-
-    @property
-    def title(self):
-        """
-        Title field. Alphanumeric.
-
-        The work title in non-Roman alphabet.
-
-        :return: the work title in non-Roman alphabet
-        """
-        return self._title
-
-    @property
-    def title_type(self):
-        """
-        Title Type field. Table Lookup (Title Type Table).
-
-        Indicates the type of title presented on this record (original, alternate etc.).
-
-        :return: the type of the title
-        """
-        return self._title_type
-
-
-class NRARecordWork(NRARecord):
-    """
-    Represents a Non-Roman Alphabet record used for Work details.
-
-    This represents the following records:
-    - Non-Roman Alphabet Entire Work Title for Excerpts (NET).
-    - Non-Roman Alphabet Title for Components (NCT).
-    - Non-Roman Alphabet Original Title for Version (NVT).
-
-    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
-    This record can be used to describe the original title of a work, and it can also be used to describe alternate
-    titles.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None):
-        super(NRARecordWork, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
-        self._title = title
-
-    @property
-    def title(self):
-        """
-        Title field. Alphanumeric.
-
-        The title in non-Roman alphabet.
-
-        :return: the title in non-Roman alphabet
-        """
-        return self._title
-
-
-class NOWRecord(NRARecord):
-    """
-    Represents a CWR Non-Roman Alphabet Other Writer Name (NOW) record.
-
-    This record identifies writer names in non-roman alphabets for the work named in an EWT (entire work for an
-    excerpt), VER (original work for a version), or COM (component) record. The language code is used to identify the
-    alphabet.
-    """
-
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_name,
-                 position=None,
-                 language_code=None):
-        super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
-        # Writer information
-        self._writer_first_name = writer_first_name
-        self._writer_name = writer_name
-        self._position = position
-
-    @property
-    def position(self):
-        """
-        Writer Position field. List lookup (previous record).
-
-        The position of the writer in the corresponding EWT, VER, or COM record.
-
-        :return: the position of the writer in the previous record
-        """
-        return self._position
-
-    @property
-    def writer_first_name(self):
-        """
-        Writer First Name. Alphanumeric.
-
-        The first name of this writer.
-
-        :return: the first name of this writer
-        """
-        return self._writer_first_name
-
-    @property
-    def writer_name(self):
-        """
-        Writer Name. Alphanumeric.
-
-        The name of this writer.
-
-        :return: the name of this writer
-        """
-        return self._writer_name
+        return self._publisher_sequence_n
 
 
 class NPRRecord(NRARecord):
@@ -269,14 +269,14 @@ class NPRRecord(NRARecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, performing_artist_first_name='',
-                 performing_artist_name='', performing_artist_ipi_name_n_ipi_name=None,
+                 performing_artist_name='', performing_artist_ipi_name_n=None,
                  performing_artist_ipi_base_n=None, language_code=None, performance_language=None,
                  performance_dialect=None):
         super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
         # Artist data
         self._performing_artist_first_name = performing_artist_first_name
         self._performing_artist_name = performing_artist_name
-        self._performing_artist_ipi_name_n = performing_artist_ipi_name_n_ipi_name
+        self._performing_artist_ipi_name_n = performing_artist_ipi_name_n
         self._performing_artist_ipi_base_n = performing_artist_ipi_base_n
 
         # Language data
@@ -353,21 +353,22 @@ class NPRRecord(NRARecord):
         return self._performing_artist_name
 
 
-class NPNRecord(NRARecord):
+class NWNRecord(NRARecord):
     """
-    Represents a CWR Non-Roman Alphabet Publisher Name Record (NPN).
+    Represents a CWR Non-Roman Alphabet Writer Name Record (NWN).
 
-    This record identifies publisher names in non-roman alphabets for this work. The language code is used to identify
-    the alphabet. This record can be used to identify the name of the publisher in the preceding SPU/OPU record.
+    This record identifies writer names in non-roman alphabets for this work. The language code is used to identify the
+    alphabet. This record can be used to identify the name of the writer in the preceding SWR/OWR record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_sequence_n, ip_n,
-                 publisher_name, language_code=None):
-        super(NPNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
-        # Publisher info
-        self._publisher_sequence_n = publisher_sequence_n
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_last_name,
+                 ip_n='',
+                 language_code=None):
+        super(NWNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        # Writer info
+        self._writer_first_name = writer_first_name
+        self._writer_last_name = writer_last_name
         self._ip_n = ip_n
-        self._publisher_name = publisher_name
 
     @property
     def ip_n(self):
@@ -381,23 +382,23 @@ class NPNRecord(NRARecord):
         return self._ip_n
 
     @property
-    def publisher_name(self):
+    def writer_first_name(self):
         """
-        Publisher Name field. Alphanumeric.
+        Writer First Name. Alphanumeric.
 
-        The name of this publishing company in non-roman alphabet.
+        The first name of this writer.
 
-        :return: the name of this publishing company in non-roman alphabet
+        :return: the first name of this writer
         """
-        return self._publisher_name
+        return self._writer_first_name
 
     @property
-    def publisher_sequence_n(self):
+    def writer_last_name(self):
         """
-        Publisher Sequence # field. Numeric.
+        Writer Last Name. Alphanumeric.
 
-        A sequential number assigned to the original publishers on this work.
+        The last or single name of this writer.
 
-        :return: the publisher sequential id
+        :return: the last or single name of this writer
         """
-        return self._publisher_sequence_n
+        return self._writer_last_name

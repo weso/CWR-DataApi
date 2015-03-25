@@ -5,6 +5,7 @@ import pyparsing as pp
 from cwr.file import FileTag
 from cwr.grammar.field import basic, special
 from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
 
 
 """
@@ -32,6 +33,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
+_filename_factory = DefaultFieldFactory(_config.load_field_config('filename'))
 
 """
 Filename fields.
@@ -51,18 +53,9 @@ Each of these fields is parsed into a value as follows:
 - Version Number. Float.
 """
 
-# Sequence Number old
-sequence_old = basic.numeric(2)
-sequence_old = sequence_old.setName('Sequence Number').setResultsName('sequence_n')
-
-# Sequence Number new
-sequence_new = basic.numeric(4)
-sequence_new = sequence_new.setName('Sequence Number').setResultsName('sequence_n')
-
 # Year
-year = basic.numeric(2)
-year.setParseAction(lambda y: _to_year(y))
-year = year.setName('Year').setResultsName('year')
+year = _filename_factory.get_field('year', compulsory=True)
+year.addParseAction(lambda y: _to_year(y[0]))
 
 
 def _to_year(parsed):
@@ -71,10 +64,7 @@ def _to_year(parsed):
 
     :param parsed: the parsed value
     """
-    if len(parsed) > 0:
-        return 2000 + parsed[0]
-    else:
-        return None
+    return 2000 + parsed
 
 # Sender
 sender = pp.Word(pp.alphanums, min=2, max=3)
@@ -85,8 +75,8 @@ receiver = pp.Word(pp.alphanums, min=2, max=3)
 receiver = receiver.setName('Received').setResultsName('receiver')
 
 # Version number
-version_num = basic.numeric_float(2, 1)
-version_num = version_num.setName('Version').setResultsName('version')
+version_num = basic.numeric_float(2, 1, 'Version')
+version_num = version_num.setResultsName('version')
 
 """
 Delimiters.
@@ -97,25 +87,9 @@ The only special case is if this is a zip file. In that case the extension will 
 node, but will return the default version.
 """
 
-# Filename header
-header = pp.CaselessLiteral('CW')
-header.suppress()
-header.setName('Filename Header')
-
-# Version delimiter
-delimiter_version = pp.CaselessLiteral('.V')
-delimiter_version.suppress()
-delimiter_version.setName('Version Separator')
-
-# Sender and received delimiter
-delimiter_ip = pp.Literal('_')
-delimiter_ip.suppress()
-delimiter_ip.setName('IPs separator')
-
 # ZIP extension
-delimiter_zip = pp.CaselessLiteral('.zip')
+delimiter_zip = _filename_factory.get_field('delimiter_zip', compulsory=True)
 delimiter_zip.setParseAction(lambda s: _config.default_version())
-delimiter_zip = delimiter_zip.setName('zip extension').setResultsName('version')
 
 """
 Filename patterns.
@@ -124,10 +98,28 @@ This the grammatical structure for the old and new filename templates.
 """
 
 # CWR filename patterns
-cwr_filename_old = special.lineStart + header + year + sequence_old + sender + delimiter_ip + receiver \
-                   + ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
-cwr_filename = special.lineStart + header + year + sequence_new + sender + delimiter_ip + receiver + \
-               ((delimiter_version + version_num) | delimiter_zip) + special.lineEnd
+cwr_filename_old = special.lineStart + \
+                   _filename_factory.get_field('header', compulsory=True).suppress() + \
+                   year + \
+                   _filename_factory.get_field('sequence_n_old', compulsory=True) + \
+                   sender + \
+                   _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
+                   receiver + \
+                   ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
+                     version_num) |
+                    delimiter_zip) + \
+                   special.lineEnd
+cwr_filename = special.lineStart + \
+               _filename_factory.get_field('header', compulsory=True).suppress() + \
+               year + \
+               _filename_factory.get_field('sequence_n_new', compulsory=True) + \
+               sender + \
+               _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
+               receiver + \
+               ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
+                 version_num) |
+                delimiter_zip) + \
+               special.lineEnd
 
 """
 Parsing actions for the patterns.

@@ -1,0 +1,110 @@
+# Structural records
+
+ari:
+  - 'ARI'
+
+transmission_header:
+  - 'HDR'
+
+transmission_trailer:
+  - 'TRL'
+
+group_header:
+  - 'GRH'
+
+group_trailer:
+  - 'GRT'
+
+# Transaction records
+
+acknowledgement:
+  - 'ACK'
+
+agreement:
+  - 'AGR'
+
+alternate_title:
+  - 'ALT'
+
+component:
+  - 'COM'
+
+entire_work_title:
+  - 'EWT'
+
+instrumentation_detail:
+  - 'IND'
+
+instrumentation_summary:
+  - 'INS'
+
+interested_party_agreement:
+  - 'IPA'
+
+message:
+  - 'MSG'
+
+original_work_title:
+  - 'VER'
+
+performing_artist:
+  - 'PER'
+
+publisher:
+  - 'SPU'
+  - 'OPU'
+
+publisher_territory:
+  - 'SPT'
+
+recording_detail:
+  - 'REC'
+
+territory_in_agreement:
+  - 'TER'
+
+work:
+  - 'NWR'
+  - 'REV'
+  - 'ISW'
+
+work_conflict:
+  - 'EXC'
+
+work_origin:
+  - 'ORN'
+
+writer:
+  - 'SWR'
+  - 'OWR'
+
+writer_territory:
+  - 'SWT'
+
+writer_publisher:
+  - 'PWR'
+
+# Non-Roman Alphabet records
+
+nat:
+  - 'NAT'
+
+now:
+  - 'NOW'
+
+npa:
+  - 'NPA'
+
+npn:
+  - 'NPN'
+
+npr:
+  - 'NPR'
+
+nra_work:
+  - 'NCT'
+  - 'NET'
+  - 'NVT'
+
+nwn:
+  - 'NWN'

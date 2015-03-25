@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table
-from cwr.grammar.field import agreement as field_agreement
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
 from cwr.agreement import AgreementRecord
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -19,21 +18,20 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
 """
 Agreement patterns.
 """
 
 # Agreement Pattern
-agreement = field_special.lineStart + field_record.record_prefix(
-    _config.record_type('agreement'),
-    compulsory=True) + field_agreement.submitter_agreement_n + field_agreement.is_code + field_table.agreement_type() + \
-            field_agreement.agreement_start_date + field_agreement.agreement_end_date + field_agreement.retention_end_date + field_table.prior_royalty_status(
-    compulsory=True) + \
-            field_agreement.prior_royalty_start_date + field_table.post_term_collection_status(
-    compulsory=True) + field_agreement.post_term_collection_end_date + \
-            field_agreement.date_of_signature + field_agreement.number_works + field_table.sm_clause() + \
-            field_agreement.sales_change + field_agreement.advance_given + field_agreement.society_assigned_agreement_n + \
-            field_special.lineEnd
+agreement = _factory_record.get_transaction_record('agreement')
 
 """
 Parsing actions for the patterns.

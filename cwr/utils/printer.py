@@ -2,22 +2,21 @@
 
 import sys
 
-from cwr.agreement import AgreementInterestedParty, AgreementRecord, AgreementTerritoryRecord
+from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
 from cwr.info import AdditionalRelatedInfoRecord
-from cwr.interested_party import IPTerritoryRecord, PublisherRecord, WriterPublisherRecord, WriterRecord
+from cwr.interested_party import IPTerritoryOfControlRecord, PublisherRecord, PublisherForWriterRecord, WriterRecord
 from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, \
     RecordingDetailRecord, InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, \
     PerformingArtistRecord
-from cwr.nra import NPARecord, NPNRecord, NWNRecord, NATRecord, NRARecordWork, NOWRecord, NPRRecord
+from cwr.nra import NPARecord, NPNRecord, NWNRecord, NATRecord, NRAWorkRecord, NOWRecord, NPRRecord
 
 
 """
-This is a small tool to print(a CWR file contents on the console.
+This is a small tool to print a CWR file contents on the console.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -29,13 +28,34 @@ class CWRPrinter():
     def __init__(self):
         pass
 
-    def print_transmission(self, transmission, file):
-        # TODO: Add support for Acknowledgement
-
+    def print_file(self, cwrfile, file):
         out_old = sys.stdout
         sys.stdout = file
 
+        self._print_tag(cwrfile.tag)
+        print(' ')
+        print('------------------------------')
+        print('******************************')
+        print('------------------------------')
+        print(' ')
+        self._print_transmission(cwrfile.transmission)
+
+        sys.stdout = out_old
+
+    def _print_tag(self, tag):
+        print('CWR Filename Tag information')
+        print('------------------------------')
+        print('Year: %s' % (tag.year))
+        print('Sender: %s' % (tag.sender))
+        print('Receiver: %s' % (tag.receiver))
+        print('Sequence Number: %s' % (tag.sequence_n))
+        print('Version: %s' % (tag.version))
+
+    def _print_transmission(self, transmission):
+        # TODO: Add support for Acknowledgement
+
         print('CWR Transmission begins')
+        print('------------------------------')
         print('Contains %s groups' % (len(transmission.groups)))
         print('------------------------------')
         self.print_transmission_header(transmission.header)
@@ -70,8 +90,6 @@ class CWRPrinter():
                     self.print_transaction_record(record)
             i += 1
 
-        sys.stdout = out_old
-
     def print_transmission_header(self, header):
         print('CWR Transmission Header')
         print('Record Type: %s' % (header.record_type))
@@ -83,12 +101,12 @@ class CWRPrinter():
         print('EDI standard: %s' % (header.edi_standard))
         print('Character set: %s' % (header.character_set))
 
-    def print_transmission_trailer(self, header):
+    def print_transmission_trailer(self, trailer):
         print('CWR Transmission Trailer')
-        print('Record Type: %s' % (header.record_type))
-        print('Group Count: %s' % (header.group_count))
-        print('Transaction Count: %s' % (header.transaction_count))
-        print('Record Count: %s' % (header.record_count))
+        print('Record Type: %s' % (trailer.record_type))
+        print('Group Count: %s' % (trailer.group_count))
+        print('Transaction Count: %s' % (trailer.transaction_count))
+        print('Record Count: %s' % (trailer.record_count))
 
     def print_group_header(self, header):
         print('CWR Group Header')
@@ -98,19 +116,19 @@ class CWRPrinter():
         print('Version Number: %s' % (header.version_number))
         print('Batch Request ID: %s' % (header.batch_request_id))
 
-    def print_group_trailer(self, header):
+    def print_group_trailer(self, trailer):
         print('CWR Group Trailer')
-        print('Record Type: %s' % (header.record_type))
-        print('Group ID: %s' % (header.group_id))
-        print('Transaction Count: %s' % (header.transaction_count))
-        print('Record Count: %s' % (header.record_count))
+        print('Record Type: %s' % (trailer.record_type))
+        print('Group ID: %s' % (trailer.group_id))
+        print('Transaction Count: %s' % (trailer.transaction_count))
+        print('Record Count: %s' % (trailer.record_count))
 
     def print_transaction_record(self, record):
         print('Record Type: %s' % (record.record_type))
         print('Transaction Sequence Number: %s' % (record.transaction_sequence_n))
         print('Record Sequence Number: %s' % (record.record_sequence_n))
 
-        if (isinstance(record, AgreementInterestedParty)):
+        if (isinstance(record, InterestedPartyForAgreementRecord)):
             self.print_ipa(record)
         elif (isinstance(record, NPARecord)):
             self.print_npa(record)
@@ -122,11 +140,11 @@ class CWRPrinter():
             self.print_ari(record)
         elif (isinstance(record, NPNRecord)):
             self.print_npn(record)
-        elif (isinstance(record, IPTerritoryRecord)):
+        elif (isinstance(record, IPTerritoryOfControlRecord)):
             self.print_ipter(record)
         elif (isinstance(record, PublisherRecord)):
             self.print_pubr(record)
-        elif (isinstance(record, WriterPublisherRecord)):
+        elif (isinstance(record, PublisherForWriterRecord)):
             self.print_pwr(record)
         elif (isinstance(record, WriterRecord)):
             self.print_writr(record)
@@ -156,16 +174,16 @@ class CWRPrinter():
             self.print_now(record)
         elif (isinstance(record, NPRRecord)):
             self.print_npr(record)
-        elif (isinstance(record, NRARecordWork)):
+        elif (isinstance(record, NRAWorkRecord)):
             self.print_nra(record)
 
     def print_ipa(self, record):
-        print('IP ID: %s' % (record.ip_n))
-        print('writer Name: %s' % (record.ip_writer_first_name))
+        print('IP Number: %s' % (record.ip_n))
+        print('Writer Name: %s' % (record.ip_writer_first_name))
         print('Last Name: %s' % (record.ip_last_name))
         print('Agreement Role Code: %s' % (record.agreement_role_code))
-        print('IPI Name: %s' % (record.ipi_name_n))
-        print('IPI Base: %s' % (record.ipi_base_n))
+        print('IPI Name Number: %s' % (record.ipi_name_n))
+        print('IPI Base Number: %s' % (record.ipi_base_n))
         print('PR Society: %s' % (record.pr_society))
         print('PR Shares: %s' % (record.pr_share))
         print('MR Shares: %s' % (record.mr_society))
@@ -174,14 +192,14 @@ class CWRPrinter():
         print('SR Shares: %s' % (record.sr_share))
 
     def print_npa(self, record):
-        print('IP ID: %s' % (record.ip_n))
-        print('IP writer Name: %s' % (record.ip_writer_name))
-        print('IP Name: %s' % (record.ip_name))
+        print('IP Number: %s' % (record.ip_n))
+        print('Writer Name: %s' % (record.ip_writer_name))
+        print('Name: %s' % (record.ip_name))
         print('Language: %s' % (record.language_code))
 
     def print_agr(self, record):
-        print('Agreement ID: %s' % (record.submitter_agreement_n))
-        print('Society Agreement Number: %s' % (record.society_assigned_agreement_n))
+        print('Agreement Number: %s' % (record.submitter_agreement_n))
+        print('Society Assigned Agreement Number: %s' % (record.society_assigned_agreement_n))
         print('International Standard Code: %s' % (record.international_standard_code))
         print('Agreement Type: %s' % (record.agreement_type))
         print('Start Date: %s' % (record.agreement_start_date))
@@ -248,8 +266,8 @@ class CWRPrinter():
         print('SR Owner Share: %s' % (record.sr_ownership_share))
 
     def print_pwr(self, record):
-        print('Publisher IP Number: %s' % (record.publisher_ip_number))
-        print('writer IP Number: %s' % (record.publisher_ip_number))
+        print('Publisher IP Number: %s' % (record.publisher_ip_n))
+        print('writer IP Number: %s' % (record.publisher_ip_n))
         print('Submitter Agreement Number: %s' % (record.submitter_agreement_n))
         print('Society-Assigned Agreement Number: %s' % (record.society_assigned_agreement_n))
 
@@ -314,12 +332,12 @@ class CWRPrinter():
         print('Duration: %s' % (record.duration))
         print('First Name Writer 1: %s' % (record.writer_1_first_name))
         print('Last Name Writer 1: %s' % (record.writer_1_last_name))
-        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base))
-        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name))
+        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base_n))
+        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name_n))
         print('First Name Writer 2: %s' % (record.writer_2_first_name))
         print('Last Name Writer 2: %s' % (record.writer_2_last_name))
-        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base))
-        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name))
+        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base_n))
+        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name_n))
 
     def print_authr(self, record):
         print('Work Number: %s' % (record.submitter_work_n))
@@ -329,12 +347,12 @@ class CWRPrinter():
         print('Source: %s' % (record.source))
         print('First Name Writer 1: %s' % (record.writer_1_first_name))
         print('Last Name Writer 1: %s' % (record.writer_1_last_name))
-        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base))
-        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name))
+        print('IPI Base Writer 1: %s' % (record.writer_1_ipi_base_n))
+        print('IPI Name Writer 1: %s' % (record.writer_1_ipi_name_n))
         print('First Name Writer 2: %s' % (record.writer_2_first_name))
         print('Last Name Writer 2: %s' % (record.writer_2_last_name))
-        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base))
-        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name))
+        print('IPI Base Writer 2: %s' % (record.writer_2_ipi_base_n))
+        print('IPI Name Writer 2: %s' % (record.writer_2_ipi_name_n))
 
     def print_alt(self, record):
         print('Alternate Title: %s' % (record.alternate_title))

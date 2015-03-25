@@ -66,29 +66,12 @@ class TestAlphanumName(unittest.TestCase):
 
         self.assertEqual('Alphanumeric Field', field.name)
 
-    def test_name_default_compulsory(self):
-        """
-        Tests that the default field name is correct for compulsory fields.
-        """
-        field = basic.alphanum(5, compulsory=True)
-
-        self.assertEqual('Alphanumeric Field', field.name)
-
     def test_name_set(self):
         """
         Tests that the given field name is set correctly for optional fields.
         """
         name = "Field Name"
         field = basic.alphanum(5, name=name)
-
-        self.assertEqual(name, field.name)
-
-    def test_name_set_compulsory(self):
-        """
-        Tests that the given field name is set correctly for compulsory fields.
-        """
-        name = "Field Name"
-        field = basic.alphanum(5, name=name, compulsory=True)
 
         self.assertEqual(name, field.name)
 
@@ -198,24 +181,6 @@ class TestAlphanumValid(unittest.TestCase, _BaseAlphanumValid):
     def setUp(self):
         self.field = basic.alphanum(5)
 
-    def test_alphanum_whitespaces(self):
-        """
-        Tests that the alphanum field accepts a string composed of whitespaces.
-        """
-        result = self.field.parseString('     ')
-        self.assertEqual('', result[0])
-
-
-class TestAlphanumCompulsoryValid(unittest.TestCase, _BaseAlphanumValid):
-    """
-    Tests that the compulsory Alphanumeric field accepts and parse valid values.
-
-    Implements the basic Alphanumeric test case for valid numbers.
-    """
-
-    def setUp(self):
-        self.field = basic.alphanum(5, compulsory=True)
-
 
 class TestAlphanumExtendedValid(unittest.TestCase, _BaseAlphanumValid):
     """
@@ -270,15 +235,6 @@ class TestAlphanumHugeValid(unittest.TestCase):
         self.assertEqual(
             'THEANAMEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
             result[0])
-
-    def test_empty(self):
-        """
-        Tests that the alphanum field accepts an empty string of the correct number of characters containing only
-        whitespaces.
-        """
-        result = self.field.parseString(
-            '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ')
-        self.assertEqual('', result[0])
 
 
 class TestAlphanumEmptyValid(unittest.TestCase):
@@ -370,17 +326,6 @@ class TestAlphanumException(unittest.TestCase, _BaseAlphanumException):
         self.field = basic.alphanum(5)
 
 
-class TestAlphanumCompulsoryException(unittest.TestCase, _BaseAlphanumException):
-    """
-    Tests that exceptions are thrown when using invalid values
-
-    Implements the basic Alphanumeric exception test case.
-    """
-
-    def setUp(self):
-        self.field = basic.alphanum(5, compulsory=True)
-
-
 class TestAlphanumHugeException(unittest.TestCase, _BaseAlphanumException):
     """
     Tests that exceptions are thrown when using invalid values
@@ -390,3 +335,11 @@ class TestAlphanumHugeException(unittest.TestCase, _BaseAlphanumException):
 
     def setUp(self):
         self.field = basic.alphanum(480)
+
+    def test_empty(self):
+        """
+        Tests that the alphanum field accepts an empty string of the correct number of characters containing only
+        whitespaces.
+        """
+        text = '                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                '
+        self.assertRaises(ParseException, self.field.parseString, text)

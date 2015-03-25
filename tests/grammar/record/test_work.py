@@ -22,6 +22,42 @@ class TestWorkValid(unittest.TestCase):
     def setUp(self):
         self.grammar = work.work_record
 
+    def test_valid_common(self):
+        record = 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('NWR', result.record_type)
+        self.assertEqual(199, result.transaction_sequence_n)
+        self.assertEqual(0, result.record_sequence_n)
+        self.assertEqual('WORK NAME', result.title)
+        self.assertEqual(None, result.language_code)
+        self.assertEqual('1450455', result.submitter_work_n)
+        self.assertEqual(None, result.iswc)
+        self.assertEqual(None, result.copyright_date)
+        self.assertEqual(None, result.copyright_number)
+        self.assertEqual('UNC', result.musical_work_distribution_category)
+        self.assertEqual(0, result.duration.hour)
+        self.assertEqual(0, result.duration.minute)
+        self.assertEqual(0, result.duration.second)
+        self.assertEqual('Y', result.recorded_indicator)
+        self.assertEqual('MTX', result.text_music_relationship)
+        self.assertEqual(None, result.composite_type)
+        self.assertEqual('ORI', result.version_type)
+        self.assertEqual(None, result.excerpt_type)
+        self.assertEqual('ORI', result.music_arrangement)
+        self.assertEqual('ORI', result.lyric_adaptation)
+        self.assertEqual(None, result.contact_name)
+        self.assertEqual(None, result.contact_id)
+        self.assertEqual(None, result.cwr_work_type)
+        self.assertEqual(False, result.grand_rights_indicator)
+        self.assertEqual(0, result.composite_component_count)
+        self.assertEqual(None, result.date_publication_printed_edition)
+        self.assertEqual('U', result.exceptional_clause)
+        self.assertEqual(None, result.opus_number)
+        self.assertEqual(None, result.catalogue_number)
+        self.assertEqual('Y', result.priority_flag)
+
     def test_valid_full(self):
         """
         Tests that the Work grammar decodes correctly formatted Work record.
@@ -104,7 +140,7 @@ class TestWorkValid(unittest.TestCase):
         self.assertEqual('THE CONTACT', result.contact_name)
         self.assertEqual('A123456789', result.contact_id)
         self.assertEqual(None, result.cwr_work_type)
-        self.assertEqual(False, result.grand_rights_indicator)
+        self.assertEqual(None, result.grand_rights_indicator)
         self.assertEqual(0, result.composite_component_count)
         self.assertEqual(2, result.date_publication_printed_edition.day)
         self.assertEqual(3, result.date_publication_printed_edition.month)

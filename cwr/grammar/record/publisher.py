@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table, society
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
-from cwr.grammar.field import publisher as field_publisher
 from cwr.interested_party import Publisher, PublisherRecord
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -23,20 +22,19 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
 """
 Publisher patterns.
 """
 
-publisher = field_special.lineStart + field_record.record_prefix(_config.record_type('publisher'),
-                                                                 compulsory=True) + field_publisher.publisher_sequence_n + \
-            field_special.ip_n() + field_publisher.name + field_publisher.unknown + \
-            field_table.publisher_type() + field_publisher.tax_id + field_special.ipi_name_number() + field_publisher.submitter_agreement_n + \
-            society.pr_affiliation() + society.pr_share(maximum=50) + \
-            society.mr_affiliation() + society.mr_share() + \
-            society.sr_affiliation() + society.sr_share() + \
-            field_table.special_agreement() + field_publisher.first_recording_refusal + field_special.blank(
-    1) + field_special.ipi_base_number() + field_publisher.international_code + \
-            field_publisher.society_assigned_agreement_n + field_table.agreement_type() + field_table.usa_license() + field_special.lineEnd
+publisher = _factory_record.get_transaction_record('publisher')
 
 """
 Parsing actions for the patterns.
@@ -71,10 +69,10 @@ def _to_publisherrecord(parsed):
     publisher_data = _to_publisher(parsed)
 
     return PublisherRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                           publisher_data, parsed.publisher_sequence_n, parsed.submitter_agreement_id,
+                           publisher_data, parsed.publisher_sequence_n, parsed.submitter_agreement_n,
                            parsed.publisher_type,
-                           parsed.publisher_unknown, parsed.agreement_type, parsed.isac,
-                           parsed.society_assigned_agreement_n, parsed.pr_society, parsed.pr_share,
-                           parsed.mr_society, parsed.mr_share, parsed.sr_society,
-                           parsed.sr_share, parsed.special_agreements,
-                           parsed.first_recording_refusal, parsed.usa_license)
+                           parsed.publisher_unknown, parsed.agreement_type, parsed.international_standard_code,
+                           parsed.society_assigned_agreement_n, parsed.pr_affiliation, parsed.pr_share,
+                           parsed.mr_affiliation, parsed.mr_share, parsed.sr_affiliation,
+                           parsed.sr_share, parsed.special_agreement_indicator,
+                           parsed.first_recording_refusal, parsed.usa_license_indicator)

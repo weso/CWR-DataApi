@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import work as field_work
-from cwr.grammar.field import table as field_table
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
-from cwr.grammar.field import work_detail as field_work_detail
 from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
     WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord, ComponentRecord
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -33,60 +31,35 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
 """
 Patterns.
 """
 
-alternate = field_special.lineStart + field_record.record_prefix(_config.record_type('alternate_title'),
-                                                                 compulsory=True) + \
-            field_work_detail.alternate_title + field_table.title_type() + field_table.language_code() + field_special.lineEnd
+alternate = _factory_record.get_transaction_record('alternate_title')
 
-entire_title = field_special.lineStart + field_record.record_prefix(_config.record_type('entire_work_title'),
-                                                                    compulsory=True) + \
-               field_work_detail.entire_work_title + field_work_detail.iswc + field_table.language_code() + field_work_detail.writer_1_last_name + \
-               field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
-               field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
-               field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_2_ipi_base_n + field_work.submitter_work_n + field_special.lineEnd
+entire_title = _factory_record.get_transaction_record('entire_work_title')
 
-version = field_special.lineStart + field_record.record_prefix(_config.record_type('original_work_title'),
-                                                               compulsory=True) + \
-          field_work_detail.original_title + field_work_detail.iswc + field_table.language_code() + field_work_detail.writer_1_last_name + \
-          field_work_detail.writer_1_first_name + field_work_detail.source + field_work_detail.writer_1_ipi_name_n + \
-          field_work_detail.writer_1_ipi_base_n + field_work_detail.writer_2_last_name + \
-          field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_2_ipi_base_n + field_work.submitter_work_n + field_special.lineEnd
+version = _factory_record.get_transaction_record('original_work_title')
 
-performing = field_special.lineStart + field_record.record_prefix(_config.record_type('performing_artist'),
-                                                                  compulsory=True) + \
-             field_work_detail.performing_artist_last_name + field_work_detail.performing_artist_first_name + field_special.ipi_name_number() + \
-             field_special.ipi_base_number() + field_special.lineEnd
+performing = _factory_record.get_transaction_record('performing_artist')
 
-recording = field_special.lineStart + field_record.record_prefix(_config.record_type('recording_detail'),
-                                                                 compulsory=True) + field_work_detail.first_release + \
-            field_special.blank(_config.field_size('recording_detail', 'constant_1')) + \
-            field_work_detail.first_release_duration + field_special.blank(
-    _config.field_size('recording_detail', 'constant_2')) + \
-            field_work_detail.first_title + field_work_detail.first_label + field_work_detail.first_release_catalog_n + \
-            field_special.ean_13() + field_special.isrc() + field_table.recording_formats() + \
-            field_table.recording_techniques() + field_table.media_types() + field_special.lineEnd
+recording = _factory_record.get_transaction_record('recording_detail')
 
-origin = field_special.lineStart + field_record.record_prefix(_config.record_type('work_origin'),
-                                                              compulsory=True) + field_table.intended_purposes() + \
-         field_work_detail.production_title + field_work_detail.cd_identifier + field_work_detail.cut_number + field_work_detail.library + field_work_detail.bltvr + field_special.visan() + field_work_detail.production_n + \
-         field_work_detail.episode_title + field_work_detail.episode_n + field_work_detail.year_production + field_special.audio_visual_key() + field_special.lineEnd
+origin = _factory_record.get_transaction_record('work_origin')
 
-inst_summary = field_special.lineStart + field_record.record_prefix(
-    _config.record_type('instrumentation_summary'), compulsory=True) + field_work_detail.number_voices + \
-               field_table.standard_instrumentations() + field_work_detail.instrumentation_description + field_special.lineEnd
+inst_summary = _factory_record.get_transaction_record('instrumentation_summary')
 
-inst_detail = field_special.lineStart + field_record.record_prefix(_config.record_type('instrumentation_detail'),
-                                                                   compulsory=True) + \
-              field_table.instruments() + field_work_detail.number_players + field_special.lineEnd
+inst_detail = _factory_record.get_transaction_record('instrumentation_detail')
 
-component = field_special.lineStart + field_record.record_prefix(_config.record_type('component'),
-                                                                 compulsory=True) + field_work_detail.component_title + \
-            field_work_detail.iswc + field_work.submitter_work_n + field_work_detail.component_duration + field_work_detail.writer_1_last_name + field_work_detail.writer_1_first_name + field_work_detail.writer_1_ipi_name_n + \
-            field_work_detail.writer_2_last_name + field_work_detail.writer_2_first_name + field_work_detail.writer_2_ipi_name_n + field_work_detail.writer_1_ipi_base_n + \
-            field_work_detail.writer_2_ipi_base_n + field_special.lineEnd
+component = _factory_record.get_transaction_record('component')
 
 """
 Parsing actions for the patterns.
@@ -179,7 +152,7 @@ def _to_recording_detail(parsed):
     """
     return RecordingDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
                                  parsed.first_release_date, parsed.first_release_duration, parsed.first_album_title,
-                                 parsed.first_album_label, parsed.first_release_catalog_n, parsed.ean_13, parsed.isrc,
+                                 parsed.first_album_label, parsed.first_release_catalog_n, parsed.ean13, parsed.isrc,
                                  parsed.recording_format, parsed.recording_technique, parsed.media_type)
 
 
@@ -204,7 +177,7 @@ def _to_instrumentation_summary(parsed):
     :return: a InstrumentationSummaryRecord created from the parsed record
     """
     return InstrumentationSummaryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                        parsed.number_voices, parsed.standard_instrumentation,
+                                        parsed.number_voices, parsed.standard_instrumentation_type,
                                         parsed.instrumentation_description)
 
 
@@ -216,7 +189,7 @@ def _to_instrumentation_detail(parsed):
     :return: a InstrumentationDetailRecord created from the parsed record
     """
     return InstrumentationDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                       parsed.instruments, parsed.number_players)
+                                       parsed.instrument, parsed.number_players)
 
 
 def _to_component(parsed):

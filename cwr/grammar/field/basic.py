@@ -25,6 +25,9 @@ Each of these fields is parsed into a value as follows:
 - Flag (F). String
 - Date (D). datetime.date.
 - Time (T). datetime.time.
+
+Additionally, other fields used on the CWR files, but not defined as basic fields, are included:
+- Blank. A line composed only of whitespaces.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -42,7 +45,7 @@ The string contained in this field is parsed into a string with no heading or tr
 """
 
 
-def alphanum(columns, name=None, compulsory=False, extended=False):
+def alphanum(columns, name=None, extended=False):
     """
     Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
 
@@ -55,7 +58,6 @@ def alphanum(columns, name=None, compulsory=False, extended=False):
 
     :param columns: number of columns for this field
     :param name: name for the field
-    :param compulsory: indicates if empty strings are disallowed
     :param extended: indicates if this is the exceptional case where non-ASCII are allowed
     :return: grammar for this Alphanumeric field
     """
@@ -78,8 +80,8 @@ def alphanum(columns, name=None, compulsory=False, extended=False):
     # Parse action
     field.setParseAction(lambda s: s[0].strip())
 
-    if compulsory:
-        # Compulsory field validation action
+    # Compulsory field validation action
+    if columns > 0:
         field.addParseAction(lambda s: _check_not_empty(s[0]))
 
     # White spaces are not removed
@@ -104,7 +106,8 @@ def _check_not_empty(string):
     string = string.strip()
 
     if len(string) == 0:
-        raise pp.ParseException(string, "The field should not be empty")
+        message = 'The string should not be empty'
+        raise pp.ParseException(message)
 
 
 """
@@ -116,7 +119,7 @@ For the Numeric field allowing float values check the numeric_float method.
 """
 
 
-def numeric(columns, name=None, compulsory=False):
+def numeric(columns, name=None):
     """
     Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
 
@@ -126,7 +129,6 @@ def numeric(columns, name=None, compulsory=False):
 
     :param columns: number of columns for this field
     :param name: name for the field
-    :param compulsory: indicates if the zero is disallowed
     :return: grammar for the integer numeric field
     """
 
@@ -146,21 +148,6 @@ def numeric(columns, name=None, compulsory=False):
 
     # Name
     field.setName(name)
-
-    if not compulsory:
-        empty = pp.Regex('[ ]{' + str(columns) + '}')
-
-        empty.setParseAction(pp.replaceWith(None))
-
-        empty.setName(name)
-
-        # White spaces are not removed
-        empty.leaveWhitespace()
-
-        field = field | empty
-
-        # Name
-        field.setName(name)
 
     return field
 
@@ -187,7 +174,7 @@ For the Numeric field allowing integer values check the numeric method.
 """
 
 
-def numeric_float(columns, nums_int, name=None, compulsory=False):
+def numeric_float(columns, nums_int, name=None):
     """
     Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
 
@@ -211,11 +198,11 @@ def numeric_float(columns, nums_int, name=None, compulsory=False):
 
     if columns <= 0:
         # Can't be empty or have negative size
-        raise BaseException()
+        raise BaseException('Number of columns should be positive')
 
     if nums_int < 0:
         # Integer columns can't have negative size
-        raise BaseException()
+        raise BaseException('Number of integer values should be positive or zero')
 
     if columns < nums_int:
         # There are more integer numbers than columns
@@ -229,9 +216,8 @@ def numeric_float(columns, nums_int, name=None, compulsory=False):
     # Parse action
     field.setParseAction(lambda n: _to_numeric_float(n[0], nums_int))
 
-    if compulsory:
-        # Compulsory field validation action
-        field.addParseAction(lambda s: _check_above_value_float(s[0], 0))
+    # Compulsory field validation action
+    field.addParseAction(lambda s: _check_above_value_float(s[0], 0))
 
     # Name
     field.setName(name)
@@ -267,9 +253,9 @@ def _check_above_value_float(string, minimum):
     """
     value = float(string)
 
-    if value <= minimum:
-        message = "The Numeric Field value should be above %s" % minimum
-        raise pp.ParseException(string, message)
+    if value < minimum:
+        message = 'The Numeric Field value should be above %s' % minimum
+        raise pp.ParseException(message)
 
 
 """
@@ -281,7 +267,7 @@ This value will be parsed into a boolean type value.
 """
 
 
-def boolean(name=None, compulsory=False):
+def boolean(name=None):
     """
     Creates the grammar for a Boolean (F) field, accepting only 'Y' or 'N'
 
@@ -301,21 +287,6 @@ def boolean(name=None, compulsory=False):
 
     # Name
     field.setName(name)
-
-    if not compulsory:
-        empty = pp.Literal(' ')
-
-        empty.setParseAction(lambda b: False)
-
-        empty.setName(name)
-
-        # White spaces are not removed
-        empty.leaveWhitespace()
-
-        field = field | empty
-
-        # Name
-        field.setName(name)
 
     return field
 
@@ -349,7 +320,7 @@ This string value will be just returned untouched.
 """
 
 
-def flag(name=None, compulsory=False):
+def flag(name=None):
     """
     Creates the grammar for a Flag (F) field, accepting only 'Y', 'N' or 'U'.
 
@@ -369,19 +340,6 @@ def flag(name=None, compulsory=False):
 
     # Name
     field.setName(name)
-
-    if not compulsory:
-        # If it is not compulsory the empty date is accepted
-        optional = pp.Literal(' ')
-        optional.setParseAction(pp.replaceWith(None))
-
-        # Name
-        optional.setName(name)
-
-        field = field | optional
-
-        # Name
-        field.setName(name)
 
     field.leaveWhitespace()
 
@@ -419,7 +377,7 @@ This string will be parsed into a datetime.date.
 """
 
 
-def date(name=None, compulsory=False):
+def date(name=None):
     """
     Creates the grammar for a Date (D) field, accepting only numbers in a certain pattern.
 
@@ -443,26 +401,6 @@ def date(name=None, compulsory=False):
     # Name
     field.setName(name)
 
-    if not compulsory:
-        # If it is not compulsory the empty date is accepted
-        optional = pp.Regex('[0]{8}')
-        optional.setParseAction(pp.replaceWith(None))
-
-        # Name
-        optional.setName(name)
-
-        # If it is not compulsory the empty date is accepted
-        empty = pp.Regex('[ ]{8}')
-        empty.setParseAction(pp.replaceWith(None))
-
-        # Name
-        empty.setName(name)
-
-        field = field | optional | empty
-
-        # Name
-        field.setName(name)
-
     # White spaces are not removed
     field.leaveWhitespace()
 
@@ -481,7 +419,7 @@ This string will be parsed into a datetime.time.
 """
 
 
-def time(name=None, compulsory=False):
+def time(name=None):
     """
     Creates the grammar for a Time (D) field, accepting only numbers in a certain pattern.
 
@@ -516,7 +454,7 @@ This accepts only values from a table or list.
 """
 
 
-def lookup(values, columns=1, name=None, compulsory=False):
+def lookup(values, columns=1, name=None):
     """
     Creates the grammar for a Lookup (L) field, accepting only values from a list.
 
@@ -533,6 +471,9 @@ def lookup(values, columns=1, name=None, compulsory=False):
     if name is None:
         name = 'Lookup Field'
 
+    if values is None:
+        raise ValueError('The values can no be None')
+
     # Only the specified values are allowed
     lookup_field = pp.oneOf(values)
 
@@ -542,19 +483,33 @@ def lookup(values, columns=1, name=None, compulsory=False):
 
     lookup_field.leaveWhitespace()
 
-    if not compulsory:
-        lookup_field_option = pp.Regex('[ ]{' + str(columns) + '}')
-
-        lookup_field_option.setName(name)
-
-        lookup_field_option.leaveWhitespace()
-
-        lookup_field_option.setParseAction(pp.replaceWith(None))
-
-        lookup_field = lookup_field | lookup_field_option
-
-        lookup_field.setName(name)
-
-        lookup_field.leaveWhitespace()
-
     return lookup_field
+
+
+"""
+Blank field.
+
+This accepts only a line composed of whitespaces.
+"""
+
+
+def blank(columns=1, name=None):
+    """
+    Creates the grammar for a blank field.
+
+    These are for constant empty strings which should be ignored, as they are used just as fillers.
+
+    :param columns: number of columns, which is the required number of whitespaces
+    :param name: name for the field
+    :return: grammar for the blank field
+    """
+    if name is None:
+        name = 'Blank Field'
+
+    field = pp.Regex('[ ]{' + str(columns) + '}')
+    field.leaveWhitespace()
+    field.suppress()
+
+    field.setName(name)
+
+    return field

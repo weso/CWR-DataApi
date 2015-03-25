@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from cwr.agreement import AgreementRecord, AgreementInterestedParty
+from cwr.agreement import AgreementRecord, InterestedPartyForAgreementRecord
 from cwr.interested_party import Publisher, Writer
 from cwr.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
     RecordingDetailRecord, WorkOriginRecord, PerformingArtistRecord
@@ -8,9 +8,8 @@ from cwr.work import WorkRecord, AlternateTitleRecord, AuthoredWorkRecord, \
 Offers methods to create model objects from JSON objects.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -69,11 +68,11 @@ def parse_authored_work(json_item):
                                language_code=json_item['language_code'],
                                source=json_item['source'],
                                writer_1_first_name=json_item['first_name_1'],
-                               writer_1_ipi_base=json_item['ipi_base_1'],
-                               writer_1_ipi_name=json_item['ipi_name_1'],
+                               writer_1_ipi_base_n=json_item['ipi_base_1'],
+                               writer_1_ipi_name_n=json_item['ipi_name_1'],
                                writer_2_first_name=json_item['first_name_2'],
-                               writer_2_ipi_base=json_item['ipi_base_2'],
-                               writer_2_ipi_name=json_item['ipi_name_2'],
+                               writer_2_ipi_base_n=json_item['ipi_base_2'],
+                               writer_2_ipi_name_n=json_item['ipi_name_2'],
                                writer_1_last_name=json_item['last_name_1'],
                                writer_2_last_name=json_item['last_name_2'],
                                iswc=json_item['iswc'])
@@ -88,12 +87,13 @@ def parse_ipa(json_item):
     :param json_item: JSON object to parse
     :return: an IPA parsed from the JSON
     """
-    agreement = AgreementInterestedParty('', 0, 0, json_item['ip_id'], json_item['ip_last_name'],
-                                         json_item['agreement_role_code'], json_item['ip_writer_name'],
-                                         json_item['ip_ipi'], json_item['ipi_name'], json_item['pr_society'],
-                                         json_item['pr_share'],
-                                         json_item['mr_society'], json_item['mr_share'], json_item['sr_society'],
-                                         json_item['sr_share'])
+    agreement = InterestedPartyForAgreementRecord('', 0, 0, json_item['ip_id'], json_item['ip_last_name'],
+                                                  json_item['agreement_role_code'], json_item['ip_writer_name'],
+                                                  json_item['ip_ipi'], json_item['ipi_name'], json_item['pr_society'],
+                                                  json_item['pr_share'],
+                                                  json_item['mr_society'], json_item['mr_share'],
+                                                  json_item['sr_society'],
+                                                  json_item['sr_share'])
 
     return agreement
 

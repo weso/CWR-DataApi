@@ -2,10 +2,9 @@
 
 from data.accessor import CWRConfiguration
 from cwr.group import GroupHeader, GroupTrailer
-from cwr.grammar.field import group as field_group
-from cwr.grammar.field import table as field_table
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -41,6 +40,14 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
 """
 Group patterns.
 
@@ -48,17 +55,11 @@ These are the grammatical structures for the Group Header and Group Trailer.
 """
 
 # Group Header pattern
-group_header = field_special.lineStart + field_record.record_type(
-    _config.record_type('group_header'), compulsory=True) + field_table.transaction_type(
-    compulsory=True) + field_group.group_id + field_group.version_number + \
-               field_group.batch_request_id + field_group.sd_type + field_special.lineEnd
+group_header = _factory_record.get_record('group_header')
 group_header = group_header.setName('Group Header').setResultsName('group_header')
 
 # Group Trailer pattern
-group_trailer = field_special.lineStart + field_record.record_type(
-    _config.record_type('group_trailer'), compulsory=True) + field_group.group_id + field_record.transaction_count(
-    compulsory=True) + field_record.record_count(compulsory=True) + \
-                field_group.currency_indicator + field_group.total_monetary_value + field_special.lineEnd
+group_trailer = _factory_record.get_record('group_trailer')
 group_trailer = group_trailer.setName('Group Trailer').setResultsName('group_trailer')
 
 """

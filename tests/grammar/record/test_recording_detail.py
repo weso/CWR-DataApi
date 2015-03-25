@@ -16,7 +16,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestWorkDetalGrammar(unittest.TestCase):
+class TestWorkDetailGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = work_detail.recording
 
@@ -66,7 +66,7 @@ class TestWorkDetalGrammar(unittest.TestCase):
         self.assertEqual('A B C  _SYMBOLS_', result.first_album_label)
         self.assertEqual('33221', result.first_release_catalog_n)
         self.assertEqual(None, result.ean)
-        self.assertEqual('', result.isrc)
+        self.assertEqual(None, result.isrc)
         self.assertEqual(None, result.recording_format)
         self.assertEqual('U', result.recording_technique)
         self.assertEqual(None, result.media_type)

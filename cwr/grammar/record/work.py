@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.field import table as field_table
-from cwr.grammar.field import special as field_special
-from cwr.grammar.field import record as field_record
-from cwr.grammar.field import work as field_work
 from cwr import work
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -19,33 +18,21 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
 """
 Work patterns.
 """
 
-work_record = field_special.lineStart + field_record.record_prefix(_config.record_type('work'),
-                                                                   compulsory=True) + field_work.work_title + \
-              field_table.language_code() + field_work.submitter_work_n + field_work.iswc + \
-              field_work.copyright_date + field_work.copyright_number + field_table.musical_work_distribution_category(
-    compulsory=True) + field_work.duration + field_work.recorded + \
-              field_table.text_music_relationship(
-                  compulsory=True) + field_table.composite_type() + field_table.version_type(
-    compulsory=True) + field_table.excerpt_type(compulsory=True) + field_table.music_arrangement() + \
-              field_table.lyric_adaptation() + field_work.contact_name + field_work.contact_id + field_table.work_type() + field_work.gr_indicator + field_work.composite_count + \
-              field_work.date_publication_printed_edition + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
-              field_special.lineEnd
+work_record = _factory_record.get_transaction_record('work')
 
-conflict = field_special.lineStart + field_record.record_prefix(_config.record_type('work_conflict'),
-                                                                compulsory=True) + field_work.work_title + \
-           field_table.language_code() + field_work.submitter_work_n + field_work.iswc + \
-           field_work.copyright_date + field_work.copyright_number + field_table.musical_work_distribution_category(
-    compulsory=True) + field_work.duration + field_work.recorded + \
-           field_table.text_music_relationship(
-               compulsory=True) + field_table.composite_type() + field_table.version_type(
-    compulsory=True) + field_table.excerpt_type(compulsory=True) + field_table.music_arrangement() + \
-           field_table.lyric_adaptation() + field_work.contact_name + field_work.contact_id + field_table.work_type() + field_work.gr_indicator + field_work.composite_count + \
-           field_work.date_publication_printed_edition + field_work.exceptional_clause + field_work.opus_number + field_work.catalogue_number + field_work.priority_flag + \
-           field_special.lineEnd
+conflict = _factory_record.get_transaction_record('work_conflict')
 
 """
 Parsing actions for the patterns.
@@ -82,7 +69,7 @@ def _to_work(parsed):
                            composite_type=parsed.composite_type,
                            composite_component_count=parsed.composite_component_count,
                            iswc=parsed.iswc,
-                           cwr_work_type=parsed.cwr_work_type,
+                           cwr_work_type=parsed.work_type,
                            duration=parsed.duration,
                            catalogue_number=parsed.catalogue_number,
                            opus_number=parsed.opus_number,
