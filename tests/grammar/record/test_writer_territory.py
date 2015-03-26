@@ -41,7 +41,7 @@ class TestSWTGrammar(unittest.TestCase):
         self.assertEqual(10.12, result.pr_col_share)
         self.assertEqual(50, result.mr_col_share)
         self.assertEqual(25.2, result.sr_col_share)
-        self.assertEqual('I', result.ie_indicator)
+        self.assertEqual('I', result.inclusion_exclusion_indicator)
         self.assertEqual(8, result.tis_numeric_code)
         self.assertEqual(True, result.shares_change)
         self.assertEqual(12, result.sequence_n)

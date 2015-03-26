@@ -19,7 +19,7 @@ alternate_title:
   - name: language_code
 
 ari:
-  - name: society_code
+  - name: society_n
   - name: work_n
   - name: type_of_right
   - name: subject_code
@@ -113,13 +113,13 @@ interested_party_agreement:
   - name: ip_last_name
     compulsory: true
   - name: ip_writer_first_name
-  - name: pr_affiliation
+  - name: pr_society
   - name: pr_share
     compulsory: true
-  - name: mr_affiliation
+  - name: mr_society
   - name: mr_share
     compulsory: true
-  - name: sr_affiliation
+  - name: sr_society
   - name: sr_share
     compulsory: true
 
@@ -208,13 +208,13 @@ publisher:
   - name: tax_id
   - name: ipi_name_n
   - name: submitter_agreement_n
-  - name: pr_affiliation
+  - name: pr_society
   - name: pr_share_50
     compulsory: true
-  - name: mr_affiliation
+  - name: mr_society
   - name: mr_share
     compulsory: true
-  - name: sr_affiliation
+  - name: sr_society
   - name: sr_share
     compulsory: true
   - name: special_agreement_indicator
@@ -233,8 +233,8 @@ publisher_territory:
   - name: pr_share_50
   - name: mr_share
   - name: sr_share
-  - name: ie_indicator
-  - name: tis_code
+  - name: inclusion_exclusion_indicator
+  - name: tis_numeric_code
   - name: shares_change
   - name: sequence_n
 
@@ -253,8 +253,8 @@ recording_detail:
   - name: media_type
 
 territory_in_agreement:
-  - name: ie_indicator
-  - name: tis_code
+  - name: inclusion_exclusion_indicator
+  - name: tis_numeric_code
 
 transmission_header:
   - name: sender_type
@@ -364,13 +364,13 @@ writer:
   - name: writer_designation_code
   - name: tax_id
   - name: ipi_name_n
-  - name: pr_affiliation
+  - name: pr_society
   - name: pr_share
     compulsory: true
-  - name: mr_affiliation
+  - name: mr_society
   - name: mr_share
     compulsory: true
-  - name: sr_affiliation
+  - name: sr_society
   - name: sr_share
     compulsory: true
   - name: reversionary
@@ -394,7 +394,7 @@ writer_territory:
   - name: pr_share
   - name: mr_share
   - name: sr_share
-  - name: ie_indicator
-  - name: tis_code
+  - name: inclusion_exclusion_indicator
+  - name: tis_numeric_code
   - name: shares_change
   - name: sequence_n

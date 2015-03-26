@@ -22,7 +22,7 @@ excerpt_type:
   name: Excerpt Type
   source: excerpt_type
 
-ie_indicator:
+inclusion_exclusion_indicator:
   type: lookup
   size: 1
   name: Inclusion/Exclusion Indicator
@@ -76,7 +76,7 @@ message_type:
   name: Message Type
   source: message_type
 
-mr_affiliation:
+mr_society:
   type: lookup
   size: 3
   name: Mechanical Rights Affiliation Society
@@ -114,7 +114,7 @@ post_term_collection_status:
   name: Post Term Collection Status
   source: post_term_collection_status
 
-pr_affiliation:
+pr_society:
   type: lookup
   size: 3
   name: Performing Rights Affiliation Society
@@ -164,7 +164,7 @@ sender_type:
   name: Sender Type
   source: sender_type
 
-society_code:
+society_n:
   type: lookup
   size: 3
   name: Society ID Field
@@ -178,7 +178,7 @@ special_agreement_indicator:
   name: Special Agreements Indicator
   source: special_agreement_indicator
 
-sr_affiliation:
+sr_society:
   type: lookup
   size: 3
   name: Synchronization Rights Affiliation Society
@@ -204,7 +204,7 @@ text_music_relationship:
   name: Text Music Relationship
   source: text_music_relationship
 
-tis_code:
+tis_numeric_code:
   type: lookup
   size: 4
   name: TIS Numeric Code

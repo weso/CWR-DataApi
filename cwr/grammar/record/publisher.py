@@ -72,7 +72,7 @@ def _to_publisherrecord(parsed):
                            publisher_data, parsed.publisher_sequence_n, parsed.submitter_agreement_n,
                            parsed.publisher_type,
                            parsed.publisher_unknown, parsed.agreement_type, parsed.international_standard_code,
-                           parsed.society_assigned_agreement_n, parsed.pr_affiliation, parsed.pr_share,
-                           parsed.mr_affiliation, parsed.mr_share, parsed.sr_affiliation,
+                           parsed.society_assigned_agreement_n, parsed.pr_society, parsed.pr_share,
+                           parsed.mr_society, parsed.mr_share, parsed.sr_society,
                            parsed.sr_share, parsed.special_agreement_indicator,
                            parsed.first_recording_refusal, parsed.usa_license_indicator)

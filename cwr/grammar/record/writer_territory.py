@@ -57,5 +57,6 @@ def _to_writerterritory(parsed):
     :return: an IPTerritoryRecord created from the parsed record
     """
     return IPTerritoryOfControlRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                      parsed.ip_n, parsed.ie_indicator, parsed.tis_code, parsed.sequence_n,
+                                      parsed.ip_n, parsed.inclusion_exclusion_indicator, parsed.tis_numeric_code,
+                                      parsed.sequence_n,
                                       parsed.pr_share, parsed.mr_share, parsed.sr_share, parsed.shares_change)

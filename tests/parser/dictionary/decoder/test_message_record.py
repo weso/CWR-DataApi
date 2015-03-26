@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import datetime
 
 from cwr.parser.dictionary import MessageDictionaryDecoder
 
@@ -16,6 +15,7 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
+
 
 class TestMessageRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):

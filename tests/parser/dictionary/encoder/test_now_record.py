@@ -3,7 +3,7 @@
 import unittest
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
-from cwr.nra import NOWRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetOtherWriterRecord
 
 
 """
@@ -23,13 +23,13 @@ class TestNOWRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
-        data = NOWRecord(record_type='NOW',
-                         transaction_sequence_n=3,
-                         record_sequence_n=15,
-                         writer_first_name='FIRST NAME',
-                         writer_name='NAME',
-                         position=5,
-                         language_code='ES')
+        data = NonRomanAlphabetOtherWriterRecord(record_type='NOW',
+                                                 transaction_sequence_n=3,
+                                                 record_sequence_n=15,
+                                                 writer_first_name='FIRST NAME',
+                                                 writer_name='NAME',
+                                                 position=5,
+                                                 language_code='ES')
 
         encoded = self._encoder.encode(data)
 

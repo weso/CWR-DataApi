@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import nra as rules_nr
+from cwr.grammar.record import non_roman_alphabet as rules_nr
 from cwr.grammar.record import work_detail as rules_work_detail
 
 

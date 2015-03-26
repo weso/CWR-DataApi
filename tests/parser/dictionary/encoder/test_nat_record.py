@@ -3,7 +3,7 @@
 import unittest
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
-from cwr.nra import NATRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetTitleRecord
 
 
 """
@@ -23,12 +23,12 @@ class TestNATRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
-        data = NATRecord(record_type='NAT',
-                         transaction_sequence_n=3,
-                         record_sequence_n=15,
-                         title='THE TITLE',
-                         title_type='FT',
-                         language_code='ES')
+        data = NonRomanAlphabetTitleRecord(record_type='NAT',
+                                           transaction_sequence_n=3,
+                                           record_sequence_n=15,
+                                           title='THE TITLE',
+                                           title_type='FT',
+                                           language_code='ES')
 
         encoded = self._encoder.encode(data)
 

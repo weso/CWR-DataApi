@@ -4,7 +4,6 @@ import unittest
 import datetime
 
 from cwr.parser.dictionary import AcknowledgementDictionaryDecoder
-from cwr.acknowledgement import AcknowledgementRecord
 
 
 """
@@ -17,6 +16,7 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
+
 
 class TestAcknowledgementRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):

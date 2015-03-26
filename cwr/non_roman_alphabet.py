@@ -13,7 +13,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class NRARecord(TransactionRecord):
+class NonRomanAlphabetRecord(TransactionRecord):
     """
     Represents a CWR Non-Roman Alphabet record.
 
@@ -22,7 +22,7 @@ class NRARecord(TransactionRecord):
     __metaclass__ = ABCMeta
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, language_code=None):
-        super(NRARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+        super(NonRomanAlphabetRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._language_code = language_code
 
     @property
@@ -37,7 +37,7 @@ class NRARecord(TransactionRecord):
         return self._language_code
 
 
-class NRAWorkRecord(NRARecord):
+class NonRomanAlphabetWorkRecord(NonRomanAlphabetRecord):
     """
     Represents a Non-Roman Alphabet record used for Work details.
 
@@ -52,7 +52,8 @@ class NRAWorkRecord(NRARecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None):
-        super(NRAWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NonRomanAlphabetWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
+                                                         language_code)
         self._title = title
 
     @property
@@ -67,7 +68,7 @@ class NRAWorkRecord(NRARecord):
         return self._title
 
 
-class NATRecord(NRARecord):
+class NonRomanAlphabetTitleRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Title (NAT) record.
 
@@ -77,7 +78,8 @@ class NATRecord(NRARecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language_code=None):
-        super(NATRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NonRomanAlphabetTitleRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
+                                                          language_code)
         # Title info
         self._title = title
         self._title_type = title_type
@@ -105,7 +107,7 @@ class NATRecord(NRARecord):
         return self._title_type
 
 
-class NOWRecord(NRARecord):
+class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Other Writer Name (NOW) record.
 
@@ -118,7 +120,8 @@ class NOWRecord(NRARecord):
                  writer_first_name, writer_name,
                  position=None,
                  language_code=None):
-        super(NOWRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NonRomanAlphabetOtherWriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
+                                                                language_code)
         # Writer information
         self._writer_first_name = writer_first_name
         self._writer_name = writer_name
@@ -158,7 +161,7 @@ class NOWRecord(NRARecord):
         return self._writer_name
 
 
-class NPARecord(NRARecord):
+class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Agreement Party Name Record (NPA).
 
@@ -169,7 +172,8 @@ class NPARecord(NRARecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer_name, ip_n='',
                  language_code=None):
-        super(NPARecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NonRomanAlphabetAgreementPartyRecord, self).__init__(record_type, transaction_sequence_n,
+                                                                   record_sequence_n, language_code)
         # IP info
         self._ip_name = ip_name
         self._ip_writer_name = ip_writer_name
@@ -209,7 +213,7 @@ class NPARecord(NRARecord):
         return self._ip_writer_name
 
 
-class NPNRecord(NRARecord):
+class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Publisher Name Record (NPN).
 
@@ -219,7 +223,8 @@ class NPNRecord(NRARecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_sequence_n, ip_n,
                  publisher_name, language_code=None):
-        super(NPNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NonRomanAlphabetPublisherNameRecord, self).__init__(record_type, transaction_sequence_n,
+                                                                  record_sequence_n, language_code)
         # Publisher info
         self._publisher_sequence_n = publisher_sequence_n
         self._ip_n = ip_n
@@ -259,7 +264,7 @@ class NPNRecord(NRARecord):
         return self._publisher_sequence_n
 
 
-class NPRRecord(NRARecord):
+class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Performance Data in non-roman alphabet (NPR) record.
 
@@ -272,7 +277,8 @@ class NPRRecord(NRARecord):
                  performing_artist_name='', performing_artist_ipi_name_n=None,
                  performing_artist_ipi_base_n=None, language_code=None, performance_language=None,
                  performance_dialect=None):
-        super(NPRRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NonRomanAlphabetPerformanceDataRecord, self).__init__(record_type, transaction_sequence_n,
+                                                                    record_sequence_n, language_code)
         # Artist data
         self._performing_artist_first_name = performing_artist_first_name
         self._performing_artist_name = performing_artist_name
@@ -353,7 +359,7 @@ class NPRRecord(NRARecord):
         return self._performing_artist_name
 
 
-class NWNRecord(NRARecord):
+class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Writer Name Record (NWN).
 
@@ -364,7 +370,8 @@ class NWNRecord(NRARecord):
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_last_name,
                  ip_n='',
                  language_code=None):
-        super(NWNRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, language_code)
+        super(NonRomanAlphabetWriterNameRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
+                                                               language_code)
         # Writer info
         self._writer_first_name = writer_first_name
         self._writer_last_name = writer_last_name
