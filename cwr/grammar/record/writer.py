@@ -73,6 +73,6 @@ def _to_writerrecord(parsed):
     return WriterRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n, writer_data,
                         parsed.writer_designation_code, parsed.work_for_hire, parsed.writer_unknown,
                         parsed.reversionary,
-                        parsed.first_recording_refusal, parsed.usa_license_indicator, parsed.pr_affiliation,
-                        parsed.pr_share, parsed.mr_affiliation, parsed.mr_share,
-                        parsed.sr_affiliation, parsed.sr_share)
+                        parsed.first_recording_refusal, parsed.usa_license_indicator, parsed.pr_society,
+                        parsed.pr_share, parsed.mr_society, parsed.mr_share,
+                        parsed.sr_society, parsed.sr_share)

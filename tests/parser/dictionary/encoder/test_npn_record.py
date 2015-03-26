@@ -3,7 +3,7 @@
 import unittest
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
-from cwr.nra import NPNRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetPublisherNameRecord
 
 
 """
@@ -23,13 +23,13 @@ class TestNPNRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
-        data = NPNRecord(record_type='NPN',
-                         transaction_sequence_n=3,
-                         record_sequence_n=15,
-                         publisher_sequence_n=17,
-                         ip_n='ABC123',
-                         publisher_name='NAME',
-                         language_code='ES')
+        data = NonRomanAlphabetPublisherNameRecord(record_type='NPN',
+                                                   transaction_sequence_n=3,
+                                                   record_sequence_n=15,
+                                                   publisher_sequence_n=17,
+                                                   ip_n='ABC123',
+                                                   publisher_name='NAME',
+                                                   language_code='ES')
 
         encoded = self._encoder.encode(data)
 

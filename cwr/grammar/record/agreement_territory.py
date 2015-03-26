@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.agreement import AgreementTerritoryRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import AgreementTerritoryDictionaryDecoder
 
 
 """
@@ -50,8 +50,5 @@ def _to_agreementterritory(parsed):
     :param parsed: result of parsing a Territory in Agreement transaction header
     :return: a AgreementTerritoryRecord created from the parsed record
     """
-    return AgreementTerritoryRecord(record_type=parsed.record_type,
-                                    transaction_sequence_n=parsed.transaction_sequence_n,
-                                    record_sequence_n=parsed.record_sequence_n,
-                                    tis_numeric_code=parsed.tis_code,
-                                    inclusion_exclusion_indicator=parsed.ie_indicator)
+    decoder = AgreementTerritoryDictionaryDecoder()
+    return decoder.decode(parsed)

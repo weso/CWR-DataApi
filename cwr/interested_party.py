@@ -232,7 +232,8 @@ class IPTerritoryOfControlRecord(TransactionRecord):
     included in the Agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, ie_indicator, tis_numeric_code,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, inclusion_exclusion_indicator,
+                 tis_numeric_code,
                  sequence_n, pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
         super(IPTerritoryOfControlRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Territory information
@@ -240,7 +241,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
 
         # IP information
         self._ip_n = ip_n
-        self._ie_indicator = ie_indicator
+        self._inclusion_exclusion_indicator = inclusion_exclusion_indicator
         self._sequence_n = sequence_n
 
         # Shares information
@@ -250,7 +251,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         self._shares_change = shares_change
 
     @property
-    def ie_indicator(self):
+    def inclusion_exclusion_indicator(self):
         """
         Inclusion/Exclusion Indicator field. Table Lookup ('E'/'I').
 
@@ -262,7 +263,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
 
         :return: 'E' if the territory is excluded, 'I' otherwise
         """
-        return self._ie_indicator
+        return self._inclusion_exclusion_indicator
 
     @property
     def ip_n(self):

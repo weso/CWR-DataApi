@@ -3,7 +3,7 @@
 import unittest
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
-from cwr.nra import NRAWorkRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetWorkRecord
 
 
 """
@@ -23,11 +23,11 @@ class TestNRAWorkRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
-        data = NRAWorkRecord(record_type='NET',
-                             transaction_sequence_n=3,
-                             record_sequence_n=15,
-                             title='THE TITLE',
-                             language_code='ES')
+        data = NonRomanAlphabetWorkRecord(record_type='NET',
+                                          transaction_sequence_n=3,
+                                          record_sequence_n=15,
+                                          title='THE TITLE',
+                                          language_code='ES')
 
         encoded = self._encoder.encode(data)
 

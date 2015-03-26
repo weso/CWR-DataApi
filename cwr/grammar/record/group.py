@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.group import GroupHeader, GroupTrailer
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import GroupHeaderDictionaryDecoder, GroupTrailerDictionaryDecoder
 
 
 """
@@ -85,8 +85,8 @@ def _to_groupheader(parsed):
     :param parsed: result of parsing a group header
     :return: a GroupHeader created from the parsed record
     """
-    return GroupHeader(parsed.record_type, parsed.group_id, parsed.transaction_type, parsed.version_number,
-                       parsed.batch_request_id)
+    parser = GroupHeaderDictionaryDecoder()
+    return parser.decode(parsed)
 
 
 def _to_grouptrailer(parsed):
@@ -96,5 +96,5 @@ def _to_grouptrailer(parsed):
     :param parsed: result of parsing a group trailer
     :return: a GroupTrailer created from the parsed record
     """
-
-    return GroupTrailer(parsed.record_type, parsed.group_id, parsed.transaction_count, parsed.record_count)
+    parser = GroupTrailerDictionaryDecoder()
+    return parser.decode(parsed)

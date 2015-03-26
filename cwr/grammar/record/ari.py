@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.info import AdditionalRelatedInfoRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import AdditionalRelatedInformationDictionaryDecoder
 
 
 """
@@ -52,6 +52,5 @@ def _to_ari(parsed):
     :param parsed: result of parsing an Additional Related Information record
     :return: a AdditionalRelatedInfoRecord created from the parsed record
     """
-    return AdditionalRelatedInfoRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                       parsed.society_code, parsed.type_of_right, parsed.work_n, parsed.subject_code,
-                                       parsed.note)
+    parser = AdditionalRelatedInformationDictionaryDecoder()
+    return parser.decode(parsed)

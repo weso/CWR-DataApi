@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import nra
+from cwr.grammar.record import non_roman_alphabet
 
 
 """
@@ -22,7 +22,7 @@ class TestNOWGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = nra.now
+        self.grammar = non_roman_alphabet.now
 
     def test_valid_full(self):
         """

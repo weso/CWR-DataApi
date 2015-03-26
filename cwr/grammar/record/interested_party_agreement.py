@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.agreement import InterestedPartyForAgreementRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import InterestedPartyForAgreementDecoder
 
 
 """
@@ -52,14 +52,5 @@ def _to_interested_party_agreement(parsed):
     :param parsed: result of parsing an IPA record
     :return: an AgreementInterestedParty created from the parsed record
     """
-    return InterestedPartyForAgreementRecord(record_type=parsed.record_type,
-                                             transaction_sequence_n=parsed.transaction_sequence_n,
-                                             record_sequence_n=parsed.record_sequence_n,
-                                             ip_n=parsed.ip_n,
-                                             ip_last_name=parsed.ip_last_name,
-                                             agreement_role_code=parsed.agreement_role_code,
-                                             ip_writer_first_name=parsed.ip_writer_first_name,
-                                             ipi_name_n=parsed.ipi_name_n, ipi_base_n=parsed.ipi_base_n,
-                                             pr_society=parsed.pr_affiliation, pr_share=parsed.pr_share,
-                                             mr_society=parsed.mr_affiliation, mr_share=parsed.mr_share,
-                                             sr_society=parsed.sr_affiliation, sr_share=parsed.sr_share)
+    parser = InterestedPartyForAgreementDecoder()
+    return parser.decode(parsed)

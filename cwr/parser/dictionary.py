@@ -8,7 +8,9 @@ from cwr.interested_party import IPTerritoryOfControlRecord
 
 from cwr.parser.common import Encoder, Decoder
 from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
-from cwr.nra import NRAWorkRecord, NATRecord, NOWRecord, NPARecord, NPNRecord, NPRRecord, NWNRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetWorkRecord, NonRomanAlphabetTitleRecord, \
+    NonRomanAlphabetOtherWriterRecord, NonRomanAlphabetAgreementPartyRecord, NonRomanAlphabetPublisherNameRecord, \
+    NonRomanAlphabetPerformanceDataRecord, NonRomanAlphabetWriterNameRecord
 from cwr.transmission import TransmissionHeader, TransmissionTrailer, Transmission
 from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, RecordingDetailRecord, \
     InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, PerformingArtistRecord
@@ -26,40 +28,131 @@ __status__ = 'Development'
 
 
 class AcknowledgementDictionaryDecoder(Decoder):
-
     def __init__(self):
         super(AcknowledgementDictionaryDecoder, self).__init__()
 
     def decode(self, data):
         return AcknowledgementRecord(record_type=data['record_type'],
-                                 transaction_sequence_n=data['transaction_sequence_n'],
-                                 record_sequence_n=data['record_sequence_n'],
-                                 original_group_id=data['original_group_id'],
-                                 original_transaction_sequence_n=data['original_transaction_sequence_n'],
-                                 original_transaction_type=data['original_transaction_type'],
-                                 transaction_status=data['transaction_status'],
-                                 creation_date_time=data['creation_date_time'],
-                                 processing_date=data['processing_date'],
-                                 creation_title=data['creation_title'],
-                                 submitter_creation_n=data['submitter_creation_n'],
-                                 recipient_creation_n=data['recipient_creation_n'])
+                                     transaction_sequence_n=data['transaction_sequence_n'],
+                                     record_sequence_n=data['record_sequence_n'],
+                                     original_group_id=data['original_group_id'],
+                                     original_transaction_sequence_n=data['original_transaction_sequence_n'],
+                                     original_transaction_type=data['original_transaction_type'],
+                                     transaction_status=data['transaction_status'],
+                                     creation_date_time=data['creation_date_time'],
+                                     processing_date=data['processing_date'],
+                                     creation_title=data['creation_title'],
+                                     submitter_creation_n=data['submitter_creation_n'],
+                                     recipient_creation_n=data['recipient_creation_n'])
+
+
+class AgreementDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(AgreementDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return AgreementRecord(record_type=data['record_type'],
+                               transaction_sequence_n=data['transaction_sequence_n'],
+                               record_sequence_n=data['record_sequence_n'],
+                               submitter_agreement_n=data['submitter_agreement_n'],
+                               agreement_type=data['agreement_type'],
+                               agreement_start_date=data['agreement_start_date'],
+                               prior_royalty_status=data['prior_royalty_status'],
+                               post_term_collection_status=data['post_term_collection_status'],
+                               number_of_works=data['number_of_works'],
+                               society_assigned_agreement_n=data['society_assigned_agreement_n'],
+                               international_standard_code=data['international_standard_code'],
+                               sales_manufacture_clause=data['sales_manufacture_clause'],
+                               agreement_end_date=data['agreement_end_date'],
+                               date_of_signature=data['date_of_signature'],
+                               retention_end_date=data['retention_end_date'],
+                               prior_royalty_start_date=data['prior_royalty_start_date'],
+                               post_term_collection_end_date=data['post_term_collection_end_date'],
+                               shares_change=data['shares_change'],
+                               advance_given=data['advance_given'])
+
+
+class AgreementTerritoryDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(AgreementTerritoryDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return AgreementTerritoryRecord(record_type=data['record_type'],
+                                        transaction_sequence_n=data['transaction_sequence_n'],
+                                        record_sequence_n=data['record_sequence_n'],
+                                        tis_numeric_code=data['tis_numeric_code'],
+                                        inclusion_exclusion_indicator=data['inclusion_exclusion_indicator'])
+
+
+class AdditionalRelatedInformationDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(AdditionalRelatedInformationDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return AdditionalRelatedInfoRecord(record_type=data['record_type'],
+                                           transaction_sequence_n=data['transaction_sequence_n'],
+                                           record_sequence_n=data['record_sequence_n'],
+                                           society_n=data['society_n'],
+                                           type_of_right=data['type_of_right'],
+                                           work_n=data['work_n'], subject_code=data['subject_code'],
+                                           note=data['note'])
+
+
+class GroupHeaderDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(GroupHeaderDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return GroupHeader(record_type=data['record_type'],
+                           group_id=data['group_id'],
+                           transaction_type=data['transaction_type'],
+                           version_number=data['version_number'],
+                           batch_request_id=data['batch_request_id'])
+
+
+class GroupTrailerDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(GroupTrailerDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return GroupTrailer(record_type=data['record_type'],
+                            group_id=data['group_id'],
+                            transaction_count=data['transaction_count'],
+                            record_count=data['record_count'])
+
+
+class InterestedPartyForAgreementDecoder(Decoder):
+    def __init__(self):
+        super(InterestedPartyForAgreementDecoder, self).__init__()
+
+    def decode(self, data):
+        return InterestedPartyForAgreementRecord(record_type=data['record_type'],
+                                                 transaction_sequence_n=data['transaction_sequence_n'],
+                                                 record_sequence_n=data['record_sequence_n'],
+                                                 ip_n=data['ip_n'],
+                                                 ip_last_name=data['ip_last_name'],
+                                                 agreement_role_code=data['agreement_role_code'],
+                                                 ip_writer_first_name=data['ip_writer_first_name'],
+                                                 ipi_name_n=data['ipi_name_n'], ipi_base_n=data['ipi_base_n'],
+                                                 pr_society=data['pr_society'], pr_share=data['pr_share'],
+                                                 mr_society=data['mr_society'], mr_share=data['mr_share'],
+                                                 sr_society=data['sr_society'], sr_share=data['sr_share'])
 
 
 class MessageDictionaryDecoder(Decoder):
-
     def __init__(self):
         super(MessageDictionaryDecoder, self).__init__()
 
     def decode(self, data):
         return MessageRecord(record_type=data['record_type'],
-                                 transaction_sequence_n=data['transaction_sequence_n'],
-                                 record_sequence_n=data['record_sequence_n'],
-                                 message_type=data['message_type'],
-                                 message_text=data['message_text'],
-                                 original_record_sequence_n=data['original_record_sequence_n'],
-                                 message_record_type=data['message_record_type'],
-                                 message_level=data['message_level'],
-                                 validation_n=data['validation_n'])
+                             transaction_sequence_n=data['transaction_sequence_n'],
+                             record_sequence_n=data['record_sequence_n'],
+                             message_type=data['message_type'],
+                             message_text=data['message_text'],
+                             original_record_sequence_n=data['original_record_sequence_n'],
+                             message_record_type=data['message_record_type'],
+                             message_level=data['message_level'],
+                             validation_n=data['validation_n'])
 
 
 class CWRDictionaryEncoder(Encoder):
@@ -116,25 +209,25 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, MessageRecord):
             # Message
             encoded = self.__encode_message_record(object)
-        elif isinstance(object, NATRecord):
+        elif isinstance(object, NonRomanAlphabetTitleRecord):
             # NAT Record
             encoded = self.__encode_nat_record(object)
-        elif isinstance(object, NOWRecord):
+        elif isinstance(object, NonRomanAlphabetOtherWriterRecord):
             # NOW Record
             encoded = self.__encode_now_record(object)
-        elif isinstance(object, NPARecord):
+        elif isinstance(object, NonRomanAlphabetAgreementPartyRecord):
             # NPA Record
             encoded = self.__encode_npa_record(object)
-        elif isinstance(object, NPNRecord):
+        elif isinstance(object, NonRomanAlphabetPublisherNameRecord):
             # NPN Record
             encoded = self.__encode_npn_record(object)
-        elif isinstance(object, NPRRecord):
+        elif isinstance(object, NonRomanAlphabetPerformanceDataRecord):
             # NPR Record
             encoded = self.__encode_npr_record(object)
-        elif isinstance(object, NRAWorkRecord):
+        elif isinstance(object, NonRomanAlphabetWorkRecord):
             # NRA Record for Works
             encoded = self.__encode_nra_work_record(object)
-        elif isinstance(object, NWNRecord):
+        elif isinstance(object, NonRomanAlphabetWriterNameRecord):
             # NWN Record for Works
             encoded = self.__encode_nwn_record(object)
         elif isinstance(object, PerformingArtistRecord):
@@ -517,7 +610,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded = self.__encode_transaction_record_head(record)
 
         encoded['ip_n'] = record.ip_n
-        encoded['ie_indicator'] = record.ie_indicator
+        encoded['ie_indicator'] = record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
         encoded['sequence_n'] = record.sequence_n
         encoded['pr_col_share'] = record.pr_col_share

@@ -27,7 +27,7 @@ class TestIPTerritoryOfControlRecordDictionaryEncoding(unittest.TestCase):
                                           transaction_sequence_n=3,
                                           record_sequence_n=15,
                                           ip_n='FG14',
-                                          ie_indicator='I',
+                                          inclusion_exclusion_indicator='I',
                                           tis_numeric_code=76,
                                           sequence_n=135,
                                           pr_col_share=50.5,

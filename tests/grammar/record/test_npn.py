@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import nra
+from cwr.grammar.record import non_roman_alphabet
 
 
 """
@@ -22,7 +22,7 @@ class TestNPNGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = nra.npn
+        self.grammar = non_roman_alphabet.npn
 
     def test_valid_full(self):
         """

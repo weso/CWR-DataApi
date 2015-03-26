@@ -3,7 +3,7 @@
 import unittest
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
-from cwr.nra import NPRRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetPerformanceDataRecord
 
 
 """
@@ -23,16 +23,16 @@ class TestNPRRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
-        data = NPRRecord(record_type='NPA',
-                         transaction_sequence_n=3,
-                         record_sequence_n=15,
-                         performing_artist_first_name='FIRST NAME',
-                         performing_artist_name='NAME',
-                         performing_artist_ipi_name_n=14107338,
-                         performing_artist_ipi_base_n='I-000000229-7',
-                         language_code='ES',
-                         performance_language='EN',
-                         performance_dialect='SC')
+        data = NonRomanAlphabetPerformanceDataRecord(record_type='NPA',
+                                                     transaction_sequence_n=3,
+                                                     record_sequence_n=15,
+                                                     performing_artist_first_name='FIRST NAME',
+                                                     performing_artist_name='NAME',
+                                                     performing_artist_ipi_name_n=14107338,
+                                                     performing_artist_ipi_base_n='I-000000229-7',
+                                                     language_code='ES',
+                                                     performance_language='EN',
+                                                     performance_dialect='SC')
 
         encoded = self._encoder.encode(data)
 
