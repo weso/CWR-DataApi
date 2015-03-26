@@ -98,6 +98,64 @@ class AdditionalRelatedInformationDictionaryDecoder(Decoder):
                                            note=data['note'])
 
 
+class AlternateTitleDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(AlternateTitleDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return AlternateTitleRecord(record_type=data['record_type'],
+                                    transaction_sequence_n=data['transaction_sequence_n'],
+                                    record_sequence_n=data['record_sequence_n'],
+                                    alternate_title=data['alternate_title'],
+                                    title_type=data['title_type'],
+                                    language_code=data['language_code'])
+
+
+class AuthoredWorkDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(AuthoredWorkDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return AuthoredWorkRecord(record_type=data['record_type'],
+                                  transaction_sequence_n=data['transaction_sequence_n'],
+                                  record_sequence_n=data['record_sequence_n'],
+                                  title=data['title'],
+                                  submitter_work_n=data['submitter_work_n'],
+                                  writer_1_first_name=data['writer_1_first_name'],
+                                  writer_1_last_name=data['writer_1_last_name'],
+                                  writer_2_first_name=data['writer_2_first_name'],
+                                  writer_2_last_name=data['writer_2_last_name'],
+                                  writer_1_ipi_base_n=data['writer_1_ipi_base_n'],
+                                  writer_1_ipi_name_n=data['writer_1_ipi_name_n'],
+                                  writer_2_ipi_base_n=data['writer_2_ipi_base_n'],
+                                  writer_2_ipi_name_n=data['writer_2_ipi_name_n'],
+                                  source=data['source'],
+                                  language_code=data['language_code'],
+                                  iswc=data['iswc'])
+
+
+class ComponentDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(ComponentDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return ComponentRecord(record_type=data['record_type'],
+                               transaction_sequence_n=data['transaction_sequence_n'],
+                               record_sequence_n=data['record_sequence_n'],
+                               title=data['title'],
+                               submitter_work_n=data['submitter_work_n'],
+                               writer_1_last_name=data['writer_1_last_name'],
+                               writer_1_first_name=data['writer_1_first_name'],
+                               writer_2_last_name=data['writer_2_last_name'],
+                               writer_2_first_name=data['writer_2_first_name'],
+                               writer_1_ipi_base_n=data['writer_1_ipi_base_n'],
+                               writer_1_ipi_name_n=data['writer_1_ipi_name_n'],
+                               writer_2_ipi_base_n=data['writer_2_ipi_base_n'],
+                               writer_2_ipi_name_n=data['writer_2_ipi_name_n'],
+                               iswc=data['iswc'],
+                               duration=data['duration'])
+
+
 class GroupHeaderDictionaryDecoder(Decoder):
     def __init__(self):
         super(GroupHeaderDictionaryDecoder, self).__init__()
@@ -139,6 +197,47 @@ class InterestedPartyForAgreementDecoder(Decoder):
                                                  sr_society=data['sr_society'], sr_share=data['sr_share'])
 
 
+class IPTerritoryOfControlDecoder(Decoder):
+    def __init__(self):
+        super(IPTerritoryOfControlDecoder, self).__init__()
+
+    def decode(self, data):
+        return IPTerritoryOfControlRecord(record_type=data['record_type'],
+                                          transaction_sequence_n=data['transaction_sequence_n'],
+                                          record_sequence_n=data['record_sequence_n'],
+                                          ip_n=data['ip_n'],
+                                          inclusion_exclusion_indicator=data['inclusion_exclusion_indicator'],
+                                          tis_numeric_code=data['tis_numeric_code'],
+                                          sequence_n=data['sequence_n'],
+                                          pr_col_share=data['pr_col_share'], mr_col_share=data['mr_col_share'],
+                                          sr_col_share=data['sr_col_share'], shares_change=data['shares_change'])
+
+
+class InstrumentationDetailDecoder(Decoder):
+    def __init__(self):
+        super(InstrumentationDetailDecoder, self).__init__()
+
+    def decode(self, data):
+        return InstrumentationDetailRecord(record_type=data['record_type'],
+                                           transaction_sequence_n=data['transaction_sequence_n'],
+                                           record_sequence_n=data['record_sequence_n'],
+                                           instrument_code=data['instrument_code'],
+                                           number_players=data['number_players'])
+
+
+class InstrumentationSummaryDecoder(Decoder):
+    def __init__(self):
+        super(InstrumentationSummaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return InstrumentationSummaryRecord(record_type=data['record_type'],
+                                            transaction_sequence_n=data['transaction_sequence_n'],
+                                            record_sequence_n=data['record_sequence_n'],
+                                            number_voices=data['number_voices'],
+                                            standard_instrumentation_type=data['standard_instrumentation_type'],
+                                            instrumentation_description=data['instrumentation_description'])
+
+
 class MessageDictionaryDecoder(Decoder):
     def __init__(self):
         super(MessageDictionaryDecoder, self).__init__()
@@ -153,6 +252,123 @@ class MessageDictionaryDecoder(Decoder):
                              message_record_type=data['message_record_type'],
                              message_level=data['message_level'],
                              validation_n=data['validation_n'])
+
+
+class PerformingArtistDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(PerformingArtistDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return PerformingArtistRecord(record_type=data['record_type'],
+                                      transaction_sequence_n=data['transaction_sequence_n'],
+                                      record_sequence_n=data['record_sequence_n'],
+                                      performing_artist_last_name=data['performing_artist_last_name'],
+                                      performing_artist_first_name=data['performing_artist_first_name'],
+                                      performing_artist_ipi_name_n=data['performing_artist_ipi_name_n'],
+                                      performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'])
+
+
+class RecordingDetailDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(RecordingDetailDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return RecordingDetailRecord(record_type=data['record_type'],
+                                     transaction_sequence_n=data['transaction_sequence_n'],
+                                     record_sequence_n=data['record_sequence_n'],
+                                     first_release_date=data['first_release_date'],
+                                     first_release_duration=data['first_release_duration'],
+                                     first_album_title=data['first_album_title'],
+                                     first_album_label=data['first_album_label'],
+                                     first_release_catalog_n=data['first_release_catalog_n'],
+                                     ean=data['ean'],
+                                     isrc=data['isrc'],
+                                     recording_format=data['recording_format'],
+                                     recording_technique=data['recording_technique'],
+                                     media_type=data['media_type'])
+
+
+class TransmissionHeaderDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(TransmissionHeaderDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return TransmissionHeader(record_type=data['record_type'],
+                                  sender_id=data['sender_id'],
+                                  sender_name=data['sender_name'],
+                                  sender_type=data['sender_type'],
+                                  creation_date_time=data['creation_date_time'],
+                                  transmission_date=data['transmission_date'],
+                                  edi_standard=data['edi_standard'],
+                                  character_set=data['character_set'])
+
+
+class TransmissionTrailerDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(TransmissionTrailerDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return TransmissionTrailer(record_type=data['record_type'],
+                                   group_count=data['group_count'],
+                                   transaction_count=data['transaction_count'],
+                                   record_count=data['record_count'])
+
+
+class WorkDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(WorkDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return WorkRecord(record_type=data['record_type'],
+                          transaction_sequence_n=data['transaction_sequence_n'],
+                          record_sequence_n=data['record_sequence_n'],
+                          submitter_work_n=data['submitter_work_n'],
+                          title=data['title'],
+                          version_type=data['version_type'],
+                          musical_work_distribution_category=data['musical_work_distribution_category'],
+                          date_publication_printed_edition=data['date_publication_printed_edition'],
+                          text_music_relationship=data['text_music_relationship'],
+                          language_code=data['language_code'],
+                          copyright_number=data['copyright_number'],
+                          copyright_date=data['copyright_date'],
+                          music_arrangement=data['music_arrangement'],
+                          lyric_adaptation=data['lyric_adaptation'],
+                          excerpt_type=data['excerpt_type'],
+                          composite_type=data['composite_type'],
+                          composite_component_count=data['composite_component_count'],
+                          iswc=data['iswc'],
+                          cwr_work_type=data['cwr_work_type'],
+                          duration=data['duration'],
+                          catalogue_number=data['catalogue_number'],
+                          opus_number=data['opus_number'],
+                          contact_id=data['contact_id'],
+                          contact_name=data['contact_name'],
+                          recorded_indicator=data['recorded_indicator'],
+                          priority_flag=data['priority_flag'],
+                          exceptional_clause=data['exceptional_clause'],
+                          grand_rights_indicator=data['grand_rights_indicator'])
+
+
+class WorkOriginDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(WorkOriginDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return WorkOriginRecord(record_type=data['record_type'],
+                                transaction_sequence_n=data['transaction_sequence_n'],
+                                record_sequence_n=data['record_sequence_n'],
+                                intended_purpose=data['intended_purpose'],
+                                production_title=data['production_title'],
+                                cd_identifier=data['cd_identifier'],
+                                cut_number=data['cut_number'],
+                                library=data['library'],
+                                bltvr=data['bltvr'],
+                                visan=data['visan'],
+                                production_n=data['production_n'],
+                                episode_title=data['episode_title'],
+                                episode_n=data['episode_n'],
+                                year_production=data['year_production'],
+                                audio_visual_key=data['audio_visual_key'])
 
 
 class NonRomanAlphabetAgreementPartyDictionaryDecoder(Decoder):

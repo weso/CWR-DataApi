@@ -23,7 +23,7 @@ class TestRecordingDetailRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
-        data = InstrumentationDetailRecord(record_type='SWR',
+        data = InstrumentationDetailRecord(record_type='IND',
                                            transaction_sequence_n=3,
                                            record_sequence_n=15,
                                            instrument_code='AHN',
@@ -31,7 +31,7 @@ class TestRecordingDetailRecordDictionaryEncoding(unittest.TestCase):
 
         encoded = self._encoder.encode(data)
 
-        self.assertEqual('SWR', encoded['record_type'])
+        self.assertEqual('IND', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
         self.assertEqual('AHN', encoded['instrument_code'])

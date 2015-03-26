@@ -27,7 +27,7 @@ class TestComponentRecordDictionaryEncoding(unittest.TestCase):
     def test_encoded(self):
         iswc = ISWCCode(12345678, 9)
 
-        data = ComponentRecord(record_type='SWR',
+        data = ComponentRecord(record_type='COM',
                                transaction_sequence_n=3,
                                record_sequence_n=15,
                                title='TITLE',
@@ -45,7 +45,7 @@ class TestComponentRecordDictionaryEncoding(unittest.TestCase):
 
         encoded = self._encoder.encode(data)
 
-        self.assertEqual('SWR', encoded['record_type'])
+        self.assertEqual('COM', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
         self.assertEqual('TITLE', encoded['title'])
