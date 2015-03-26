@@ -26,17 +26,17 @@ class TestPublisherForWriterRecordDictionaryEncoding(unittest.TestCase):
         data = PublisherForWriterRecord(record_type='SPU',
                                         transaction_sequence_n=3,
                                         record_sequence_n=15,
-                                        publisher_ip_n=111,
-                                        writer_ip_n=222,
-                                        submitter_agreement_n=333,
-                                        society_assigned_agreement_n=444)
+                                        publisher_ip_n='111',
+                                        writer_ip_n='222',
+                                        submitter_agreement_n='333',
+                                        society_assigned_agreement_n='444')
 
         encoded = self._encoder.encode(data)
 
         self.assertEqual('SPU', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
-        self.assertEqual(111, encoded['publisher_ip_n'])
-        self.assertEqual(222, encoded['writer_ip_n'])
-        self.assertEqual(333, encoded['submitter_agreement_n'])
-        self.assertEqual(444, encoded['society_assigned_agreement_n'])
+        self.assertEqual('111', encoded['publisher_ip_n'])
+        self.assertEqual('222', encoded['writer_ip_n'])
+        self.assertEqual('333', encoded['submitter_agreement_n'])
+        self.assertEqual('444', encoded['society_assigned_agreement_n'])

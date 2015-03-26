@@ -268,6 +268,20 @@ class PerformingArtistDictionaryDecoder(Decoder):
                                       performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'])
 
 
+class PublisherForWriterDecoder(Decoder):
+    def __init__(self):
+        super(PublisherForWriterDecoder, self).__init__()
+
+    def decode(self, data):
+        return PublisherForWriterRecord(record_type=data['record_type'],
+                                        transaction_sequence_n=data['transaction_sequence_n'],
+                                        record_sequence_n=data['record_sequence_n'],
+                                        publisher_ip_n=data['publisher_ip_n'],
+                                        writer_ip_n=data['writer_ip_n'],
+                                        submitter_agreement_n=data['submitter_agreement_n'],
+                                        society_assigned_agreement_n=data['society_assigned_agreement_n'])
+
+
 class RecordingDetailDictionaryDecoder(Decoder):
     def __init__(self):
         super(RecordingDetailDictionaryDecoder, self).__init__()
@@ -369,6 +383,46 @@ class WorkOriginDictionaryDecoder(Decoder):
                                 episode_n=data['episode_n'],
                                 year_production=data['year_production'],
                                 audio_visual_key=data['audio_visual_key'])
+
+
+class WriterDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(WriterDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return Writer(ip_n=data['ip_n'],
+                      personal_number=data['personal_number'],
+                      ipi_base_n=data['ipi_base_n'],
+                      writer_first_name=data['writer_first_name'],
+                      writer_last_name=data['writer_last_name'],
+                      tax_id=data['tax_id'],
+                      ipi_name_n=data['ipi_name_n'])
+
+
+class WriterRecordDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(WriterRecordDictionaryDecoder, self).__init__()
+        self._writer_decoder = WriterDictionaryDecoder()
+
+    def decode(self, data):
+        writer = self._writer_decoder.decode(data)
+
+        return WriterRecord(record_type=data['record_type'],
+                            transaction_sequence_n=data['transaction_sequence_n'],
+                            record_sequence_n=data['record_sequence_n'],
+                            writer=writer,
+                            writer_designation=data['writer_designation'],
+                            work_for_hire=data['work_for_hire'],
+                            writer_unknown=data['writer_unknown'],
+                            reversionary=data['reversionary'],
+                            first_recording_refusal=data['first_recording_refusal'],
+                            usa_license=data['usa_license'],
+                            pr_society=data['pr_society'],
+                            pr_ownership_share=data['pr_ownership_share'],
+                            mr_society=data['mr_society'],
+                            mr_ownership_share=data['mr_ownership_share'],
+                            sr_society=data['sr_society'],
+                            sr_ownership_share=data['sr_ownership_share'])
 
 
 class NonRomanAlphabetAgreementPartyDictionaryDecoder(Decoder):
