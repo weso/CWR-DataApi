@@ -139,6 +139,104 @@ class InterestedPartyForAgreementDecoder(Decoder):
                                                  sr_society=data['sr_society'], sr_share=data['sr_share'])
 
 
+class NonRomanAlphabetAgreementPartyDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(NonRomanAlphabetAgreementPartyDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return NonRomanAlphabetAgreementPartyRecord(record_type=data['record_type'],
+                                                    transaction_sequence_n=data['transaction_sequence_n'],
+                                                    record_sequence_n=data['record_sequence_n'],
+                                                    ip_name=data['ip_name'],
+                                                    ip_writer_name=data['ip_writer_name'],
+                                                    ip_n=data['ip_n'],
+                                                    language_code=data['language_code'])
+
+
+class NonRomanAlphabetOtherWriterDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(NonRomanAlphabetOtherWriterDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return NonRomanAlphabetOtherWriterRecord(record_type=data['record_type'],
+                                                 transaction_sequence_n=data['transaction_sequence_n'],
+                                                 record_sequence_n=data['record_sequence_n'],
+                                                 writer_first_name=data['writer_first_name'],
+                                                 writer_name=data['writer_name'],
+                                                 position=data['position'],
+                                                 language_code=data['language_code'])
+
+
+class NonRomanAlphabetPerformanceDataDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(NonRomanAlphabetPerformanceDataDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return NonRomanAlphabetPerformanceDataRecord(record_type=data['record_type'],
+                                                     transaction_sequence_n=data['transaction_sequence_n'],
+                                                     record_sequence_n=data['record_sequence_n'],
+                                                     performing_artist_first_name=data['performing_artist_first_name'],
+                                                     performing_artist_name=data['performing_artist_name'],
+                                                     performing_artist_ipi_name_n=data['performing_artist_ipi_name_n'],
+                                                     performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'],
+                                                     language_code=data['language_code'],
+                                                     performance_language=data['performance_language'],
+                                                     performance_dialect=data['performance_dialect'])
+
+
+class NonRomanAlphabetPublisherNameDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(NonRomanAlphabetPublisherNameDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return NonRomanAlphabetPublisherNameRecord(record_type=data['record_type'],
+                                                   transaction_sequence_n=data['transaction_sequence_n'],
+                                                   record_sequence_n=data['record_sequence_n'],
+                                                   publisher_sequence_n=data['publisher_sequence_n'],
+                                                   ip_n=data['ip_n'],
+                                                   publisher_name=data['publisher_name'],
+                                                   language_code=data['language_code'])
+
+
+class NonRomanAlphabetTitleDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(NonRomanAlphabetTitleDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return NonRomanAlphabetTitleRecord(record_type=data['record_type'],
+                                           transaction_sequence_n=data['transaction_sequence_n'],
+                                           record_sequence_n=data['record_sequence_n'],
+                                           title=data['title'],
+                                           title_type=data['title_type'],
+                                           language_code=data['language_code'])
+
+
+class NonRomanAlphabetWorkDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(NonRomanAlphabetWorkDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return NonRomanAlphabetWorkRecord(record_type=data['record_type'],
+                                          transaction_sequence_n=data['transaction_sequence_n'],
+                                          record_sequence_n=data['record_sequence_n'],
+                                          title=data['title'],
+                                          language_code=data['language_code'])
+
+
+class NonRomanAlphabetWriterNameDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(NonRomanAlphabetWriterNameDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return NonRomanAlphabetWriterNameRecord(record_type=data['record_type'],
+                                                transaction_sequence_n=data['transaction_sequence_n'],
+                                                record_sequence_n=data['record_sequence_n'],
+                                                writer_first_name=data['writer_first_name'],
+                                                writer_last_name=data['writer_last_name'],
+                                                ip_n=data['ip_n'],
+                                                language_code=data['language_code'])
+
+
 class MessageDictionaryDecoder(Decoder):
     def __init__(self):
         super(MessageDictionaryDecoder, self).__init__()
