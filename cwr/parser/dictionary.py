@@ -139,6 +139,22 @@ class InterestedPartyForAgreementDecoder(Decoder):
                                                  sr_society=data['sr_society'], sr_share=data['sr_share'])
 
 
+class MessageDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(MessageDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return MessageRecord(record_type=data['record_type'],
+                             transaction_sequence_n=data['transaction_sequence_n'],
+                             record_sequence_n=data['record_sequence_n'],
+                             message_type=data['message_type'],
+                             message_text=data['message_text'],
+                             original_record_sequence_n=data['original_record_sequence_n'],
+                             message_record_type=data['message_record_type'],
+                             message_level=data['message_level'],
+                             validation_n=data['validation_n'])
+
+
 class NonRomanAlphabetAgreementPartyDictionaryDecoder(Decoder):
     def __init__(self):
         super(NonRomanAlphabetAgreementPartyDictionaryDecoder, self).__init__()
@@ -237,20 +253,42 @@ class NonRomanAlphabetWriterNameDictionaryDecoder(Decoder):
                                                 language_code=data['language_code'])
 
 
-class MessageDictionaryDecoder(Decoder):
+class PublisherDictionaryDecoder(Decoder):
     def __init__(self):
-        super(MessageDictionaryDecoder, self).__init__()
+        super(PublisherDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return MessageRecord(record_type=data['record_type'],
-                             transaction_sequence_n=data['transaction_sequence_n'],
-                             record_sequence_n=data['record_sequence_n'],
-                             message_type=data['message_type'],
-                             message_text=data['message_text'],
-                             original_record_sequence_n=data['original_record_sequence_n'],
-                             message_record_type=data['message_record_type'],
-                             message_level=data['message_level'],
-                             validation_n=data['validation_n'])
+        return Publisher(ip_n=data['ip_n'],
+                         publisher_name=data['publisher_name'],
+                         ipi_name_n=data['ipi_name_n'],
+                         ipi_base_n=data['ipi_base_n'],
+                         tax_id=data['tax_id'])
+
+
+class PublisherRecordDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(PublisherRecordDictionaryDecoder, self).__init__()
+        self._publisher_decoder = PublisherDictionaryDecoder()
+
+    def decode(self, data):
+        publisher = self._publisher_decoder.decode(data)
+
+        return PublisherRecord(record_type=data['record_type'], transaction_sequence_n=data['transaction_sequence_n'],
+                               record_sequence_n=data['record_sequence_n'],
+                               publisher=publisher, publisher_sequence_n=data['publisher_sequence_n'],
+                               submitter_agreement_n=data['submitter_agreement_n'],
+                               publisher_type=data['publisher_type'],
+                               publisher_unknown=data['publisher_unknown'], agreement_type=data['agreement_type'],
+                               isac=data['isac'],
+                               society_assigned_agreement_n=data['society_assigned_agreement_n'],
+                               pr_society=data['pr_society'],
+                               pr_ownership_share=data['pr_ownership_share'],
+                               mr_society=data['mr_society'], mr_ownership_share=data['mr_ownership_share'],
+                               sr_society=data['sr_society'],
+                               sr_ownership_share=data['sr_ownership_share'],
+                               special_agreements=data['special_agreements'],
+                               first_recording_refusal=data['first_recording_refusal'],
+                               usa_license=data['usa_license'])
 
 
 class CWRDictionaryEncoder(Encoder):
