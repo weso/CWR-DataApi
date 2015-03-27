@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import publisher, non_roman_alphabet, writer, work, ari
+from cwr.grammar.record import publisher, non_roman_alphabet, writer, work
 from cwr.grammar.transaction import interested_party, work_detail
 from cwr.grammar.record import work_detail as rule_work_detail
 from data.accessor import CWRConfiguration
@@ -48,7 +48,7 @@ work_transaction = work.work_record + pp.Optional(pp.OneOrMore(interested_party.
                    pp.Optional(rule_work_detail.origin) + \
                    pp.Optional(pp.OneOrMore(work_detail.instrumentation_information)) + \
                    pp.Optional(pp.OneOrMore(work_detail.information_for_components)) + \
-                   pp.Optional(pp.OneOrMore(ari.ari))
+                   pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('additional_related_information')))
 
 # Acknowledgement
 acknowledgement_transaction = _factory_record.get_transaction_record('acknowledgement') + \
