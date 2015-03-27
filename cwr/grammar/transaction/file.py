@@ -6,7 +6,6 @@ from cwr.grammar.record import transmission
 from cwr.grammar.field import special
 from cwr.grammar.transaction import transaction
 from cwr.group import Group
-
 from cwr.transmission import Transmission
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory

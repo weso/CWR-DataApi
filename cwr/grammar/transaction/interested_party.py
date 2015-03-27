@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import publisher, publisher_territory, writer, writer_territory, \
+from cwr.grammar.record import writer, writer_territory, \
     writer_publisher
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
@@ -30,19 +30,20 @@ _prefixer = PrefixBuilder(_config.record_types())
 _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 # Original Publisher
-original_publisher_information = publisher.publisher + \
+original_publisher_information = _factory_record.get_transaction_record('publisher') + \
                                  pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
-                                 pp.Optional(pp.OneOrMore(publisher_territory.territory))
+                                 pp.Optional(
+                                     pp.OneOrMore(_factory_record.get_transaction_record('publisher_territory')))
 
 # Administrator
-administrator_information = publisher.publisher + \
+administrator_information = _factory_record.get_transaction_record('publisher') + \
                             pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
-                            pp.Optional(pp.OneOrMore(publisher_territory.territory))
+                            pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('publisher_territory')))
 
 # Subpublisher
-subpublisher_information = publisher.publisher + \
+subpublisher_information = _factory_record.get_transaction_record('publisher') + \
                            pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
-                           pp.Optional(pp.OneOrMore(publisher_territory.territory))
+                           pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('publisher_territory')))
 
 # Controlled writer
 controlled_writer_information = writer.writer + \
@@ -54,7 +55,7 @@ controlled_writer_information = writer.writer + \
 controlled_publisher_information = original_publisher_information + \
                                    pp.Optional(pp.OneOrMore(administrator_information)) + \
                                    pp.Optional(pp.OneOrMore(subpublisher_information)) + \
-                                   pp.Optional(pp.OneOrMore(publisher.publisher))
+                                   pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('publisher')))
 
 # IPA
 ipa_information = _factory_record.get_transaction_record('interested_party_agreement') + \

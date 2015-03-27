@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import publisher, writer, work
+from cwr.grammar.record import writer, work
 from cwr.grammar.transaction import interested_party, work_detail
 from cwr.grammar.record import work_detail as rule_work_detail
 from data.accessor import CWRConfiguration
@@ -35,7 +35,7 @@ agreement_transaction = _factory_record.get_transaction_record('agreement') + \
 
 # Work
 work_transaction = work.work_record + pp.Optional(pp.OneOrMore(interested_party.controlled_publisher_information)) + \
-                   pp.Optional(pp.OneOrMore(publisher.publisher)) + \
+                   pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('publisher'))) + \
                    pp.Optional(pp.OneOrMore(interested_party.controlled_writer_information)) + \
                    pp.Optional(pp.OneOrMore(writer.writer)) + \
                    pp.Optional(pp.OneOrMore(rule_work_detail.alternate)) + \
