@@ -13,11 +13,6 @@ acknowledgement:
   - name: transaction_status
     compulsory: true
 
-alternate_title:
-  - name: alternate_title
-  - name: title_type
-  - name: language_code
-
 additional_related_information:
   - name: society_n
   - name: work_n
@@ -310,6 +305,11 @@ work:
   - name: opus_number
   - name: catalogue_number
   - name: priority_flag
+
+work_alternate_title:
+  - name: alternate_title
+  - name: title_type
+  - name: language_code
 
 work_conflict:
   - name: work_title

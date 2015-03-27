@@ -23,9 +23,6 @@ acknowledgement:
 agreement:
   - 'AGR'
 
-alternate_title:
-  - 'ALT'
-
 component:
   - 'COM'
 
@@ -67,6 +64,9 @@ work:
   - 'NWR'
   - 'REV'
   - 'ISW'
+
+work_alternate_title:
+  - 'ALT'
 
 work_conflict:
   - 'EXC'

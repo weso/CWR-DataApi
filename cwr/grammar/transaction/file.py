@@ -2,11 +2,16 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import transmission, group
+from cwr.grammar.record import transmission
 from cwr.grammar.field import special
 from cwr.grammar.transaction import transaction
 from cwr.group import Group
+
 from cwr.transmission import Transmission
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -20,6 +25,15 @@ This have been created from the BNF description included in the CWR specificatio
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __status__ = 'Development'
+_config = CWRConfiguration()
+
+_data = _config.load_field_config('table')
+_data.update(_config.load_field_config('common'))
+
+_factory_field = DefaultFieldFactory(_data, CWRTables())
+
+_prefixer = PrefixBuilder(_config.record_types())
+_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 """
 Fields.
@@ -30,7 +44,8 @@ group_transactions = pp.OneOrMore(
              transaction.acknowledgement_transaction))
 group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
 
-group_info = group.group_header + group_transactions + group.group_trailer
+group_info = _factory_record.get_record('group_header') + group_transactions + _factory_record.get_record(
+    'group_trailer')
 
 _transmission_groups = pp.OneOrMore(group_info)
 _transmission_groups = _transmission_groups.setName('Transmission Groups').setResultsName('groups')

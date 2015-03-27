@@ -82,7 +82,7 @@ class RecordFactory(object):
         self._decoders['transmission_trailer'] = TransmissionTrailerDictionaryDecoder()
         self._decoders['work'] = WorkDictionaryDecoder()
         self._decoders['work_conflict'] = WorkDictionaryDecoder()
-        self._decoders['alternate_title'] = AlternateTitleDictionaryDecoder()
+        self._decoders['work_alternate_title'] = AlternateTitleDictionaryDecoder()
         self._decoders['entire_work_title'] = AuthoredWorkDictionaryDecoder()
         self._decoders['original_work_title'] = AuthoredWorkDictionaryDecoder()
         self._decoders['performing_artist'] = PerformingArtistDictionaryDecoder()
@@ -105,7 +105,7 @@ class RecordFactory(object):
             decoder = self._decoders[id]
             record.setParseAction(lambda p: decoder.decode(p))
 
-        return record
+        return record.setResultsName(id)
 
     def get_record(self, id):
         record = self._lineStart + \
@@ -117,7 +117,7 @@ class RecordFactory(object):
             decoder = self._decoders[id]
             record.setParseAction(lambda p: decoder.decode(p))
 
-        return record
+        return record.setResultsName(id)
 
     def _build_record(self, id):
         field_config = self._record_configs[id]

@@ -41,7 +41,7 @@ _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer,
 Patterns.
 """
 
-alternate = _factory_record.get_transaction_record('alternate_title')
+alternate = _factory_record.get_transaction_record('work_alternate_title')
 
 entire_title = _factory_record.get_transaction_record('entire_work_title')
 
