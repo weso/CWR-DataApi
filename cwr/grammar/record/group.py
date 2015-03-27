@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
-from cwr.parser.dictionary import GroupHeaderDictionaryDecoder, GroupTrailerDictionaryDecoder
 
 
 """
@@ -61,40 +60,3 @@ group_header = group_header.setName('Group Header').setResultsName('group_header
 # Group Trailer pattern
 group_trailer = _factory_record.get_record('group_trailer')
 group_trailer = group_trailer.setName('Group Trailer').setResultsName('group_trailer')
-
-"""
-Parsing actions for the patterns.
-
-The header will be parsed into a GroupHeader and the trailer into a GroupTrailer.
-"""
-
-group_header.setParseAction(lambda h: _to_groupheader(h))
-group_trailer.setParseAction(lambda t: _to_grouptrailer(t))
-
-"""
-Parsing methods.
-
-These are the methods which transform nodes into instances of classes.
-"""
-
-
-def _to_groupheader(parsed):
-    """
-    Transforms the final parsing result into a GroupHeader instance.
-
-    :param parsed: result of parsing a group header
-    :return: a GroupHeader created from the parsed record
-    """
-    parser = GroupHeaderDictionaryDecoder()
-    return parser.decode(parsed)
-
-
-def _to_grouptrailer(parsed):
-    """
-    Transforms the final parsing result into a GroupTrailer instance.
-
-    :param parsed: result of parsing a group trailer
-    :return: a GroupTrailer created from the parsed record
-    """
-    parser = GroupTrailerDictionaryDecoder()
-    return parser.decode(parsed)

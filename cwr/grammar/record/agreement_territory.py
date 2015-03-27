@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
-from cwr.parser.dictionary import AgreementTerritoryDictionaryDecoder
 
 
 """
@@ -31,24 +30,3 @@ Territory in Agreement patterns.
 """
 
 territory_in_agreement = _factory_record.get_transaction_record('territory_in_agreement')
-
-"""
-Parsing actions for the patterns.
-"""
-
-territory_in_agreement.setParseAction(lambda p: _to_agreementterritory(p))
-
-"""
-Parsing actions for the patterns.
-"""
-
-
-def _to_agreementterritory(parsed):
-    """
-    Transforms the final parsing result into a AgreementTerritoryRecord instance.
-
-    :param parsed: result of parsing a Territory in Agreement transaction header
-    :return: a AgreementTerritoryRecord created from the parsed record
-    """
-    decoder = AgreementTerritoryDictionaryDecoder()
-    return decoder.decode(parsed)

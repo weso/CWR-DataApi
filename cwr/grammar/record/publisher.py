@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
-from cwr.parser.dictionary import PublisherRecordDictionaryDecoder
 
 
 """
@@ -35,26 +34,3 @@ Publisher patterns.
 """
 
 publisher = _factory_record.get_transaction_record('publisher')
-
-"""
-Parsing actions for the patterns.
-"""
-
-publisher.setParseAction(lambda p: _to_publisherrecord(p))
-
-"""
-Parsing methods.
-
-These are the methods which transform nodes into instances of classes.
-"""
-
-
-def _to_publisherrecord(parsed):
-    """
-    Transforms the final parsing result into an PublisherRecord instance.
-
-    :param parsed: result of parsing a Publisher record
-    :return: an PublisherRecord created from the parsed record
-    """
-    decoder = PublisherRecordDictionaryDecoder()
-    return decoder.decode(parsed)

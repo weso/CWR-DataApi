@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
-from cwr.parser.dictionary import IPTerritoryOfControlDecoder
 
 
 """
@@ -35,26 +34,3 @@ SPT patterns.
 """
 
 territory = _factory_record.get_transaction_record('publisher_territory')
-
-"""
-Parsing actions for the patterns.
-"""
-
-territory.setParseAction(lambda p: _to_publisherterritory(p))
-
-"""
-Parsing methods.
-
-These are the methods which transform nodes into instances of classes.
-"""
-
-
-def _to_publisherterritory(parsed):
-    """
-    Transforms the final parsing result into an IPTerritoryRecord instance.
-
-    :param parsed: result of parsing the Territory record
-    :return: an IPTerritoryRecord created from the parsed record
-    """
-    decoder = IPTerritoryOfControlDecoder()
-    return decoder.decode(parsed)

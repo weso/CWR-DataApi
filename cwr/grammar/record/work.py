@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
-from cwr.parser.dictionary import WorkDictionaryDecoder
 
 
 """
@@ -33,27 +32,3 @@ Work patterns.
 work_record = _factory_record.get_transaction_record('work')
 
 conflict = _factory_record.get_transaction_record('work_conflict')
-
-"""
-Parsing actions for the patterns.
-"""
-
-work_record.setParseAction(lambda p: _to_work(p))
-conflict.setParseAction(lambda p: _to_work(p))
-
-"""
-Parsing methods.
-
-These are the methods which transform nodes into instances of classes.
-"""
-
-
-def _to_work(parsed):
-    """
-    Transforms the final parsing result into a WorkRecord instance.
-
-    :param parsed: result of parsing a Work transaction header
-    :return: a WorkRecord created from the parsed record
-    """
-    decoder = WorkDictionaryDecoder()
-    return decoder.decode(parsed)

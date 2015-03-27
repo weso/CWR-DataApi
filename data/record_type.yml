@@ -1,6 +1,6 @@
 # Structural records
 
-ari:
+additional_related_information:
   - 'ARI'
 
 transmission_header:
@@ -86,25 +86,25 @@ writer_publisher:
 
 # Non-Roman Alphabet records
 
-nat:
-  - 'NAT'
-
-now:
-  - 'NOW'
-
-npa:
+nra_agreement_party:
   - 'NPA'
 
-npn:
+nra_other_writer:
+  - 'NOW'
+
+nra_performance_data:
+  - 'NPR'
+
+nra_publisher_name:
   - 'NPN'
 
-npr:
-  - 'NPR'
+nra_title:
+  - 'NAT'
 
 nra_work:
   - 'NCT'
   - 'NET'
   - 'NVT'
 
-nwn:
+nra_writer_name:
   - 'NWN'

@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
-from cwr.parser.dictionary import InterestedPartyForAgreementDecoder
 
 
 """
@@ -31,26 +30,3 @@ IPA patterns.
 """
 
 interested_party_agreement = _factory_record.get_transaction_record('interested_party_agreement')
-
-"""
-Parsing actions for the patterns.
-"""
-
-interested_party_agreement.setParseAction(lambda p: _to_interested_party_agreement(p))
-
-"""
-Parsing methods.
-
-These are the methods which transform nodes into instances of classes.
-"""
-
-
-def _to_interested_party_agreement(parsed):
-    """
-    Transforms the final parsing result into an AgreementInterestedParty instance.
-
-    :param parsed: result of parsing an IPA record
-    :return: an AgreementInterestedParty created from the parsed record
-    """
-    parser = InterestedPartyForAgreementDecoder()
-    return parser.decode(parsed)

@@ -54,4 +54,4 @@ work_transaction = work.work_record + pp.Optional(pp.OneOrMore(interested_party.
 acknowledgement_transaction = _factory_record.get_transaction_record('acknowledgement') + \
                               pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('message'))) + \
                               (_factory_record.get_transaction_record('agreement') | (
-                              work.work_record + pp.Optional(work.conflict)))
+                                  work.work_record + pp.Optional(work.conflict)))

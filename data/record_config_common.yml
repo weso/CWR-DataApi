@@ -18,7 +18,7 @@ alternate_title:
   - name: title_type
   - name: language_code
 
-ari:
+additional_related_information:
   - name: society_n
   - name: work_n
   - name: type_of_right
@@ -131,18 +131,7 @@ message:
   - name: validation_n
   - name: message_text
 
-nat:
-  - name: title
-  - name: title_type
-  - name: language_code
-
-now:
-  - name: writer_name
-  - name: writer_first_name_long
-  - name: language_code
-  - name: position
-
-npa:
+nra_agreement_party:
   - name: ip_n
   - name: ip_name
     compulsory: true
@@ -150,15 +139,13 @@ npa:
     compulsory: true
   - name: language_code
 
-npn:
-  - name: publisher_sequence_n
-  - name: ip_n
-    compulsory: true
-  - name: publisher_name_long
-    compulsory: true
+nra_other_writer:
+  - name: writer_name
+  - name: writer_first_name_long
   - name: language_code
+  - name: position
 
-npr:
+nra_performance_data:
   - name: performing_artist_name
   - name: performing_artist_first_name_long
   - name: performing_artist_ipi_name_n
@@ -167,11 +154,24 @@ npr:
   - name: performance_language
   - name: performance_dialect
 
+nra_publisher_name:
+  - name: publisher_sequence_n
+  - name: ip_n
+    compulsory: true
+  - name: publisher_name_long
+    compulsory: true
+  - name: language_code
+
+nra_title:
+  - name: title
+  - name: title_type
+  - name: language_code
+
 nra_work:
   - name: title
   - name: language_code
 
-nwn:
+nra_writer_name:
   - name: ip_n
   - name: writer_last_name_long
   - name: writer_first_name_long

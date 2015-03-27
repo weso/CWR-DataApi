@@ -4,7 +4,6 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
-from cwr.parser.dictionary import TransmissionHeaderDictionaryDecoder, TransmissionTrailerDictionaryDecoder
 
 
 """
@@ -60,33 +59,3 @@ transmission_trailer = _factory_record.get_record('transmission_trailer')
 transmission_trailer = transmission_trailer.setName('Transmission Trailer').setResultsName('transmission_trailer')
 
 transmission_trailer.leaveWhitespace()
-"""
-Parsing actions for the patterns.
-
-The header will be parsed into a TransmissionHeader and the trailer into a TransmissionTrailer.
-"""
-
-transmission_header.setParseAction(lambda h: _to_transmissionheader(h))
-transmission_trailer.setParseAction(lambda t: _to_transmissiontrailer(t))
-
-
-def _to_transmissionheader(parsed):
-    """
-    Transforms the final parsing result into a TransmissionHeader instance.
-
-    :param parsed: result of parsing a Transmission Header
-    :return: a TransmissionHeader created from the parsed record
-    """
-    decoder = TransmissionHeaderDictionaryDecoder()
-    return decoder.decode(parsed)
-
-
-def _to_transmissiontrailer(parsed):
-    """
-    Transforms the final parsing result into a TransmissionTrailer instance.
-
-    :param parsed: result of parsing a Transmission Trailer
-    :return: a TransmissionTrailer created from the parsed record
-    """
-    decoder = TransmissionTrailerDictionaryDecoder()
-    return decoder.decode(parsed)
