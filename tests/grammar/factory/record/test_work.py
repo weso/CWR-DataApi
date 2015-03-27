@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import work
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -20,7 +24,17 @@ class TestWorkValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = work.work_record
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('work')
 
     def test_valid_common(self):
         record = 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y'
@@ -157,7 +171,17 @@ class TestWorkException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = work.work_record
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('work')
 
     def test_ser_no_duration(self):
         """
