@@ -3,8 +3,7 @@
 import pyparsing as pp
 
 from cwr.grammar.record import publisher, non_roman_alphabet, publisher_territory, writer, writer_territory, \
-    writer_publisher, \
-    interested_party_agreement
+    writer_publisher
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -53,12 +52,13 @@ controlled_writer_information = writer.writer + \
 
 # Controlled publisher
 controlled_publisher_information = original_publisher_information + \
-                                   pp.Optional(pp.OneOrMore(administrator_information)) \
-                                   + pp.Optional(pp.OneOrMore(subpublisher_information)) \
-                                   + pp.Optional(pp.OneOrMore(publisher.publisher))
+                                   pp.Optional(pp.OneOrMore(administrator_information)) + \
+                                   pp.Optional(pp.OneOrMore(subpublisher_information)) + \
+                                   pp.Optional(pp.OneOrMore(publisher.publisher))
 
 # IPA
-ipa_information = interested_party_agreement.interested_party_agreement + pp.Optional(non_roman_alphabet.npa)
+ipa_information = _factory_record.get_transaction_record('interested_party_agreement') + \
+                  pp.Optional(non_roman_alphabet.npa)
 
 # Territory
 territory_information = pp.OneOrMore(_factory_record.get_transaction_record('territory_in_agreement')) \

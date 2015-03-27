@@ -6,7 +6,6 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import record as field_record
-
 from cwr.parser.dictionary import *
 
 
