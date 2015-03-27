@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import agreement
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 """
 CWR agreement grammar tests.
@@ -17,7 +20,17 @@ __status__ = 'Development'
 
 class TestGrammarAgreement(unittest.TestCase):
     def setUp(self):
-        self.grammar = agreement.agreement
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('agreement')
 
     def test(self):
         record = 'AGR000000010000000000041383606100              OS200006062017010120170101N        D20170101        00001SYY              '
@@ -106,7 +119,17 @@ class TestGrammarAgreement(unittest.TestCase):
 
 class TestGrammarGroupHeaderException(unittest.TestCase):
     def setUp(self):
-        self.grammar = agreement.agreement
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('agreement')
 
     def test_works_zero(self):
         """

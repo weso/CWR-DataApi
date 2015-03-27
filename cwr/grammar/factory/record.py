@@ -6,7 +6,8 @@ import logging
 import pyparsing as pp
 
 from cwr.grammar.field import record as field_record
-from cwr.parser.dictionary import AcknowledgementDictionaryDecoder, MessageDictionaryDecoder
+
+from cwr.parser.dictionary import AcknowledgementDictionaryDecoder, MessageDictionaryDecoder, AgreementDictionaryDecoder
 
 
 """
@@ -31,6 +32,7 @@ class PrefixBuilder(object):
 
     def get_transaction_prefix(self, id):
         return field_record.record_prefix(self._config[id])
+
 
 class RecordFactory(object):
     """
@@ -61,6 +63,7 @@ class RecordFactory(object):
         # TODO: Do this somewhere else
         self._decoders['acknowledgement'] = AcknowledgementDictionaryDecoder()
         self._decoders['message'] = MessageDictionaryDecoder()
+        self._decoders['agreement'] = AgreementDictionaryDecoder()
 
     def get_transaction_record(self, id):
         record = self._lineStart + \
@@ -70,7 +73,7 @@ class RecordFactory(object):
 
         if id in self._decoders:
             decoder = self._decoders[id]
-            record.setParseAction(lambda p : decoder.decode(p))
+            record.setParseAction(lambda p: decoder.decode(p))
 
         return record
 
