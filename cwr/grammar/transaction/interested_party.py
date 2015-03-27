@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import publisher, non_roman_alphabet, publisher_territory, writer, writer_territory, \
+from cwr.grammar.record import publisher, publisher_territory, writer, writer_territory, \
     writer_publisher
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
@@ -31,22 +31,22 @@ _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer,
 
 # Original Publisher
 original_publisher_information = publisher.publisher + \
-                                 pp.Optional(non_roman_alphabet.npn) + \
+                                 pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
                                  pp.Optional(pp.OneOrMore(publisher_territory.territory))
 
 # Administrator
 administrator_information = publisher.publisher + \
-                            pp.Optional(non_roman_alphabet.npn) + \
+                            pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
                             pp.Optional(pp.OneOrMore(publisher_territory.territory))
 
 # Subpublisher
 subpublisher_information = publisher.publisher + \
-                           pp.Optional(non_roman_alphabet.npn) + \
+                           pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
                            pp.Optional(pp.OneOrMore(publisher_territory.territory))
 
 # Controlled writer
 controlled_writer_information = writer.writer + \
-                                pp.Optional(non_roman_alphabet.nwn) + \
+                                pp.Optional(_factory_record.get_transaction_record('nra_writer_name')) + \
                                 pp.Optional(pp.OneOrMore(writer_territory.territory)) + \
                                 pp.OneOrMore(writer_publisher.publisher)
 
@@ -58,7 +58,7 @@ controlled_publisher_information = original_publisher_information + \
 
 # IPA
 ipa_information = _factory_record.get_transaction_record('interested_party_agreement') + \
-                  pp.Optional(non_roman_alphabet.npa)
+                  pp.Optional(_factory_record.get_transaction_record('nra_agreement_party'))
 
 # Territory
 territory_information = pp.OneOrMore(_factory_record.get_transaction_record('territory_in_agreement')) \
