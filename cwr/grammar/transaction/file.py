@@ -2,7 +2,6 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import transmission
 from cwr.grammar.field import special
 from cwr.grammar.transaction import transaction
 from cwr.group import Group
@@ -54,8 +53,10 @@ Rules.
 """
 
 # File rule
-cwr_transmission = transmission.transmission_header + _transmission_groups + transmission.transmission_trailer + pp.ZeroOrMore(
-    special.lineEnd)
+cwr_transmission = _factory_record.get_record('transmission_header') + \
+                   _transmission_groups + \
+                   _factory_record.get_record('transmission_trailer') + \
+                   pp.ZeroOrMore(special.lineEnd)
 
 """
 Parsing actions for the patterns.

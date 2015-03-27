@@ -3,7 +3,12 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar.record import transmission
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+
+from data.accessor import CWRTables
+
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -24,7 +29,17 @@ class TestParseTransmissionHeader(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = transmission.transmission_header
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_record('transmission_header')
 
     def test_valid_full(self):
         """
@@ -85,7 +100,17 @@ class TestParseTransmissionTrailer(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = transmission.transmission_trailer
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_record('transmission_trailer')
 
     def test_valid_full(self):
         """
@@ -109,7 +134,17 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = transmission.transmission_header
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_record('transmission_header')
 
     def test_invalid_wrong_type(self):
         """
@@ -142,7 +177,17 @@ class TestParseTransmissionTrailerException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = transmission.transmission_header
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_record('transmission_header')
 
     def test_invalid_wrong_length_too_short(self):
         """
