@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.interested_party import Writer, WriterRecord
+from cwr.interested_party import Writer
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import WriterRecordDictionaryDecoder
 
 
 """
@@ -68,11 +69,5 @@ def _to_writerrecord(parsed):
     :param parsed: result of parsing a Writer record
     :return: an WriterRecord created from the parsed record
     """
-    writer_data = _to_writer(parsed)
-
-    return WriterRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n, writer_data,
-                        parsed.writer_designation_code, parsed.work_for_hire, parsed.writer_unknown,
-                        parsed.reversionary,
-                        parsed.first_recording_refusal, parsed.usa_license_indicator, parsed.pr_society,
-                        parsed.pr_share, parsed.mr_society, parsed.mr_share,
-                        parsed.sr_society, parsed.sr_share)
+    decoder = WriterRecordDictionaryDecoder()
+    return decoder.decode(parsed)

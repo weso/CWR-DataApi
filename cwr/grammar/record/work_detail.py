@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.work import AlternateTitleRecord, AuthoredWorkRecord, PerformingArtistRecord, RecordingDetailRecord, \
-    WorkOriginRecord, InstrumentationSummaryRecord, InstrumentationDetailRecord, ComponentRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import AlternateTitleDictionaryDecoder, AuthoredWorkDictionaryDecoder, \
+    PerformingArtistDictionaryDecoder, RecordingDetailDictionaryDecoder, WorkOriginDictionaryDecoder, \
+    InstrumentationDetailDecoder, InstrumentationSummaryDecoder, ComponentDictionaryDecoder
 
 
 """
@@ -97,8 +98,8 @@ def _to_alternate_title(parsed):
     :param parsed: result of parsing an Alternate Title record
     :return: a AlternateTitleRecord created from the parsed record
     """
-    return AlternateTitleRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                parsed.title, parsed.title_type, parsed.language_code)
+    decoder = AlternateTitleDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_entire_title(parsed):
@@ -108,12 +109,8 @@ def _to_entire_title(parsed):
     :param parsed: result of parsing an Entire Title record
     :return: a AuthoredWorkRecord created from the parsed record
     """
-    return AuthoredWorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                              parsed.title, parsed.submitter_work_n, parsed.writer_1_first_name,
-                              parsed.writer_1_last_name,
-                              parsed.writer_2_first_name, parsed.writer_2_last_name, parsed.writer_1_ipi_base_n,
-                              parsed.writer_1_ipi_name_n, parsed.writer_2_ipi_base_n, parsed.writer_2_ipi_name_n,
-                              parsed.source, parsed.language_code, parsed.iswc)
+    decoder = AuthoredWorkDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_version_title(parsed):
@@ -123,12 +120,8 @@ def _to_version_title(parsed):
     :param parsed: result of parsing an Original Work Title for Versions record
     :return: a AuthoredWorkRecord created from the parsed record
     """
-    return AuthoredWorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                              parsed.title, parsed.submitter_work_n, parsed.writer_1_first_name,
-                              parsed.writer_1_last_name,
-                              parsed.writer_2_first_name, parsed.writer_2_last_name, parsed.writer_1_ipi_base_n,
-                              parsed.writer_1_ipi_name_n, parsed.writer_2_ipi_base_n, parsed.writer_2_ipi_name_n,
-                              parsed.source, parsed.language_code, parsed.iswc)
+    decoder = AuthoredWorkDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_performing_artist(parsed):
@@ -138,9 +131,8 @@ def _to_performing_artist(parsed):
     :param parsed: result of parsing a Performing Artist record
     :return: a PerformingArtistRecord created from the parsed record
     """
-    return PerformingArtistRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                  parsed.performing_artist_last_name, parsed.performing_artist_first_name,
-                                  parsed.ipi_name_n, parsed.ipi_base_n)
+    decoder = PerformingArtistDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_recording_detail(parsed):
@@ -150,10 +142,8 @@ def _to_recording_detail(parsed):
     :param parsed: result of parsing a Recording Detail record
     :return: a RecordingDetailRecord created from the parsed record
     """
-    return RecordingDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                 parsed.first_release_date, parsed.first_release_duration, parsed.first_album_title,
-                                 parsed.first_album_label, parsed.first_release_catalog_n, parsed.ean13, parsed.isrc,
-                                 parsed.recording_format, parsed.recording_technique, parsed.media_type)
+    decoder = RecordingDetailDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_work_origin(parsed):
@@ -163,10 +153,8 @@ def _to_work_origin(parsed):
     :param parsed: result of parsing a Work Origin record
     :return: a WorkOriginRecord created from the parsed record
     """
-    return WorkOriginRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                            parsed.intended_purpose, parsed.production_title, parsed.cd_identifier, parsed.cut_number,
-                            parsed.library, parsed.bltvr, parsed.visan, parsed.production_n, parsed.episode_title,
-                            parsed.episode_n, parsed.year_production, parsed.audio_visual_key)
+    decoder = WorkOriginDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_instrumentation_summary(parsed):
@@ -176,9 +164,8 @@ def _to_instrumentation_summary(parsed):
     :param parsed: result of parsing an Instrumentation Summary record
     :return: a InstrumentationSummaryRecord created from the parsed record
     """
-    return InstrumentationSummaryRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                        parsed.number_voices, parsed.standard_instrumentation_type,
-                                        parsed.instrumentation_description)
+    decoder = InstrumentationSummaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_instrumentation_detail(parsed):
@@ -188,8 +175,8 @@ def _to_instrumentation_detail(parsed):
     :param parsed: result of parsing an Instrumentation Detail record
     :return: a InstrumentationDetailRecord created from the parsed record
     """
-    return InstrumentationDetailRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                       parsed.instrument, parsed.number_players)
+    decoder = InstrumentationDetailDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_component(parsed):
@@ -199,9 +186,5 @@ def _to_component(parsed):
     :param parsed: result of parsing an Component Detail record
     :return: a ComponentRecord created from the parsed record
     """
-    return ComponentRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n, parsed.title,
-                           parsed.writer_1_last_name, parsed.submitter_work_n, parsed.writer_1_first_name,
-                           parsed.writer_2_first_name,
-                           parsed.writer_2_last_name, parsed.writer_1_ipi_base_n, parsed.writer_1_ipi_name_n,
-                           parsed.writer_2_ipi_base_n,
-                           parsed.writer_2_ipi_name_n, parsed.iswc, parsed.duration)
+    decoder = ComponentDictionaryDecoder()
+    return decoder.decode(parsed)

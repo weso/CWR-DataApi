@@ -44,7 +44,7 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         dict['composite_type'] = 'MED'
         dict['composite_component_count'] = 5
         dict['iswc'] = ISWCCode(12345678, 9)
-        dict['cwr_work_type'] = 'BL'
+        dict['work_type'] = 'BL'
         dict['duration'] = datetime.datetime.strptime('011200', '%H%M%S').time()
         dict['catalogue_number'] = 'GGH97'
         dict['opus_number'] = 'OP35'
@@ -77,7 +77,7 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self.assertEqual(5, record.composite_component_count)
         self.assertEqual(12345678, record.iswc.id_code)
         self.assertEqual(9, record.iswc.check_digit)
-        self.assertEqual('BL', record.cwr_work_type)
+        self.assertEqual('BL', record.work_type)
         self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), record.duration)
         self.assertEqual('GGH97', record.catalogue_number)
         self.assertEqual('OP35', record.opus_number)

@@ -209,8 +209,10 @@ class IPTerritoryOfControlDecoder(Decoder):
                                           inclusion_exclusion_indicator=data['inclusion_exclusion_indicator'],
                                           tis_numeric_code=data['tis_numeric_code'],
                                           sequence_n=data['sequence_n'],
-                                          pr_col_share=data['pr_col_share'], mr_col_share=data['mr_col_share'],
-                                          sr_col_share=data['sr_col_share'], shares_change=data['shares_change'])
+                                          pr_collection_share=data['pr_collection_share'],
+                                          mr_collection_share=data['mr_collection_share'],
+                                          sr_collection_share=data['sr_collection_share'],
+                                          shares_change=data['shares_change'])
 
 
 class InstrumentationDetailDecoder(Decoder):
@@ -351,7 +353,7 @@ class WorkDictionaryDecoder(Decoder):
                           composite_type=data['composite_type'],
                           composite_component_count=data['composite_component_count'],
                           iswc=data['iswc'],
-                          cwr_work_type=data['cwr_work_type'],
+                          work_type=data['work_type'],
                           duration=data['duration'],
                           catalogue_number=data['catalogue_number'],
                           opus_number=data['opus_number'],
@@ -549,7 +551,7 @@ class PublisherRecordDictionaryDecoder(Decoder):
                                submitter_agreement_n=data['submitter_agreement_n'],
                                publisher_type=data['publisher_type'],
                                publisher_unknown=data['publisher_unknown'], agreement_type=data['agreement_type'],
-                               isac=data['isac'],
+                               international_standard_code=data['international_standard_code'],
                                society_assigned_agreement_n=data['society_assigned_agreement_n'],
                                pr_society=data['pr_society'],
                                pr_ownership_share=data['pr_ownership_share'],
@@ -1019,9 +1021,9 @@ class CWRDictionaryEncoder(Encoder):
         encoded['ie_indicator'] = record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
         encoded['sequence_n'] = record.sequence_n
-        encoded['pr_col_share'] = record.pr_col_share
-        encoded['mr_col_share'] = record.mr_col_share
-        encoded['sr_col_share'] = record.sr_col_share
+        encoded['pr_collection_share'] = record.pr_collection_share
+        encoded['mr_collection_share'] = record.mr_collection_share
+        encoded['sr_collection_share'] = record.sr_collection_share
         encoded['shares_change'] = record.shares_change
 
         return encoded
@@ -1204,7 +1206,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded = self.__encode_interested_party_record(record)
 
         encoded['agreement_type'] = record.agreement_type
-        encoded['isac'] = record.isac
+        encoded['international_standard_code'] = record.international_standard_code
         encoded['pr_society'] = record.pr_society
         encoded['pr_ownership_share'] = record.pr_ownership_share
         encoded['publisher_sequence_n'] = record.publisher_sequence_n
@@ -1312,7 +1314,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded['contact_name'] = record.contact_name
         encoded['copyright_date'] = record.copyright_date
         encoded['copyright_number'] = record.copyright_number
-        encoded['cwr_work_type'] = record.cwr_work_type
+        encoded['work_type'] = record.work_type
         encoded['date_publication_printed_edition'] = record.date_publication_printed_edition
         encoded['duration'] = record.duration
         encoded['exceptional_clause'] = record.exceptional_clause

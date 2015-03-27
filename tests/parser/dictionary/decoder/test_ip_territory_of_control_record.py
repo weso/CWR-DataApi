@@ -31,9 +31,9 @@ class TestIPTerritoryOfControlDecoder(unittest.TestCase):
         dict['inclusion_exclusion_indicator'] = 'I'
         dict['tis_numeric_code'] = 12
         dict['sequence_n'] = 13
-        dict['pr_col_share'] = 50.1
-        dict['mr_col_share'] = 50.2
-        dict['sr_col_share'] = 50.3
+        dict['pr_collection_share'] = 50.1
+        dict['mr_collection_share'] = 50.2
+        dict['sr_collection_share'] = 50.3
         dict['shares_change'] = 'Y'
 
         record = self._decoder.decode(dict)
@@ -45,7 +45,7 @@ class TestIPTerritoryOfControlDecoder(unittest.TestCase):
         self.assertEqual('I', record.inclusion_exclusion_indicator)
         self.assertEqual(12, record.tis_numeric_code)
         self.assertEqual(13, record.sequence_n)
-        self.assertEqual(50.1, record.pr_col_share)
-        self.assertEqual(50.2, record.mr_col_share)
-        self.assertEqual(50.3, record.sr_col_share)
+        self.assertEqual(50.1, record.pr_collection_share)
+        self.assertEqual(50.2, record.mr_collection_share)
+        self.assertEqual(50.3, record.sr_collection_share)
         self.assertEqual('Y', record.shares_change)

@@ -38,7 +38,7 @@ class TestPublisherDictionaryEncoding(unittest.TestCase):
                                publisher_type='PA',
                                publisher_unknown='U',
                                agreement_type='PG',
-                               isac='14AEI',
+                               international_standard_code='14AEI',
                                society_assigned_agreement_n='GH34',
                                pr_society=13,
                                pr_ownership_share=50.5,
@@ -66,7 +66,7 @@ class TestPublisherDictionaryEncoding(unittest.TestCase):
         self.assertEqual('PA', encoded['publisher_type'])
         self.assertEqual('U', encoded['publisher_unknown'])
         self.assertEqual('PG', encoded['agreement_type'])
-        self.assertEqual('14AEI', encoded['isac'])
+        self.assertEqual('14AEI', encoded['international_standard_code'])
         self.assertEqual('GH34', encoded['society_assigned_agreement_n'])
         self.assertEqual(13, encoded['pr_society'])
         self.assertEqual(50.5, encoded['pr_ownership_share'])

@@ -88,7 +88,7 @@ class WorkRecord(BaseWorkRecord):
                  musical_work_distribution_category,
                  date_publication_printed_edition=None, text_music_relationship=None, language_code=None,
                  copyright_number='', copyright_date=None, music_arrangement=None, lyric_adaptation=None,
-                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, cwr_work_type=None,
+                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, work_type=None,
                  duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
                  recorded_indicator='U', priority_flag='U', exceptional_clause='U', grand_rights_indicator=False):
         super(WorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title, language_code,
@@ -120,7 +120,7 @@ class WorkRecord(BaseWorkRecord):
         self._catalogue_number = catalogue_number
 
         # International info
-        self._cwr_work_type = cwr_work_type
+        self._work_type = work_type
 
         # Contact info
         self._contact_id = contact_id
@@ -216,17 +216,6 @@ class WorkRecord(BaseWorkRecord):
         :return: the Work Copyright number
         """
         return self._copyright_number
-
-    @property
-    def cwr_work_type(self):
-        """
-        CWR Work Type field. Table Lookup (CWR Work Type).
-
-        Indicates a genre found in the CWR Work Type table.
-
-        :return: a CWR work type
-        """
-        return self._cwr_work_type
 
     @property
     def date_publication_printed_edition(self):
@@ -406,6 +395,17 @@ class WorkRecord(BaseWorkRecord):
         :return: the Work's version type
         """
         return self._version_type
+
+    @property
+    def work_type(self):
+        """
+        CWR Work Type field. Table Lookup (CWR Work Type).
+
+        Indicates a genre found in the CWR Work Type table.
+
+        :return: a CWR work type
+        """
+        return self._work_type
 
 
 class WorkTransaction(object):

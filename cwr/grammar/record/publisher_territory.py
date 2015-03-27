@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.interested_party import IPTerritoryOfControlRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import IPTerritoryOfControlDecoder
 
 
 """
@@ -56,7 +56,5 @@ def _to_publisherterritory(parsed):
     :param parsed: result of parsing the Territory record
     :return: an IPTerritoryRecord created from the parsed record
     """
-    return IPTerritoryOfControlRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                      parsed.ip_n, parsed.inclusion_exclusion_indicator, parsed.tis_numeric_code,
-                                      parsed.sequence_n,
-                                      parsed.pr_share, parsed.mr_share, parsed.sr_share, parsed.shares_change)
+    decoder = IPTerritoryOfControlDecoder()
+    return decoder.decode(parsed)

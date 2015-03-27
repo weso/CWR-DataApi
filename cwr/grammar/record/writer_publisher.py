@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.interested_party import PublisherForWriterRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import PublisherForWriterDecoder
 
 
 """
@@ -48,6 +48,5 @@ def _to_publisher(parsed):
     :param parsed: result of parsing a Writer Publisher record
     :return: a WriterPublisherRecord created from the parsed record
     """
-    return PublisherForWriterRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                    parsed.publisher_ip_n, parsed.writer_ip_n, parsed.submitter_agreement_n,
-                                    parsed.society_assigned_agreement_n)
+    decoder = PublisherForWriterDecoder()
+    return decoder.decode(parsed)

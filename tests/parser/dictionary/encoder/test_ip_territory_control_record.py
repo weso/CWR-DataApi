@@ -30,9 +30,9 @@ class TestIPTerritoryOfControlRecordDictionaryEncoding(unittest.TestCase):
                                           inclusion_exclusion_indicator='I',
                                           tis_numeric_code=76,
                                           sequence_n=135,
-                                          pr_col_share=50.5,
-                                          mr_col_share=60.5,
-                                          sr_col_share=70.5,
+                                          pr_collection_share=50.5,
+                                          mr_collection_share=60.5,
+                                          sr_collection_share=70.5,
                                           shares_change=True)
 
         encoded = self._encoder.encode(data)
@@ -44,7 +44,7 @@ class TestIPTerritoryOfControlRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('I', encoded['ie_indicator'])
         self.assertEqual(76, encoded['tis_numeric_code'])
         self.assertEqual(135, encoded['sequence_n'])
-        self.assertEqual(50.5, encoded['pr_col_share'])
-        self.assertEqual(60.5, encoded['mr_col_share'])
-        self.assertEqual(70.5, encoded['sr_col_share'])
+        self.assertEqual(50.5, encoded['pr_collection_share'])
+        self.assertEqual(60.5, encoded['mr_collection_share'])
+        self.assertEqual(70.5, encoded['sr_collection_share'])
         self.assertEqual(True, encoded['shares_change'])

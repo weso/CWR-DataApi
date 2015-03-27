@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.transmission import TransmissionHeader, TransmissionTrailer
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import TransmissionHeaderDictionaryDecoder, TransmissionTrailerDictionaryDecoder
 
 
 """
@@ -77,9 +77,8 @@ def _to_transmissionheader(parsed):
     :param parsed: result of parsing a Transmission Header
     :return: a TransmissionHeader created from the parsed record
     """
-    return TransmissionHeader(parsed.record_type, parsed.sender_id, parsed.sender_name, parsed.sender_type,
-                              parsed.creation_date_time,
-                              parsed.transmission_date, parsed.edi_version, parsed.character_set)
+    decoder = TransmissionHeaderDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_transmissiontrailer(parsed):
@@ -89,4 +88,5 @@ def _to_transmissiontrailer(parsed):
     :param parsed: result of parsing a Transmission Trailer
     :return: a TransmissionTrailer created from the parsed record
     """
-    return TransmissionTrailer(parsed.record_type, parsed.group_count, parsed.transaction_count, parsed.record_count)
+    decoder = TransmissionTrailerDictionaryDecoder()
+    return decoder.decode(parsed)

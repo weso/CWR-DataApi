@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord, NonRomanAlphabetWriterNameRecord, \
-    NonRomanAlphabetTitleRecord, NonRomanAlphabetWorkRecord, NonRomanAlphabetOtherWriterRecord, \
-    NonRomanAlphabetPerformanceDataRecord, NonRomanAlphabetPublisherNameRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import NonRomanAlphabetAgreementPartyDictionaryDecoder, \
+    NonRomanAlphabetPublisherNameDictionaryDecoder, NonRomanAlphabetWriterNameDictionaryDecoder, \
+    NonRomanAlphabetTitleDictionaryDecoder, NonRomanAlphabetPerformanceDataDictionaryDecoder, \
+    NonRomanAlphabetWorkDictionaryDecoder, NonRomanAlphabetOtherWriterDictionaryDecoder
 
 
 """
@@ -89,10 +90,8 @@ def _to_npa(parsed):
     :param parsed: result of parsing an NPA transaction
     :return: a NPARecord created from the parsed record
     """
-    return NonRomanAlphabetAgreementPartyRecord(parsed.record_type, parsed.transaction_sequence_n,
-                                                parsed.record_sequence_n,
-                                                parsed.ip_name, parsed.ip_writer_name, parsed.ip_n,
-                                                parsed.language_code)
+    decoder = NonRomanAlphabetAgreementPartyDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_npn(parsed):
@@ -102,10 +101,8 @@ def _to_npn(parsed):
     :param parsed: result of parsing an NPN transaction
     :return: a NPNRecord created from the parsed record
     """
-    return NonRomanAlphabetPublisherNameRecord(parsed.record_type, parsed.transaction_sequence_n,
-                                               parsed.record_sequence_n,
-                                               parsed.publisher_sequence_n, parsed.ip_n, parsed.publisher_name,
-                                               parsed.language_code)
+    decoder = NonRomanAlphabetPublisherNameDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_nwn(parsed):
@@ -115,9 +112,8 @@ def _to_nwn(parsed):
     :param parsed: result of parsing an NWN transaction
     :return: a NWNRecord created from the parsed record
     """
-    return NonRomanAlphabetWriterNameRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                            parsed.writer_first_name, parsed.writer_last_name, parsed.ip_n,
-                                            parsed.language_code)
+    decoder = NonRomanAlphabetWriterNameDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_nat(parsed):
@@ -127,8 +123,8 @@ def _to_nat(parsed):
     :param parsed: result of parsing an NAT transaction
     :return: a NATRecord created from the parsed record
     """
-    return NonRomanAlphabetTitleRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                       parsed.title, parsed.title_type, parsed.language_code)
+    decoder = NonRomanAlphabetTitleDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_npr(parsed):
@@ -138,12 +134,8 @@ def _to_npr(parsed):
     :param parsed: result of parsing an NPR transaction
     :return: a NPRRecord created from the parsed record
     """
-    return NonRomanAlphabetPerformanceDataRecord(parsed.record_type, parsed.transaction_sequence_n,
-                                                 parsed.record_sequence_n,
-                                                 parsed.performing_artist_first_name, parsed.performing_artist_name,
-                                                 parsed.ipi_name_n,
-                                                 parsed.ipi_base_n,
-                                                 parsed.language_code, parsed.performance_language, parsed.dialect)
+    decoder = NonRomanAlphabetPerformanceDataDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_nra_work(parsed):
@@ -153,8 +145,8 @@ def _to_nra_work(parsed):
     :param parsed: result of parsing an Work NRA transaction
     :return: a NRARecordWork created from the parsed record
     """
-    return NonRomanAlphabetWorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                      parsed.title, parsed.language_code)
+    decoder = NonRomanAlphabetWorkDictionaryDecoder()
+    return decoder.decode(parsed)
 
 
 def _to_now(parsed):
@@ -164,7 +156,5 @@ def _to_now(parsed):
     :param parsed: result of parsing a NOW transaction
     :return: a NOWRecord created from the parsed record
     """
-    return NonRomanAlphabetOtherWriterRecord(parsed.record_type, parsed.transaction_sequence_n,
-                                             parsed.record_sequence_n,
-                                             parsed.writer_first_name, parsed.writer_name, parsed.position,
-                                             parsed.language_code)
+    decoder = NonRomanAlphabetOtherWriterDictionaryDecoder()
+    return decoder.decode(parsed)

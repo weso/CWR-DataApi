@@ -39,7 +39,7 @@ class TestPublisherRecordDictionaryDecoder(unittest.TestCase):
         dict['publisher_type'] = 'PA'
         dict['publisher_unknown'] = 'N'
         dict['agreement_type'] = 'PG'
-        dict['isac'] = 'A0123456789124'
+        dict['international_standard_code'] = 'A0123456789124'
         dict['society_assigned_agreement_n'] = 'SAGR123'
         dict['pr_society'] = 1
         dict['pr_ownership_share'] = 50.1
@@ -69,7 +69,7 @@ class TestPublisherRecordDictionaryDecoder(unittest.TestCase):
         self.assertEqual('PA', record.publisher_type)
         self.assertEqual('N', record.publisher_unknown)
         self.assertEqual('PG', record.agreement_type)
-        self.assertEqual('A0123456789124', record.isac)
+        self.assertEqual('A0123456789124', record.international_standard_code)
         self.assertEqual('SAGR123', record.society_assigned_agreement_n)
         self.assertEqual(1, record.pr_society)
         self.assertEqual(50.1, record.pr_ownership_share)

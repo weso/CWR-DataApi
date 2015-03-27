@@ -45,7 +45,7 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
                           composite_type='MED',
                           composite_component_count=5,
                           iswc=iswc,
-                          cwr_work_type='BL',
+                          work_type='BL',
                           duration=datetime.datetime.strptime('011200', '%H%M%S').time(),
                           catalogue_number='GGH97',
                           opus_number='OP35',
@@ -78,7 +78,7 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(5, encoded['composite_component_count'])
         self.assertEqual(12345678, encoded['iswc'].id_code)
         self.assertEqual(9, encoded['iswc'].check_digit)
-        self.assertEqual('BL', encoded['cwr_work_type'])
+        self.assertEqual('BL', encoded['work_type'])
         self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), encoded['duration'])
         self.assertEqual('GGH97', encoded['catalogue_number'])
         self.assertEqual('OP35', encoded['opus_number'])

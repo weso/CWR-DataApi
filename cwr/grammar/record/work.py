@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.work import WorkRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.parser.dictionary import WorkDictionaryDecoder
 
 
 """
@@ -55,27 +55,5 @@ def _to_work(parsed):
     :param parsed: result of parsing a Work transaction header
     :return: a WorkRecord created from the parsed record
     """
-    return WorkRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                      parsed.submitter_work_n, parsed.title, parsed.version_type,
-                      parsed.musical_work_distribution_category,
-                      date_publication_printed_edition=parsed.date_publication_printed_edition,
-                      text_music_relationship=parsed.text_music_relationship,
-                      language_code=parsed.language_code,
-                      copyright_number=parsed.copyright_number,
-                      copyright_date=parsed.copyright_date,
-                      music_arrangement=parsed.music_arrangement,
-                      lyric_adaptation=parsed.lyric_adaptation,
-                      excerpt_type=parsed.excerpt_type,
-                      composite_type=parsed.composite_type,
-                      composite_component_count=parsed.composite_component_count,
-                      iswc=parsed.iswc,
-                      cwr_work_type=parsed.work_type,
-                      duration=parsed.duration,
-                      catalogue_number=parsed.catalogue_number,
-                      opus_number=parsed.opus_number,
-                      contact_id=parsed.contact_id,
-                      contact_name=parsed.contact_name,
-                      recorded_indicator=parsed.recorded_indicator,
-                      priority_flag=parsed.priority_flag,
-                      exceptional_clause=parsed.exceptional_clause,
-                      grand_rights_indicator=parsed.grand_rights_indicator)
+    decoder = WorkDictionaryDecoder()
+    return decoder.decode(parsed)

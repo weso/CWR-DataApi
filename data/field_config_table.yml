@@ -28,11 +28,11 @@ inclusion_exclusion_indicator:
   name: Inclusion/Exclusion Indicator
   source: ie_indicator
 
-instrument:
+instrument_code:
   type: lookup
   size: 3
   name: Instrument
-  source: instrument
+  source: instrument_code
 
 intended_purpose:
   type: lookup
@@ -172,7 +172,7 @@ society_n:
   actions:
     - to_int
 
-special_agreement_indicator:
+special_agreements:
   type: lookup
   size: 1
   name: Special Agreements Indicator
@@ -236,7 +236,7 @@ type_of_right:
   name: Type of Right
   source: type_of_right
 
-usa_license_indicator:
+usa_license:
   type: lookup
   size: 1
   name: USA License Indicator
@@ -254,7 +254,7 @@ work_type:
   name: Work Type
   source: work_type
 
-writer_designation_code:
+writer_designation:
   type: lookup
   size: 2
   name: Writer Designation
