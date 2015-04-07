@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import writer_territory
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -22,7 +26,17 @@ class TestSWTGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = writer_territory.territory
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('writer_territory')
 
     def test_valid_full(self):
         """
@@ -38,10 +52,10 @@ class TestSWTGrammar(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('A12345678', result.ip_n)
-        self.assertEqual(10.12, result.pr_col_share)
-        self.assertEqual(50, result.mr_col_share)
-        self.assertEqual(25.2, result.sr_col_share)
-        self.assertEqual('I', result.ie_indicator)
+        self.assertEqual(10.12, result.pr_collection_share)
+        self.assertEqual(50, result.mr_collection_share)
+        self.assertEqual(25.2, result.sr_collection_share)
+        self.assertEqual('I', result.inclusion_exclusion_indicator)
         self.assertEqual(8, result.tis_numeric_code)
         self.assertEqual(True, result.shares_change)
         self.assertEqual(12, result.sequence_n)

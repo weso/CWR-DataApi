@@ -27,8 +27,8 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
     The note field should be used sparingly.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, society_n, type_of_right, work_n='',
-                 subject_code=None, note=''):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 society_n, type_of_right, work_n='', subject_code=None, note=''):
         super(AdditionalRelatedInfoRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._society_n = society_n
         self._type_of_right = type_of_right

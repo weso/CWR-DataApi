@@ -5,7 +5,7 @@ import sys
 
 import chardet
 
-from cwr.grammar import file as rule_file
+from cwr.grammar.transaction import file as rule_file
 
 
 """

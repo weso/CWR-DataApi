@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import work_detail
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -22,7 +25,17 @@ class TestComponentGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = work_detail.component
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('component')
 
     def test_valid_full(self):
         """
@@ -46,13 +59,13 @@ class TestComponentGrammar(unittest.TestCase):
         self.assertEqual(1, result.duration.second)
         self.assertEqual('LAST NAME 1', result.writer_1_last_name)
         self.assertEqual('FIRST NAME 1', result.writer_1_first_name)
-        self.assertEqual(14107338, result.writer_1_ipi_name)
+        self.assertEqual(14107338, result.writer_1_ipi_name_n)
         self.assertEqual('LAST NAME 2', result.writer_2_last_name)
         self.assertEqual('FIRST NAME 2', result.writer_2_first_name)
-        self.assertEqual(14107339, result.writer_2_ipi_name)
-        self.assertEqual('I', result.writer_1_ipi_base.header)
-        self.assertEqual(229, result.writer_1_ipi_base.id_code)
-        self.assertEqual(7, result.writer_1_ipi_base.check_digit)
-        self.assertEqual('I', result.writer_2_ipi_base.header)
-        self.assertEqual(230, result.writer_2_ipi_base.id_code)
-        self.assertEqual(7, result.writer_2_ipi_base.check_digit)
+        self.assertEqual(14107339, result.writer_2_ipi_name_n)
+        self.assertEqual('I', result.writer_1_ipi_base_n.header)
+        self.assertEqual(229, result.writer_1_ipi_base_n.id_code)
+        self.assertEqual(7, result.writer_1_ipi_base_n.check_digit)
+        self.assertEqual('I', result.writer_2_ipi_base_n.header)
+        self.assertEqual(230, result.writer_2_ipi_base_n.id_code)
+        self.assertEqual(7, result.writer_2_ipi_base_n.check_digit)

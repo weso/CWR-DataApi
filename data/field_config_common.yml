@@ -1,0 +1,710 @@
+advance_given:
+  type: boolean
+  size: 1
+  name: Advance Given
+
+agreement_end_date:
+  type: date
+  size: 8
+  name: Agreement End Date
+
+agreement_start_date:
+  type: date
+  size: 8
+  name: Agreement Start Date
+
+alternate_title:
+  type: alphanum_ext
+  size: 60
+  name: Alternate Title
+
+audio_visual_key:
+  type: avi
+  size: 18
+  name: AVI Field
+
+batch_request_id:
+  type: numeric
+  size: 10
+  name: Batch Request ID
+
+blank:
+  type: blank
+  size: 1
+  name: Blank
+
+bltvr:
+  type: alphanum
+  size: 1
+  name: BLTVR
+
+catalogue_number:
+  type: alphanum
+  size: 25
+  name: Catalogue Number
+
+cd_identifier:
+  type: alphanum
+  size: 15
+  name: CD Identifier
+
+component_duration:
+  type: time
+  size: 8
+  name: Duration
+  results_name: duration
+
+component_title:
+  type: alphanum
+  size: 60
+  name: Title
+  results_name: title
+
+composite_component_count:
+  type: numeric
+  size: 3
+  name: Composite Component Count
+
+constant:
+  type: blank
+  size: 6
+  name: Constant
+
+constant_1:
+  type: blank
+  size: 60
+  name: First Constant
+
+constant_2:
+  type: blank
+  size: 5
+  name: Second Constant
+
+contact_id:
+  type: alphanum
+  size: 10
+  name: Contact Id
+
+contact_name:
+  type: alphanum
+  size: 30
+  name: Contact Name
+
+copyright_date:
+  type: date
+  size: 8
+  name: Copyright Date
+
+copyright_number:
+  type: alphanum
+  size: 12
+  name: Copyright Number
+
+character_set:
+  type: charset
+  size: 15
+  name: Character Set
+
+creation_date_time:
+  type: date_time
+  size: 16
+  name: Creation Date and Time
+
+creation_title:
+  type: alphanum
+  size: 60
+  name: Creation Title
+
+currency_indicator:
+  type: alphanum
+  size: 3
+  name: Currency Indicator
+
+cut_number:
+  type: numeric
+  size: 4
+  name: Cut Number
+
+date_of_signature:
+  type: date
+  size: 8
+  name: Date of Signature of Agreement
+
+date_publication_printed_edition:
+  type: date
+  size: 8
+  name: Date of Publication of Printed Edition
+
+duration:
+  type: time
+  size: 8
+  name: Duration
+
+ean13:
+  type: ean13
+  size: 13
+  name: EAN 13
+  results_name: ean
+
+edi_standard:
+  type: lookup
+  size: 5
+  name: EDI Standard Version
+  values:
+    - '01.10'
+
+entire_work_title:
+  type: alphanum
+  size: 60
+  name: Entire Work Title
+  results_name: title
+
+episode_n:
+  type: alphanum
+  size: 20
+  name: Episode Number
+
+episode_title:
+  type: alphanum
+  size: 60
+  name: Episode Title
+
+exceptional_clause:
+  type: flag
+  size: 1
+  name: Exceptional Clause
+
+filler:
+  type: blank
+  size: 1
+  name: Filler
+
+first_album_label:
+  type: alphanum
+  size: 60
+  name: First Album Label
+
+first_album_title:
+  type: alphanum
+  size: 60
+  name: First Album Title
+
+first_recording_refusal:
+  type: flag
+  size: 1
+  name: First Recording Refusal Indicator
+
+first_release_catalog_n:
+  type: alphanum
+  size: 18
+  name: First Release Catalog Number
+
+first_release_date:
+  type: date
+  size: 8
+  name: First Release Date
+
+first_release_duration:
+  type: time
+  size: 8
+  name: First Release Duration
+
+grand_rights_indicator:
+  type: boolean
+  size: 1
+  name: Grand Rights Indicator
+
+group_count:
+  type: numeric
+  size: 5
+  name: Group Count
+
+group_id:
+  type: numeric
+  size: 5
+  name: Group ID
+
+instrumentation_description:
+  type: alphanum
+  size: 50
+  name: Instrumentation Description
+
+international_standard_code:
+  type: alphanum
+  size: 14
+  name: International Standard Agreement Code
+
+ip_last_name:
+  type: alphanum
+  size: 45
+  name: Interested Party Last Name
+  
+ip_n:
+  type: alphanum
+  size: 9
+  name: Interested Party Number
+
+ip_name:
+  type: alphanum
+  size: 160
+  name: Interested Party Name
+
+ip_writer_first_name:
+  type: alphanum
+  size: 30
+  name: Interested Party Writer First Name
+
+ip_writer_name:
+  type: alphanum
+  size: 160
+  name: Interested Party Writer First Name
+
+ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: IPI Base Number
+
+ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: IPI Name Number
+
+isrc:
+  type: isrc
+  size: 12
+  name: ISRC
+
+iswc:
+  type: iswc
+  size: 11
+  name: ISWC
+
+library:
+  type: alphanum
+  size: 60
+  name: Library
+
+message_text:
+  type: alphanum
+  size: 150
+  name: Message Text
+
+mr_collection_share:
+  type: percentage
+  size: 5
+  name: Mechanical Rights Collection Share
+
+mr_share:
+  type: percentage
+  size: 5
+  name: Mechanical Rights Share
+
+mr_ownership_share:
+  type: percentage
+  size: 5
+  name: Mechanical Rights Ownership Share
+
+number_players:
+  type: numeric
+  size: 3
+  name: Number of players
+
+number_voices:
+  type: numeric
+  size: 3
+  name: Number of voices
+
+number_of_works:
+  type: numeric
+  size: 5
+  name: Number of Works
+
+note:
+  type: alphanum
+  size: 160
+  name: Note
+
+opus_number:
+  type: alphanum
+  size: 25
+  name: Opus Number
+
+original_group_id:
+  type: numeric
+  size: 5
+  name: Original Group ID
+
+original_title:
+  type: alphanum
+  size: 60
+  name: Original Work Title
+  results_name: title
+
+original_transaction_sequence_n:
+  type: numeric
+  size: 8
+  name: Original Transaction Sequence Number
+
+original_record_sequence_n:
+  type: numeric
+  size: 8
+  name: Original Record Sequence Number
+
+performance_dialect:
+  type: alphanum
+  size: 3
+  name: Dialect
+
+performing_artist_first_name:
+  type: alphanum
+  size: 30
+  name: Performing Artist First Name
+
+performing_artist_first_name_long:
+  type: alphanum
+  size: 160
+  name: Performing Artist First Name
+  results_name: performing_artist_first_name
+
+performing_artist_ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: IPI Base Number
+
+performing_artist_ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: IPI Name Number
+
+performing_artist_last_name:
+  type: alphanum
+  size: 45
+  name: Performing Artist Last Name
+
+performing_artist_name:
+  type: alphanum
+  size: 160
+  name: Performing Artist Name
+
+personal_number:
+  type: numeric
+  size: 12
+  name: Personal Number
+
+position:
+  type: numeric
+  size: 1
+  name: Writer Position
+
+post_term_collection_end_date:
+  type: date
+  size: 8
+  name: Post Term Collection End Date
+
+pr_collection_share:
+  type: percentage
+  size: 5
+  name: Performing Rights Collection Share
+
+pr_ownership_share:
+  type: percentage
+  size: 5
+  name: Performing Rights Ownership Share
+  values:
+    - 50
+
+pr_share:
+  type: percentage
+  size: 5
+  name: Performing Rights Share
+
+prior_royalty_start_date:
+  type: date
+  size: 8
+  name: Prior Royalty Start Date
+
+priority_flag:
+  type: flag
+  size: 1
+  name: Priority Flag
+
+processing_date:
+  type: date
+  size: 8
+  name: Processing Date
+
+production_n:
+  type: alphanum
+  size: 12
+  name: Production Number
+
+production_title:
+  type: alphanum
+  size: 60
+  name: Production Title
+
+publisher_ip_n:
+  type: alphanum
+  size: 9
+  name: Publisher IP Number
+
+publisher_name:
+  type: alphanum
+  size: 45
+  name: Publisher Name
+
+publisher_name_long:
+  type: alphanum
+  size: 480
+  name: Publisher Name
+  results_name: publisher_name
+
+publisher_sequence_n:
+  type: numeric
+  size: 2
+  name: Publisher Sequence Number
+
+publisher_unknown:
+  type: flag
+  size: 1
+  name: Publisher Unknown Indicator
+
+recipient_creation_n:
+  type: alphanum
+  size: 20
+  name: Recipient Creation Number
+
+record_count:
+  type: numeric
+  size: 8
+  name: Record Count
+
+record_sequence_n:
+  type: numeric
+  size: 8
+  name: Record Sequence Number
+
+recorded_indicator:
+  type: flag
+  size: 1
+  name: Recorded Indicator
+
+retention_end_date:
+  type: date
+  size: 8
+  name: Retention End Date
+
+reversionary:
+  type: flag
+  size: 1
+  name: Reversionary Indicator
+
+sd_type:
+  type: alphanum
+  size: 2
+  name: SD Type
+
+sequence_n:
+  type: numeric
+  size: 3
+  name: Sequence Number
+
+sender_id:
+  type: numeric
+  size: 9
+  name: Sender ID
+
+sender_name:
+  type: alphanum
+  size: 45
+  name: Sender Name
+
+shares_change:
+  type: boolean
+  size: 1
+  name: Shares Change
+
+society_assigned_agreement_n:
+  type: alphanum
+  size: 14
+  name: Society Given Agreement Number
+
+source:
+  type: alphanum
+  size: 60
+  name: Source
+
+sr_collection_share:
+  type: percentage
+  size: 5
+  name: Synchronization Rights Collection Share
+
+sr_share:
+  type: percentage
+  size: 5
+  name: Synchronization Rights Share
+
+sr_ownership_share:
+  type: percentage
+  size: 5
+  name: Synchronization Rights Ownership Share
+
+submitter_agreement_n:
+  type: alphanum
+  size: 14
+  name: Submitters Agreement Number
+
+submitter_creation_n:
+  type: alphanum
+  size: 20
+  name: Submitter Creation Number
+
+submitter_work_n:
+  type: alphanum
+  size: 14
+  name: Submitter Work Number
+
+tax_id:
+  type: numeric
+  size: 9
+  name: Tax ID Number
+
+title:
+  type: alphanum
+  size: 640
+  name: Title
+
+total_monetary_value:
+  type: alphanum
+  size: 10
+  name: Total Monetary Value
+
+transaction_count:
+  type: numeric
+  size: 8
+  name: Transaction Count
+
+transaction_sequence_n:
+  type: numeric
+  size: 8
+  name: Transaction Sequence Number
+
+transmission_date:
+  type: date
+  size: 8
+  name: Transmission Date
+
+validation_n:
+  type: numeric
+  size: 3
+  name: Validation Number
+
+version_number:
+  type: lookup
+  size: 5
+  name: Version Number
+  values:
+    - '02.10'
+
+visan:
+  type: visan
+  size: 25
+  name: VISAN
+
+work_n:
+  type: alphanum
+  size: 14
+  name: Work Number
+
+work_for_hire:
+  type: flag
+  size: 1
+  name: Work For Hire Indicator
+
+work_title:
+  type: alphanum
+  size: 60
+  name: Work Title
+  results_name: title
+
+writer_1_first_name:
+  type: alphanum
+  size: 30
+  name: Writer 1 First Name
+
+writer_1_ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: Writer 1 IPI Base Number
+
+writer_1_ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: Writer 1 IPI Name Number
+
+writer_1_last_name:
+  type: alphanum
+  size: 45
+  name: Writer 1 Last Name
+
+writer_2_first_name:
+  type: alphanum
+  size: 30
+  name: Writer 2 First Name
+
+writer_2_ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: Writer 2 IPI Base Number
+
+writer_2_ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: Writer 2 IPI Name Number
+
+writer_2_last_name:
+  type: alphanum
+  size: 45
+  name: Writer 2 Last Name
+
+writer_first_name:
+  type: alphanum
+  size: 30
+  name: Writer First Name
+
+writer_first_name_long:
+  type: alphanum
+  size: 160
+  name: Writer First Name
+  results_name: writer_first_name
+
+writer_ip_n:
+  type: alphanum
+  size: 9
+  name: Writer IP Number
+
+writer_last_name:
+  type: alphanum
+  size: 45
+  name: Writer Last Name
+
+writer_last_name_long:
+  type: alphanum
+  size: 160
+  name: Writer Last Name
+  results_name: writer_last_name
+
+writer_name:
+  type: alphanum
+  size: 160
+  name: Writer Name
+
+writer_unknown:
+  type: flag
+  size: 1
+  name: Writer Unknown Indicator
+
+year_production:
+  type: numeric
+  size: 4
+  name: Year of Production

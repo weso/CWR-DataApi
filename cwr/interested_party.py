@@ -8,7 +8,7 @@ from cwr.record import TransactionRecord
 Interested party model classes.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
 __license__ = 'MIT'
 __status__ = 'Development'
 
@@ -22,11 +22,13 @@ class InterestedParty(object):
     def __init__(self, ip_n, ipi_base_n, tax_id, ipi_name):
         # IP info
         self._ip_n = ip_n
+
+        # IPI info
+        self._ipi_name = ipi_name
         self._ipi_base_n = ipi_base_n
 
         # Other info
         self._tax_id = tax_id
-        self._ipi_name = ipi_name
 
     @property
     def ip_n(self):
@@ -88,24 +90,32 @@ class InterestedPartyRecord(TransactionRecord):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, first_record_refusal='U', usa_license='',
-                 pr_society=None, mr_society=None, sr_society=None):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 first_recording_refusal='U', usa_license='',
+                 pr_society=None, pr_ownership_share=0,
+                 mr_society=None, mr_ownership_share=0,
+                 sr_society=None, sr_ownership_share=0):
         """
         Constructs an InterestedPartyRecord.
 
-        :param first_record_refusal: record refusal status flag
+        :param first_recording_refusal: record refusal status flag
         :param first_record_refusal: first record refusal flag
         :param usa_license: USA license rights flag
         """
         super(InterestedPartyRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Flags
-        self._first_record_refusal = first_record_refusal
+        self._first_recording_refusal = first_recording_refusal
         self._usa_license = usa_license
 
-        # Shares
+        # Societies
         self._pr_society = pr_society
         self._mr_society = mr_society
         self._sr_society = sr_society
+
+        # Shares
+        self._pr_ownership_share = pr_ownership_share
+        self._mr_ownership_share = mr_ownership_share
+        self._sr_ownership_share = sr_ownership_share
 
     @property
     def first_recording_refusal(self):
@@ -118,7 +128,20 @@ class InterestedPartyRecord(TransactionRecord):
 
         :return: 'T' if the submitter needs to authorize first recording, 'F' if not, 'U' if unknown
         """
-        return self._first_record_refusal
+        return self._first_recording_refusal
+
+    @property
+    def mr_ownership_share(self):
+        """
+        MR Ownership Share field. Numeric Decimal.
+
+        Defines the percentage of the writer’s ownership of the mechanical rights to the work.
+
+        This value can range from 0 (0%) to 1 (100%).
+
+        :return: the MR ownership share
+        """
+        return self._mr_ownership_share
 
     @property
     def mr_society(self):
@@ -132,6 +155,21 @@ class InterestedPartyRecord(TransactionRecord):
         return self._mr_society
 
     @property
+    def pr_ownership_share(self):
+        """
+        PR Ownership Share field. Numeric Decimal.
+
+        Defines the percentage of the writer’s ownership of the performance rights to the work.
+
+        This value can range from 0 (0%) to 1 (100%).
+
+        Note that writers both own and collect the performing right interest.
+
+        :return: the PR ownership share
+        """
+        return self._pr_ownership_share
+
+    @property
     def pr_society(self):
         """
         Performing Rights Affiliation Society field. Table Lookup (Society Code Table).
@@ -141,6 +179,19 @@ class InterestedPartyRecord(TransactionRecord):
         :return: the Interested Party performing rights society
         """
         return self._pr_society
+
+    @property
+    def sr_ownership_share(self):
+        """
+        SR Ownership Share field. Numeric Decimal.
+
+        Defines the percentage of the writer’s ownership of the synchronization rights to the work.
+
+        This value can range from 0 (0%) to 1 (100%).
+
+        :return: the SR ownership share
+        """
+        return self._sr_ownership_share
 
     @property
     def sr_society(self):
@@ -166,7 +217,7 @@ class InterestedPartyRecord(TransactionRecord):
         return self._usa_license
 
 
-class IPTerritoryRecord(TransactionRecord):
+class IPTerritoryOfControlRecord(TransactionRecord):
     """
     Represents a CWR Publisher or Writer Territory of Control (SPT/SWT).
 
@@ -181,25 +232,26 @@ class IPTerritoryRecord(TransactionRecord):
     included in the Agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, ie_indicator, tis_numeric_code,
-                 sequence_n, pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
-        super(IPTerritoryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, inclusion_exclusion_indicator,
+                 tis_numeric_code,
+                 sequence_n, pr_collection_share=0, mr_collection_share=0, sr_collection_share=0, shares_change=False):
+        super(IPTerritoryOfControlRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Territory information
         self._tis_numeric_code = tis_numeric_code
 
         # IP information
         self._ip_n = ip_n
-        self._ie_indicator = ie_indicator
+        self._inclusion_exclusion_indicator = inclusion_exclusion_indicator
         self._sequence_n = sequence_n
 
         # Shares information
-        self._pr_col_share = pr_col_share
-        self._mr_col_share = mr_col_share
-        self._sr_col_share = sr_col_share
+        self._pr_collection_share = pr_collection_share
+        self._mr_collection_share = mr_collection_share
+        self._sr_collection_share = sr_collection_share
         self._shares_change = shares_change
 
     @property
-    def ie_indicator(self):
+    def inclusion_exclusion_indicator(self):
         """
         Inclusion/Exclusion Indicator field. Table Lookup ('E'/'I').
 
@@ -211,7 +263,7 @@ class IPTerritoryRecord(TransactionRecord):
 
         :return: 'E' if the territory is excluded, 'I' otherwise
         """
-        return self._ie_indicator
+        return self._inclusion_exclusion_indicator
 
     @property
     def ip_n(self):
@@ -225,7 +277,7 @@ class IPTerritoryRecord(TransactionRecord):
         return self._ip_n
 
     @property
-    def mr_col_share(self):
+    def mr_collection_share(self):
         """
         Mechanical Rights Collection Share field. Numeric decimal.
 
@@ -236,10 +288,10 @@ class IPTerritoryRecord(TransactionRecord):
 
         :return: the Mechanical Rights collection share
         """
-        return self._mr_col_share
+        return self._mr_collection_share
 
     @property
-    def pr_col_share(self):
+    def pr_collection_share(self):
         """
         Performing Rights Collection Share field. Numeric decimal.
 
@@ -250,7 +302,7 @@ class IPTerritoryRecord(TransactionRecord):
 
         :return: the Performing Rights collection share
         """
-        return self._pr_col_share
+        return self._pr_collection_share
 
     @property
     def sequence_n(self):
@@ -276,7 +328,7 @@ class IPTerritoryRecord(TransactionRecord):
         return self._shares_change
 
     @property
-    def sr_col_share(self):
+    def sr_collection_share(self):
         """
         Synchronization Rights Collection Share field. Numeric decimal.
 
@@ -287,7 +339,7 @@ class IPTerritoryRecord(TransactionRecord):
 
         :return: return Synchronization Rights collection share
         """
-        return self._sr_col_share
+        return self._sr_collection_share
 
     @property
     def tis_numeric_code(self):
@@ -309,8 +361,8 @@ class Publisher(InterestedParty):
     administrator.
     """
 
-    def __init__(self, publisher_id, publisher_name, ipi_base_n=None, tax_id=None, ipi_name_n=None):
-        super(Publisher, self).__init__(publisher_id, ipi_base_n, tax_id, ipi_name_n)
+    def __init__(self, ip_n, publisher_name, ipi_base_n=None, tax_id=None, ipi_name_n=None):
+        super(Publisher, self).__init__(ip_n, ipi_base_n, tax_id, ipi_name_n)
         self._publisher_name = publisher_name
 
     @property
@@ -337,12 +389,13 @@ class PublisherRecord(InterestedPartyRecord):
     who are involved in the ownership and collection of a work. May they be under control of the submitter or not.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher, publisher_sequence_n,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
+                 publisher, publisher_sequence_n,
                  submitter_agreement_n='',
-                 publisher_type=None, publisher_unknown='N', agreement_type=None, isac='',
+                 publisher_type=None, publisher_unknown='N', agreement_type=None, international_standard_code='',
                  society_assigned_agreement_n='',
                  pr_society=None, pr_ownership_share=0, mr_society=None, mr_ownership_share=0, sr_society=None,
-                 sr_ownership_share=0, special_agreements=None, first_record_refusal='U', usa_license=''):
+                 sr_ownership_share=0, special_agreements=None, first_recording_refusal='U', usa_license=''):
         """
         Constructs a PublisherRecord.
 
@@ -352,7 +405,7 @@ class PublisherRecord(InterestedPartyRecord):
         :param publisher_type: the publisher role in the agreement
         :param publisher_unknown: publisher unknown flag
         :param agreement_type: the type of agreement
-        :param isac: ISAC for the publisher's agreement
+        :param international_standard_code: ISAC for the publisher's agreement
         :param society_assigned_agreement_n: ID for the Agreement given by a society
         :param pr_society: Performing Rights society
         :param pr_ownership_share: Performing Rights share
@@ -362,8 +415,10 @@ class PublisherRecord(InterestedPartyRecord):
         :param sr_ownership_share: Synchronization Rights share
         """
         super(PublisherRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
-                                              first_record_refusal, usa_license,
-                                              pr_society, mr_society, sr_society)
+                                              first_recording_refusal, usa_license,
+                                              pr_society, pr_ownership_share,
+                                              mr_society, mr_ownership_share,
+                                              sr_society, sr_ownership_share)
 
         # Publisher info
         self._publisher = publisher
@@ -374,13 +429,8 @@ class PublisherRecord(InterestedPartyRecord):
         self._submitter_agreement_n = submitter_agreement_n
         self._society_assigned_agreement_n = society_assigned_agreement_n
         self._agreement_type = agreement_type
-        self._isac = isac
+        self._international_standard_code = international_standard_code
         self._special_agreements = special_agreements
-
-        # Shares
-        self._pr_ownership_share = pr_ownership_share
-        self._mr_ownership_share = mr_ownership_share
-        self._sr_ownership_share = sr_ownership_share
 
         # Other info
         self._publisher_sequence_n = publisher_sequence_n
@@ -397,7 +447,7 @@ class PublisherRecord(InterestedPartyRecord):
         return self._agreement_type
 
     @property
-    def isac(self):
+    def international_standard_code(self):
         """
         International Standard Agreement Code field.
 
@@ -405,39 +455,7 @@ class PublisherRecord(InterestedPartyRecord):
 
         :return: the agreement ISAC
         """
-        return self._isac
-
-    @property
-    def mr_ownership_share(self):
-        """
-        Mechanical Rights Ownership Share field. Numeric decimal.
-
-        Defines the percentage of the publisher’s ownership of the mechanical rights to the work.
-
-        This share does not define the percentage of the total royalty distributed for sales of CDs, Cassettes, etc.
-        containing the work that will be collected by the publisher.
-
-        Within an individual record, this value can range from 0 (0%) to 1 (100%).
-
-        :return: the mechanical of the performing rights for the Publisher
-        """
-        return self._mr_ownership_share
-
-    @property
-    def pr_ownership_share(self):
-        """
-        Performing Rights Ownership Share field. Numeric decimal.
-
-        Defines the percentage of the publisher’s ownership of the performance rights to the work.
-
-        This share does not define the percentage of the total royalty distributed for performance of the work that
-        will be collected by the publisher.
-
-        Within an individual record, this value can range from 0 (0%) to 0.5 (50%).
-
-        :return: the percentage of the performing rights for the Publisher
-        """
-        return self._pr_ownership_share
+        return self._international_standard_code
 
     @property
     def publisher(self):
@@ -499,22 +517,6 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the Special Agreements indicator
         """
         return self._special_agreements
-
-    @property
-    def sr_ownership_share(self):
-        """
-        Synchronization Rights Ownership Share field. Numeric decimal.
-
-        Defines the percentage of the publisher’s ownership of the synch rights to the work.
-
-        This share does not define the percentage of the total money distributed that will be collected by the
-        publisher.  Within an individual SPU record.
-
-        Within an individual record, this value can range from 0 (0%) to 1 (100%).
-
-        :return: the percentage of the synchronization rights for the Publisher
-        """
-        return self._sr_ownership_share
 
     @property
     def submitter_agreement_n(self):
@@ -650,15 +652,14 @@ class Writer(InterestedParty):
     This can be a Writer Controlled by Submitter (SWR) or Other Writer (OWR).
     """
 
-    def __init__(self, writer_id, personal_number, ipi_base_n=None, writer_first_name='', writer_last_name='',
+    def __init__(self, ip_n, personal_number, ipi_base_n=None, writer_first_name='', writer_last_name='',
                  tax_id=None, ipi_name_n=None):
-        super(Writer, self).__init__(writer_id, ipi_base_n, tax_id, ipi_name_n)
+        super(Writer, self).__init__(ip_n, ipi_base_n, tax_id, ipi_name_n)
 
         # Writer information
         self._writer_first_name = writer_first_name
         self._writer_last_name = writer_last_name
         self._personal_number = personal_number
-        self._tax_id = tax_id
 
     @property
     def personal_number(self):
@@ -696,7 +697,7 @@ class Writer(InterestedParty):
         return self._writer_last_name
 
 
-class WriterPublisherRecord(TransactionRecord):
+class PublisherForWriterRecord(TransactionRecord):
     """
     Represents a CWR Publisher For Writer (PWR) record.
 
@@ -713,11 +714,11 @@ class WriterPublisherRecord(TransactionRecord):
     publisher agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_ip_number, writer_ip_n,
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_ip_n, writer_ip_n,
                  submitter_agreement_n=None, society_assigned_agreement_n=None):
-        super(WriterPublisherRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+        super(PublisherForWriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Parties IDs
-        self._publisher_ip_number = publisher_ip_number
+        self._publisher_ip_n = publisher_ip_n
         self._writer_ip_n = writer_ip_n
 
         # Agreement IDs
@@ -725,7 +726,7 @@ class WriterPublisherRecord(TransactionRecord):
         self._society_assigned_agreement_n = society_assigned_agreement_n
 
     @property
-    def publisher_ip_number(self):
+    def publisher_ip_n(self):
         """
         Publisher IP Number field. Alphanumeric.
 
@@ -734,7 +735,7 @@ class WriterPublisherRecord(TransactionRecord):
 
         :return: the Publisher id
         """
-        return self._publisher_ip_number
+        return self._publisher_ip_n
 
     @property
     def society_assigned_agreement_n(self):
@@ -780,13 +781,15 @@ class WriterRecord(InterestedPartyRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer, writer_designation=None,
-                 work_for_hire=False, writer_unknown='F', reversionary='U', first_record_refusal='U', usa_license='',
+                 work_for_hire=False, writer_unknown='F', reversionary='U', first_recording_refusal='U', usa_license='',
                  pr_society=None, pr_ownership_share=0,
                  mr_society=None, mr_ownership_share=0,
                  sr_society=None, sr_ownership_share=0):
-        super(WriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, first_record_refusal,
-                                           usa_license,
-                                           pr_society, mr_society, sr_society)
+        super(WriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
+                                           first_recording_refusal, usa_license,
+                                           pr_society, pr_ownership_share,
+                                           mr_society, mr_ownership_share,
+                                           sr_society, sr_ownership_share)
         # Writer info
         self._writer = writer
 
@@ -795,41 +798,8 @@ class WriterRecord(InterestedPartyRecord):
         self._writer_unknown = writer_unknown
         self._work_for_hire = work_for_hire
 
-        # Shares
-        self._pr_ownership_share = pr_ownership_share
-        self._mr_ownership_share = mr_ownership_share
-        self._sr_ownership_share = sr_ownership_share
-
         # Other info
         self._reversionary = reversionary
-
-    @property
-    def mr_ownership_share(self):
-        """
-        MR Ownership Share field. Numeric Decimal.
-
-        Defines the percentage of the writer’s ownership of the mechanical rights to the work.
-
-        This value can range from 0 (0%) to 1 (100%).
-
-        :return: the MR ownership share
-        """
-        return self._mr_ownership_share
-
-    @property
-    def pr_ownership_share(self):
-        """
-        PR Ownership Share field. Numeric Decimal.
-
-        Defines the percentage of the writer’s ownership of the performance rights to the work.
-
-        This value can range from 0 (0%) to 1 (100%).
-
-        Note that writers both own and collect the performing right interest.
-
-        :return: the PR ownership share
-        """
-        return self._pr_ownership_share
 
     @property
     def reversionary(self):
@@ -843,19 +813,6 @@ class WriterRecord(InterestedPartyRecord):
         :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
         """
         return self._reversionary
-
-    @property
-    def sr_ownership_share(self):
-        """
-        SR Ownership Share field. Numeric Decimal.
-
-        Defines the percentage of the writer’s ownership of the synchronization rights to the work.
-
-        This value can range from 0 (0%) to 1 (100%).
-
-        :return: the SR ownership share
-        """
-        return self._sr_ownership_share
 
     @property
     def work_for_hire(self):

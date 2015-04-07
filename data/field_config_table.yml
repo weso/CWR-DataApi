@@ -1,0 +1,261 @@
+agreement_role_code:
+  type: lookup
+  size: 2
+  name: Agreement Role Code
+  source: agreement_role_code
+
+agreement_type:
+  type: lookup
+  size: 2
+  name: Agreement Type
+  source: agreement_type
+
+composite_type:
+  type: lookup
+  size: 3
+  name: Composite Type
+  source: composite_type
+
+excerpt_type:
+  type: lookup
+  size: 3
+  name: Excerpt Type
+  source: excerpt_type
+
+inclusion_exclusion_indicator:
+  type: lookup
+  size: 1
+  name: Inclusion/Exclusion Indicator
+  source: ie_indicator
+
+instrument_code:
+  type: lookup
+  size: 3
+  name: Instrument
+  source: instrument_code
+
+intended_purpose:
+  type: lookup
+  size: 3
+  name: Intended Purpose
+  source: intended_purpose
+
+language_code:
+  type: lookup
+  size: 2
+  name: Language Code
+  source: language_code
+
+lyric_adaptation:
+  type: lookup
+  size: 3
+  name: Lyric Adaptation
+  source: lyric_adaptation
+
+media_type:
+  type: lookup
+  size: 3
+  name: Media Type
+  source: media_type
+
+message_level:
+  type: lookup
+  size: 3
+  name: Message Level
+  source: message_level
+
+message_record_type:
+  type: lookup
+  size: 3
+  name: Message Record Type
+  source: record_type
+
+message_type:
+  type: lookup
+  size: 3
+  name: Message Type
+  source: message_type
+
+mr_society:
+  type: lookup
+  size: 3
+  name: Mechanical Rights Affiliation Society
+  source: society_code
+  actions:
+    - to_int
+
+music_arrangement:
+  type: lookup
+  size: 3
+  name: Music Arrangement
+  source: music_arrangement
+
+musical_work_distribution_category:
+  type: lookup
+  size: 3
+  name: Musical Work Distribution Category
+  source: musical_work_distribution_category
+
+original_transaction_type:
+  type: lookup
+  size: 3
+  name: Original Transaction Type
+  source: transaction_type
+
+performance_language:
+  type: lookup
+  size: 2
+  name: Performance Language
+  source: language_code
+
+post_term_collection_status:
+  type: lookup
+  size: 1
+  name: Post Term Collection Status
+  source: post_term_collection_status
+
+pr_society:
+  type: lookup
+  size: 3
+  name: Performing Rights Affiliation Society
+  source: society_code
+  actions:
+    - to_int
+
+publisher_type:
+  type: lookup
+  size: 2
+  name: Publisher Type
+  source: publisher_type
+
+prior_royalty_status:
+  type: lookup
+  size: 1
+  name: Prior Royalty Status
+  source: prior_royalty_status
+
+record_type:
+  type: lookup
+  size: 3
+  name: Record Type
+  source: record_type
+
+recording_format:
+  type: lookup
+  size: 1
+  name: Recording Format
+  source: recording_format
+
+recording_technique:
+  type: lookup
+  size: 1
+  name: Recording Technique
+  source: recording_technique
+
+sales_manufacture_clause:
+  type: lookup
+  size: 1
+  name: Sales/Manufacture Clause
+  source: sales_manufacture_clause
+
+sender_type:
+  type: lookup
+  size: 2
+  name: Sender Type
+  source: sender_type
+
+society_n:
+  type: lookup
+  size: 3
+  name: Society ID Field
+  source: society_code
+  actions:
+    - to_int
+
+special_agreements:
+  type: lookup
+  size: 1
+  name: Special Agreements Indicator
+  source: special_agreement_indicator
+
+sr_society:
+  type: lookup
+  size: 3
+  name: Synchronization Rights Affiliation Society
+  source: society_code
+  actions:
+    - to_int
+
+standard_instrumentation_type:
+  type: lookup
+  size: 3
+  name: Standard Instrumentation Type
+  source: standard_instrumentation_type
+
+subject_code:
+  type: lookup
+  size: 2
+  name: Subject Code
+  source: subject_code
+
+text_music_relationship:
+  type: lookup
+  size: 3
+  name: Text Music Relationship
+  source: text_music_relationship
+
+tis_numeric_code:
+  type: lookup
+  size: 4
+  name: TIS Numeric Code
+  source: tis_code
+  actions:
+    - to_int
+
+title_type:
+  type: lookup
+  size: 2
+  name: Title Type
+  source: title_type
+
+transaction_status:
+  type: lookup
+  size: 2
+  name: Transaction Status
+  source: transaction_status
+
+transaction_type:
+  type: lookup
+  size: 3
+  name: Transaction Type
+  source: transaction_type
+
+type_of_right:
+  type: lookup
+  size: 3
+  name: Type of Right
+  source: type_of_right
+
+usa_license:
+  type: lookup
+  size: 1
+  name: USA License Indicator
+  source: usa_license_indicator
+
+version_type:
+  type: lookup
+  size: 3
+  name: Version Type
+  source: version_type
+
+work_type:
+  type: lookup
+  size: 2
+  name: Work Type
+  source: work_type
+
+writer_designation:
+  type: lookup
+  size: 2
+  name: Writer Designation
+  source: writer_designation_code

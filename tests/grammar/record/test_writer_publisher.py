@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import writer_publisher
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -22,7 +24,14 @@ class TestWriterPublisherGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = writer_publisher.publisher
+        _config = CWRConfiguration()
+
+        _factory_field = DefaultFieldFactory(_config.load_field_config('common'))
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('writer_publisher')
 
     def test_valid_full(self):
         """
@@ -37,7 +46,7 @@ class TestWriterPublisherGrammar(unittest.TestCase):
         self.assertEqual('PWR', result.record_type)
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
-        self.assertEqual('A12345678', result.publisher_ip_number)
+        self.assertEqual('A12345678', result.publisher_ip_n)
         # self.assertEqual('THE PUBLISHER', result.publisher_name)
         self.assertEqual('C1234567890123', result.submitter_agreement_n)
         self.assertEqual('D1234567890123', result.society_assigned_agreement_n)

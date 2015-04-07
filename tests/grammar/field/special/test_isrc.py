@@ -28,18 +28,8 @@ class TestISRCValid(unittest.TestCase):
 
         self.assertEqual('ES-A2B-12-12', result)
 
-    def test_white(self):
-        """
-        Tests an average code.
-        """
-        code = '            '
 
-        result = self.isrc.parseString(code)[0]
-
-        self.assertEqual('', result)
-
-
-class TestEAN13ResultName(unittest.TestCase):
+class TestISRCResultName(unittest.TestCase):
     """
     Tests that the IPI Base Number accepts and parses valid values.
     """

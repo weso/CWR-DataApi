@@ -9,7 +9,7 @@ from cwr.record import TransactionRecord
 Work entity model classes.
 """
 
-__author__ = 'Borja Garrido Bear, Bernardo Martínez Garrido'
+__author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
 __license__ = 'MIT'
 __status__ = 'Development'
 
@@ -88,14 +88,13 @@ class WorkRecord(BaseWorkRecord):
                  musical_work_distribution_category,
                  date_publication_printed_edition=None, text_music_relationship=None, language_code=None,
                  copyright_number='', copyright_date=None, music_arrangement=None, lyric_adaptation=None,
-                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, cwr_work_type=None,
+                 excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, work_type=None,
                  duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
                  recorded_indicator='U', priority_flag='U', exceptional_clause='U', grand_rights_indicator=False):
         super(WorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title, language_code,
                                          iswc)
         # Work identifying info
         self._submitter_work_n = submitter_work_n
-        self._title = title
         self._date_publication_printed_edition = date_publication_printed_edition
 
         # Copyright
@@ -121,7 +120,7 @@ class WorkRecord(BaseWorkRecord):
         self._catalogue_number = catalogue_number
 
         # International info
-        self._cwr_work_type = cwr_work_type
+        self._work_type = work_type
 
         # Contact info
         self._contact_id = contact_id
@@ -217,17 +216,6 @@ class WorkRecord(BaseWorkRecord):
         :return: the Work Copyright number
         """
         return self._copyright_number
-
-    @property
-    def cwr_work_type(self):
-        """
-        CWR Work Type field. Table Lookup (CWR Work Type).
-
-        Indicates a genre found in the CWR Work Type table.
-
-        :return: a CWR work type
-        """
-        return self._cwr_work_type
 
     @property
     def date_publication_printed_edition(self):
@@ -408,8 +396,19 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._version_type
 
+    @property
+    def work_type(self):
+        """
+        CWR Work Type field. Table Lookup (CWR Work Type).
 
-class WorkTransaction(TransactionRecord):
+        Indicates a genre found in the CWR Work Type table.
+
+        :return: a CWR work type
+        """
+        return self._work_type
+
+
+class WorkTransaction(object):
     """
     Represents a CWR Work Transaction.
 
@@ -452,12 +451,12 @@ class WorkTransaction(TransactionRecord):
     [[SPU, SPT*]*, OPU*, [SWR, SWT*, PWR*]*, OWR*, ALT*, EWT, VER, PER*, REC, ORN*, INS*, IND*, COM*, ARI*]
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, entire_work_title=None,
+    def __init__(self, entire_work_title=None,
                  original_work_title=None, recording=None, alternate_titles=None,
                  publishers_controlled=None, publishers_other=None, writers_controlled=None,
                  writers_other=None, performing_artists=None, work_origins=None, instrumentation_summaries=None,
                  instrumentation_details=None, components=None, additional_info=None):
-        super(WorkTransaction, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+        super(WorkTransaction, self).__init__()
         self._entire_work_title = entire_work_title
         self._original_work_title = original_work_title
         self._recording = recording
@@ -690,7 +689,7 @@ class ComponentRecord(TransactionRecord):
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, writer_1_last_name,
                  submitter_work_n='',
                  writer_1_first_name='', writer_2_first_name='', writer_2_last_name='',
-                 writer_1_ipi_base=None, writer_1_ipi_name=None, writer_2_ipi_base=None, writer_2_ipi_name=None,
+                 writer_1_ipi_base_n=None, writer_1_ipi_name_n=None, writer_2_ipi_base_n=None, writer_2_ipi_name_n=None,
                  iswc='', duration=None):
         super(ComponentRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Work's info
@@ -702,14 +701,14 @@ class ComponentRecord(TransactionRecord):
         # First writer's info
         self._writer_1_first_name = writer_1_first_name
         self._writer_1_last_name = writer_1_last_name
-        self._writer_1_ipi_base = writer_1_ipi_base
-        self._writer_1_ipi_name = writer_1_ipi_name
+        self._writer_1_ipi_base_n = writer_1_ipi_base_n
+        self._writer_1_ipi_name_n = writer_1_ipi_name_n
 
         # Second writer's info
         self._writer_2_first_name = writer_2_first_name
         self._writer_2_last_name = writer_2_last_name
-        self._writer_2_ipi_base = writer_2_ipi_base
-        self._writer_2_ipi_name = writer_2_ipi_name
+        self._writer_2_ipi_base_n = writer_2_ipi_base_n
+        self._writer_2_ipi_name_n = writer_2_ipi_name_n
 
     @property
     def duration(self):
@@ -768,7 +767,7 @@ class ComponentRecord(TransactionRecord):
         return self._writer_1_first_name
 
     @property
-    def writer_1_ipi_base(self):
+    def writer_1_ipi_base_n(self):
         """
         Writer 1 IPI Base Number field. Table Lookup (IPI DB).
 
@@ -779,10 +778,10 @@ class ComponentRecord(TransactionRecord):
 
         :return: the first Writer's IP base number
         """
-        return self._writer_1_ipi_base
+        return self._writer_1_ipi_base_n
 
     @property
-    def writer_1_ipi_name(self):
+    def writer_1_ipi_name_n(self):
         """
         Writer 1 IPI Name # field.
 
@@ -793,7 +792,7 @@ class ComponentRecord(TransactionRecord):
 
         :return: the first Writer's IP name field
         """
-        return self._writer_1_ipi_name
+        return self._writer_1_ipi_name_n
 
     @property
     def writer_1_last_name(self):
@@ -818,7 +817,7 @@ class ComponentRecord(TransactionRecord):
         return self._writer_2_first_name
 
     @property
-    def writer_2_ipi_base(self):
+    def writer_2_ipi_base_n(self):
         """
         Writer 2 IP Base Number field. Table Lookup (IPI DB).
 
@@ -829,10 +828,10 @@ class ComponentRecord(TransactionRecord):
 
         :return: the second Writer's IP base number
         """
-        return self._writer_2_ipi_base
+        return self._writer_2_ipi_base_n
 
     @property
-    def writer_2_ipi_name(self):
+    def writer_2_ipi_name_n(self):
         """
         Writer 2 IPI Name # field.
 
@@ -843,7 +842,7 @@ class ComponentRecord(TransactionRecord):
 
         :return: the second Writer's IP name field
         """
-        return self._writer_2_ipi_name
+        return self._writer_2_ipi_name_n
 
     @property
     def writer_2_last_name(self):
@@ -866,7 +865,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, submitter_work_n='',
                  writer_1_first_name='', writer_1_last_name='', writer_2_first_name='', writer_2_last_name='',
-                 writer_1_ipi_base=None, writer_1_ipi_name=None, writer_2_ipi_base=None, writer_2_ipi_name=None,
+                 writer_1_ipi_base_n=None, writer_1_ipi_name_n=None, writer_2_ipi_base_n=None, writer_2_ipi_name_n=None,
                  source=None, language_code=None, iswc=None):
         super(AuthoredWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title,
                                                  language_code, iswc)
@@ -878,14 +877,14 @@ class AuthoredWorkRecord(BaseWorkRecord):
         # First writer's info
         self._writer_1_first_name = writer_1_first_name
         self._writer_1_last_name = writer_1_last_name
-        self._writer_1_ipi_base = writer_1_ipi_base
-        self._writer_1_ipi_name = writer_1_ipi_name
+        self._writer_1_ipi_base_n = writer_1_ipi_base_n
+        self._writer_1_ipi_name_n = writer_1_ipi_name_n
 
         # Second writer's info
         self._writer_2_first_name = writer_2_first_name
         self._writer_2_last_name = writer_2_last_name
-        self._writer_2_ipi_base = writer_2_ipi_base
-        self._writer_2_ipi_name = writer_2_ipi_name
+        self._writer_2_ipi_base_n = writer_2_ipi_base_n
+        self._writer_2_ipi_name_n = writer_2_ipi_name_n
 
     @property
     def source(self):
@@ -921,7 +920,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
         return self._writer_1_first_name
 
     @property
-    def writer_1_ipi_base(self):
+    def writer_1_ipi_base_n(self):
         """
         Writer 1 IPI Base Number field. Table Lookup (CISAC)
 
@@ -932,10 +931,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
         :return: the first Writer's IPI base number
         """
-        return self._writer_1_ipi_base
+        return self._writer_1_ipi_base_n
 
     @property
-    def writer_1_ipi_name(self):
+    def writer_1_ipi_name_n(self):
         """
         Writer 1 IP Name # field. Table Lookup (CISAC)
 
@@ -946,7 +945,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
         :return: the first Writer's IP name field
         """
-        return self._writer_1_ipi_name
+        return self._writer_1_ipi_name_n
 
     @property
     def writer_1_last_name(self):
@@ -971,7 +970,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
         return self._writer_2_first_name
 
     @property
-    def writer_2_ipi_base(self):
+    def writer_2_ipi_base_n(self):
         """
         Writer 2 IPI Base Number field. Table Lookup (CISAC)
 
@@ -982,10 +981,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
         :return: the second Writer's IPI base number
         """
-        return self._writer_2_ipi_base
+        return self._writer_2_ipi_base_n
 
     @property
-    def writer_2_ipi_name(self):
+    def writer_2_ipi_name_n(self):
         """
         Writer 2 IP Name # field. Table Lookup (CISAC)
 
@@ -996,7 +995,7 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
         :return: the second Writer's IP name field
         """
-        return self._writer_2_ipi_name
+        return self._writer_2_ipi_name_n
 
     @property
     def writer_2_last_name(self):
@@ -1431,11 +1430,11 @@ class InstrumentationSummaryRecord(TransactionRecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, number_voices=0,
                  standard_instrumentation_type=None,
-                 description=''):
+                 instrumentation_description=''):
         super(InstrumentationSummaryRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._number_voices = number_voices
         self._standard_instrumentation_type = standard_instrumentation_type
-        self._instrumentation_description = description
+        self._instrumentation_description = instrumentation_description
 
     @property
     def instrumentation_description(self):
@@ -1481,13 +1480,15 @@ class PerformingArtistRecord(TransactionRecord):
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, performing_artist_last_name,
-                 performing_artist_first_name='', performing_artist_ipi_name=None,
-                 performing_artist_ipi_base_number=None):
+                 performing_artist_first_name='', performing_artist_ipi_name_n=None,
+                 performing_artist_ipi_base_n=None):
         super(PerformingArtistRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._performing_artist_first_name = performing_artist_first_name
         self._performing_artist_last_name = performing_artist_last_name
-        self._performing_artist_ipi_name = performing_artist_ipi_name
-        self._performing_artist_ipi_base_number = performing_artist_ipi_base_number
+
+        # IPI
+        self._performing_artist_ipi_name_n = performing_artist_ipi_name_n
+        self._performing_artist_ipi_base_n = performing_artist_ipi_base_n
 
     @property
     def performing_artist_first_name(self):
@@ -1509,7 +1510,7 @@ class PerformingArtistRecord(TransactionRecord):
 
         :return: the IPI base number
         """
-        return self._performing_artist_ipi_base_number
+        return self._performing_artist_ipi_base_n
 
     @property
     def performing_artist_ipi_name_n(self):
@@ -1522,7 +1523,7 @@ class PerformingArtistRecord(TransactionRecord):
 
         :return: the Performing Artist IPI name number
         """
-        return self._performing_artist_ipi_name
+        return self._performing_artist_ipi_name_n
 
     @property
     def performing_artist_last_name(self):

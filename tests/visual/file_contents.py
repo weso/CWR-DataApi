@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import codecs
 import time
+import logging
 
-import chardet
-
-from cwr.grammar import file as rule_file
+from cwr.parser.file import CWRFileDecoder
 from cwr.utils.printer import CWRPrinter
 
 
@@ -21,63 +20,35 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-
-def _read(file):
-    cwr = open(file, 'rt')
-
-    rawdata = cwr.readline()
-    result = chardet.detect(rawdata)
-    charenc = result['encoding']
-
-    cwr = codecs.open(file, 'r', 'latin-1')
-    file = cwr.readline()
-
-    if charenc == 'UTF-8-SIG':
-        file = file[3:]
-
-    for line in cwr:
-        file += line
-
-    return file
-
-
 if __name__ == '__main__':
-    print("File contents parsing test")
-    path = raw_input("Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ")
-    output = raw_input("Please enter the full path to the file where the results will be stored: ")
-    print '\n'
-    print "Reading file %s" % (path)
-    print "Storing output on %s" % (output)
-    print '\n'
+    print('File contents parsing test')
+    path = raw_input('Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
+    output = raw_input('Please enter the full path to the file where the results will be stored: ')
+    log = raw_input('Please enter the full path to the file where parsing log will be saved: ')
+    print('\n')
+    print('Reading file %s' % (path))
+    print('Storing output on %s' % (output))
+    print('Saving long on %s' % (log))
+    print('\n')
 
-    start_all = time.clock()
-    start_parsing = time.clock()
+    logging.basicConfig(filename=log,
+                        level=logging.DEBUG,
+                        )
+    logger = logging.getLogger(__name__)
+
+    decoder = CWRFileDecoder()
+
     start = time.clock()
-    file = _read(path)
-    end = time.clock()
-    time_read = (end - start)
-
-    print 'Read the file in %s seconds' % (time_read)
-    print '\n'
-
-    start = time.clock()
-    data = rule_file.cwr_transmission.parseString(file)[0]
+    data = decoder.decode(path)
     end = time.clock()
     time_parse = (end - start)
 
-    end_parsing = time.clock()
+    print('Parsed the file in %s seconds' % (time_parse))
+    print('\n')
 
-    print 'Parsed the file in %s seconds' % (time_parse)
-    print '\n'
-
-    print 'In total the reading and parsing process took %s seconds' % (end_parsing - start_parsing)
-    print '\n'
+    logger.info('Finished parsing n %s seconds' % time_parse)
 
     output = codecs.open(output, 'w', 'latin-1')
 
     printer = CWRPrinter()
-    printer.print_transmission(data, output)
-
-    end_all = time.clock()
-    print 'In total the full process took %s seconds' % (end_all - start_all)
-    print '\n'
+    printer.print_file(data, output)

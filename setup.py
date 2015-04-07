@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import ast
 import re
-
-from setuptools import setup, find_packages
 from codecs import open
 from os import path
+
+from setuptools import setup, find_packages
 
 
 """
@@ -16,7 +16,7 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
-_tests_require = ['chardet']
+_tests_require = []
 
 here = path.abspath(path.dirname(__file__))
 
@@ -43,7 +43,7 @@ setup(
     license='MIT',
     url='https://github.com/weso/CWR-DataApi',
     download_url='https://github.com/weso/CWR-DataApi',
-    keywords=['CWR', 'commonworks', 'api', 'CISAC'],
+    keywords=['CWR', 'commonworks', 'api', 'CISAC', 'parser'],
     platforms='any',
     classifiers=['License :: OSI Approved :: MIT License', 'Development Status :: 3 - Alpha',
                  'Intended Audience :: Developers', 'Operating System :: OS Independent',
@@ -55,6 +55,7 @@ setup(
                  'Topic :: Software Development :: Libraries :: Python Modules'],
     long_description=long_description,
     install_requires=[
+        'chardet',
         'pyparsing',
         'pyyaml',
     ],
