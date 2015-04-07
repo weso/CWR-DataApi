@@ -2,8 +2,7 @@
 
 import pyparsing as pp
 
-from cwr.grammar.record import writer_territory, \
-    writer_publisher
+from cwr.grammar.record import writer_territory
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -48,7 +47,7 @@ subpublisher_information = _factory_record.get_transaction_record('publisher') +
 controlled_writer_information = _factory_record.get_transaction_record('writer') + \
                                 pp.Optional(_factory_record.get_transaction_record('nra_writer_name')) + \
                                 pp.Optional(pp.OneOrMore(writer_territory.territory)) + \
-                                pp.OneOrMore(writer_publisher.publisher)
+                                pp.OneOrMore(_factory_record.get_transaction_record('writer_publisher'))
 
 # Controlled publisher
 controlled_publisher_information = original_publisher_information + \
