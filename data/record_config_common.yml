@@ -13,13 +13,8 @@ acknowledgement:
   - name: transaction_status
     compulsory: true
 
-alternate_title:
-  - name: alternate_title
-  - name: title_type
-  - name: language_code
-
-ari:
-  - name: society_code
+additional_related_information:
+  - name: society_n
   - name: work_n
   - name: type_of_right
   - name: subject_code
@@ -95,7 +90,7 @@ group_trailer:
   - name: total_monetary_value
 
 instrumentation_detail:
-  - name: instrument
+  - name: instrument_code
   - name: number_players
 
 instrumentation_summary:
@@ -113,13 +108,13 @@ interested_party_agreement:
   - name: ip_last_name
     compulsory: true
   - name: ip_writer_first_name
-  - name: pr_affiliation
+  - name: pr_society
   - name: pr_share
     compulsory: true
-  - name: mr_affiliation
+  - name: mr_society
   - name: mr_share
     compulsory: true
-  - name: sr_affiliation
+  - name: sr_society
   - name: sr_share
     compulsory: true
 
@@ -128,21 +123,10 @@ message:
   - name: original_record_sequence_n
   - name: message_record_type
   - name: message_level
-  - name: validation
+  - name: validation_n
   - name: message_text
 
-nat:
-  - name: title
-  - name: title_type
-  - name: language_code
-
-now:
-  - name: writer_name
-  - name: writer_first_name_long
-  - name: language_code
-  - name: position
-
-npa:
+nra_agreement_party:
   - name: ip_n
   - name: ip_name
     compulsory: true
@@ -150,7 +134,22 @@ npa:
     compulsory: true
   - name: language_code
 
-npn:
+nra_other_writer:
+  - name: writer_name
+  - name: writer_first_name_long
+  - name: language_code
+  - name: position
+
+nra_performance_data:
+  - name: performing_artist_name
+  - name: performing_artist_first_name_long
+  - name: performing_artist_ipi_name_n
+  - name: performing_artist_ipi_base_n
+  - name: language_code
+  - name: performance_language
+  - name: performance_dialect
+
+nra_publisher_name:
   - name: publisher_sequence_n
   - name: ip_n
     compulsory: true
@@ -158,20 +157,16 @@ npn:
     compulsory: true
   - name: language_code
 
-npr:
-  - name: performing_artist_name
-  - name: performing_artist_first_name_long
-  - name: ipi_name_n
-  - name: ipi_base_n
+nra_title:
+  - name: title
+  - name: title_type
   - name: language_code
-  - name: performance_language
-  - name: dialect
 
 nra_work:
   - name: title
   - name: language_code
 
-nwn:
+nra_writer_name:
   - name: ip_n
   - name: writer_last_name_long
   - name: writer_first_name_long
@@ -195,46 +190,46 @@ original_work_title:
 performing_artist:
   - name: performing_artist_last_name
   - name: performing_artist_first_name
-  - name: ipi_name_n
-  - name: ipi_base_n
+  - name: performing_artist_ipi_name_n
+  - name: performing_artist_ipi_base_n
 
 publisher:
   - name: publisher_sequence_n
     compulsory: true
   - name: ip_n
-  - name: name
+  - name: publisher_name
   - name: publisher_unknown
   - name: publisher_type
   - name: tax_id
   - name: ipi_name_n
   - name: submitter_agreement_n
-  - name: pr_affiliation
-  - name: pr_share_50
+  - name: pr_society
+  - name: pr_ownership_share
     compulsory: true
-  - name: mr_affiliation
-  - name: mr_share
+  - name: mr_society
+  - name: mr_ownership_share
     compulsory: true
-  - name: sr_affiliation
-  - name: sr_share
+  - name: sr_society
+  - name: sr_ownership_share
     compulsory: true
-  - name: special_agreement_indicator
+  - name: special_agreements
   - name: first_recording_refusal
   - name: blank
   - name: ipi_base_n
   - name: international_standard_code
   - name: society_assigned_agreement_n
   - name: agreement_type
-  - name: usa_license_indicator
+  - name: usa_license
 
 publisher_territory:
   - name: ip_n
     compulsory: true
   - name: constant
-  - name: pr_share_50
-  - name: mr_share
-  - name: sr_share
-  - name: ie_indicator
-  - name: tis_code
+  - name: pr_collection_share
+  - name: mr_collection_share
+  - name: sr_collection_share
+  - name: inclusion_exclusion_indicator
+  - name: tis_numeric_code
   - name: shares_change
   - name: sequence_n
 
@@ -253,8 +248,8 @@ recording_detail:
   - name: media_type
 
 territory_in_agreement:
-  - name: ie_indicator
-  - name: tis_code
+  - name: inclusion_exclusion_indicator
+  - name: tis_numeric_code
 
 transmission_header:
   - name: sender_type
@@ -263,7 +258,7 @@ transmission_header:
     compulsory: true
   - name: sender_name
     compulsory: true
-  - name: edi_version
+  - name: edi_standard
     compulsory: true
   - name: creation_date_time
     compulsory: true
@@ -310,6 +305,11 @@ work:
   - name: opus_number
   - name: catalogue_number
   - name: priority_flag
+
+work_alternate_title:
+  - name: alternate_title
+  - name: title_type
+  - name: language_code
 
 work_conflict:
   - name: work_title
@@ -361,17 +361,17 @@ writer:
   - name: writer_last_name
   - name: writer_first_name
   - name: writer_unknown
-  - name: writer_designation_code
+  - name: writer_designation
   - name: tax_id
   - name: ipi_name_n
-  - name: pr_affiliation
-  - name: pr_share
+  - name: pr_society
+  - name: pr_ownership_share
     compulsory: true
-  - name: mr_affiliation
-  - name: mr_share
+  - name: mr_society
+  - name: mr_ownership_share
     compulsory: true
-  - name: sr_affiliation
-  - name: sr_share
+  - name: sr_society
+  - name: sr_ownership_share
     compulsory: true
   - name: reversionary
   - name: first_recording_refusal
@@ -379,7 +379,7 @@ writer:
   - name: filler
   - name: ipi_base_n
   - name: personal_number
-  - name: usa_license_indicator
+  - name: usa_license
 
 writer_publisher:
   - name: publisher_ip_n
@@ -391,10 +391,10 @@ writer_publisher:
 
 writer_territory:
   - name: ip_n
-  - name: pr_share
-  - name: mr_share
-  - name: sr_share
-  - name: ie_indicator
-  - name: tis_code
+  - name: pr_collection_share
+  - name: mr_collection_share
+  - name: sr_collection_share
+  - name: inclusion_exclusion_indicator
+  - name: tis_numeric_code
   - name: shares_change
   - name: sequence_n

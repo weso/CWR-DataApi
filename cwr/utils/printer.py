@@ -8,7 +8,9 @@ from cwr.interested_party import IPTerritoryOfControlRecord, PublisherRecord, Pu
 from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, \
     RecordingDetailRecord, InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, \
     PerformingArtistRecord
-from cwr.nra import NPARecord, NPNRecord, NWNRecord, NATRecord, NRAWorkRecord, NOWRecord, NPRRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord, NonRomanAlphabetPublisherNameRecord, \
+    NonRomanAlphabetWriterNameRecord, NonRomanAlphabetTitleRecord, NonRomanAlphabetWorkRecord, \
+    NonRomanAlphabetOtherWriterRecord, NonRomanAlphabetPerformanceDataRecord
 
 
 """
@@ -130,7 +132,7 @@ class CWRPrinter():
 
         if (isinstance(record, InterestedPartyForAgreementRecord)):
             self.print_ipa(record)
-        elif (isinstance(record, NPARecord)):
+        elif (isinstance(record, NonRomanAlphabetAgreementPartyRecord)):
             self.print_npa(record)
         elif (isinstance(record, AgreementRecord)):
             self.print_agr(record)
@@ -138,7 +140,7 @@ class CWRPrinter():
             self.print_ter(record)
         elif (isinstance(record, AdditionalRelatedInfoRecord)):
             self.print_ari(record)
-        elif (isinstance(record, NPNRecord)):
+        elif (isinstance(record, NonRomanAlphabetPublisherNameRecord)):
             self.print_npn(record)
         elif (isinstance(record, IPTerritoryOfControlRecord)):
             self.print_ipter(record)
@@ -148,7 +150,7 @@ class CWRPrinter():
             self.print_pwr(record)
         elif (isinstance(record, WriterRecord)):
             self.print_writr(record)
-        elif (isinstance(record, NWNRecord)):
+        elif (isinstance(record, NonRomanAlphabetWriterNameRecord)):
             self.print_nwn(record)
         elif (isinstance(record, WorkRecord)):
             self.print_workr(record)
@@ -158,7 +160,7 @@ class CWRPrinter():
             self.print_authr(record)
         elif (isinstance(record, AlternateTitleRecord)):
             self.print_alt(record)
-        elif (isinstance(record, NATRecord)):
+        elif (isinstance(record, NonRomanAlphabetTitleRecord)):
             self.print_nat(record)
         elif (isinstance(record, RecordingDetailRecord)):
             self.print_rec(record)
@@ -170,11 +172,11 @@ class CWRPrinter():
             self.print_ins(record)
         elif (isinstance(record, PerformingArtistRecord)):
             self.print_per(record)
-        elif (isinstance(record, NOWRecord)):
+        elif (isinstance(record, NonRomanAlphabetOtherWriterRecord)):
             self.print_now(record)
-        elif (isinstance(record, NPRRecord)):
+        elif (isinstance(record, NonRomanAlphabetPerformanceDataRecord)):
             self.print_npr(record)
-        elif (isinstance(record, NRAWorkRecord)):
+        elif (isinstance(record, NonRomanAlphabetWorkRecord)):
             self.print_nra(record)
 
     def print_ipa(self, record):
@@ -234,12 +236,12 @@ class CWRPrinter():
 
     def print_ipter(self, record):
         print('Interested Party Number: %s' % (record.ip_n))
-        print('Inclusion/Exclusion Indicator: %s' % (record.ie_indicator))
+        print('Inclusion/Exclusion Indicator: %s' % (record.inclusion_exclusion_indicator))
         print('TIS: %s' % (record.tis_numeric_code))
         print('Sequence Number: %s' % (record.sequence_n))
-        print('PR collection share: %s' % (record.pr_col_share))
-        print('MR collection share: %s' % (record.mr_col_share))
-        print('SR collection share: %s' % (record.sr_col_share))
+        print('PR collection share: %s' % (record.pr_collection_share))
+        print('MR collection share: %s' % (record.mr_collection_share))
+        print('SR collection share: %s' % (record.sr_collection_share))
         print('Shares Change: %s' % (record.shares_change))
 
     def print_pubr(self, record):
@@ -254,7 +256,7 @@ class CWRPrinter():
         print('Agreement Number: %s' % (record.submitter_agreement_n))
         print('Society Agreement Number: %s' % (record.society_assigned_agreement_n))
         print('Agreement Type: %s' % (record.agreement_type))
-        print('ISAC: %s' % (record.isac))
+        print('ISAC: %s' % (record.international_standard_code))
         print('Special Agreements Indicator: %s' % (record.special_agreements))
         print('First Record Refusal Indicator: %s' % (record.first_recording_refusal))
         print('USA License: %s' % (record.usa_license))
@@ -302,7 +304,7 @@ class CWRPrinter():
         print('Submitter Work Number: %s' % (record.submitter_work_n))
         print('ISWC: %s' % (record.iswc))
         print('Title: %s' % (record.title))
-        print('CWR Work Type: %s' % (record.cwr_work_type))
+        print('CWR Work Type: %s' % (record.work_type))
         print('Catalogue Number: %s' % (record.catalogue_number))
         print('Opus Number: %s' % (record.opus_number))
         print('Duration: %s' % (record.duration))
