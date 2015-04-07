@@ -7,7 +7,6 @@ from cwr.grammar.record import writer, writer_territory, \
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
