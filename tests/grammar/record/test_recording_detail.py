@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.record import work_detail
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -18,7 +21,17 @@ __status__ = 'Development'
 
 class TestWorkDetailGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = work_detail.recording
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+
+        self.grammar = _factory_record.get_transaction_record('recording_detail')
 
     def test_common_3(self):
         record = 'REC000005310000516420080304                                                            000300     A NAME _ AND 1999                                           THIS IS THE LABEL                                           G0100007401741                 GBBBN0009590 U   '
