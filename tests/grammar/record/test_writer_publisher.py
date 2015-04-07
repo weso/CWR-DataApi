@@ -3,7 +3,6 @@ import unittest
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
-
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
