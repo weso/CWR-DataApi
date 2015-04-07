@@ -168,7 +168,7 @@ def parse_work(json_item):
                       excerpt_type=json_item['excerpt_type'],
                       composite_type=json_item['composite_type'],
                       composite_component_count=json_item['composite_component_count'], iswc=json_item['iswc'],
-                      cwr_work_type=json_item['cwr_work_type'],
+                      work_type=json_item['cwr_work_type'],
                       musical_work_distribution_category=json_item['musical_distribution_category'],
                       duration=json_item['duration'], catalogue_number=json_item['catalogue_number'],
                       opus_number=json_item['opus_number'],

@@ -232,25 +232,26 @@ class IPTerritoryOfControlRecord(TransactionRecord):
     included in the Agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, ie_indicator, tis_numeric_code,
-                 sequence_n, pr_col_share=0, mr_col_share=0, sr_col_share=0, shares_change=False):
+    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, inclusion_exclusion_indicator,
+                 tis_numeric_code,
+                 sequence_n, pr_collection_share=0, mr_collection_share=0, sr_collection_share=0, shares_change=False):
         super(IPTerritoryOfControlRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Territory information
         self._tis_numeric_code = tis_numeric_code
 
         # IP information
         self._ip_n = ip_n
-        self._ie_indicator = ie_indicator
+        self._inclusion_exclusion_indicator = inclusion_exclusion_indicator
         self._sequence_n = sequence_n
 
         # Shares information
-        self._pr_col_share = pr_col_share
-        self._mr_col_share = mr_col_share
-        self._sr_col_share = sr_col_share
+        self._pr_collection_share = pr_collection_share
+        self._mr_collection_share = mr_collection_share
+        self._sr_collection_share = sr_collection_share
         self._shares_change = shares_change
 
     @property
-    def ie_indicator(self):
+    def inclusion_exclusion_indicator(self):
         """
         Inclusion/Exclusion Indicator field. Table Lookup ('E'/'I').
 
@@ -262,7 +263,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
 
         :return: 'E' if the territory is excluded, 'I' otherwise
         """
-        return self._ie_indicator
+        return self._inclusion_exclusion_indicator
 
     @property
     def ip_n(self):
@@ -276,7 +277,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         return self._ip_n
 
     @property
-    def mr_col_share(self):
+    def mr_collection_share(self):
         """
         Mechanical Rights Collection Share field. Numeric decimal.
 
@@ -287,10 +288,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
 
         :return: the Mechanical Rights collection share
         """
-        return self._mr_col_share
+        return self._mr_collection_share
 
     @property
-    def pr_col_share(self):
+    def pr_collection_share(self):
         """
         Performing Rights Collection Share field. Numeric decimal.
 
@@ -301,7 +302,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
 
         :return: the Performing Rights collection share
         """
-        return self._pr_col_share
+        return self._pr_collection_share
 
     @property
     def sequence_n(self):
@@ -327,7 +328,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         return self._shares_change
 
     @property
-    def sr_col_share(self):
+    def sr_collection_share(self):
         """
         Synchronization Rights Collection Share field. Numeric decimal.
 
@@ -338,7 +339,7 @@ class IPTerritoryOfControlRecord(TransactionRecord):
 
         :return: return Synchronization Rights collection share
         """
-        return self._sr_col_share
+        return self._sr_collection_share
 
     @property
     def tis_numeric_code(self):
@@ -391,7 +392,7 @@ class PublisherRecord(InterestedPartyRecord):
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
                  publisher, publisher_sequence_n,
                  submitter_agreement_n='',
-                 publisher_type=None, publisher_unknown='N', agreement_type=None, isac='',
+                 publisher_type=None, publisher_unknown='N', agreement_type=None, international_standard_code='',
                  society_assigned_agreement_n='',
                  pr_society=None, pr_ownership_share=0, mr_society=None, mr_ownership_share=0, sr_society=None,
                  sr_ownership_share=0, special_agreements=None, first_recording_refusal='U', usa_license=''):
@@ -404,7 +405,7 @@ class PublisherRecord(InterestedPartyRecord):
         :param publisher_type: the publisher role in the agreement
         :param publisher_unknown: publisher unknown flag
         :param agreement_type: the type of agreement
-        :param isac: ISAC for the publisher's agreement
+        :param international_standard_code: ISAC for the publisher's agreement
         :param society_assigned_agreement_n: ID for the Agreement given by a society
         :param pr_society: Performing Rights society
         :param pr_ownership_share: Performing Rights share
@@ -428,7 +429,7 @@ class PublisherRecord(InterestedPartyRecord):
         self._submitter_agreement_n = submitter_agreement_n
         self._society_assigned_agreement_n = society_assigned_agreement_n
         self._agreement_type = agreement_type
-        self._isac = isac
+        self._international_standard_code = international_standard_code
         self._special_agreements = special_agreements
 
         # Other info
@@ -446,7 +447,7 @@ class PublisherRecord(InterestedPartyRecord):
         return self._agreement_type
 
     @property
-    def isac(self):
+    def international_standard_code(self):
         """
         International Standard Agreement Code field.
 
@@ -454,7 +455,7 @@ class PublisherRecord(InterestedPartyRecord):
 
         :return: the agreement ISAC
         """
-        return self._isac
+        return self._international_standard_code
 
     @property
     def publisher(self):

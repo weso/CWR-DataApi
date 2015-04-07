@@ -17,7 +17,6 @@ alternate_title:
   type: alphanum_ext
   size: 60
   name: Alternate Title
-  results_name: title
 
 audio_visual_key:
   type: avi
@@ -136,11 +135,6 @@ date_publication_printed_edition:
   size: 8
   name: Date of Publication of Printed Edition
 
-dialect:
-  type: alphanum
-  size: 3
-  name: Dialect
-
 duration:
   type: time
   size: 8
@@ -150,11 +144,12 @@ ean13:
   type: ean13
   size: 13
   name: EAN 13
+  results_name: ean
 
-edi_version:
+edi_standard:
   type: lookup
   size: 5
-  name: EDI Version
+  name: EDI Standard Version
   values:
     - '01.10'
 
@@ -294,15 +289,20 @@ message_text:
   size: 150
   name: Message Text
 
+mr_collection_share:
+  type: percentage
+  size: 5
+  name: Mechanical Rights Collection Share
+
 mr_share:
   type: percentage
   size: 5
   name: Mechanical Rights Share
 
-name:
-  type: alphanum
-  size: 45
-  name: Publisher Name
+mr_ownership_share:
+  type: percentage
+  size: 5
+  name: Mechanical Rights Ownership Share
 
 number_players:
   type: numeric
@@ -350,6 +350,11 @@ original_record_sequence_n:
   size: 8
   name: Original Record Sequence Number
 
+performance_dialect:
+  type: alphanum
+  size: 3
+  name: Dialect
+
 performing_artist_first_name:
   type: alphanum
   size: 30
@@ -360,6 +365,16 @@ performing_artist_first_name_long:
   size: 160
   name: Performing Artist First Name
   results_name: performing_artist_first_name
+
+performing_artist_ipi_base_n:
+  type: ipi_base_n
+  size: 13
+  name: IPI Base Number
+
+performing_artist_ipi_name_n:
+  type: ipi_name_n
+  size: 11
+  name: IPI Name Number
 
 performing_artist_last_name:
   type: alphanum
@@ -386,18 +401,22 @@ post_term_collection_end_date:
   size: 8
   name: Post Term Collection End Date
 
+pr_collection_share:
+  type: percentage
+  size: 5
+  name: Performing Rights Collection Share
+
+pr_ownership_share:
+  type: percentage
+  size: 5
+  name: Performing Rights Ownership Share
+  values:
+    - 50
+
 pr_share:
   type: percentage
   size: 5
   name: Performing Rights Share
-
-pr_share_50:
-  type: percentage
-  size: 5
-  name: Performing Rights Share
-  results_name: pr_share
-  values:
-    - 50
 
 prior_royalty_start_date:
   type: date
@@ -515,10 +534,20 @@ source:
   size: 60
   name: Source
 
+sr_collection_share:
+  type: percentage
+  size: 5
+  name: Synchronization Rights Collection Share
+
 sr_share:
   type: percentage
   size: 5
   name: Synchronization Rights Share
+
+sr_ownership_share:
+  type: percentage
+  size: 5
+  name: Synchronization Rights Ownership Share
 
 submitter_agreement_n:
   type: alphanum
@@ -565,7 +594,7 @@ transmission_date:
   size: 8
   name: Transmission Date
 
-validation:
+validation_n:
   type: numeric
   size: 3
   name: Validation Number

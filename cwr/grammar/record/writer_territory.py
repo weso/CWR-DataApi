@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.interested_party import IPTerritoryOfControlRecord
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
@@ -35,27 +34,3 @@ Patterns.
 """
 
 territory = _factory_record.get_transaction_record('writer_territory')
-
-"""
-Parsing actions for the patterns.
-"""
-
-territory.setParseAction(lambda p: _to_writerterritory(p))
-
-"""
-Parsing methods.
-
-These are the methods which transform nodes into instances of classes.
-"""
-
-
-def _to_writerterritory(parsed):
-    """
-    Transforms the final parsing result into an IPTerritoryRecord instance.
-
-    :param parsed: result of parsing the Territory record
-    :return: an IPTerritoryRecord created from the parsed record
-    """
-    return IPTerritoryOfControlRecord(parsed.record_type, parsed.transaction_sequence_n, parsed.record_sequence_n,
-                                      parsed.ip_n, parsed.ie_indicator, parsed.tis_code, parsed.sequence_n,
-                                      parsed.pr_share, parsed.mr_share, parsed.sr_share, parsed.shares_change)
