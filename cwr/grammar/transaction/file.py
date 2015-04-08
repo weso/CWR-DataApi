@@ -37,16 +37,41 @@ _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer,
 Fields.
 """
 
-group_transactions = pp.OneOrMore(
-    pp.Group(transaction.agreement_transaction | transaction.work_transaction | \
-             transaction.acknowledgement_transaction))
-group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
+_group_agreement = (pp.Group(transaction.agreement_transaction) +
+                    pp.NotAny(transaction.work_transaction | transaction.acknowledgement_transaction))
+_group_work = (pp.Group(transaction.work_transaction) +
+               pp.NotAny(transaction.agreement_transaction | transaction.acknowledgement_transaction))
+_group_ack = (pp.Group(transaction.acknowledgement_transaction) +
+              pp.NotAny(transaction.work_transaction | transaction.agreement_transaction))
 
-group_info = _factory_record.get_record('group_header') + group_transactions + _factory_record.get_record(
-    'group_trailer')
+_trans_agreement = pp.OneOrMore(pp.Group(transaction.agreement_transaction))
+_trans_work = pp.OneOrMore(pp.Group(transaction.work_transaction))
+_trans_ack = pp.OneOrMore(pp.Group(transaction.acknowledgement_transaction))
 
-_transmission_groups = pp.OneOrMore(group_info)
-_transmission_groups = _transmission_groups.setName('Transmission Groups').setResultsName('groups')
+_trans = pp.OneOrMore(pp.Group(transaction.acknowledgement_transaction | transaction.work_transaction
+                               | transaction.acknowledgement_transaction))
+
+_trans_agreement = _trans_agreement.setName('Group Transactions').setResultsName('transactions')
+_trans_work = _trans_work.setName('Group Transactions').setResultsName('transactions')
+_trans_ack = _trans_ack.setName('Group Transactions').setResultsName('transactions')
+
+group_transactions = _trans_agreement | _trans_work | _trans_ack
+
+group_info = _factory_record.get_record('group_header') + \
+             group_transactions + \
+             _factory_record.get_record('group_trailer')
+
+group_info_agr = pp.Group(
+    _factory_record.get_record('group_header') + _trans_agreement + _factory_record.get_record('group_trailer'))
+
+group_info_work = pp.Group(
+    _factory_record.get_record('group_header') + _trans_work + _factory_record.get_record('group_trailer'))
+
+group_info_ack = pp.Group(
+    _factory_record.get_record('group_header') + _trans_ack + _factory_record.get_record('group_trailer'))
+
+transmission_groups = pp.OneOrMore(group_info)
+transmission_groups = transmission_groups.setName('Transmission Groups').setResultsName('groups')
 
 """
 Rules.
@@ -54,7 +79,7 @@ Rules.
 
 # File rule
 cwr_transmission = _factory_record.get_record('transmission_header') + \
-                   _transmission_groups + \
+                   transmission_groups + \
                    _factory_record.get_record('transmission_trailer') + \
                    pp.ZeroOrMore(special.lineEnd)
 

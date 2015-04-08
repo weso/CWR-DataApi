@@ -20,7 +20,7 @@ class TestTransactionInformationValid(unittest.TestCase):
         self.grammar = file.group_transactions
 
     def test_agreement_two(self):
-        record = _full() + '\n' + _full()
+        record = _agreement_full() + '\n' + _agreement_full()
 
         group = self.grammar.parseString(record)
 
@@ -99,7 +99,7 @@ class TestTransactionInformationValid(unittest.TestCase):
         self.assertEqual('NPA', result[20].record_type)
 
     def test_agreement_full(self):
-        record = _full()
+        record = _agreement_full()
 
         result = self.grammar.parseString(record)[0]
 
@@ -148,6 +148,52 @@ class TestTransactionInformationValid(unittest.TestCase):
 
         self.assertEqual('NWR', result[0].record_type)
 
+    def test_work_big(self):
+        record = _work_big()
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual(10, len(result))
+
+        self.assertEqual('NWR', result[0].record_type)
+        self.assertEqual('SPU', result[1].record_type)
+        self.assertEqual('SPU', result[2].record_type)
+        self.assertEqual('SPU', result[3].record_type)
+        self.assertEqual('SPT', result[4].record_type)
+        self.assertEqual('SWR', result[5].record_type)
+        self.assertEqual('SWT', result[6].record_type)
+        self.assertEqual('PWR', result[7].record_type)
+        self.assertEqual('PER', result[8].record_type)
+        self.assertEqual('REC', result[9].record_type)
+
+    def test_work_two(self):
+        work = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789POP030201YMUSPOTMODMOVORIORITHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
+
+        record = work + '\n' + _work_big()
+
+        group = self.grammar.parseString(record)
+
+        self.assertEqual(2, len(group))
+
+        result = group[0]
+
+        self.assertEqual(1, len(result))
+
+        result = group[1]
+
+        self.assertEqual(10, len(result))
+
+        self.assertEqual('NWR', result[0].record_type)
+        self.assertEqual('SPU', result[1].record_type)
+        self.assertEqual('SPU', result[2].record_type)
+        self.assertEqual('SPU', result[3].record_type)
+        self.assertEqual('SPT', result[4].record_type)
+        self.assertEqual('SWR', result[5].record_type)
+        self.assertEqual('SWT', result[6].record_type)
+        self.assertEqual('PWR', result[7].record_type)
+        self.assertEqual('PER', result[8].record_type)
+        self.assertEqual('REC', result[9].record_type)
+
     def test_acknowledgement_agreement_full(self):
         acknowledgement = 'ACK0000123400000023201201021020300123401234567AGRTHE CREATION TITLE                                          ABCD1234512345123456ABCD123451234512345720130203AS'
 
@@ -190,6 +236,17 @@ class TestTransactionInformationValid(unittest.TestCase):
         self.assertEqual('EXC', result[4].record_type)
 
 
+class TestTransactionInformationInvalid(unittest.TestCase):
+    def setUp(self):
+        self.grammar = file.group_transactions
+
+
+    def test_agreement_and_work(self):
+        record = _agreement_full() + '\n' + _work_big()
+
+        # self.assertRaises(ParseException, self.grammar.parseString, record)
+
+
 def _agr_territory():
     territory_1 = 'TER0000123400000023I0020'
     territory_2 = 'TER0000123400000023I0020'
@@ -219,9 +276,22 @@ def _agr_territory():
     return agr_territory
 
 
-def _full():
+def _agreement_full():
     agreement = 'AGR0000123400000023C1234567890123D1234567890123OG201201022013020320140304D20100405D201605062017060701234MYY0123456789012A'
 
     record = agreement + '\n' + _agr_territory() + '\n' + _agr_territory()
 
     return record
+
+
+def _work_big():
+    return 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
+           'SPU0000019900000702014271370  MUSIC SOCIETY                                 E          005101734040102328568410061 0500061 1000061 10000   0000000000000                            OS ' + '\n' + \
+           'SPU00000199000007030166       ANOTHER SOCIETY                               AM         002501650060477617137010061 0000061 0000061 00000   0000000000000                            PS ' + '\n' + \
+           'SPU00000199000007040170       YET ANOTHER SOCIETY                           SE         002261445930035870006610059 00000   00000   00000   0000000000000                            PG ' + '\n' + \
+           'SPT000001990000070570             050000500005000I0484Y001' + '\n' + \
+           'SWR00000199000007061185684  A NAME                                       YET ANOTHER NAME               C          0026058307861 0500061 0000061 00000    0000260582865             ' + '\n' + \
+           'SWT00000199000007071185684  050000500005000I0484Y001' + '\n' + \
+           'PWR00000199000007084271370  MUSIC SOCIETY                                01023285684100              1185684  ' + '\n' + \
+           'PER0000019900000709A NAME                                                                     000000000000000000000000' + '\n' + \
+           'REC000001990000071019980101                                                            000300     A COMPILATION                                               P A I  _AR_                                                 33002                                       U   '
