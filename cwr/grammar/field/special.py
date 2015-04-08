@@ -341,6 +341,9 @@ def audio_visual_key(name=None):
     society_code = society_code.setName('Society Code').setResultsName('society_code')
 
     av_number = basic.alphanum(15)
+    field_empty = pp.Regex('[ ]{15}')
+    field_empty.setParseAction(pp.replaceWith(''))
+    av_number = av_number | field_empty
     av_number = av_number.setName('Audio-Visual Number').setResultsName('av_number')
 
     field = pp.Group(society_code + av_number)
