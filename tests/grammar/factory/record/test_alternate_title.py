@@ -38,6 +38,13 @@ class TestAlternateTitleGrammar(unittest.TestCase):
 
         result = self.grammar.parseString(record)[0]
 
+        self.assertEqual('ALT', result.record_type)
+        self.assertEqual(282, result.transaction_sequence_n)
+        self.assertEqual(1380, result.record_sequence_n)
+        self.assertEqual('PA\xc6\x8f', result.alternate_title)
+        self.assertEqual('AT', result.title_type)
+        self.assertEqual(None, result.language_code)
+
     def test_valid_full(self):
         record = 'ALT0000123400000023THE TITLE                                                   ATES'
 
