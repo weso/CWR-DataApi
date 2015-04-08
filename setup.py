@@ -58,6 +58,7 @@ setup(
         'chardet',
         'pyparsing',
         'pyyaml',
+        'setuptools',
     ],
     tests_require=_tests_require,
     extras_require={'test': _tests_require},
