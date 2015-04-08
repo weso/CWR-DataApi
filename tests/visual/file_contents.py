@@ -28,7 +28,7 @@ if __name__ == '__main__':
     print('\n')
     print('Reading file %s' % (path))
     print('Storing output on %s' % (output))
-    print('Saving long on %s' % (log))
+    print('Saving log on %s' % (log))
     print('\n')
 
     logging.basicConfig(filename=log,
