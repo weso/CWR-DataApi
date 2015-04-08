@@ -42,11 +42,12 @@ group_transactions = pp.OneOrMore(
              transaction.acknowledgement_transaction))
 group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
 
-group_info = _factory_record.get_record('group_header') + group_transactions + _factory_record.get_record(
-    'group_trailer')
+group_info = _factory_record.get_record('group_header') + \
+             group_transactions + \
+             _factory_record.get_record('group_trailer')
 
-_transmission_groups = pp.OneOrMore(group_info)
-_transmission_groups = _transmission_groups.setName('Transmission Groups').setResultsName('groups')
+transmission_groups = pp.OneOrMore(group_info)
+transmission_groups = transmission_groups.setName('Transmission Groups').setResultsName('groups')
 
 """
 Rules.
@@ -54,7 +55,7 @@ Rules.
 
 # File rule
 cwr_transmission = _factory_record.get_record('transmission_header') + \
-                   _transmission_groups + \
+                   transmission_groups + \
                    _factory_record.get_record('transmission_trailer') + \
                    pp.ZeroOrMore(special.lineEnd)
 
