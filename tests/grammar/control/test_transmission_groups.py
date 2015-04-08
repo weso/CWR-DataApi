@@ -56,12 +56,36 @@ class TestGroupsValid(unittest.TestCase):
         self.assertEqual('IPA', transaction[2].record_type)
         self.assertEqual('IPA', transaction[3].record_type)
 
+        group = result[1]
+
+        self.assertEqual('GRH', group.group_header.record_type)
+
+        self.assertEqual('GRT', group.group_trailer.record_type)
+
+        self.assertEqual('NWR', group.group_header.transaction_type)
+
+        transactions = group.transactions
+
+        self.assertEqual(2, len(transactions))
+
     def test_two_work_agr(self):
         record = _two_groups_work_agr()
 
         result = self.grammar.parseString(record)
 
         self.assertEqual(2, len(result))
+
+        group = result[0]
+
+        self.assertEqual('GRH', group.group_header.record_type)
+
+        self.assertEqual('GRT', group.group_trailer.record_type)
+
+        self.assertEqual('NWR', group.group_header.transaction_type)
+
+        transactions = group.transactions
+
+        self.assertEqual(2, len(transactions))
 
         group = result[1]
 

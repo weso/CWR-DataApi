@@ -410,8 +410,6 @@ pr_ownership_share:
   type: percentage
   size: 5
   name: Performing Rights Ownership Share
-  values:
-    - 50
 
 pr_share:
   type: percentage
