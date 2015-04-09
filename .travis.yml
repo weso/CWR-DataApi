@@ -29,4 +29,3 @@ install:
   - pip install tox
 script:
   - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS
-  - python setup.py sdist
