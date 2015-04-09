@@ -24,17 +24,17 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-with open('cwr/__init__.py', 'rb') as f:
-    version = str(ast.literal_eval(_version_re.search(
-        f.read().decode('utf-8')).group(1)))
+with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
+    version = f.read()
+    version = _version_re.search(version).group(1)
+    version = str(ast.literal_eval(version.rstrip()))
 
 setup(
     name='CWR-API',
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        'data': ['*.csv'],
-        'data': ['*.yml'],
+        'data': ['*.csv', '*.yml'],
     },
     version=version,
     description='API library for the CWR standard format',
@@ -58,6 +58,7 @@ setup(
         'chardet',
         'pyparsing',
         'pyyaml',
+        'setuptools',
     ],
     tests_require=_tests_require,
     extras_require={'test': _tests_require},
