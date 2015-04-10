@@ -61,7 +61,7 @@ The code can be found at the GitHub `project page`_.
 License
 -------
 
-The project is released under the `MIT License`_.
+The project has been released under the `MIT License`_.
 
 .. _CISAC: http://www.cisac.org/
 .. _BMAT: http://www.bmat.com/
