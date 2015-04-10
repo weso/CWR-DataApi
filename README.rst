@@ -16,6 +16,11 @@ The library includes a data model for representing the contents of a CWR
 file, and parsers to create that model from a file, and to decode and
 encode JSON messages with the data model.
 
+Documentation
+-------------
+
+The current version is under development. No public documentation is still offered.
+
 Status
 ------
 
@@ -26,31 +31,25 @@ Issues management
 
 Issues are managed at the GitHub `project issues page`_.
 
-Documentation
--------------
-
-Documentation for the project can be found at the GitHub `project
-wiki`_.
-
 Building the code
 -----------------
 
-The application has been coded in Python, and tested for various
-versions of the Python 2 and 3 interpreter.
-
-Dependencies are indicated on requirements.txt.
+The application has been coded in Python, without using any particular framework.
 
 Prerequisites
 ~~~~~~~~~~~~~
 
-Requires Python, and has been tested on the following interpreters:
+The project has been tested in the following versions of the interpreter:
 
-- Python 2 (2.6, 2.7)
-- Python 3 (3.2, 3.3, 3.4)
-- Pypy (for Python 2 and 3)
+- Python 2.6
+- Python 2.7
+- Python 3.2
+- Python 3.3
+- Python 3.4
+- Pypy
+- Pypy 3
 
-The dependencies can be acquired using the list on requirements.txt,
-with the command:
+Al other dependencies are indicated on requirements.txt, which can be installed with the command:
 
 ``pip install -r requirements.txt``
 
@@ -58,16 +57,6 @@ Getting the code
 ~~~~~~~~~~~~~~~~
 
 The code can be found at the GitHub `project page`_.
-
-To acquire it through Git use the following clone URI:
-
-``git clone https://github.com/weso/CWR-DataApi.git``
-
-Continuous integration
-----------------------
-
-The continuous integration information can be found at the `project CI
-page`_ based on Travis CI.
 
 License
 -------
