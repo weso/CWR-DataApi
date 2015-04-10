@@ -1,5 +1,5 @@
 CWR Data Model API
-===================
+==================
 
 This projects offers a domain model for the CISAC CWR standard v2.1 to be
 used on Python applications.
