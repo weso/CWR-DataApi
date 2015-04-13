@@ -1,110 +1,114 @@
 # Structural records
 
 additional_related_information:
-  - 'ARI'
+  record_type: 'ARI'
 
 transmission_header:
-  - 'HDR'
+  record_type: 'HDR'
 
 transmission_trailer:
-  - 'TRL'
+  record_type: 'TRL'
 
 group_header:
-  - 'GRH'
+  record_type: 'GRH'
 
 group_trailer:
-  - 'GRT'
+  record_type: 'GRT'
 
 # Transaction records
 
 acknowledgement:
-  - 'ACK'
+  record_type: 'ACK'
 
 agreement:
-  - 'AGR'
+  record_type: 'AGR'
 
 component:
-  - 'COM'
+  record_type: 'COM'
 
 entire_work_title:
-  - 'EWT'
+  record_type: 'EWT'
 
 instrumentation_detail:
-  - 'IND'
+  record_type: 'IND'
 
 instrumentation_summary:
-  - 'INS'
+  record_type: 'INS'
 
 interested_party_agreement:
-  - 'IPA'
+  record_type: 'IPA'
 
 message:
-  - 'MSG'
+  record_type: 'MSG'
 
 original_work_title:
-  - 'VER'
+  record_type: 'VER'
 
 performing_artist:
-  - 'PER'
+  record_type: 'PER'
 
 publisher:
-  - 'SPU'
-  - 'OPU'
+  record_type:
+    - 'SPU'
+    - 'OPU'
 
 publisher_territory:
-  - 'SPT'
+  record_type: 'SPT'
 
 recording_detail:
-  - 'REC'
+  record_type: 'REC'
 
 territory_in_agreement:
-  - 'TER'
+  record_type: 'TER'
 
 work:
-  - 'NWR'
-  - 'REV'
-  - 'ISW'
+  record_type:
+    - 'NWR'
+    - 'REV'
+    - 'ISW'
 
 work_alternate_title:
-  - 'ALT'
+  record_type: 'ALT'
 
 work_conflict:
-  - 'EXC'
+  record_type: 'EXC'
 
 work_origin:
-  - 'ORN'
+  record_type: 'ORN'
 
 writer:
-  - 'SWR'
-  - 'OWR'
+  record_type:
+    - 'SWR'
+    - 'OWR'
 
 writer_territory:
-  - 'SWT'
+  record_type: 'SWT'
 
 writer_publisher:
-  - 'PWR'
+  record_type: 'PWR'
 
 # Non-Roman Alphabet records
 
 nra_agreement_party:
-  - 'NPA'
+  record_type: 'NPA'
 
 nra_other_writer:
-  - 'NOW'
+  record_type: 'NOW'
 
 nra_performance_data:
-  - 'NPR'
+  record_type: 'NPR'
 
 nra_publisher_name:
-  - 'NPN'
+  record_type: 'NPN'
 
 nra_title:
-  - 'NAT'
+  record_type: 'NAT'
 
 nra_work:
-  - 'NCT'
-  - 'NET'
-  - 'NVT'
+  record_type:
+    - 'NCT'
+    - 'NET'
+    - 'NVT'
 
 nra_writer_name:
-  - 'NWN'
+  record_type: 'NWN'

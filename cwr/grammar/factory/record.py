@@ -27,10 +27,10 @@ class PrefixBuilder(object):
         self._config = config
 
     def get_prefix(self, id):
-        return field_record.record_type(self._config[id])
+        return field_record.record_type(self._config[id]['record_type'])
 
     def get_transaction_prefix(self, id, factory):
-        return field_record.record_prefix(self._config[id], factory)
+        return field_record.record_prefix(self._config[id]['record_type'], factory)
 
 
 class RecordFactory(object):
