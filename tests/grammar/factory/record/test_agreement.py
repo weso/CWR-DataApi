@@ -30,7 +30,7 @@ class TestGrammarAgreement(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('agreement')
+        self.grammar = _factory_record.get_record('agreement')
 
     def test(self):
         record = 'AGR000000010000000000041383606100              OS200006062017010120170101N        D20170101        00001SYY              '
@@ -129,7 +129,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('agreement')
+        self.grammar = _factory_record.get_record('agreement')
 
     def test_works_zero(self):
         """

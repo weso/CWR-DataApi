@@ -26,11 +26,18 @@ class PrefixBuilder(object):
     def __init__(self, config):
         self._config = config
 
-    def get_prefix(self, id):
-        return field_record.record_type(self._config[id]['record_type'])
+    def get_prefix(self, id, factory):
 
-    def get_transaction_prefix(self, id, factory):
-        return field_record.record_prefix(self._config[id]['record_type'], factory)
+        config = self._config[id]
+
+        if config['header_type'] == 'transaction':
+            header = field_record.record_prefix(self._config[id]['record_type'], factory)
+        elif config['header_type'] == 'record':
+            header = field_record.record_type(self._config[id]['record_type'])
+        else:
+            header = None
+
+        return header
 
 
 class RecordFactory(object):
@@ -94,23 +101,18 @@ class RecordFactory(object):
         self._decoders['writer_publisher'] = PublisherForWriterDictionaryDecoder()
         self._decoders['writer_territory'] = IPTerritoryOfControlDictionaryDecoder()
 
-    def get_transaction_record(self, id):
-        record = self._lineStart + \
-                 self._prefixer.get_transaction_prefix(id, self._field_factory) + \
-                 self._build_record(id) + \
-                 self._lineEnd
-
-        if id in self._decoders:
-            decoder = self._decoders[id]
-            record.setParseAction(lambda p: decoder.decode(p))
-
-        return record.setResultsName(id)
-
     def get_record(self, id):
-        record = self._lineStart + \
-                 self._prefixer.get_prefix(id) + \
-                 self._build_record(id) + \
-                 self._lineEnd
+        prefix = self._prefixer.get_prefix(id, self._field_factory)
+
+        if prefix is None:
+            record = self._lineStart + \
+                     self._build_record(id) + \
+                     self._lineEnd
+        else:
+            record = self._lineStart + \
+                     prefix + \
+                     self._build_record(id) + \
+                     self._lineEnd
 
         if id in self._decoders:
             decoder = self._decoders[id]

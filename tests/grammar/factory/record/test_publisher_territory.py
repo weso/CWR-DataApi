@@ -35,7 +35,7 @@ class TestNPNGrammar(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('publisher_territory')
+        self.grammar = _factory_record.get_record('publisher_territory')
 
     def test_valid_common(self):
         """

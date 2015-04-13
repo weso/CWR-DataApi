@@ -31,7 +31,7 @@ class TestWorkDetailGrammar(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('recording_detail')
+        self.grammar = _factory_record.get_record('recording_detail')
 
     def test_common_3(self):
         record = 'REC000005310000516420080304                                                            000300     A NAME _ AND 1999                                           THIS IS THE LABEL                                           G0100007401741                 GBBBN0009590 U   '

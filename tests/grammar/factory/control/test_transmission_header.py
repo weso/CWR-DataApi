@@ -10,7 +10,7 @@ from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
-CWR Transmission grammar tests.
+CWR Transaction Header grammar tests.
 
 The following cases are tested:
 """
@@ -21,11 +21,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestParseTransmissionHeader(unittest.TestCase):
-    """
-    Tests that the Transmission Header grammar decodes correctly formatted strings
-    """
-
+class TestTransmissionHeaderGrammar(unittest.TestCase):
     def setUp(self):
         _config = CWRConfiguration()
 
@@ -38,6 +34,26 @@ class TestParseTransmissionHeader(unittest.TestCase):
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('transmission_header')
+
+    def test_valid_common(self):
+        record = 'HDRPB226144593AGENCIA GRUPO MUSICAL                        01.102013080902591120130809               '
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('HDR', result.record_type)
+        self.assertEqual('PB', result.sender_type)
+        self.assertEqual(226144593, result.sender_id)
+        self.assertEqual('AGENCIA GRUPO MUSICAL', result.sender_name)
+        self.assertEqual('01.10', result.edi_standard)
+        self.assertEqual(2013, result.creation_date_time.year)
+        self.assertEqual(8, result.creation_date_time.month)
+        self.assertEqual(9, result.creation_date_time.day)
+        self.assertEqual(2, result.creation_date_time.hour)
+        self.assertEqual(59, result.creation_date_time.minute)
+        self.assertEqual(11, result.creation_date_time.second)
+        self.assertEqual(2013, result.transmission_date.year)
+        self.assertEqual(8, result.transmission_date.month)
+        self.assertEqual(9, result.transmission_date.day)
 
     def test_valid_full(self):
         """
@@ -64,66 +80,6 @@ class TestParseTransmissionHeader(unittest.TestCase):
         self.assertEqual(11, result.transmission_date.month)
         self.assertEqual(2, result.transmission_date.day)
         self.assertEqual('U+0123', result.character_set)
-
-    def test_valid_no_charset(self):
-        """
-        Tests that TransmissionHeaderDecoder decodes correctly formatted record prefixes.
-
-        This is missing the optional charset field.
-        """
-        record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102               '
-
-        result = self.grammar.parseString(record)[0]
-
-        self.assertEqual('HDR', result.record_type)
-        self.assertEqual('AA', result.sender_type)
-        self.assertEqual(1234, result.sender_id)
-        self.assertEqual('NAME OF THE COMPANY', result.sender_name)
-        self.assertEqual('01.10', result.edi_standard)
-        self.assertEqual(2012, result.creation_date_time.year)
-        self.assertEqual(1, result.creation_date_time.month)
-        self.assertEqual(15, result.creation_date_time.day)
-        self.assertEqual(12, result.creation_date_time.hour)
-        self.assertEqual(30, result.creation_date_time.minute)
-        self.assertEqual(0, result.creation_date_time.second)
-        self.assertEqual(2012, result.transmission_date.year)
-        self.assertEqual(11, result.transmission_date.month)
-        self.assertEqual(2, result.transmission_date.day)
-        self.assertEqual(None, result.character_set)
-
-
-class TestParseTransmissionTrailer(unittest.TestCase):
-    """
-    Tests that TransmissionTrailerDecoder decodes correctly formatted strings
-    """
-
-    def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('transmission_trailer')
-
-    def test_valid_full(self):
-        """
-        Tests that TransmissionTrailerDecoder decodes correctly formatted record prefixes.
-
-        This test contains all the optional fields.
-        """
-        record = 'TRL012340123456701234568'
-
-        result = self.grammar.parseString(record)[0]
-
-        self.assertEqual('TRL', result.record_type)
-        self.assertEqual(1234, result.group_count)
-        self.assertEqual(1234567, result.transaction_count)
-        self.assertEqual(1234568, result.record_count)
 
 
 class TestParseTransmissionHeaderException(unittest.TestCase):
@@ -165,32 +121,5 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
         Tests that TransmissionHeaderDecoder throws an exception when the record size is too short.
         """
         record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123        '
-
-        self.assertRaises(ParseException, self.grammar.parseString, record)
-
-
-class TestParseTransmissionTrailerException(unittest.TestCase):
-    """
-    Tests that TransmissionTrailerDecoder throws exceptions with incorrectly formatted strings.
-    """
-
-    def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('transmission_header')
-
-    def test_invalid_wrong_length_too_short(self):
-        """
-        Tests that TransmissionTrailerDecoder throws an exception when the line is too short.
-        """
-        record = 'TRL01234012345670123456'
 
         self.assertRaises(ParseException, self.grammar.parseString, record)

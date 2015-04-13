@@ -35,7 +35,7 @@ class TestInstrumentationSummaryGrammar(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('instrumentation_summary')
+        self.grammar = _factory_record.get_record('instrumentation_summary')
 
     def test_valid_full(self):
         """

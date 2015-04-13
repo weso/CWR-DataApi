@@ -31,7 +31,7 @@ class TestAlternateTitleGrammar(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('work_alternate_title')
+        self.grammar = _factory_record.get_record('work_alternate_title')
 
     def test_extended_character(self):
         record = 'ALT0000028200001380PA\xc6\x8f                                                        AT  '

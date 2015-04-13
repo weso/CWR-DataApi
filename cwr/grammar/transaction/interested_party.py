@@ -27,38 +27,38 @@ _prefixer = PrefixBuilder(_config.record_types())
 _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 # Original Publisher
-original_publisher_information = _factory_record.get_transaction_record('publisher') + \
-                                 pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
+original_publisher_information = _factory_record.get_record('publisher') + \
+                                 pp.Optional(_factory_record.get_record('nra_publisher_name')) + \
                                  pp.Optional(
-                                     pp.OneOrMore(_factory_record.get_transaction_record('publisher_territory')))
+                                     pp.OneOrMore(_factory_record.get_record('publisher_territory')))
 
 # Administrator
-administrator_information = _factory_record.get_transaction_record('publisher') + \
-                            pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
-                            pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('publisher_territory')))
+administrator_information = _factory_record.get_record('publisher') + \
+                            pp.Optional(_factory_record.get_record('nra_publisher_name')) + \
+                            pp.Optional(pp.OneOrMore(_factory_record.get_record('publisher_territory')))
 
 # Subpublisher
-subpublisher_information = _factory_record.get_transaction_record('publisher') + \
-                           pp.Optional(_factory_record.get_transaction_record('nra_publisher_name')) + \
-                           pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('publisher_territory')))
+subpublisher_information = _factory_record.get_record('publisher') + \
+                           pp.Optional(_factory_record.get_record('nra_publisher_name')) + \
+                           pp.Optional(pp.OneOrMore(_factory_record.get_record('publisher_territory')))
 
 # Controlled writer
-controlled_writer_information = _factory_record.get_transaction_record('writer') + \
-                                pp.Optional(_factory_record.get_transaction_record('nra_writer_name')) + \
-                                pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('writer_territory'))) + \
-                                pp.OneOrMore(_factory_record.get_transaction_record('writer_publisher'))
+controlled_writer_information = _factory_record.get_record('writer') + \
+                                pp.Optional(_factory_record.get_record('nra_writer_name')) + \
+                                pp.Optional(pp.OneOrMore(_factory_record.get_record('writer_territory'))) + \
+                                pp.OneOrMore(_factory_record.get_record('writer_publisher'))
 
 # Controlled publisher
 controlled_publisher_information = original_publisher_information + \
                                    pp.Optional(pp.OneOrMore(administrator_information)) + \
                                    pp.Optional(pp.OneOrMore(subpublisher_information)) + \
-                                   pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('publisher')))
+                                   pp.Optional(pp.OneOrMore(_factory_record.get_record('publisher')))
 
 # IPA
-ipa_information = _factory_record.get_transaction_record('interested_party_agreement') + \
-                  pp.Optional(_factory_record.get_transaction_record('nra_agreement_party'))
+ipa_information = _factory_record.get_record('interested_party_agreement') + \
+                  pp.Optional(_factory_record.get_record('nra_agreement_party'))
 
 # Territory
-territory_information = pp.OneOrMore(_factory_record.get_transaction_record('territory_in_agreement')) \
+territory_information = pp.OneOrMore(_factory_record.get_record('territory_in_agreement')) \
                         + ipa_information * 2 + \
                         pp.ZeroOrMore(ipa_information)

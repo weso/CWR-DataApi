@@ -29,21 +29,21 @@ _prefixer = PrefixBuilder(_config.record_types())
 _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
 # Instrumentation
-instrumentation_information = _factory_record.get_transaction_record('instrumentation_summary') + \
+instrumentation_information = _factory_record.get_record('instrumentation_summary') + \
                               pp.Optional(
-                                  pp.OneOrMore(_factory_record.get_transaction_record('instrumentation_detail')))
+                                  pp.OneOrMore(_factory_record.get_record('instrumentation_detail')))
 
 # Excerpts
-information_for_excerpts = _factory_record.get_transaction_record('entire_work_title') + \
-                           pp.Optional(_factory_record.get_transaction_record('nra_work')) + \
-                           pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('nra_other_writer')))
+information_for_excerpts = _factory_record.get_record('entire_work_title') + \
+                           pp.Optional(_factory_record.get_record('nra_work')) + \
+                           pp.Optional(pp.OneOrMore(_factory_record.get_record('nra_other_writer')))
 
 # Versions
-information_for_versions = _factory_record.get_transaction_record('original_work_title') + \
-                           pp.Optional(_factory_record.get_transaction_record('nra_work')) + \
-                           pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('nra_other_writer')))
+information_for_versions = _factory_record.get_record('original_work_title') + \
+                           pp.Optional(_factory_record.get_record('nra_work')) + \
+                           pp.Optional(pp.OneOrMore(_factory_record.get_record('nra_other_writer')))
 
 # Components
-information_for_components = _factory_record.get_transaction_record('component') + \
-                             pp.Optional(_factory_record.get_transaction_record('nra_work')) + \
-                             pp.Optional(pp.OneOrMore(_factory_record.get_transaction_record('nra_other_writer')))
+information_for_components = _factory_record.get_record('component') + \
+                             pp.Optional(_factory_record.get_record('nra_work')) + \
+                             pp.Optional(pp.OneOrMore(_factory_record.get_record('nra_other_writer')))

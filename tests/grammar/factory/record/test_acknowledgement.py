@@ -30,7 +30,7 @@ class TestAcknowledgementAgreementValid(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('acknowledgement')
+        self.grammar = _factory_record.get_record('acknowledgement')
 
     def test_valid_full(self):
         """
@@ -105,7 +105,7 @@ class TestAcknowledgementAgreementException(unittest.TestCase):
         _prefixer = PrefixBuilder(_config.record_types())
         _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
-        self.grammar = _factory_record.get_transaction_record('acknowledgement')
+        self.grammar = _factory_record.get_record('acknowledgement')
 
     def test_nwr_missing_title(self):
         """
