@@ -125,19 +125,50 @@ class RecordFactory(object):
 
         record = None
 
-        for group in field_config:
-            if group['group_type'] == 'sequence':
-                for field in group['fields']:
-                    if 'compulsory' in field:
-                        compulsory = field['compulsory']
-                    else:
-                        compulsory = False
+        for group_data in field_config:
+            group = self._get_group(group_data)
 
-                    field = self._field_factory.get_field(field['name'], compulsory=compulsory)
-
-                    if record is None:
-                        record = field
-                    else:
-                        record += field
+            if record is None:
+                record = group
+            else:
+                record += group
 
         return record
+
+    def _get_group(self, group_data):
+        group = None
+
+        if group_data['group_type'] == 'sequence':
+            group = self._get_sequence(group_data)
+        elif group_data['group_type'] == 'option':
+            group = self._get_option(group_data)
+
+        return group
+
+    def _get_sequence(self, group):
+        sequence = None
+
+        for field in group['fields']:
+            if 'compulsory' in field:
+                compulsory = field['compulsory']
+            else:
+                compulsory = False
+
+            field = self._field_factory.get_field(field['name'], compulsory=compulsory)
+
+            if sequence is None:
+                sequence = field
+            else:
+                sequence += field
+
+        return sequence
+
+    def _get_option(self, group):
+        options = []
+
+        for group_data in group['fields']:
+            group = self._get_group(group_data)
+
+            options.append(group)
+
+        return pp.oneOf(options)
