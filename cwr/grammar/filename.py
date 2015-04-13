@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import pyparsing as pp
-
 from cwr.file import FileTag
-from cwr.grammar.field import basic, special
+from cwr.grammar.field import special
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 
@@ -36,36 +34,6 @@ _config = CWRConfiguration()
 _filename_factory = DefaultFieldFactory(_config.load_field_config('filename'))
 
 """
-Filename fields.
-
-These fields are:
-- Sequence Number (old and new). 2 or 4 alphanumeric characters.
-- Year. 2 numeric characters.
-- Sender. 2 or 3 alphanumeric characters.
-- Receiver. 2 or 3 alphanumeric characters.
-- Version Number. 2 digits float (one value for integer, one for decimal).
-
-Each of these fields is parsed into a value as follows:
-- Sequence Number (old and new). Integer.
-- Year. Four digits integer (year in the current century).
-- Sender. String.
-- Receiver. String.
-- Version Number. Float.
-"""
-
-# Sender
-sender = pp.Word(pp.alphanums, min=2, max=3)
-sender = sender.setName('Sender').setResultsName('sender')
-
-# Receiver
-receiver = pp.Word(pp.alphanums, min=2, max=3)
-receiver = receiver.setName('Received').setResultsName('receiver')
-
-# Version number
-version_num = basic.numeric_float(2, 1, 'Version')
-version_num = version_num.setResultsName('version')
-
-"""
 Filename patterns.
 
 This the grammatical structure for the old and new filename templates.
@@ -76,22 +44,22 @@ cwr_filename_old = special.lineStart + \
                    _filename_factory.get_field('header', compulsory=True).suppress() + \
                    _filename_factory.get_field('year', compulsory=True) + \
                    _filename_factory.get_field('sequence_n_old', compulsory=True) + \
-                   sender + \
+                   _filename_factory.get_field('sender', compulsory=True) + \
                    _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
-                   receiver + \
+                   _filename_factory.get_field('receiver', compulsory=True) + \
                    ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
-                     version_num) |
+                     _filename_factory.get_field('version', compulsory=True)) |
                     _filename_factory.get_field('delimiter_zip', compulsory=True)) + \
                    special.lineEnd
 cwr_filename = special.lineStart + \
                _filename_factory.get_field('header', compulsory=True).suppress() + \
                _filename_factory.get_field('year', compulsory=True) + \
                _filename_factory.get_field('sequence_n_new', compulsory=True) + \
-               sender + \
+               _filename_factory.get_field('sender', compulsory=True) + \
                _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
-               receiver + \
+               _filename_factory.get_field('receiver', compulsory=True) + \
                ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
-                 version_num) |
+                 _filename_factory.get_field('version', compulsory=True)) |
                 _filename_factory.get_field('delimiter_zip', compulsory=True)) + \
                special.lineEnd
 

@@ -29,6 +29,20 @@ header:
   values:
     - CW
 
+receiver:
+  type: alphanum_variable
+  size: 3
+  name: Receiver
+  values:
+    - 2
+
+sender:
+  type: alphanum_variable
+  size: 3
+  name: Sender
+  values:
+    - 2
+
 sequence_n_new:
   type: numeric
   size: 4
@@ -40,6 +54,13 @@ sequence_n_old:
   size: 2
   name: Sequence Number
   results_name: sequence_n
+
+version:
+  type: numeric_float
+  size: 2
+  name: Version
+  values:
+    - 1
 
 year:
   type: numeric

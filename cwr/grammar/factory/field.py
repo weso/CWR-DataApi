@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
 import logging
 
 from data.accessor import CWRConfiguration
-
-from cwr.grammar.field import basic
-from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
-    BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter, ISWCAdapter, IPIBaseNumberAdapter, \
-    IPINameNumberAdapter, PercentageAdapter, EAN13Adapter, ISRCAdapter, VISANAdapter, AudioVisualKeydapter, \
-    DateTimeAdapter, CharSetAdapter
+from cwr.grammar.factory.adapter import *
 
 
 """
@@ -185,6 +179,8 @@ class DefaultFieldFactory(OptionFieldFactory):
         self._adapters['visan'] = VISANAdapter()
         self._adapters['avi'] = AudioVisualKeydapter()
         self._adapters['charset'] = CharSetAdapter()
+        self._adapters['alphanum_variable'] = VariableAlphanumAdapter()
+        self._adapters['numeric_float'] = NumericFloatAdapter()
 
         # Field values are optional
         self._field_values = field_values
