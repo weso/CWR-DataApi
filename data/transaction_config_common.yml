@@ -1,3 +1,21 @@
+administrator_information:
+  - record: publisher
+  - record: nra_publisher_name
+    optional: true
+  - record: publisher_territory
+    optional: true
+    at_least_one: true
+
+controlled_writer_information:
+  - record: writer
+  - record: nra_writer_name
+    optional: true
+  - record: writer_territory
+    optional: true
+    at_least_one: true
+  - record: writer_publisher
+    at_least_one: true
+
 information_for_excerpts:
   - record: entire_work_title
   - record: nra_work
@@ -25,5 +43,26 @@ information_for_components:
 instrumentation_information:
   - record: instrumentation_summary
   - record: instrumentation_detail
+    optional: true
+    at_least_one: true
+
+ipa_information:
+  - record: interested_party_agreement
+  - record: nra_agreement_party
+    optional: true
+
+original_publisher_information:
+  - record: publisher
+  - record: nra_publisher_name
+    optional: true
+  - record: publisher_territory
+    optional: true
+    at_least_one: true
+
+subpublisher_information:
+  - record: publisher
+  - record: nra_publisher_name
+    optional: true
+  - record: publisher_territory
     optional: true
     at_least_one: true

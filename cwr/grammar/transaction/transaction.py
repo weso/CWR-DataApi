@@ -38,7 +38,7 @@ agreement_transaction = _factory_record.get_record('agreement') + \
 work_transaction = _factory_record.get_record('work') + \
                    pp.Optional(pp.OneOrMore(interested_party.controlled_publisher_information)) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('publisher'))) + \
-                   pp.Optional(pp.OneOrMore(interested_party.controlled_writer_information)) + \
+                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('controlled_writer_information'))) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('writer'))) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('work_alternate_title'))) + \
                    pp.Optional(_factory_record.get_record('nra_title')) + \
