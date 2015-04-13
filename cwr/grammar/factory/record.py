@@ -102,17 +102,17 @@ class RecordFactory(object):
         self._decoders['writer_territory'] = IPTerritoryOfControlDictionaryDecoder()
 
     def get_record(self, id):
+
+        record = self._build_record(id)
+
         prefix = self._prefixer.get_prefix(id, self._field_factory)
 
-        if prefix is None:
-            record = self._lineStart + \
-                     self._build_record(id) + \
-                     self._lineEnd
-        else:
-            record = self._lineStart + \
-                     prefix + \
-                     self._build_record(id) + \
-                     self._lineEnd
+        if prefix is not None:
+            record = prefix + record
+
+        record = self._lineStart + \
+                 record + \
+                 self._lineEnd
 
         if id in self._decoders:
             decoder = self._decoders[id]
