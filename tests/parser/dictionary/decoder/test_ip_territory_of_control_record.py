@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import IPTerritoryOfControlDecoder
+from cwr.parser.dictionary import IPTerritoryOfControlDictionaryDecoder
 
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 class TestIPTerritoryOfControlDecoder(unittest.TestCase):
     def setUp(self):
-        self._decoder = IPTerritoryOfControlDecoder()
+        self._decoder = IPTerritoryOfControlDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}

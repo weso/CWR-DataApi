@@ -179,9 +179,9 @@ class GroupTrailerDictionaryDecoder(Decoder):
                             record_count=data['record_count'])
 
 
-class InterestedPartyForAgreementDecoder(Decoder):
+class InterestedPartyForAgreementDictionaryDecoder(Decoder):
     def __init__(self):
-        super(InterestedPartyForAgreementDecoder, self).__init__()
+        super(InterestedPartyForAgreementDictionaryDecoder, self).__init__()
 
     def decode(self, data):
         return InterestedPartyForAgreementRecord(record_type=data['record_type'],
@@ -197,9 +197,9 @@ class InterestedPartyForAgreementDecoder(Decoder):
                                                  sr_society=data['sr_society'], sr_share=data['sr_share'])
 
 
-class IPTerritoryOfControlDecoder(Decoder):
+class IPTerritoryOfControlDictionaryDecoder(Decoder):
     def __init__(self):
-        super(IPTerritoryOfControlDecoder, self).__init__()
+        super(IPTerritoryOfControlDictionaryDecoder, self).__init__()
 
     def decode(self, data):
         return IPTerritoryOfControlRecord(record_type=data['record_type'],
@@ -215,9 +215,9 @@ class IPTerritoryOfControlDecoder(Decoder):
                                           shares_change=data['shares_change'])
 
 
-class InstrumentationDetailDecoder(Decoder):
+class InstrumentationDetailDictionaryDecoder(Decoder):
     def __init__(self):
-        super(InstrumentationDetailDecoder, self).__init__()
+        super(InstrumentationDetailDictionaryDecoder, self).__init__()
 
     def decode(self, data):
         return InstrumentationDetailRecord(record_type=data['record_type'],
@@ -227,9 +227,9 @@ class InstrumentationDetailDecoder(Decoder):
                                            number_players=data['number_players'])
 
 
-class InstrumentationSummaryDecoder(Decoder):
+class InstrumentationSummaryDictionaryDecoder(Decoder):
     def __init__(self):
-        super(InstrumentationSummaryDecoder, self).__init__()
+        super(InstrumentationSummaryDictionaryDecoder, self).__init__()
 
     def decode(self, data):
         return InstrumentationSummaryRecord(record_type=data['record_type'],
@@ -270,9 +270,9 @@ class PerformingArtistDictionaryDecoder(Decoder):
                                       performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'])
 
 
-class PublisherForWriterDecoder(Decoder):
+class PublisherForWriterDictionaryDecoder(Decoder):
     def __init__(self):
-        super(PublisherForWriterDecoder, self).__init__()
+        super(PublisherForWriterDictionaryDecoder, self).__init__()
 
     def decode(self, data):
         return PublisherForWriterRecord(record_type=data['record_type'],
