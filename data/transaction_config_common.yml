@@ -6,6 +6,11 @@ administrator_information:
     optional: true
     at_least_one: true
 
+agreement_transaction:
+  - record: agreement
+  - transaction: territory_information
+    at_least_one: true
+
 controlled_publisher_information:
   - transaction: original_publisher_information
   - transaction: administrator_information
@@ -84,3 +89,46 @@ territory_information:
     at_least_one: true
   - transaction: ipa_information
     at_least_two: true
+
+work_transaction:
+  - record: work
+  - transaction: controlled_publisher_information
+    optional: true
+    at_least_one: true
+  - record: publisher
+    optional: true
+    at_least_one: true
+  - transaction: controlled_writer_information
+    optional: true
+    at_least_one: true
+  - record: writer
+    optional: true
+    at_least_one: true
+  - record: work_alternate_title
+    optional: true
+    at_least_one: true
+  - record: nra_title
+    optional: true
+  - transaction: information_for_excerpts
+    optional: true
+  - transaction: information_for_versions
+    optional: true
+  - record: performing_artist
+    optional: true
+    at_least_one: true
+  - record: nra_performance_data
+    optional: true
+    at_least_one: true
+  - record: recording_detail
+    optional: true
+  - record: work_origin
+    optional: true
+  - transaction: instrumentation_information
+    optional: true
+    at_least_one: true
+  - transaction: information_for_components
+    optional: true
+    at_least_one: true
+  - record: additional_related_information
+    optional: true
+    at_least_one: true

@@ -28,28 +28,6 @@ _prefixer = PrefixBuilder(_config.record_types())
 _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
 
-# Agreement
-agreement_transaction = _factory_record.get_record('agreement') + \
-                        pp.OneOrMore(_factory_transaction.get_transaction('territory_information'))
-
-# Work
-work_transaction = _factory_record.get_record('work') + \
-                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('controlled_publisher_information'))) + \
-                   pp.Optional(pp.OneOrMore(_factory_record.get_record('publisher'))) + \
-                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('controlled_writer_information'))) + \
-                   pp.Optional(pp.OneOrMore(_factory_record.get_record('writer'))) + \
-                   pp.Optional(pp.OneOrMore(_factory_record.get_record('work_alternate_title'))) + \
-                   pp.Optional(_factory_record.get_record('nra_title')) + \
-                   pp.Optional(_factory_transaction.get_transaction('information_for_excerpts')) + \
-                   pp.Optional(_factory_transaction.get_transaction('information_for_versions')) + \
-                   pp.Optional(pp.OneOrMore(_factory_record.get_record('performing_artist'))) + \
-                   pp.Optional(pp.OneOrMore(_factory_record.get_record('nra_performance_data'))) + \
-                   pp.Optional(_factory_record.get_record('recording_detail')) + \
-                   pp.Optional(_factory_record.get_record('work_origin')) + \
-                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('instrumentation_information'))) + \
-                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('information_for_components'))) + \
-                   pp.Optional(pp.OneOrMore(_factory_record.get_record('additional_related_information')))
-
 # Acknowledgement
 acknowledgement_transaction = _factory_record.get_record('acknowledgement') + \
                               pp.Optional(pp.OneOrMore(_factory_record.get_record('message'))) + \
