@@ -28,12 +28,15 @@ class PrefixBuilder(object):
 
     def get_prefix(self, id, factory):
 
-        config = self._config[id]
+        if id in self._config:
+            config = self._config[id]
 
-        if config['header_type'] == 'transaction':
-            header = field_record.record_prefix(self._config[id]['record_type'], factory)
-        elif config['header_type'] == 'record':
-            header = field_record.record_type(self._config[id]['record_type'])
+            if config['header_type'] == 'transaction':
+                header = field_record.record_prefix(self._config[id]['record_type'], factory)
+            elif config['header_type'] == 'record':
+                header = field_record.record_type(self._config[id]['record_type'])
+            else:
+                header = None
         else:
             header = None
 
@@ -100,6 +103,8 @@ class RecordFactory(object):
         self._decoders['writer'] = WriterRecordDictionaryDecoder()
         self._decoders['writer_publisher'] = PublisherForWriterDictionaryDecoder()
         self._decoders['writer_territory'] = IPTerritoryOfControlDictionaryDecoder()
+        self._decoders['filename_new'] = FileTagDictionaryDecoder()
+        self._decoders['filename_old'] = FileTagDictionaryDecoder()
 
     def get_record(self, id):
 
@@ -164,11 +169,14 @@ class RecordFactory(object):
         return sequence
 
     def _get_option(self, group):
-        options = []
+        options = None
 
         for group_data in group['fields']:
             group = self._get_group(group_data)
 
-            options.append(group)
+            if options is None:
+                options = group
+            else:
+                options = options | group
 
-        return pp.oneOf(options)
+        return options

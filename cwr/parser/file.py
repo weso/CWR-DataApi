@@ -2,11 +2,13 @@
 import os
 
 from cwr.grammar.transaction.file import cwr_transmission as rule_file
-from cwr.grammar.filename import cwr_filename_old as rule_filename_old
-from cwr.grammar.filename import cwr_filename as rule_filename_new
 from cwr.file import CWRFile, FileTag
 from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
 from cwr.parser.common import Decoder
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
 
 
 """
@@ -39,8 +41,20 @@ class CWRFileDecoder(Decoder):
 class CWRFileNameDecoder(Decoder):
     def __init__(self):
         super(CWRFileNameDecoder, self).__init__()
-        self._filename_decoder_old = GrammarDecoder(rule_filename_old)
-        self._filename_decoder_new = GrammarDecoder(rule_filename_new)
+
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+        _data.update(_config.load_field_config('filename'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = RecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+
+        self._filename_decoder_old = GrammarDecoder(_factory_record.get_record('filename_old'))
+        self._filename_decoder_new = GrammarDecoder(_factory_record.get_record('filename_new'))
 
     def decode(self, path):
         filename = os.path.basename(path)

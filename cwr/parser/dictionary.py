@@ -14,6 +14,7 @@ from cwr.non_roman_alphabet import NonRomanAlphabetWorkRecord, NonRomanAlphabetT
 from cwr.transmission import TransmissionHeader, TransmissionTrailer, Transmission
 from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, RecordingDetailRecord, \
     InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, PerformingArtistRecord
+from cwr.file import FileTag
 
 
 """
@@ -1388,3 +1389,15 @@ class CWRDictionaryEncoder(Encoder):
         encoded['writer'] = self.__encode_writer(record.writer)
 
         return encoded
+
+
+class FileTagDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(FileTagDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return FileTag(data['year'],
+                       data['sequence_n'],
+                       data['sender'],
+                       data['receiver'],
+                       data['version'])
