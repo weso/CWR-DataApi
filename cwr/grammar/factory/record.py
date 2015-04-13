@@ -124,13 +124,15 @@ class RecordFactory(object):
         field_config = self._record_configs[id]
 
         fields = []
-        for config in field_config:
-            if 'compulsory' in config:
-                compulsory = config['compulsory']
-            else:
-                compulsory = False
+        for group in field_config:
+            if group['group_type'] == 'sequence':
+                for field in group['fields']:
+                    if 'compulsory' in field:
+                        compulsory = field['compulsory']
+                    else:
+                        compulsory = False
 
-            fields.append(self._field_factory.get_field(config['name'], compulsory=compulsory))
+                    fields.append(self._field_factory.get_field(field['name'], compulsory=compulsory))
 
         if len(fields) > 0:
             first = True
