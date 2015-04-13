@@ -44,10 +44,19 @@ class PrefixBuilder(object):
 
 
 class RecordFactory(object):
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        pass
+
+    def get_record(self, id):
+        raise NotImplementedError("The get_record method is not implemented")
+
+
+class DefaultRecordFactory(RecordFactory):
     """
     Factory for acquiring record rules.
     """
-    __metaclass__ = ABCMeta
 
     _lineStart = pp.lineStart.suppress()
     _lineStart.setName("Start of line")
@@ -56,6 +65,7 @@ class RecordFactory(object):
     _lineEnd.setName("End of line")
 
     def __init__(self, record_configs, prefixer, field_factory):
+        super(DefaultRecordFactory, self).__init__()
         # records already created
         self._records = {}
         # Logger
@@ -126,11 +136,11 @@ class RecordFactory(object):
         return record.setResultsName(id)
 
     def _build_record(self, id):
-        field_config = self._record_configs[id]
+        record_config = self._record_configs[id]
 
         record = None
 
-        for group_data in field_config:
+        for group_data in record_config:
             group = self._get_group(group_data)
 
             if record is None:

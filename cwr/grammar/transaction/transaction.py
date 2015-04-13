@@ -2,11 +2,13 @@
 
 import pyparsing as pp
 
-from cwr.grammar.transaction import interested_party, work_detail
+from cwr.grammar.transaction import interested_party
+
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.grammar.factory.record import PrefixBuilder, DefaultRecordFactory
+from cwr.grammar.factory.transaction import DefaultTransactionFactory
 
 
 """
@@ -25,7 +27,8 @@ _data.update(_config.load_field_config('common'))
 _factory_field = DefaultFieldFactory(_data, CWRTables())
 
 _prefixer = PrefixBuilder(_config.record_types())
-_factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+_factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+_factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
 
 # Agreement
 agreement_transaction = _factory_record.get_record('agreement') + \
@@ -39,14 +42,14 @@ work_transaction = _factory_record.get_record('work') + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('writer'))) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('work_alternate_title'))) + \
                    pp.Optional(_factory_record.get_record('nra_title')) + \
-                   pp.Optional(work_detail.information_for_excerpts) + \
-                   pp.Optional(work_detail.information_for_versions) + \
+                   pp.Optional(_factory_transaction.get_transaction('information_for_excerpts')) + \
+                   pp.Optional(_factory_transaction.get_transaction('information_for_versions')) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('performing_artist'))) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('nra_performance_data'))) + \
                    pp.Optional(_factory_record.get_record('recording_detail')) + \
                    pp.Optional(_factory_record.get_record('work_origin')) + \
-                   pp.Optional(pp.OneOrMore(work_detail.instrumentation_information)) + \
-                   pp.Optional(pp.OneOrMore(work_detail.information_for_components)) + \
+                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('instrumentation_information'))) + \
+                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('information_for_components'))) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('additional_related_information')))
 
 # Acknowledgement

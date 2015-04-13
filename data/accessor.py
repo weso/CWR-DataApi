@@ -83,6 +83,7 @@ class CWRConfiguration(object):
 
         self._field_configs = {}
         self._record_configs = {}
+        self._transaction_configs = {}
 
     def _load_record_config(self):
         """
@@ -146,6 +147,18 @@ class CWRConfiguration(object):
             self._record_configs[id] = self._reader.read_yaml_file('record_config_%s.yml' % id)
 
         return self._record_configs[id]
+
+    def load_transaction_config(self, id):
+        """
+        Loads the configuration fields file for the id.
+
+        :param id: the id for the field
+        :return: the fields configuration
+        """
+        if id not in self._transaction_configs:
+            self._transaction_configs[id] = self._reader.read_yaml_file('transaction_config_%s.yml' % id)
+
+        return self._transaction_configs[id]
 
     def default_version(self):
         """

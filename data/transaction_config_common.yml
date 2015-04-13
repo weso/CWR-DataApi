@@ -1,0 +1,29 @@
+information_for_excerpts:
+  - record: entire_work_title
+  - record: nra_work
+    optional: true
+  - record: nra_other_writer
+    optional: true
+    at_least_one: true
+
+information_for_versions:
+  - record: original_work_title
+  - record: nra_work
+    optional: true
+  - record: nra_other_writer
+    optional: true
+    at_least_one: true
+
+information_for_components:
+  - record: component
+  - record: nra_work
+    optional: true
+  - record: nra_other_writer
+    optional: true
+    at_least_one: true
+
+instrumentation_information:
+  - record: instrumentation_summary
+  - record: instrumentation_detail
+    optional: true
+    at_least_one: true

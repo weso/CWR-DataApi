@@ -7,7 +7,7 @@ from pyparsing import ParseException
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.grammar.factory.record import PrefixBuilder, DefaultRecordFactory
 
 """
 CWR file name grammar tests.
@@ -36,7 +36,7 @@ class TestFileNameValid(unittest.TestCase):
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
         _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('filename_new')
 
@@ -96,7 +96,7 @@ class TestFileNameValidOld(unittest.TestCase):
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
         _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('filename_old')
 
@@ -156,7 +156,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
         _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('filename_new')
 
@@ -216,7 +216,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
         _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('filename_old')
 
@@ -272,7 +272,7 @@ class TestFileNameException(unittest.TestCase):
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
         _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('filename_new')
 
@@ -303,7 +303,7 @@ class TestFileNameOldException(unittest.TestCase):
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
         _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('filename_old')
 

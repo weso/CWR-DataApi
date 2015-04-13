@@ -4,7 +4,7 @@ import unittest
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from cwr.grammar.factory.record import PrefixBuilder, DefaultRecordFactory
 
 
 """
@@ -33,7 +33,7 @@ class TestNPNGrammar(unittest.TestCase):
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
         _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('nra_publisher_name')
 
