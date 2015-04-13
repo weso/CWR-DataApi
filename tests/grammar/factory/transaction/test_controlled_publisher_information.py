@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.transaction import interested_party
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, DefaultRecordFactory
+
+from cwr.grammar.factory.transaction import DefaultTransactionFactory
 
 """
 CWR Controlled Publisher Information grammar tests.
@@ -17,7 +22,18 @@ __status__ = 'Development'
 
 class TestControlledPublisherInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = interested_party.controlled_publisher_information
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+        _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
+
+        self.grammar = _factory_transaction.get_transaction('controlled_publisher_information')
 
     def test_full(self):
         publisher = 'SPU000012340000002319A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'

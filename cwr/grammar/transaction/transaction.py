@@ -2,8 +2,6 @@
 
 import pyparsing as pp
 
-from cwr.grammar.transaction import interested_party
-
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
@@ -32,11 +30,11 @@ _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config
 
 # Agreement
 agreement_transaction = _factory_record.get_record('agreement') + \
-                        pp.OneOrMore(interested_party.territory_information)
+                        pp.OneOrMore(_factory_transaction.get_transaction('territory_information'))
 
 # Work
 work_transaction = _factory_record.get_record('work') + \
-                   pp.Optional(pp.OneOrMore(interested_party.controlled_publisher_information)) + \
+                   pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('controlled_publisher_information'))) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('publisher'))) + \
                    pp.Optional(pp.OneOrMore(_factory_transaction.get_transaction('controlled_writer_information'))) + \
                    pp.Optional(pp.OneOrMore(_factory_record.get_record('writer'))) + \

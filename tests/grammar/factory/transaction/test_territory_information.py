@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.transaction import interested_party
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.field import DefaultFieldFactory
+from data.accessor import CWRTables
+from cwr.grammar.factory.record import PrefixBuilder, DefaultRecordFactory
+
+from cwr.grammar.factory.transaction import DefaultTransactionFactory
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +22,18 @@ __status__ = 'Development'
 
 class TestTerritoryInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = interested_party.territory_information
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+
+        _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+        _prefixer = PrefixBuilder(_config.record_types())
+        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+        _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
+
+        self.grammar = _factory_transaction.get_transaction('territory_information')
 
     def test_valid_full(self):
         territory_1 = 'TER0000123400000023I0020'

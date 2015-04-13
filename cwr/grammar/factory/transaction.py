@@ -39,17 +39,25 @@ class DefaultTransactionFactory(TransactionFactory):
         transaction = None
 
         for group_data in transaction_config:
-            record = self._record_factory.get_record(group_data['record'])
 
+            if 'record' in group_data:
+                entry = self._record_factory.get_record(group_data['record'])
+            elif 'transaction' in group_data:
+                entry = self.get_transaction(group_data['transaction'])
+
+            # TODO: Use a class to handle these rules
             if 'at_least_one' in group_data and group_data['at_least_one']:
-                record = pp.OneOrMore(record)
+                entry = pp.OneOrMore(entry)
+
+            if 'at_least_two' in group_data and group_data['at_least_two']:
+                entry = (entry * 2) + pp.ZeroOrMore(entry)
 
             if 'optional' in group_data and group_data['optional']:
-                record = pp.Optional(record)
+                entry = pp.Optional(entry)
 
             if not transaction:
-                transaction = record
+                transaction = entry
             else:
-                transaction = transaction + record
+                transaction = transaction + entry
 
         return transaction

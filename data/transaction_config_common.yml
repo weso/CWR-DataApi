@@ -6,6 +6,18 @@ administrator_information:
     optional: true
     at_least_one: true
 
+controlled_publisher_information:
+  - transaction: original_publisher_information
+  - transaction: administrator_information
+    optional: true
+    at_least_one: true
+  - transaction: subpublisher_information
+    optional: true
+    at_least_one: true
+  - record: publisher
+    optional: true
+    at_least_one: true
+
 controlled_writer_information:
   - record: writer
   - record: nra_writer_name
@@ -66,3 +78,9 @@ subpublisher_information:
   - record: publisher_territory
     optional: true
     at_least_one: true
+
+territory_information:
+  - record: territory_in_agreement
+    at_least_one: true
+  - transaction: ipa_information
+    at_least_two: true
