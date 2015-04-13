@@ -123,7 +123,8 @@ class RecordFactory(object):
     def _build_record(self, id):
         field_config = self._record_configs[id]
 
-        fields = []
+        record = None
+
         for group in field_config:
             if group['group_type'] == 'sequence':
                 for field in group['fields']:
@@ -132,18 +133,11 @@ class RecordFactory(object):
                     else:
                         compulsory = False
 
-                    fields.append(self._field_factory.get_field(field['name'], compulsory=compulsory))
+                    field = self._field_factory.get_field(field['name'], compulsory=compulsory)
 
-        if len(fields) > 0:
-            first = True
-            record = None
-            for field in fields:
-                if first:
-                    record = field
-                    first = False
-                else:
-                    record += field
-        else:
-            record = None
+                    if record is None:
+                        record = field
+                    else:
+                        record += field
 
         return record
