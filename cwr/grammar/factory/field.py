@@ -3,6 +3,8 @@
 from abc import ABCMeta, abstractmethod
 import logging
 
+from data.accessor import CWRConfiguration
+
 from cwr.grammar.field import basic
 from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
     BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter, ISWCAdapter, IPIBaseNumberAdapter, \
@@ -193,7 +195,7 @@ class DefaultFieldFactory(OptionFieldFactory):
             self._field_rules = field_rules
 
         if actions is None:
-            self._actions = ActionsSource()
+            self._actions = DefaultActionsSource()
         else:
             self._actions = actions
 
@@ -258,9 +260,12 @@ class DefaultFieldFactory(OptionFieldFactory):
             field.setParseAction(lambda p: action_method(p))
 
 
-class ActionsSource():
+class DefaultActionsSource():
     def __init__(self):
-        pass
+        self._config = CWRConfiguration()
+
+    def to_default_filename_version(self, parsed):
+        return self._config.default_version()
 
     def to_int(self, parsed):
         value = parsed[0]
@@ -269,3 +274,18 @@ class ActionsSource():
             return None
         else:
             return int(parsed[0])
+
+    def to_year(self, parsed):
+        """
+        Transforms the parsed two digits integer into a valid year value.
+
+        :param parsed: the parsed value
+        """
+        value = parsed[0]
+
+        if not isinstance(value, int):
+            value = int(value)
+        else:
+            value = parsed
+
+        return 2000 + value

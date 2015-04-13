@@ -19,6 +19,8 @@ delimiter_zip:
   results_name: version
   values:
     - .zip
+  actions:
+    - to_default_filename_version
 
 header:
   type: lookup
@@ -43,3 +45,5 @@ year:
   type: numeric
   size: 2
   name: Year
+  actions:
+    - to_year

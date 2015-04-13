@@ -53,19 +53,6 @@ Each of these fields is parsed into a value as follows:
 - Version Number. Float.
 """
 
-# Year
-year = _filename_factory.get_field('year', compulsory=True)
-year.addParseAction(lambda y: _to_year(y[0]))
-
-
-def _to_year(parsed):
-    """
-    Transforms the parsed two digits integer into a valid year value.
-
-    :param parsed: the parsed value
-    """
-    return 2000 + parsed
-
 # Sender
 sender = pp.Word(pp.alphanums, min=2, max=3)
 sender = sender.setName('Sender').setResultsName('sender')
@@ -79,19 +66,6 @@ version_num = basic.numeric_float(2, 1, 'Version')
 version_num = version_num.setResultsName('version')
 
 """
-Delimiters.
-
-These divide the distinct sections of the filename, and mostly can be ignored.
-
-The only special case is if this is a zip file. In that case the extension will be parsed as if it were the version
-node, but will return the default version.
-"""
-
-# ZIP extension
-delimiter_zip = _filename_factory.get_field('delimiter_zip', compulsory=True)
-delimiter_zip.setParseAction(lambda s: _config.default_version())
-
-"""
 Filename patterns.
 
 This the grammatical structure for the old and new filename templates.
@@ -100,25 +74,25 @@ This the grammatical structure for the old and new filename templates.
 # CWR filename patterns
 cwr_filename_old = special.lineStart + \
                    _filename_factory.get_field('header', compulsory=True).suppress() + \
-                   year + \
+                   _filename_factory.get_field('year', compulsory=True) + \
                    _filename_factory.get_field('sequence_n_old', compulsory=True) + \
                    sender + \
                    _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
                    receiver + \
                    ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
                      version_num) |
-                    delimiter_zip) + \
+                    _filename_factory.get_field('delimiter_zip', compulsory=True)) + \
                    special.lineEnd
 cwr_filename = special.lineStart + \
                _filename_factory.get_field('header', compulsory=True).suppress() + \
-               year + \
+               _filename_factory.get_field('year', compulsory=True) + \
                _filename_factory.get_field('sequence_n_new', compulsory=True) + \
                sender + \
                _filename_factory.get_field('delimiter_ip', compulsory=True).suppress() + \
                receiver + \
                ((_filename_factory.get_field('delimiter_version', compulsory=True).suppress() +
                  version_num) |
-                delimiter_zip) + \
+                _filename_factory.get_field('delimiter_zip', compulsory=True)) + \
                special.lineEnd
 
 """
