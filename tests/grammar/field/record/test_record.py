@@ -3,7 +3,9 @@ import unittest
 
 from pyparsing import ParseException
 
+from data.accessor import CWRConfiguration
 from cwr.grammar.field.record import record_prefix
+from cwr.grammar.factory.field import DefaultFieldFactory
 
 """
 CWR file Record parsing tests.
@@ -14,6 +16,10 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
+# Acquires data sources
+_config = CWRConfiguration()
+_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
+
 
 class TestParseTransactionRecordPrefixValid(unittest.TestCase):
     """
@@ -21,7 +27,7 @@ class TestParseTransactionRecordPrefixValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = record_prefix('HDR')
+        self.grammar = record_prefix('HDR', _common_factory)
 
     def test_valid(self):
         """
@@ -42,7 +48,7 @@ class TestParseRecordPrefixException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = record_prefix('HDR')
+        self.grammar = record_prefix('HDR', _common_factory)
 
     def test_wrong_type(self):
         """

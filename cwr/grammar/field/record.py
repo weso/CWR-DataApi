@@ -2,7 +2,6 @@
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.field import basic
-from cwr.grammar.factory.field import DefaultFieldFactory
 
 """
 Grammar for Records.
@@ -16,7 +15,6 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_common_factory = DefaultFieldFactory(_config.load_field_config('common'))
 
 # RECORD FIELDS
 
@@ -45,16 +43,17 @@ def record_type(values):
 
 
 # Record prefix
-def record_prefix(required_type):
+def record_prefix(required_type, factory):
     """
     Creates a record prefix for the specified record type.
 
     :param required_type: the type of the record using this prefix
+    :param factory: field factory
     :return: the record prefix
     """
     field = record_type(required_type) + \
-            _common_factory.get_field('transaction_sequence_n') + \
-            _common_factory.get_field('record_sequence_n')
+            factory.get_field('transaction_sequence_n') + \
+            factory.get_field('record_sequence_n')
     field.leaveWhitespace()
 
     return field

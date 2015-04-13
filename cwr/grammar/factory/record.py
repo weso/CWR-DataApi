@@ -29,8 +29,8 @@ class PrefixBuilder(object):
     def get_prefix(self, id):
         return field_record.record_type(self._config[id])
 
-    def get_transaction_prefix(self, id):
-        return field_record.record_prefix(self._config[id])
+    def get_transaction_prefix(self, id, factory):
+        return field_record.record_prefix(self._config[id], factory)
 
 
 class RecordFactory(object):
@@ -96,7 +96,7 @@ class RecordFactory(object):
 
     def get_transaction_record(self, id):
         record = self._lineStart + \
-                 self._prefixer.get_transaction_prefix(id) + \
+                 self._prefixer.get_transaction_prefix(id, self._field_factory) + \
                  self._build_record(id) + \
                  self._lineEnd
 
