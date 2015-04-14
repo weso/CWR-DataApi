@@ -27,7 +27,7 @@ class TestAcknowledgementAgreementValid(unittest.TestCase):
 
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-        _prefixer = DefaultPrefixBuilder(_config.record_types())
+        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
         _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('acknowledgement')
@@ -102,7 +102,7 @@ class TestAcknowledgementAgreementException(unittest.TestCase):
 
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-        _prefixer = DefaultPrefixBuilder(_config.record_types())
+        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
         _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
         self.grammar = _factory_record.get_record('acknowledgement')

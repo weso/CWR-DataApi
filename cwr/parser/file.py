@@ -50,7 +50,7 @@ class CWRFileNameDecoder(Decoder):
 
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-        _prefixer = DefaultPrefixBuilder(_config.record_types())
+        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
         _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self._filename_decoder_old = GrammarDecoder(_factory_record.get_record('filename_old'))

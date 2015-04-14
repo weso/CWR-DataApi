@@ -30,7 +30,7 @@ _data.update(_config.load_field_config('common'))
 
 _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-_prefixer = DefaultPrefixBuilder(_config.record_types())
+_prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
 _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
 

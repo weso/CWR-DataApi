@@ -24,16 +24,17 @@ Configuration classes.
 
 
 class DefaultPrefixBuilder(object):
-    def __init__(self, config):
+    def __init__(self, config, factory):
         self._config = config
+        self._factory = factory
 
-    def get_prefix(self, id, factory):
+    def get_prefix(self, id):
 
         if id in self._config:
             config = self._config[id]
 
             if config['header_type'] == 'transaction':
-                header = field_record.record_prefix(self._config[id]['record_type'], factory)
+                header = field_record.record_prefix(self._config[id]['record_type'], self._factory)
             elif config['header_type'] == 'record':
                 header = field_record.record_type(self._config[id]['record_type'])
             else:
@@ -127,7 +128,7 @@ class DefaultRecordFactory(RecordFactory, RuleFactory):
 
         sequence.append(self._lineStart)
 
-        prefix = self._prefixer.get_prefix(id, self._field_factory)
+        prefix = self._prefixer.get_prefix(id)
 
         if prefix is not None:
             sequence.append(prefix)
