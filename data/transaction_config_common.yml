@@ -13,6 +13,31 @@ administrator_information:
         - optional
         - at_least_one
 
+acknowledgement_transaction:
+  - group_type: sequence
+    rules:
+    - rule_type: record
+      id: acknowledgement
+    - rule_type: record
+      id: message
+      modifiers:
+        - optional
+        - at_least_one
+  - group_type: option
+    rules:
+      - group_type: sequence
+        rules:
+        - rule_type: record
+          id: agreement
+      - group_type: sequence
+        rules:
+        - rule_type: record
+          id: work
+        - rule_type: record
+          id: work_conflict
+          modifiers:
+            - optional
+
 agreement_transaction:
   - group_type: sequence
     rules:

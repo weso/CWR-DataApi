@@ -3,7 +3,6 @@
 import pyparsing as pp
 
 from cwr.grammar.field import special
-from cwr.grammar.transaction import transaction
 from cwr.group import Group
 from cwr.transmission import Transmission
 from data.accessor import CWRConfiguration
@@ -42,7 +41,7 @@ Fields.
 group_transactions = pp.OneOrMore(
     pp.Group(_factory_transaction.get_transaction('agreement_transaction') |
              _factory_transaction.get_transaction('work_transaction') | \
-             transaction.acknowledgement_transaction))
+             _factory_transaction.get_transaction('acknowledgement_transaction')))
 group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
 
 group_info = _factory_record.get_record('group_header') + \
