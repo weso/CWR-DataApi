@@ -1,55 +1,91 @@
 filename_old:
   - group_type: sequence
-    fields:
-    - field: header
-      compulsory: true
-    - field: year
-      compulsory: true
-    - field: sequence_n_old
-      compulsory: true
-    - field: sender
-      compulsory: true
-    - field: delimiter_ip
-      compulsory: true
-    - field: receiver
-      compulsory: true
+    rules:
+    - rule_type: field
+      id: header
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: year
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sequence_n_old
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sender
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: delimiter_ip
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: receiver
+      modifiers:
+        - compulsory
   - group_type: option
-    fields:
+    rules:
     - group_type: sequence
-      fields:
-      - field: delimiter_version
-        compulsory: true
-      - field: version
-        compulsory: true
+      rules:
+      - rule_type: field
+        id: delimiter_version
+        modifiers:
+          - compulsory
+      - rule_type: field
+        id: version
+        modifiers:
+          - compulsory
     - group_type: sequence
-      fields:
-      - field: delimiter_zip
-        compulsory: true
+      rules:
+      - rule_type: field
+        id: delimiter_zip
+        modifiers:
+          - compulsory
 
 filename_new:
   - group_type: sequence
-    fields:
-    - field: header
-      compulsory: true
-    - field: year
-      compulsory: true
-    - field: sequence_n_new
-      compulsory: true
-    - field: sender
-      compulsory: true
-    - field: delimiter_ip
-      compulsory: true
-    - field: receiver
-      compulsory: true
+    rules:
+    - rule_type: field
+      id: header
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: year
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sequence_n_new
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sender
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: delimiter_ip
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: receiver
+      modifiers:
+        - compulsory
   - group_type: option
-    fields:
+    rules:
     - group_type: sequence
-      fields:
-      - field: delimiter_version
-        compulsory: true
-      - field: version
-        compulsory: true
+      rules:
+      - rule_type: field
+        id: delimiter_version
+        modifiers:
+          - compulsory
+      - rule_type: field
+        id: version
+        modifiers:
+          - compulsory
     - group_type: sequence
-      fields:
-      - field: delimiter_zip
-        compulsory: true
+      rules:
+      - rule_type: field
+        id: delimiter_zip
+        modifiers:
+          - compulsory

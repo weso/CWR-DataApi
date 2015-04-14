@@ -1,466 +1,801 @@
 acknowledgement:
   - group_type: sequence
-    fields:
-    - field: creation_date_time
-    - field: original_group_id
-    - field: original_transaction_sequence_n
-      compulsory: true
-    - field: original_transaction_type
-      compulsory: true
-    - field: creation_title
-    - field: submitter_creation_n
-    - field: recipient_creation_n
-    - field: processing_date
-      compulsory: true
-    - field: transaction_status
-      compulsory: true
+    rules:
+    - rule_type: field
+      id: creation_date_time
+    - rule_type: field
+      id: original_group_id
+    - rule_type: field
+      id: original_transaction_sequence_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: original_transaction_type
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: creation_title
+    - rule_type: field
+      id: submitter_creation_n
+    - rule_type: field
+      id: recipient_creation_n
+    - rule_type: field
+      id: processing_date
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: transaction_status
+      modifiers:
+        - compulsory
 
 additional_related_information:
   - group_type: sequence
-    fields:
-    - field: society_n
-    - field: work_n
-    - field: type_of_right
-    - field: subject_code
-    - field: note
+    rules:
+    - rule_type: field
+      id: society_n
+    - rule_type: field
+      id: work_n
+    - rule_type: field
+      id: type_of_right
+    - rule_type: field
+      id: subject_code
+    - rule_type: field
+      id: note
 
 agreement:
   - group_type: sequence
-    fields:
-    - field: submitter_agreement_n
-      compulsory: true
-    - field: international_standard_code
-    - field: agreement_type
-    - field: agreement_start_date
-      compulsory: true
-    - field: agreement_end_date
-    - field: retention_end_date
-    - field: prior_royalty_status
-      compulsory: true
-    - field: prior_royalty_start_date
-    - field: post_term_collection_status
-      compulsory: true
-    - field: post_term_collection_end_date
-    - field: date_of_signature
-    - field: number_of_works
-      compulsory: true
-    - field: sales_manufacture_clause
-    - field: shares_change
-    - field: advance_given
-    - field: society_assigned_agreement_n
+    rules:
+    - rule_type: field
+      id: submitter_agreement_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: international_standard_code
+    - rule_type: field
+      id: agreement_type
+    - rule_type: field
+      id: agreement_start_date
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: agreement_end_date
+    - rule_type: field
+      id: retention_end_date
+    - rule_type: field
+      id: prior_royalty_status
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: prior_royalty_start_date
+    - rule_type: field
+      id: post_term_collection_status
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: post_term_collection_end_date
+    - rule_type: field
+      id: date_of_signature
+    - rule_type: field
+      id: number_of_works
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sales_manufacture_clause
+    - rule_type: field
+      id: shares_change
+    - rule_type: field
+      id: advance_given
+    - rule_type: field
+      id: society_assigned_agreement_n
 
 component:
   - group_type: sequence
-    fields:
-    - field: component_title
-    - field: iswc
-    - field: submitter_work_n
-    - field: component_duration
-    - field: writer_1_last_name
-    - field: writer_1_first_name
-    - field: writer_1_ipi_name_n
-    - field: writer_2_last_name
-    - field: writer_2_first_name
-    - field: writer_2_ipi_name_n
-    - field: writer_1_ipi_base_n
-    - field: writer_2_ipi_base_n
+    rules:
+    - rule_type: field
+      id: component_title
+    - rule_type: field
+      id: iswc
+    - rule_type: field
+      id: submitter_work_n
+    - rule_type: field
+      id: component_duration
+    - rule_type: field
+      id: writer_1_last_name
+    - rule_type: field
+      id: writer_1_first_name
+    - rule_type: field
+      id: writer_1_ipi_name_n
+    - rule_type: field
+      id: writer_2_last_name
+    - rule_type: field
+      id: writer_2_first_name
+    - rule_type: field
+      id: writer_2_ipi_name_n
+    - rule_type: field
+      id: writer_1_ipi_base_n
+    - rule_type: field
+      id: writer_2_ipi_base_n
 
 entire_work_title:
   - group_type: sequence
-    fields:
-    - field: entire_work_title
-    - field: iswc
-    - field: language_code
-    - field: writer_1_last_name
-    - field: writer_1_first_name
-    - field: source
-    - field: writer_1_ipi_name_n
-    - field: writer_1_ipi_base_n
-    - field: writer_2_last_name
-    - field: writer_2_first_name
-    - field: writer_2_ipi_name_n
-    - field: writer_2_ipi_base_n
-    - field: submitter_work_n
+    rules:
+    - rule_type: field
+      id: entire_work_title
+    - rule_type: field
+      id: iswc
+    - rule_type: field
+      id: language_code
+    - rule_type: field
+      id: writer_1_last_name
+    - rule_type: field
+      id: writer_1_first_name
+    - rule_type: field
+      id: source
+    - rule_type: field
+      id: writer_1_ipi_name_n
+    - rule_type: field
+      id: writer_1_ipi_base_n
+    - rule_type: field
+      id: writer_2_last_name
+    - rule_type: field
+      id: writer_2_first_name
+    - rule_type: field
+      id: writer_2_ipi_name_n
+    - rule_type: field
+      id: writer_2_ipi_base_n
+    - rule_type: field
+      id: submitter_work_n
 
 group_header:
   - group_type: sequence
-    fields:
-    - field: transaction_type
-      compulsory: true
-    - field: group_id
-      compulsory: true
-    - field: version_number
-      compulsory: true
-    - field: batch_request_id
-    - field: sd_type
+    rules:
+    - rule_type: field
+      id: transaction_type
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: group_id
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: version_number
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: batch_request_id
+    - rule_type: field
+      id: sd_type
 
 group_trailer:
   - group_type: sequence
-    fields:
-    - field: group_id
-    - field: transaction_count
-    - field: record_count
-    - field: currency_indicator
-    - field: total_monetary_value
+    rules:
+    - rule_type: field
+      id: group_id
+    - rule_type: field
+      id: transaction_count
+    - rule_type: field
+      id: record_count
+    - rule_type: field
+      id: currency_indicator
+    - rule_type: field
+      id: total_monetary_value
 
 instrumentation_detail:
   - group_type: sequence
-    fields:
-    - field: instrument_code
-    - field: number_players
+    rules:
+    - rule_type: field
+      id: instrument_code
+    - rule_type: field
+      id: number_players
 
 instrumentation_summary:
   - group_type: sequence
-    fields:
-    - field: number_voices
-    - field: standard_instrumentation_type
-    - field: instrumentation_description
+    rules:
+    - rule_type: field
+      id: number_voices
+    - rule_type: field
+      id: standard_instrumentation_type
+    - rule_type: field
+      id: instrumentation_description
 
 interested_party_agreement:
   - group_type: sequence
-    fields:
-    - field: agreement_role_code
-      compulsory: true
-    - field: ipi_name_n
-    - field: ipi_base_n
-    - field: ip_n
-      compulsory: true
-    - field: ip_last_name
-      compulsory: true
-    - field: ip_writer_first_name
-    - field: pr_society
-    - field: pr_share
-      compulsory: true
-    - field: mr_society
-    - field: mr_share
-      compulsory: true
-    - field: sr_society
-    - field: sr_share
-      compulsory: true
+    rules:
+    - rule_type: field
+      id: agreement_role_code
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: ipi_name_n
+    - rule_type: field
+      id: ipi_base_n
+    - rule_type: field
+      id: ip_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: ip_last_name
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: ip_writer_first_name
+    - rule_type: field
+      id: pr_society
+    - rule_type: field
+      id: pr_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: mr_society
+    - rule_type: field
+      id: mr_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sr_society
+    - rule_type: field
+      id: sr_share
+      modifiers:
+        - compulsory
 
 message:
   - group_type: sequence
-    fields:
-    - field: message_type
-    - field: original_record_sequence_n
-    - field: message_record_type
-    - field: message_level
-    - field: validation_n
-    - field: message_text
+    rules:
+    - rule_type: field
+      id: message_type
+    - rule_type: field
+      id: original_record_sequence_n
+    - rule_type: field
+      id: message_record_type
+    - rule_type: field
+      id: message_level
+    - rule_type: field
+      id: validation_n
+    - rule_type: field
+      id: message_text
 
 nra_agreement_party:
   - group_type: sequence
-    fields:
-    - field: ip_n
-    - field: ip_name
-      compulsory: true
-    - field: ip_writer_name
-      compulsory: true
-    - field: language_code
+    rules:
+    - rule_type: field
+      id: ip_n
+    - rule_type: field
+      id: ip_name
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: ip_writer_name
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: language_code
 
 nra_other_writer:
   - group_type: sequence
-    fields:
-    - field: writer_name
-    - field: writer_first_name_long
-    - field: language_code
-    - field: position
+    rules:
+    - rule_type: field
+      id: writer_name
+    - rule_type: field
+      id: writer_first_name_long
+    - rule_type: field
+      id: language_code
+    - rule_type: field
+      id: position
 
 nra_performance_data:
   - group_type: sequence
-    fields:
-    - field: performing_artist_name
-    - field: performing_artist_first_name_long
-    - field: performing_artist_ipi_name_n
-    - field: performing_artist_ipi_base_n
-    - field: language_code
-    - field: performance_language
-    - field: performance_dialect
+    rules:
+    - rule_type: field
+      id: performing_artist_name
+    - rule_type: field
+      id: performing_artist_first_name_long
+    - rule_type: field
+      id: performing_artist_ipi_name_n
+    - rule_type: field
+      id: performing_artist_ipi_base_n
+    - rule_type: field
+      id: language_code
+    - rule_type: field
+      id: performance_language
+    - rule_type: field
+      id: performance_dialect
 
 nra_publisher_name:
   - group_type: sequence
-    fields:
-    - field: publisher_sequence_n
-    - field: ip_n
-      compulsory: true
-    - field: publisher_name_long
-      compulsory: true
-    - field: language_code
+    rules:
+    - rule_type: field
+      id: publisher_sequence_n
+    - rule_type: field
+      id: ip_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: publisher_name_long
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: language_code
 
 nra_title:
   - group_type: sequence
-    fields:
-    - field: title
-    - field: title_type
-    - field: language_code
+    rules:
+    - rule_type: field
+      id: title
+    - rule_type: field
+      id: title_type
+    - rule_type: field
+      id: language_code
 
 nra_work:
   - group_type: sequence
-    fields:
-    - field: title
-    - field: language_code
+    rules:
+    - rule_type: field
+      id: title
+    - rule_type: field
+      id: language_code
 
 nra_writer_name:
   - group_type: sequence
-    fields:
-    - field: ip_n
-    - field: writer_last_name_long
-    - field: writer_first_name_long
-    - field: language_code
+    rules:
+    - rule_type: field
+      id: ip_n
+    - rule_type: field
+      id: writer_last_name_long
+    - rule_type: field
+      id: writer_first_name_long
+    - rule_type: field
+      id: language_code
 
 original_work_title:
   - group_type: sequence
-    fields:
-    - field: original_title
-    - field: iswc
-    - field: language_code
-    - field: writer_1_last_name
-    - field: writer_1_first_name
-    - field: source
-    - field: writer_1_ipi_name_n
-    - field: writer_1_ipi_base_n
-    - field: writer_2_last_name
-    - field: writer_2_first_name
-    - field: writer_2_ipi_name_n
-    - field: writer_2_ipi_base_n
-    - field: submitter_work_n
+    rules:
+    - rule_type: field
+      id: original_title
+    - rule_type: field
+      id: iswc
+    - rule_type: field
+      id: language_code
+    - rule_type: field
+      id: writer_1_last_name
+    - rule_type: field
+      id: writer_1_first_name
+    - rule_type: field
+      id: source
+    - rule_type: field
+      id: writer_1_ipi_name_n
+    - rule_type: field
+      id: writer_1_ipi_base_n
+    - rule_type: field
+      id: writer_2_last_name
+    - rule_type: field
+      id: writer_2_first_name
+    - rule_type: field
+      id: writer_2_ipi_name_n
+    - rule_type: field
+      id: writer_2_ipi_base_n
+    - rule_type: field
+      id: submitter_work_n
 
 performing_artist:
   - group_type: sequence
-    fields:
-    - field: performing_artist_last_name
-    - field: performing_artist_first_name
-    - field: performing_artist_ipi_name_n
-    - field: performing_artist_ipi_base_n
+    rules:
+    - rule_type: field
+      id: performing_artist_last_name
+    - rule_type: field
+      id: performing_artist_first_name
+    - rule_type: field
+      id: performing_artist_ipi_name_n
+    - rule_type: field
+      id: performing_artist_ipi_base_n
 
 publisher:
   - group_type: sequence
-    fields:
-    - field: publisher_sequence_n
-      compulsory: true
-    - field: ip_n
-    - field: publisher_name
-    - field: publisher_unknown
-    - field: publisher_type
-    - field: tax_id
-    - field: ipi_name_n
-    - field: submitter_agreement_n
-    - field: pr_society
-    - field: pr_ownership_share
-      compulsory: true
-    - field: mr_society
-    - field: mr_ownership_share
-      compulsory: true
-    - field: sr_society
-    - field: sr_ownership_share
-      compulsory: true
-    - field: special_agreements
-    - field: first_recording_refusal
-    - field: blank
-    - field: ipi_base_n
-    - field: international_standard_code
-    - field: society_assigned_agreement_n
-    - field: agreement_type
-    - field: usa_license
+    rules:
+    - rule_type: field
+      id: publisher_sequence_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: ip_n
+    - rule_type: field
+      id: publisher_name
+    - rule_type: field
+      id: publisher_unknown
+    - rule_type: field
+      id: publisher_type
+    - rule_type: field
+      id: tax_id
+    - rule_type: field
+      id: ipi_name_n
+    - rule_type: field
+      id: submitter_agreement_n
+    - rule_type: field
+      id: pr_society
+    - rule_type: field
+      id: pr_ownership_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: mr_society
+    - rule_type: field
+      id: mr_ownership_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sr_society
+    - rule_type: field
+      id: sr_ownership_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: special_agreements
+    - rule_type: field
+      id: first_recording_refusal
+    - rule_type: field
+      id: blank
+    - rule_type: field
+      id: ipi_base_n
+    - rule_type: field
+      id: international_standard_code
+    - rule_type: field
+      id: society_assigned_agreement_n
+    - rule_type: field
+      id: agreement_type
+    - rule_type: field
+      id: usa_license
 
 publisher_territory:
   - group_type: sequence
-    fields:
-    - field: ip_n
-      compulsory: true
-    - field: constant
-    - field: pr_collection_share
-    - field: mr_collection_share
-    - field: sr_collection_share
-    - field: inclusion_exclusion_indicator
-    - field: tis_numeric_code
-    - field: shares_change
-    - field: sequence_n
+    rules:
+    - rule_type: field
+      id: ip_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: constant
+    - rule_type: field
+      id: pr_collection_share
+    - rule_type: field
+      id: mr_collection_share
+    - rule_type: field
+      id: sr_collection_share
+    - rule_type: field
+      id: inclusion_exclusion_indicator
+    - rule_type: field
+      id: tis_numeric_code
+    - rule_type: field
+      id: shares_change
+    - rule_type: field
+      id: sequence_n
 
 recording_detail:
   - group_type: sequence
-    fields:
-    - field: first_release_date
-    - field: constant_1
-    - field: first_release_duration
-    - field: constant_2
-    - field: first_album_title
-    - field: first_album_label
-    - field: first_release_catalog_n
-    - field: ean13
-    - field: isrc
-    - field: recording_format
-    - field: recording_technique
-    - field: media_type
+    rules:
+    - rule_type: field
+      id: first_release_date
+    - rule_type: field
+      id: constant_1
+    - rule_type: field
+      id: first_release_duration
+    - rule_type: field
+      id: constant_2
+    - rule_type: field
+      id: first_album_title
+    - rule_type: field
+      id: first_album_label
+    - rule_type: field
+      id: first_release_catalog_n
+    - rule_type: field
+      id: ean13
+    - rule_type: field
+      id: isrc
+    - rule_type: field
+      id: recording_format
+    - rule_type: field
+      id: recording_technique
+    - rule_type: field
+      id: media_type
 
 territory_in_agreement:
   - group_type: sequence
-    fields:
-    - field: inclusion_exclusion_indicator
-    - field: tis_numeric_code
+    rules:
+    - rule_type: field
+      id: inclusion_exclusion_indicator
+    - rule_type: field
+      id: tis_numeric_code
 
 transmission_header:
   - group_type: sequence
-    fields:
-    - field: sender_type
-      compulsory: true
-    - field: sender_id
-      compulsory: true
-    - field: sender_name
-      compulsory: true
-    - field: edi_standard
-      compulsory: true
-    - field: creation_date_time
-      compulsory: true
-    - field: transmission_date
-      compulsory: true
-    - field: character_set
+    rules:
+    - rule_type: field
+      id: sender_type
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sender_id
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sender_name
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: edi_standard
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: creation_date_time
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: transmission_date
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: character_set
 
 transmission_trailer:
   - group_type: sequence
-    fields:
-    - field: group_count
-      compulsory: true
-    - field: transaction_count
-      compulsory: true
-    - field: record_count
-      compulsory: true
+    rules:
+    - rule_type: field
+      id: group_count
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: transaction_count
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: record_count
+      modifiers:
+        - compulsory
 
 work:
   - group_type: sequence
-    fields:
-    - field: work_title
-      compulsory: true
-    - field: language_code
-    - field: submitter_work_n
-      compulsory: true
-    - field: iswc
-    - field: copyright_date
-    - field: copyright_number
-    - field: musical_work_distribution_category
-      compulsory: true
-    - field: duration
-    - field: recorded_indicator
-    - field: text_music_relationship
-      compulsory: true
-    - field: composite_type
-    - field: version_type
-      compulsory: true
-    - field: excerpt_type
-    - field: music_arrangement
-    - field: lyric_adaptation
-    - field: contact_name
-    - field: contact_id
-    - field: work_type
-    - field: grand_rights_indicator
-    - field: composite_component_count
-    - field: date_publication_printed_edition
-    - field: exceptional_clause
-    - field: opus_number
-    - field: catalogue_number
-    - field: priority_flag
+    rules:
+    - rule_type: field
+      id: work_title
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: language_code
+    - rule_type: field
+      id: submitter_work_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: iswc
+    - rule_type: field
+      id: copyright_date
+    - rule_type: field
+      id: copyright_number
+    - rule_type: field
+      id: musical_work_distribution_category
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: duration
+    - rule_type: field
+      id: recorded_indicator
+    - rule_type: field
+      id: text_music_relationship
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: composite_type
+    - rule_type: field
+      id: version_type
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: excerpt_type
+    - rule_type: field
+      id: music_arrangement
+    - rule_type: field
+      id: lyric_adaptation
+    - rule_type: field
+      id: contact_name
+    - rule_type: field
+      id: contact_id
+    - rule_type: field
+      id: work_type
+    - rule_type: field
+      id: grand_rights_indicator
+    - rule_type: field
+      id: composite_component_count
+    - rule_type: field
+      id: date_publication_printed_edition
+    - rule_type: field
+      id: exceptional_clause
+    - rule_type: field
+      id: opus_number
+    - rule_type: field
+      id: catalogue_number
+    - rule_type: field
+      id: priority_flag
 
 work_alternate_title:
   - group_type: sequence
-    fields:
-    - field: alternate_title
-    - field: title_type
-    - field: language_code
+    rules:
+    - rule_type: field
+      id: alternate_title
+    - rule_type: field
+      id: title_type
+    - rule_type: field
+      id: language_code
 
 work_conflict:
   - group_type: sequence
-    fields:
-    - field: work_title
-    - field: language_code
-    - field: submitter_work_n
-    - field: iswc
-    - field: copyright_date
-    - field: copyright_number
-    - field: musical_work_distribution_category
-      compulsory: true
-    - field: duration
-    - field: recorded_indicator
-    - field: text_music_relationship
-      compulsory: true
-    - field: composite_type
-    - field: version_type
-      compulsory: true
-    - field: excerpt_type
-      compulsory: true
-    - field: music_arrangement
-    - field: lyric_adaptation
-    - field: contact_name
-    - field: contact_id
-    - field: work_type
-    - field: grand_rights_indicator
-    - field: composite_component_count
-    - field: date_publication_printed_edition
-    - field: exceptional_clause
-    - field: opus_number
-    - field: catalogue_number
-    - field: priority_flag
+    rules:
+    - rule_type: field
+      id: work_title
+    - rule_type: field
+      id: language_code
+    - rule_type: field
+      id: submitter_work_n
+    - rule_type: field
+      id: iswc
+    - rule_type: field
+      id: copyright_date
+    - rule_type: field
+      id: copyright_number
+    - rule_type: field
+      id: musical_work_distribution_category
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: duration
+    - rule_type: field
+      id: recorded_indicator
+    - rule_type: field
+      id: text_music_relationship
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: composite_type
+    - rule_type: field
+      id: version_type
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: excerpt_type
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: music_arrangement
+    - rule_type: field
+      id: lyric_adaptation
+    - rule_type: field
+      id: contact_name
+    - rule_type: field
+      id: contact_id
+    - rule_type: field
+      id: work_type
+    - rule_type: field
+      id: grand_rights_indicator
+    - rule_type: field
+      id: composite_component_count
+    - rule_type: field
+      id: date_publication_printed_edition
+    - rule_type: field
+      id: exceptional_clause
+    - rule_type: field
+      id: opus_number
+    - rule_type: field
+      id: catalogue_number
+    - rule_type: field
+      id: priority_flag
 
 work_origin:
   - group_type: sequence
-    fields:
-    - field: intended_purpose
-    - field: production_title
-    - field: cd_identifier
-    - field: cut_number
-    - field: library
-    - field: bltvr
-    - field: visan
-    - field: production_n
-    - field: episode_title
-    - field: episode_n
-    - field: year_production
-    - field: audio_visual_key
+    rules:
+    - rule_type: field
+      id: intended_purpose
+    - rule_type: field
+      id: production_title
+    - rule_type: field
+      id: cd_identifier
+    - rule_type: field
+      id: cut_number
+    - rule_type: field
+      id: library
+    - rule_type: field
+      id: bltvr
+    - rule_type: field
+      id: visan
+    - rule_type: field
+      id: production_n
+    - rule_type: field
+      id: episode_title
+    - rule_type: field
+      id: episode_n
+    - rule_type: field
+      id: year_production
+    - rule_type: field
+      id: audio_visual_key
 
 writer:
   - group_type: sequence
-    fields:
-    - field: ip_n
-    - field: writer_last_name
-    - field: writer_first_name
-    - field: writer_unknown
-    - field: writer_designation
-    - field: tax_id
-    - field: ipi_name_n
-    - field: pr_society
-    - field: pr_ownership_share
-      compulsory: true
-    - field: mr_society
-    - field: mr_ownership_share
-      compulsory: true
-    - field: sr_society
-    - field: sr_ownership_share
-      compulsory: true
-    - field: reversionary
-    - field: first_recording_refusal
-    - field: work_for_hire
-    - field: filler
-    - field: ipi_base_n
-    - field: personal_number
-    - field: usa_license
+    rules:
+    - rule_type: field
+      id: ip_n
+    - rule_type: field
+      id: writer_last_name
+    - rule_type: field
+      id: writer_first_name
+    - rule_type: field
+      id: writer_unknown
+    - rule_type: field
+      id: writer_designation
+    - rule_type: field
+      id: tax_id
+    - rule_type: field
+      id: ipi_name_n
+    - rule_type: field
+      id: pr_society
+    - rule_type: field
+      id: pr_ownership_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: mr_society
+    - rule_type: field
+      id: mr_ownership_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: sr_society
+    - rule_type: field
+      id: sr_ownership_share
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: reversionary
+    - rule_type: field
+      id: first_recording_refusal
+    - rule_type: field
+      id: work_for_hire
+    - rule_type: field
+      id: filler
+    - rule_type: field
+      id: ipi_base_n
+    - rule_type: field
+      id: personal_number
+    - rule_type: field
+      id: usa_license
 
 writer_publisher:
   - group_type: sequence
-    fields:
-    - field: publisher_ip_n
-    - field: publisher_name
-    - field: submitter_agreement_n
-      compulsory: true
-    - field: society_assigned_agreement_n
-    - field: writer_ip_n
+    rules:
+    - rule_type: field
+      id: publisher_ip_n
+    - rule_type: field
+      id: publisher_name
+    - rule_type: field
+      id: submitter_agreement_n
+      modifiers:
+        - compulsory
+    - rule_type: field
+      id: society_assigned_agreement_n
+    - rule_type: field
+      id: writer_ip_n
 
 writer_territory:
   - group_type: sequence
-    fields:
-    - field: ip_n
-    - field: pr_collection_share
-    - field: mr_collection_share
-    - field: sr_collection_share
-    - field: inclusion_exclusion_indicator
-    - field: tis_numeric_code
-    - field: shares_change
-    - field: sequence_n
+    rules:
+    - rule_type: field
+      id: ip_n
+    - rule_type: field
+      id: pr_collection_share
+    - rule_type: field
+      id: mr_collection_share
+    - rule_type: field
+      id: sr_collection_share
+    - rule_type: field
+      id: inclusion_exclusion_indicator
+    - rule_type: field
+      id: tis_numeric_code
+    - rule_type: field
+      id: shares_change
+    - rule_type: field
+      id: sequence_n

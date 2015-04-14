@@ -8,7 +8,7 @@ from cwr.parser.common import Decoder
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import PrefixBuilder, DefaultRecordFactory
+from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
 
 
 """
@@ -50,7 +50,7 @@ class CWRFileNameDecoder(Decoder):
 
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-        _prefixer = PrefixBuilder(_config.record_types())
+        _prefixer = DefaultPrefixBuilder(_config.record_types())
         _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
 
         self._filename_decoder_old = GrammarDecoder(_factory_record.get_record('filename_old'))

@@ -9,7 +9,7 @@ from cwr.transmission import Transmission
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import PrefixBuilder, DefaultRecordFactory
+from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
 from cwr.grammar.factory.transaction import DefaultTransactionFactory
 
 
@@ -31,7 +31,7 @@ _data.update(_config.load_field_config('common'))
 
 _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-_prefixer = PrefixBuilder(_config.record_types())
+_prefixer = DefaultPrefixBuilder(_config.record_types())
 _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
 
@@ -41,7 +41,7 @@ Fields.
 
 group_transactions = pp.OneOrMore(
     pp.Group(_factory_transaction.get_transaction('agreement_transaction') |
-             _factory_transaction.get_transaction('work_transaction')| \
+             _factory_transaction.get_transaction('work_transaction') | \
              transaction.acknowledgement_transaction))
 group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
 

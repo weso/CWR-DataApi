@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 import logging
 
 import pyparsing as pp
 
 from cwr.grammar.field import record as field_record
 from cwr.parser.dictionary import *
+from cwr.grammar.factory.rule import RuleFactory, DefaultGroupRuleFactory
 
 
 """
@@ -22,7 +23,7 @@ Configuration classes.
 """
 
 
-class PrefixBuilder(object):
+class DefaultPrefixBuilder(object):
     def __init__(self, config):
         self._config = config
 
@@ -49,11 +50,12 @@ class RecordFactory(object):
     def __init__(self):
         pass
 
+    @abstractmethod
     def get_record(self, id):
         raise NotImplementedError("The get_record method is not implemented")
 
 
-class DefaultRecordFactory(RecordFactory):
+class DefaultRecordFactory(RecordFactory, RuleFactory):
     """
     Factory for acquiring record rules.
     """
@@ -78,6 +80,10 @@ class DefaultRecordFactory(RecordFactory):
         self._prefixer = prefixer
         # Dictionary decoders
         self._decoders = {}
+
+        factories = {'field': self}
+        # TODO: This should not be stored inside this factory
+        self._group_rule_factory = DefaultGroupRuleFactory(factories)
 
         # TODO: Do this somewhere else
         self._decoders['acknowledgement'] = AcknowledgementDictionaryDecoder()
@@ -135,58 +141,12 @@ class DefaultRecordFactory(RecordFactory):
 
         return record.setResultsName(id)
 
+    def get_rule(self, id, modifiers):
+        compulsory = 'compulsory' in modifiers
+
+        return self._field_factory.get_field(id, compulsory=compulsory)
+
     def _build_record(self, id):
         record_config = self._record_configs[id]
 
-        record = None
-
-        for group_data in record_config:
-            group = self._get_group(group_data)
-
-            if record is None:
-                record = group
-            else:
-                record += group
-
-        return record
-
-    def _get_group(self, group_data):
-        group = None
-
-        if group_data['group_type'] == 'sequence':
-            group = self._get_sequence(group_data)
-        elif group_data['group_type'] == 'option':
-            group = self._get_option(group_data)
-
-        return group
-
-    def _get_sequence(self, group):
-        sequence = None
-
-        for field in group['fields']:
-            if 'compulsory' in field:
-                compulsory = field['compulsory']
-            else:
-                compulsory = False
-
-            field = self._field_factory.get_field(field['field'], compulsory=compulsory)
-
-            if sequence is None:
-                sequence = field
-            else:
-                sequence += field
-
-        return sequence
-
-    def _get_option(self, group):
-        options = None
-
-        for group_data in group['fields']:
-            group = self._get_group(group_data)
-
-            if options is None:
-                options = group
-            else:
-                options = options | group
-
-        return options
+        return self._group_rule_factory.get_rule_group(record_config)

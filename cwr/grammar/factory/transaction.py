@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 
 import pyparsing as pp
 
@@ -20,8 +20,9 @@ class TransactionFactory(object):
     def __init__(self):
         pass
 
+    @abstractmethod
     def get_transaction(self, id):
-        pass
+        raise NotImplementedError("The get_transaction method is not implemented")
 
 
 class DefaultTransactionFactory(TransactionFactory):
