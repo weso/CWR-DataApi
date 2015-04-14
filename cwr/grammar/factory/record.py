@@ -81,7 +81,7 @@ class DefaultRecordFactory(RecordFactory, RuleFactory):
         # Dictionary decoders
         self._decoders = {}
 
-        factories = {'field': self}
+        factories = {'field': field_factory}
         # TODO: This should not be stored inside this factory
         self._group_rule_factory = DefaultGroupRuleFactory(factories)
 
@@ -123,17 +123,21 @@ class DefaultRecordFactory(RecordFactory, RuleFactory):
         self._decoders['filename_old'] = FileTagDictionaryDecoder()
 
     def get_record(self, id):
-
         record = self._build_record(id)
 
         prefix = self._prefixer.get_prefix(id, self._field_factory)
 
         if prefix is not None:
-            record = prefix + record
+            rule = prefix
+            rule += record
 
-        record = self._lineStart + \
-                 record + \
-                 self._lineEnd
+            record = rule
+
+        rule = self._lineStart
+        rule += record
+        rule += self._lineEnd
+
+        record = rule
 
         if id in self._decoders:
             decoder = self._decoders[id]
@@ -142,9 +146,7 @@ class DefaultRecordFactory(RecordFactory, RuleFactory):
         return record.setResultsName(id)
 
     def get_rule(self, id, modifiers):
-        compulsory = 'compulsory' in modifiers
-
-        return self._field_factory.get_field(id, compulsory=compulsory)
+        return self.get_record(id)
 
     def _build_record(self, id):
         record_config = self._record_configs[id]

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+from cwr.grammar.factory.rule import DefaultGroupRuleFactory, RuleFactory
 
 import pyparsing as pp
 
@@ -25,7 +26,7 @@ class TransactionFactory(object):
         raise NotImplementedError("The get_transaction method is not implemented")
 
 
-class DefaultTransactionFactory(TransactionFactory):
+class DefaultTransactionFactory(TransactionFactory, RuleFactory):
     """
     Factory for acquiring record rules.
     """
@@ -35,30 +36,15 @@ class DefaultTransactionFactory(TransactionFactory):
         self._record_factory = record_factory
         self._transaction_configs = transaction_configs
 
+        factories = {'record': record_factory, 'transaction': self}
+        # TODO: This should not be stored inside this factory
+        self._group_rule_factory = DefaultGroupRuleFactory(factories)
+
     def get_transaction(self, id):
         transaction_config = self._transaction_configs[id]
-        transaction = None
+        transactions = self._group_rule_factory.get_rule_group(transaction_config)
 
-        for group_data in transaction_config:
+        return transactions
 
-            if 'record' in group_data:
-                entry = self._record_factory.get_record(group_data['record'])
-            elif 'transaction' in group_data:
-                entry = self.get_transaction(group_data['transaction'])
-
-            # TODO: Use a class to handle these rules
-            if 'at_least_one' in group_data and group_data['at_least_one']:
-                entry = pp.OneOrMore(entry)
-
-            if 'at_least_two' in group_data and group_data['at_least_two']:
-                entry = (entry * 2) + pp.ZeroOrMore(entry)
-
-            if 'optional' in group_data and group_data['optional']:
-                entry = pp.Optional(entry)
-
-            if not transaction:
-                transaction = entry
-            else:
-                transaction = transaction + entry
-
-        return transaction
+    def get_rule(self, id, modifiers):
+        return self.get_transaction(id)

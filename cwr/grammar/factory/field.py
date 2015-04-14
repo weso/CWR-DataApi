@@ -4,6 +4,7 @@ import logging
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.adapter import *
+from cwr.grammar.factory.rule import RuleFactory
 
 
 """
@@ -78,7 +79,7 @@ class FieldFactory(object):
         raise NotImplementedError("The create_field method is not implemented")
 
 
-class OptionFieldFactory(FieldFactory):
+class OptionFieldFactory(FieldFactory, RuleFactory):
     """
     Factory for acquiring field rules where those rules can be optional.
 
@@ -194,6 +195,11 @@ class DefaultFieldFactory(OptionFieldFactory):
             self._actions = DefaultActionsSource()
         else:
             self._actions = actions
+
+    def get_rule(self, id, modifiers):
+        compulsory = 'compulsory' in modifiers
+
+        return self.get_field(id, compulsory=compulsory)
 
     def create_field(self, id, config):
         """

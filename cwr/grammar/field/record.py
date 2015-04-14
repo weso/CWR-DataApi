@@ -51,9 +51,10 @@ def record_prefix(required_type, factory):
     :param factory: field factory
     :return: the record prefix
     """
-    field = record_type(required_type) + \
-            factory.get_field('transaction_sequence_n') + \
-            factory.get_field('record_sequence_n')
+    field = record_type(required_type)
+    field += factory.get_field('transaction_sequence_n')
+    field += factory.get_field('record_sequence_n')
+
     field.leaveWhitespace()
 
     return field

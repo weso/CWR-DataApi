@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import pyparsing as pp
 
 """
 Rules factories.
@@ -71,6 +72,14 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
                 modifiers = []
 
             rule = self.rule_factories[rule_data['rule_type']].get_rule(rule_data['id'], modifiers)
+
+            if 'at_least_one' in modifiers:
+                rule = pp.OneOrMore(rule)
+            elif 'at_least_two' in modifiers:
+                rule = (rule * 2) + pp.ZeroOrMore(rule)
+
+            if 'optional' in modifiers:
+                rule = pp.Optional(rule)
 
             if sequence is None:
                 sequence = rule
