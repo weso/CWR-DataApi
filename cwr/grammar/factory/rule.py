@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+
 import pyparsing as pp
+
 
 """
 Rules factories.
@@ -48,7 +50,7 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
             if record is None:
                 record = group
             else:
-                record += group
+                record = pp.And([record, group])
 
         return record
 
@@ -63,7 +65,7 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
         return group
 
     def _get_sequence(self, group):
-        sequence = None
+        sequence = []
 
         for rule_data in group['rules']:
             if 'modifiers' in rule_data:
@@ -76,17 +78,14 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
             if 'at_least_one' in modifiers:
                 rule = pp.OneOrMore(rule)
             elif 'at_least_two' in modifiers:
-                rule = (rule * 2) + pp.ZeroOrMore(rule)
+                rule = pp.And([(rule * 2), pp.ZeroOrMore(rule)])
 
             if 'optional' in modifiers:
                 rule = pp.Optional(rule)
 
-            if sequence is None:
-                sequence = rule
-            else:
-                sequence += rule
+            sequence.append(rule)
 
-        return sequence
+        return pp.And(sequence)
 
     def _get_option(self, group):
         options = None
@@ -97,6 +96,6 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
             if options is None:
                 options = group
             else:
-                options = options | group
+                options = pp.MatchFirst([options, group])
 
         return options

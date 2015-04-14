@@ -55,6 +55,6 @@ def record_prefix(required_type, factory):
     field += factory.get_field('transaction_sequence_n')
     field += factory.get_field('record_sequence_n')
 
-    field.leaveWhitespace()
+    # field.leaveWhitespace()
 
     return field

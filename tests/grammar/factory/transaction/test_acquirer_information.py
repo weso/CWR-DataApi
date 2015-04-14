@@ -6,7 +6,6 @@ from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
 from cwr.grammar.factory.transaction import DefaultTransactionFactory
-from pyparsing import ParseException
 
 """
 CWR Acquirer Information grammar tests.
@@ -41,8 +40,6 @@ class TestAcquirerInformationValid(unittest.TestCase):
 
         record = ipa + '\n' + npa
 
-        print self.grammar
-
         result = self.grammar.parseString(record)
 
         self.assertEqual(2, len(result))
@@ -60,6 +57,7 @@ class TestAcquirerInformationValid(unittest.TestCase):
         self.assertEqual(1, len(result))
 
         self.assertEqual('IPA', result[0].record_type)
+
 
 class TestAcquirerInformationInvalid(unittest.TestCase):
     def setUp(self):

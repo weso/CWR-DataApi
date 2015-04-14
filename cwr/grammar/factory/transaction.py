@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-from cwr.grammar.factory.rule import DefaultGroupRuleFactory, RuleFactory
 
-import pyparsing as pp
+from cwr.grammar.factory.rule import DefaultGroupRuleFactory, RuleFactory
 
 
 """

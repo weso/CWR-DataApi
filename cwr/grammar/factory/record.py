@@ -123,21 +123,22 @@ class DefaultRecordFactory(RecordFactory, RuleFactory):
         self._decoders['filename_old'] = FileTagDictionaryDecoder()
 
     def get_record(self, id):
-        record = self._build_record(id)
+        sequence = []
+
+        sequence.append(self._lineStart)
 
         prefix = self._prefixer.get_prefix(id, self._field_factory)
 
         if prefix is not None:
-            rule = prefix
-            rule += record
+            sequence.append(prefix)
 
-            record = rule
+        record = self._build_record(id)
 
-        rule = self._lineStart
-        rule += record
-        rule += self._lineEnd
+        sequence.append(record)
 
-        record = rule
+        sequence.append(self._lineEnd)
+
+        record = pp.And(sequence)
 
         if id in self._decoders:
             decoder = self._decoders[id]
