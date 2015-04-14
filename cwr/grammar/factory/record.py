@@ -169,7 +169,7 @@ class DefaultRecordFactory(RecordFactory):
             else:
                 compulsory = False
 
-            field = self._field_factory.get_field(field['name'], compulsory=compulsory)
+            field = self._field_factory.get_field(field['field'], compulsory=compulsory)
 
             if sequence is None:
                 sequence = field

@@ -1,55 +1,55 @@
 filename_old:
   - group_type: sequence
     fields:
-    - name: header
+    - field: header
       compulsory: true
-    - name: year
+    - field: year
       compulsory: true
-    - name: sequence_n_old
+    - field: sequence_n_old
       compulsory: true
-    - name: sender
+    - field: sender
       compulsory: true
-    - name: delimiter_ip
+    - field: delimiter_ip
       compulsory: true
-    - name: receiver
+    - field: receiver
       compulsory: true
   - group_type: option
     fields:
     - group_type: sequence
       fields:
-      - name: delimiter_version
+      - field: delimiter_version
         compulsory: true
-      - name: version
+      - field: version
         compulsory: true
     - group_type: sequence
       fields:
-      - name: delimiter_zip
+      - field: delimiter_zip
         compulsory: true
 
 filename_new:
   - group_type: sequence
     fields:
-    - name: header
+    - field: header
       compulsory: true
-    - name: year
+    - field: year
       compulsory: true
-    - name: sequence_n_new
+    - field: sequence_n_new
       compulsory: true
-    - name: sender
+    - field: sender
       compulsory: true
-    - name: delimiter_ip
+    - field: delimiter_ip
       compulsory: true
-    - name: receiver
+    - field: receiver
       compulsory: true
   - group_type: option
     fields:
     - group_type: sequence
       fields:
-      - name: delimiter_version
+      - field: delimiter_version
         compulsory: true
-      - name: version
+      - field: version
         compulsory: true
     - group_type: sequence
       fields:
-      - name: delimiter_zip
+      - field: delimiter_zip
         compulsory: true
