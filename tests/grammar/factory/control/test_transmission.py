@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.transaction import file
+from tests.utils.grammar import getRecordGrammar
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestFileValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = file.cwr_transmission
+        self.grammar = getRecordGrammar('transmission')
 
     def test_empty_lines_end(self):
         record = _common()

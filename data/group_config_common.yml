@@ -1,3 +1,15 @@
+groups:
+  id: groups
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: group
+        id: group_info
+        modifiers:
+          - at_least_one
+          - grouped
+
 group_info:
   id: group_info
   rule_type: group
@@ -29,14 +41,15 @@ transactions:
         - at_least_one
         - grouped
 
-groups:
-  id: groups
+transmission:
+  id: transmission
   rule_type: group
   rules:
     - group_type: sequence
       rules:
+      - rule_type: record
+        id: transmission_header
       - rule_type: group
-        id: group_info
-        modifiers:
-          - at_least_one
-          - grouped
+        id: groups
+      - rule_type: record
+        id: transmission_trailer

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-from cwr.grammar.transaction.file import cwr_transmission as rule_file
 from cwr.file import CWRFile, FileTag
 from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
 from cwr.parser.common import Decoder
@@ -27,8 +26,23 @@ class CWRFileDecoder(Decoder):
 
     def __init__(self):
         super(CWRFileDecoder, self).__init__()
+
+        _config = CWRConfiguration()
+
+        _data = _config.load_field_config('table')
+        _data.update(_config.load_field_config('common'))
+        _data.update(_config.load_field_config('filename'))
+
+        _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
+
+        _rules = _config.load_transaction_config('common')
+        _rules.update(_config.load_record_config('common'))
+        _rules.update(_config.load_group_config('common'))
+
+        _group_rule_factory = DefaultRuleFactory(_rules, _factory_field)
+
         self._filename_decoder = CWRFileNameDecoder()
-        self._file_decoder = GrammarFileDecoder(rule_file)
+        self._file_decoder = GrammarFileDecoder(_group_rule_factory.get_rule('transmission'))
 
     def decode(self, path):
         filename = self._filename_decoder.decode(os.path.basename(path))

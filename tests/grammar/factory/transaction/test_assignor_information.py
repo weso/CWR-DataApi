@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getTransactionGrammar
+from tests.utils.grammar import getRecordGrammar
 
 """
 CWR Acquirer Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestAssignorInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getTransactionGrammar('ipa_information')
+        self.grammar = getRecordGrammar('ipa_information')
 
     def test_full(self):
         ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'

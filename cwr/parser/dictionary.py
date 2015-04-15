@@ -305,6 +305,14 @@ class RecordingDetailDictionaryDecoder(Decoder):
                                      media_type=data['media_type'])
 
 
+class TransmissionDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(TransmissionDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return Transmission(data['transmission_header'], data['transmission_trailer'], data['groups'])
+
+
 class TransmissionHeaderDictionaryDecoder(Decoder):
     def __init__(self):
         super(TransmissionHeaderDictionaryDecoder, self).__init__()

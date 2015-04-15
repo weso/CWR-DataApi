@@ -117,3 +117,29 @@ class RecordRuleDecorator(RuleDecorator):
             header = None
 
         return header
+
+
+class GroupRuleDecorator(RuleDecorator):
+    _lineStart = pp.lineStart.suppress()
+    _lineStart.setName("Start of line")
+
+    _lineEnd = pp.lineEnd.suppress()
+    _lineEnd.setName("End of line")
+
+    def __init__(self):
+        super(GroupRuleDecorator, self).__init__()
+
+        self._decoders = {}
+        # TODO: Do this somewhere else
+        self._decoders['transmission'] = TransmissionDictionaryDecoder()
+
+    def decorate(self, rule, data):
+        id = data['id']
+
+        record = rule
+
+        if id in self._decoders:
+            decoder = self._decoders[id]
+            record.setParseAction(lambda p: decoder.decode(p))
+
+        return record.setResultsName(id)

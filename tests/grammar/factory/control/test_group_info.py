@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.transaction import file
+from tests.utils.grammar import getRecordGrammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestGroupInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = file.group_info
+        self.grammar = self.grammar = getRecordGrammar('group_info')
 
     def test_agreement_min(self):
         header = 'GRHAGR0000102.100130400001  '
@@ -25,7 +25,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + _agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)[0]
+        result = self.grammar.parseString(record)
 
         transaction = result.transactions[0]
 
@@ -37,7 +37,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + _agreement_short() + '\n' + _agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)[0]
+        result = self.grammar.parseString(record)
 
         transaction = result.transactions[0]
 
@@ -54,7 +54,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + agreement_record_1 + '\n' + agreement_record_2 + '\n' + trailer
 
-        result = self.grammar.parseString(record)[0]
+        result = self.grammar.parseString(record)
 
         self.assertEqual('GRH', result.group_header.record_type)
 
@@ -102,7 +102,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
 class TestGroupInformationInvalid(unittest.TestCase):
     def setUp(self):
-        self.grammar = file.group_info
+        self.grammar = self.grammar = getRecordGrammar('group_info')
 
 
     def test_agreement_and_work(self):

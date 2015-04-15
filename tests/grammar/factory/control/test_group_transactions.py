@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from cwr.grammar.transaction import file
+from tests.utils.grammar import getRecordGrammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestTransactionInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = file.group_transactions
+        self.grammar = getRecordGrammar('transactions')
 
     def test_agreement_two(self):
         record = _agreement_full() + '\n' + _agreement_full()
@@ -238,7 +238,7 @@ class TestTransactionInformationValid(unittest.TestCase):
 
 class TestTransactionInformationInvalid(unittest.TestCase):
     def setUp(self):
-        self.grammar = file.group_transactions
+        self.grammar = getRecordGrammar('transactions')
 
 
     def test_agreement_and_work(self):

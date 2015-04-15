@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getTransactionGrammar
+from tests.utils.grammar import getRecordGrammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestSubpublisherInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getTransactionGrammar('subpublisher_information')
+        self.grammar = getRecordGrammar('subpublisher_information')
 
     def test_valid_full(self):
         publisher = 'SPU000012340000002319A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'
