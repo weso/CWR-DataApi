@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -20,7 +20,7 @@ class TestWorkValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('work')
+        self.grammar = getRecordGrammar('work')
 
     def test_valid_common(self):
         record = 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y'
@@ -157,7 +157,7 @@ class TestWorkException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('work')
+        self.grammar = getRecordGrammar('work')
 
     def test_ser_no_duration(self):
         """

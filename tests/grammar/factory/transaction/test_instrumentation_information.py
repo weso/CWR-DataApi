@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getTransactionGrammar
 
 """
 CWR Instrumentation Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestInstrumentationInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getCommonGrammar('instrumentation_information')
+        self.grammar = getTransactionGrammar('instrumentation_information')
 
     def test_valid_full(self):
         summary = 'INS0000123400000023012BBADESCRIPTION                                       '

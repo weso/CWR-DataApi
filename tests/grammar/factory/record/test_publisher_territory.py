@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -22,7 +22,7 @@ class TestNPNGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('publisher_territory')
+        self.grammar = getRecordGrammar('publisher_territory')
 
     def test_valid_common(self):
         """

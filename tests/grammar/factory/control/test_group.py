@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 """
 CWR group grammar tests.
@@ -21,7 +21,7 @@ class TestGrammarGroupHeader(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('group_header')
+        self.grammar = getRecordGrammar('group_header')
 
     def test_valid_full(self):
         """
@@ -62,7 +62,7 @@ class TestGrammarGroupTrailer(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('group_trailer')
+        self.grammar = getRecordGrammar('group_trailer')
 
     def test_valid_full(self):
         """
@@ -86,7 +86,7 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('group_header')
+        self.grammar = getRecordGrammar('group_header')
 
     def test_invalid_wrong_group_id(self):
         """
@@ -104,7 +104,7 @@ class TestGrammarGroupTrailerException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('group_trailer')
+        self.grammar = getRecordGrammar('group_trailer')
 
     def test_invalid_wrong_group_id(self):
         """

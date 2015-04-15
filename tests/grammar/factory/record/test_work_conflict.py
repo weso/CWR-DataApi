@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -20,7 +20,7 @@ class TestWorkValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('work_conflict')
+        self.grammar = getRecordGrammar('work_conflict')
 
     def test_valid_full(self):
         """

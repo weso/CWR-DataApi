@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -22,7 +22,7 @@ class TestIPAGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('interested_party_agreement')
+        self.grammar = getRecordGrammar('interested_party_agreement')
 
     def test_valid_common(self):
         """
@@ -135,7 +135,7 @@ class TestIPAGrammar(unittest.TestCase):
 
 class TestIPAGrammarException(unittest.TestCase):
     def setUp(self):
-        self.grammar = getCommonGrammar('interested_party_agreement')
+        self.grammar = getRecordGrammar('interested_party_agreement')
 
     def test_acquiror_missing_shares(self):
         """

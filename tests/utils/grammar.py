@@ -4,6 +4,7 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
+from cwr.grammar.factory.transaction import DefaultTransactionFactory
 
 """
 Grammar utilities for the test classes.
@@ -15,7 +16,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-def getCommonGrammar(id):
+def getRecordGrammar(id):
     _config = CWRConfiguration()
 
     _data = _config.load_field_config('table')
@@ -27,6 +28,21 @@ def getCommonGrammar(id):
     _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
 
     return _factory_record.get_record(id)
+
+
+def getTransactionGrammar(id):
+    _config = CWRConfiguration()
+
+    _data = _config.load_field_config('table')
+    _data.update(_config.load_field_config('common'))
+
+    _factory_field = DefaultFieldFactory(_data, CWRTables())
+
+    _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
+    _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+    _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
+
+    return _factory_transaction.get_transaction(id)
 
 
 def getFilenameGrammar(id):

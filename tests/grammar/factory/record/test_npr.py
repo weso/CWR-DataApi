@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestNPRGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getCommonGrammar('nra_performance_data')
+        self.grammar = getRecordGrammar('nra_performance_data')
 
     def test_valid_full(self):
         """

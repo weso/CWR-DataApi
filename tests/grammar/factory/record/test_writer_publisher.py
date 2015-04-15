@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -22,7 +22,7 @@ class TestWriterPublisherGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getCommonGrammar('writer_publisher')
+        self.grammar = getRecordGrammar('writer_publisher')
 
     def test_valid_full(self):
         """

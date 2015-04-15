@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getTransactionGrammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestAcknowledgementTransactionValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getCommonGrammar('acknowledgement_transaction')
+        self.grammar = getTransactionGrammar('acknowledgement_transaction')
 
     def test_agreement_full(self):
         acknowledgement = 'ACK0000123400000023201201021020300123401234567AGRTHE CREATION TITLE                                          ABCD1234512345123456ABCD123451234512345720130203AS'

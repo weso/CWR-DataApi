@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestGroupHeaderGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getCommonGrammar('group_header')
+        self.grammar = getRecordGrammar('group_header')
 
     def test_valid_full(self):
         record = 'GRHAGR0000102.100130400001  '

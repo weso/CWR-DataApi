@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getCommonGrammar
+from tests.utils.grammar import getTransactionGrammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestTerritoryInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getCommonGrammar('territory_information')
+        self.grammar = getTransactionGrammar('territory_information')
 
     def test_valid_full(self):
         territory_1 = 'TER0000123400000023I0020'
