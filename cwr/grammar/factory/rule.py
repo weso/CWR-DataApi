@@ -29,7 +29,7 @@ class TerminalRuleFactory(object):
         raise NotImplementedError("The is_terminal method is not implemented")
 
 
-class GroupRuleFactory(object):
+class RuleFactory(object):
     __metaclass__ = ABCMeta
 
     def __init__(self):
@@ -40,9 +40,9 @@ class GroupRuleFactory(object):
         raise NotImplementedError("The get_rule_group method is not implemented")
 
 
-class DefaultGroupRuleFactory(GroupRuleFactory):
+class DefaultRuleFactory(RuleFactory):
     def __init__(self, record_configs, terminal_rule_factory, decorators=None):
-        super(DefaultGroupRuleFactory, self).__init__()
+        super(DefaultRuleFactory, self).__init__()
         # Configuration for creating the record
         self._record_configs = record_configs
         self._terminal_rule_factory = terminal_rule_factory

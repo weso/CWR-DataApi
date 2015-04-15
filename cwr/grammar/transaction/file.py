@@ -9,7 +9,7 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import RecordRuleDecorator
-from cwr.grammar.factory.rule import DefaultGroupRuleFactory
+from cwr.grammar.factory.rule import DefaultRuleFactory
 
 
 """
@@ -34,7 +34,7 @@ _rules = _config.load_transaction_config('common')
 _rules.update(_config.load_record_config('common'))
 
 _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
-_group_rule_factory = DefaultGroupRuleFactory(_rules, _factory_field, _decorators)
+_group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 
 """
 Fields.

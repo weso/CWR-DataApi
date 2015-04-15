@@ -4,7 +4,7 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import RecordRuleDecorator
-from cwr.grammar.factory.rule import DefaultGroupRuleFactory
+from cwr.grammar.factory.rule import DefaultRuleFactory
 
 """
 Grammar utilities for the test classes.
@@ -25,7 +25,7 @@ def getRecordGrammar(id):
     _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
     _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
-    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('common'), _factory_field, _decorators)
+    _group_rule_factory = DefaultRuleFactory(_config.load_record_config('common'), _factory_field, _decorators)
 
     return _group_rule_factory.get_rule(id)
 
@@ -42,7 +42,7 @@ def getTransactionGrammar(id):
     _rules.update(_config.load_record_config('common'))
 
     _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
-    _group_rule_factory = DefaultGroupRuleFactory(_rules, _factory_field, _decorators)
+    _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 
     return _group_rule_factory.get_rule(id)
 
@@ -56,6 +56,6 @@ def getFilenameGrammar(id):
 
     _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
-    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factory_field)
+    _group_rule_factory = DefaultRuleFactory(_config.load_record_config('filename'), _factory_field)
 
     return _group_rule_factory.get_rule(id)
