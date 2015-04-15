@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
+from tests.utils.grammar import getCommonGrammar
 
 """
 CWR acknowledgement grammar tests.
@@ -20,17 +17,7 @@ __status__ = 'Development'
 
 class TestAcknowledgementAgreementValid(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('acknowledgement')
+        self.grammar = getCommonGrammar('acknowledgement')
 
     def test_valid_full(self):
         """
@@ -95,17 +82,7 @@ class TestAcknowledgementAgreementValid(unittest.TestCase):
 
 class TestAcknowledgementAgreementException(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('acknowledgement')
+        self.grammar = getCommonGrammar('acknowledgement')
 
     def test_nwr_missing_title(self):
         """

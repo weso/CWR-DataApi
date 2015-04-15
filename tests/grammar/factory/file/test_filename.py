@@ -4,10 +4,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
+from tests.utils.grammar import getFilenameGrammar
 
 """
 CWR file name grammar tests.
@@ -27,18 +24,7 @@ class TestFileNameValid(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-        _data.update(_config.load_field_config('filename'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('filename_new')
+        self.grammar = getFilenameGrammar('filename_new')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -87,18 +73,7 @@ class TestFileNameValidOld(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-        _data.update(_config.load_field_config('filename'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('filename_old')
+        self.grammar = getFilenameGrammar('filename_old')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -147,18 +122,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-        _data.update(_config.load_field_config('filename'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('filename_new')
+        self.grammar = getFilenameGrammar('filename_new')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -207,18 +171,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-        _data.update(_config.load_field_config('filename'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('filename_old')
+        self.grammar = getFilenameGrammar('filename_old')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -263,18 +216,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
 
 class TestFileNameException(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-        _data.update(_config.load_field_config('filename'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('filename_new')
+        self.grammar = getFilenameGrammar('filename_new')
 
     def test_empty(self):
         self.assertRaises(ParseException, self.grammar.parseString, '')
@@ -294,18 +236,7 @@ class TestFileNameException(unittest.TestCase):
 
 class TestFileNameOldException(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-        _data.update(_config.load_field_config('filename'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('filename_old')
+        self.grammar = getFilenameGrammar('filename_old')
 
     def test_empty(self):
         self.assertRaises(ParseException, self.grammar.parseString, '')

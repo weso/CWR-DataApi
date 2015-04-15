@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
-from cwr.grammar.factory.transaction import DefaultTransactionFactory
+from tests.utils.grammar import getCommonGrammar
 
 """
 CWR Controlled Writer Information grammar tests.
@@ -21,18 +17,7 @@ __status__ = 'Development'
 
 class TestControlledWriterInformationValid(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types())
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-        _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
-
-        self.grammar = _factory_transaction.get_transaction('controlled_writer_information')
+        self.grammar = getCommonGrammar('controlled_writer_information')
 
     def test_full(self):
         writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'

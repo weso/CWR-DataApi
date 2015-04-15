@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
-from cwr.grammar.factory.transaction import DefaultTransactionFactory
+from tests.utils.grammar import getCommonGrammar
 
 """
 CWR Administrator Information grammar tests.
@@ -21,18 +17,7 @@ __status__ = 'Development'
 
 class TestAcknowledgementTransactionValid(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types())
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-        _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
-
-        self.grammar = _factory_transaction.get_transaction('acknowledgement_transaction')
+        self.grammar = getCommonGrammar('acknowledgement_transaction')
 
     def test_agreement_full(self):
         acknowledgement = 'ACK0000123400000023201201021020300123401234567AGRTHE CREATION TITLE                                          ABCD1234512345123456ABCD123451234512345720130203AS'

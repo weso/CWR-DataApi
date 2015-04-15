@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
-from cwr.grammar.factory.transaction import DefaultTransactionFactory
+from tests.utils.grammar import getCommonGrammar
 
 """
 CWR Acquirer Information grammar tests.
@@ -21,18 +17,7 @@ __status__ = 'Development'
 
 class TestAcquirerInformationValid(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types())
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-        _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
-
-        self.grammar = _factory_transaction.get_transaction('ipa_information')
+        self.grammar = getCommonGrammar('ipa_information')
 
     def test_valid_full(self):
         ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'
@@ -61,18 +46,7 @@ class TestAcquirerInformationValid(unittest.TestCase):
 
 class TestAcquirerInformationInvalid(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types())
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-        _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
-
-        self.grammar = _factory_transaction.get_transaction('ipa_information')
+        self.grammar = getCommonGrammar('ipa_information')
 
     def test_two_ipa(self):
         ipa = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009020500100300001102312'

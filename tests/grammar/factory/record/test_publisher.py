@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
+from tests.utils.grammar import getCommonGrammar
 
 """
 CWR file Publisher parsing tests.
@@ -22,17 +19,7 @@ class TestPublisherRecordValid(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('publisher')
+        self.grammar = getCommonGrammar('publisher')
 
     def test_common(self):
         record = 'SPU00000179000005380166       THE MUSIC SOCIETY                             E          002501650060399357851805061 0025061 0050061 00500   0000000000000                            OS '

@@ -37,9 +37,14 @@ class GroupRuleFactory(object):
 
 
 class DefaultGroupRuleFactory(GroupRuleFactory):
-    def __init__(self, rule_factories):
+    def __init__(self, rule_factories, decorators=None):
         super(DefaultGroupRuleFactory, self).__init__()
         self.rule_factories = rule_factories
+
+        if decorators:
+            self._decorators = decorators
+        else:
+            self._decorators = {}
 
     def get_rule_group(self, groups):
         record = None
@@ -75,6 +80,9 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
 
             rule = self.rule_factories[rule_data['rule_type']].get_rule(rule_data['id'], modifiers)
 
+            if self._decorators and id in self._decorators:
+                rule = self._decorators[id].decorate(rule)
+
             if 'at_least_one' in modifiers:
                 rule = pp.OneOrMore(rule)
             elif 'at_least_two' in modifiers:
@@ -99,3 +107,14 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
                 options = pp.MatchFirst([options, group])
 
         return options
+
+
+class RuleDecorator(object):
+    __metaclass__ = ABCMeta
+
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def decorate(self, id, rule):
+        raise NotImplementedError("The decorate method is not implemented")
