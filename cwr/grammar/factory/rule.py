@@ -36,8 +36,8 @@ class RuleFactory(object):
         pass
 
     @abstractmethod
-    def get_rule_group(self, groups):
-        raise NotImplementedError("The get_rule_group method is not implemented")
+    def get_rule(self, groups):
+        raise NotImplementedError("The get_rule method is not implemented")
 
 
 class DefaultRuleFactory(RuleFactory):
@@ -54,24 +54,17 @@ class DefaultRuleFactory(RuleFactory):
 
     def get_rule(self, id):
         record_config = self._record_configs[id]
+        sequence = []
 
-        return self.get_rule_group(record_config)
+        for rules in record_config['rules']:
+            sequence.append(self._get_group(rules))
 
-    def get_rule_group(self, rules_data):
-        record = None
+        record = pp.And(sequence)
 
-        for rules in rules_data['rules']:
-            group = self._get_group(rules)
-
-            if record is None:
-                record = group
-            else:
-                record = pp.And([record, group])
-
-        if 'rule_type' in rules_data:
-            rule_type = rules_data['rule_type']
+        if 'rule_type' in record_config:
+            rule_type = record_config['rule_type']
             if rule_type in self._decorators:
-                record = self._decorators[rule_type].decorate(record, rules_data)
+                record = self._decorators[rule_type].decorate(record, record_config)
 
         return record
 
@@ -79,13 +72,13 @@ class DefaultRuleFactory(RuleFactory):
         group = None
 
         if rules['group_type'] == 'sequence':
-            group = self._get_sequence(rules)
+            group = self._build_group(rules, pp.And)
         elif rules['group_type'] == 'option':
-            group = self._get_option(rules)
+            group = self._build_group(rules, pp.MatchFirst)
 
         return group
 
-    def _get_sequence(self, group):
+    def _build_group(self, group, strategy):
         sequence = []
 
         for rule_data in group['rules']:
@@ -94,37 +87,37 @@ class DefaultRuleFactory(RuleFactory):
             else:
                 modifiers = []
 
+            rule = self._build_rule(rule_data, modifiers)
+
+            rule = self._apply_modifiers(rule, modifiers)
+
+            sequence.append(rule)
+
+        return strategy(sequence)
+
+    def _build_rule(self, rule_data, modifiers):
+        if 'rule_type' in rule_data:
             rule_type = rule_data['rule_type']
 
             if self._terminal_rule_factory.is_terminal(rule_type):
                 rule = self._terminal_rule_factory.get_rule(rule_data['id'], modifiers)
             else:
                 rule = self.get_rule(rule_data['id'])
+        else:
+            rule = self._get_group(rule_data)
 
-            if 'at_least_one' in modifiers:
-                rule = pp.OneOrMore(rule)
-            elif 'at_least_two' in modifiers:
-                rule = pp.And([(rule * 2), pp.ZeroOrMore(rule)])
+        return rule
 
-            if 'optional' in modifiers:
-                rule = pp.Optional(rule)
+    def _apply_modifiers(self, rule, modifiers):
+        if 'at_least_one' in modifiers:
+            rule = pp.OneOrMore(rule)
+        elif 'at_least_two' in modifiers:
+            rule = pp.And([(rule * 2), pp.ZeroOrMore(rule)])
 
-            sequence.append(rule)
+        if 'optional' in modifiers:
+            rule = pp.Optional(rule)
 
-        return pp.And(sequence)
-
-    def _get_option(self, group):
-        options = None
-
-        for group_data in group['rules']:
-            group = self._get_group(group_data)
-
-            if options is None:
-                options = group
-            else:
-                options = pp.MatchFirst([options, group])
-
-        return options
+        return rule
 
 
 class RuleDecorator(object):
