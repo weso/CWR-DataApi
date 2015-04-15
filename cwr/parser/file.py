@@ -33,7 +33,7 @@ class CWRFileDecoder(Decoder):
     def decode(self, path):
         filename = self._filename_decoder.decode(os.path.basename(path))
 
-        transmission = self._file_decoder.decode(path)
+        transmission = self._file_decoder.decode(path)[0]
 
         return CWRFile(filename, transmission)
 
