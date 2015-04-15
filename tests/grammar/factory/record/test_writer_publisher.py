@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -24,14 +22,7 @@ class TestWriterPublisherGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _factory_field = DefaultFieldFactory(_config.load_field_config('common'))
-
-        _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_transaction_record('writer_publisher')
+        self.grammar = getRecordGrammar('writer_publisher')
 
     def test_valid_full(self):
         """

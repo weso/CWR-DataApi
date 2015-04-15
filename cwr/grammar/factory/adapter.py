@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 
 import pyparsing as pp
 
-from cwr.grammar.field import basic, special, table
+from cwr.grammar.field import basic, special, table, filename
 
 """
 CWR fields grammar adapters.
@@ -286,3 +286,29 @@ class CharSetAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         return table.char_code(columns=columns, name=name)
+
+
+class VariableAlphanumAdapter(FieldAdapter):
+    def __init__(self):
+        super(VariableAlphanumAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        if values is not None and len(values) > 0:
+            min = int(values[0])
+        else:
+            min = columns
+
+        return filename.alphanum_variable(min=min, max=columns, name=name)
+
+
+class NumericFloatAdapter(FieldAdapter):
+    def __init__(self):
+        super(NumericFloatAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        if values is not None and len(values) > 0:
+            nums_int = int(values[0])
+        else:
+            nums_int = columns
+
+        return basic.numeric_float(columns=columns, nums_int=nums_int, name=name)

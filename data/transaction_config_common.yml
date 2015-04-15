@@ -1,0 +1,315 @@
+administrator_information:
+  id: administrator_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: publisher
+      - rule_type: record
+        id: nra_publisher_name
+        modifiers:
+          - optional
+      - rule_type: record
+        id: publisher_territory
+        modifiers:
+          - optional
+          - at_least_one
+
+acknowledgement_transaction:
+  id: acknowledgement_transaction
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: acknowledgement
+      - rule_type: record
+        id: message
+        modifiers:
+          - optional
+          - at_least_one
+    - group_type: option
+      rules:
+        - group_type: sequence
+          rules:
+          - rule_type: record
+            id: agreement
+        - group_type: sequence
+          rules:
+          - rule_type: record
+            id: work
+          - rule_type: record
+            id: work_conflict
+            modifiers:
+              - optional
+
+agreement_transaction:
+  id: agreement_transaction
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: agreement
+      - rule_type: transaction
+        id: territory_information
+        modifiers:
+          - at_least_one
+
+controlled_publisher_information:
+  id: controlled_publisher_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: transaction
+        id: original_publisher_information
+      - rule_type: transaction
+        id: administrator_information
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: transaction
+        id: subpublisher_information
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: publisher
+        modifiers:
+          - optional
+          - at_least_one
+
+controlled_writer_information:
+  id: controlled_writer_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: writer
+      - rule_type: record
+        id: nra_writer_name
+        modifiers:
+          - optional
+      - rule_type: record
+        id: writer_territory
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: writer_publisher
+        modifiers:
+          - at_least_one
+
+information_for_excerpts:
+  id: information_for_excerpts
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: entire_work_title
+      - rule_type: record
+        id: nra_work
+        modifiers:
+          - optional
+      - rule_type: record
+        id: nra_other_writer
+        modifiers:
+          - optional
+          - at_least_one
+
+information_for_versions:
+  id: information_for_versions
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: original_work_title
+      - rule_type: record
+        id: nra_work
+        modifiers:
+          - optional
+      - rule_type: record
+        id: nra_other_writer
+        modifiers:
+          - optional
+          - at_least_one
+
+information_for_components:
+  id: information_for_components
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: component
+      - rule_type: record
+        id: nra_work
+        modifiers:
+          - optional
+      - rule_type: record
+        id: nra_other_writer
+        modifiers:
+          - optional
+          - at_least_one
+
+instrumentation_information:
+  id: instrumentation_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: instrumentation_summary
+      - rule_type: record
+        id: instrumentation_detail
+        modifiers:
+          - optional
+          - at_least_one
+
+ipa_information:
+  id: ipa_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: interested_party_agreement
+      - rule_type: record
+        id: nra_agreement_party
+        modifiers:
+          - optional
+
+original_publisher_information:
+  id: original_publisher_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: publisher
+      - rule_type: record
+        id: nra_publisher_name
+        modifiers:
+          - optional
+      - rule_type: record
+        id: publisher_territory
+        modifiers:
+          - optional
+          - at_least_one
+
+subpublisher_information:
+  id: subpublisher_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: publisher
+      - rule_type: record
+        id: nra_publisher_name
+        modifiers:
+          - optional
+      - rule_type: record
+        id: publisher_territory
+        modifiers:
+          - optional
+          - at_least_one
+
+territory_information:
+  id: territory_information
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: territory_in_agreement
+        modifiers:
+          - at_least_one
+      - rule_type: transaction
+        id: ipa_information
+        modifiers:
+          - at_least_two
+
+work_transaction:
+  id: work_transaction
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: work
+      - rule_type: transaction
+        id: controlled_publisher_information
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: publisher
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: transaction
+        id: controlled_writer_information
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: writer
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: work_alternate_title
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: nra_title
+        modifiers:
+          - optional
+      - rule_type: transaction
+        id: information_for_excerpts
+        modifiers:
+          - optional
+      - rule_type: transaction
+        id: information_for_versions
+        modifiers:
+          - optional
+      - rule_type: record
+        id: performing_artist
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: nra_performance_data
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: recording_detail
+        modifiers:
+          - optional
+      - rule_type: record
+        id: work_origin
+        modifiers:
+          - optional
+      - rule_type: transaction
+        id: instrumentation_information
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: transaction
+        id: information_for_components
+        modifiers:
+          - optional
+          - at_least_one
+      - rule_type: record
+        id: additional_related_information
+        modifiers:
+          - optional
+          - at_least_one

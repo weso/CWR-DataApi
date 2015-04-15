@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from tests.utils.grammar import getRecordGrammar
 
 """
 CWR file Publisher parsing tests.
@@ -22,17 +19,7 @@ class TestPublisherRecordValid(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_transaction_record('publisher')
+        self.grammar = getRecordGrammar('publisher')
 
     def test_common(self):
         record = 'SPU00000179000005380166       THE MUSIC SOCIETY                             E          002501650060399357851805061 0025061 0050061 00500   0000000000000                            OS '
@@ -139,17 +126,7 @@ class TestPublisherRecordValid(unittest.TestCase):
 
 class TestPublisherRecordException(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_transaction_record('publisher')
+        self.grammar = getRecordGrammar('publisher')
 
     def test_no_acquiror_performing_shares(self):
         record = 'SPU000012340000002319A12345678PUBLISHER NAME                                PA92370341200014107338A0123456789123009020500100000001100000BY I-000000229-7A0123456789124A0123456789125OSB'
