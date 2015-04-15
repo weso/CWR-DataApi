@@ -4,7 +4,6 @@ import time
 import sys
 
 import chardet
-
 from cwr.grammar.transaction import file as rule_file
 
 

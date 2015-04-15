@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar.factory.field import DefaultFieldFactory
+from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from data.accessor import CWRConfiguration
 
@@ -23,7 +23,7 @@ _config = CWRConfiguration()
 
 class TestLookupFieldFactoryValid(unittest.TestCase):
     def setUp(self):
-        self.factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+        self.factory = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), CWRTables())
 
     def test_creation(self):
         id = 'original_transaction_type'
@@ -67,7 +67,7 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
 
 class TestLookupFieldFactoryException(unittest.TestCase):
     def setUp(self):
-        self.factory = DefaultFieldFactory(_config.load_field_config('table'), CWRTables())
+        self.factory = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), CWRTables())
 
     def test_whitespace_compulsory(self):
         """
@@ -75,7 +75,8 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = DefaultFieldFactory(_config.load_field_config('table'), CWRTables()).get_field(id, compulsory=True)
+        field = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), CWRTables()).get_field(id,
+                                                                                                           compulsory=True)
 
         self.assertRaises(ParseException, field.parseString, '   ')
 
@@ -85,7 +86,8 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = DefaultFieldFactory(_config.load_field_config('table'), CWRTables()).get_field(id, compulsory=True)
+        field = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), CWRTables()).get_field(id,
+                                                                                                           compulsory=True)
 
         self.assertRaises(ParseException, field.parseString, '')
 
@@ -95,7 +97,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = DefaultFieldFactory(_config.load_field_config('table'), CWRTables()).get_field(id)
+        field = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), CWRTables()).get_field(id)
 
         self.assertRaises(ParseException, field.parseString, '')
 
@@ -105,7 +107,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = DefaultFieldFactory(_config.load_field_config('table'), CWRTables()).get_field(id)
+        field = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), CWRTables()).get_field(id)
 
         self.assertRaises(ParseException, field.parseString, '123')
 
@@ -115,6 +117,6 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'original_transaction_type'
 
-        field = DefaultFieldFactory(_config.load_field_config('table'), CWRTables()).get_field(id)
+        field = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), CWRTables()).get_field(id)
 
         self.assertRaises(ParseException, field.parseString, '12 ')

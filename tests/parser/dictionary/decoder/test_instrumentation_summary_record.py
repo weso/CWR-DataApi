@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import InstrumentationSummaryDecoder
+from cwr.parser.dictionary import InstrumentationSummaryDictionaryDecoder
 
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 class TestInstrumentationSummaryDecoder(unittest.TestCase):
     def setUp(self):
-        self._decoder = InstrumentationSummaryDecoder()
+        self._decoder = InstrumentationSummaryDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}

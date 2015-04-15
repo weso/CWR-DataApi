@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import InterestedPartyForAgreementDecoder
+from cwr.parser.dictionary import InterestedPartyForAgreementDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestInterestedPartyForAgreementDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._decoder = InterestedPartyForAgreementDecoder()
+        self._decoder = InterestedPartyForAgreementDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}
