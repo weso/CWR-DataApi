@@ -76,6 +76,13 @@ class DefaultRuleFactory(RuleFactory):
         elif rules['group_type'] == 'option':
             group = self._build_group(rules, pp.MatchFirst)
 
+        if 'modifiers' in rules:
+            modifiers = rules['modifiers']
+        else:
+            modifiers = []
+
+        group = self._apply_modifiers(group, modifiers)
+
         return group
 
     def _build_group(self, group, strategy):
@@ -109,6 +116,9 @@ class DefaultRuleFactory(RuleFactory):
         return rule
 
     def _apply_modifiers(self, rule, modifiers):
+        if 'grouped' in modifiers:
+            rule = pp.Group(rule)
+
         if 'at_least_one' in modifiers:
             rule = pp.OneOrMore(rule)
         elif 'at_least_two' in modifiers:

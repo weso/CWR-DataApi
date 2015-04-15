@@ -1,0 +1,15 @@
+group_transactions:
+  id: group_transactions
+  rule_type: group
+  rules:
+    - group_type: option
+      rules:
+      - rule_type: group
+        id: agreement_transaction
+      - rule_type: group
+        id: work_transaction
+      - rule_type: group
+        id: acknowledgement_transaction
+      modifiers:
+        - at_least_one
+        - grouped

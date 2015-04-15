@@ -32,6 +32,7 @@ _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
 _rules = _config.load_transaction_config('common')
 _rules.update(_config.load_record_config('common'))
+_rules.update(_config.load_group_config('common'))
 
 _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
 _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
@@ -40,11 +41,7 @@ _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 Fields.
 """
 
-group_transactions = pp.OneOrMore(
-    pp.Group(_group_rule_factory.get_rule('agreement_transaction') |
-             _group_rule_factory.get_rule('work_transaction') | \
-             _group_rule_factory.get_rule('acknowledgement_transaction')))
-group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
+group_transactions = _group_rule_factory.get_rule('group_transactions')
 
 group_info = _group_rule_factory.get_rule('group_header') + \
              group_transactions + \
