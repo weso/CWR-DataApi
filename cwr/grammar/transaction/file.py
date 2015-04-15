@@ -45,8 +45,7 @@ group_transactions = _group_rule_factory.get_rule('transactions')
 
 group_info = _group_rule_factory.get_rule('group_info')
 
-transmission_groups = pp.OneOrMore(group_info)
-transmission_groups = transmission_groups.setName('Transmission Groups').setResultsName('groups')
+transmission_groups = _group_rule_factory.get_rule('groups')
 
 """
 Rules.
