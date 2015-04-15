@@ -24,9 +24,8 @@ def getRecordGrammar(id):
 
     _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-    _factories = {'field': _factory_field}
     _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
-    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('common'), _factories, _decorators)
+    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('common'), _factory_field, _decorators)
 
     return _group_rule_factory.get_rule(id)
 
@@ -42,9 +41,8 @@ def getTransactionGrammar(id):
     _rules = _config.load_transaction_config('common')
     _rules.update(_config.load_record_config('common'))
 
-    _factories = {'field': _factory_field}
     _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
-    _group_rule_factory = DefaultGroupRuleFactory(_rules, _factories, _decorators)
+    _group_rule_factory = DefaultGroupRuleFactory(_rules, _factory_field, _decorators)
 
     return _group_rule_factory.get_rule(id)
 
@@ -58,7 +56,6 @@ def getFilenameGrammar(id):
 
     _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-    _factories = {'field': _factory_field}
-    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factories)
+    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factory_field)
 
     return _group_rule_factory.get_rule(id)

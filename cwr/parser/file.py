@@ -3,7 +3,7 @@ import os
 
 from cwr.grammar.transaction.file import cwr_transmission as rule_file
 from cwr.file import CWRFile, FileTag
-from cwr.parser.common import GrammarDecoderSingle, GrammarFileDecoder, Encoder
+from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
 from cwr.parser.common import Decoder
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
@@ -50,11 +50,10 @@ class CWRFileNameDecoder(Decoder):
 
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-        _factories = {'field': _factory_field}
-        _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factories)
+        _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factory_field)
 
-        self._filename_decoder_old = GrammarDecoderSingle(_group_rule_factory.get_rule('filename_old'))
-        self._filename_decoder_new = GrammarDecoderSingle(_group_rule_factory.get_rule('filename_new'))
+        self._filename_decoder_old = GrammarDecoder(_group_rule_factory.get_rule('filename_old'))
+        self._filename_decoder_new = GrammarDecoder(_group_rule_factory.get_rule('filename_new'))
 
     def decode(self, path):
         filename = os.path.basename(path)

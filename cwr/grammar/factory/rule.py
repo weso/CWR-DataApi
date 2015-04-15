@@ -24,6 +24,10 @@ class RuleFactory(object):
     def get_rule(self, id, modifiers):
         raise NotImplementedError("The get_rule method is not implemented")
 
+    @abstractmethod
+    def is_terminal(self, type):
+        raise NotImplementedError("The is_terminal method is not implemented")
+
 
 class GroupRuleFactory(object):
     __metaclass__ = ABCMeta
@@ -37,11 +41,11 @@ class GroupRuleFactory(object):
 
 
 class DefaultGroupRuleFactory(GroupRuleFactory):
-    def __init__(self, record_configs, rule_factories, decorators=None):
+    def __init__(self, record_configs, terminal_rule_factory, decorators=None):
         super(DefaultGroupRuleFactory, self).__init__()
         # Configuration for creating the record
         self._record_configs = record_configs
-        self._rule_factories = rule_factories
+        self._terminal_rule_factory = terminal_rule_factory
 
         if decorators:
             self._decorators = decorators
@@ -92,8 +96,8 @@ class DefaultGroupRuleFactory(GroupRuleFactory):
 
             rule_type = rule_data['rule_type']
 
-            if rule_type in self._rule_factories:
-                rule = self._rule_factories[rule_type].get_rule(rule_data['id'], modifiers)
+            if self._terminal_rule_factory.is_terminal(rule_type):
+                rule = self._terminal_rule_factory.get_rule(rule_data['id'], modifiers)
             else:
                 rule = self.get_rule(rule_data['id'])
 

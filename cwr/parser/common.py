@@ -51,23 +51,6 @@ class GrammarDecoder(Decoder):
         return self._grammar.parseString(text)
 
 
-class GrammarDecoderSingle(Decoder):
-    """
-    Parses a string based on a Pyparsing grammar rules set.
-    """
-
-    def __init__(self, grammar):
-        super(GrammarDecoderSingle, self).__init__()
-        self._grammar = grammar
-
-    @property
-    def grammar(self):
-        return self._grammar
-
-    def decode(self, text):
-        return self._grammar.parseString(text)[0]
-
-
 class GrammarFileDecoder(GrammarDecoder):
     """
     Parses the contents of a file based on a Pyparsing grammar rules set.

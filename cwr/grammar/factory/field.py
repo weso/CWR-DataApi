@@ -243,6 +243,9 @@ class DefaultFieldFactory(OptionFieldFactory):
 
         return field
 
+    def is_terminal(self, type):
+        return type == 'field'
+
     def not_compulsory_wrapper(self, field, type, name, columns):
 
         adapter = self._adapters[type]
