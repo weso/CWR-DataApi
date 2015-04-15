@@ -41,7 +41,7 @@ _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 Fields.
 """
 
-group_transactions = _group_rule_factory.get_rule('group_transactions')
+group_transactions = _group_rule_factory.get_rule('transactions')
 
 group_info = _group_rule_factory.get_rule('group_header') + \
              group_transactions + \

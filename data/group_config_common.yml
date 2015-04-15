@@ -1,5 +1,5 @@
-group_transactions:
-  id: group_transactions
+transactions:
+  id: transactions
   rule_type: group
   rules:
     - group_type: option
@@ -13,3 +13,18 @@ group_transactions:
       modifiers:
         - at_least_one
         - grouped
+
+group_info:
+  id: group_info
+  rule_type: group
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: record
+        id: group_header
+      - rule_type: group_transactions
+        id: work_transaction
+        modifiers:
+          - optional
+      - rule_type: record
+        id: group_trailer

@@ -66,7 +66,7 @@ class DefaultRuleFactory(RuleFactory):
             if rule_type in self._decorators:
                 record = self._decorators[rule_type].decorate(record, record_config)
 
-        return record
+        return record.setResultsName(id)
 
     def _get_group(self, rules):
         group = None
