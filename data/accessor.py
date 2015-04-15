@@ -73,12 +73,10 @@ class CWRConfiguration(object):
 
         # Files containing the CWR info
         self._file_record_config = 'record_config.yml'
-        self._file_record_type = 'record_type.yml'
         self._file_defaults = 'default_values.yml'
 
         # CWR configuration information
         self._record_config = None
-        self._record_type = None
         self._cwr_defaults = None
 
         self._field_configs = {}
@@ -97,19 +95,6 @@ class CWRConfiguration(object):
             self._record_config = self._reader.read_yaml_file(self._file_record_config)
 
         return self._record_config
-
-    def _load_record_type(self):
-        """
-        Loads the CWR record type configuration file, creating a matrix from it, and then returns this data.
-
-        The file will only be loaded once.
-
-        :return: the CWR record type configuration matrix
-        """
-        if self._record_type is None:
-            self._record_type = self._reader.read_yaml_file(self._file_record_type)
-
-        return self._record_type
 
     def _load_cwr_defaults(self):
         """

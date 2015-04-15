@@ -8,8 +8,8 @@ from cwr.transmission import Transmission
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
-from cwr.grammar.factory.transaction import DefaultTransactionFactory
+from cwr.grammar.factory.record import RecordRuleDecorator
+from cwr.grammar.factory.rule import DefaultGroupRuleFactory
 
 
 """
@@ -30,23 +30,26 @@ _data.update(_config.load_field_config('common'))
 
 _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-_prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-_factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-_factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
+_rules = _config.load_transaction_config('common')
+_rules.update(_config.load_record_config('common'))
+
+_factories = {'field': _factory_field}
+_decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
+_group_rule_factory = DefaultGroupRuleFactory(_rules, _factories, _decorators)
 
 """
 Fields.
 """
 
 group_transactions = pp.OneOrMore(
-    pp.Group(_factory_transaction.get_transaction('agreement_transaction') |
-             _factory_transaction.get_transaction('work_transaction') | \
-             _factory_transaction.get_transaction('acknowledgement_transaction')))
+    pp.Group(_group_rule_factory.get_rule('agreement_transaction') |
+             _group_rule_factory.get_rule('work_transaction') | \
+             _group_rule_factory.get_rule('acknowledgement_transaction')))
 group_transactions = group_transactions.setName('Group Transactions').setResultsName('transactions')
 
-group_info = _factory_record.get_record('group_header') + \
+group_info = _group_rule_factory.get_rule('group_header') + \
              group_transactions + \
-             _factory_record.get_record('group_trailer')
+             _group_rule_factory.get_rule('group_trailer')
 
 transmission_groups = pp.OneOrMore(group_info)
 transmission_groups = transmission_groups.setName('Transmission Groups').setResultsName('groups')
@@ -56,9 +59,9 @@ Rules.
 """
 
 # File rule
-cwr_transmission = _factory_record.get_record('transmission_header') + \
+cwr_transmission = _group_rule_factory.get_rule('transmission_header') + \
                    transmission_groups + \
-                   _factory_record.get_record('transmission_trailer') + \
+                   _group_rule_factory.get_rule('transmission_trailer') + \
                    pp.ZeroOrMore(special.lineEnd)
 
 """

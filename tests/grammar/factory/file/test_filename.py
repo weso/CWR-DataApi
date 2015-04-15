@@ -28,7 +28,7 @@ class TestFileNameValid(unittest.TestCase):
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW12012311_22.V21')[0]
+        data = self.grammar.parseString('CW12012311_22.V21')
 
         self.assertEqual(2012, data.year)
         self.assertEqual(123, data.sequence_n)
@@ -38,7 +38,7 @@ class TestFileNameValid(unittest.TestCase):
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW130123ABC_23.V22')[0]
+        data = self.grammar.parseString('CW130123ABC_23.V22')
 
         self.assertEqual(2013, data.year)
         self.assertEqual(123, data.sequence_n)
@@ -48,7 +48,7 @@ class TestFileNameValid(unittest.TestCase):
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW99000022_DEC.V00')[0]
+        data = self.grammar.parseString('CW99000022_DEC.V00')
 
         self.assertEqual(2099, data.year)
         self.assertEqual(0, data.sequence_n)
@@ -58,7 +58,7 @@ class TestFileNameValid(unittest.TestCase):
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW000012AB2_234.V02')[0]
+        data = self.grammar.parseString('CW000012AB2_234.V02')
 
         self.assertEqual(2000, data.year)
         self.assertEqual(12, data.sequence_n)
@@ -77,7 +77,7 @@ class TestFileNameValidOld(unittest.TestCase):
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW122311_22.V21')[0]
+        data = self.grammar.parseString('CW122311_22.V21')
 
         self.assertEqual(2012, data.year)
         self.assertEqual(23, data.sequence_n)
@@ -87,7 +87,7 @@ class TestFileNameValidOld(unittest.TestCase):
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW1301ABC_23.V22')[0]
+        data = self.grammar.parseString('CW1301ABC_23.V22')
 
         self.assertEqual(2013, data.year)
         self.assertEqual(1, data.sequence_n)
@@ -97,7 +97,7 @@ class TestFileNameValidOld(unittest.TestCase):
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW990022_DEC.V00')[0]
+        data = self.grammar.parseString('CW990022_DEC.V00')
 
         self.assertEqual(2099, data.year)
         self.assertEqual(0, data.sequence_n)
@@ -107,7 +107,7 @@ class TestFileNameValidOld(unittest.TestCase):
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW0012AB2_234.V02')[0]
+        data = self.grammar.parseString('CW0012AB2_234.V02')
 
         self.assertEqual(2000, data.year)
         self.assertEqual(12, data.sequence_n)
@@ -126,7 +126,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW12012311_22.zip')[0]
+        data = self.grammar.parseString('CW12012311_22.zip')
 
         self.assertEqual(2012, data.year)
         self.assertEqual(123, data.sequence_n)
@@ -136,7 +136,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW130123ABC_23.zip')[0]
+        data = self.grammar.parseString('CW130123ABC_23.zip')
 
         self.assertEqual(2013, data.year)
         self.assertEqual(123, data.sequence_n)
@@ -146,7 +146,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW99000022_DEC.zip')[0]
+        data = self.grammar.parseString('CW99000022_DEC.zip')
 
         self.assertEqual(2099, data.year)
         self.assertEqual(0, data.sequence_n)
@@ -156,7 +156,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW000012AB2_234.zip')[0]
+        data = self.grammar.parseString('CW000012AB2_234.zip')
 
         self.assertEqual(2000, data.year)
         self.assertEqual(12, data.sequence_n)
@@ -175,7 +175,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW122311_22.zip')[0]
+        data = self.grammar.parseString('CW122311_22.zip')
 
         self.assertEqual(2012, data.year)
         self.assertEqual(23, data.sequence_n)
@@ -185,7 +185,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
 
     def test_s3_r2(self):
         # Sender with 3 digits and receiver with 2 digits
-        data = self.grammar.parseString('CW1301ABC_23.zip')[0]
+        data = self.grammar.parseString('CW1301ABC_23.zip')
 
         self.assertEqual(2013, data.year)
         self.assertEqual(1, data.sequence_n)
@@ -195,7 +195,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
 
     def test_s2_r3(self):
         # Sender with 2 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW990022_DEC.zip')[0]
+        data = self.grammar.parseString('CW990022_DEC.zip')
 
         self.assertEqual(2099, data.year)
         self.assertEqual(0, data.sequence_n)
@@ -205,7 +205,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
 
     def test_s3_r3(self):
         # Sender with 3 digits and receiver with 3 digits
-        data = self.grammar.parseString('CW0012AB2_234.zip')[0]
+        data = self.grammar.parseString('CW0012AB2_234.zip')
 
         self.assertEqual(2000, data.year)
         self.assertEqual(12, data.sequence_n)

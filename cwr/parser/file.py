@@ -8,7 +8,7 @@ from cwr.parser.common import Decoder
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
+from cwr.grammar.factory.rule import DefaultGroupRuleFactory
 
 
 """
@@ -50,11 +50,11 @@ class CWRFileNameDecoder(Decoder):
 
         _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+        _factories = {'field': _factory_field}
+        _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factories)
 
-        self._filename_decoder_old = GrammarDecoder(_factory_record.get_record('filename_old'))
-        self._filename_decoder_new = GrammarDecoder(_factory_record.get_record('filename_new'))
+        self._filename_decoder_old = GrammarDecoder(_group_rule_factory.get_rule('filename_old'))
+        self._filename_decoder_new = GrammarDecoder(_group_rule_factory.get_rule('filename_new'))
 
     def decode(self, path):
         filename = os.path.basename(path)

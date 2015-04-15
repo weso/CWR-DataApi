@@ -3,10 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -23,17 +20,7 @@ __status__ = 'Development'
 
 class TestTransmissionHeaderGrammar(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('transmission_header')
+        self.grammar = getRecordGrammar('transmission_header')
 
     def test_valid_common(self):
         record = 'HDRPB226144593AGENCIA GRUPO MUSICAL                        01.102013080902591120130809               '
@@ -88,17 +75,7 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
     """
 
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-        _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_record('transmission_header')
+        self.grammar = getRecordGrammar('transmission_header')
 
     def test_invalid_wrong_type(self):
         """

@@ -3,8 +3,8 @@
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldFactory
 from data.accessor import CWRTables
-from cwr.grammar.factory.record import DefaultPrefixBuilder, DefaultRecordFactory
-from cwr.grammar.factory.transaction import DefaultTransactionFactory
+from cwr.grammar.factory.record import RecordRuleDecorator
+from cwr.grammar.factory.rule import DefaultGroupRuleFactory
 
 """
 Grammar utilities for the test classes.
@@ -24,10 +24,11 @@ def getRecordGrammar(id):
 
     _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-    _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-    _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
+    _factories = {'field': _factory_field}
+    _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
+    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('common'), _factories, _decorators)
 
-    return _factory_record.get_record(id)
+    return _group_rule_factory.get_rule(id)
 
 
 def getTransactionGrammar(id):
@@ -38,11 +39,14 @@ def getTransactionGrammar(id):
 
     _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-    _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-    _factory_record = DefaultRecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-    _factory_transaction = DefaultTransactionFactory(_config.load_transaction_config('common'), _factory_record)
+    _rules = _config.load_transaction_config('common')
+    _rules.update(_config.load_record_config('common'))
 
-    return _factory_transaction.get_transaction(id)
+    _factories = {'field': _factory_field}
+    _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
+    _group_rule_factory = DefaultGroupRuleFactory(_rules, _factories, _decorators)
+
+    return _group_rule_factory.get_rule(id)
 
 
 def getFilenameGrammar(id):
@@ -54,7 +58,7 @@ def getFilenameGrammar(id):
 
     _factory_field = DefaultFieldFactory(_data, CWRTables())
 
-    _prefixer = DefaultPrefixBuilder(_config.record_types(), _factory_field)
-    _factory_record = DefaultRecordFactory(_config.load_record_config('filename'), _prefixer, _factory_field)
+    _factories = {'field': _factory_field}
+    _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factories)
 
-    return _factory_record.get_record(id)
+    return _group_rule_factory.get_rule(id)
