@@ -4,7 +4,7 @@ import logging
 
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.adapter import *
-from cwr.grammar.factory.rule import RuleFactory
+from cwr.grammar.factory.rule import TerminalRuleFactory
 
 
 """
@@ -20,13 +20,14 @@ Configuration classes.
 """
 
 
-class FieldFactory(object):
+class FieldTerminalRuleFactory(TerminalRuleFactory):
     """
     Factory for acquiring field rules.
     """
     __metaclass__ = ABCMeta
 
     def __init__(self, field_configs):
+        super(FieldTerminalRuleFactory, self).__init__()
         # Fields already created
         self._fields = {}
         # Field builders being used
@@ -79,7 +80,7 @@ class FieldFactory(object):
         raise NotImplementedError("The create_field method is not implemented")
 
 
-class OptionFieldFactory(FieldFactory, RuleFactory):
+class OptionFieldTerminalRuleFactory(FieldTerminalRuleFactory):
     """
     Factory for acquiring field rules where those rules can be optional.
 
@@ -93,7 +94,7 @@ class OptionFieldFactory(FieldFactory, RuleFactory):
     __metaclass__ = ABCMeta
 
     def __init__(self, field_configs):
-        super(OptionFieldFactory, self).__init__(field_configs)
+        super(OptionFieldTerminalRuleFactory, self).__init__(field_configs)
 
         # Fields already wrapped with the optional wrapper
         self._fields_optional = {}
@@ -122,7 +123,7 @@ class OptionFieldFactory(FieldFactory, RuleFactory):
                 # Field configuration info
                 config = self._field_configs[id]
 
-                field = super(OptionFieldFactory, self).get_field(id)
+                field = super(OptionFieldTerminalRuleFactory, self).get_field(id)
 
                 # It is not compulsory, the wrapped is added
                 self._logger.info('Wrapped field %s already exists, using saved instance' % id)
@@ -131,7 +132,7 @@ class OptionFieldFactory(FieldFactory, RuleFactory):
                 # Wrapped field is saved
                 self._fields_optional[id] = field
         else:
-            field = super(OptionFieldFactory, self).get_field(id)
+            field = super(OptionFieldTerminalRuleFactory, self).get_field(id)
 
         return field
 
@@ -152,13 +153,13 @@ class OptionFieldFactory(FieldFactory, RuleFactory):
         raise NotImplementedError("The create_field method is not implemented")
 
 
-class DefaultFieldFactory(OptionFieldFactory):
+class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
     """
     Factory for acquiring fields rules using the default configuration.
     """
 
     def __init__(self, field_configs, field_values=None, field_rules=None, actions=None):
-        super(DefaultFieldFactory, self).__init__(field_configs)
+        super(DefaultFieldTerminalRuleFactory, self).__init__(field_configs)
 
         # TODO: Don't do this manually
         self._adapters['alphanum'] = AlphanumAdapter()

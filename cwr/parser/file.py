@@ -6,7 +6,7 @@ from cwr.file import CWRFile, FileTag
 from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
 from cwr.parser.common import Decoder
 from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
+from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultGroupRuleFactory
 
@@ -48,7 +48,7 @@ class CWRFileNameDecoder(Decoder):
         _data.update(_config.load_field_config('common'))
         _data.update(_config.load_field_config('filename'))
 
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
+        _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
         _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factory_field)
 

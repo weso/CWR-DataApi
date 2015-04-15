@@ -14,7 +14,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class RuleFactory(object):
+class TerminalRuleFactory(object):
     __metaclass__ = ABCMeta
 
     def __init__(self):

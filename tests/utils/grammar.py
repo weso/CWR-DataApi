@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
+from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import RecordRuleDecorator
 from cwr.grammar.factory.rule import DefaultGroupRuleFactory
@@ -22,7 +22,7 @@ def getRecordGrammar(id):
     _data = _config.load_field_config('table')
     _data.update(_config.load_field_config('common'))
 
-    _factory_field = DefaultFieldFactory(_data, CWRTables())
+    _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
     _decorators = {'transaction': RecordRuleDecorator(_factory_field), 'record': RecordRuleDecorator(_factory_field)}
     _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('common'), _factory_field, _decorators)
@@ -36,7 +36,7 @@ def getTransactionGrammar(id):
     _data = _config.load_field_config('table')
     _data.update(_config.load_field_config('common'))
 
-    _factory_field = DefaultFieldFactory(_data, CWRTables())
+    _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
     _rules = _config.load_transaction_config('common')
     _rules.update(_config.load_record_config('common'))
@@ -54,7 +54,7 @@ def getFilenameGrammar(id):
     _data.update(_config.load_field_config('common'))
     _data.update(_config.load_field_config('filename'))
 
-    _factory_field = DefaultFieldFactory(_data, CWRTables())
+    _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
     _group_rule_factory = DefaultGroupRuleFactory(_config.load_record_config('filename'), _factory_field)
 

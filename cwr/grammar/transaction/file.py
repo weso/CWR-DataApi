@@ -6,7 +6,7 @@ from cwr.grammar.field import special
 from cwr.group import Group
 from cwr.transmission import Transmission
 from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
+from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.record import RecordRuleDecorator
 from cwr.grammar.factory.rule import DefaultGroupRuleFactory
@@ -28,7 +28,7 @@ _config = CWRConfiguration()
 _data = _config.load_field_config('table')
 _data.update(_config.load_field_config('common'))
 
-_factory_field = DefaultFieldFactory(_data, CWRTables())
+_factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
 _rules = _config.load_transaction_config('common')
 _rules.update(_config.load_record_config('common'))
