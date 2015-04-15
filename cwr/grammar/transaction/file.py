@@ -43,9 +43,7 @@ Fields.
 
 group_transactions = _group_rule_factory.get_rule('transactions')
 
-group_info = _group_rule_factory.get_rule('group_header') + \
-             group_transactions + \
-             _group_rule_factory.get_rule('group_trailer')
+group_info = _group_rule_factory.get_rule('group_info')
 
 transmission_groups = pp.OneOrMore(group_info)
 transmission_groups = transmission_groups.setName('Transmission Groups').setResultsName('groups')

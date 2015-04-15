@@ -22,8 +22,8 @@ group_info:
       rules:
       - rule_type: record
         id: group_header
-      - rule_type: group_transactions
-        id: work_transaction
+      - rule_type: group
+        id: transactions
         modifiers:
           - optional
       - rule_type: record
