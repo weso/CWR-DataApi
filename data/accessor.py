@@ -73,16 +73,16 @@ class CWRConfiguration(object):
 
         # Files containing the CWR info
         self._file_record_config = 'record_config.yml'
-        self._file_record_type = 'record_type.yml'
         self._file_defaults = 'default_values.yml'
 
         # CWR configuration information
         self._record_config = None
-        self._record_type = None
         self._cwr_defaults = None
 
         self._field_configs = {}
+        self._group_configs = {}
         self._record_configs = {}
+        self._transaction_configs = {}
 
     def _load_record_config(self):
         """
@@ -96,19 +96,6 @@ class CWRConfiguration(object):
             self._record_config = self._reader.read_yaml_file(self._file_record_config)
 
         return self._record_config
-
-    def _load_record_type(self):
-        """
-        Loads the CWR record type configuration file, creating a matrix from it, and then returns this data.
-
-        The file will only be loaded once.
-
-        :return: the CWR record type configuration matrix
-        """
-        if self._record_type is None:
-            self._record_type = self._reader.read_yaml_file(self._file_record_type)
-
-        return self._record_type
 
     def _load_cwr_defaults(self):
         """
@@ -135,6 +122,18 @@ class CWRConfiguration(object):
 
         return self._field_configs[id]
 
+    def load_group_config(self, id):
+        """
+        Loads the configuration fields file for the id.
+
+        :param id: the id for the field
+        :return: the fields configuration
+        """
+        if id not in self._group_configs:
+            self._group_configs[id] = self._reader.read_yaml_file('group_config_%s.yml' % id)
+
+        return self._group_configs[id]
+
     def load_record_config(self, id):
         """
         Loads the configuration fields file for the id.
@@ -146,6 +145,18 @@ class CWRConfiguration(object):
             self._record_configs[id] = self._reader.read_yaml_file('record_config_%s.yml' % id)
 
         return self._record_configs[id]
+
+    def load_transaction_config(self, id):
+        """
+        Loads the configuration fields file for the id.
+
+        :param id: the id for the field
+        :return: the fields configuration
+        """
+        if id not in self._transaction_configs:
+            self._transaction_configs[id] = self._reader.read_yaml_file('transaction_config_%s.yml' % id)
+
+        return self._transaction_configs[id]
 
     def default_version(self):
         """
@@ -166,20 +177,6 @@ class CWRConfiguration(object):
         :return: the expected size for the field on the record
         """
         return self._load_record_config()[record][field]['size']
-
-    def record_type(self, record):
-        """
-        Returns the expected record type for the received record.
-
-        The record is the internal name used to identify a record type.
-
-        :param record: the id for the record type
-        :return: the expected record type on the record prefix
-        """
-        return self._load_record_type()[record]
-
-    def record_types(self):
-        return self._load_record_type()
 
 
 class CWRTables(object):

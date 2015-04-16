@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
 import logging
 
-from cwr.grammar.field import basic
-from cwr.grammar.factory.adapter import AlphanumAdapter, ExtendedAlphanumAdapter, NumericAdapter, LookupAdapter, \
-    BooleanAdapter, BlankAdapter, DateAdapter, FlagAdapter, TimeAdapter, ISWCAdapter, IPIBaseNumberAdapter, \
-    IPINameNumberAdapter, PercentageAdapter, EAN13Adapter, ISRCAdapter, VISANAdapter, AudioVisualKeydapter, \
-    DateTimeAdapter, CharSetAdapter
+from data.accessor import CWRConfiguration
+from cwr.grammar.factory.adapter import *
+from cwr.grammar.factory.rule import TerminalRuleFactory
 
 
 """
@@ -23,23 +20,24 @@ Configuration classes.
 """
 
 
-class FieldFactory(object):
+class FieldTerminalRuleFactory(TerminalRuleFactory):
     """
     Factory for acquiring field rules.
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, field_configs):
+    def __init__(self, field_configs, logger=None):
+        super(FieldTerminalRuleFactory, self).__init__()
         # Fields already created
         self._fields = {}
         # Field builders being used
         self._adapters = {}
         # Logger
-        self._logger = logging.getLogger(__name__)
+        self._logger = logger
         # Configuration for creating the fields
         self._field_configs = field_configs
 
-    def get_field(self, id):
+    def get_field_base(self, id):
         """
         Returns the rule for the field identified by the id.
 
@@ -50,19 +48,22 @@ class FieldFactory(object):
         :param compulsory: indicates if the empty string is rejected or not
         :return: the rule of a field
         """
-        self._logger.info('Acquiring field %s' % id)
+        if self._logger:
+            self._logger.info('Acquiring base field %s' % id)
 
         # Field configuration info
         config = self._field_configs[id]
 
         if id in self._fields:
             # Field already exists
-            self._logger.info('Field %s already exists, using saved instance' % id)
+            if self._logger:
+                self._logger.info('Field %s already exists, using saved instance' % id)
             field = self._fields[id]
         else:
             # Field does not exist
             # It is created
-            self._logger.info('Field %s does not exist, creating new instance' % id)
+            if self._logger:
+                self._logger.info('Field %s does not exist, creating new instance' % id)
             field = self.create_field(id, config)
 
             # Field is saved
@@ -82,7 +83,7 @@ class FieldFactory(object):
         raise NotImplementedError("The create_field method is not implemented")
 
 
-class OptionFieldFactory(FieldFactory):
+class OptionFieldTerminalRuleFactory(FieldTerminalRuleFactory):
     """
     Factory for acquiring field rules where those rules can be optional.
 
@@ -96,7 +97,7 @@ class OptionFieldFactory(FieldFactory):
     __metaclass__ = ABCMeta
 
     def __init__(self, field_configs):
-        super(OptionFieldFactory, self).__init__(field_configs)
+        super(OptionFieldTerminalRuleFactory, self).__init__(field_configs)
 
         # Fields already wrapped with the optional wrapper
         self._fields_optional = {}
@@ -114,27 +115,32 @@ class OptionFieldFactory(FieldFactory):
         :param compulsory: indicates if the empty string is rejected or not
         :return: a lookup field
         """
-        self._logger.info('Acquiring field %s' % id)
+        if self._logger:
+            self._logger.info('Acquiring field %s' % id)
 
         if not compulsory:
             if id in self._fields_optional:
                 # Wrapped field already exists
-                self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
+                if self._logger:
+                    self._logger.info('Wrapped field %s already exists, using saved instance' % id)
                 field = self._fields_optional[id]
             else:
                 # Field configuration info
                 config = self._field_configs[id]
 
-                field = super(OptionFieldFactory, self).get_field(id)
+                field = self.get_field_base(id)
 
                 # It is not compulsory, the wrapped is added
-                self._logger.info('Wrapped field %s already exists, using saved instance' % id)
+                if self._logger:
+                    self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
                 field = self.not_compulsory_wrapper(field, config['type'], config['name'], config['size'])
 
                 # Wrapped field is saved
                 self._fields_optional[id] = field
         else:
-            field = super(OptionFieldFactory, self).get_field(id)
+            if self._logger:
+                self._logger.info('The %s is compulsory' % id)
+            field = self.get_field_base(id)
 
         return field
 
@@ -155,13 +161,13 @@ class OptionFieldFactory(FieldFactory):
         raise NotImplementedError("The create_field method is not implemented")
 
 
-class DefaultFieldFactory(OptionFieldFactory):
+class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
     """
     Factory for acquiring fields rules using the default configuration.
     """
 
     def __init__(self, field_configs, field_values=None, field_rules=None, actions=None):
-        super(DefaultFieldFactory, self).__init__(field_configs)
+        super(DefaultFieldTerminalRuleFactory, self).__init__(field_configs)
 
         # TODO: Don't do this manually
         self._adapters['alphanum'] = AlphanumAdapter()
@@ -183,6 +189,8 @@ class DefaultFieldFactory(OptionFieldFactory):
         self._adapters['visan'] = VISANAdapter()
         self._adapters['avi'] = AudioVisualKeydapter()
         self._adapters['charset'] = CharSetAdapter()
+        self._adapters['alphanum_variable'] = VariableAlphanumAdapter()
+        self._adapters['numeric_float'] = NumericFloatAdapter()
 
         # Field values are optional
         self._field_values = field_values
@@ -193,9 +201,14 @@ class DefaultFieldFactory(OptionFieldFactory):
             self._field_rules = field_rules
 
         if actions is None:
-            self._actions = ActionsSource()
+            self._actions = DefaultActionsSource()
         else:
             self._actions = actions
+
+    def get_rule(self, id, modifiers):
+        compulsory = 'compulsory' in modifiers
+
+        return self.get_field(id, compulsory=compulsory)
 
     def create_field(self, id, config):
         """
@@ -239,6 +252,9 @@ class DefaultFieldFactory(OptionFieldFactory):
 
         return field
 
+    def is_terminal(self, type):
+        return type == 'field'
+
     def not_compulsory_wrapper(self, field, type, name, columns):
 
         adapter = self._adapters[type]
@@ -258,9 +274,12 @@ class DefaultFieldFactory(OptionFieldFactory):
             field.setParseAction(lambda p: action_method(p))
 
 
-class ActionsSource():
+class DefaultActionsSource():
     def __init__(self):
-        pass
+        self._config = CWRConfiguration()
+
+    def to_default_filename_version(self, parsed):
+        return self._config.default_version()
 
     def to_int(self, parsed):
         value = parsed[0]
@@ -269,3 +288,18 @@ class ActionsSource():
             return None
         else:
             return int(parsed[0])
+
+    def to_year(self, parsed):
+        """
+        Transforms the parsed two digits integer into a valid year value.
+
+        :param parsed: the parsed value
+        """
+        value = parsed[0]
+
+        if not isinstance(value, int):
+            value = int(value)
+        else:
+            value = parsed
+
+        return 2000 + value

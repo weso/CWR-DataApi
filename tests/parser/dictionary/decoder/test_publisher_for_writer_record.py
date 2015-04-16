@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import PublisherForWriterDecoder
+from cwr.parser.dictionary import PublisherForWriterDictionaryDecoder
 
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 class TestPublisherForWriterDecoder(unittest.TestCase):
     def setUp(self):
-        self._decoder = PublisherForWriterDecoder()
+        self._decoder = PublisherForWriterDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}
