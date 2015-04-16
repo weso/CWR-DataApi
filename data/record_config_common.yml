@@ -11,12 +11,8 @@ acknowledgement:
         id: original_group_id
       - rule_type: field
         id: original_transaction_sequence_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: original_transaction_type
-        modifiers:
-          - compulsory
       - rule_type: field
         id: creation_title
       - rule_type: field
@@ -25,12 +21,8 @@ acknowledgement:
         id: recipient_creation_n
       - rule_type: field
         id: processing_date
-        modifiers:
-          - compulsory
       - rule_type: field
         id: transaction_status
-        modifiers:
-          - compulsory
 
 additional_related_information:
   id: additional_related_information
@@ -59,38 +51,28 @@ agreement:
       rules:
       - rule_type: field
         id: submitter_agreement_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: international_standard_code
       - rule_type: field
         id: agreement_type
       - rule_type: field
         id: agreement_start_date
-        modifiers:
-          - compulsory
       - rule_type: field
         id: agreement_end_date
       - rule_type: field
         id: retention_end_date
       - rule_type: field
         id: prior_royalty_status
-        modifiers:
-          - compulsory
       - rule_type: field
         id: prior_royalty_start_date
       - rule_type: field
         id: post_term_collection_status
-        modifiers:
-          - compulsory
       - rule_type: field
         id: post_term_collection_end_date
       - rule_type: field
         id: date_of_signature
       - rule_type: field
         id: number_of_works
-        modifiers:
-          - compulsory
       - rule_type: field
         id: sales_manufacture_clause
       - rule_type: field
@@ -175,16 +157,10 @@ group_header:
       rules:
       - rule_type: field
         id: transaction_type
-        modifiers:
-          - compulsory
       - rule_type: field
         id: group_id
-        modifiers:
-          - compulsory
       - rule_type: field
         id: version_number
-        modifiers:
-          - compulsory
       - rule_type: field
         id: batch_request_id
       - rule_type: field
@@ -243,40 +219,28 @@ interested_party_agreement:
       rules:
       - rule_type: field
         id: agreement_role_code
-        modifiers:
-          - compulsory
       - rule_type: field
         id: ipi_name_n
       - rule_type: field
         id: ipi_base_n
       - rule_type: field
         id: ip_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: ip_last_name
-        modifiers:
-          - compulsory
       - rule_type: field
         id: ip_writer_first_name
       - rule_type: field
         id: pr_society
       - rule_type: field
         id: pr_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: mr_society
       - rule_type: field
         id: mr_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: sr_society
       - rule_type: field
         id: sr_share
-        modifiers:
-          - compulsory
 
 message:
   id: message
@@ -309,12 +273,8 @@ nra_agreement_party:
         id: ip_n
       - rule_type: field
         id: ip_name
-        modifiers:
-          - compulsory
       - rule_type: field
         id: ip_writer_name
-        modifiers:
-          - compulsory
       - rule_type: field
         id: language_code
 
@@ -367,12 +327,8 @@ nra_publisher_name:
         id: publisher_sequence_n
       - rule_type: field
         id: ip_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: publisher_name_long
-        modifiers:
-          - compulsory
       - rule_type: field
         id: language_code
 
@@ -482,8 +438,6 @@ publisher:
       rules:
       - rule_type: field
         id: publisher_sequence_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: ip_n
       - rule_type: field
@@ -502,20 +456,14 @@ publisher:
         id: pr_society
       - rule_type: field
         id: pr_ownership_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: mr_society
       - rule_type: field
         id: mr_ownership_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: sr_society
       - rule_type: field
         id: sr_ownership_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: special_agreements
       - rule_type: field
@@ -542,8 +490,6 @@ publisher_territory:
       rules:
       - rule_type: field
         id: ip_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: constant
       - rule_type: field
@@ -614,28 +560,16 @@ transmission_header:
       rules:
       - rule_type: field
         id: sender_type
-        modifiers:
-          - compulsory
       - rule_type: field
         id: sender_id
-        modifiers:
-          - compulsory
       - rule_type: field
         id: sender_name
-        modifiers:
-          - compulsory
       - rule_type: field
         id: edi_standard
-        modifiers:
-          - compulsory
       - rule_type: field
         id: creation_date_time
-        modifiers:
-          - compulsory
       - rule_type: field
         id: transmission_date
-        modifiers:
-          - compulsory
       - rule_type: field
         id: character_set
 
@@ -648,16 +582,10 @@ transmission_trailer:
       rules:
       - rule_type: field
         id: group_count
-        modifiers:
-          - compulsory
       - rule_type: field
         id: transaction_count
-        modifiers:
-          - compulsory
       - rule_type: field
         id: record_count
-        modifiers:
-          - compulsory
 
 work:
   id: work
@@ -671,14 +599,10 @@ work:
       rules:
       - rule_type: field
         id: work_title
-        modifiers:
-          - compulsory
       - rule_type: field
         id: language_code
       - rule_type: field
         id: submitter_work_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: iswc
       - rule_type: field
@@ -687,8 +611,6 @@ work:
         id: copyright_number
       - rule_type: field
         id: musical_work_distribution_category
-        modifiers:
-          - compulsory
       - rule_type: field
         id: duration
       - rule_type: field
@@ -699,8 +621,6 @@ work:
         id: composite_type
       - rule_type: field
         id: version_type
-        modifiers:
-          - compulsory
       - rule_type: field
         id: excerpt_type
       - rule_type: field
@@ -763,26 +683,18 @@ work_conflict:
         id: copyright_number
       - rule_type: field
         id: musical_work_distribution_category
-        modifiers:
-          - compulsory
       - rule_type: field
         id: duration
       - rule_type: field
         id: recorded_indicator
       - rule_type: field
         id: text_music_relationship
-        modifiers:
-          - compulsory
       - rule_type: field
         id: composite_type
       - rule_type: field
         id: version_type
-        modifiers:
-          - compulsory
       - rule_type: field
         id: excerpt_type
-        modifiers:
-          - compulsory
       - rule_type: field
         id: music_arrangement
       - rule_type: field
@@ -867,20 +779,14 @@ writer:
         id: pr_society
       - rule_type: field
         id: pr_ownership_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: mr_society
       - rule_type: field
         id: mr_ownership_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: sr_society
       - rule_type: field
         id: sr_ownership_share
-        modifiers:
-          - compulsory
       - rule_type: field
         id: reversionary
       - rule_type: field
@@ -909,8 +815,6 @@ writer_publisher:
         id: publisher_name
       - rule_type: field
         id: submitter_agreement_n
-        modifiers:
-          - compulsory
       - rule_type: field
         id: society_assigned_agreement_n
       - rule_type: field
