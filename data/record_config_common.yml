@@ -695,8 +695,6 @@ work:
         id: recorded_indicator
       - rule_type: field
         id: text_music_relationship
-        modifiers:
-          - compulsory
       - rule_type: field
         id: composite_type
       - rule_type: field
