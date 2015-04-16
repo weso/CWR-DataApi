@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import logging
 
 from cwr.file import CWRFile, FileTag
 from cwr.parser.common import GrammarDecoder, GrammarFileDecoder, Encoder
@@ -27,6 +28,9 @@ class CWRFileDecoder(Decoder):
 
     def __init__(self):
         super(CWRFileDecoder, self).__init__()
+
+        # Logger
+        self._logger = logging.getLogger(__name__)
 
         _config = CWRConfiguration()
 

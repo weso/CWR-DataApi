@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(filename=log,
                         level=logging.DEBUG,
-                        )
+                        format='%(asctime)s.%(msecs)d %(levelname)s %(module)s - %(funcName)s: %(message)s')
     logger = logging.getLogger(__name__)
 
     decoder = CWRFileDecoder()

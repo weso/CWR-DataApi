@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import logging
 
 import pyparsing as pp
 
@@ -32,8 +33,9 @@ class TerminalRuleFactory(object):
 class RuleFactory(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self):
-        pass
+    def __init__(self, logger=None):
+        # Logger
+        self._logger = logger
 
     @abstractmethod
     def get_rule(self, groups):
@@ -53,6 +55,9 @@ class DefaultRuleFactory(RuleFactory):
             self._decorators = {}
 
     def get_rule(self, id):
+        if self._logger:
+            self._logger.info('Acquiring rule %s' % id)
+
         record_config = self._record_configs[id]
         sequence = []
 
