@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from data.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldFactory
-from data.accessor import CWRTables
-from cwr.grammar.factory.record import PrefixBuilder, RecordFactory
+from tests.utils.grammar import getRecordGrammar
 
 
 """
@@ -21,17 +18,7 @@ __status__ = 'Development'
 
 class TestOriginalWorkTitleGrammar(unittest.TestCase):
     def setUp(self):
-        _config = CWRConfiguration()
-
-        _data = _config.load_field_config('table')
-        _data.update(_config.load_field_config('common'))
-
-        _factory_field = DefaultFieldFactory(_data, CWRTables())
-
-        _prefixer = PrefixBuilder(_config.record_types())
-        _factory_record = RecordFactory(_config.load_record_config('common'), _prefixer, _factory_field)
-
-        self.grammar = _factory_record.get_transaction_record('original_work_title')
+        self.grammar = getRecordGrammar('original_work_title')
 
     def test_valid_full(self):
         record = 'VER0000123400000023THE TITLE                                                   T0123456789ESLAST NAME 1                                  FIRST NAME 1                  THE SOURCE                                                  00014107338I-000000229-7LAST NAME 2                                  FIRST NAME 2                  00014107339I-000000230-7ABCD0123456789'

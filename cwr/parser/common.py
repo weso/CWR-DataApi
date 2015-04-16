@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import logging
 
 from cwr.utils.reader import UTF8AdapterReader
 
@@ -48,7 +49,7 @@ class GrammarDecoder(Decoder):
         return self._grammar
 
     def decode(self, text):
-        return self._grammar.parseString(text)[0]
+        return self._grammar.parseString(text)
 
 
 class GrammarFileDecoder(GrammarDecoder):
@@ -58,6 +59,7 @@ class GrammarFileDecoder(GrammarDecoder):
 
     def __init__(self, grammar, reader=None):
         super(GrammarFileDecoder, self).__init__(grammar)
+        self._logger = logging.getLogger(__name__)
 
         if reader is None:
             self._reader = UTF8AdapterReader()
@@ -65,7 +67,15 @@ class GrammarFileDecoder(GrammarDecoder):
             self._reader = reader
 
     def decode(self, path):
-        return super(GrammarFileDecoder, self).decode(self.reader.read(path))
+        self._logger.info('Begins reading file %s' % path)
+        data = self.reader.read(path)
+        self._logger.info('Finished reading file %s' % path)
+
+        self._logger.info('Begins decoding file %s' % path)
+        result = super(GrammarFileDecoder, self).decode(data)
+        self._logger.info('Finished decoding file %s' % path)
+
+        return result
 
     @property
     def reader(self):

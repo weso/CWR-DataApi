@@ -17,8 +17,12 @@ if "%1" == "" goto help
 if "%1" == "help" (
 	:help
 	echo.Please use `make ^<target^>` where ^<target^> is one of
-	echo.  sdist      to make the source distribution
-	echo.  bdist      to make the binary distribution
+	echo.  sdist          to make the source distribution
+	echo.  bdist          to make the binary distribution
+	echo.  pypi_reg       to register on pypi
+	echo.  pypitest_reg   to register on pypi-test
+	echo.  pypi           to upload to pypi
+	echo.  pypitest       to upload to pypi-test
 	goto end
 )
 
@@ -51,7 +55,7 @@ exit /b 1
 
 
 if "%1" == "sdist" (
-	echo %PYTHON% sdist
+	%PYTHON% setup.py sdist
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Generated source distribution. It can be found in the
@@ -60,11 +64,43 @@ if "%1" == "sdist" (
 )
 
 if "%1" == "bdist" (
-	echo %PYTHON% bdist
+	%PYTHON% setup.py bdist
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Generated binary distribution. It can be found in the
 	echo.%DISTDIR% folder.
+	goto end
+)
+
+if "%1" == "pypi_reg" (
+	%PYTHON% setup.py register -r pypi
+	if errorlevel 1 exit /b 1
+	echo.
+	echo.Registered project on pypi.
+	goto end
+)
+
+if "%1" == "pypitest_reg" (
+	%PYTHON% setup.py register -r pypitest
+	if errorlevel 1 exit /b 1
+	echo.
+	echo.Registered project on pypitest.
+	goto end
+)
+
+if "%1" == "pypi" (
+	%PYTHON% setup.py sdist upload -r pypi
+	if errorlevel 1 exit /b 1
+	echo.
+	echo.Uploaded project to pypi.
+	goto end
+)
+
+if "%1" == "pypitest" (
+	%PYTHON% setup.py sdist upload -r pypitest
+	if errorlevel 1 exit /b 1
+	echo.
+	echo.Uploaded project to pypitest.
 	goto end
 )
 

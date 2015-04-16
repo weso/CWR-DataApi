@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta
-import logging
+from abc import ABCMeta, abstractmethod
 
 import pyparsing as pp
 
 from cwr.grammar.field import record as field_record
 from cwr.parser.dictionary import *
+from cwr.grammar.factory.rule import RuleDecorator
 
 
 """
@@ -22,43 +22,29 @@ Configuration classes.
 """
 
 
-class PrefixBuilder(object):
-    def __init__(self, config):
-        self._config = config
-
-    def get_prefix(self, id):
-        return field_record.record_type(self._config[id])
-
-    def get_transaction_prefix(self, id):
-        return field_record.record_prefix(self._config[id])
-
-
 class RecordFactory(object):
-    """
-    Factory for acquiring record rules.
-    """
     __metaclass__ = ABCMeta
 
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def get_record(self, id):
+        raise NotImplementedError("The get_record method is not implemented")
+
+
+class RecordRuleDecorator(RuleDecorator):
     _lineStart = pp.lineStart.suppress()
     _lineStart.setName("Start of line")
 
     _lineEnd = pp.lineEnd.suppress()
     _lineEnd.setName("End of line")
 
-    def __init__(self, record_configs, prefixer, field_factory):
-        # records already created
-        self._records = {}
-        # Logger
-        self._logger = logging.getLogger(__name__)
-        # Configuration for creating the record
-        self._record_configs = record_configs
-        # Fields factory
-        self._field_factory = field_factory
-        # Prefix builder
-        self._prefixer = prefixer
-        # Dictionary decoders
-        self._decoders = {}
+    def __init__(self, factory):
+        super(RecordRuleDecorator, self).__init__()
+        self._factory = factory
 
+        self._decoders = {}
         # TODO: Do this somewhere else
         self._decoders['acknowledgement'] = AcknowledgementDictionaryDecoder()
         self._decoders['message'] = MessageDictionaryDecoder()
@@ -67,7 +53,7 @@ class RecordFactory(object):
         self._decoders['additional_related_information'] = AdditionalRelatedInformationDictionaryDecoder()
         self._decoders['group_header'] = GroupHeaderDictionaryDecoder()
         self._decoders['group_trailer'] = GroupTrailerDictionaryDecoder()
-        self._decoders['interested_party_agreement'] = InterestedPartyForAgreementDecoder()
+        self._decoders['interested_party_agreement'] = InterestedPartyForAgreementDictionaryDecoder()
         self._decoders['nra_agreement_party'] = NonRomanAlphabetAgreementPartyDictionaryDecoder()
         self._decoders['nra_publisher_name'] = NonRomanAlphabetPublisherNameDictionaryDecoder()
         self._decoders['nra_writer_name'] = NonRomanAlphabetWriterNameDictionaryDecoder()
@@ -76,7 +62,7 @@ class RecordFactory(object):
         self._decoders['nra_work'] = NonRomanAlphabetWorkDictionaryDecoder()
         self._decoders['nra_other_writer'] = NonRomanAlphabetOtherWriterDictionaryDecoder()
         self._decoders['publisher'] = PublisherRecordDictionaryDecoder()
-        self._decoders['publisher_territory'] = IPTerritoryOfControlDecoder()
+        self._decoders['publisher_territory'] = IPTerritoryOfControlDictionaryDecoder()
         self._decoders['transmission_header'] = TransmissionHeaderDictionaryDecoder()
         self._decoders['transmission_trailer'] = TransmissionTrailerDictionaryDecoder()
         self._decoders['work'] = WorkDictionaryDecoder()
@@ -87,18 +73,32 @@ class RecordFactory(object):
         self._decoders['performing_artist'] = PerformingArtistDictionaryDecoder()
         self._decoders['recording_detail'] = RecordingDetailDictionaryDecoder()
         self._decoders['work_origin'] = WorkOriginDictionaryDecoder()
-        self._decoders['instrumentation_summary'] = InstrumentationSummaryDecoder()
-        self._decoders['instrumentation_detail'] = InstrumentationDetailDecoder()
+        self._decoders['instrumentation_summary'] = InstrumentationSummaryDictionaryDecoder()
+        self._decoders['instrumentation_detail'] = InstrumentationDetailDictionaryDecoder()
         self._decoders['component'] = ComponentDictionaryDecoder()
         self._decoders['writer'] = WriterRecordDictionaryDecoder()
-        self._decoders['writer_publisher'] = PublisherForWriterDecoder()
-        self._decoders['writer_territory'] = IPTerritoryOfControlDecoder()
+        self._decoders['writer_publisher'] = PublisherForWriterDictionaryDecoder()
+        self._decoders['writer_territory'] = IPTerritoryOfControlDictionaryDecoder()
+        self._decoders['filename_new'] = FileTagDictionaryDecoder()
+        self._decoders['filename_old'] = FileTagDictionaryDecoder()
 
-    def get_transaction_record(self, id):
-        record = self._lineStart + \
-                 self._prefixer.get_transaction_prefix(id) + \
-                 self._build_record(id) + \
-                 self._lineEnd
+    def decorate(self, rule, data):
+        sequence = []
+
+        id = data['id']
+
+        sequence.append(self._lineStart)
+
+        prefix = self._get_prefix(data)
+
+        if prefix is not None:
+            sequence.append(prefix)
+
+        sequence.append(rule)
+
+        sequence.append(self._lineEnd)
+
+        record = pp.And(sequence)
 
         if id in self._decoders:
             decoder = self._decoders[id]
@@ -106,40 +106,40 @@ class RecordFactory(object):
 
         return record.setResultsName(id)
 
-    def get_record(self, id):
-        record = self._lineStart + \
-                 self._prefixer.get_prefix(id) + \
-                 self._build_record(id) + \
-                 self._lineEnd
+    def _get_prefix(self, config):
+        rule_type = config['rule_type']
 
-        if id in self._decoders:
-            decoder = self._decoders[id]
-            record.setParseAction(lambda p: decoder.decode(p))
-
-        return record.setResultsName(id)
-
-    def _build_record(self, id):
-        field_config = self._record_configs[id]
-
-        fields = []
-        for config in field_config:
-            if 'compulsory' in config:
-                compulsory = config['compulsory']
-            else:
-                compulsory = False
-
-            fields.append(self._field_factory.get_field(config['name'], compulsory=compulsory))
-
-        if len(fields) > 0:
-            first = True
-            record = None
-            for field in fields:
-                if first:
-                    record = field
-                    first = False
-                else:
-                    record += field
+        if rule_type == 'transaction':
+            header = field_record.record_prefix(config['record_type'], self._factory)
+        elif rule_type == 'record':
+            header = field_record.record_type(config['record_type'])
         else:
-            record = None
+            header = None
 
-        return record
+        return header
+
+
+class GroupRuleDecorator(RuleDecorator):
+    _lineStart = pp.lineStart.suppress()
+    _lineStart.setName("Start of line")
+
+    _lineEnd = pp.lineEnd.suppress()
+    _lineEnd.setName("End of line")
+
+    def __init__(self):
+        super(GroupRuleDecorator, self).__init__()
+
+        self._decoders = {}
+        # TODO: Do this somewhere else
+        self._decoders['transmission'] = TransmissionDictionaryDecoder()
+
+    def decorate(self, rule, data):
+        id = data['id']
+
+        record = rule
+
+        if id in self._decoders:
+            decoder = self._decoders[id]
+            record.setParseAction(lambda p: decoder.decode(p))
+
+        return record.setResultsName(id)
