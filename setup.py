@@ -34,7 +34,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        'data': ['*.csv', '*.yml'],
+        'data': ['data/*.csv', 'data/*.yml'],
     },
     version=version,
     description='API library for the CWR standard format',

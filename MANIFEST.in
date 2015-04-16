@@ -1,0 +1,7 @@
+# Miscellany files
+include LICENSE
+include README.rst
+prune tests
+include data/*.py
+include data/*.csv
+include data/*.yml
