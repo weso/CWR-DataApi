@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
 from cwr.group import GroupHeader, GroupTrailer, Group
@@ -343,11 +341,8 @@ class TransmissionTrailerDictionaryDecoder(Decoder):
 class WorkDictionaryDecoder(Decoder):
     def __init__(self):
         super(WorkDictionaryDecoder, self).__init__()
-        self._logger = logging.getLogger(__name__)
 
     def decode(self, data):
-        self._logger.info('Decoding work [%s, %s, %s]' % (
-        data['record_type'], data['transaction_sequence_n'], data['record_sequence_n']))
         return WorkRecord(record_type=data['record_type'],
                           transaction_sequence_n=data['transaction_sequence_n'],
                           record_sequence_n=data['record_sequence_n'],

@@ -26,18 +26,16 @@ class FieldTerminalRuleFactory(TerminalRuleFactory):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, field_configs):
+    def __init__(self, field_configs, logger=None):
         super(FieldTerminalRuleFactory, self).__init__()
         # Fields already created
         self._fields = {}
         # Field builders being used
         self._adapters = {}
         # Logger
-        self._logger = logging.getLogger(__name__)
+        self._logger = logger
         # Configuration for creating the fields
         self._field_configs = field_configs
-
-        self._logger.info('Constructing %s' % __name__)
 
     def get_field_base(self, id):
         """
@@ -50,19 +48,22 @@ class FieldTerminalRuleFactory(TerminalRuleFactory):
         :param compulsory: indicates if the empty string is rejected or not
         :return: the rule of a field
         """
-        self._logger.info('Acquiring base field %s' % id)
+        if self._logger:
+            self._logger.info('Acquiring base field %s' % id)
 
         # Field configuration info
         config = self._field_configs[id]
 
         if id in self._fields:
             # Field already exists
-            self._logger.info('Field %s already exists, using saved instance' % id)
+            if self._logger:
+                self._logger.info('Field %s already exists, using saved instance' % id)
             field = self._fields[id]
         else:
             # Field does not exist
             # It is created
-            self._logger.info('Field %s does not exist, creating new instance' % id)
+            if self._logger:
+                self._logger.info('Field %s does not exist, creating new instance' % id)
             field = self.create_field(id, config)
 
             # Field is saved
@@ -114,12 +115,14 @@ class OptionFieldTerminalRuleFactory(FieldTerminalRuleFactory):
         :param compulsory: indicates if the empty string is rejected or not
         :return: a lookup field
         """
-        self._logger.info('Acquiring field %s' % id)
+        if self._logger:
+            self._logger.info('Acquiring field %s' % id)
 
         if not compulsory:
             if id in self._fields_optional:
                 # Wrapped field already exists
-                self._logger.info('Wrapped field %s already exists, using saved instance' % id)
+                if self._logger:
+                    self._logger.info('Wrapped field %s already exists, using saved instance' % id)
                 field = self._fields_optional[id]
             else:
                 # Field configuration info
@@ -128,13 +131,15 @@ class OptionFieldTerminalRuleFactory(FieldTerminalRuleFactory):
                 field = self.get_field_base(id)
 
                 # It is not compulsory, the wrapped is added
-                self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
+                if self._logger:
+                    self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
                 field = self.not_compulsory_wrapper(field, config['type'], config['name'], config['size'])
 
                 # Wrapped field is saved
                 self._fields_optional[id] = field
         else:
-            self._logger.info('The %s is compulsory' % id)
+            if self._logger:
+                self._logger.info('The %s is compulsory' % id)
             field = self.get_field_base(id)
 
         return field

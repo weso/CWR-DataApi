@@ -33,9 +33,9 @@ class TerminalRuleFactory(object):
 class RuleFactory(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self):
+    def __init__(self, logger=None):
         # Logger
-        self._logger = logging.getLogger(__name__)
+        self._logger = logger
 
     @abstractmethod
     def get_rule(self, groups):
@@ -55,7 +55,8 @@ class DefaultRuleFactory(RuleFactory):
             self._decorators = {}
 
     def get_rule(self, id):
-        self._logger.info('Acquiring rule %s' % id)
+        if self._logger:
+            self._logger.info('Acquiring rule %s' % id)
 
         record_config = self._record_configs[id]
         sequence = []
