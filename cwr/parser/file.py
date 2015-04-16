@@ -9,6 +9,7 @@ from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
 from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
+import logging
 
 
 """
@@ -27,6 +28,9 @@ class CWRFileDecoder(Decoder):
 
     def __init__(self):
         super(CWRFileDecoder, self).__init__()
+
+        # Logger
+        self._logger = logging.getLogger(__name__)
 
         _config = CWRConfiguration()
 
