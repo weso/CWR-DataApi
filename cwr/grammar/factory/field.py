@@ -37,7 +37,9 @@ class FieldTerminalRuleFactory(TerminalRuleFactory):
         # Configuration for creating the fields
         self._field_configs = field_configs
 
-    def get_field(self, id):
+        self._logger.info('Constructing %s' % __name__)
+
+    def get_field_base(self, id):
         """
         Returns the rule for the field identified by the id.
 
@@ -48,7 +50,7 @@ class FieldTerminalRuleFactory(TerminalRuleFactory):
         :param compulsory: indicates if the empty string is rejected or not
         :return: the rule of a field
         """
-        self._logger.info('Acquiring field %s' % id)
+        self._logger.info('Acquiring base field %s' % id)
 
         # Field configuration info
         config = self._field_configs[id]
@@ -117,22 +119,23 @@ class OptionFieldTerminalRuleFactory(FieldTerminalRuleFactory):
         if not compulsory:
             if id in self._fields_optional:
                 # Wrapped field already exists
-                self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
+                self._logger.info('Wrapped field %s already exists, using saved instance' % id)
                 field = self._fields_optional[id]
             else:
                 # Field configuration info
                 config = self._field_configs[id]
 
-                field = super(OptionFieldTerminalRuleFactory, self).get_field(id)
+                field = self.get_field_base(id)
 
                 # It is not compulsory, the wrapped is added
-                self._logger.info('Wrapped field %s already exists, using saved instance' % id)
+                self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
                 field = self.not_compulsory_wrapper(field, config['type'], config['name'], config['size'])
 
                 # Wrapped field is saved
                 self._fields_optional[id] = field
         else:
-            field = super(OptionFieldTerminalRuleFactory, self).get_field(id)
+            self._logger.info('The %s is compulsory' % id)
+            field = self.get_field_base(id)
 
         return field
 
