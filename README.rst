@@ -56,7 +56,7 @@ Al other dependencies are indicated on requirements.txt, which can be installed 
 Getting the code
 ~~~~~~~~~~~~~~~~
 
-The code can be found at the GitHub `project page`_.
+The code can be found at the `GitHub project page`_.
 
 License
 -------
@@ -67,5 +67,5 @@ The project has been released under the `MIT License`_.
 .. _BMAT: http://www.bmat.com/
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://github.com/weso/CWR-DataApi/issues
-.. _project page: https://github.com/weso/CWR-DataApi
+.. _GitHub project page: https://github.com/weso/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php

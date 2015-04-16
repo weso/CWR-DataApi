@@ -5,7 +5,6 @@ from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, Ag
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.info import AdditionalRelatedInfoRecord
 from cwr.interested_party import IPTerritoryOfControlRecord
-
 from cwr.parser.common import Encoder, Decoder
 from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
 from cwr.non_roman_alphabet import NonRomanAlphabetWorkRecord, NonRomanAlphabetTitleRecord, \
