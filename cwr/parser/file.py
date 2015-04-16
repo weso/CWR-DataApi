@@ -8,6 +8,7 @@ from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
+from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
 
 
 """
@@ -31,7 +32,6 @@ class CWRFileDecoder(Decoder):
 
         _data = _config.load_field_config('table')
         _data.update(_config.load_field_config('common'))
-        _data.update(_config.load_field_config('filename'))
 
         _factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
 
@@ -39,7 +39,10 @@ class CWRFileDecoder(Decoder):
         _rules.update(_config.load_record_config('common'))
         _rules.update(_config.load_group_config('common'))
 
-        _group_rule_factory = DefaultRuleFactory(_rules, _factory_field)
+        _decorators = {'transaction': RecordRuleDecorator(_factory_field),
+                       'record': RecordRuleDecorator(_factory_field),
+                       'group': GroupRuleDecorator()}
+        _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 
         self._filename_decoder = CWRFileNameDecoder()
         self._file_decoder = GrammarFileDecoder(_group_rule_factory.get_rule('transmission'))
