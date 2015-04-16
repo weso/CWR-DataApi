@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+import logging
 
 from cwr.utils.reader import UTF8AdapterReader
-import logging
 
 
 """

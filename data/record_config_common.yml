@@ -233,14 +233,20 @@ interested_party_agreement:
         id: pr_society
       - rule_type: field
         id: pr_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: mr_society
       - rule_type: field
         id: mr_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: sr_society
       - rule_type: field
         id: sr_share
+        modifiers:
+          - compulsory
 
 message:
   id: message
@@ -456,14 +462,20 @@ publisher:
         id: pr_society
       - rule_type: field
         id: pr_ownership_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: mr_society
       - rule_type: field
         id: mr_ownership_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: sr_society
       - rule_type: field
         id: sr_ownership_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: special_agreements
       - rule_type: field
@@ -494,10 +506,16 @@ publisher_territory:
         id: constant
       - rule_type: field
         id: pr_collection_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: mr_collection_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: sr_collection_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: inclusion_exclusion_indicator
       - rule_type: field
@@ -779,14 +797,20 @@ writer:
         id: pr_society
       - rule_type: field
         id: pr_ownership_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: mr_society
       - rule_type: field
         id: mr_ownership_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: sr_society
       - rule_type: field
         id: sr_ownership_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: reversionary
       - rule_type: field
@@ -831,10 +855,16 @@ writer_territory:
         id: ip_n
       - rule_type: field
         id: pr_collection_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: mr_collection_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: sr_collection_share
+        modifiers:
+          - compulsory
       - rule_type: field
         id: inclusion_exclusion_indicator
       - rule_type: field
