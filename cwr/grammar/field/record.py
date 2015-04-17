@@ -33,7 +33,6 @@ def record_type(values):
     While it is possible to set this field as optional, it is expected to be compulsory.
 
     :param values: allowed record type codes
-    :param compulsory: indicates if the empty string is disallowed
     :return: grammar for the record type field
     """
     field = basic.lookup(values, columns=_config.field_size('record', 'record_type'),
