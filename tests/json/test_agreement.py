@@ -4,7 +4,7 @@ import unittest
 import datetime
 
 from cwr.agreement import AgreementRecord
-from cwr.parser.cwrjson import JSONDecoder
+from cwr.parser.cwrjson import JSONEncoder
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestAgreementRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = JSONDecoder()
+        self._encoder = JSONEncoder()
 
     def test_encoded(self):
         data = AgreementRecord(record_type='ACK',
