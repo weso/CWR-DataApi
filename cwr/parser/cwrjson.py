@@ -15,9 +15,9 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class JSONDecoder(Encoder):
+class JSONEncoder(Encoder):
     def __init__(self):
-        super(JSONDecoder, self).__init__()
+        super(JSONEncoder, self).__init__()
         self._dict_encoder = CWRDictionaryEncoder()
 
     def encode(self, object):
