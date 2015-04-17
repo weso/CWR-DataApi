@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
-from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
-from cwr.group import GroupHeader, GroupTrailer, Group
-from cwr.info import AdditionalRelatedInfoRecord
-from cwr.interested_party import IPTerritoryOfControlRecord
+from cwr.acknowledgement import *
+from cwr.agreement import *
+from cwr.group import *
+from cwr.info import *
 from cwr.parser.common import Encoder, Decoder
-from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
-from cwr.non_roman_alphabet import NonRomanAlphabetWorkRecord, NonRomanAlphabetTitleRecord, \
-    NonRomanAlphabetOtherWriterRecord, NonRomanAlphabetAgreementPartyRecord, NonRomanAlphabetPublisherNameRecord, \
-    NonRomanAlphabetPerformanceDataRecord, NonRomanAlphabetWriterNameRecord
-from cwr.transmission import TransmissionHeader, TransmissionTrailer, Transmission
-from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, RecordingDetailRecord, \
-    InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, PerformingArtistRecord
-from cwr.file import FileTag
+from cwr.interested_party import *
+from cwr.non_roman_alphabet import *
+from cwr.transmission import *
+from cwr.work import *
+from cwr.file import *
+from cwr.other import *
 
 
 """
@@ -682,6 +679,18 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, WriterRecord):
             # Writer
             encoded = self.__encode_writer_record(object)
+        elif isinstance(object, ISWCCode):
+            # ISWC
+            encoded = self.__encode_iswc(object)
+        elif isinstance(object, IPIBaseNumber):
+            # IPI Base Number
+            encoded = self.__encode_ipi_base(object)
+        elif isinstance(object, VISAN):
+            # V-ISAN
+            encoded = self.__encode_visan(object)
+        elif isinstance(object, AVIKey):
+            # AVI Key
+            encoded = self.__encode_avi_key(object)
         else:
             encoded = None
 
@@ -1394,6 +1403,65 @@ class CWRDictionaryEncoder(Encoder):
         encoded['work_for_hire'] = record.work_for_hire
 
         encoded['writer'] = self.__encode_writer(record.writer)
+
+        return encoded
+
+    def __encode_iswc(self, iswc):
+        """
+        Creates a dictionary from a ISWCCode.
+
+        :param iswc: the ISWCCode to transform into a dictionary
+        :return: a dictionary created from the ISWCCode
+        """
+        encoded = {}
+
+        encoded['id_code'] = iswc.id_code
+        encoded['check_digit'] = iswc.check_digit
+
+        return encoded
+
+    def __encode_ipi_base(self, ipi):
+        """
+        Creates a dictionary from a IPIBaseNumber.
+
+        :param ipi: the IPIBaseNumber to transform into a dictionary
+        :return: a dictionary created from the IPIBaseNumber
+        """
+        encoded = {}
+
+        encoded['header'] = ipi.header
+        encoded['id_code'] = ipi.id_code
+        encoded['check_digit'] = ipi.check_digit
+
+        return encoded
+
+    def __encode_visan(self, visan):
+        """
+        Creates a dictionary from a VISAN.
+
+        :param ipi: the VISAN to transform into a dictionary
+        :return: a dictionary created from the VISAN
+        """
+        encoded = {}
+
+        encoded['version'] = visan.version
+        encoded['isan'] = visan.isan
+        encoded['episode'] = visan.episode
+        encoded['check_digit'] = visan.check_digit
+
+        return encoded
+
+    def __encode_avi_key(self, avi_key):
+        """
+        Creates a dictionary from a AVIKey.
+
+        :param avi_key: the AVIKey to transform into a dictionary
+        :return: a dictionary created from the AVIKey
+        """
+        encoded = {}
+
+        encoded['society_code'] = avi_key.society_code
+        encoded['av_number'] = avi_key.av_number
 
         return encoded
 

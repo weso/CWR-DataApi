@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 
 import pyparsing as pp
 
