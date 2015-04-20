@@ -1566,3 +1566,42 @@ class FileTagDictionaryDecoder(Decoder):
                        data['sender'],
                        data['receiver'],
                        data['version'])
+
+
+class AVIKeyDecoder(Decoder):
+    def __init__(self):
+        super(AVIKeyDecoder, self).__init__()
+
+    def decode(self, data):
+        return AVIKey(data['society_code'],
+                      data['av_number'])
+
+
+class IPIBaseDecoder(Decoder):
+    def __init__(self):
+        super(IPIBaseDecoder, self).__init__()
+
+    def decode(self, data):
+        return IPIBaseNumber(data['header'],
+                             data['id_code'],
+                             data['check_digit'])
+
+
+class ISWCDecoder(Decoder):
+    def __init__(self):
+        super(ISWCDecoder, self).__init__()
+
+    def decode(self, data):
+        return ISWCCode(data['id_code'],
+                        data['check_digit'])
+
+
+class VISANDecoder(Decoder):
+    def __init__(self):
+        super(VISANDecoder, self).__init__()
+
+    def decode(self, data):
+        return VISAN(data['version'],
+                     data['isan'],
+                     data['episode'],
+                     data['check_digit'])
