@@ -2,7 +2,6 @@
 
 import json
 
-from cwr.parser.common import Encoder
 from cwr.parser.dictionary import CWRDictionaryEncoder
 
 
@@ -15,13 +14,12 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class JSONEncoder(Encoder):
+class JSONEncoder(CWRDictionaryEncoder):
     def __init__(self):
         super(JSONEncoder, self).__init__()
-        self._dict_encoder = CWRDictionaryEncoder()
 
     def encode(self, object):
-        encoded = self._dict_encoder.encode(object)
+        encoded = super(JSONEncoder, self).encode(object)
 
         return json.dumps(encoded, default=self._date_handler)
 
