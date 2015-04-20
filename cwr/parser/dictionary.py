@@ -11,6 +11,7 @@ from cwr.transmission import *
 from cwr.work import *
 from cwr.file import *
 from cwr.other import *
+from cwr.table_value import *
 
 
 """
@@ -568,6 +569,40 @@ class PublisherRecordDictionaryDecoder(Decoder):
                                usa_license=data['usa_license'])
 
 
+class TableValueDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(TableValueDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return TableValue(code=data['code'],
+                          name=data['name'],
+                          description=data['description'])
+
+
+class MediaTypeValueDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(MediaTypeValueDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return MediaTypeValue(code=data['code'],
+                              name=data['name'],
+                              media_type=data['media_type'],
+                              duration_max=data['duration_max'],
+                              works_max=data['works_max'],
+                              fragments_max=data['fragments_max'])
+
+
+class InstrumentValueDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(InstrumentValueDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return InstrumentValue(code=data['code'],
+                               name=data['name'],
+                               family=data['family'],
+                               description=data['description'])
+
+
 class CWRDictionaryEncoder(Encoder):
     """
     Encodes CWR model classes into dictionaries.
@@ -691,6 +726,15 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, AVIKey):
             # AVI Key
             encoded = self.__encode_avi_key(object)
+        elif isinstance(object, MediaTypeValue):
+            # Media type value
+            encoded = self.__encode_media_type_value(object)
+        elif isinstance(object, InstrumentValue):
+            # Instrument value
+            encoded = self.__encode_instrument_value(object)
+        elif isinstance(object, TableValue):
+            # Table value
+            encoded = self.__encode_table_value(object)
         else:
             encoded = None
 
@@ -1462,6 +1506,52 @@ class CWRDictionaryEncoder(Encoder):
 
         encoded['society_code'] = avi_key.society_code
         encoded['av_number'] = avi_key.av_number
+
+        return encoded
+
+    def __encode_table_value(self, value):
+        """
+        Creates a dictionary from a TableValue.
+
+        :param value: the TableValue to transform into a dictionary
+        :return: a dictionary created from the TableValue
+        """
+        encoded = {}
+
+        encoded['code'] = value.code
+        encoded['name'] = value.name
+        encoded['description'] = value.description
+
+        return encoded
+
+    def __encode_media_type_value(self, value):
+        """
+        Creates a dictionary from a MediaTypeValue.
+
+        :param value: the MediaTypeValue to transform into a dictionary
+        :return: a dictionary created from the MediaTypeValue
+        """
+        encoded = {}
+
+        encoded['code'] = value.code
+        encoded['name'] = value.name
+        encoded['media_type'] = value.media_type
+        encoded['duration_max'] = value.duration_max
+        encoded['works_max'] = value.works_max
+        encoded['fragments_max'] = value.fragments_max
+
+        return encoded
+
+    def __encode_instrument_value(self, value):
+        """
+        Creates a dictionary from a InstrumentValue.
+
+        :param value: the InstrumentValue to transform into a dictionary
+        :return: a dictionary created from the InstrumentValue
+        """
+        encoded = self.__encode_table_value(value)
+
+        encoded['family'] = value.family
 
         return encoded
 
