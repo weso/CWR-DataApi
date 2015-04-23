@@ -55,6 +55,8 @@ class TestWriterRecordDictionaryEncoding(unittest.TestCase):
 
         writer = encoded['writer']
 
+        writer = json.loads(writer)
+
         self.assertEqual('ABC15', writer['ip_n'])
         self.assertEqual('ABC1234', writer['personal_number'])
         self.assertEqual(14107338, writer['ipi_name_n'])

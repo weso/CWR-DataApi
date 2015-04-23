@@ -813,7 +813,7 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = self.__encode_transaction_record_head(record)
 
-        encoded['iswc'] = record.iswc
+        encoded['iswc'] = self.encode(record.iswc)
         encoded['language_code'] = record.language_code
         encoded['title'] = record.title
 
@@ -923,7 +923,7 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = self.__encode_transaction_record_head(record)
 
-        encoded['iswc'] = record.iswc
+        encoded['iswc'] = self.encode(record.iswc)
         encoded['language_code'] = record.language_code
         encoded['source'] = record.source
         encoded['submitter_work_n'] = record.submitter_work_n
@@ -949,7 +949,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded = self.__encode_transaction_record_head(record)
 
         encoded['duration'] = record.duration
-        encoded['iswc'] = record.iswc
+        encoded['iswc'] = self.encode(record.iswc)
         encoded['submitter_work_n'] = record.submitter_work_n
         encoded['title'] = record.title
         encoded['writer_1_first_name'] = record.writer_1_first_name
@@ -1412,8 +1412,9 @@ class CWRDictionaryEncoder(Encoder):
         encoded['library'] = record.library
         encoded['production_n'] = record.production_n
         encoded['production_title'] = record.production_title
-        encoded['visan'] = record.visan
         encoded['year_production'] = record.year_production
+
+        encoded['visan'] = self.encode(record.visan)
 
         return encoded
 
@@ -1446,7 +1447,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded['writer_unknown'] = record.writer_unknown
         encoded['work_for_hire'] = record.work_for_hire
 
-        encoded['writer'] = self.__encode_writer(record.writer)
+        encoded['writer'] = self.encode(record.writer)
 
         return encoded
 

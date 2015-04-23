@@ -3,7 +3,6 @@
 import json
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
-from cwr.other import ISWCCode, VISAN
 
 
 """
@@ -28,10 +27,6 @@ class JSONEncoder(CWRDictionaryEncoder):
 
         if hasattr(obj, 'isoformat'):
             result = obj.isoformat()
-        elif isinstance(obj, ISWCCode):
-            result = self.encode(obj)
-        elif isinstance(obj, VISAN):
-            result = self.encode(obj)
         else:
             result = obj
 

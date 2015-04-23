@@ -60,5 +60,6 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(14107448, encoded['writer_2_ipi_name_n'])
         self.assertEqual('SOURCE', encoded['source'])
         self.assertEqual('ES', encoded['language_code'])
-        self.assertEqual(12345678, encoded['iswc'].id_code)
-        self.assertEqual(9, encoded['iswc'].check_digit)
+
+        self.assertEqual(12345678, encoded['iswc']['id_code'])
+        self.assertEqual(9, encoded['iswc']['check_digit'])
