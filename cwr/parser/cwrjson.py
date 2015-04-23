@@ -3,6 +3,7 @@
 import json
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
+from cwr.other import ISWCCode, VISAN
 
 
 """
@@ -24,4 +25,14 @@ class JSONEncoder(CWRDictionaryEncoder):
         return json.dumps(encoded, default=self._date_handler)
 
     def _date_handler(self, obj):
-        return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+
+        if hasattr(obj, 'isoformat'):
+            result = obj.isoformat()
+        elif isinstance(obj, ISWCCode):
+            result = self.encode(obj)
+        elif isinstance(obj, VISAN):
+            result = self.encode(obj)
+        else:
+            result = obj
+
+        return result
