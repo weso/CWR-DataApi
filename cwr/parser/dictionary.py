@@ -1419,7 +1419,6 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = self.__encode_transaction_record_head(record)
 
-        encoded['audio_visual_key'] = record.audio_visual_key
         encoded['bltvr'] = record.bltvr
         encoded['cd_identifier'] = record.cd_identifier
         encoded['cut_number'] = record.cut_number
@@ -1431,6 +1430,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded['production_title'] = record.production_title
         encoded['year_production'] = record.year_production
 
+        encoded['audio_visual_key'] = self.encode(record.audio_visual_key)
         encoded['visan'] = self.encode(record.visan)
 
         return encoded

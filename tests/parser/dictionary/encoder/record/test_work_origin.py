@@ -4,7 +4,7 @@ import unittest
 
 from cwr.parser.dictionary import CWRDictionaryEncoder
 from cwr.work import WorkOriginRecord
-from cwr.other import VISAN
+from cwr.other import VISAN, AVIKey
 
 
 """
@@ -25,6 +25,7 @@ class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
 
     def test_encoded(self):
         visan = VISAN(1234567, 12345678912, 123, 1)
+        avi = AVIKey(123, 'ABC')
 
         data = WorkOriginRecord(record_type='ORN',
                                 transaction_sequence_n=3,
@@ -40,7 +41,7 @@ class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
                                 episode_title='EPISODE',
                                 episode_n='EP145',
                                 year_production=1994,
-                                audio_visual_key='KEY')
+                                audio_visual_key=avi)
 
         encoded = self._encoder.encode(data)
 
@@ -57,9 +58,11 @@ class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('EPISODE', encoded['episode_title'])
         self.assertEqual('EP145', encoded['episode_n'])
         self.assertEqual(1994, encoded['year_production'])
-        self.assertEqual('KEY', encoded['audio_visual_key'])
 
-        self.assertEqual(visan.check_digit, encoded['visan']['check_digit'])
-        self.assertEqual(visan.episode, encoded['visan']['episode'])
-        self.assertEqual(visan.isan, encoded['visan']['isan'])
-        self.assertEqual(visan.version, encoded['visan']['version'])
+        self.assertEqual(1, encoded['visan']['check_digit'])
+        self.assertEqual(123, encoded['visan']['episode'])
+        self.assertEqual(12345678912, encoded['visan']['isan'])
+        self.assertEqual(1234567, encoded['visan']['version'])
+
+        self.assertEqual(123, encoded['audio_visual_key']['society_code'])
+        self.assertEqual('ABC', encoded['audio_visual_key']['av_number'])
