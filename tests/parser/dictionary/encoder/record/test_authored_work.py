@@ -45,7 +45,7 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
 
         encoded = self._encoder.encode(data)
 
-        self.assertEqual('SWR', encoded['record_type'])
+        self.assertEqual('EWT', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
         self.assertEqual('TITLE', encoded['title'])

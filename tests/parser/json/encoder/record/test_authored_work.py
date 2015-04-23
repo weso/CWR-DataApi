@@ -27,7 +27,7 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
     def test_encoded(self):
         iswc = ISWCCode(12345678, 9)
 
-        data = AuthoredWorkRecord(record_type='SWR',
+        data = AuthoredWorkRecord(record_type='EWT',
                                   transaction_sequence_n=3,
                                   record_sequence_n=15,
                                   title='TITLE',
@@ -48,7 +48,7 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
 
         encoded = json.loads(encoded)
 
-        self.assertEqual('SWR', encoded['record_type'])
+        self.assertEqual('EWT', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
         self.assertEqual('TITLE', encoded['title'])
