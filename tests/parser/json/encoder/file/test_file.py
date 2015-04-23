@@ -50,7 +50,7 @@ class TestFileDictionaryEncoding(unittest.TestCase):
 
         self.assertEqual('HDR', transmission['header']['record_type'])
         self.assertEqual('TRL', transmission['trailer']['record_type'])
-        self.assertEqual(1, len(transmission['groups']))
+        self.assertEqual(2, len(transmission['groups']))
 
         group = transmission['groups'][0]
         self.assertEqual('GRH', group['group_header']['record_type'])
@@ -79,7 +79,7 @@ class TestFileDictionaryEncoding(unittest.TestCase):
                                       group_count=155,
                                       transaction_count=245,
                                       record_count=568)
-        groups = [self._get_group()]
+        groups = [self._get_group(), self._get_group()]
 
         return Transmission(header, trailer, groups)
 

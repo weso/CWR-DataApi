@@ -23,13 +23,14 @@ class JSONEncoder(Encoder):
     def encode(self, object):
         encoded = self._dict_encoder.encode(object)
 
-        return json.dumps(encoded, default=self._date_handler)
+        return json.dumps(encoded, default=_date_handler)
 
-    def _date_handler(self, obj):
 
-        if hasattr(obj, 'isoformat'):
-            result = obj.isoformat()
-        else:
-            result = obj
+def _date_handler(obj):
+    if hasattr(obj, 'isoformat'):
+        result = obj.isoformat()
+    else:
+        raise TypeError("Unserializable object {} of type {}".format(obj,
+                                                                     type(obj)))
 
-        return result
+    return result

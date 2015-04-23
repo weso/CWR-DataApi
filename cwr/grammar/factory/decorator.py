@@ -132,6 +132,7 @@ class GroupRuleDecorator(RuleDecorator):
         self._decoders = {}
         # TODO: Do this somewhere else
         self._decoders['transmission'] = TransmissionDictionaryDecoder()
+        self._decoders['group_info'] = GroupDictionaryDecoder()
 
     def decorate(self, rule, data):
         id = data['id']

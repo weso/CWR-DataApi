@@ -310,6 +310,14 @@ class TransmissionDictionaryDecoder(Decoder):
         return Transmission(data['transmission_header'], data['transmission_trailer'], data['groups'])
 
 
+class GroupDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(GroupDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return Group(data['group_header'], data['group_trailer'], data['transactions'])
+
+
 class TransmissionHeaderDictionaryDecoder(Decoder):
     def __init__(self):
         super(TransmissionHeaderDictionaryDecoder, self).__init__()
@@ -978,8 +986,8 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = {}
 
-        encoded['group_header'] = self.__encode_group_header(record.group_header)
-        encoded['group_trailer'] = self.__encode_group_trailer(record.group_trailer)
+        encoded['group_header'] = self.encode(record.group_header)
+        encoded['group_trailer'] = self.encode(record.group_trailer)
 
         transactions = []
         for trs in record.transactions:
@@ -1286,7 +1294,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded['special_agreements'] = record.special_agreements
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
-        encoded['publisher'] = self.__encode_publisher(record.publisher)
+        encoded['publisher'] = self.encode(record.publisher)
 
         return encoded
 
@@ -1321,12 +1329,12 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = {}
 
-        encoded['header'] = self.__encode_transmission_header(record.header)
-        encoded['trailer'] = self.__encode_transmission_trailer(record.trailer)
+        encoded['header'] = self.encode(record.header)
+        encoded['trailer'] = self.encode(record.trailer)
 
         groups = []
         for g in record.groups:
-            groups.append(self.__encode_group(g))
+            groups.append(self.encode(g))
 
         encoded['groups'] = groups
 

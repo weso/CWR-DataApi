@@ -25,7 +25,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + _agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
         transaction = result.transactions[0]
 
@@ -37,7 +37,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + _agreement_short() + '\n' + _agreement_short() + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
         transaction = result.transactions[0]
 
@@ -54,7 +54,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         record = header + '\n' + agreement_record_1 + '\n' + agreement_record_2 + '\n' + trailer
 
-        result = self.grammar.parseString(record)
+        result = self.grammar.parseString(record)[0]
 
         self.assertEqual('GRH', result.group_header.record_type)
 
