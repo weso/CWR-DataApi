@@ -735,6 +735,9 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, TableValue):
             # Table value
             encoded = self.__encode_table_value(object)
+        elif isinstance(object, FileTag):
+            # Table value
+            encoded = self.__encode_file_tag(object)
         else:
             encoded = None
 
@@ -1556,6 +1559,23 @@ class CWRDictionaryEncoder(Encoder):
         encoded = self.__encode_table_value(value)
 
         encoded['family'] = value.family
+
+        return encoded
+
+    def __encode_file_tag(self, value):
+        """
+        Creates a dictionary from a TableValue.
+
+        :param value: the TableValue to transform into a dictionary
+        :return: a dictionary created from the TableValue
+        """
+        encoded = {}
+
+        encoded['year'] = value.year
+        encoded['sequence_n'] = value.sequence_n
+        encoded['sender'] = value.sender
+        encoded['receiver'] = value.receiver
+        encoded['version'] = value.version
 
         return encoded
 
