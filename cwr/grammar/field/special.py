@@ -388,8 +388,7 @@ def _combine_date_time(data):
     """
     Combines the received date and time.
 
-    :param date: date to combine
-    :param time: time to combine
+    :param data: date and time to combine
     :return: the date and time combined
     """
     return datetime.datetime.combine(data.date, data.time)

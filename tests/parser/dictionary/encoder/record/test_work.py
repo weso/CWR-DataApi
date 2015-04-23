@@ -76,8 +76,6 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('MOV', encoded['excerpt_type'])
         self.assertEqual('MED', encoded['composite_type'])
         self.assertEqual(5, encoded['composite_component_count'])
-        self.assertEqual(12345678, encoded['iswc'].id_code)
-        self.assertEqual(9, encoded['iswc'].check_digit)
         self.assertEqual('BL', encoded['work_type'])
         self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), encoded['duration'])
         self.assertEqual('GGH97', encoded['catalogue_number'])
@@ -88,3 +86,6 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('Y', encoded['priority_flag'])
         self.assertEqual('Y', encoded['exceptional_clause'])
         self.assertEqual(True, encoded['grand_rights_indicator'])
+
+        self.assertEqual(12345678, encoded['iswc']['id_code'])
+        self.assertEqual(9, encoded['iswc']['check_digit'])

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.adapter import *
 from cwr.grammar.factory.rule import TerminalRuleFactory
@@ -45,7 +43,6 @@ class FieldTerminalRuleFactory(TerminalRuleFactory):
         characters.
 
         :param id: unique id in the system for the field
-        :param compulsory: indicates if the empty string is rejected or not
         :return: the rule of a field
         """
         if self._logger:

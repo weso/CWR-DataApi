@@ -269,12 +269,12 @@ class CWRPrinter():
 
     def print_pwr(self, record):
         print('Publisher IP Number: %s' % (record.publisher_ip_n))
-        print('writer IP Number: %s' % (record.publisher_ip_n))
+        print('Writer IP Number: %s' % (record.writer_ip_n))
         print('Submitter Agreement Number: %s' % (record.submitter_agreement_n))
         print('Society-Assigned Agreement Number: %s' % (record.society_assigned_agreement_n))
 
     def print_writr(self, record):
-        print('writer Number: %s' % (record.writer.ip_n))
+        print('Writer Number: %s' % (record.writer.ip_n))
         print('Personal Number: %s' % (record.writer.personal_number))
         print('First Name: %s' % (record.writer.writer_first_name))
         print('Last Name: %s' % (record.writer.writer_last_name))
@@ -282,7 +282,7 @@ class CWRPrinter():
         print('IPI Base: %s' % (record.writer.ipi_base_n))
         print('IPI Name: %s' % (record.writer.ipi_name_n))
         print('Tax ID: %s' % (record.writer.tax_id))
-        print('writer Designation Code: %s' % (record.writer_designation))
+        print('Writer Designation Code: %s' % (record.writer_designation))
         print('Work For Hire Indicator: %s' % (record.work_for_hire))
         print('Reversionary Indicator: %s' % (record.reversionary))
         print('First Record Refusal Indicator: %s' % (record.first_recording_refusal))

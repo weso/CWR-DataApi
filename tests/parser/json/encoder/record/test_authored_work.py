@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import json
 
-from cwr.parser.dictionary import CWRDictionaryEncoder
+from cwr.parser.cwrjson import JSONEncoder
 from cwr.work import AuthoredWorkRecord
 from cwr.other import ISWCCode
 
@@ -21,12 +22,12 @@ __status__ = 'Development'
 
 class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = JSONEncoder()
 
     def test_encoded(self):
         iswc = ISWCCode(12345678, 9)
 
-        data = AuthoredWorkRecord(record_type='SWR',
+        data = AuthoredWorkRecord(record_type='EWT',
                                   transaction_sequence_n=3,
                                   record_sequence_n=15,
                                   title='TITLE',
@@ -45,7 +46,9 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
 
         encoded = self._encoder.encode(data)
 
-        self.assertEqual('SWR', encoded['record_type'])
+        encoded = json.loads(encoded)
+
+        self.assertEqual('EWT', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
         self.assertEqual('TITLE', encoded['title'])
@@ -60,5 +63,6 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(14107448, encoded['writer_2_ipi_name_n'])
         self.assertEqual('SOURCE', encoded['source'])
         self.assertEqual('ES', encoded['language_code'])
-        self.assertEqual(12345678, encoded['iswc'].id_code)
-        self.assertEqual(9, encoded['iswc'].check_digit)
+
+        self.assertEqual(12345678, encoded['iswc']['id_code'])
+        self.assertEqual(9, encoded['iswc']['check_digit'])

@@ -42,7 +42,7 @@ setup(
     author_email='weso@weso.es',
     license='MIT',
     url='https://github.com/weso/CWR-DataApi',
-    download_url='https://github.com/weso/CWR-DataApi',
+    download_url='https://pypi.python.org/pypi/CWR-API',
     keywords=['CWR', 'commonworks', 'api', 'CISAC', 'parser'],
     platforms='any',
     classifiers=['License :: OSI Approved :: MIT License', 'Development Status :: 3 - Alpha',

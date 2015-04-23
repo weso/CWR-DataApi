@@ -23,14 +23,14 @@ class TestGroupTrailerDictionaryEncoding(unittest.TestCase):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
-        data = GroupTrailer(record_type='GRH',
+        data = GroupTrailer(record_type='GRT',
                             group_id=3,
                             transaction_count=15,
                             record_count=20)
 
         encoded = self._encoder.encode(data)
 
-        self.assertEqual('GRH', encoded['record_type'])
+        self.assertEqual('GRT', encoded['record_type'])
         self.assertEqual(3, encoded['group_id'])
         self.assertEqual(15, encoded['transaction_count'])
         self.assertEqual(20, encoded['record_count'])
