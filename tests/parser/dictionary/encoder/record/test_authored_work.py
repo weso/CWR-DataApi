@@ -26,7 +26,7 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
     def test_encoded(self):
         iswc = ISWCCode(12345678, 9)
 
-        data = AuthoredWorkRecord(record_type='SWR',
+        data = AuthoredWorkRecord(record_type='EWT',
                                   transaction_sequence_n=3,
                                   record_sequence_n=15,
                                   title='TITLE',

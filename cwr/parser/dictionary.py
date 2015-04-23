@@ -973,11 +973,14 @@ class CWRDictionaryEncoder(Encoder):
         encoded = {}
 
         encoded['group_header'] = self.__encode_group_header(record.group_header)
-        encoded['group_trailer'] = self.__encode_group_header(record.group_trailer)
+        encoded['group_trailer'] = self.__encode_group_trailer(record.group_trailer)
 
         transactions = []
-        for t in record.transactions:
-            transactions.append(self.encode(t))
+        for trs in record.transactions:
+            transaction = []
+            for tr in trs:
+                transaction.append(self.encode(tr))
+            transactions.append(transaction)
 
         encoded['transactions'] = transactions
 
