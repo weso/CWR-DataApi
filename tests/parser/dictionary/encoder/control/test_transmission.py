@@ -7,6 +7,7 @@ from cwr.parser.dictionary import CWRDictionaryEncoder
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import AgreementRecord
+from cwr.transmission import TransmissionTrailer, TransmissionHeader, Transmission
 
 
 """
@@ -21,11 +22,41 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestGroupDictionaryEncoding(unittest.TestCase):
+class TestTransmissionDictionaryEncoding(unittest.TestCase):
     def setUp(self):
         self._encoder = CWRDictionaryEncoder()
 
     def test_encoded(self):
+        header = TransmissionHeader(record_type='HDR',
+                                    sender_id='ABC334',
+                                    sender_name='SENDER',
+                                    sender_type='SO',
+                                    creation_date_time=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+                                    transmission_date=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+                                    edi_standard='01.10',
+                                    character_set='ASCII')
+        trailer = TransmissionTrailer(record_type='TRL',
+                                      group_count=155,
+                                      transaction_count=245,
+                                      record_count=568)
+        groups = [self._get_group()]
+
+        data = Transmission(header, trailer, groups)
+
+        encoded = self._encoder.encode(data)
+
+        self.assertEqual('HDR', encoded['header']['record_type'])
+        self.assertEqual('TRL', encoded['trailer']['record_type'])
+        self.assertEqual(1, len(encoded['groups']))
+
+        group = encoded['groups'][0]
+        self.assertEqual('GRH', group['group_header']['record_type'])
+        self.assertEqual('GRT', group['group_trailer']['record_type'])
+        self.assertEqual(1, len(group['transactions']))
+        self.assertEqual(4, len(group['transactions'][0]))
+        self.assertEqual('ACK', group['transactions'][0][0]['record_type'])
+
+    def _get_group(self):
         header = GroupHeader(record_type='GRH',
                              group_id=3,
                              transaction_type='AGR',
@@ -37,15 +68,7 @@ class TestGroupDictionaryEncoding(unittest.TestCase):
                                record_count=20)
         transactions = [self._get_transaction()]
 
-        data = Group(header, trailer, transactions)
-
-        encoded = self._encoder.encode(data)
-
-        self.assertEqual('GRH', encoded['group_header']['record_type'])
-        self.assertEqual('GRT', encoded['group_trailer']['record_type'])
-        self.assertEqual(1, len(encoded['transactions']))
-        self.assertEqual(4, len(encoded['transactions'][0]))
-        self.assertEqual('ACK', encoded['transactions'][0][0]['record_type'])
+        return Group(header, trailer, transactions)
 
     def _get_transaction(self):
         acknowledgement = self._get_ack()
