@@ -90,7 +90,5 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('Y', encoded['exceptional_clause'])
         self.assertEqual(True, encoded['grand_rights_indicator'])
 
-        iswc = json.loads(encoded['iswc'])
-
-        self.assertEqual(12345678, iswc['id_code'])
-        self.assertEqual(9, iswc['check_digit'])
+        self.assertEqual(12345678, encoded['iswc']['id_code'])
+        self.assertEqual(9, encoded['iswc']['check_digit'])

@@ -53,17 +53,13 @@ class TestWriterRecordDictionaryEncoding(unittest.TestCase):
 
         encoded = json.loads(encoded)
 
-        writer = encoded['writer']
-
-        writer = json.loads(writer)
-
-        self.assertEqual('ABC15', writer['ip_n'])
-        self.assertEqual('ABC1234', writer['personal_number'])
-        self.assertEqual(14107338, writer['ipi_name_n'])
-        self.assertEqual('I-000000229-7', writer['ipi_base_n'])
-        self.assertEqual('NAME', writer['writer_first_name'])
-        self.assertEqual('LAST NAME', writer['writer_last_name'])
-        self.assertEqual(923703412, writer['tax_id'])
+        self.assertEqual('ABC15', encoded['writer']['ip_n'])
+        self.assertEqual('ABC1234', encoded['writer']['personal_number'])
+        self.assertEqual(14107338, encoded['writer']['ipi_name_n'])
+        self.assertEqual('I-000000229-7', encoded['writer']['ipi_base_n'])
+        self.assertEqual('NAME', encoded['writer']['writer_first_name'])
+        self.assertEqual('LAST NAME', encoded['writer']['writer_last_name'])
+        self.assertEqual(923703412, encoded['writer']['tax_id'])
 
         self.assertEqual('SWR', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])

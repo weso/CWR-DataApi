@@ -62,9 +62,7 @@ class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(1994, encoded['year_production'])
         self.assertEqual('KEY', encoded['audio_visual_key'])
 
-        visan = json.loads(encoded['visan'])
-
-        self.assertEqual(1, visan['check_digit'])
-        self.assertEqual(123, visan['episode'])
-        self.assertEqual(12345678912, visan['isan'])
-        self.assertEqual(1234567, visan['version'])
+        self.assertEqual(1, encoded['visan']['check_digit'])
+        self.assertEqual(123, encoded['visan']['episode'])
+        self.assertEqual(12345678912, encoded['visan']['isan'])
+        self.assertEqual(1234567, encoded['visan']['version'])
