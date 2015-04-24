@@ -7,6 +7,40 @@ from cwr.record import TransactionRecord
 
 """
 Work entity model classes.
+
+This module stores classes for handling work related transactions. This means that it offers classes not only to
+represent work records, but also to represent work details, such as instrumentation or performing artists.
+
+Transaction
+-----------
+
+A work transaction registers all the data related to a single work. There are four variations of it, depending on it's
+concrete use:
+- New Work Registration (NWR)
+- Revised Registration (REV)
+- Notification of ISWC Assign to a Work (ISW)
+- Existing work which is in Conflict with a Work Registration (EXC)
+
+New Work Registration and Revised Registration serve as a way for publishers to communicate with societies, indicating
+new works or changing data about existing ones.
+
+Notification of ISWC Assign to a Work is sent from a society to a publisher to indicate that an ISWC has been assigned
+to the musical work.
+
+Existing work which is in Conflict with a Work Registration is also sent from a society to a publisher, but this time
+to indicate any data from the work which enters in conflict with the data the society has. These records will be part
+of an Acknowledgement transaction.
+
+Heading record
+--------------
+
+The transaction's heading record contains the identifying data for the transaction's work, which is mostly it's title.
+
+Transaction's composition
+-------------------------
+
+A work transaction can be lengthy, there are 26 different types of records which may appear on it, most of them
+containing information about details.
 """
 
 __author__ = 'Bernardo Martínez Garrido, Borja Garrido Bear'
@@ -16,11 +50,27 @@ __status__ = 'Development'
 
 class BaseWorkRecord(TransactionRecord):
     """
-    Base class representing a Work's info.
+    Abstract class representing a Work's basic information.
+
+    This is used for the heading record, which is the Work record, and those work detail records which expand over
+    the work's basic data, and which currently are Entire Work and Original Work for Versions.
+
+    This is meant to store the data which identifies a work in a generic way, which are the title, the language and
+    the ISWC.
     """
     __metaclass__ = ABCMeta
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None, iswc=None):
+        """
+        Constructs a BaseWorkRecord.
+
+        :param record_type: type of record
+        :param transaction_sequence_n: position in the transactions sequence
+        :param record_sequence_n: position in the records sequence
+        :param title: work title
+        :param language_code: work title's language
+        :param iswc: ISWC for the work
+        """
         super(BaseWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._title = title
         self._language_code = language_code
@@ -72,16 +122,16 @@ class BaseWorkRecord(TransactionRecord):
 
 class WorkRecord(BaseWorkRecord):
     """
-    Represents a CWR Work Title and Core Information Record.
+    Represents a Work Record.
 
-    This can be one of the following CWR v2.1 records:
+    This is used as heading record on a Work transaction, and there is one variation for each transaction, which are:
     - Existing work which is in Conflict with a Work Registration (EXC)
-    - New Work Registration (NWR)
     - Notification of ISWC assign to a work (ISW)
+    - New Work Registration (NWR)
     - Revised Registration (REV)
 
-    While the intentions of each type of record differ, these distinctions mean little to the class
-    structure, because they are all meant to hold a Work's information for a Work Transaction.
+    While there are some differences on the meaning of each type, their structure is basically the same. They all serve
+    to store the identifying data of a single work, which mostly means it's title.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, submitter_work_n, title, version_type,
@@ -91,6 +141,38 @@ class WorkRecord(BaseWorkRecord):
                  excerpt_type=None, composite_type=None, composite_component_count=1, iswc=None, work_type=None,
                  duration=None, catalogue_number='', opus_number='', contact_id='', contact_name='',
                  recorded_indicator='U', priority_flag='U', exceptional_clause='U', grand_rights_indicator=False):
+        """
+        Constructs a WorkRecord.
+
+        :param record_type: type of record
+        :param transaction_sequence_n: position in the transactions sequence
+        :param record_sequence_n: position in the records sequence
+        :param submitter_work_n: number given by the submitter to the work
+        :param title: work's title
+        :param version_type: type of versioning this work represents, if any
+        :param musical_work_distribution_category: type of work for distributions
+        :param date_publication_printed_edition: date in which this edition was printed
+        :param text_music_relationship: relationship between the text and the music
+        :param language_code: work's language
+        :param copyright_number: original copyright number
+        :param copyright_date: original copyright date
+        :param music_arrangement: musical arrangement, if any
+        :param lyric_adaptation: lyrical adaptation, if any
+        :param excerpt_type: type of excerpt, if any
+        :param composite_type: type of composition, if any
+        :param composite_component_count: numbers of components in a composition
+        :param iswc: work's ISWC
+        :param work_type: CWR work type
+        :param duration: duration of the work
+        :param catalogue_number: catalogue number
+        :param opus_number: opus number
+        :param contact_id: id for the work's contact persion
+        :param contact_name: name of the work's contact person
+        :param recorded_indicator: indicates if the work has been recorded
+        :param priority_flag: indicates if the works should be given priority
+        :param exceptional_clause: indicates if the GEMA exceptional clause applies
+        :param grand_rights_indicator: indicates if the work was originally intended for performance on stage
+        """
         super(WorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title, language_code,
                                          iswc)
         # Work identifying info
@@ -408,282 +490,12 @@ class WorkRecord(BaseWorkRecord):
         return self._work_type
 
 
-class WorkTransaction(object):
-    """
-    Represents a CWR Work Transaction.
-
-    This can be one of the following CWR v2.1 transactions:
-    - Existing work which is in Conflict with a Work Registration (EXC)
-    - New Work Registration (NWR)
-    - Notification of ISWC assign to a work (ISW)
-    - Revised Registration (REV)
-
-    While the actual use and intentions of each of these transactions differ, all of them indicate a relationship
-    between a Work, Publishers and Writers. Along several details of the work.
-
-    This is a very complex Transaction, composed by more than twenty types of records. Most of them are optional,
-    making the possible number of variations huge.
-
-    But all these records can be grouped into four types:
-    - Work information record, which is only one, containing the most important information about the record
-    - Publishers, divided between those controlled by the submitter and those out of his control
-    - Writers, divided between those controlled by the submitter and those out of his control
-    - Work details, containing such information as alternate titles or instrument composition
-
-    All, except the first, can appear multiple times in different forms.
-
-    Publishers controlled by the submitter appear along the territories they control, while those out of his
-    control appear alone.
-
-    So this section can be described as [[SPU, SPT*]*, OPU*].
-
-    Writers controlled by the submitter appear along their territories and publishers, while those out of his
-    control appear alone.
-
-    This section can be described as [[SWR, SWT*, PWR*]*, OWR*].
-
-    The work details are various kinds of data with little relation between them, some of which can appear multiple
-    times.
-
-    This section can be described as [ALT*, EWT, VER, PER*, REC, ORN*, INS*, IND*, COM*, ARI*]
-
-    And so, in the end a Work Transaction can be seen as (missing the header record):
-    [[SPU, SPT*]*, OPU*, [SWR, SWT*, PWR*]*, OWR*, ALT*, EWT, VER, PER*, REC, ORN*, INS*, IND*, COM*, ARI*]
-    """
-
-    def __init__(self, entire_work_title=None,
-                 original_work_title=None, recording=None, alternate_titles=None,
-                 publishers_controlled=None, publishers_other=None, writers_controlled=None,
-                 writers_other=None, performing_artists=None, work_origins=None, instrumentation_summaries=None,
-                 instrumentation_details=None, components=None, additional_info=None):
-        super(WorkTransaction, self).__init__()
-        self._entire_work_title = entire_work_title
-        self._original_work_title = original_work_title
-        self._recording = recording
-        self._additional_info = additional_info
-
-        if alternate_titles is None:
-            self._alternate_titles = []
-        else:
-            self._alternate_titles = alternate_titles
-
-        if publishers_controlled is None:
-            self._publishers_controlled = []
-        else:
-            self._publishers_controlled = publishers_controlled
-
-        if publishers_other is None:
-            self._publishers_other = []
-        else:
-            self._publishers_other = publishers_controlled
-
-        if writers_controlled is None:
-            self._writers_controlled = []
-        else:
-            self._writers_controlled = writers_controlled
-
-        if writers_other is None:
-            self._writers_other = []
-        else:
-            self._writers_other = writers_other
-
-        if performing_artists is None:
-            self._performing_artists = []
-        else:
-            self._performing_artists = performing_artists
-
-        if work_origins is None:
-            self._work_origins = []
-        else:
-            self._work_origins = work_origins
-
-        if instrumentation_summaries is None:
-            self._instrumentation_summaries = []
-        else:
-            self._instrumentation_summaries = instrumentation_summaries
-
-        if instrumentation_details is None:
-            self._instrumentation_details = []
-        else:
-            self._instrumentation_details = instrumentation_details
-
-        if components is None:
-            self._components = []
-        else:
-            self._components = components
-
-    @property
-    def additional_info(self):
-        """
-        Additional Info field.
-
-        Contains information such as comments or the Society number.
-
-        This is a collection of strings.
-
-        :return: additional info for the work
-        """
-        return self._additional_info
-
-    @property
-    def alternate_titles(self):
-        """
-        Alternate Titles field.
-
-        Returns the Alternate Titles for the Work.
-
-        :return: the Alternate Title for the Work
-        """
-        return self._alternate_titles
-
-    @property
-    def components(self):
-        """
-        Components field.
-
-        Returns the Work Components.
-
-        :return: the Work Components
-        """
-        return self._components
-
-    @property
-    def entire_work_title(self):
-        """
-        Entire Work Title field.
-
-        Returns an Entire Work Title for the Work.
-
-        :return: an Entire Work Title for the Work
-        """
-        return self._entire_work_title
-
-    @property
-    def instrumentation_details(self):
-        """
-        Instrumentation Details field.
-
-        Returns the Work Instrumentation Details.
-
-        :return: the Work Instrumentation Details
-        """
-        return self._instrumentation_details
-
-    @property
-    def instrumentation_summaries(self):
-        """
-        Instrumentation Summaries field.
-
-        Returns the Work Instrumentation Summaries.
-
-        :return: the Work Instrumentation Summaries
-        """
-        return self._instrumentation_summaries
-
-    @property
-    def original_work_title(self):
-        """
-        Original Work Title field.
-
-        Returns an Original Work Title for the Work.
-
-        :return: an Original Work Title for the Work
-        """
-        return self._original_work_title
-
-    @property
-    def performing_artists(self):
-        """
-        Performing Artists field.
-
-        The Performing Artists.
-
-        :return: the Performing Artists
-        """
-        return self._performing_artists
-
-    @property
-    def publishers_controlled(self):
-        """
-        Publisher Controlled by Submitter field.
-
-        List all publishers controlled by the submitter.  This record is mandatory if writer ownership shares are less
-        than 100%.
-
-        This is a collection of PublisherWithTerritories.
-
-        :return: the publishers controlled by the submitter
-        """
-        return self._publishers_controlled
-
-    @property
-    def publishers_other(self):
-        """
-        Other Publishers field.
-
-        Lists all the publishers not controlled by the submitter.
-
-        This is just a collection of Publishers.
-
-        :return: the Publishers not controlled by the submitter
-        """
-        return self._publishers_other
-
-    @property
-    def recording(self):
-        """
-        Recording field.
-
-        Recording status.
-
-        :return: the Recording status
-        """
-        return self._recording
-
-    @property
-    def work_origins(self):
-        """
-        Work Origins field.
-
-        Returns the Work Origins.
-
-        :return: the Work Origins
-        """
-        return self._work_origins
-
-    @property
-    def writers_controlled(self):
-        """
-        Writers Controlled by Submitter field.
-
-        Lists all the Writers controlled by the submitter.
-
-        This is a collection of WriterWithTerritoryPublishers.
-
-        :return: all the Writers controlled by the submitter along his Territories and Publishers
-        """
-        return self._writers_controlled
-
-    @property
-    def writers_other(self):
-        """
-        Other Writers field.
-
-        List all the Writers not controlled by the submitter.
-
-        This is just a collection of Writers.
-
-        :return: the Writers not controlled by the submitter
-        """
-        return self._writers_other
-
-
 class ComponentRecord(TransactionRecord):
     """
-    Represents a CWR Component (COM).
+    Represents a Component (COM) Record.
 
-    If the work being registered is a composite work, the COM record will identify an individual component of the
-    composite.
+    This is to be used on a Work Transaction when said work is a composite. The Component Record will identify an
+    individual component of the composite.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, writer_1_last_name,
@@ -691,6 +503,25 @@ class ComponentRecord(TransactionRecord):
                  writer_1_first_name='', writer_2_first_name='', writer_2_last_name='',
                  writer_1_ipi_base_n=None, writer_1_ipi_name_n=None, writer_2_ipi_base_n=None, writer_2_ipi_name_n=None,
                  iswc='', duration=None):
+        """
+        Constructs a ComponentRecord.
+
+        :param record_type: type of record
+        :param transaction_sequence_n: position in the transactions sequence
+        :param record_sequence_n: position in the records sequence
+        :param title: work's title
+        :param writer_1_last_name: last name of the first writer
+        :param submitter_work_n: number given by the submitter to the work
+        :param writer_1_first_name: first name of the first writer
+        :param writer_2_first_name: first name of the second writer
+        :param writer_2_last_name: last name of the second writer
+        :param writer_1_ipi_base_n: IPI base number for the first writer
+        :param writer_1_ipi_name_n: IPI name number for the first writer
+        :param writer_2_ipi_base_n: IPI base number for the second writer
+        :param writer_2_ipi_name_n: IPI name number for the second writer
+        :param iswc: work's ISWC
+        :param duration: component's duration
+        """
         super(ComponentRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Work's info
         self._submitter_work_n = submitter_work_n
@@ -799,7 +630,9 @@ class ComponentRecord(TransactionRecord):
         """
         Writer 1 Last Name field. Alphanumeric.
 
-        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+        Last name of the first writer of this component. Note that if the submitter does not have the ability to split
+        first and last names, the entire name should be entered in this field in the format “Last Name, First Name”
+        including the comma after the last name.
 
         :return: the first Writer's last name
         """
@@ -849,7 +682,9 @@ class ComponentRecord(TransactionRecord):
         """
         Writer 2 Last Name field. Alphanumeric.
 
-        If the ISWC is not known, then the last name of a writer is helpful to identify the work.
+        Last name of the second writer of this component. Note that if the submitter does not have the ability to split
+        first and last names, the entire name should be entered in this field in the format “Last Name, First Name”
+        including the comma after the last name.
 
         :return: the second Writer's last name
         """
@@ -858,15 +693,43 @@ class ComponentRecord(TransactionRecord):
 
 class AuthoredWorkRecord(BaseWorkRecord):
     """
-    Represents a Work with authors. This is for the Entire Work (EWT) and Original Work for Versions (VER) entities.
+    Represents a Work with authors. This is for the Entire Work Title for Excerpts (EWT) and Original Work Title for
+    Versions (VER) Records.
 
-    It also indicates the original source of the work.
+    While both of these records share the same structure, their uses change.
+
+    The Entire Work Title for Excerpts Record serves to indicate the complete work from which the Work originates, when
+    the transaction refers to an excerpt.
+
+    The Original Work Title for Versions serves to indicate the original work of which the Work is a version, when the
+    transaction refers to a version.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, submitter_work_n='',
                  writer_1_first_name='', writer_1_last_name='', writer_2_first_name='', writer_2_last_name='',
                  writer_1_ipi_base_n=None, writer_1_ipi_name_n=None, writer_2_ipi_base_n=None, writer_2_ipi_name_n=None,
                  source=None, language_code=None, iswc=None):
+        """
+        Constructs an AuthoredWorkRecord.
+
+        :param record_type: type of record
+        :param transaction_sequence_n: position in the transactions sequence
+        :param record_sequence_n: position in the records sequence
+        :param title: work title
+        :param submitter_work_n: number given by the submitter to the work
+        :param writer_1_first_name: first name of the first writer
+        :param writer_1_last_name: last name of the first writer
+        :param writer_2_first_name: first name of the second writer
+        :param writer_2_last_name: last name of the second writer
+        :param writer_1_ipi_base_n: IPI base number for the first writer
+        :param writer_1_ipi_name_n: IPI name number for the first writer
+        :param writer_2_ipi_base_n: IPI base number for the second writer
+        :param writer_2_ipi_name_n: IPI name number for the second writer
+        :param source: source from which the work was obtained
+        :param language_code: work title's language
+        :param iswc: ISWC for the work
+        :return:
+        """
         super(AuthoredWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title,
                                                  language_code, iswc)
 
@@ -1011,18 +874,27 @@ class AuthoredWorkRecord(BaseWorkRecord):
 
 class AlternateTitleRecord(TransactionRecord):
     """
-    Represents a CWR Alternate Title (ALT) record.
+    Represents an Alternate Title (ALT) Record.
 
-    This identifies alternate titles for this work.
+    This identifies alternate titles for the Transaction's Work.
 
-    The language code is used to identify titles that have been translated into a language other than the original.
-
-    Note that this applies to translation of the title only - not a  translation of the work. Including record type VER
-    would indicate a work translation.
+    Note that this applies to translation of the title only, not a  translation of the work. For translations of the
+    Work the Original Work Title for Versions (VER) Record should be used.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, alternate_title, title_type,
                  language_code=None):
+        """
+        Constructs an AlternateTitleRecord.
+
+        :param record_type: type of record
+        :param transaction_sequence_n: position in the transactions sequence
+        :param record_sequence_n: position in the records sequence
+        :param alternate_title: the alternative title
+        :param title_type: the type of title
+        :param language_code: the language of the title, if it was translated
+        :return:
+        """
         super(AlternateTitleRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         self._alternate_title = alternate_title
         self._title_type = title_type
