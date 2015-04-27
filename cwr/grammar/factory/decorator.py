@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 
 import pyparsing as pp
 
@@ -132,6 +132,7 @@ class GroupRuleDecorator(RuleDecorator):
         self._decoders = {}
         # TODO: Do this somewhere else
         self._decoders['transmission'] = TransmissionDictionaryDecoder()
+        self._decoders['group_info'] = GroupDictionaryDecoder()
 
     def decorate(self, rule, data):
         id = data['id']

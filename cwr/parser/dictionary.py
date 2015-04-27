@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
-from cwr.agreement import InterestedPartyForAgreementRecord, AgreementRecord, AgreementTerritoryRecord
-from cwr.group import GroupHeader, GroupTrailer, Group
-from cwr.info import AdditionalRelatedInfoRecord
-from cwr.interested_party import IPTerritoryOfControlRecord
+from cwr.acknowledgement import *
+from cwr.agreement import *
+from cwr.group import *
+from cwr.info import *
 from cwr.parser.common import Encoder, Decoder
-from cwr.interested_party import Publisher, PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
-from cwr.non_roman_alphabet import NonRomanAlphabetWorkRecord, NonRomanAlphabetTitleRecord, \
-    NonRomanAlphabetOtherWriterRecord, NonRomanAlphabetAgreementPartyRecord, NonRomanAlphabetPublisherNameRecord, \
-    NonRomanAlphabetPerformanceDataRecord, NonRomanAlphabetWriterNameRecord
-from cwr.transmission import TransmissionHeader, TransmissionTrailer, Transmission
-from cwr.work import WorkRecord, ComponentRecord, AuthoredWorkRecord, AlternateTitleRecord, RecordingDetailRecord, \
-    InstrumentationDetailRecord, WorkOriginRecord, InstrumentationSummaryRecord, PerformingArtistRecord
-from cwr.file import FileTag
+from cwr.interested_party import *
+from cwr.non_roman_alphabet import *
+from cwr.transmission import *
+from cwr.work import *
+from cwr.file import *
+from cwr.other import *
+from cwr.table_value import *
 
 
 """
@@ -312,6 +310,14 @@ class TransmissionDictionaryDecoder(Decoder):
         return Transmission(data['transmission_header'], data['transmission_trailer'], data['groups'])
 
 
+class GroupDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(GroupDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return Group(data['group_header'], data['group_trailer'], data['transactions'])
+
+
 class TransmissionHeaderDictionaryDecoder(Decoder):
     def __init__(self):
         super(TransmissionHeaderDictionaryDecoder, self).__init__()
@@ -571,6 +577,40 @@ class PublisherRecordDictionaryDecoder(Decoder):
                                usa_license=data['usa_license'])
 
 
+class TableValueDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(TableValueDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return TableValue(code=data['code'],
+                          name=data['name'],
+                          description=data['description'])
+
+
+class MediaTypeValueDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(MediaTypeValueDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return MediaTypeValue(code=data['code'],
+                              name=data['name'],
+                              media_type=data['media_type'],
+                              duration_max=data['duration_max'],
+                              works_max=data['works_max'],
+                              fragments_max=data['fragments_max'])
+
+
+class InstrumentValueDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(InstrumentValueDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return InstrumentValue(code=data['code'],
+                               name=data['name'],
+                               family=data['family'],
+                               description=data['description'])
+
+
 class CWRDictionaryEncoder(Encoder):
     """
     Encodes CWR model classes into dictionaries.
@@ -682,6 +722,33 @@ class CWRDictionaryEncoder(Encoder):
         elif isinstance(object, WriterRecord):
             # Writer
             encoded = self.__encode_writer_record(object)
+        elif isinstance(object, ISWCCode):
+            # ISWC
+            encoded = self.__encode_iswc(object)
+        elif isinstance(object, IPIBaseNumber):
+            # IPI Base Number
+            encoded = self.__encode_ipi_base(object)
+        elif isinstance(object, VISAN):
+            # V-ISAN
+            encoded = self.__encode_visan(object)
+        elif isinstance(object, AVIKey):
+            # AVI Key
+            encoded = self.__encode_avi_key(object)
+        elif isinstance(object, MediaTypeValue):
+            # Media type value
+            encoded = self.__encode_media_type_value(object)
+        elif isinstance(object, InstrumentValue):
+            # Instrument value
+            encoded = self.__encode_instrument_value(object)
+        elif isinstance(object, TableValue):
+            # Table value
+            encoded = self.__encode_table_value(object)
+        elif isinstance(object, FileTag):
+            # Table value
+            encoded = self.__encode_file_tag(object)
+        elif isinstance(object, CWRFile):
+            # Table value
+            encoded = self.__encode_file(object)
         else:
             encoded = None
 
@@ -760,7 +827,7 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = self.__encode_transaction_record_head(record)
 
-        encoded['iswc'] = record.iswc
+        encoded['iswc'] = self.encode(record.iswc)
         encoded['language_code'] = record.language_code
         encoded['title'] = record.title
 
@@ -870,7 +937,7 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = self.__encode_transaction_record_head(record)
 
-        encoded['iswc'] = record.iswc
+        encoded['iswc'] = self.encode(record.iswc)
         encoded['language_code'] = record.language_code
         encoded['source'] = record.source
         encoded['submitter_work_n'] = record.submitter_work_n
@@ -896,7 +963,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded = self.__encode_transaction_record_head(record)
 
         encoded['duration'] = record.duration
-        encoded['iswc'] = record.iswc
+        encoded['iswc'] = self.encode(record.iswc)
         encoded['submitter_work_n'] = record.submitter_work_n
         encoded['title'] = record.title
         encoded['writer_1_first_name'] = record.writer_1_first_name
@@ -919,12 +986,15 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = {}
 
-        encoded['group_header'] = self.__encode_group_header(record.group_header)
-        encoded['group_trailer'] = self.__encode_group_header(record.group_trailer)
+        encoded['group_header'] = self.encode(record.group_header)
+        encoded['group_trailer'] = self.encode(record.group_trailer)
 
         transactions = []
-        for t in record.transactions:
-            transactions.append(self.encode(t))
+        for trs in record.transactions:
+            transaction = []
+            for tr in trs:
+                transaction.append(self.encode(tr))
+            transactions.append(transaction)
 
         encoded['transactions'] = transactions
 
@@ -1224,7 +1294,7 @@ class CWRDictionaryEncoder(Encoder):
         encoded['special_agreements'] = record.special_agreements
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
-        encoded['publisher'] = self.__encode_publisher(record.publisher)
+        encoded['publisher'] = self.encode(record.publisher)
 
         return encoded
 
@@ -1259,12 +1329,12 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = {}
 
-        encoded['header'] = self.__encode_transmission_header(record.header)
-        encoded['trailer'] = self.__encode_transmission_trailer(record.trailer)
+        encoded['header'] = self.encode(record.header)
+        encoded['trailer'] = self.encode(record.trailer)
 
         groups = []
         for g in record.groups:
-            groups.append(self.__encode_group(g))
+            groups.append(self.encode(g))
 
         encoded['groups'] = groups
 
@@ -1349,7 +1419,6 @@ class CWRDictionaryEncoder(Encoder):
         """
         encoded = self.__encode_transaction_record_head(record)
 
-        encoded['audio_visual_key'] = record.audio_visual_key
         encoded['bltvr'] = record.bltvr
         encoded['cd_identifier'] = record.cd_identifier
         encoded['cut_number'] = record.cut_number
@@ -1359,8 +1428,10 @@ class CWRDictionaryEncoder(Encoder):
         encoded['library'] = record.library
         encoded['production_n'] = record.production_n
         encoded['production_title'] = record.production_title
-        encoded['visan'] = record.visan
         encoded['year_production'] = record.year_production
+
+        encoded['audio_visual_key'] = self.encode(record.audio_visual_key)
+        encoded['visan'] = self.encode(record.visan)
 
         return encoded
 
@@ -1393,7 +1464,143 @@ class CWRDictionaryEncoder(Encoder):
         encoded['writer_unknown'] = record.writer_unknown
         encoded['work_for_hire'] = record.work_for_hire
 
-        encoded['writer'] = self.__encode_writer(record.writer)
+        encoded['writer'] = self.encode(record.writer)
+
+        return encoded
+
+    def __encode_iswc(self, iswc):
+        """
+        Creates a dictionary from a ISWCCode.
+
+        :param iswc: the ISWCCode to transform into a dictionary
+        :return: a dictionary created from the ISWCCode
+        """
+        encoded = {}
+
+        encoded['id_code'] = iswc.id_code
+        encoded['check_digit'] = iswc.check_digit
+
+        return encoded
+
+    def __encode_ipi_base(self, ipi):
+        """
+        Creates a dictionary from a IPIBaseNumber.
+
+        :param ipi: the IPIBaseNumber to transform into a dictionary
+        :return: a dictionary created from the IPIBaseNumber
+        """
+        encoded = {}
+
+        encoded['header'] = ipi.header
+        encoded['id_code'] = ipi.id_code
+        encoded['check_digit'] = ipi.check_digit
+
+        return encoded
+
+    def __encode_visan(self, visan):
+        """
+        Creates a dictionary from a VISAN.
+
+        :param ipi: the VISAN to transform into a dictionary
+        :return: a dictionary created from the VISAN
+        """
+        encoded = {}
+
+        encoded['version'] = visan.version
+        encoded['isan'] = visan.isan
+        encoded['episode'] = visan.episode
+        encoded['check_digit'] = visan.check_digit
+
+        return encoded
+
+    def __encode_avi_key(self, avi_key):
+        """
+        Creates a dictionary from a AVIKey.
+
+        :param avi_key: the AVIKey to transform into a dictionary
+        :return: a dictionary created from the AVIKey
+        """
+        encoded = {}
+
+        encoded['society_code'] = avi_key.society_code
+        encoded['av_number'] = avi_key.av_number
+
+        return encoded
+
+    def __encode_table_value(self, value):
+        """
+        Creates a dictionary from a TableValue.
+
+        :param value: the TableValue to transform into a dictionary
+        :return: a dictionary created from the TableValue
+        """
+        encoded = {}
+
+        encoded['code'] = value.code
+        encoded['name'] = value.name
+        encoded['description'] = value.description
+
+        return encoded
+
+    def __encode_media_type_value(self, value):
+        """
+        Creates a dictionary from a MediaTypeValue.
+
+        :param value: the MediaTypeValue to transform into a dictionary
+        :return: a dictionary created from the MediaTypeValue
+        """
+        encoded = {}
+
+        encoded['code'] = value.code
+        encoded['name'] = value.name
+        encoded['media_type'] = value.media_type
+        encoded['duration_max'] = value.duration_max
+        encoded['works_max'] = value.works_max
+        encoded['fragments_max'] = value.fragments_max
+
+        return encoded
+
+    def __encode_instrument_value(self, value):
+        """
+        Creates a dictionary from a InstrumentValue.
+
+        :param value: the InstrumentValue to transform into a dictionary
+        :return: a dictionary created from the InstrumentValue
+        """
+        encoded = self.__encode_table_value(value)
+
+        encoded['family'] = value.family
+
+        return encoded
+
+    def __encode_file_tag(self, value):
+        """
+        Creates a dictionary from a TableValue.
+
+        :param value: the TableValue to transform into a dictionary
+        :return: a dictionary created from the TableValue
+        """
+        encoded = {}
+
+        encoded['year'] = value.year
+        encoded['sequence_n'] = value.sequence_n
+        encoded['sender'] = value.sender
+        encoded['receiver'] = value.receiver
+        encoded['version'] = value.version
+
+        return encoded
+
+    def __encode_file(self, value):
+        """
+        Creates a dictionary from a TableValue.
+
+        :param value: the TableValue to transform into a dictionary
+        :return: a dictionary created from the TableValue
+        """
+        encoded = {}
+
+        encoded['tag'] = self.encode(value.tag)
+        encoded['transmission'] = self.encode(value.transmission)
 
         return encoded
 
@@ -1408,3 +1615,42 @@ class FileTagDictionaryDecoder(Decoder):
                        data['sender'],
                        data['receiver'],
                        data['version'])
+
+
+class AVIKeyDecoder(Decoder):
+    def __init__(self):
+        super(AVIKeyDecoder, self).__init__()
+
+    def decode(self, data):
+        return AVIKey(data['society_code'],
+                      data['av_number'])
+
+
+class IPIBaseDecoder(Decoder):
+    def __init__(self):
+        super(IPIBaseDecoder, self).__init__()
+
+    def decode(self, data):
+        return IPIBaseNumber(data['header'],
+                             data['id_code'],
+                             data['check_digit'])
+
+
+class ISWCDecoder(Decoder):
+    def __init__(self):
+        super(ISWCDecoder, self).__init__()
+
+    def decode(self, data):
+        return ISWCCode(data['id_code'],
+                        data['check_digit'])
+
+
+class VISANDecoder(Decoder):
+    def __init__(self):
+        super(VISANDecoder, self).__init__()
+
+    def decode(self, data):
+        return VISAN(data['version'],
+                     data['isan'],
+                     data['episode'],
+                     data['check_digit'])

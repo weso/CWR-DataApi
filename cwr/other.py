@@ -179,6 +179,9 @@ class VISAN(object):
         """
         return self._version
 
+    def __str__(self):
+        return '%s %s %s %s' % (self._version, self._isan, self._episode, self._check_digit)
+
 
 class AVIKey(object):
     """
@@ -204,3 +207,6 @@ class AVIKey(object):
         :return: the society code
         """
         return self._society_code
+
+    def __str__(self):
+        return '%s %s' % (self._av_number, self._society_code)

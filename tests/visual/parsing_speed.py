@@ -4,6 +4,7 @@ import time
 import sys
 
 import chardet
+
 from cwr.parser.file import CWRFileDecoder
 
 
