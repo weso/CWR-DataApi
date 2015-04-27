@@ -4,7 +4,8 @@ import time
 import sys
 
 import chardet
-from cwr.grammar.transaction import file as rule_file
+
+from cwr.parser.file import CWRFileDecoder
 
 
 """
@@ -62,8 +63,10 @@ if __name__ == '__main__':
         time_read = (finish - start)
         time_read_avg += time_read
 
+        decoder = CWRFileDecoder()
+
         start = time.clock()
-        data = rule_file.cwr_transmission.parseString(file)[0]
+        data = decoder.decode(path)
         finish = time.clock()
         time_parse = (finish - start)
         time_parse_avg += time_parse

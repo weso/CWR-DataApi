@@ -189,7 +189,6 @@ def numeric_float(columns, nums_int, name=None):
     :param columns: number of columns for this field
     :param name: name for the field
     :param nums_int: characters, counting from the left, for the integer value
-    :param compulsory: indicates if the zero is disallowed
     :return: grammar for the float numeric field
     """
 
@@ -272,7 +271,6 @@ def boolean(name=None):
     Creates the grammar for a Boolean (F) field, accepting only 'Y' or 'N'
 
     :param name: name for the field
-    :param compulsory: indicates if the field must be filled
     :return: grammar for the flag field
     """
 
@@ -325,7 +323,6 @@ def flag(name=None):
     Creates the grammar for a Flag (F) field, accepting only 'Y', 'N' or 'U'.
 
     :param name: name for the field
-    :param compulsory: indicates if the empty flag is disallowed
     :return: grammar for the flag field
     """
 
@@ -384,7 +381,6 @@ def date(name=None):
     The field can be compulsory, in which case the empty date, composed only of zeros, is disallowed.
 
     :param name: name for the field
-    :param compulsory: indicates if the empty date is disallowed
     :return: grammar for the date field
     """
 
@@ -424,7 +420,6 @@ def time(name=None):
     Creates the grammar for a Time (D) field, accepting only numbers in a certain pattern.
 
     :param name: name for the field
-    :param compulsory: indicates if the empty time is disallowed
     :return: grammar for the date field
     """
 
@@ -465,7 +460,6 @@ def lookup(values, columns=1, name=None):
 
     :param columns: number of columns, for the case this field is left empty
     :param name: name for the field
-    :param compulsory: indicates if the empty string is disallowed
     :return: grammar for the lookup field
     """
     if name is None:

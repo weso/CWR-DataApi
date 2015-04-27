@@ -97,10 +97,6 @@ class InterestedPartyRecord(TransactionRecord):
                  sr_society=None, sr_ownership_share=0):
         """
         Constructs an InterestedPartyRecord.
-
-        :param first_recording_refusal: record refusal status flag
-        :param first_record_refusal: first record refusal flag
-        :param usa_license: USA license rights flag
         """
         super(InterestedPartyRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
         # Flags

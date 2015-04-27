@@ -8,7 +8,6 @@ groups:
         id: group_info
         modifiers:
           - at_least_one
-          - grouped
 
 group_info:
   id: group_info
