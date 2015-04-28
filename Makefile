@@ -1,45 +1,67 @@
 # Makefile for the Python project
 #
-
-# You can set these variables from the command line.
-DISTDIR       = dist
-EGGDIR        = CWR_API.egg-info
-PYTHON        = python
-
+# It supports creating distribution files, and deploying them to Pypi and Pypitest
+#
+# A Python interpreter is required, and it should be accessible from the command line.
+ 
+# Sets the variables.
+ 
+# Sets the Python executable.
+# It will be the executable for the interpreter set up for the command line.
+PYTHON   = python
+ 
+# Sets the distribution folder.
+# It will be the 'dist' folder.
+DISTDIR   = dist
+ 
+# Sets the .egg file path.
+# The file will be located at the project's root.
+EGGDIR    = CWR_API.egg-info
+ 
 # User-friendly check for sphinx-build
-ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
-$(error The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed, then set the SPHINXBUILD environment variable to point to the full path of the '$(SPHINXBUILD)' executable. Alternatively you can add the directory with the executable to your PATH. If you don't have Sphinx installed, grab it from http://sphinx-doc.org/)
+ifeq ($(shell which $(PYTHON) >/dev/null 2>&1; echo $$?), 1)
+$(error The '$(PYTHON)' command was not found. Make sure you have a version of the python interpreter installed, then add the directory where it was installed to the PATH.)
 endif
-
+ 
 .PHONY: help clean 
-
+ 
+# Help option
+# Shows the allowed commands to be received as parameters
 help:
-	@echo "Please use \`make <target>' where <target> is one of"
+	@echo "Please use 'make <target>' where <target> is one of"
 	@echo "  sdist          to make the standard distribution"
 	@echo "  bdist          to make the binary distribution"
 	@echo "  pypi_reg       to register on pypi"
 	@echo "  pypitest_reg   to register on testpypi"
 	@echo "  pypi           to upload to pypi"
 	@echo "  pypitest       to upload to testpypi"
-
+ 
+# Clean option
+# Removes the distribution folder and the .egg file
 clean:
-	rm -r $(DISTDIR)
-	rm -r $(EGGDIR)
-	
+	rm -r -f $(DISTDIR)
+	rm -r -f $(EGGDIR)
+ 
+# Source distribution.
 sdist:
-    $(PYTHON) setup.py sdist
-	
+	$(PYTHON) setup.py sdist
+ 
+# Binary distribution.
 bdist:
-    $(PYTHON) setup.py bdist
-
+	$(PYTHON) setup.py bdist
+ 
+# Pypi registration.
 pypi_reg:
-    $(PYTHON) setup.py register -r pypi
-
+	$(PYTHON) setup.py register -r pypi
+ 
+# Pypitest registration.
 pypitest_reg:
-    $(PYTHON) setup.py register -r testpypi
-
+	$(PYTHON) setup.py register -r testpypi
+ 
+# Pypi deployment.
 pypi:
-    $(PYTHON) setup.py sdist upload -r pypi
-
+	$(PYTHON) setup.py sdist upload -r pypi
+ 
+# Pypitest deployment.
 pypitest:
-    $(PYTHON) setup.py sdist upload -r testpypi
+	$(PYTHON) setup.py sdist upload -r testpypi
