@@ -871,5 +871,9 @@ writer_territory:
         id: tis_numeric_code
       - rule_type: field
         id: shares_change
-      - rule_type: field
-        id: sequence_n
+      - group_type: option
+        rules:
+        - rule_type: field
+          id: sequence_n
+        - rule_type: field
+          id: sequence_n_2

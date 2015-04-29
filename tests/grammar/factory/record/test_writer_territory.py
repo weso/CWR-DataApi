@@ -24,6 +24,28 @@ class TestSWTGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = getRecordGrammar('writer_territory')
 
+    def test_valid_too_short(self):
+        """
+        Tests that Publisher Territory of Control grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'SWT0000000000000002030106939100001000000000I0484N01'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('SWT', result.record_type)
+        self.assertEqual(0, result.transaction_sequence_n)
+        self.assertEqual(2, result.record_sequence_n)
+        self.assertEqual('030106939', result.ip_n)
+        self.assertEqual(100, result.pr_collection_share)
+        self.assertEqual(100, result.mr_collection_share)
+        self.assertEqual(0, result.sr_collection_share)
+        self.assertEqual('I', result.inclusion_exclusion_indicator)
+        self.assertEqual(484, result.tis_numeric_code)
+        self.assertEqual(False, result.shares_change)
+        self.assertEqual(1, result.sequence_n)
+
     def test_valid_full(self):
         """
         Tests that Publisher Territory of Control grammar decodes correctly formatted record prefixes.
