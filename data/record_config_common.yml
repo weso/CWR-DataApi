@@ -179,10 +179,18 @@ group_trailer:
         id: transaction_count
       - rule_type: field
         id: record_count
-      - rule_type: field
-        id: currency_indicator
-      - rule_type: field
-        id: total_monetary_value
+      - group_type: option
+        rules:
+        - group_type: sequence
+          rules:
+          - rule_type: field
+            id: currency_indicator
+          - rule_type: field
+            id: total_monetary_value
+        - group_type: sequence
+          rules:
+          - rule_type: field
+            id: empty
 
 instrumentation_detail:
   id: instrumentation_detail
