@@ -1,6 +1,6 @@
 # Makefile for the Python project
 #
-# It supports creating distribution files, and deploying them to Pypi and Pypitest
+# It supports creating distribution files, and deploying them to Pypi and Pypitest or installing them locally
 #
 # A Python interpreter is required, and it should be accessible from the command line.
  
@@ -31,6 +31,7 @@ help:
 	@echo "Please use 'make <target>' where <target> is one of"
 	@echo "  sdist          to make the standard distribution"
 	@echo "  bdist          to make the binary distribution"
+	@echo "  install        to install the project"
 	@echo "  pypi_reg       to register on pypi"
 	@echo "  pypitest_reg   to register on testpypi"
 	@echo "  pypi           to upload to pypi"
@@ -49,6 +50,10 @@ sdist:
 # Binary distribution.
 bdist:
 	$(PYTHON) setup.py bdist
+
+# Install in local libraries repository
+install:
+	$(PYTHON) setup.py install
  
 # Pypi registration.
 pypi_reg:
