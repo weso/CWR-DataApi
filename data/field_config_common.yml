@@ -153,11 +153,6 @@ edi_standard:
   values:
     - '01.10'
 
-empty:
-  type: alphanum
-  size: 0
-  name: Empty
-
 entire_work_title:
   type: alphanum
   size: 60

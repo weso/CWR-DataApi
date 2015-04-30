@@ -20,6 +20,155 @@ class TestFileValid(unittest.TestCase):
     def setUp(self):
         self.grammar = getRecordGrammar('transmission')
 
+    def test_common_short(self):
+        record = 'HDRSO000000059SABC                                         01.102013021111110110110111               ' + '\n' + \
+                 'GRHNWR0000102.100000000000  ' + '\n' + \
+                 'NWR0000000000000000WORK NAME                                                   ES000000123     T011112211111221011            POP000320U      ORI                                                    00000000000                                                    ' + '\n' + \
+                 'SWR0000000000000001030106939WRITER SURNAME                               WRITER                         CA         000111011110111000001110000   00000    I-001234567-1             ' + '\n' + \
+                 'SWT0000000000000002030106939100001000000000I0484N01' + '\n' + \
+                 'GRT000010032029801599286' + '\n' + \
+                 'TRL000010032029801599288'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('HDR', result.header.record_type)
+        self.assertTrue(isinstance(result.header, TransmissionHeader))
+
+        self.assertEqual('TRL', result.trailer.record_type)
+        self.assertTrue(isinstance(result.trailer, TransmissionTrailer))
+
+        self.assertEqual(1, len(result.groups))
+
+        group = result.groups[0]
+
+        self.assertEqual('GRH', group.group_header.record_type)
+
+        self.assertEqual('GRT', group.group_trailer.record_type)
+
+        self.assertEqual('NWR', group.group_header.transaction_type)
+
+        transactions = group.transactions
+
+        self.assertEqual(1, len(transactions))
+
+        transaction = transactions[0]
+
+        self.assertEqual(3, len(transaction))
+
+        self.assertEqual('NWR', transaction[0].record_type)
+        self.assertEqual('SWR', transaction[1].record_type)
+        self.assertEqual('SWT', transaction[2].record_type)
+
+    def test_common_short_2(self):
+        group_1 = 'GRHNWR0000102.100000000000  ' + '\n' + \
+                  'NWR0000000000000000WORK NAME                                                   ES000000123     T011112211111221011            POP000320U      ORI                                                    00000000000                                                    ' + '\n' + \
+                  'SWR0000000000000001030106939WRITER SURNAME                               WRITER                         CA         000111011110111000001110000   00000    I-001234567-1             ' + '\n' + \
+                  'SWT0000000000000002030106939100001000000000I0484N01' + '\n' + \
+                  'GRT000010032029801599286'
+
+        group_2 = 'GRHNWR0000102.100000000000  ' + '\n' + \
+                  'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
+                  'SPU0000019900000702014271370  MUSIC SOCIETY                                 E          005101734040102328568410061 0500061 1000061 10000   0000000000000                            OS ' + '\n' + \
+                  'SPU00000199000007030166       ANOTHER SOCIETY                               AM         002501650060477617137010061 0000061 0000061 00000   0000000000000                            PS ' + '\n' + \
+                  'SPU00000199000007040170       YET ANOTHER SOCIETY                           SE         002261445930035870006610059 00000   00000   00000   0000000000000                            PG ' + '\n' + \
+                  'SPT000001990000070570             050000500005000I0484Y001' + '\n' + \
+                  'SWR00000199000007061185684  A NAME                                       YET ANOTHER NAME               C          0026058307861 0500061 0000061 00000    0000260582865             ' + '\n' + \
+                  'SWT00000199000007071185684  050000500005000I0484Y001' + '\n' + \
+                  'PWR00000199000007084271370  MUSIC SOCIETY                                01023285684100              1185684  ' + '\n' + \
+                  'PER0000019900000709A NAME                                                                     000000000000000000000000' + '\n' + \
+                  'REC000001990000071019980101                                                            000300     A COMPILATION                                               P A I  _AR_                                                 33002                                       U   ' + '\n' + \
+                  'GRT000010032029801599286'
+
+        record = 'HDRSO000000059SABC                                         01.102013021111110110110111               ' + '\n' + \
+                 group_1 + '\n' + \
+                 group_2 + '\n' + \
+                 'TRL000010032029801599288'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('HDR', result.header.record_type)
+        self.assertTrue(isinstance(result.header, TransmissionHeader))
+
+        self.assertEqual('TRL', result.trailer.record_type)
+        self.assertTrue(isinstance(result.trailer, TransmissionTrailer))
+
+        self.assertEqual(2, len(result.groups))
+
+        group = result.groups[0]
+
+        self.assertEqual('GRH', group.group_header.record_type)
+
+        self.assertEqual('GRT', group.group_trailer.record_type)
+
+        self.assertEqual('NWR', group.group_header.transaction_type)
+
+        transactions = group.transactions
+
+        self.assertEqual(1, len(transactions))
+
+        transaction = transactions[0]
+
+        self.assertEqual(3, len(transaction))
+
+        self.assertEqual('NWR', transaction[0].record_type)
+        self.assertEqual('SWR', transaction[1].record_type)
+        self.assertEqual('SWT', transaction[2].record_type)
+
+    def test_common_short_mixed(self):
+        group_1 = 'GRHNWR0000102.100000000000  ' + '\n' + \
+                  'NWR0000000000000000WORK NAME                                                   ES000000123     T011112211111221011            POP000320U      ORI                                                    00000000000                                                    ' + '\n' + \
+                  'SWR0000000000000001030106939WRITER SURNAME                               WRITER                         CA         000111011110111000001110000   00000    I-001234567-1             ' + '\n' + \
+                  'SWT0000000000000002030106939100001000000000I0484N01' + '\n' + \
+                  'GRT000010032029801599286   0000000000'
+
+        group_2 = 'GRHNWR0000102.100000000000  ' + '\n' + \
+                  'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
+                  'SPU0000019900000702014271370  MUSIC SOCIETY                                 E          005101734040102328568410061 0500061 1000061 10000   0000000000000                            OS ' + '\n' + \
+                  'SPU00000199000007030166       ANOTHER SOCIETY                               AM         002501650060477617137010061 0000061 0000061 00000   0000000000000                            PS ' + '\n' + \
+                  'SPU00000199000007040170       YET ANOTHER SOCIETY                           SE         002261445930035870006610059 00000   00000   00000   0000000000000                            PG ' + '\n' + \
+                  'SPT000001990000070570             050000500005000I0484Y001' + '\n' + \
+                  'SWR00000199000007061185684  A NAME                                       YET ANOTHER NAME               C          0026058307861 0500061 0000061 00000    0000260582865             ' + '\n' + \
+                  'SWT00000199000007071185684  050000500005000I0484Y001' + '\n' + \
+                  'PWR00000199000007084271370  MUSIC SOCIETY                                01023285684100              1185684  ' + '\n' + \
+                  'PER0000019900000709A NAME                                                                     000000000000000000000000' + '\n' + \
+                  'REC000001990000071019980101                                                            000300     A COMPILATION                                               P A I  _AR_                                                 33002                                       U   ' + '\n' + \
+                  'GRT000010032029801599286'
+
+        record = 'HDRSO000000059SABC                                         01.102013021111110110110111               ' + '\n' + \
+                 group_1 + '\n' + \
+                 group_2 + '\n' + \
+                 'TRL000010032029801599288'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('HDR', result.header.record_type)
+        self.assertTrue(isinstance(result.header, TransmissionHeader))
+
+        self.assertEqual('TRL', result.trailer.record_type)
+        self.assertTrue(isinstance(result.trailer, TransmissionTrailer))
+
+        self.assertEqual(2, len(result.groups))
+
+        group = result.groups[0]
+
+        self.assertEqual('GRH', group.group_header.record_type)
+
+        self.assertEqual('GRT', group.group_trailer.record_type)
+
+        self.assertEqual('NWR', group.group_header.transaction_type)
+
+        transactions = group.transactions
+
+        self.assertEqual(1, len(transactions))
+
+        transaction = transactions[0]
+
+        self.assertEqual(3, len(transaction))
+
+        self.assertEqual('NWR', transaction[0].record_type)
+        self.assertEqual('SWR', transaction[1].record_type)
+        self.assertEqual('SWT', transaction[2].record_type)
+
     def test_empty_lines_end(self):
         record = _common()
 
