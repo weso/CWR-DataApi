@@ -35,8 +35,8 @@ REM Shows the allowed commands to be received as parameters
 if "%1" == "help" (
 	:help
 	echo.Please use `make ^<target^>` where ^<target^> is one of
-	echo.  sdist          to make the source distribution
-	echo.  bdist          to make the binary distribution
+	echo.  dist_source    to make the source distribution
+	echo.  dist_binary    to make the binary distribution
 	echo.  install        to install the project
 	echo.  pypi_reg       to register on pypi
 	echo.  pypitest_reg   to register on pypi-test
@@ -78,7 +78,7 @@ exit /b 1
 
 
 REM Source distribution.
-if "%1" == "sdist" (
+if "%1" == "dist_source" (
 	%PYTHON% setup.py sdist
 	if errorlevel 1 exit /b 1
 	echo.
@@ -88,7 +88,7 @@ if "%1" == "sdist" (
 )
 
 REM Binary distribution.
-if "%1" == "bdist" (
+if "%1" == "dist_binary" (
 	%PYTHON% setup.py bdist
 	if errorlevel 1 exit /b 1
 	echo.

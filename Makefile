@@ -29,26 +29,26 @@ endif
 # Shows the allowed commands to be received as parameters
 help:
 	@echo "Please use 'make <target>' where <target> is one of"
-	@echo "  sdist          to make the standard distribution"
-	@echo "  bdist          to make the binary distribution"
+	@echo "  dist_source    to make the standard distribution"
+	@echo "  dist_binary    to make the binary distribution"
 	@echo "  install        to install the project"
 	@echo "  pypi_reg       to register on pypi"
 	@echo "  pypitest_reg   to register on testpypi"
 	@echo "  pypi           to upload to pypi"
 	@echo "  pypitest       to upload to testpypi"
- 
+
 # Clean option
 # Removes the distribution folder and the .egg file
 clean:
 	rm -r -f $(DISTDIR)
 	rm -r -f $(EGGDIR)
- 
+
 # Source distribution.
-sdist:
+dist_source:
 	$(PYTHON) setup.py sdist
- 
+
 # Binary distribution.
-bdist:
+dist_binary:
 	$(PYTHON) setup.py bdist
 
 # Install in local libraries repository
