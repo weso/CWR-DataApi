@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 
-from cwr.parser.file import CWRFileDecoder
+from cwr.parser.decoder.file import CWRFileDecoder
 from cwr.parser.cwrjson import JSONEncoder
 
 

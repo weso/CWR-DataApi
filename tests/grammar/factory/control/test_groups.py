@@ -99,6 +99,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
         self.assertEqual('AGR', transaction[0].record_type)
 
+
 def _agreement_short():
     agr_1 = 'AGR000000000000000000023683606100              OS200311182013111820131118N        D20131118        00009SYY              '
     ter_1_1 = 'TER0000000000000000I2136'
@@ -106,6 +107,7 @@ def _agreement_short():
     ipa_1_2 = 'IPA0000000000000002AC00250165006000000000000066       SOCIETY MUSIC                                                              61 0500061 1000061 10000'
 
     return agr_1 + '\n' + ter_1_1 + '\n' + ipa_1_1 + '\n' + ipa_1_2
+
 
 def _work_big():
     return 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \

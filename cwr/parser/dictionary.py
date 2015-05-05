@@ -1501,7 +1501,7 @@ class CWRDictionaryEncoder(Encoder):
         """
         Creates a dictionary from a VISAN.
 
-        :param ipi: the VISAN to transform into a dictionary
+        :param visan: the VISAN to transform into a dictionary
         :return: a dictionary created from the VISAN
         """
         encoded = {}
