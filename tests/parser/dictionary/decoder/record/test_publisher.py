@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import PublisherRecordDictionaryDecoder
+from cwr.parser.decoder.dictionary import PublisherRecordDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
 

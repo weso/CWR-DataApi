@@ -9,21 +9,27 @@ from setuptools import setup, find_packages
 
 """
 PyPI configuration module.
+
+This is prepared for easing the generation of deployment files.
 """
 
-__author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
+__version__ = '1.0.0'
 
+# Regular expression for the version
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
+
+# Test requirements
 _tests_require = []
 
+# Path to the project's root
 here = path.abspath(path.dirname(__file__))
 
-# Get the long description from the relevant file
+# Gets the long description from the readme
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
+# Gets the version for the source folder __init__.py file
 with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
     version = f.read()
     version = _version_re.search(version).group(1)

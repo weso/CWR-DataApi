@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import GroupTrailerDictionaryDecoder
+from cwr.parser.decoder.dictionary import GroupTrailerDictionaryDecoder
 
 
 """

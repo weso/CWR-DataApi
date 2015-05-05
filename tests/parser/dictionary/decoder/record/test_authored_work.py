@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import AuthoredWorkDictionaryDecoder
+from cwr.parser.decoder.dictionary import AuthoredWorkDictionaryDecoder
 from cwr.other import IPIBaseNumber, ISWCCode
 
 
