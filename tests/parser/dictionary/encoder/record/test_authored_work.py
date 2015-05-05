@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
 from cwr.work import AuthoredWorkRecord
 from cwr.other import ISWCCode
 

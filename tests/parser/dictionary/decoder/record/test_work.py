@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.dictionary import WorkDictionaryDecoder
+from cwr.parser.decoder.dictionary import WorkDictionaryDecoder
 from cwr.other import ISWCCode
 
 

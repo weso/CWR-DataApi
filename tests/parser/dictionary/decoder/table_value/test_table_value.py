@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import TableValueDictionaryDecoder
+from cwr.parser.decoder.dictionary import TableValueDictionaryDecoder
 
 
 """

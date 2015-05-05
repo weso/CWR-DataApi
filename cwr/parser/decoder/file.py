@@ -3,8 +3,7 @@ import os
 import logging
 
 from cwr.file import CWRFile, FileTag
-from cwr.parser.common import GrammarDecoder, GrammarFileDecoder
-from cwr.parser.common import Decoder
+from cwr.parser.decoder.common import GrammarDecoder, GrammarFileDecoder, Decoder
 from data.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data.accessor import CWRTables

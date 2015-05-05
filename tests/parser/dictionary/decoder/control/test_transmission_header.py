@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.dictionary import TransmissionHeaderDictionaryDecoder
+from cwr.parser.decoder.dictionary import TransmissionHeaderDictionaryDecoder
 
 
 """

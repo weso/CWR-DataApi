@@ -3,7 +3,7 @@
 import unittest
 
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
-from cwr.parser.common import GrammarDecoder
+from cwr.parser.decoder.common import GrammarDecoder
 from tests.utils.grammar import getRecordGrammar
 
 

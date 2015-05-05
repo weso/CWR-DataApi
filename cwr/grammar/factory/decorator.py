@@ -5,7 +5,7 @@ from abc import abstractmethod
 import pyparsing as pp
 
 from cwr.grammar.field import record as field_record
-from cwr.parser.dictionary import *
+from cwr.parser.decoder.dictionary import *
 from cwr.grammar.factory.rule import RuleDecorator
 
 

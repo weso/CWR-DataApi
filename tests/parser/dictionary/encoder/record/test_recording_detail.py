@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
 from cwr.work import RecordingDetailRecord
 
 

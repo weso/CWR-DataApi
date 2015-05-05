@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import WorkOriginDictionaryDecoder
+from cwr.parser.decoder.dictionary import WorkOriginDictionaryDecoder
 from cwr.other import VISAN
 
 

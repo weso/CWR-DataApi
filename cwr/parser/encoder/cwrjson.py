@@ -2,8 +2,8 @@
 
 import json
 
-from cwr.parser.dictionary import CWRDictionaryEncoder
-from cwr.parser.common import Encoder
+from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.common import Encoder
 
 
 """

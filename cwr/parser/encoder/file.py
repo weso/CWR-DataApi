@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from cwr.parser.common import Encoder
+from cwr.parser.encoder.common import Encoder
 
 
 """

@@ -4,7 +4,7 @@ import unittest
 import datetime
 import json
 
-from cwr.parser.cwrjson import JSONEncoder
+from cwr.parser.encoder.cwrjson import JSONEncoder
 from cwr.work import WorkRecord
 from cwr.other import ISWCCode
 

@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.dictionary import AgreementDictionaryDecoder
+from cwr.parser.decoder.dictionary import AgreementDictionaryDecoder
 
 
 """
