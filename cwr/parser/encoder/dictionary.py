@@ -15,9 +15,10 @@ from cwr.table_value import *
 
 
 """
-Offers classes to parse CWR objects from and into dictionaries.
+Classes for transforming instances of the CWR model into dictionaries.
 
-This helps for example to create JSON or Mongo objects.
+A single monolithic encoder takes care of this process. It will just check the class of the received object and encode
+it accordingly.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -28,6 +29,8 @@ __status__ = 'Development'
 class CWRDictionaryEncoder(Encoder):
     """
     Encodes CWR model classes into dictionaries.
+
+    It will check the class of the received class, and encode it accordingly.
     """
 
     def __init__(self):

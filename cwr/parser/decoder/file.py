@@ -12,9 +12,9 @@ from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorato
 
 
 """
-Parsers for decoding CWR files, creating a graph of CWR classes from them.
+Classes for processing CWR files, creating a graph of CWR model instances from it.
 
-While the decoder classes are accessible, they are meant to be used directly only when creating custom versions,
+While the decoder classes are accessible, they are meant to be used directly only for creating custom versions,
 by default the factory methods default_file_decoder() and default_filename_decoder() should be used to acquire
 the decoders to use when reading a file.
 

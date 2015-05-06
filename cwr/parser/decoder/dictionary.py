@@ -15,9 +15,15 @@ from cwr.table_value import *
 
 
 """
-Offers classes to parse CWR objects from and into dictionaries.
+Classes for transforming dictionaries into instances of the CWR model.
 
-This helps for example to create JSON or Mongo objects.
+There is a decoder for each of the model classes, and all of them expect a dictionary having at least one key for each
+field, having the same name as the field, which will refer to a valid value.
+
+As said, the values on the dictionary should be valid values, for example if an integer is expected, then the dictionary
+contains an integer. The values contained in the dictionary entries should not need to be parsed.
+
+These decoders are useful for handling JSON transmissions or Mongo databases.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
