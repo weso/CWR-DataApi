@@ -4,7 +4,14 @@ from abc import ABCMeta, abstractmethod
 
 
 """
-Offers base classes to parse data from CWR model instances.
+Base classes for implementing encoder parsers.
+
+An encoder parser receives an instance of a model class and returns a data structure.
+
+For example, it may receive a CWRFile instance and return a JSON.
+
+All encoders are expected to implement the Encoder interface. This offers a single method which receives the class to
+encode, and returns an equivalent data structure.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -14,7 +21,8 @@ __status__ = 'Development'
 
 class Encoder(object):
     """
-    Interface for encoders. These are parsers which transform a a model class into another data.
+    Interface for implementing encoder parsers. These parser receive a class from the domain model and return a data
+    structure.
     """
     __metaclass__ = ABCMeta
 
@@ -22,11 +30,11 @@ class Encoder(object):
         pass
 
     @abstractmethod
-    def encode(self, data):
+    def encode(self, instance):
         """
-        Encodes the data, creating an structure from a model object instance.
+        Encodes the data, creating a structure from an instance from the domain model.
 
-        :param data: the data to encode
+        :param instance: the instance to encode
         :return: a data structure created from the received data
         """
         raise NotImplementedError('The encode method must be implemented')
