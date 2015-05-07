@@ -32,8 +32,6 @@ class TestSWTGrammar(unittest.TestCase):
         """
         record = 'SWT0000000000000002030106939100001000000000I0484N01'
 
-        print self.grammar
-
         result = self.grammar.parseString(record)[0]
 
         self.assertEqual('SWT', result.record_type)
