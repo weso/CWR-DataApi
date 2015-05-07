@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from data.accessor import CWRConfiguration
+from data_commonworks.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
-from data.accessor import CWRTables
+from data_commonworks.accessor import CWRTables
 from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
 from cwr.grammar.factory.rule import DefaultRuleFactory
 

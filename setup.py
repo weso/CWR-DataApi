@@ -40,7 +40,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        'data': ['cwr_data/*.csv', 'cwr_data/*.yml'],
+        'data_commonworks': ['data_commonworks/*.csv', 'data_commonworks/*.yml'],
     },
     version=version,
     description='API library for the CWR standard format',

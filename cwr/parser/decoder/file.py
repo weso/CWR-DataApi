@@ -4,9 +4,9 @@ import logging
 
 from cwr.file import CWRFile, FileTag
 from cwr.parser.decoder.common import GrammarDecoder, GrammarFileDecoder, Decoder
-from data.accessor import CWRConfiguration
+from data_commonworks.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
-from data.accessor import CWRTables
+from data_commonworks.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
 from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
 
