@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestGroupInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = self.grammar = getRecordGrammar('groups')
+        self.grammar = self.grammar = get_record_grammar('groups')
 
     def test_agreement_min(self):
         group1 = 'GRHAGR0000102.100130400001  ' + '\n' + \

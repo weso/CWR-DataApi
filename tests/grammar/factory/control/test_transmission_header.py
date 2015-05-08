@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestTransmissionHeaderGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('transmission_header')
+        self.grammar = get_record_grammar('transmission_header')
 
     def test_valid_common(self):
         record = 'HDRPB226144593AGENCIA GRUPO MUSICAL                        01.102013080902591120130809               '
@@ -75,7 +75,7 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('transmission_header')
+        self.grammar = get_record_grammar('transmission_header')
 
     def test_invalid_wrong_type(self):
         """

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Information for Components grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestInformationForComponentsValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('information_for_components')
+        self.grammar = get_record_grammar('information_for_components')
 
     def test_valid_full(self):
         component = 'COM0000123400000023THE TITLE                                                   T0123456789ABCD0123456789030201LAST NAME 1                                  FIRST NAME 1                  00014107338LAST NAME 2                                  FIRST NAME 2                  00014107339I-000000229-7I-000000230-7'

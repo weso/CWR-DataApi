@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestGroupTrailerGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('group_trailer')
+        self.grammar = get_record_grammar('group_trailer')
 
     def test_valid_full(self):
         record = 'GRT000010000017900000719   0000000000'
@@ -67,7 +67,7 @@ class TestGrammarGroupTrailerException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('group_trailer')
+        self.grammar = get_record_grammar('group_trailer')
 
     def test_invalid_wrong_group_id(self):
         """

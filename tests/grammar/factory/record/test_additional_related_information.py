@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -22,7 +22,7 @@ class TestAdditionalRelatedInformationGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('additional_related_information')
+        self.grammar = get_record_grammar('additional_related_information')
 
     def test_valid_full(self):
         record = 'ARI0000123400000023001ABCD0123456789ALLDWNOTE                                                                                                                                                            '

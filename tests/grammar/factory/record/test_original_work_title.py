@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestOriginalWorkTitleGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('original_work_title')
+        self.grammar = get_record_grammar('original_work_title')
 
     def test_valid_full(self):
         record = 'VER0000123400000023THE TITLE                                                   T0123456789ESLAST NAME 1                                  FIRST NAME 1                  THE SOURCE                                                  00014107338I-000000229-7LAST NAME 2                                  FIRST NAME 2                  00014107339I-000000230-7ABCD0123456789'

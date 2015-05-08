@@ -79,9 +79,9 @@ _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 _group_rule_factory_filename = DefaultRuleFactory(_config.load_record_config('filename'), _factory_field)
 
 
-def getRecordGrammar(id):
+def get_record_grammar(id):
     return _group_rule_factory.get_rule(id)
 
 
-def getFilenameGrammar(id):
+def get_filename_grammar(id):
     return _group_rule_factory_filename.get_rule(id)

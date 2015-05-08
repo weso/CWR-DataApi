@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestWorkOriginGrammarValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('work_origin')
+        self.grammar = get_record_grammar('work_origin')
 
     def test_full(self):
         record = 'ORN0000123400000023LIBPRODUCTION TITLE                                            IDENTIFIER     1234THE LIBRARY                                                 B1234567812345678901212341ABDFE       EPISODE TITLE                                               ABD12345            2012123ABDEFG         '
