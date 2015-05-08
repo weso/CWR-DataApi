@@ -6,6 +6,7 @@ from data_commonworks.accessor import CWRTables
 from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
 from cwr.grammar.factory.rule import DefaultRuleFactory
 from cwr.parser.decoder.dictionary import *
+from cwr.grammar.factory.adapter import *
 
 """
 Grammar utilities for the test classes.
@@ -18,11 +19,36 @@ __status__ = 'Development'
 
 _config = CWRConfiguration()
 
+adapters = {}
+
+adapters['alphanum'] = AlphanumAdapter()
+adapters['alphanum_ext'] = ExtendedAlphanumAdapter()
+adapters['numeric'] = NumericAdapter()
+adapters['boolean'] = BooleanAdapter()
+adapters['flag'] = FlagAdapter()
+adapters['date'] = DateAdapter()
+adapters['time'] = TimeAdapter()
+adapters['date_time'] = DateTimeAdapter()
+adapters['blank'] = BlankAdapter()
+adapters['lookup'] = LookupAdapter()
+adapters['iswc'] = ISWCAdapter()
+adapters['ipi_name_n'] = IPINameNumberAdapter()
+adapters['ipi_base_n'] = IPIBaseNumberAdapter()
+adapters['percentage'] = PercentageAdapter()
+adapters['ean13'] = EAN13Adapter()
+adapters['isrc'] = ISRCAdapter()
+adapters['visan'] = VISANAdapter()
+adapters['avi'] = AudioVisualKeydapter()
+adapters['charset'] = CharSetAdapter()
+adapters['alphanum_variable'] = VariableAlphanumAdapter()
+adapters['numeric_float'] = NumericFloatAdapter()
+
 _data = _config.load_field_config('table')
 _data.update(_config.load_field_config('common'))
 _data.update(_config.load_field_config('filename'))
 
-_factory_field = DefaultFieldTerminalRuleFactory(_data, CWRTables())
+_factory_field = DefaultFieldTerminalRuleFactory(_data, adapters, field_values=CWRTables())
+_factory_table = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), adapters, field_values=CWRTables())
 
 _rules = _config.load_transaction_config('common')
 _rules.update(_config.load_record_config('common'))
