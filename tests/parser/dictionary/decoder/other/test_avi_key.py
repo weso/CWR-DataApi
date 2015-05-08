@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import AVIKeyDecoder
+from cwr.parser.decoder.dictionary import AVIKeyDecoder
 
 
 """

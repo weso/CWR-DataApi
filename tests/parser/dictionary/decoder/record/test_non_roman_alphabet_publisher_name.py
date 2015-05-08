@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import NonRomanAlphabetPublisherNameDictionaryDecoder
+from cwr.parser.decoder.dictionary import NonRomanAlphabetPublisherNameDictionaryDecoder
 
 
 """

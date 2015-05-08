@@ -3,7 +3,7 @@
 import unittest
 import json
 
-from cwr.parser.cwrjson import JSONEncoder
+from cwr.parser.encoder.cwrjson import JSONEncoder
 from cwr.work import WorkOriginRecord
 from cwr.other import VISAN, AVIKey
 

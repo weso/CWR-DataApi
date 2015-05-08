@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from data.accessor import CWRConfiguration
+from data_commonworks.accessor import CWRConfiguration
 from cwr.grammar.factory.adapter import *
 from cwr.grammar.factory.rule import TerminalRuleFactory
 

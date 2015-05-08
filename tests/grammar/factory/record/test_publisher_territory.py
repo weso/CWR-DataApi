@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -22,7 +22,7 @@ class TestNPNGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('publisher_territory')
+        self.grammar = get_record_grammar('publisher_territory')
 
     def test_valid_common(self):
         """
@@ -46,6 +46,28 @@ class TestNPNGrammar(unittest.TestCase):
         self.assertEqual(True, result.shares_change)
         self.assertEqual(1, result.sequence_n)
 
+    def test_valid_common_short(self):
+        """
+        Tests that Publisher Territory of Control grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'SPT0000000100000002160694172      050000500000000I0484N01'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('SPT', result.record_type)
+        self.assertEqual(1, result.transaction_sequence_n)
+        self.assertEqual(2, result.record_sequence_n)
+        self.assertEqual('160694172', result.ip_n)
+        self.assertEqual(50, result.pr_collection_share)
+        self.assertEqual(50, result.mr_collection_share)
+        self.assertEqual(0, result.sr_collection_share)
+        self.assertEqual('I', result.inclusion_exclusion_indicator)
+        self.assertEqual(484, result.tis_numeric_code)
+        self.assertEqual(False, result.shares_change)
+        self.assertEqual(1, result.sequence_n)
+
     def test_valid_full(self):
         """
         Tests that Publisher Territory of Control grammar decodes correctly formatted record prefixes.
@@ -63,6 +85,28 @@ class TestNPNGrammar(unittest.TestCase):
         self.assertEqual(10.12, result.pr_collection_share)
         self.assertEqual(50, result.mr_collection_share)
         self.assertEqual(25.2, result.sr_collection_share)
+        self.assertEqual('I', result.inclusion_exclusion_indicator)
+        self.assertEqual(8, result.tis_numeric_code)
+        self.assertEqual(True, result.shares_change)
+        self.assertEqual(12, result.sequence_n)
+
+    def test_valid_min(self):
+        """
+        Tests that Publisher Territory of Control grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'SPT0000000100000001               000000000000000I0008Y012'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('SPT', result.record_type)
+        self.assertEqual(1, result.transaction_sequence_n)
+        self.assertEqual(1, result.record_sequence_n)
+        self.assertEqual(None, result.ip_n)
+        self.assertEqual(0, result.pr_collection_share)
+        self.assertEqual(0, result.mr_collection_share)
+        self.assertEqual(0, result.sr_collection_share)
         self.assertEqual('I', result.inclusion_exclusion_indicator)
         self.assertEqual(8, result.tis_numeric_code)
         self.assertEqual(True, result.shares_change)

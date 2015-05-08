@@ -20,8 +20,8 @@ class TransmissionHeader(Record):
     """
     Represents a CWR file Transmission Header (HDR).
 
-    This is a required “cover sheet” for transmissions submitted by a participant, containing the file control
-    information as well as the name of the sender.
+    This stores the general information about a transmission (which means, the CWR file contents) submitted by a
+    participant, containing the file control information as well as the name of the sender.
     """
 
     def __init__(self, record_type, sender_id, sender_name, sender_type, creation_date_time, transmission_date,

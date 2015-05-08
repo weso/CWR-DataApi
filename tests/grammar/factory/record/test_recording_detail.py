@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestWorkDetailGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('recording_detail')
+        self.grammar = get_record_grammar('recording_detail')
 
     def test_common_3(self):
         record = 'REC000005310000516420080304                                                            000300     A NAME _ AND 1999                                           THIS IS THE LABEL                                           G0100007401741                 GBBBN0009590 U   '

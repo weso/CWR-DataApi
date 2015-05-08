@@ -101,6 +101,7 @@ controlled_writer_information:
       - rule_type: record
         id: writer_publisher
         modifiers:
+          - optional
           - at_least_one
 
 information_for_excerpts:

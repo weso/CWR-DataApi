@@ -5,7 +5,7 @@ import sys
 
 import chardet
 
-from cwr.parser.file import CWRFileDecoder
+from cwr.parser.decoder.file import default_file_decoder
 
 
 """
@@ -63,7 +63,7 @@ if __name__ == '__main__':
         time_read = (finish - start)
         time_read_avg += time_read
 
-        decoder = CWRFileDecoder()
+        decoder = default_file_decoder()
 
         start = time.clock()
         data = decoder.decode(path)

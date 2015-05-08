@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Controlled Writer Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestControlledWriterInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('controlled_writer_information')
+        self.grammar = get_record_grammar('controlled_writer_information')
 
     def test_full(self):
         writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -22,7 +22,7 @@ class TestInstrumentationSummaryGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('instrumentation_summary')
+        self.grammar = get_record_grammar('instrumentation_summary')
 
     def test_valid_full(self):
         """

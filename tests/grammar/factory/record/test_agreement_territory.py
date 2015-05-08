@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -22,7 +22,7 @@ class TestParseAgreementTerritory(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('territory_in_agreement')
+        self.grammar = get_record_grammar('territory_in_agreement')
 
     def test_valid(self):
         """

@@ -4,7 +4,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from tests.utils.grammar import getFilenameGrammar
+from tests.utils.grammar import get_filename_grammar
 
 """
 CWR file name grammar tests.
@@ -24,7 +24,7 @@ class TestFileNameValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getFilenameGrammar('filename_new')
+        self.grammar = get_filename_grammar('filename_new')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -73,7 +73,7 @@ class TestFileNameValidOld(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getFilenameGrammar('filename_old')
+        self.grammar = get_filename_grammar('filename_old')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -122,7 +122,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getFilenameGrammar('filename_new')
+        self.grammar = get_filename_grammar('filename_new')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -171,7 +171,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getFilenameGrammar('filename_old')
+        self.grammar = get_filename_grammar('filename_old')
 
     def test_s2_r2(self):
         # Sender with 2 digits and receiver with 2 digits
@@ -216,7 +216,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
 
 class TestFileNameException(unittest.TestCase):
     def setUp(self):
-        self.grammar = getFilenameGrammar('filename_new')
+        self.grammar = get_filename_grammar('filename_new')
 
     def test_empty(self):
         self.assertRaises(ParseException, self.grammar.parseString, '')
@@ -236,7 +236,7 @@ class TestFileNameException(unittest.TestCase):
 
 class TestFileNameOldException(unittest.TestCase):
     def setUp(self):
-        self.grammar = getFilenameGrammar('filename_old')
+        self.grammar = get_filename_grammar('filename_old')
 
     def test_empty(self):
         self.assertRaises(ParseException, self.grammar.parseString, '')

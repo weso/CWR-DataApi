@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR NRA for Work details grammar tests.
@@ -21,7 +21,7 @@ class TestNRAWorkGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('nra_work')
+        self.grammar = get_record_grammar('nra_work')
 
     def test_valid_full(self):
         """

@@ -179,10 +179,46 @@ group_trailer:
         id: transaction_count
       - rule_type: field
         id: record_count
+      - group_type: optional
+        rules:
+        - rule_type: field
+          id: currency_indicator
+        - rule_type: field
+          id: total_monetary_value
+
+group_trailer_base:
+  id: group_trailer_base
+  record_type: 'GRT'
+  rule_type: record
+  results_name: group_trailer
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: field
+        id: group_id
+      - rule_type: field
+        id: transaction_count
+      - rule_type: field
+        id: record_count
       - rule_type: field
         id: currency_indicator
       - rule_type: field
         id: total_monetary_value
+
+group_trailer_short:
+  id: group_trailer
+  record_type: 'GRT'
+  rule_type: record
+  results_name: group_trailer
+  rules:
+    - group_type: sequence
+      rules:
+      - rule_type: field
+        id: group_id
+      - rule_type: field
+        id: transaction_count
+      - rule_type: field
+        id: record_count
 
 instrumentation_detail:
   id: instrumentation_detail
@@ -522,8 +558,12 @@ publisher_territory:
         id: tis_numeric_code
       - rule_type: field
         id: shares_change
-      - rule_type: field
-        id: sequence_n
+      - group_type: option
+        rules:
+        - rule_type: field
+          id: sequence_n
+        - rule_type: field
+          id: sequence_n_2
 
 recording_detail:
   id: recording_detail
@@ -871,5 +911,9 @@ writer_territory:
         id: tis_numeric_code
       - rule_type: field
         id: shares_change
-      - rule_type: field
-        id: sequence_n
+      - group_type: option
+        rules:
+        - rule_type: field
+          id: sequence_n
+        - rule_type: field
+          id: sequence_n_2

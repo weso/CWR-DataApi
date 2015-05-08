@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestAlternateTitleGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('work_alternate_title')
+        self.grammar = get_record_grammar('work_alternate_title')
 
     def test_extended_character(self):
         record = 'ALT0000028200001380PA\xc6\x8f                                                        AT  '

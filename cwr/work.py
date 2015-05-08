@@ -62,7 +62,7 @@ class BaseWorkRecord(TransactionRecord):
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None, iswc=None):
         """
-        Constructs a BaseWorkRecord.
+        Constructs a BaseWorkRecord receiving all the fields.
 
         :param record_type: type of record
         :param transaction_sequence_n: position in the transactions sequence
@@ -494,8 +494,10 @@ class ComponentRecord(TransactionRecord):
     """
     Represents a Component (COM) Record.
 
-    This is to be used on a Work Transaction when said work is a composite. The Component Record will identify an
-    individual component of the composite.
+    This is a detail record, used to insert additional information in a Work transaction.
+
+    In this case, it is to be used when said Work is a composite. The Component Record will identify an individual
+    component of such composite.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, writer_1_last_name,
@@ -693,16 +695,20 @@ class ComponentRecord(TransactionRecord):
 
 class AuthoredWorkRecord(BaseWorkRecord):
     """
-    Represents a Work with authors. This is for the Entire Work Title for Excerpts (EWT) and Original Work Title for
-    Versions (VER) Records.
+    Represents a Work with authors.
 
-    While both of these records share the same structure, their uses change.
+    This is a detail record, used to insert additional information in a Work transaction, and is used to represent
+    various CWR transaction records:
+    - Entire Work Title for Excerpts (EWT)
+    - Original Work Title for Versions (VER)
 
-    The Entire Work Title for Excerpts Record serves to indicate the complete work from which the Work originates, when
-    the transaction refers to an excerpt.
+    As expected, both of these records share the same structure. But it should be noted that their uses change.
 
-    The Original Work Title for Versions serves to indicate the original work of which the Work is a version, when the
-    transaction refers to a version.
+    The Entire Work Title for Excerpts Record (EWT) serves to indicate the complete work from which the Work originates,
+    when the transaction refers to an excerpt.
+
+    The Original Work Title for Versions serves (VER) to indicate the original work of which the Work is a version, when
+    the transaction refers to a version.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, submitter_work_n='',
@@ -728,7 +734,6 @@ class AuthoredWorkRecord(BaseWorkRecord):
         :param source: source from which the work was obtained
         :param language_code: work title's language
         :param iswc: ISWC for the work
-        :return:
         """
         super(AuthoredWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n, title,
                                                  language_code, iswc)
@@ -876,7 +881,9 @@ class AlternateTitleRecord(TransactionRecord):
     """
     Represents an Alternate Title (ALT) Record.
 
-    This identifies alternate titles for the Transaction's Work.
+    This is a detail record, used to insert additional information in a Work transaction.
+
+    The record identifies alternate titles for the Transaction's Work.
 
     Note that this applies to translation of the title only, not a  translation of the work. For translations of the
     Work the Original Work Title for Versions (VER) Record should be used.
@@ -937,6 +944,8 @@ class AlternateTitleRecord(TransactionRecord):
 class RecordingDetailRecord(TransactionRecord):
     """
     Represents a CWR Recording Detail (REC).
+
+    This is a detail record, used to insert additional information in a Work transaction.
 
     This record contains information on the first commercial release of the work.
     """
@@ -1081,10 +1090,9 @@ class InstrumentationDetailRecord(TransactionRecord):
     """
     Represents a CWR Instrumentation Detail (IND) record.
 
-    The IND record provides information on standard instruments or voices for serious works.
+    This is a detail record, used to insert additional information in a Work transaction.
 
-    If the Musical Work  Distribution Category is SER then instrumentation detail is required using one or more INS
-    records as well as IND records to describe the individual instruments (if any).
+    The record provides information on standard instruments or voices for serious works.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, instrument_code, number_players=0):
@@ -1119,15 +1127,14 @@ class WorkOriginRecord(TransactionRecord):
     """
     Represents a CWR Work Origin (ORN) record.
 
-    This record serves to describe the origin of the work.
+    This is a detail record, used to insert additional information in a Work transaction.
+
+    The record serves to describe the origin of the work.
 
     The origin may be a library, or an audio-visual production or both. If the work originated in an AV production,
     additional information regarding the usage of the work within the production can be helpful.
 
     Note that the cue sheet is always the final authority for usage data.
-
-    Many identifiers for the audio-visual production have been added with version 2.1 including the reference as used in
-    the CIS tool, AV Index.
     """
 
     def __init__(self, record_type, transaction_sequence_n, record_sequence_n, intended_purpose, production_title='',
@@ -1286,7 +1293,9 @@ class InstrumentationSummaryRecord(TransactionRecord):
     """
     Represents a CWR Instrumentation Summary (INS) record.
 
-    This record provides information on standard and non-standard instrumentation for serious works. If the Musical Work
+    This is a detail record, used to insert additional information in a Work transaction.
+
+    The record provides information on standard and non-standard instrumentation for serious works. If the Musical Work
     Distribution Category is SER then instrumentation detail is required using one or more Standard Instrumentation
     Type, one or more IND records, or one Instrumentation Description.
 
@@ -1347,6 +1356,8 @@ class InstrumentationSummaryRecord(TransactionRecord):
 class PerformingArtistRecord(TransactionRecord):
     """
     Represents a CWR Performing Artist (PER).
+
+    This is a detail record, used to insert additional information in a Work transaction.
 
     Contains the info of a person or group performing this work either in public or on a recording.
     """
