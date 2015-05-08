@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-import os
 import logging
 
-from cwr.file import CWRFile, FileTag
-from cwr.parser.decoder.common import GrammarDecoder, GrammarFileDecoder, Decoder
+from cwr.parser.decoder.common import GrammarDecoder
 from data_commonworks.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data_commonworks.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
 from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
+from cwr.parser.decoder.dictionary import *
 
 
 """
@@ -34,6 +33,57 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
+def _default_group_decoders():
+    decoders = {}
+
+    decoders['transmission'] = TransmissionDictionaryDecoder()
+    decoders['group_info'] = GroupDictionaryDecoder()
+
+    return decoders
+
+
+def _default_record_decoders():
+    decoders = {}
+
+    decoders['acknowledgement'] = AcknowledgementDictionaryDecoder()
+    decoders['message'] = MessageDictionaryDecoder()
+    decoders['agreement'] = AgreementDictionaryDecoder()
+    decoders['territory_in_agreement'] = AgreementTerritoryDictionaryDecoder()
+    decoders['additional_related_information'] = AdditionalRelatedInformationDictionaryDecoder()
+    decoders['group_header'] = GroupHeaderDictionaryDecoder()
+    decoders['group_trailer'] = GroupTrailerDictionaryDecoder()
+    decoders['interested_party_agreement'] = InterestedPartyForAgreementDictionaryDecoder()
+    decoders['nra_agreement_party'] = NonRomanAlphabetAgreementPartyDictionaryDecoder()
+    decoders['nra_publisher_name'] = NonRomanAlphabetPublisherNameDictionaryDecoder()
+    decoders['nra_writer_name'] = NonRomanAlphabetWriterNameDictionaryDecoder()
+    decoders['nra_title'] = NonRomanAlphabetTitleDictionaryDecoder()
+    decoders['nra_performance_data'] = NonRomanAlphabetPerformanceDataDictionaryDecoder()
+    decoders['nra_work'] = NonRomanAlphabetWorkDictionaryDecoder()
+    decoders['nra_other_writer'] = NonRomanAlphabetOtherWriterDictionaryDecoder()
+    decoders['publisher'] = PublisherRecordDictionaryDecoder()
+    decoders['publisher_territory'] = IPTerritoryOfControlDictionaryDecoder()
+    decoders['transmission_header'] = TransmissionHeaderDictionaryDecoder()
+    decoders['transmission_trailer'] = TransmissionTrailerDictionaryDecoder()
+    decoders['work'] = WorkDictionaryDecoder()
+    decoders['work_conflict'] = WorkDictionaryDecoder()
+    decoders['work_alternate_title'] = AlternateTitleDictionaryDecoder()
+    decoders['entire_work_title'] = AuthoredWorkDictionaryDecoder()
+    decoders['original_work_title'] = AuthoredWorkDictionaryDecoder()
+    decoders['performing_artist'] = PerformingArtistDictionaryDecoder()
+    decoders['recording_detail'] = RecordingDetailDictionaryDecoder()
+    decoders['work_origin'] = WorkOriginDictionaryDecoder()
+    decoders['instrumentation_summary'] = InstrumentationSummaryDictionaryDecoder()
+    decoders['instrumentation_detail'] = InstrumentationDetailDictionaryDecoder()
+    decoders['component'] = ComponentDictionaryDecoder()
+    decoders['writer'] = WriterRecordDictionaryDecoder()
+    decoders['writer_publisher'] = PublisherForWriterDictionaryDecoder()
+    decoders['writer_territory'] = IPTerritoryOfControlDictionaryDecoder()
+    decoders['filename_new'] = FileTagDictionaryDecoder()
+    decoders['filename_old'] = FileTagDictionaryDecoder()
+
+    return decoders
+
+
 def default_file_decoder():
     """
     Creates a decoder which parses a CWR file, creating a CWRFile class instance from it.
@@ -51,9 +101,9 @@ def default_file_decoder():
     _rules.update(_config.load_record_config('common'))
     _rules.update(_config.load_group_config('common'))
 
-    _decorators = {'transaction': RecordRuleDecorator(_factory_field),
-                   'record': RecordRuleDecorator(_factory_field),
-                   'group': GroupRuleDecorator()}
+    _decorators = {'transaction': RecordRuleDecorator(_factory_field, _default_record_decoders()),
+                   'record': RecordRuleDecorator(_factory_field, _default_record_decoders()),
+                   'group': GroupRuleDecorator(_default_group_decoders())}
     _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 
     return FileDecoder(_group_rule_factory.get_rule('transmission'), default_filename_decoder())
@@ -97,18 +147,22 @@ class FileDecoder(Decoder):
         self._logger = logging.getLogger(__name__)
 
         self._filename_decoder = filename_decoder
-        self._file_decoder = GrammarFileDecoder(grammar)
+        self._file_decoder = GrammarDecoder(grammar)
 
-    def decode(self, path):
+    def decode(self, data):
         """
         Parses the file, creating a CWRFile from it.
 
-        :param path: path to the file to parse
+        It requires a dictionary with two values:
+        - filename, containing the filename
+        - contents, containing the file contents
+
+        :param data: dictionary with the data to parse
         :return: a CWRFile instance
         """
-        filename = self._filename_decoder.decode(os.path.basename(path))
+        filename = self._filename_decoder.decode(data['filename'])
 
-        transmission = self._file_decoder.decode(path)[0]
+        transmission = self._file_decoder.decode(data['contents'])[0]
 
         return CWRFile(filename, transmission)
 

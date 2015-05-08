@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
-import logging
-
-from cwr.utils.reader import UTF8AdapterReader
 
 
 """
@@ -16,9 +13,8 @@ For example, it may receive a JSON and return a CWRFile instance.
 All decoders are expected to implement the Decoder interface. This offers a single method which receives the data to
 decode, and returns an equivalent model class instance.
 
-Additionally, two decoders for handling grammar rules are included:
+Additionally, a decoder for handling grammar rules is included:
 - GrammarDecoder, which decodes a string applying a Pyparsing grammar rule.
-- GrammarFileDecoder, an extension of the previous decoder meant to work with files.
 
 Note that in the context of the project these parsers are expected to be lossfull. Not all the data in the CWR files
 is useful, some rows contains information which can be safely ignored, but also they may parse sources, such as JSON
@@ -87,35 +83,3 @@ class GrammarDecoder(Decoder):
         :return: a class representing the data
         """
         return self._grammar.parseString(text)
-
-
-class GrammarFileDecoder(GrammarDecoder):
-    """
-    Parses the contents of a file based on a Pyparsing grammar rules set.
-
-    By default, this expects the file to be on the UTF-8 format.
-    """
-
-    def __init__(self, grammar, reader=None):
-        super(GrammarFileDecoder, self).__init__(grammar)
-        self._logger = logging.getLogger(__name__)
-
-        if reader is None:
-            self._reader = UTF8AdapterReader()
-        else:
-            self._reader = reader
-
-    def decode(self, path):
-        self._logger.info('Begins reading file %s' % path)
-        data = self.reader.read(path)
-        self._logger.info('Finished reading file %s' % path)
-
-        self._logger.info('Begins decoding file %s' % path)
-        result = super(GrammarFileDecoder, self).decode(data)
-        self._logger.info('Finished decoding file %s' % path)
-
-        return result
-
-    @property
-    def reader(self):
-        return self._reader
