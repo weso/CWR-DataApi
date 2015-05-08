@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import PerformingArtistDictionaryDecoder
+from cwr.parser.decoder.dictionary import PerformingArtistDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestGroupInformationValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = self.grammar = getRecordGrammar('group_info')
+        self.grammar = self.grammar = get_record_grammar('group_info')
 
     def test_agreement_min(self):
         header = 'GRHAGR0000102.100130400001  '
@@ -27,9 +27,84 @@ class TestGroupInformationValid(unittest.TestCase):
 
         result = self.grammar.parseString(record)[0]
 
+        self.assertEqual('GRH', result.group_header.record_type)
+
+        self.assertEqual('GRT', result.group_trailer.record_type)
+
         transaction = result.transactions[0]
 
         self.assertEqual('AGR', transaction[0].record_type)
+
+    def test_agreement_short(self):
+        header = 'GRHAGR0000102.100130400001  '
+        trailer = 'GRT012340123456701234567'
+
+        record = header + '\n' + _agreement_short() + '\n' + trailer
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('GRH', result.group_header.record_type)
+
+        self.assertEqual('GRT', result.group_trailer.record_type)
+
+        transaction = result.transactions[0]
+
+        self.assertEqual('AGR', transaction[0].record_type)
+
+    def test_agreement_short_b(self):
+        header = 'GRHAGR0123402.100123456789  '
+
+        trailer = 'GRT012340123456701234567'
+
+        agreement_record_1 = _agreement_record_big()
+
+        agreement_record_2 = _agreement_record_big()
+
+        record = header + '\n' + agreement_record_1 + '\n' + agreement_record_2 + '\n' + trailer
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('GRH', result.group_header.record_type)
+
+        self.assertEqual('GRT', result.group_trailer.record_type)
+
+        transactions = result.transactions
+
+        self.assertEqual(2, len(transactions))
+
+        transaction = transactions[0]
+        self.assertEqual(21, len(transaction))
+
+        self.assertEqual('AGR', transaction[0].record_type)
+
+        self.assertEqual('TER', transaction[1].record_type)
+        self.assertEqual('TER', transaction[2].record_type)
+
+        self.assertEqual('IPA', transaction[3].record_type)
+        self.assertEqual('NPA', transaction[4].record_type)
+
+        self.assertEqual('IPA', transaction[5].record_type)
+        self.assertEqual('NPA', transaction[6].record_type)
+
+        self.assertEqual('IPA', transaction[7].record_type)
+        self.assertEqual('NPA', transaction[8].record_type)
+
+        self.assertEqual('IPA', transaction[9].record_type)
+        self.assertEqual('NPA', transaction[10].record_type)
+
+        self.assertEqual('TER', transaction[11].record_type)
+        self.assertEqual('TER', transaction[12].record_type)
+
+        self.assertEqual('IPA', transaction[13].record_type)
+        self.assertEqual('NPA', transaction[14].record_type)
+
+        self.assertEqual('IPA', transaction[15].record_type)
+        self.assertEqual('NPA', transaction[16].record_type)
+
+        self.assertEqual('IPA', transaction[17].record_type)
+        self.assertEqual('NPA', transaction[18].record_type)
+
+        self.assertEqual('IPA', transaction[19].record_type)
 
     def test_agreement_small_pair(self):
         header = 'GRHAGR0000102.100130400001  '
@@ -38,6 +113,10 @@ class TestGroupInformationValid(unittest.TestCase):
         record = header + '\n' + _agreement_short() + '\n' + _agreement_short() + '\n' + trailer
 
         result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('GRH', result.group_header.record_type)
+
+        self.assertEqual('GRT', result.group_trailer.record_type)
 
         transaction = result.transactions[0]
 
@@ -102,7 +181,7 @@ class TestGroupInformationValid(unittest.TestCase):
 
 class TestGroupInformationInvalid(unittest.TestCase):
     def setUp(self):
-        self.grammar = self.grammar = getRecordGrammar('group_info')
+        self.grammar = self.grammar = get_record_grammar('group_info')
 
 
     def test_agreement_and_work(self):

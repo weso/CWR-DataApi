@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
 from cwr.file import FileTag, CWRFile
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord

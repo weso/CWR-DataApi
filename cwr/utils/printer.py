@@ -14,7 +14,10 @@ from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord, NonRoma
 
 
 """
-This is a small tool to print a CWR file contents on the console.
+A small tool to print the contents of a CWR on the console.
+
+It is meant to be used mostly as a testing tool, to check if a file can be parsed correctly, and to visually check at
+least part of it's contents.
 """
 
 __author__ = 'Bernardo Martínez Garrido'

@@ -70,7 +70,12 @@ class DefaultRuleFactory(RuleFactory):
             if rule_type in self._decorators:
                 record = self._decorators[rule_type].decorate(record, record_config)
 
-        return record.setResultsName(id)
+        if 'results_name' in record_config:
+            record = record.setResultsName(record_config['results_name'])
+        else:
+            record = record.setResultsName(id)
+
+        return record
 
     def _get_group(self, rules):
         group = None
@@ -79,6 +84,8 @@ class DefaultRuleFactory(RuleFactory):
             group = self._build_group(rules, pp.And)
         elif rules['group_type'] == 'option':
             group = self._build_group(rules, pp.MatchFirst)
+        elif rules['group_type'] == 'optional':
+            group = pp.Optional(self._build_group(rules, pp.And))
 
         if 'modifiers' in rules:
             modifiers = rules['modifiers']
@@ -132,14 +139,3 @@ class DefaultRuleFactory(RuleFactory):
             rule = pp.Optional(rule)
 
         return rule
-
-
-class RuleDecorator(object):
-    __metaclass__ = ABCMeta
-
-    def __init__(self):
-        pass
-
-    @abstractmethod
-    def decorate(self, rule, data):
-        raise NotImplementedError("The decorate method is not implemented")

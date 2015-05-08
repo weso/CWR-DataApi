@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR agreement grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestGrammarAgreement(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('agreement')
+        self.grammar = get_record_grammar('agreement')
 
     def test(self):
         record = 'AGR000000010000000000041383606100              OS200006062017010120170101N        D20170101        00001SYY              '
@@ -106,7 +106,7 @@ class TestGrammarAgreement(unittest.TestCase):
 
 class TestGrammarGroupHeaderException(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('agreement')
+        self.grammar = get_record_grammar('agreement')
 
     def test_works_zero(self):
         """

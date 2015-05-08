@@ -3,8 +3,8 @@
 import unittest
 
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
-from cwr.parser.common import GrammarDecoder
-from tests.utils.grammar import getRecordGrammar
+from cwr.parser.decoder.common import GrammarDecoder
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -21,7 +21,7 @@ __status__ = 'Development'
 
 class TestFileCWRDecodeValid(unittest.TestCase):
     def setUp(self):
-        self._parser = GrammarDecoder(getRecordGrammar('transmission'))
+        self._parser = GrammarDecoder(get_record_grammar('transmission'))
 
     def test_two_groups(self):
         record = _two_groups()

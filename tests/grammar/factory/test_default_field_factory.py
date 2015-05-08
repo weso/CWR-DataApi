@@ -4,8 +4,8 @@ import unittest
 from pyparsing import ParseException
 
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
-from data.accessor import CWRTables
-from data.accessor import CWRConfiguration
+from data_commonworks.accessor import CWRTables
+from data_commonworks.accessor import CWRConfiguration
 
 
 """

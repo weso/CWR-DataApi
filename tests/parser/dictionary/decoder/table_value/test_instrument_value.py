@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import InstrumentValueDictionaryDecoder
+from cwr.parser.decoder.dictionary import InstrumentValueDictionaryDecoder
 
 
 """

@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
 from cwr.interested_party import Writer
 
 

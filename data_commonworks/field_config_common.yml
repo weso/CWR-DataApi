@@ -507,6 +507,12 @@ sequence_n:
   size: 3
   name: Sequence Number
 
+sequence_n_2:
+  type: numeric
+  size: 2
+  name: Sequence Number
+  results_name: sequence_n
+
 sender_id:
   type: numeric
   size: 9

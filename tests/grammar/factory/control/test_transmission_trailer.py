@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestTransmissionTrailerGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('transmission_trailer')
+        self.grammar = get_record_grammar('transmission_trailer')
 
     def test_valid_full(self):
         record = 'TRL000020000053200005703'
@@ -39,7 +39,7 @@ class TestParseTransmissionTrailerException(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('transmission_header')
+        self.grammar = get_record_grammar('transmission_header')
 
     def test_invalid_wrong_length_too_short(self):
         """

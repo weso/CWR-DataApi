@@ -21,8 +21,12 @@ group_info:
         id: transactions
         modifiers:
           - optional
-      - rule_type: record
-        id: group_trailer
+      - group_type: option
+        rules:
+        - rule_type: record
+          id: group_trailer_base
+        - rule_type: record
+          id: group_trailer_short
 
 transactions:
   id: transactions

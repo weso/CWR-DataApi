@@ -4,7 +4,7 @@ import unittest
 import datetime
 import json
 
-from cwr.parser.cwrjson import JSONEncoder
+from cwr.parser.encoder.cwrjson import JSONEncoder
 from cwr.file import FileTag, CWRFile
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord

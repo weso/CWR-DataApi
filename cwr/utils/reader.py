@@ -7,7 +7,10 @@ import chardet
 
 
 """
-This is a small tool to read the contents of a file, trying to convert its contents to UTF-8.
+Small tools for reading the contents of a file.
+
+Mainly, this contains a class which helps to convert a file into the UTF-8 format. But this, sadly, does not work on
+Python 3.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -29,31 +32,43 @@ class FileReader():
 
     @abstractmethod
     def read(self, file):
+        """
+        Processes the received file and returns it's contents.
+
+        :param file: file being read
+        """
         pass
 
 
 class UTF8AdapterReader(FileReader):
     """
     Reads a file's contents and transforms them into the UTF8 encoding.
+
+    Does not work on Python 3.
     """
 
     def __init__(self):
         super(UTF8AdapterReader, self).__init__()
 
     def read(self, file):
-        cwr = open(file, 'rt')
+        """
+        Processes the received file and returns it's contents adapted to the UTF-8 format.
 
-        rawdata = cwr.readline()
+        :param file: file being read
+        """
+        file_contents = open(file, 'rt')
+
+        rawdata = file_contents.readline()
         result = chardet.detect(rawdata)
         charenc = result['encoding']
 
-        cwr = codecs.open(file, 'r', 'latin-1')
-        file = cwr.readline()
+        file_contents = codecs.open(file, 'r', 'latin-1')
+        file = file_contents.readline()
 
         if charenc == 'UTF-8-SIG':
             file = file[3:]
 
-        for line in cwr:
+        for line in file_contents:
             file += line
 
         return file

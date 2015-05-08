@@ -1,7 +1,9 @@
 # Miscellany files
 include LICENSE
 include README.rst
+# The tests folder is removed
 prune tests
-include data/*.py
-include data/*.csv
-include data/*.yml
+# Data files are added
+include data_commonworks/*.py
+include data_commonworks/*.csv
+include data_commonworks/*.yml

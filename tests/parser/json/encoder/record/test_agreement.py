@@ -5,7 +5,7 @@ import datetime
 import json
 
 from cwr.agreement import AgreementRecord
-from cwr.parser.cwrjson import JSONEncoder
+from cwr.parser.encoder.cwrjson import JSONEncoder
 
 
 """

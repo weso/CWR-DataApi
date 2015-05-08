@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestPerformingArtistGrammar(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('performing_artist')
+        self.grammar = get_record_grammar('performing_artist')
 
     def test_valid_full(self):
         record = 'PER0000123400000023LAST NAME                                    FIRST NAME                    00014107338I-000000229-7'

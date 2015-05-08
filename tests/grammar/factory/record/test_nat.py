@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 
 """
@@ -22,7 +22,7 @@ class TestNPAGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('nra_title')
+        self.grammar = get_record_grammar('nra_title')
 
     def test_valid_full(self):
         """
