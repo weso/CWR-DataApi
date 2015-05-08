@@ -162,6 +162,13 @@ class FileDecoder(Decoder):
         """
         filename = self._filename_decoder.decode(data['filename'])
 
+        file_data = data['contents']
+        i = 0
+        while file_data[i:i + 1] != 'H':
+            i += 1
+        if i > 0:
+            data['contents'] = file_data[i:]
+
         transmission = self._file_decoder.decode(data['contents'])[0]
 
         return CWRFile(filename, transmission)
