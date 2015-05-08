@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR acknowledgement grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestAcknowledgementAgreementValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('acknowledgement')
+        self.grammar = get_record_grammar('acknowledgement')
 
     def test_valid_full(self):
         """
@@ -82,7 +82,7 @@ class TestAcknowledgementAgreementValid(unittest.TestCase):
 
 class TestAcknowledgementAgreementException(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('acknowledgement')
+        self.grammar = get_record_grammar('acknowledgement')
 
     def test_nwr_missing_title(self):
         """

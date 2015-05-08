@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Administrator Information grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestAgreementTransactionValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('agreement_transaction')
+        self.grammar = get_record_grammar('agreement_transaction')
 
     def test_valid_short(self):
         record = _agreement_short()

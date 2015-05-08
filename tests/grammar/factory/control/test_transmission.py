@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
 """
@@ -18,7 +18,7 @@ __status__ = 'Development'
 
 class TestFileValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('transmission')
+        self.grammar = get_record_grammar('transmission')
 
     def test_common_short(self):
         record = 'HDRSO000000059SABC                                         01.102013021111110110110111               ' + '\n' + \

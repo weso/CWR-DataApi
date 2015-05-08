@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Test Work grammar tests.
@@ -17,7 +17,7 @@ __status__ = 'Development'
 
 class TestWorkTransactionValid(unittest.TestCase):
     def setUp(self):
-        self.grammar = getRecordGrammar('work_transaction')
+        self.grammar = get_record_grammar('work_transaction')
 
     def test_writer(self):
         record = 'NWR0000000000000000WORK NAME                                                   ES000000123     T011112211111221011            POP000320U      ORI                                                    00000000000                                                    ' + '\n' + \

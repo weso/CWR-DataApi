@@ -139,14 +139,3 @@ class DefaultRuleFactory(RuleFactory):
             rule = pp.Optional(rule)
 
         return rule
-
-
-class RuleDecorator(object):
-    __metaclass__ = ABCMeta
-
-    def __init__(self):
-        pass
-
-    @abstractmethod
-    def decorate(self, rule, data):
-        raise NotImplementedError("The decorate method is not implemented")

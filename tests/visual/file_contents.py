@@ -2,9 +2,11 @@
 import codecs
 import time
 import logging
+import os
 
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.utils.printer import CWRPrinter
+from cwr.utils.reader import UTF8AdapterReader
 
 
 """
@@ -38,8 +40,14 @@ if __name__ == '__main__':
 
     decoder = default_file_decoder()
 
+    reader = UTF8AdapterReader()
+
+    data = {}
+    data['filename'] = os.path.basename(path)
+    data['contents'] = reader.read(path)
+
     start = time.clock()
-    data = decoder.decode(path)
+    data = decoder.decode(data)
     end = time.clock()
     time_parse = (end - start)
 

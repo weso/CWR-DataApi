@@ -2,7 +2,7 @@
 
 import pyparsing as pp
 
-from data.accessor import CWRConfiguration, CWRTables
+from data_commonworks.accessor import CWRConfiguration, CWRTables
 
 
 """

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import getRecordGrammar
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Non-Roman Alphabet Writer Name grammar tests.
@@ -21,7 +21,7 @@ class TestNWNGrammar(unittest.TestCase):
     """
 
     def setUp(self):
-        self.grammar = getRecordGrammar('nra_writer_name')
+        self.grammar = get_record_grammar('nra_writer_name')
 
     def test_valid_full(self):
         """
