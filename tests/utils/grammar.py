@@ -66,9 +66,14 @@ decoders['writer_territory'] = IPTerritoryOfControlDictionaryDecoder()
 decoders['filename_new'] = FileTagDictionaryDecoder()
 decoders['filename_old'] = FileTagDictionaryDecoder()
 
+decoders_group = {}
+
+decoders_group['transmission'] = TransmissionDictionaryDecoder()
+decoders_group['group_info'] = GroupDictionaryDecoder()
+
 _decorators = {'transaction': RecordRuleDecorator(_factory_field, decoders),
                'record': RecordRuleDecorator(_factory_field, decoders),
-               'group': GroupRuleDecorator()}
+               'group': GroupRuleDecorator(decoders_group)}
 _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
 
 _group_rule_factory_filename = DefaultRuleFactory(_config.load_record_config('filename'), _factory_field)
