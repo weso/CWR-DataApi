@@ -314,9 +314,9 @@ nra_agreement_party:
       - rule_type: field
         id: ip_n
       - rule_type: field
-        id: ip_name
+        id: ip_name_ext
       - rule_type: field
-        id: ip_writer_name
+        id: ip_writer_name_ext
       - rule_type: field
         id: language_code
 
@@ -328,9 +328,9 @@ nra_other_writer:
     - group_type: sequence
       rules:
       - rule_type: field
-        id: writer_name
+        id: writer_name_ext
       - rule_type: field
-        id: writer_first_name_long
+        id: writer_first_name_long_ext
       - rule_type: field
         id: language_code
       - rule_type: field
@@ -344,9 +344,9 @@ nra_performance_data:
     - group_type: sequence
       rules:
       - rule_type: field
-        id: performing_artist_name
+        id: performing_artist_name_ext
       - rule_type: field
-        id: performing_artist_first_name_long
+        id: performing_artist_first_name_long_ext
       - rule_type: field
         id: performing_artist_ipi_name_n
       - rule_type: field
@@ -370,7 +370,7 @@ nra_publisher_name:
       - rule_type: field
         id: ip_n
       - rule_type: field
-        id: publisher_name_long
+        id: publisher_name_long_ext
       - rule_type: field
         id: language_code
 
@@ -382,7 +382,7 @@ nra_title:
     - group_type: sequence
       rules:
       - rule_type: field
-        id: title
+        id: title_ext
       - rule_type: field
         id: title_type
       - rule_type: field
@@ -399,7 +399,7 @@ nra_work:
     - group_type: sequence
       rules:
       - rule_type: field
-        id: title
+        id: title_ext
       - rule_type: field
         id: language_code
 
@@ -413,9 +413,9 @@ nra_writer_name:
       - rule_type: field
         id: ip_n
       - rule_type: field
-        id: writer_last_name_long
+        id: writer_last_name_long_ext
       - rule_type: field
-        id: writer_first_name_long
+        id: writer_first_name_long_ext
       - rule_type: field
         id: language_code
 

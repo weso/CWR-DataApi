@@ -41,3 +41,21 @@ class TestNOWGrammar(unittest.TestCase):
         self.assertEqual('FIRST NAME', result.writer_first_name)
         self.assertEqual('ES', result.language_code)
         self.assertEqual(1, result.position)
+
+    def test_extended_character(self):
+        """
+        Tests that IPA grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'NOW0000123400000023NAME \xc6\x8f                                                                                                                                                         FIRST NAME \xc6\x8f                                                                                                                                                   ES1'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('NOW', result.record_type)
+        self.assertEqual(1234, result.transaction_sequence_n)
+        self.assertEqual(23, result.record_sequence_n)
+        self.assertEqual('NAME \xc6\x8f', result.writer_name)
+        self.assertEqual('FIRST NAME \xc6\x8f', result.writer_first_name)
+        self.assertEqual('ES', result.language_code)
+        self.assertEqual(1, result.position)
