@@ -6,7 +6,6 @@ import os
 
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.utils.printer import CWRPrinter
-from cwr.utils.reader import UTF8AdapterReader
 
 
 """
@@ -40,11 +39,9 @@ if __name__ == '__main__':
 
     decoder = default_file_decoder()
 
-    reader = UTF8AdapterReader()
-
     data = {}
     data['filename'] = os.path.basename(path)
-    data['contents'] = reader.read(path)
+    data['contents'] = codecs.open(path, 'r', 'latin-1').read()
 
     start = time.clock()
     data = decoder.decode(data)
