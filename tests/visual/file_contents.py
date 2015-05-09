@@ -6,7 +6,6 @@ import os
 
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.utils.printer import CWRPrinter
-from cwr.utils.reader import UTF8AdapterReader
 
 
 """
@@ -39,8 +38,6 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
 
     decoder = default_file_decoder()
-
-    reader = UTF8AdapterReader()
 
     data = {}
     data['filename'] = os.path.basename(path)

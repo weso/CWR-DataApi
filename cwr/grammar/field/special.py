@@ -6,7 +6,7 @@ import pyparsing as pp
 
 from cwr.other import ISWCCode, IPIBaseNumber, VISAN, AVIKey
 from cwr.grammar.field import basic
-from data_commonworks.accessor import CWRConfiguration
+from data_commonworks.accessor import CWRConfiguration, CWRTables
 
 
 """
@@ -260,22 +260,106 @@ def isrc(name=None):
     :return: grammar for an ISRC field
     """
 
+    config = CWRTables()
+
     if name is None:
         name = 'ISRC Field'
 
     separator = pp.Literal('-')
-    country = basic.alphanum(2)
+    country = basic.lookup(config.get_data('isrc_country_code'))
+    registrant = basic.alphanum(3)
+    year = pp.Regex('[0-9]{2}')
+    work_id = pp.Regex('[0-9]{2}')
+
+    field = _isrc_short(name) | _isrc_long(name)
+
+    field.setName(name)
+
+    return field.setResultsName('isrc')
+
+
+def _isrc_short(name=None):
+    """
+    Creates the grammar for a short ISRC code.
+
+    ISRC stands for International Standard Recording Code, which is the standard ISO 3901. This stores information
+    identifying a particular recording.
+
+    This variant contains separator for the parts, and follows the pattern:
+    CC-XXX-YY-NN
+
+    Where each code means:
+    - CC: country code
+    - XXX: registrant
+    - YY: year
+    - NN: work id
+
+    :param name: name for the field
+    :return: grammar for an ISRC field
+    """
+
+    config = CWRTables()
+
+    if name is None:
+        name = 'ISRC Field'
+
+    separator = pp.Literal('-')
+    country = basic.lookup(config.get_data('isrc_country_code'))
     registrant = basic.alphanum(3)
     year = pp.Regex('[0-9]{2}')
     work_id = pp.Regex('[0-9]{2}')
 
     field = pp.Combine(country + separator + registrant + separator + year + separator + work_id)
 
+    country.setName('ISO-2 Country Code')
+    registrant.setName('Registrant')
+    year.setName('Year')
+    work_id.setName('Work ID')
+
     field.setName(name)
 
-    # TODO: Fix this field
-    field = basic.alphanum(12)
-    field = field.setName(name)
+    return field.setResultsName('isrc')
+
+
+def _isrc_long(name=None):
+    """
+    Creates the grammar for a short ISRC code.
+
+    ISRC stands for International Standard Recording Code, which is the standard ISO 3901. This stores information
+    identifying a particular recording.
+
+    This variant contain no separator for the parts, and follows the pattern:
+    CCXXXYYNNNNN
+
+    Where each code means:
+    - CC: country code
+    - XXX: registrant
+    - YY: year
+    - NNNNN: work id
+
+    :param name: name for the field
+    :return: grammar for an ISRC field
+    """
+
+    config = CWRTables()
+
+    if name is None:
+        name = 'ISRC Field'
+
+    separator = pp.Literal('-')
+    country = basic.lookup(config.get_data('isrc_country_code'))
+    registrant = basic.alphanum(3)
+    year = pp.Regex('[0-9]{2}')
+    work_id = pp.Regex('[0-9]{5}')
+
+    field = pp.Combine(country + registrant + year + work_id)
+
+    country.setName('ISO-2 Country Code')
+    registrant.setName('Registrant')
+    year.setName('Year')
+    work_id.setName('Work ID')
+
+    field.setName(name)
 
     return field.setResultsName('isrc')
 

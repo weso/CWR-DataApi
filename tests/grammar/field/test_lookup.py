@@ -21,7 +21,7 @@ class TestLookupName(unittest.TestCase):
         """
         Tests that the default field name is correct for optional fields.
         """
-        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+        field = basic.lookup(['AB1', 'CD2', 'EF3'], columns=3)
 
         self.assertEqual('Lookup Field', field.name)
 
@@ -30,7 +30,7 @@ class TestLookupName(unittest.TestCase):
         Tests that the given field name is set correctly for optional fields.
         """
         name = "Field Name"
-        field = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name=name)
+        field = basic.lookup(['AB1', 'CD2', 'EF3'], columns=3, name=name)
 
         self.assertEqual(name, field.name)
 
@@ -38,8 +38,8 @@ class TestLookupName(unittest.TestCase):
         """
         Tests that the field name does not change for creating a new one
         """
-        field1 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field1')
-        field2 = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3, name='field2')
+        field1 = basic.lookup(['AB1', 'CD2', 'EF3'], columns=3, name='field1')
+        field2 = basic.lookup(['AB1', 'CD2', 'EF3'], columns=3, name='field2')
 
         self.assertEqual('field1', field1.name)
         self.assertEqual('field2', field2.name)
@@ -51,7 +51,7 @@ class TestLookupValid(unittest.TestCase):
     """
 
     def setUp(self):
-        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+        self.lookup = basic.lookup(['AB1', 'CD2', 'EF3'], columns=3)
 
     def test_valid(self):
         """
@@ -63,7 +63,7 @@ class TestLookupValid(unittest.TestCase):
 
 class TestLookupExceptionCompulsory(unittest.TestCase):
     def setUp(self):
-        self.lookup = basic.lookup(('AB1', 'CD2', 'EF3'), columns=3)
+        self.lookup = basic.lookup(['AB1', 'CD2', 'EF3'], columns=3)
 
     def test_invalid(self):
         """
