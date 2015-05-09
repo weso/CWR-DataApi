@@ -59,3 +59,21 @@ class TestNPAGrammar(unittest.TestCase):
         self.assertEqual('PARTY NAME', result.ip_name)
         self.assertEqual('PARTY WRITER NAME', result.ip_writer_name)
         self.assertEqual(None, result.language_code)
+
+    def test_extended_character(self):
+        """
+        Tests that IPA grammar decodes correctly formatted record prefixes.
+
+        This test contains none of the optional fields.
+        """
+        record = 'NPA0000123400000023000000000PARTY NAME \xc6\x8f                                                                                                                                                   PARTY WRITER NAME \xc6\x8f                                                                                                                                              '
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('NPA', result.record_type)
+        self.assertEqual(1234, result.transaction_sequence_n)
+        self.assertEqual(23, result.record_sequence_n)
+        self.assertEqual('000000000', result.ip_n)
+        self.assertEqual('PARTY NAME \xc6\x8f', result.ip_name)
+        self.assertEqual('PARTY WRITER NAME \xc6\x8f', result.ip_writer_name)
+        self.assertEqual(None, result.language_code)
