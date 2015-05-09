@@ -79,7 +79,7 @@ class GrammarDecoder(Decoder):
 
         For this a Pyparsing grammar rule will be applied to the string.
 
-        :param data: the data to decode
+        :param text: the data to decode
         :return: a class representing the data
         """
         return self._grammar.parseString(text)

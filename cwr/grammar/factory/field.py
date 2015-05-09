@@ -163,31 +163,10 @@ class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
     Factory for acquiring fields rules using the default configuration.
     """
 
-    def __init__(self, field_configs, field_values=None, field_rules=None, actions=None):
+    def __init__(self, field_configs, adapters, field_values=None, field_rules=None, actions=None):
         super(DefaultFieldTerminalRuleFactory, self).__init__(field_configs)
 
-        # TODO: Don't do this manually
-        self._adapters['alphanum'] = AlphanumAdapter()
-        self._adapters['alphanum_ext'] = ExtendedAlphanumAdapter()
-        self._adapters['numeric'] = NumericAdapter()
-        self._adapters['boolean'] = BooleanAdapter()
-        self._adapters['flag'] = FlagAdapter()
-        self._adapters['date'] = DateAdapter()
-        self._adapters['time'] = TimeAdapter()
-        self._adapters['date_time'] = DateTimeAdapter()
-        self._adapters['blank'] = BlankAdapter()
-        self._adapters['lookup'] = LookupAdapter()
-        self._adapters['iswc'] = ISWCAdapter()
-        self._adapters['ipi_name_n'] = IPINameNumberAdapter()
-        self._adapters['ipi_base_n'] = IPIBaseNumberAdapter()
-        self._adapters['percentage'] = PercentageAdapter()
-        self._adapters['ean13'] = EAN13Adapter()
-        self._adapters['isrc'] = ISRCAdapter()
-        self._adapters['visan'] = VISANAdapter()
-        self._adapters['avi'] = AudioVisualKeydapter()
-        self._adapters['charset'] = CharSetAdapter()
-        self._adapters['alphanum_variable'] = VariableAlphanumAdapter()
-        self._adapters['numeric_float'] = NumericFloatAdapter()
+        self._adapters = adapters
 
         # Field values are optional
         self._field_values = field_values
