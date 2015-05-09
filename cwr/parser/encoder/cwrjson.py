@@ -40,7 +40,14 @@ class JSONEncoder(Encoder):
         """
         encoded = self._dict_encoder.encode(instance)
 
-        return json.dumps(encoded, ensure_ascii=False, default=_iso_handler, encoding='latin1')
+        try:
+            result = json.dumps(encoded, ensure_ascii=False, default=_iso_handler, encoding='latin1')
+        except TypeError:
+            # TODO: Is this really the best way to handle this?
+            # For Python 3
+            result = json.dumps(encoded, ensure_ascii=False, default=_iso_handler)
+
+        return result
 
 
 def _unicode_handler(obj):
