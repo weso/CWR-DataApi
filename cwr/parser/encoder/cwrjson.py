@@ -40,7 +40,23 @@ class JSONEncoder(Encoder):
         """
         encoded = self._dict_encoder.encode(instance)
 
-        return json.dumps(encoded, default=_iso_handler)
+        return json.dumps(encoded, ensure_ascii=False, default=_iso_handler, encoding='latin1')
+
+
+def _unicode_handler(obj):
+    """
+    Transforms an unicode string into a UTF-8 equivalent.
+
+    :param obj: object to transform into it's UTF-8 equivalent
+    :return: the UTF-8 equivalent of the string
+    """
+    if isinstance(obj, str):
+        result = obj.isoformat()
+    else:
+        raise TypeError("Unserializable object {} of type {}".format(obj,
+                                                                     type(obj)))
+
+    return result
 
 
 def _iso_handler(obj):
