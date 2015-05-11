@@ -31,6 +31,52 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
+class TransactionRecordDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(TransactionRecordDictionaryDecoder, self).__init__()
+        self._decoders = {}
+
+        self._decoders['ACK'] = AcknowledgementDictionaryDecoder()
+        self._decoders['AGR'] = AgreementDictionaryDecoder()
+        self._decoders['TER'] = AgreementTerritoryDictionaryDecoder()
+        self._decoders['ARI'] = AdditionalRelatedInformationDictionaryDecoder()
+        self._decoders['ALT'] = AlternateTitleDictionaryDecoder()
+        self._decoders['EWT'] = AuthoredWorkDictionaryDecoder()
+        self._decoders['VER'] = AuthoredWorkDictionaryDecoder()
+        self._decoders['COM'] = ComponentDictionaryDecoder()
+        self._decoders['IPA'] = InterestedPartyForAgreementDictionaryDecoder()
+        self._decoders['SPT'] = IPTerritoryOfControlDictionaryDecoder()
+        self._decoders['SWT'] = IPTerritoryOfControlDictionaryDecoder()
+        self._decoders['IND'] = InstrumentationDetailDictionaryDecoder()
+        self._decoders['INS'] = InstrumentationSummaryDictionaryDecoder()
+        self._decoders['MSG'] = MessageDictionaryDecoder()
+        self._decoders['PER'] = PerformingArtistDictionaryDecoder()
+        self._decoders['PWR'] = PublisherForWriterDictionaryDecoder()
+        self._decoders['REC'] = RecordingDetailDictionaryDecoder()
+        self._decoders['EXC'] = WorkDictionaryDecoder()
+        self._decoders['ISW'] = WorkDictionaryDecoder()
+        self._decoders['NWR'] = WorkDictionaryDecoder()
+        self._decoders['REV'] = WorkDictionaryDecoder()
+        self._decoders['ORN'] = WorkOriginDictionaryDecoder()
+        self._decoders['SWR'] = WriterRecordDictionaryDecoder()
+        self._decoders['OWR'] = WriterRecordDictionaryDecoder()
+        self._decoders['OWR'] = WriterRecordDictionaryDecoder()
+        self._decoders['NPA'] = NonRomanAlphabetAgreementPartyDictionaryDecoder()
+        self._decoders['NOW'] = NonRomanAlphabetOtherWriterDictionaryDecoder()
+        self._decoders['NPR'] = NonRomanAlphabetPerformanceDataDictionaryDecoder()
+        self._decoders['NPN'] = NonRomanAlphabetPublisherNameDictionaryDecoder()
+        self._decoders['NAT'] = NonRomanAlphabetTitleDictionaryDecoder()
+        self._decoders['NET'] = NonRomanAlphabetWorkDictionaryDecoder()
+        self._decoders['NCT'] = NonRomanAlphabetWorkDictionaryDecoder()
+        self._decoders['NVT'] = NonRomanAlphabetWorkDictionaryDecoder()
+        self._decoders['NWN'] = NonRomanAlphabetWriterNameDictionaryDecoder()
+        self._decoders['SPU'] = PublisherRecordDictionaryDecoder()
+        self._decoders['OPU'] = PublisherRecordDictionaryDecoder()
+
+    def decode(self, data):
+        return self._decoders[data['record_type']].decode(data)
+
+
 class AcknowledgementDictionaryDecoder(Decoder):
     def __init__(self):
         super(AcknowledgementDictionaryDecoder, self).__init__()
@@ -320,8 +366,31 @@ class GroupDictionaryDecoder(Decoder):
     def __init__(self):
         super(GroupDictionaryDecoder, self).__init__()
 
+        self._header_decoder = GroupHeaderDictionaryDecoder()
+        self._trailer_decoder = GroupTrailerDictionaryDecoder()
+        self._transaction_decoder = TransactionRecordDictionaryDecoder()
+
     def decode(self, data):
-        return Group(data['group_header'], data['group_trailer'], data['transactions'])
+        header = data['group_header']
+        if isinstance(header, dict):
+            header = self._header_decoder.decode(header)
+
+        trailer = data['group_trailer']
+        if isinstance(trailer, dict):
+            trailer = self._trailer_decoder.decode(trailer)
+
+        transactions = []
+        if len(data['transactions']) > 0:
+            if isinstance(data['transactions'][0][0], dict):
+                for transaction in data['transactions']:
+                    transaction_records = []
+                    for record in transaction:
+                        transaction_records.append(self._transaction_decoder.decode(record))
+                    transactions.append(transaction_records)
+            else:
+                transactions = data['transactions']
+
+        return Group(header, trailer, transactions)
 
 
 class TransmissionHeaderDictionaryDecoder(Decoder):
