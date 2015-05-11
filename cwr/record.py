@@ -103,7 +103,7 @@ class TransactionRecord(Record):
 
     def __repr__(self):
         return '<class %s>(record_type=%r, transaction_sequence_n=%r, record_sequence_n=%r)' % (
-            'TransactionRecord', self._record_type,
+            self.__class__.__name__, self._record_type,
             self._transaction_sequence_n,
             self._record_sequence_n)
 

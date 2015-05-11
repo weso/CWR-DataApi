@@ -13,10 +13,6 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __status__ = 'Development'
 
-"""
-Configuration classes.
-"""
-
 
 class FieldTerminalRuleFactory(TerminalRuleFactory):
     """

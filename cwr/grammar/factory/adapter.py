@@ -10,7 +10,7 @@ from cwr.grammar.field import basic, special, table, filename
 CWR fields grammar adapters.
 
 These classes allow the factories to create rules in an homogeneous way, by setting a basic interface which will wrap
-around field rules.
+around field rules, giving a basic common method through which rules can be created.
 
 This interface is the FieldAdapter, having only the get_field method, which will receive a series of parameters, all
 of them optional, and generate a field rule from them. The concrete rule will depend on the implementation.
