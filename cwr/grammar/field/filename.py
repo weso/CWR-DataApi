@@ -12,6 +12,15 @@ __status__ = 'Development'
 
 
 def alphanum_variable(min, max, name=None):
+    """
+    Creates the grammar for an alphanumeric code where the size ranges between two values.
+
+    :param min: minimum size
+    :param max: maximum size
+    :param name: name for the field
+    :return: grammar for an alphanumeric field of a variable size
+    """
+
     if name is None:
         name = 'Alphanumeric Field'
 
