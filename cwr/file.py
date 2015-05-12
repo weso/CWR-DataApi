@@ -118,10 +118,11 @@ class FileTag(object):
             self._version)
 
     def __repr__(self):
-        return '<class %s>(year=%s, sequence_n=%r, sender=%r, receiver=%r, version=%r)' % (self.__class__.__name__, self._year,
-                                                                                           self._sequence_n,
-                                                                                           self._sender, self._receiver,
-                                                                                           self._version)
+        return '<class %s>(year=%s, sequence_n=%r, sender=%r, receiver=%r, version=%r)' % (
+            self.__class__.__name__, self._year,
+            self._sequence_n,
+            self._sender, self._receiver,
+            self._version)
 
     @property
     def year(self):

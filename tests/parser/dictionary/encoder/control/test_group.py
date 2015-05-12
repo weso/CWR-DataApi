@@ -84,7 +84,7 @@ class TestGroupDictionaryEncoding(unittest.TestCase):
                              message_record_type='AGR')
 
     def _get_agreement(self):
-        return AgreementRecord(record_type='ACK',
+        return AgreementRecord(record_type='AGR',
                                transaction_sequence_n=3,
                                record_sequence_n=15,
                                submitter_agreement_n='AB12',

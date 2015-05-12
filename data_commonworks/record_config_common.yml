@@ -630,6 +630,7 @@ transmission_header:
         id: transmission_date
       - rule_type: field
         id: character_set
+  results_name: header
 
 transmission_trailer:
   id: transmission_trailer
@@ -644,6 +645,7 @@ transmission_trailer:
         id: transaction_count
       - rule_type: field
         id: record_count
+  results_name: trailer
 
 work:
   id: work
