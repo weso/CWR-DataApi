@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from cwr.parser.decoder.common import Decoder
+from cwr.parser.decoder.dictionary import FileDictionaryDecoder
+import json
 
 """
 Classes for decoding CWR classes from JSON dictionaries.
@@ -14,6 +16,9 @@ __status__ = 'Development'
 class JSONDecoder(Decoder):
     def __init__(self):
         super(JSONDecoder, self).__init__()
+        self._dict_decoder = FileDictionaryDecoder()
 
     def decode(self, data):
-        pass
+        decoded = json.loads(data)
+
+        return self._dict_decoder.decode(decoded)
