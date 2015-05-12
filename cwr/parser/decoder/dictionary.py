@@ -354,6 +354,25 @@ class RecordingDetailDictionaryDecoder(Decoder):
                                      media_type=data['media_type'])
 
 
+class FileDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(FileDictionaryDecoder, self).__init__()
+
+        self._tag_decoder = FileTagDictionaryDecoder()
+        self._transmission_decoder = TransmissionDictionaryDecoder()
+
+    def decode(self, data):
+        tag = data['tag']
+        if isinstance(tag, dict):
+            tag = self._tag_decoder.decode(tag)
+
+        transmission = data['transmission']
+        if isinstance(transmission, dict):
+            transmission = self._transmission_decoder.decode(transmission)
+
+        return CWRFile(tag, transmission)
+
+
 class TransmissionDictionaryDecoder(Decoder):
     def __init__(self):
         super(TransmissionDictionaryDecoder, self).__init__()

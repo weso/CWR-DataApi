@@ -3,7 +3,6 @@
 import unittest
 
 from cwr.parser.decoder.dictionary import FileTagDictionaryDecoder
-from cwr.file import FileTag
 
 
 """
@@ -18,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestFileDictionaryEncoding(unittest.TestCase):
+class TestFileTagDictionaryDecoding(unittest.TestCase):
     def setUp(self):
         self._decoder = FileTagDictionaryDecoder()
 
