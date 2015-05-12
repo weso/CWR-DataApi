@@ -450,6 +450,15 @@ def _to_avi(parsed):
 
 
 def date_time(name=None):
+    """
+    Creates the grammar for a date and time field, which is a combination of the Date (D) and Time or Duration field (T)
+    .
+
+    This field requires first a Date, and then a Time, without any space in between.
+
+    :param name: name for the field
+    :return: grammar for a Date and Time field
+    """
     if name is None:
         name = 'Date and Time Field'
 

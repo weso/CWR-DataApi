@@ -194,6 +194,16 @@ class AcknowledgementTransaction(object):
         else:
             self._messages = messages
 
+    def __str__(self):
+        return '%s [agr=%r, nwr=%r, rev=%r, exc=%r, messages=%r]' % (
+            'Acnowledgement Transaction', self._agr,
+            self._nwr, self._rev, self._exc, self._messages)
+
+    def __repr__(self):
+        return '<class %s>(agr=%r, nwr=%r, rev=%r, exc=%r, messages=%r)' % (
+            self.__class__.__name__, self._agr,
+            self._nwr, self._rev, self._exc, self._messages)
+
     @property
     def ack(self):
         """

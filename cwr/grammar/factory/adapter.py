@@ -9,7 +9,14 @@ from cwr.grammar.field import basic, special, table, filename
 """
 CWR fields grammar adapters.
 
-These classes allow the factories to create rules in an homogeneous way.
+These classes allow the factories to create rules in an homogeneous way, by setting a basic interface which will wrap
+around field rules, giving a basic common method through which rules can be created.
+
+This interface is the FieldAdapter, having only the get_field method, which will receive a series of parameters, all
+of them optional, and generate a field rule from them. The concrete rule will depend on the implementation.
+
+Additionally, it offers the wrap_as_optional method, which allows setting a field as optional. It is meant to be used
+with a field created by the adapter, so it can be overriden for specific fields.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -19,9 +26,10 @@ __status__ = 'Development'
 
 class FieldAdapter(object):
     """
-    Instances of this class generate field rules.
+    Interface for adapting field rules creation to the parser factory requirements.
 
-    This serves as an adapter so the different field rules use the same parameters.
+    This is meant to receive always the same, or similar, groups of values, and then generate a specific field rule
+    from them.
     """
     __metaclass__ = ABCMeta
 
@@ -36,7 +44,7 @@ class FieldAdapter(object):
         :param name: the name of the field
         :param columns: number of columns
         :param values: allowed values for the field
-        :return: the rules for the field
+        :return: the rule for the field
         """
         raise NotImplementedError("The get_field method is not implemented")
 
@@ -114,6 +122,12 @@ class ExtendedAlphanumAdapter(FieldAdapter):
 
 
 class NumericAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
+
+    This version only allows integers.
+    """
+
     def __init__(self):
         super(NumericAdapter, self).__init__()
 
@@ -122,6 +136,10 @@ class NumericAdapter(FieldAdapter):
 
 
 class BooleanAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Boolean (B) field, accepting only 'Y' or 'N'
+    """
+
     def __init__(self):
         super(BooleanAdapter, self).__init__()
 
@@ -130,6 +148,10 @@ class BooleanAdapter(FieldAdapter):
 
 
 class FlagAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Flag (F) field, accepting only 'Y', 'N' or 'U'.
+    """
+
     def __init__(self):
         super(FlagAdapter, self).__init__()
 
@@ -138,6 +160,10 @@ class FlagAdapter(FieldAdapter):
 
 
 class DateAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Date (D) field, accepting only numbers in a certain pattern.
+    """
+
     def __init__(self):
         super(DateAdapter, self).__init__()
 
@@ -180,6 +206,10 @@ class DateAdapter(FieldAdapter):
 
 
 class TimeAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Time (D) field, accepting only numbers in a certain pattern.
+    """
+
     def __init__(self):
         super(TimeAdapter, self).__init__()
 
@@ -188,6 +218,11 @@ class TimeAdapter(FieldAdapter):
 
 
 class DateTimeAdapter(FieldAdapter):
+    """
+    Creates the grammar for a date and time field, which is a combination of the Date (D) and Time or Duration field (T)
+    .
+    """
+
     def __init__(self):
         super(DateTimeAdapter, self).__init__()
 
@@ -196,6 +231,12 @@ class DateTimeAdapter(FieldAdapter):
 
 
 class BlankAdapter(FieldAdapter):
+    """
+    Creates the grammar for a blank field.
+
+    These are for constant empty strings which should be ignored, as they are used just as fillers.
+    """
+
     def __init__(self):
         super(BlankAdapter, self).__init__()
 
@@ -204,14 +245,22 @@ class BlankAdapter(FieldAdapter):
 
 
 class LookupAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Lookup (L) field, accepting only values from a list.
+    """
+
     def __init__(self):
         super(LookupAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.lookup(values, columns, name)
+        return basic.lookup(values, name)
 
 
 class ISWCAdapter(FieldAdapter):
+    """
+    ISWC field.
+    """
+
     def __init__(self):
         super(ISWCAdapter, self).__init__()
 
@@ -220,6 +269,10 @@ class ISWCAdapter(FieldAdapter):
 
 
 class IPIBaseNumberAdapter(FieldAdapter):
+    """
+    IPI Base Number field.
+    """
+
     def __init__(self):
         super(IPIBaseNumberAdapter, self).__init__()
 
@@ -228,6 +281,10 @@ class IPIBaseNumberAdapter(FieldAdapter):
 
 
 class IPINameNumberAdapter(FieldAdapter):
+    """
+    IPI Name Number field.
+    """
+
     def __init__(self):
         super(IPINameNumberAdapter, self).__init__()
 
@@ -236,6 +293,11 @@ class IPINameNumberAdapter(FieldAdapter):
 
 
 class PercentageAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Numeric (N) field storing a percentage and accepting only the specified number of
+    characters.
+    """
+
     def __init__(self):
         super(PercentageAdapter, self).__init__()
 
@@ -249,6 +311,10 @@ class PercentageAdapter(FieldAdapter):
 
 
 class EAN13Adapter(FieldAdapter):
+    """
+    Creates the grammar for an EAN 13 code.
+    """
+
     def __init__(self):
         super(EAN13Adapter, self).__init__()
 
@@ -257,6 +323,10 @@ class EAN13Adapter(FieldAdapter):
 
 
 class ISRCAdapter(FieldAdapter):
+    """
+    Creates the grammar for an ISRC code.
+    """
+
     def __init__(self):
         super(ISRCAdapter, self).__init__()
 
@@ -265,6 +335,10 @@ class ISRCAdapter(FieldAdapter):
 
 
 class VISANAdapter(FieldAdapter):
+    """
+    Creates the grammar for a V-ISAN code.
+    """
+
     def __init__(self):
         super(VISANAdapter, self).__init__()
 
@@ -273,6 +347,10 @@ class VISANAdapter(FieldAdapter):
 
 
 class AudioVisualKeydapter(FieldAdapter):
+    """
+    Creates the grammar for an Audio Visual Key code.
+    """
+
     def __init__(self):
         super(AudioVisualKeydapter, self).__init__()
 
@@ -281,6 +359,10 @@ class AudioVisualKeydapter(FieldAdapter):
 
 
 class CharSetAdapter(FieldAdapter):
+    """
+    Character set code field.
+    """
+
     def __init__(self):
         super(CharSetAdapter, self).__init__()
 
@@ -289,6 +371,10 @@ class CharSetAdapter(FieldAdapter):
 
 
 class VariableAlphanumAdapter(FieldAdapter):
+    """
+    Creates the grammar for an alphanumeric code where the size ranges between two values.
+    """
+
     def __init__(self):
         super(VariableAlphanumAdapter, self).__init__()
 
@@ -302,6 +388,10 @@ class VariableAlphanumAdapter(FieldAdapter):
 
 
 class NumericFloatAdapter(FieldAdapter):
+    """
+    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
+    """
+
     def __init__(self):
         super(NumericFloatAdapter, self).__init__()
 

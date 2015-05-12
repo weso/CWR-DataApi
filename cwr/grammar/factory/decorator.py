@@ -9,16 +9,18 @@ from cwr.parser.decoder.dictionary import *
 
 
 """
-Record fields factories.
+Decorators for the grammar rules.
+
+These serve to adapt a basic set of rules for a certain type of work. For example, for converting a group of rules
+into the rule for a record.
+
+This works through the basic interface RuleDecorator, which will receive the rule, and any required additional data, and
+return the adapted rule.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __status__ = 'Development'
-
-"""
-Configuration classes.
-"""
 
 
 class RuleDecorator(object):
