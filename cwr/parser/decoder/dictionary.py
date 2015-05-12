@@ -358,8 +358,28 @@ class TransmissionDictionaryDecoder(Decoder):
     def __init__(self):
         super(TransmissionDictionaryDecoder, self).__init__()
 
+        self._header_decoder = TransmissionHeaderDictionaryDecoder()
+        self._trailer_decoder = TransmissionTrailerDictionaryDecoder()
+        self._group_decoder = GroupDictionaryDecoder()
+
     def decode(self, data):
-        return Transmission(data['transmission_header'], data['transmission_trailer'], data['groups'])
+        header = data['header']
+        if isinstance(header, dict):
+            header = self._header_decoder.decode(header)
+
+        trailer = data['trailer']
+        if isinstance(trailer, dict):
+            trailer = self._trailer_decoder.decode(trailer)
+
+        groups = []
+        if len(data['groups']) > 0:
+            if isinstance(data['groups'][0], dict):
+                for group in data['groups']:
+                    groups.append(self._group_decoder.decode(group))
+            else:
+                groups = data['groups']
+
+        return Transmission(header, trailer, groups)
 
 
 class GroupDictionaryDecoder(Decoder):
