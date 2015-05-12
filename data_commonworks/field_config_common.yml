@@ -249,6 +249,12 @@ ip_name:
   size: 160
   name: Interested Party Name
 
+ip_name_ext:
+  type: alphanum_ext
+  size: 160
+  name: Interested Party Name
+  results_name: ip_name
+
 ip_writer_first_name:
   type: alphanum
   size: 30
@@ -258,6 +264,12 @@ ip_writer_name:
   type: alphanum
   size: 160
   name: Interested Party Writer First Name
+
+ip_writer_name_ext:
+  type: alphanum_ext
+  size: 160
+  name: Interested Party Writer First Name
+  results_name: ip_writer_name
 
 ipi_base_n:
   type: ipi_base_n
@@ -366,6 +378,12 @@ performing_artist_first_name_long:
   name: Performing Artist First Name
   results_name: performing_artist_first_name
 
+performing_artist_first_name_long_ext:
+  type: alphanum_ext
+  size: 160
+  name: Performing Artist First Name
+  results_name: performing_artist_first_name
+
 performing_artist_ipi_base_n:
   type: ipi_base_n
   size: 13
@@ -385,6 +403,12 @@ performing_artist_name:
   type: alphanum
   size: 160
   name: Performing Artist Name
+
+performing_artist_name_ext:
+  type: alphanum_ext
+  size: 160
+  name: Performing Artist Name
+  results_name: performing_artist_name
 
 personal_number:
   type: numeric
@@ -453,6 +477,12 @@ publisher_name:
 
 publisher_name_long:
   type: alphanum
+  size: 480
+  name: Publisher Name
+  results_name: publisher_name
+
+publisher_name_long_ext:
+  type: alphanum_ext
   size: 480
   name: Publisher Name
   results_name: publisher_name
@@ -578,6 +608,12 @@ title:
   size: 640
   name: Title
 
+title_ext:
+  type: alphanum_ext
+  size: 640
+  name: Title
+  results_name: title
+
 total_monetary_value:
   type: alphanum
   size: 10
@@ -682,6 +718,12 @@ writer_first_name_long:
   name: Writer First Name
   results_name: writer_first_name
 
+writer_first_name_long_ext:
+  type: alphanum_ext
+  size: 160
+  name: Writer First Name
+  results_name: writer_first_name
+
 writer_ip_n:
   type: alphanum
   size: 9
@@ -698,10 +740,22 @@ writer_last_name_long:
   name: Writer Last Name
   results_name: writer_last_name
 
+writer_last_name_long_ext:
+  type: alphanum_ext
+  size: 160
+  name: Writer Last Name
+  results_name: writer_last_name
+
 writer_name:
   type: alphanum
   size: 160
   name: Writer Name
+
+writer_name_ext:
+  type: alphanum_ext
+  size: 160
+  name: Writer Name
+  results_name: writer_name
 
 writer_unknown:
   type: flag

@@ -125,8 +125,6 @@ def numeric(columns, name=None):
 
     This version only allows integers.
 
-    This can be a compulsory field, in which case the zero is disallowed.
-
     :param columns: number of columns for this field
     :param name: name for the field
     :return: grammar for the integer numeric field
@@ -268,7 +266,7 @@ This value will be parsed into a boolean type value.
 
 def boolean(name=None):
     """
-    Creates the grammar for a Boolean (F) field, accepting only 'Y' or 'N'
+    Creates the grammar for a Boolean (B) field, accepting only 'Y' or 'N'
 
     :param name: name for the field
     :return: grammar for the flag field
@@ -378,8 +376,6 @@ def date(name=None):
     """
     Creates the grammar for a Date (D) field, accepting only numbers in a certain pattern.
 
-    The field can be compulsory, in which case the empty date, composed only of zeros, is disallowed.
-
     :param name: name for the field
     :return: grammar for the date field
     """
@@ -417,7 +413,7 @@ This string will be parsed into a datetime.time.
 
 def time(name=None):
     """
-    Creates the grammar for a Time (D) field, accepting only numbers in a certain pattern.
+    Creates the grammar for a Time or Duration (T) field, accepting only numbers in a certain pattern.
 
     :param name: name for the field
     :return: grammar for the date field
@@ -449,16 +445,12 @@ This accepts only values from a table or list.
 """
 
 
-def lookup(values, columns=1, name=None):
+def lookup(values, name=None):
     """
     Creates the grammar for a Lookup (L) field, accepting only values from a list.
 
-    The 'columns' parameter is used only in the case the field is optional. It will be used to indicate the number
-    of whitespaces this field can take.
-
     Like in the Alphanumeric field, the result will be stripped of all heading and trailing whitespaces.
 
-    :param columns: number of columns, for the case this field is left empty
     :param name: name for the field
     :return: grammar for the lookup field
     """

@@ -41,3 +41,23 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('ALTERNATE', encoded['alternate_title'])
         self.assertEqual('FT', encoded['title_type'])
         self.assertEqual('ES', encoded['language_code'])
+
+    def test_extended_character(self):
+        data = AlternateTitleRecord(record_type='SWR',
+                                    transaction_sequence_n=3,
+                                    record_sequence_n=15,
+                                    alternate_title='PA\xc6\x8f',
+                                    title_type='FT',
+                                    language_code='ES')
+
+        encoded = self._encoder.encode(data)
+
+        encoded = json.loads(encoded)
+
+        self.assertEqual('SWR', encoded['record_type'])
+        self.assertEqual(3, encoded['transaction_sequence_n'])
+        self.assertEqual(15, encoded['record_sequence_n'])
+        # TODO: Fix this test check for Python 2 and 3
+        # self.assertEqual(unicode('PA\xc6\x8f', 'latin1'), encoded['alternate_title'])
+        self.assertEqual('FT', encoded['title_type'])
+        self.assertEqual('ES', encoded['language_code'])

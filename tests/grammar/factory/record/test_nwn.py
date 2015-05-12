@@ -40,3 +40,21 @@ class TestNWNGrammar(unittest.TestCase):
         self.assertEqual('LAST NAME', result.writer_last_name)
         self.assertEqual('FIRST NAME', result.writer_first_name)
         self.assertEqual('ES', result.language_code)
+
+    def test_extended_character(self):
+        """
+        Tests that NWN grammar decodes correctly formatted record prefixes.
+
+        This test contains all the optional fields.
+        """
+        record = 'NWN0000123400000023A12345678LAST NAME \xc6\x8f                                                                                                                                                    FIRST NAME \xc6\x8f                                                                                                                                                   ES'
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('NWN', result.record_type)
+        self.assertEqual(1234, result.transaction_sequence_n)
+        self.assertEqual(23, result.record_sequence_n)
+        self.assertEqual('A12345678', result.ip_n)
+        self.assertEqual('LAST NAME \xc6\x8f', result.writer_last_name)
+        self.assertEqual('FIRST NAME \xc6\x8f', result.writer_first_name)
+        self.assertEqual('ES', result.language_code)
