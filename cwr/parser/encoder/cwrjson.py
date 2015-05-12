@@ -7,7 +7,7 @@ from cwr.parser.encoder.common import Encoder
 
 
 """
-Classes for encoding CWR classes into dictionaries.
+Classes for encoding CWR classes into JSON dictionaries.
 
 It just consists of a single parser, the JSONEncoder, which delegates most of the work to an instance of the
 CWRDictionaryEncoder.
