@@ -36,6 +36,7 @@ help:
 	@echo "  pypitest_reg   to register on testpypi"
 	@echo "  pypi           to upload to pypi"
 	@echo "  pypitest       to upload to testpypi"
+	@echo "  test           to run tests"
 
 # Clean option
 # Removes the distribution folder and the .egg file
@@ -70,3 +71,7 @@ pypi:
 # Pypitest deployment.
 pypitest:
 	$(PYTHON) setup.py sdist upload -r testpypi
+
+# Tests suite.
+test:
+	tox

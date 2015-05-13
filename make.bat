@@ -42,6 +42,7 @@ if "%1" == "help" (
 	echo.  pypitest_reg   to register on pypi-test
 	echo.  pypi           to upload to pypi
 	echo.  pypitest       to upload to pypi-test
+	echo.  test           to run tests
 	goto end
 )
 
@@ -140,6 +141,11 @@ if "%1" == "pypitest" (
 	echo.
 	echo.Uploaded project to pypitest.
 	goto end
+)
+
+REM Tests suite.
+if "%1" == "test" (
+	tox
 )
 
 :end
