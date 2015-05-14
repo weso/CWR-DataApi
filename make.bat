@@ -27,6 +27,12 @@ if "%EGGDIR%" == "" (
 	set EGGDIR=CWR_API.egg-info
 )
 
+REM Sets the tox folder path.
+REM It will be the '.tox' folder.
+if "%TOXDIR%" == "" (
+	set TOXDIR=.tox
+)
+
 REM If no parameters are received, the help is shown
 if "%1" == "" goto help
 
@@ -54,6 +60,9 @@ if "%1" == "clean" (
 	)
 	if exist %EGGDIR% (
 		rd /S /Q %EGGDIR%
+	)
+	if exist %TOXDIR% (
+		rd /S /Q %TOXDIR%
 	)
 	goto end
 )

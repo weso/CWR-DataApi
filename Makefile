@@ -17,6 +17,10 @@ DISTDIR   = dist
 # Sets the .egg file path.
 # The file will be located at the project's root.
 EGGDIR    = CWR_API.egg-info
+
+# Sets the tox folder path.
+# It will be the '.tox' folder.
+TOXDIR    = .tox
  
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(PYTHON) >/dev/null 2>&1; echo $$?), 1)
@@ -43,6 +47,7 @@ help:
 clean:
 	rm -r -f $(DISTDIR)
 	rm -r -f $(EGGDIR)
+	rm -r -f $(TOXDIR)
 
 # Source distribution.
 dist_source:
