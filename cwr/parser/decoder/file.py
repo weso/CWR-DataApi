@@ -2,7 +2,7 @@
 import logging
 
 from cwr.parser.decoder.common import GrammarDecoder
-from data_commonworks.accessor import CWRConfiguration
+from config_commonworks.accessor import CWRConfiguration
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from data_commonworks.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
