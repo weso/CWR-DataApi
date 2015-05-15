@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import InstrumentValueDictionaryEncoder
 from cwr.table_value import InstrumentValue
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestInstrumentValueEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = InstrumentValueDictionaryEncoder()
 
     def test_encoded(self):
         data = InstrumentValue('BBF', 'Bamboo Flute', 'National/Folk', 'same as Dizi or D\'Tzu')

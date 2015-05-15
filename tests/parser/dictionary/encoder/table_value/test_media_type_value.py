@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import MediaTypeDictionaryEncoder
 from cwr.table_value import MediaTypeValue
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestMediaTypeValueEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = MediaTypeDictionaryEncoder()
 
     def test_encoded(self):
         data = MediaTypeValue('EP', '45 rpm 17 cm EP', 'VINYL', 16, 4, 12)

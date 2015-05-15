@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import TableValueDictionaryEncoder
 from cwr.table_value import TableValue
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestTableValueEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = TableValueDictionaryEncoder()
 
     def test_encoded(self):
         data = TableValue('AS', 'Assignor',

@@ -6,7 +6,8 @@ import pyparsing as pp
 
 from cwr.other import ISWCCode, IPIBaseNumber, VISAN, AVIKey
 from cwr.grammar.field import basic
-from data_commonworks.accessor import CWRConfiguration, CWRTables
+from config_cwr.accessor import CWRConfiguration
+from data_cwr.accessor import CWRTables
 
 
 """

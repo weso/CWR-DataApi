@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 
-from cwr.parser.decoder.file import CWRFileDecoder
+from cwr.parser.decoder.file import default_file_decoder
 from cwr.parser.encoder.cwrjson import JSONEncoder
 
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     print('Storing output on %s' % (output))
     print('\n')
 
-    decoder = CWRFileDecoder()
+    decoder = default_file_decoder()
 
     data = decoder.decode(path)
 
