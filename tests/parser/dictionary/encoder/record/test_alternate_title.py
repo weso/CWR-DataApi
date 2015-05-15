@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import AlternateTitleEncoder
 from cwr.work import AlternateTitleRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = AlternateTitleEncoder()
 
     def test_encoded(self):
         data = AlternateTitleRecord(record_type='SWR',

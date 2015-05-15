@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import NonRomanAlphabetPublisherNameEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetPublisherNameRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestNPNRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = NonRomanAlphabetPublisherNameEncoder()
 
     def test_encoded(self):
         data = NonRomanAlphabetPublisherNameRecord(record_type='NPN',

@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import RecordingDetailEncoder
 from cwr.work import RecordingDetailRecord
 
 
@@ -21,7 +21,7 @@ __status__ = 'Development'
 
 class TestRecordingDetailRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = RecordingDetailEncoder()
 
     def test_encoded(self):
         data = RecordingDetailRecord(record_type='SWR',

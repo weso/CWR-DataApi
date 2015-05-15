@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import GroupEncoder
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import AgreementRecord
@@ -23,7 +23,7 @@ __status__ = 'Development'
 
 class TestGroupDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = GroupEncoder()
 
     def test_encoded(self):
         header = GroupHeader(record_type='GRH',

@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import MessageEncoder
 from cwr.acknowledgement import MessageRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestMessageRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = MessageEncoder()
 
     def test_encoded(self):
         data = MessageRecord(record_type='MSG',

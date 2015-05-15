@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import PublisherForWriterEncoder
 from cwr.interested_party import PublisherForWriterRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestPublisherForWriterRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = PublisherForWriterEncoder()
 
     def test_encoded(self):
         data = PublisherForWriterRecord(record_type='SPU',

@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import NonRomanAlphabetOtherWriterEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetOtherWriterRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestNOWRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = NonRomanAlphabetOtherWriterEncoder()
 
     def test_encoded(self):
         data = NonRomanAlphabetOtherWriterRecord(record_type='NOW',

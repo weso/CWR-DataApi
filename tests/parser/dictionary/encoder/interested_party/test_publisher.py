@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import PublisherEncoder
 from cwr.interested_party import Publisher
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestPublisherDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = PublisherEncoder()
 
     def test_encoded(self):
         data = Publisher(ip_n='ABC15',

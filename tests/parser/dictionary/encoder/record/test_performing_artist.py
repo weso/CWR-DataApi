@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import PerformingArtistEncoder
 from cwr.work import PerformingArtistRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestPerformingArtistRecordRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = PerformingArtistEncoder()
 
     def test_encoded(self):
         data = PerformingArtistRecord(record_type='PER',

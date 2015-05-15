@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from abc import ABCMeta, abstractmethod
-
 from cwr.acknowledgement import *
 from cwr.agreement import *
 from cwr.group import *
@@ -45,7 +43,7 @@ class CWRDictionaryEncoder(Encoder):
         self._encoder_inst_value = InstrumentValueEncoder()
 
         self._encoder_iswc = ISWCEncoder()
-        self._encoder_avk = AudioVisualKeyEncoder()
+        self._encoder_avk = AVIKeyEncoder()
         self._encoder_visan = VISANEncoder()
         self._encoder_ipi = IPIBaseEncoder()
 
@@ -72,23 +70,23 @@ class CWRDictionaryEncoder(Encoder):
         self._encoder_ind = InstrumentationDetailEncoder()
         self._encoder_ins = InstrumentationSummaryEncoder()
         self._encoder_ipa = InterestedPartyForAgreementEncoder()
-        self._encoder_itc = InterestedPartyTerritoryOfControlEncoder()
+        self._encoder_itc = IPTerritoryOfControlEncoder()
         self._encoder_msg = MessageEncoder()
         self._encoder_per = PerformingArtistEncoder()
         self._encoder_pub_wr = PublisherForWriterEncoder()
         self._encoder_pub_rec = PublisherRecordEncoder(self._encoder_publisher)
         self._encoder_red = RecordingDetailEncoder()
         self._encoder_work = WorkEncoder(self._encoder_iswc)
-        self._encoder_work_origin = WorkOriginEncoder(self._encoder_avk,self._encoder_visan)
+        self._encoder_work_origin = WorkOriginEncoder(self._encoder_avk, self._encoder_visan)
         self._encoder_wri_rec = WriterRecordEncoder(self._encoder_writer)
 
-        self._encoder_nat = NATEncoder()
-        self._encoder_now = NOWEncoder()
-        self._encoder_npa = NPAEncoder()
-        self._encoder_npn = NPNEncoder()
-        self._encoder_npr = NPREncoder()
-        self._encoder_nra_work = NRAWorkEncoder()
-        self._encoder_nwn = NRNEncoder()
+        self._encoder_nat = NonRomanAlphabetTitleEncoder()
+        self._encoder_now = NonRomanAlphabetOtherWriterEncoder()
+        self._encoder_npa = NonRomanAlphabetAgreementPartyEncoder()
+        self._encoder_npn = NonRomanAlphabetPublisherNameEncoder()
+        self._encoder_npr = NonRomanAlphabetPerformanceDataEncoder()
+        self._encoder_nra_work = NonRomanAlphabetWorkEncoder()
+        self._encoder_nwn = NonRomanAlphabetWriterNameEncoder()
 
         self._encoder_file = FileEncoder(self._encoder_file_tag, self._encoder_transm)
 
@@ -297,9 +295,10 @@ class IPIBaseEncoder(Encoder):
 
         return encoded
 
-class AudioVisualKeyEncoder(Encoder):
+
+class AVIKeyEncoder(Encoder):
     def __init__(self):
-        super(AudioVisualKeyEncoder, self).__init__()
+        super(AVIKeyEncoder, self).__init__()
 
     def encode(self, avi_key):
         encoded = {}
@@ -308,6 +307,7 @@ class AudioVisualKeyEncoder(Encoder):
         encoded['av_number'] = avi_key.av_number
 
         return encoded
+
 
 class VISANEncoder(Encoder):
     def __init__(self):
@@ -322,6 +322,7 @@ class VISANEncoder(Encoder):
         encoded['check_digit'] = visan.check_digit
 
         return encoded
+
 
 class TransactionHeaderEncoder(Encoder):
     def __init__(self):
@@ -363,7 +364,7 @@ class AdditionalRecordRelatedInfoEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(AdditionalRecordRelatedInfoEncoder, self).encode(record)
-        
+
         encoded['note'] = record.note
         encoded['society_n'] = record.society_n
         encoded['subject_code'] = record.subject_code
@@ -379,7 +380,7 @@ class AgreementEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(AgreementEncoder, self).encode(record)
-        
+
         encoded['advance_given'] = record.advance_given
         encoded['agreement_end_date'] = record.agreement_end_date
         encoded['date_of_signature'] = record.date_of_signature
@@ -406,7 +407,7 @@ class AgreementTerritoryEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(AgreementTerritoryEncoder, self).encode(record)
-        
+
         encoded['inclusion_exclusion_indicator'] = record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
 
@@ -419,7 +420,7 @@ class AlternateTitleEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(AlternateTitleEncoder, self).encode(record)
-        
+
         encoded['alternate_title'] = record.alternate_title
         encoded['title_type'] = record.title_type
         encoded['language_code'] = record.language_code
@@ -438,7 +439,7 @@ class AuthoredWorkEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(AuthoredWorkEncoder, self).encode(record)
-        
+
         encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
         encoded['language_code'] = record.language_code
         encoded['source'] = record.source
@@ -467,7 +468,7 @@ class ComponentEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(ComponentEncoder, self).encode(record)
-        
+
         encoded['duration'] = record.duration
         encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
         encoded['submitter_work_n'] = record.submitter_work_n
@@ -503,7 +504,7 @@ class InstrumentationSummaryEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(InstrumentationSummaryEncoder, self).encode(record)
-        
+
         encoded['instrumentation_description'] = record.instrumentation_description
         encoded['number_voices'] = record.number_voices
         encoded['standard_instrumentation_type'] = record.standard_instrumentation_type
@@ -517,7 +518,7 @@ class PerformingArtistEncoder(TransactionHeaderEncoder):
 
     def encode(self, record):
         encoded = super(PerformingArtistEncoder, self).encode(record)
-        
+
         encoded['performing_artist_first_name'] = record.performing_artist_first_name
         encoded['performing_artist_ipi_base_n'] = record.performing_artist_ipi_base_n
         encoded['performing_artist_ipi_name_n'] = record.performing_artist_ipi_name_n
@@ -527,13 +528,13 @@ class PerformingArtistEncoder(TransactionHeaderEncoder):
 
 
 class WorkOriginEncoder(TransactionHeaderEncoder):
-    def __init__(self, encoder_avk = None, encoder_visan = None):
+    def __init__(self, encoder_avk=None, encoder_visan=None):
         super(WorkOriginEncoder, self).__init__()
 
         if encoder_avk:
             self._encoder_avk = encoder_avk
         else:
-            self._encoder_avk = AudioVisualKeyEncoder()
+            self._encoder_avk = AVIKeyEncoder()
 
         if encoder_visan:
             self._encoder_visan = encoder_visan
@@ -561,7 +562,7 @@ class WorkOriginEncoder(TransactionHeaderEncoder):
 
 
 class BaseWorkEncoder(TransactionHeaderEncoder):
-    def __init__(self, encoder_iswc = None):
+    def __init__(self, encoder_iswc=None):
         super(BaseWorkEncoder, self).__init__()
 
         if encoder_iswc:
@@ -580,7 +581,7 @@ class BaseWorkEncoder(TransactionHeaderEncoder):
 
 
 class WorkEncoder(BaseWorkEncoder):
-    def __init__(self, encoder_iswc = None):
+    def __init__(self, encoder_iswc=None):
         super(WorkEncoder, self).__init__(encoder_iswc)
 
     def encode(self, record):
@@ -647,10 +648,10 @@ class InterestedPartyRecordEncoder(TransactionHeaderEncoder):
 
 
 class PublisherRecordEncoder(InterestedPartyRecordEncoder):
-    def __init__(self, encoder_publisher = None):
+    def __init__(self, encoder_publisher=None):
         super(PublisherRecordEncoder, self).__init__()
-        if encoder_publisher :
-            self._encoder_publisher =encoder_publisher
+        if encoder_publisher:
+            self._encoder_publisher = encoder_publisher
         else:
             self._encoder_publisher = PublisherEncoder()
 
@@ -674,12 +675,12 @@ class PublisherRecordEncoder(InterestedPartyRecordEncoder):
 
 
 class WriterRecordEncoder(InterestedPartyRecordEncoder):
-    def __init__(self, encoder_writer = None):
+    def __init__(self, encoder_writer=None):
         super(WriterRecordEncoder, self).__init__()
-        if encoder_writer :
-            self._encoder_writer =encoder_writer
+        if encoder_writer:
+            self._encoder_writer = encoder_writer
         else:
-            self.encoder_writer_ = WriterEncoder()
+            self._encoder_writer = WriterEncoder()
 
     def encode(self, record):
         encoded = super(WriterRecordEncoder, self).encode(record)
@@ -706,12 +707,12 @@ class NRAEncoder(TransactionHeaderEncoder):
         return encoded
 
 
-class NATEncoder(NRAEncoder):
+class NonRomanAlphabetTitleEncoder(NRAEncoder):
     def __init__(self):
-        super(NATEncoder, self).__init__()
+        super(NonRomanAlphabetTitleEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NATEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetTitleEncoder, self).encode(record)
 
         encoded['title'] = record.title
         encoded['title_type'] = record.title_type
@@ -719,12 +720,12 @@ class NATEncoder(NRAEncoder):
         return encoded
 
 
-class NOWEncoder(NRAEncoder):
+class NonRomanAlphabetOtherWriterEncoder(NRAEncoder):
     def __init__(self):
-        super(NOWEncoder, self).__init__()
+        super(NonRomanAlphabetOtherWriterEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NOWEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetOtherWriterEncoder, self).encode(record)
 
         encoded['position'] = record.position
         encoded['writer_first_name'] = record.writer_first_name
@@ -733,12 +734,12 @@ class NOWEncoder(NRAEncoder):
         return encoded
 
 
-class NPAEncoder(NRAEncoder):
+class NonRomanAlphabetAgreementPartyEncoder(NRAEncoder):
     def __init__(self):
-        super(NPAEncoder, self).__init__()
+        super(NonRomanAlphabetAgreementPartyEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NPAEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetAgreementPartyEncoder, self).encode(record)
 
         encoded['ip_name'] = record.ip_name
         encoded['ip_writer_name'] = record.ip_writer_name
@@ -747,12 +748,12 @@ class NPAEncoder(NRAEncoder):
         return encoded
 
 
-class NPNEncoder(NRAEncoder):
+class NonRomanAlphabetPublisherNameEncoder(NRAEncoder):
     def __init__(self):
-        super(NPNEncoder, self).__init__()
+        super(NonRomanAlphabetPublisherNameEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NPNEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetPublisherNameEncoder, self).encode(record)
 
         encoded['ip_n'] = record.ip_n
         encoded['publisher_name'] = record.publisher_name
@@ -761,24 +762,24 @@ class NPNEncoder(NRAEncoder):
         return encoded
 
 
-class NRAWorkEncoder(NRAEncoder):
+class NonRomanAlphabetWorkEncoder(NRAEncoder):
     def __init__(self):
-        super(NRAWorkEncoder, self).__init__()
+        super(NonRomanAlphabetWorkEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NRAWorkEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetWorkEncoder, self).encode(record)
 
         encoded['title'] = record.title
 
         return encoded
 
 
-class NRNEncoder(NRAEncoder):
+class NonRomanAlphabetWriterNameEncoder(NRAEncoder):
     def __init__(self):
-        super(NRNEncoder, self).__init__()
+        super(NonRomanAlphabetWriterNameEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NRNEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetWriterNameEncoder, self).encode(record)
 
         encoded['writer_first_name'] = record.writer_first_name
         encoded['writer_last_name'] = record.writer_last_name
@@ -787,12 +788,12 @@ class NRNEncoder(NRAEncoder):
         return encoded
 
 
-class NPREncoder(NRAEncoder):
+class NonRomanAlphabetPerformanceDataEncoder(NRAEncoder):
     def __init__(self):
-        super(NPREncoder, self).__init__()
+        super(NonRomanAlphabetPerformanceDataEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NPREncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetPerformanceDataEncoder, self).encode(record)
 
         encoded['performance_dialect'] = record.performance_dialect
         encoded['performance_language'] = record.performance_language
@@ -804,12 +805,12 @@ class NPREncoder(NRAEncoder):
         return encoded
 
 
-class InterestedPartyTerritoryOfControlEncoder(TransactionHeaderEncoder):
+class IPTerritoryOfControlEncoder(TransactionHeaderEncoder):
     def __init__(self):
-        super(InterestedPartyTerritoryOfControlEncoder, self).__init__()
+        super(IPTerritoryOfControlEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(InterestedPartyTerritoryOfControlEncoder, self).encode(record)
+        encoded = super(IPTerritoryOfControlEncoder, self).encode(record)
 
         encoded['ip_n'] = record.ip_n
         encoded['ie_indicator'] = record.inclusion_exclusion_indicator
@@ -885,7 +886,7 @@ class RecordingDetailEncoder(TransactionHeaderEncoder):
 
 
 class GroupEncoder(Encoder):
-    def __init__(self, header_encoder = None, trailer_encoder=None, trans_encoder=None):
+    def __init__(self, header_encoder=None, trailer_encoder=None, trans_encoder=None):
         super(GroupEncoder, self).__init__()
 
         if header_encoder:
@@ -994,7 +995,7 @@ class WriterEncoder(InterestedPartyEncoder):
 
 
 class TransmissionEncoder(Encoder):
-    def __init__(self, header_encoder = None, trailer_encoder=None, groups_encoder=None):
+    def __init__(self, header_encoder=None, trailer_encoder=None, groups_encoder=None):
         super(TransmissionEncoder, self).__init__()
 
         if header_encoder:
@@ -1078,7 +1079,7 @@ class FileTagEncoder(Encoder):
 
 
 class FileEncoder(Encoder):
-    def __init__(self, encoder_tag, encoder_trans):
+    def __init__(self, encoder_tag=None, encoder_trans=None):
         super(FileEncoder, self).__init__()
 
         if encoder_tag:

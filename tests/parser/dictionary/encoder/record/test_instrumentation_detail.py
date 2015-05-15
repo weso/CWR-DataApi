@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import InstrumentationDetailEncoder
 from cwr.work import InstrumentationDetailRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestRecordingDetailRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = InstrumentationDetailEncoder()
 
     def test_encoded(self):
         data = InstrumentationDetailRecord(record_type='IND',
