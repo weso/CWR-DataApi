@@ -3,8 +3,7 @@
 import unittest
 
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
-from cwr.parser.decoder.common import GrammarDecoder
-from tests.utils.grammar import get_record_grammar
+from cwr.parser.decoder.file import default_file_decoder
 
 
 """
@@ -21,12 +20,17 @@ __status__ = 'Development'
 
 class TestFileCWRDecodeValid(unittest.TestCase):
     def setUp(self):
-        self._parser = GrammarDecoder(get_record_grammar('transmission'))
+        self._parser = default_file_decoder()
 
     def test_two_groups(self):
-        record = _two_groups()
+        data = {}
 
-        result = self._parser.decode(record)[0]
+        data['filename'] = 'CW12012311_22.V21'
+        data['contents'] = _two_groups()
+
+        result = self._parser.decode(data)
+
+        result = result.transmission
 
         self.assertEqual('HDR', result.header.record_type)
         self.assertTrue(isinstance(result.header, TransmissionHeader))
