@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import IPIBaseDecoder
+from cwr.parser.decoder.dictionary import IPIBaseDictionaryDecoder
 
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 class TestIPIBaseDecoder(unittest.TestCase):
     def setUp(self):
-        self._decoder = IPIBaseDecoder()
+        self._decoder = IPIBaseDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}

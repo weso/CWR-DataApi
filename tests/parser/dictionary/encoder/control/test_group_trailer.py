@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import GroupTrailerDictionaryEncoder
 from cwr.group import GroupTrailer
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestGroupTrailerDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = GroupTrailerDictionaryEncoder()
 
     def test_encoded(self):
         data = GroupTrailer(record_type='GRT',

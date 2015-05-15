@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import ISWCDecoder
+from cwr.parser.decoder.dictionary import ISWCDictionaryDecoder
 
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 class TestISWCDecoder(unittest.TestCase):
     def setUp(self):
-        self._decoder = ISWCDecoder()
+        self._decoder = ISWCDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}

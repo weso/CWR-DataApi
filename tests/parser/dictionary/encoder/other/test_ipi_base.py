@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import IPIBaseDictionaryEncoder
 from cwr.other import IPIBaseNumber
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestIPIBaseEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = IPIBaseDictionaryEncoder()
 
     def test_encoded(self):
         data = IPIBaseNumber('T', 123456789,

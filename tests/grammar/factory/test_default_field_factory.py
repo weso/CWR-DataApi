@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from config_commonworks.accessor import CWRConfiguration
+from config_cwr.accessor import CWRConfiguration
 from tests.utils.grammar import _factory_table
 
 

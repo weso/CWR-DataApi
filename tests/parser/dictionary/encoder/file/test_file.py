@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import FileDictionaryDictionaryEncoder
 from cwr.file import FileTag, CWRFile
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
@@ -25,7 +25,7 @@ __status__ = 'Development'
 
 class TestFileDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = FileDictionaryDictionaryEncoder()
 
     def test_encoded(self):
         tag = self._get_file_tag()

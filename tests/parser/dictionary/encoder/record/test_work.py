@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import WorkDictionaryEncoder
 from cwr.work import WorkRecord
 from cwr.other import ISWCCode
 
@@ -22,7 +22,7 @@ __status__ = 'Development'
 
 class TestWorkRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = WorkDictionaryEncoder()
 
     def test_encoded(self):
         iswc = ISWCCode(12345678, 9)
