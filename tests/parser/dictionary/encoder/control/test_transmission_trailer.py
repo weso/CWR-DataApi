@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import TransmissionTrailerDictionaryEncoder
 from cwr.transmission import TransmissionTrailer
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestTransmissionTrailerDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = TransmissionTrailerDictionaryEncoder()
 
     def test_encoded(self):
         data = TransmissionTrailer(record_type='TRL',

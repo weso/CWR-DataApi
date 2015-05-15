@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import VISANDecoder
+from cwr.parser.decoder.dictionary import VISANDictionaryDecoder
 
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 class TestVISANDecoder(unittest.TestCase):
     def setUp(self):
-        self._decoder = VISANDecoder()
+        self._decoder = VISANDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}

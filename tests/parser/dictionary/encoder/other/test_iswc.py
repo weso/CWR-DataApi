@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import ISWCDictionaryEncoder
 from cwr.other import ISWCCode
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestISWCodeEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = ISWCDictionaryEncoder()
 
     def test_encoded(self):
         data = ISWCCode(123456789,

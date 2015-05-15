@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import VISANDictionaryEncoder
 from cwr.other import VISAN
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestVISANEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = VISANDictionaryEncoder()
 
     def test_encoded(self):
         data = VISAN(1, 2, 3, 4)

@@ -21,10 +21,6 @@ matrix:
     - python: "pypy3"
       env: REQUIREMENTS=lowest
 
-before_install:
-  # Setting up Jython
-  - chmod +x ./.scripts/jython_env.sh
-  - ./.scripts/jython_env.sh
 install:
   - pip install tox
 script:

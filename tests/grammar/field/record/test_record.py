@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from data_commonworks.accessor import CWRConfiguration
+from config_cwr.accessor import CWRConfiguration
 from cwr.grammar.field.record import record_prefix
 from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
 from tests.utils.grammar import adapters

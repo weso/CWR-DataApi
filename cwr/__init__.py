@@ -7,5 +7,5 @@
     :license: MIT, see LICENSE for more details.
 """
 
-__version__ = '0.0.16'
+__version__ = '0.0.18'
 __license__ = 'MIT'
