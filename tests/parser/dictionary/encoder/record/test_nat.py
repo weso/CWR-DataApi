@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import NonRomanAlphabetTitleEncoder
+from cwr.parser.encoder.dictionary import NonRomanAlphabetTitleDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetTitleRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestNATRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = NonRomanAlphabetTitleEncoder()
+        self._encoder = NonRomanAlphabetTitleDictionaryEncoder()
 
     def test_encoded(self):
         data = NonRomanAlphabetTitleRecord(record_type='NAT',

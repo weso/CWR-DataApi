@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import AuthoredWorkEncoder
+from cwr.parser.encoder.dictionary import AuthoredWorkDictionaryEncoder
 from cwr.work import AuthoredWorkRecord
 from cwr.other import ISWCCode
 
@@ -21,7 +21,7 @@ __status__ = 'Development'
 
 class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = AuthoredWorkEncoder()
+        self._encoder = AuthoredWorkDictionaryEncoder()
 
     def test_encoded(self):
         iswc = ISWCCode(12345678, 9)

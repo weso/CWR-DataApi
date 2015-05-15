@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import AdditionalRecordRelatedInfoEncoder
+from cwr.parser.encoder.dictionary import AdditionalRecordRelatedInfoDictionaryEncoder
 from cwr.info import AdditionalRelatedInfoRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestAdditionalRelatedInfoRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = AdditionalRecordRelatedInfoEncoder()
+        self._encoder = AdditionalRecordRelatedInfoDictionaryEncoder()
 
     def test_encoded(self):
         data = AdditionalRelatedInfoRecord(record_type='GRH',

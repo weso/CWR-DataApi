@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import AgreementTerritoryEncoder
+from cwr.parser.encoder.dictionary import AgreementTerritoryDictionaryEncoder
 from cwr.agreement import AgreementTerritoryRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestAgreementTerritoryRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = AgreementTerritoryEncoder()
+        self._encoder = AgreementTerritoryDictionaryEncoder()
 
     def test_encoded(self):
         data = AgreementTerritoryRecord(record_type='TER',

@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import GroupHeaderEncoder
+from cwr.parser.encoder.dictionary import GroupHeaderDictionaryEncoder
 from cwr.group import GroupHeader
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestGroupHeaderDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = GroupHeaderEncoder()
+        self._encoder = GroupHeaderDictionaryEncoder()
 
     def test_encoded(self):
         data = GroupHeader(record_type='GRH',

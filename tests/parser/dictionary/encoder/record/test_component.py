@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import ComponentEncoder
+from cwr.parser.encoder.dictionary import ComponentDictionaryEncoder
 from cwr.work import ComponentRecord
 from cwr.other import ISWCCode
 
@@ -22,7 +22,7 @@ __status__ = 'Development'
 
 class TestComponentRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = ComponentEncoder()
+        self._encoder = ComponentDictionaryEncoder()
 
     def test_encoded(self):
         iswc = ISWCCode(12345678, 9)

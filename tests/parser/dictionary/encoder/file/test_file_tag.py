@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import FileTagEncoder
+from cwr.parser.encoder.dictionary import FileTagDictionaryEncoder
 from cwr.file import FileTag
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestFileTagDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = FileTagEncoder()
+        self._encoder = FileTagDictionaryEncoder()
 
     def test_encoded(self):
         data = FileTag(year=2015,

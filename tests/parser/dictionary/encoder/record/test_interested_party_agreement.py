@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import InterestedPartyForAgreementEncoder
+from cwr.parser.encoder.dictionary import InterestedPartyForAgreementDictionaryEncoder
 from cwr.agreement import InterestedPartyForAgreementRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestAgreementInterestedPartyRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = InterestedPartyForAgreementEncoder()
+        self._encoder = InterestedPartyForAgreementDictionaryEncoder()
 
     def test_encoded(self):
         data = InterestedPartyForAgreementRecord(record_type='ACK',

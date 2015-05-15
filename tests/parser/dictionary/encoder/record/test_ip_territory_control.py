@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import IPTerritoryOfControlEncoder
+from cwr.parser.encoder.dictionary import IPTerritoryOfControlDictionaryEncoder
 from cwr.interested_party import IPTerritoryOfControlRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestIPTerritoryOfControlRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = IPTerritoryOfControlEncoder()
+        self._encoder = IPTerritoryOfControlDictionaryEncoder()
 
     def test_encoded(self):
         data = IPTerritoryOfControlRecord(record_type='MSG',

@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import NonRomanAlphabetWorkEncoder
+from cwr.parser.encoder.dictionary import NonRomanAlphabetWorkDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetWorkRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestNRAWorkRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = NonRomanAlphabetWorkEncoder()
+        self._encoder = NonRomanAlphabetWorkDictionaryEncoder()
 
     def test_encoded(self):
         data = NonRomanAlphabetWorkRecord(record_type='NET',

@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import WorkOriginEncoder
+from cwr.parser.encoder.dictionary import WorkOriginDictionaryEncoder
 from cwr.work import WorkOriginRecord
 from cwr.other import VISAN, AVIKey
 
@@ -21,7 +21,7 @@ __status__ = 'Development'
 
 class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = WorkOriginEncoder()
+        self._encoder = WorkOriginDictionaryEncoder()
 
     def test_encoded(self):
         visan = VISAN(1234567, 12345678912, 123, 1)
