@@ -4,8 +4,8 @@ include README.rst
 # The tests folder is removed
 prune tests
 # Data files are added
-include data_commonworks/*.py
-include data_commonworks/*.csv
-include data_commonworks/*.yml
+include data_cwr/*.py
+include data_cwr/*.csv
+include data_cwr/*.yml
 # Configuration files are added
-include config_commonworks/*.yml
+include config_cwr/*.yml
