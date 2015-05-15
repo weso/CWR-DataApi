@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import TransmissionHeaderDictionaryEncoder
 from cwr.transmission import TransmissionHeader
 
 
@@ -21,7 +21,7 @@ __status__ = 'Development'
 
 class TestTransmissionHeaderDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = TransmissionHeaderDictionaryEncoder()
 
     def test_encoded(self):
         data = TransmissionHeader(record_type='HDR',

@@ -7,3 +7,5 @@ prune tests
 include data_commonworks/*.py
 include data_commonworks/*.csv
 include data_commonworks/*.yml
+# Configuration files are added
+include config_commonworks/*.yml

@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import AcknowledgementDictionaryEncoder
 from cwr.acknowledgement import AcknowledgementRecord
 
 
@@ -21,7 +21,7 @@ __status__ = 'Development'
 
 class TestAcknowledgementRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = AcknowledgementDictionaryEncoder()
 
     def test_encoded(self):
         data = AcknowledgementRecord(record_type='ACK',
