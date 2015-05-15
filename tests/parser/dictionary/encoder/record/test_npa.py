@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import NonRomanAlphabetAgreementPartyDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestNPARecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = NonRomanAlphabetAgreementPartyDictionaryEncoder()
 
     def test_encoded(self):
         data = NonRomanAlphabetAgreementPartyRecord(record_type='NPA',

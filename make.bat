@@ -27,6 +27,12 @@ if "%EGGDIR%" == "" (
 	set EGGDIR=CWR_API.egg-info
 )
 
+REM Sets the tox folder path.
+REM It will be the '.tox' folder.
+if "%TOXDIR%" == "" (
+	set TOXDIR=.tox
+)
+
 REM If no parameters are received, the help is shown
 if "%1" == "" goto help
 
@@ -42,6 +48,7 @@ if "%1" == "help" (
 	echo.  pypitest_reg   to register on pypi-test
 	echo.  pypi           to upload to pypi
 	echo.  pypitest       to upload to pypi-test
+	echo.  test           to run tests
 	goto end
 )
 
@@ -53,6 +60,9 @@ if "%1" == "clean" (
 	)
 	if exist %EGGDIR% (
 		rd /S /Q %EGGDIR%
+	)
+	if exist %TOXDIR% (
+		rd /S /Q %TOXDIR%
 	)
 	goto end
 )
@@ -140,6 +150,11 @@ if "%1" == "pypitest" (
 	echo.
 	echo.Uploaded project to pypitest.
 	goto end
+)
+
+REM Tests suite.
+if "%1" == "test" (
+	tox
 )
 
 :end

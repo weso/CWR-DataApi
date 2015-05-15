@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import AVIKeyDecoder
+from cwr.parser.decoder.dictionary import AVIKeyDictionaryDecoder
 
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 class TestAVIKeyDecoder(unittest.TestCase):
     def setUp(self):
-        self._decoder = AVIKeyDecoder()
+        self._decoder = AVIKeyDictionaryDecoder()
 
     def test_encoded(self):
         dict = {}

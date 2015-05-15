@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import AVIKeyDictionaryEncoder
 from cwr.other import AVIKey
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestAVIKeyEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = AVIKeyDictionaryEncoder()
 
     def test_encoded(self):
         data = AVIKey(1, 2)

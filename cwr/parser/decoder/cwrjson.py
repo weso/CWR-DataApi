@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from cwr.parser.decoder.common import Decoder
 from cwr.parser.decoder.dictionary import FileDictionaryDecoder
-import json
+
 
 """
 Classes for decoding CWR classes from JSON dictionaries.

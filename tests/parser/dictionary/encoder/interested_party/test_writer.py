@@ -2,7 +2,7 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import WriterDictionaryEncoder
 from cwr.interested_party import Writer
 
 
@@ -20,7 +20,7 @@ __status__ = 'Development'
 
 class TestWriterDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = WriterDictionaryEncoder()
 
     def test_encoded(self):
         data = Writer(ip_n='ABC15',

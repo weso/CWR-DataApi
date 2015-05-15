@@ -3,7 +3,7 @@
 import unittest
 import datetime
 
-from cwr.parser.encoder.dictionary import CWRDictionaryEncoder
+from cwr.parser.encoder.dictionary import AgreementDictionaryEncoder
 from cwr.agreement import AgreementRecord
 
 
@@ -21,7 +21,7 @@ __status__ = 'Development'
 
 class TestAgreementRecordDictionaryEncoding(unittest.TestCase):
     def setUp(self):
-        self._encoder = CWRDictionaryEncoder()
+        self._encoder = AgreementDictionaryEncoder()
 
     def test_encoded(self):
         data = AgreementRecord(record_type='ACK',
