@@ -78,3 +78,8 @@ class TestTerritoryInformationGrammarException(unittest.TestCase):
         record = ''
 
         self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

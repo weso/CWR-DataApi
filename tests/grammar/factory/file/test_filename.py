@@ -221,6 +221,11 @@ class TestFileNameGrammarException(unittest.TestCase):
     def test_empty(self):
         self.assertRaises(ParseException, self.grammar.parseString, '')
 
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
     def test_sequence_too_long(self):
         self.assertRaises(ParseException, self.grammar.parseString, 'CW0000012AB2_234.V21')
 
@@ -240,3 +245,8 @@ class TestFileNameOldException(unittest.TestCase):
 
     def test_empty(self):
         self.assertRaises(ParseException, self.grammar.parseString, '')
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

@@ -87,6 +87,11 @@ class TestAgreementTransactionGrammarException(unittest.TestCase):
 
         self.assertRaises(ParseException, self.grammar.parseString, record)
 
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
 
 def _agreement_short():
     agr_1 = 'AGR000000000000000000023683606100              OS200311182013111820131118N        D20131118        00009SYY              '
