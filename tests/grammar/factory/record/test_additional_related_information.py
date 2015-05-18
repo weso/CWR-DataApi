@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -37,3 +39,16 @@ class TestAdditionalRelatedInformationGrammar(unittest.TestCase):
         self.assertEqual('ALL', result.type_of_right)
         self.assertEqual('DW', result.subject_code)
         self.assertEqual('NOTE', result.note)
+
+
+class TestAdditionalRelatedInformationGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('additional_related_information')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the Original Transaction Type is NWR and not Creation Title is set.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

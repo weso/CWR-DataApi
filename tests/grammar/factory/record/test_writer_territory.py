@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -16,7 +18,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestSWTGrammar(unittest.TestCase):
+class TestWriterTerritoryGrammar(unittest.TestCase):
     """
     Tests that the SWT grammar decodes correctly formatted strings
     """
@@ -67,3 +69,16 @@ class TestSWTGrammar(unittest.TestCase):
         self.assertEqual(8, result.tis_numeric_code)
         self.assertEqual(True, result.shares_change)
         self.assertEqual(12, result.sequence_n)
+
+
+class TestWriterTerritoryGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('writer_territory')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -64,7 +66,16 @@ class TestGroupHeaderGrammar(unittest.TestCase):
         self.assertEqual(0, result.batch_request_id)
 
 
-class TestGrammarGroupHeaderException(unittest.TestCase):
+class TestGroupInformationGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = self.grammar = get_record_grammar('group_info')
+
+
+    def test_empty(self):
+        record = ''
+
+
+class TestGrammarGroupHeaderGrammarException(unittest.TestCase):
     """
     Tests that GroupHeaderDecoder throws exceptions with incorrectly formatted strings.
     """
@@ -72,11 +83,8 @@ class TestGrammarGroupHeaderException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('group_header')
 
-    def test_invalid_wrong_group_id(self):
-        """
-        Tests that GroupHeaderDecoder throws an exception when the group ID is 0.
-        """
-        # TODO: Check the exception's info
-        record = 'GRHACK0000002.100123456789  '
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+    def test_empty(self):
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

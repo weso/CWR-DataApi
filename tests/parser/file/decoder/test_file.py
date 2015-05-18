@@ -71,6 +71,19 @@ class TestFileCWRDecodeValid(unittest.TestCase):
         self.assertEqual('IPA', transaction[3].record_type)
 
 
+class TestFileCWRDecodeInvalid(unittest.TestCase):
+    def setUp(self):
+        self._parser = default_file_decoder()
+
+    def test_bad_contents(self):
+        data = {}
+
+        data['filename'] = 'CW12012311_22.V21'
+        data['contents'] = 'Contents of the file'
+
+        result = self._parser.decode(data)
+
+
 def _two_groups():
     header_file = 'HDRPB226144593AGENCIA GRUPO MUSICAL                        01.102013080902591120130809               '
     header_group1 = 'GRHAGR0000102.100130400001  '

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -16,7 +18,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestParseAgreementTerritory(unittest.TestCase):
+class TestAgreementTerritoryGrammar(unittest.TestCase):
     """
     Tests that the Territory in Agreement grammar decodes correctly formatted strings
     """
@@ -37,3 +39,16 @@ class TestParseAgreementTerritory(unittest.TestCase):
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('I', result.inclusion_exclusion_indicator)
         self.assertEqual(20, result.tis_numeric_code)
+
+
+class TestAgreementTerritoryGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('territory_in_agreement')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

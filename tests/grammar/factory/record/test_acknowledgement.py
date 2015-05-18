@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -15,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestAcknowledgementAgreementValid(unittest.TestCase):
+class TestAcknowledgementGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('acknowledgement')
 
@@ -80,22 +82,14 @@ class TestAcknowledgementAgreementValid(unittest.TestCase):
         self.assertEqual('AS', result.transaction_status)
 
 
-class TestAcknowledgementAgreementException(unittest.TestCase):
+class TestAcknowledgementGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('acknowledgement')
 
-    def test_nwr_missing_title(self):
+    def test_empty(self):
         """
         Tests that a exception is thrown when the Original Transaction Type is NWR and not Creation Title is set.
         """
-        # record = 'ACK0000123400000023201201021020300123401234567NWR                                                            ABCD1234512345123456ABCD123451234512345720130203AS'
+        record = ''
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_rev_missing_title(self):
-        """
-        Tests that a exception is thrown when the Original Transaction Type is NWR and not Creation Title is set.
-        """
-        # record = 'ACK0000123400000023201201021020300123401234567REV                                                            ABCD1234512345123456ABCD123451234512345720130203AS'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)

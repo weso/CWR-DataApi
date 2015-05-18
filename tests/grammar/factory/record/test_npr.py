@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -65,3 +67,16 @@ class TestNPRGrammar(unittest.TestCase):
         self.assertEqual('ES', result.language_code)
         self.assertEqual('EN', result.performance_language)
         self.assertEqual('CAN', result.performance_dialect)
+
+
+class TestNPRGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('nra_performance_data')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

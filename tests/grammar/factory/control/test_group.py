@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -15,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestGroupInformationValid(unittest.TestCase):
+class TestGroupInformationGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = self.grammar = get_record_grammar('group_info')
 
@@ -179,19 +181,15 @@ class TestGroupInformationValid(unittest.TestCase):
         self.assertEqual('NPA', transaction[20].record_type)
 
 
-class TestGroupInformationInvalid(unittest.TestCase):
+class TestGroupInformationGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = self.grammar = get_record_grammar('group_info')
 
 
-    def test_agreement_and_work(self):
-        header = 'GRHACK0123402.100123456789  '
+    def test_empty(self):
+        record = ''
 
-        trailer = 'GRT012340123456701234567             '
-
-        record = header + '\n' + _agreement_record_big() + '\n' + _work_big() + '\n' + trailer
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
 
 def _work_big():

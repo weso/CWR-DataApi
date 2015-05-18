@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -124,3 +126,16 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual(7, result.writer.ipi_base_n.check_digit)
         self.assertEqual(12345678901, result.writer.personal_number)
         self.assertEqual('B', result.usa_license)
+
+
+class TestWriterGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('writer')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

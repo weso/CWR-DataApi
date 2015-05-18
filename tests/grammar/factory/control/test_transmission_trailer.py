@@ -41,10 +41,7 @@ class TestParseTransmissionTrailerException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transmission_header')
 
-    def test_invalid_wrong_length_too_short(self):
-        """
-        Tests that TransmissionTrailerDecoder throws an exception when the line is too short.
-        """
-        record = 'TRL01234012345670123456'
+    def test_empty(self):
+        record = ''
 
         self.assertRaises(ParseException, self.grammar.parseString, record)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -16,7 +18,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestWorkDetailGrammar(unittest.TestCase):
+class TestRecordingDetailGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('recording_detail')
 
@@ -93,3 +95,16 @@ class TestWorkDetailGrammar(unittest.TestCase):
         self.assertEqual('A', result.recording_format)
         self.assertEqual('D', result.recording_technique)
         self.assertEqual('CD', result.media_type)
+
+
+class TestRecordingDetailGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('recording_detail')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

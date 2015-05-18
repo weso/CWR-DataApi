@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -15,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestSubpublisherInformationValid(unittest.TestCase):
+class TestSubpublisherInformationGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('subpublisher_information')
 
@@ -86,3 +88,16 @@ class TestSubpublisherInformationValid(unittest.TestCase):
         self.assertEqual(1, len(result))
 
         self.assertEqual('SPU', result[0].record_type)
+
+
+class TestSubpublisherInformationGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('subpublisher_information')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

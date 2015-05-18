@@ -18,7 +18,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestFileNameValid(unittest.TestCase):
+class TestFileNameGrammar(unittest.TestCase):
     """
     Tests that CWRFileNameDecoder decodes correctly formatted CWR file names (using the new format).
     """
@@ -67,7 +67,7 @@ class TestFileNameValid(unittest.TestCase):
         self.assertEqual(0.2, data.version)
 
 
-class TestFileNameValidOld(unittest.TestCase):
+class TestFileNameGrammarOld(unittest.TestCase):
     """
     Tests that CWRFileNameDecoder decodes correctly formatted CWR file names (using the old format).
     """
@@ -116,7 +116,7 @@ class TestFileNameValidOld(unittest.TestCase):
         self.assertEqual(0.2, data.version)
 
 
-class TestFileNameZIPDecodeValid(unittest.TestCase):
+class TestFileNameZIPDecode(unittest.TestCase):
     """
     Tests that CWRFileNameDecoder decodes correctly formatted zip file file names (using the new format).
     """
@@ -165,7 +165,7 @@ class TestFileNameZIPDecodeValid(unittest.TestCase):
         self.assertEqual(2.1, data.version)
 
 
-class TestFileNameZIPDecodeValidOld(unittest.TestCase):
+class TestFileNameZIPDecodeOld(unittest.TestCase):
     """
     Tests that CWRFileNameDecoder decodes correctly formatted zip file names (using the old format).
     """
@@ -214,7 +214,7 @@ class TestFileNameZIPDecodeValidOld(unittest.TestCase):
         self.assertEqual(2.1, data.version)
 
 
-class TestFileNameException(unittest.TestCase):
+class TestFileNameGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_filename_grammar('filename_new')
 
