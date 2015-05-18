@@ -193,7 +193,8 @@ class FileDecoder(Decoder):
 
         file_data = data['contents']
         i = 0
-        while file_data[i:i + 1] != 'H':
+        max = len(file_data)
+        while file_data[i:i + 1] != 'H' and i<max:
             i += 1
         if i > 0:
             data['contents'] = file_data[i:]

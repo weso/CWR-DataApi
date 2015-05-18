@@ -4,6 +4,7 @@ import unittest
 
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 from cwr.parser.decoder.file import default_file_decoder
+from pyparsing import ParseException
 
 
 """
@@ -75,13 +76,21 @@ class TestFileCWRDecodeInvalid(unittest.TestCase):
     def setUp(self):
         self._parser = default_file_decoder()
 
+    def test_empty_contents(self):
+        data = {}
+
+        data['filename'] = 'CW12012311_22.V21'
+        data['contents'] = ''
+
+        self.assertRaises(ParseException, self._parser.decode, data)
+
     def test_bad_contents(self):
         data = {}
 
         data['filename'] = 'CW12012311_22.V21'
         data['contents'] = 'Contents of the file'
 
-        result = self._parser.decode(data)
+        self.assertRaises(ParseException, self._parser.decode, data)
 
 
 def _two_groups():
