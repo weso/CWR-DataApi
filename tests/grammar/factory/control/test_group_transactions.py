@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -15,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestTransactionInformationValid(unittest.TestCase):
+class TestTransactionInformationGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transactions')
 
@@ -236,15 +238,19 @@ class TestTransactionInformationValid(unittest.TestCase):
         self.assertEqual('EXC', result[4].record_type)
 
 
-class TestTransactionInformationInvalid(unittest.TestCase):
+class TestTransactionInformationGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transactions')
 
+    def test_empty(self):
+        record = ''
 
-    def test_agreement_and_work(self):
-        record = _agreement_full() + '\n' + _work_big()
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
 
 def _agr_territory():

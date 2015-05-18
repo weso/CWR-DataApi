@@ -3,8 +3,8 @@ import unittest
 
 from pyparsing import ParseException
 
-from config_cwr.accessor import CWRConfiguration
-from tests.utils.grammar import _factory_table
+from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
+from cwr.grammar.factory.adapter import LookupAdapter
 
 
 """
@@ -16,47 +16,54 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
-# Acquires data sources
-_config = CWRConfiguration()
+def _factory():
+    adapters = {}
+    adapters['lookup'] = LookupAdapter()
+
+    config_fields = {'test_lookup': {'type': 'lookup', 'name': 'Test Lookup Field', 'size': 3, 'values':['AB1', 'CD2', 'EF3']}}
+
+    return DefaultFieldTerminalRuleFactory(config_fields, adapters)
 
 
 class TestLookupFieldFactoryValid(unittest.TestCase):
     def setUp(self):
-        self.factory = _factory_table
+        self.factory = _factory()
 
     def test_creation(self):
-        id = 'original_transaction_type'
+        id = 'test_lookup'
 
         result = self.factory.get_field(id)
 
         self.assertNotEqual(None, result)
 
-    def test_optional_empty_whitespaces(self):
-        id = 'original_transaction_type'
+    def test_optional_trailing_whitespace(self):
+        id = 'test_lookup'
 
         result = self.factory.get_field(id)
-        result = result.parseString('   AGR')
+        result = result.parseString('CD2  ')[0]
 
-        self.assertNotEqual(None, result)
+        self.assertEqual('CD2', result)
 
-    def test_optional_valid(self):
-        id = 'original_transaction_type'
-
-        result = self.factory.get_field(id)
-        result = result.parseString('AGR  ')
-
-        self.assertNotEqual('AGR', result)
-
-    def test_compulsory_valid(self):
-        id = 'original_transaction_type'
+    def test_compulsory_trailing_whitespace(self):
+        id = 'test_lookup'
 
         result = self.factory.get_field(id, compulsory=True)
-        result = result.parseString('AGR  ')
+        result = result.parseString('CD2  ')[0]
 
-        self.assertNotEqual('AGR', result)
+        self.assertEqual('CD2', result)
+
+    def test_optional_heading_whitespaces(self):
+        id = 'test_lookup'
+
+        field = self.factory.get_field(id)
+
+        result = self.factory.get_field(id)
+        result = result.parseString('   CD2')[0]
+
+        self.assertEqual(None, result)
 
     def test_returns_same(self):
-        id = 'original_transaction_type'
+        id = 'test_lookup'
 
         result1 = self.factory.get_field(id)
         result2 = self.factory.get_field(id)
@@ -66,13 +73,21 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
 
 class TestLookupFieldFactoryException(unittest.TestCase):
     def setUp(self):
-        self.factory = _factory_table
+        self.factory = _factory()
+
+    def test_compulsory_heading_whitespace(self):
+        id = 'test_lookup'
+
+        field = self.factory.get_field(id,
+                                       compulsory=True)
+
+        self.assertRaises(ParseException, field.parseString, '   CD2')
 
     def test_whitespace_compulsory(self):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """
-        id = 'original_transaction_type'
+        id = 'test_lookup'
 
         field = self.factory.get_field(id,
                                        compulsory=True)
@@ -83,7 +98,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """
-        id = 'original_transaction_type'
+        id = 'test_lookup'
 
         field = self.factory.get_field(id,
                                        compulsory=True)
@@ -94,7 +109,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """
-        id = 'original_transaction_type'
+        id = 'test_lookup'
 
         field = self.factory.get_field(id)
 
@@ -104,7 +119,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """
-        id = 'original_transaction_type'
+        id = 'test_lookup'
 
         field = self.factory.get_field(id)
 
@@ -114,7 +129,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """
-        id = 'original_transaction_type'
+        id = 'test_lookup'
 
         field = self.factory.get_field(id)
 

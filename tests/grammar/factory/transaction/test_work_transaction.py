@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -15,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestWorkTransactionValid(unittest.TestCase):
+class TestWorkTransactionGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('work_transaction')
 
@@ -142,3 +144,21 @@ class TestWorkTransactionValid(unittest.TestCase):
         self.assertEqual(1, len(result))
 
         self.assertEqual('NWR', result[0].record_type)
+
+
+class TestWorkTransactionGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('work_transaction')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

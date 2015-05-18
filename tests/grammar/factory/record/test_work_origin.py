@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -16,7 +18,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestWorkOriginGrammarValid(unittest.TestCase):
+class TestWorkOriginGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('work_origin')
 
@@ -69,3 +71,21 @@ class TestWorkOriginGrammarValid(unittest.TestCase):
         self.assertEqual(0, result.year_production)
         self.assertEqual(0, result.audio_visual_key.society_code)
         self.assertEqual('', result.audio_visual_key.av_number)
+
+
+class TestWorkOriginGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('work_origin')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

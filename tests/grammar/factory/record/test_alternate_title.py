@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -43,3 +45,21 @@ class TestAlternateTitleGrammar(unittest.TestCase):
         self.assertEqual('THE TITLE', result.alternate_title)
         self.assertEqual('AT', result.title_type)
         self.assertEqual('ES', result.language_code)
+
+
+class TestAlternateTitleGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('work_alternate_title')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

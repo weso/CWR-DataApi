@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -15,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestInformationForComponentsValid(unittest.TestCase):
+class TestInformationForComponentsGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('information_for_components')
 
@@ -86,3 +88,21 @@ class TestInformationForComponentsValid(unittest.TestCase):
         self.assertEqual('COM', result[0].record_type)
         self.assertEqual('NOW', result[1].record_type)
         self.assertEqual('NOW', result[1].record_type)
+
+
+class TestInformationForComponentsGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('information_for_components')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
