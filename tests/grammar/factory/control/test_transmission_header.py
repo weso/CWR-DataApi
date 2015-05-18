@@ -77,26 +77,12 @@ class TestParseTransmissionHeaderException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transmission_header')
 
-    def test_invalid_wrong_type(self):
-        """
-        Tests that TransmissionHeaderDecoder throws an exception when the record type is not one of the CWR record types.
-        """
-        record = 'AAAAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123         '
+    def test_empty(self):
+        record = ''
 
         self.assertRaises(ParseException, self.grammar.parseString, record)
 
-    def test_invalid_lower_case_name(self):
-        """
-        Tests that TransmissionHeaderDecoder throws an exception when the company name is in lower case.
-        """
-        record = 'HDRAA000001234name of the company                          01.102012011512300020121102U+0123         '
-
-        self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_invalid_wrong_length_too_short(self):
-        """
-        Tests that TransmissionHeaderDecoder throws an exception when the record size is too short.
-        """
-        record = 'HDRAA000001234NAME OF THE COMPANY                          01.102012011512300020121102U+0123        '
+    def test_invalid(self):
+        record = 'This is an invalid string'
 
         self.assertRaises(ParseException, self.grammar.parseString, record)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -77,3 +79,21 @@ class TestNPAGrammar(unittest.TestCase):
         self.assertEqual('PARTY NAME \xc6\x8f', result.ip_name)
         self.assertEqual('PARTY WRITER NAME \xc6\x8f', result.ip_writer_name)
         self.assertEqual(None, result.language_code)
+
+
+class TestNPAGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('nra_agreement_party')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

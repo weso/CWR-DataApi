@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -15,7 +17,7 @@ __version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestAgreementTransactionValid(unittest.TestCase):
+class TestAgreementTransactionGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('agreement_transaction')
 
@@ -71,6 +73,24 @@ class TestAgreementTransactionValid(unittest.TestCase):
 
         self.assertEqual('IPA', result[19].record_type)
         self.assertEqual('NPA', result[20].record_type)
+
+
+class TestAgreementTransactionGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('agreement_transaction')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
 
 def _agreement_short():

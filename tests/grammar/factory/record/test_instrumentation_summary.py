@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 
@@ -40,3 +42,21 @@ class TestInstrumentationSummaryGrammar(unittest.TestCase):
         self.assertEqual(12, result.number_voices)
         self.assertEqual('BBA', result.standard_instrumentation_type)
         self.assertEqual('DESCRIPTION', result.instrumentation_description)
+
+
+class TestInstrumentationSummaryGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('instrumentation_summary')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
