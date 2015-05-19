@@ -49,7 +49,8 @@ The project has been tested in the following versions of the interpreter:
 - Pypy
 - Pypy 3
 
-Al other dependencies are indicated on requirements.txt, which can be installed with the command:
+Al other dependencies are indicated on requirements.txt, which can be installed
+with the command:
 
 ``pip install -r requirements.txt``
 
