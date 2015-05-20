@@ -49,9 +49,9 @@ The project has been tested in the following versions of the interpreter:
 - Pypy
 - Pypy 3
 
-Al other dependencies are indicated on requirements.txt, which can be installed with the command:
+All other dependencies are indicated on requirements.txt. The included makefile can install them with the command:
 
-``pip install -r requirements.txt``
+``make requirements``
 
 Getting the code
 ~~~~~~~~~~~~~~~~

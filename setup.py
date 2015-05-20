@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import ast
 import re
+import sys
+
 from codecs import open
 from os import path
 
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
 
 
 """
@@ -20,7 +23,7 @@ __version__ = '1.0.0'
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 
 # Test requirements
-_tests_require = []
+_tests_require = ['tox']
 
 # Path to the project's root
 here = path.abspath(path.dirname(__file__))
@@ -34,6 +37,20 @@ with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
     version = f.read()
     version = _version_re.search(version).group(1)
     version = str(ast.literal_eval(version.rstrip()))
+
+
+class _ToxTester(TestCommand):
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        #import here, cause outside the eggs aren't loaded
+        import tox
+        errcode = tox.cmdline(self.test_args)
+        sys.exit(errcode)
 
 setup(
     name='CWR-API',
@@ -69,4 +86,5 @@ setup(
     ],
     tests_require=_tests_require,
     extras_require={'test': _tests_require},
+    cmdclass = {'test': _ToxTester},
 )

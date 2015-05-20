@@ -16,11 +16,13 @@ __license__ = 'MIT'
 __version__ = '0.0.0'
 __status__ = 'Development'
 
+
 def _factory():
     adapters = {}
     adapters['lookup'] = LookupAdapter()
 
-    config_fields = {'test_lookup': {'type': 'lookup', 'name': 'Test Lookup Field', 'size': 3, 'values':['AB1', 'CD2', 'EF3']}}
+    config_fields = {
+    'test_lookup': {'type': 'lookup', 'name': 'Test Lookup Field', 'size': 3, 'values': ['AB1', 'CD2', 'EF3']}}
 
     return DefaultFieldTerminalRuleFactory(config_fields, adapters)
 

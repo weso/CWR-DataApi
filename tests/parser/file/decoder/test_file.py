@@ -2,9 +2,10 @@
 
 import unittest
 
+from pyparsing import ParseException
+
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 from cwr.parser.decoder.file import default_file_decoder
-from pyparsing import ParseException
 
 
 """
