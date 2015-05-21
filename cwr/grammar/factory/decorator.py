@@ -92,10 +92,10 @@ class RecordRuleDecorator(RuleDecorator):
     def _get_prefix(self, config):
         rule_type = config['rule_type']
 
-        if rule_type == 'transaction':
-            header = field_record.record_prefix(config['record_type'], self._factory)
+        if rule_type == 'transaction_record':
+            header = field_record.record_prefix(config['head'], self._factory)
         elif rule_type == 'record':
-            header = field_record.record_type(config['record_type'])
+            header = field_record.record_type(config['head'])
         else:
             header = None
 
