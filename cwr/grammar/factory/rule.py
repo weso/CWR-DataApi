@@ -57,8 +57,8 @@ class DefaultRuleFactory(RuleFactory):
         processed = {}
 
         for rule in rules:
-            rule_type = rule.keys()[0]
-            data = rule.values()[0]
+            rule_type = list(rule.keys())[0]
+            data = list(rule.values())[0]
             id = data['id']
             rules = data['rules']
             if 'results_name' in data:
@@ -118,8 +118,8 @@ class DefaultRuleFactory(RuleFactory):
     def _get_group(self, rules, joiner=None):
         group = None
 
-        group_type = rules.keys()[0]
-        data = rules.values()[0]
+        group_type = list(rules.keys())[0]
+        data = list(rules.values())[0]
 
         if group_type == 'sequence':
             group = self._build_group(data, pp.And)
@@ -141,8 +141,8 @@ class DefaultRuleFactory(RuleFactory):
         sequence = []
 
         for rule in rules_data:
-            rule_type = rule.keys()[0]
-            rule_values = rule.values()[0]
+            rule_type = list(rule.keys())[0]
+            rule_values = list(rule.values())[0]
             if isinstance(rule_values, list):
                 modifiers = rule_values[1:]
                 rule_id = rule_values[0]
