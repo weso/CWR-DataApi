@@ -1,0 +1,230 @@
+- group:
+    id: administrator_information
+    rules:
+      - sequence:
+        - record: publisher
+        - record: nra_publisher_name
+        - record:
+          - nra_publisher_name
+          - optional
+        - record:
+          - publisher_territory
+          - optional
+          - at_least_one
+
+- group:
+    id: acknowledgement_transaction
+    rules:
+      - sequence:
+        - record: acknowledgement
+        - record:
+          - message
+          - optional
+          - at_least_one
+      - option:
+        - sequence:
+          - record: agreement
+        - sequence:
+          - record: work
+          - record:
+            - work_conflict
+            - optional
+
+- group:
+    id: agreement_transaction
+    rules:
+      - sequence:
+        - record: agreement
+        - transaction:
+          - territory_information
+          - at_least_one
+
+- group:
+    id: controlled_publisher_information
+    rules:
+      - sequence:
+        - transaction: original_publisher_information
+        - transaction:
+          - administrator_information
+          - optional
+          - at_least_one
+        - transaction:
+          - subpublisher_information
+          - optional
+          - at_least_one
+        - record:
+          - publisher
+          - optional
+          - at_least_one
+
+- group:
+    id: controlled_writer_information
+    rules:
+      - sequence:
+        - record: writer
+        - record:
+          - nra_writer_name
+          - optional
+        - record: nra_writer_name
+          - nra_writer_name
+          - optional
+          - at_least_one
+        - record: writer_publisher
+          - nra_writer_name
+          - optional
+          - at_least_one
+
+- group:
+    id: information_for_excerpts
+    rules:
+      - sequence:
+        - record: entire_work_title
+        - record:
+          - nra_work
+          - optional
+        - record:
+          - nra_other_writer
+          - optional
+          - at_least_one
+
+- group:
+    id: information_for_versions
+    rules:
+      - sequence:
+        - record: original_work_title
+        - record:
+          - nra_work
+          - optional
+        - record:
+          - nra_other_writer
+          - optional
+          - at_least_one
+
+- group:
+    id: information_for_components
+    rules:
+      - sequence:
+        - record: component
+        - record:
+          - nra_work
+          - optional
+        - record:
+          - nra_other_writer
+          - optional
+          - at_least_one
+
+- group:
+    id: instrumentation_information
+    rules:
+      - sequence:
+        - record: instrumentation_summary
+        - record:
+          - instrumentation_detail
+          - optional
+          - at_least_one
+
+- group:
+    id: ipa_information
+    rules:
+      - sequence:
+        - record: interested_party_agreement
+        - record:
+          - nra_agreement_party
+          - optional
+
+- group:
+    id: original_publisher_information
+    rules:
+      - sequence:
+        - record: publisher
+        - record:
+          - nra_publisher_name
+          - optional
+        - record:
+          - publisher_territory
+          - optional
+          - at_least_one
+
+- group:
+    id: subpublisher_information
+    rules:
+      - sequence:
+        - record: publisher
+        - record: nra_publisher_name
+        - record:
+          - nra_publisher_name
+          - optional
+        - record:
+          - publisher_territory
+          - optional
+          - at_least_one
+
+- group:
+    id: territory_information
+    rules:
+      - sequence:
+        - record:
+          - territory_in_agreement
+          - at_least_one
+        - record:
+          - ipa_information
+          - at_least_two
+
+- group:
+    id: work_transaction
+    rules:
+      - sequence:
+        - record: work
+        - record:
+          - controlled_publisher_information
+          - optional
+          - at_least_one
+        - record:
+          - publisher
+          - optional
+          - at_least_one
+        - record:
+          - controlled_writer_information
+          - optional
+          - at_least_one
+        - record:
+          - writer
+          - optional
+          - at_least_one
+        - record:
+          - work_alternate_title
+          - optional
+          - at_least_one
+        - record:
+          - nra_title
+          - optional
+        - record:
+          - information_for_excerpts
+          - optional
+        - record:
+          - information_for_versions
+          - optional
+        - record:
+          - performing_artist
+          - optional
+        - record:
+          - nra_performance_data
+          - optional
+        - record:
+          - recording_detail
+          - optional
+        - record:
+          - work_origin
+          - optional
+        - record:
+          - instrumentation_information
+          - optional
+          - at_least_one
+        - record:
+          - information_for_components
+          - optional
+          - at_least_one
+        - record:
+          - additional_related_information
+          - optional
+          - at_least_one
