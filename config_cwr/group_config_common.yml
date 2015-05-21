@@ -1,58 +1,44 @@
-groups:
-  id: groups
-  rule_type: group
-  rules:
-    - group_type: sequence
-      rules:
-      - rule_type: group
-        id: group_info
-        modifiers:
+- group:
+    id: groups
+    rules:
+      - sequence:
+        - group:
+          - group_info
           - at_least_one
 
-group_info:
-  id: group_info
-  rule_type: group
-  rules:
-    - group_type: sequence
-      rules:
-      - rule_type: record
-        id: group_header
-      - rule_type: group
-        id: transactions
-        modifiers:
+- group:
+    id: group_info
+    rules:
+      - sequence:
+        - record: group_header
+        - group:
+          - transactions
           - optional
-      - group_type: option
-        rules:
-        - rule_type: record
-          id: group_trailer_base
-        - rule_type: record
-          id: group_trailer_short
+        - option:
+          - record: group_trailer_base
+          - record: group_trailer_short
 
-transactions:
-  id: transactions
-  rule_type: group
-  rules:
-    - group_type: option
-      rules:
-      - rule_type: group
-        id: agreement_transaction
-      - rule_type: group
-        id: work_transaction
-      - rule_type: group
-        id: acknowledgement_transaction
-      modifiers:
-        - at_least_one
-        - grouped
+- group:
+    id: transactions
+    rules:
+      - option:
+        - group:
+          - agreement_transaction
+          - at_least_one
+          - grouped
+        - group:
+          - work_transaction
+          - at_least_one
+          - grouped
+        - group:
+          - acknowledgement_transaction
+          - at_least_one
+          - grouped
 
-transmission:
-  id: transmission
-  rule_type: group
-  rules:
-    - group_type: sequence
-      rules:
-      - rule_type: record
-        id: transmission_header
-      - rule_type: group
-        id: groups
-      - rule_type: record
-        id: transmission_trailer
+- group:
+    id: transmission
+    rules:
+      - sequence:
+        - record: transmission_header
+        - group: groups
+        - record: transmission_trailer

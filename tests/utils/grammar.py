@@ -51,8 +51,8 @@ _factory_field = DefaultFieldTerminalRuleFactory(_data, adapters, field_values=C
 _factory_table = DefaultFieldTerminalRuleFactory(_config.load_field_config('table'), adapters, field_values=CWRTables())
 
 _rules = _config.load_transaction_config('common')
-_rules.update(_config.load_record_config('common'))
-_rules.update(_config.load_group_config('common'))
+_rules.extend(_config.load_record_config('common'))
+_rules.extend(_config.load_group_config('common'))
 
 decoders = {}
 
@@ -97,7 +97,7 @@ decoders_group = {}
 decoders_group['transmission'] = TransmissionDictionaryDecoder()
 decoders_group['group_info'] = GroupDictionaryDecoder()
 
-_decorators = {'transaction': RecordRuleDecorator(_factory_field, decoders),
+_decorators = {'transaction_record': RecordRuleDecorator(_factory_field, decoders),
                'record': RecordRuleDecorator(_factory_field, decoders),
                'group': GroupRuleDecorator(decoders_group)}
 _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
