@@ -1,6 +1,6 @@
 acknowledgement:
   id: acknowledgement
-  record_type: 'ACK'
+  record_type: ACK
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -26,7 +26,7 @@ acknowledgement:
 
 additional_related_information:
   id: additional_related_information
-  record_type: 'ARI'
+  record_type: ARI
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -44,7 +44,7 @@ additional_related_information:
 
 agreement:
   id: agreement
-  record_type: 'AGR'
+  record_type: AGR
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -84,7 +84,7 @@ agreement:
 
 component:
   id: component
-  record_type: 'COM'
+  record_type: COM
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -116,7 +116,7 @@ component:
 
 entire_work_title:
   id: entire_work_title
-  record_type: 'EWT'
+  record_type: EWT
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -150,7 +150,7 @@ entire_work_title:
 
 group_header:
   id: group_header
-  record_type: 'GRH'
+  record_type: GRH
   rule_type: record
   rules:
     - group_type: sequence
@@ -168,7 +168,7 @@ group_header:
 
 group_trailer:
   id: group_trailer
-  record_type: 'GRT'
+  record_type: GRT
   rule_type: record
   rules:
     - group_type: sequence
@@ -188,7 +188,7 @@ group_trailer:
 
 group_trailer_base:
   id: group_trailer_base
-  record_type: 'GRT'
+  record_type: GRT
   rule_type: record
   results_name: group_trailer
   rules:
@@ -206,8 +206,8 @@ group_trailer_base:
         id: total_monetary_value
 
 group_trailer_short:
-  id: group_trailer
-  record_type: 'GRT'
+  id: group_trailer_short
+  record_type: GRT
   rule_type: record
   results_name: group_trailer
   rules:
@@ -222,7 +222,7 @@ group_trailer_short:
 
 instrumentation_detail:
   id: instrumentation_detail
-  record_type: 'IND'
+  record_type: IND
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -234,7 +234,7 @@ instrumentation_detail:
 
 instrumentation_summary:
   id: instrumentation_summary
-  record_type: 'INS'
+  record_type: INS
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -248,7 +248,7 @@ instrumentation_summary:
 
 interested_party_agreement:
   id: interested_party_agreement
-  record_type: 'IPA'
+  record_type: IPA
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -286,7 +286,7 @@ interested_party_agreement:
 
 message:
   id: message
-  record_type: 'MSG'
+  record_type: MSG
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -306,7 +306,7 @@ message:
 
 nra_agreement_party:
   id: nra_agreement_party
-  record_type: 'NPA'
+  record_type: NPA
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -322,7 +322,7 @@ nra_agreement_party:
 
 nra_other_writer:
   id: nra_other_writer
-  record_type: 'NOW'
+  record_type: NOW
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -338,7 +338,7 @@ nra_other_writer:
 
 nra_performance_data:
   id: nra_performance_data
-  record_type: 'NPR'
+  record_type: NPR
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -360,7 +360,7 @@ nra_performance_data:
 
 nra_publisher_name:
   id: nra_publisher_name
-  record_type: 'NPN'
+  record_type: NPN
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -376,7 +376,7 @@ nra_publisher_name:
 
 nra_title:
   id: nra_title
-  record_type: 'NAT'
+  record_type: NAT
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -391,9 +391,9 @@ nra_title:
 nra_work:
   id: nra_work
   record_type:
-    - 'NCT'
-    - 'NET'
-    - 'NVT'
+    - NCT
+    - NET
+    - NVT
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -405,7 +405,7 @@ nra_work:
 
 nra_writer_name:
   id: nra_writer_name
-  record_type: 'NWN'
+  record_type: NWN
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -421,7 +421,7 @@ nra_writer_name:
 
 original_work_title:
   id: original_work_title
-  record_type: 'VER'
+  record_type: VER
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -455,7 +455,7 @@ original_work_title:
 
 performing_artist:
   id: performing_artist
-  record_type: 'PER'
+  record_type: PER
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -472,8 +472,8 @@ performing_artist:
 publisher:
   id: publisher
   record_type:
-    - 'SPU'
-    - 'OPU'
+    - SPU
+    - OPU
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -531,7 +531,7 @@ publisher:
 
 publisher_territory:
   id: publisher_territory
-  record_type: 'SPT'
+  record_type: SPT
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -567,7 +567,7 @@ publisher_territory:
 
 recording_detail:
   id: recording_detail
-  record_type: 'REC'
+  record_type: REC
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -599,7 +599,7 @@ recording_detail:
 
 territory_in_agreement:
   id: territory_in_agreement
-  record_type: 'TER'
+  record_type: TER
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -611,7 +611,7 @@ territory_in_agreement:
 
 transmission_header:
   id: transmission_header
-  record_type: 'HDR'
+  record_type: HDR
   rule_type: record
   rules:
     - group_type: sequence
@@ -634,7 +634,7 @@ transmission_header:
 
 transmission_trailer:
   id: transmission_trailer
-  record_type: 'TRL'
+  record_type: TRL
   rule_type: record
   rules:
     - group_type: sequence
@@ -650,9 +650,9 @@ transmission_trailer:
 work:
   id: work
   record_type:
-    - 'NWR'
-    - 'REV'
-    - 'ISW'
+    - NWR
+    - REV
+    - ISW
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -710,7 +710,7 @@ work:
 
 work_alternate_title:
   id: work_alternate_title
-  record_type: 'ALT'
+  record_type: ALT
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -724,7 +724,7 @@ work_alternate_title:
 
 work_conflict:
   id: work_conflict
-  record_type: 'EXC'
+  record_type: EXC
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -782,7 +782,7 @@ work_conflict:
 
 work_origin:
   id: work_origin
-  record_type: 'ORN'
+  record_type: ORN
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -815,8 +815,8 @@ work_origin:
 writer:
   id: writer
   record_type:
-    - 'SWR'
-    - 'OWR'
+    - SWR
+    - OWR
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -870,7 +870,7 @@ writer:
 
 writer_publisher:
   id: writer_publisher
-  record_type: 'PWR'
+  record_type: PWR
   rule_type: transaction
   rules:
     - group_type: sequence
@@ -888,7 +888,7 @@ writer_publisher:
 
 writer_territory:
   id: writer_territory
-  record_type: 'SWT'
+  record_type: SWT
   rule_type: transaction
   rules:
     - group_type: sequence
