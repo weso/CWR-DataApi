@@ -85,7 +85,7 @@ def _default_record_decoders():
     return decoders
 
 
-def _default_adapters():
+def default_adapters():
     adapters = {}
 
     adapters['alphanum'] = AlphanumAdapter()
@@ -116,29 +116,43 @@ def _default_adapters():
     return adapters
 
 
+def default_grammar_factory():
+    config = CWRConfiguration()
+
+    data = config.load_field_config('table')
+    data.update(config.load_field_config('common'))
+
+    factory_field = DefaultFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
+
+    rules = config.load_transaction_config('common')
+    rules.extend(config.load_record_config('common'))
+    rules.extend(config.load_group_config('common'))
+
+    decorators = {'transaction_record': RecordRuleDecorator(factory_field, _default_record_decoders()),
+                   'record': RecordRuleDecorator(factory_field, _default_record_decoders()),
+                   'group': GroupRuleDecorator(_default_group_decoders())}
+    return DefaultRuleFactory(rules, factory_field, decorators)
+
+
+def default_filename_grammar_factory():
+    config = CWRConfiguration()
+
+    data = config.load_field_config('table')
+    data.update(config.load_field_config('common'))
+    data.update(config.load_field_config('filename'))
+
+    factory_field = DefaultFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
+
+    return DefaultRuleFactory(config.load_record_config('filename'), factory_field)
+
+
 def default_file_decoder():
     """
     Creates a decoder which parses a CWR file, creating a CWRFile class instance from it.
 
     :return: a CWR file decoder for the default standard
     """
-    _config = CWRConfiguration()
-
-    _data = _config.load_field_config('table')
-    _data.update(_config.load_field_config('common'))
-
-    _factory_field = DefaultFieldTerminalRuleFactory(_data, _default_adapters(), field_values=CWRTables())
-
-    _rules = _config.load_transaction_config('common')
-    _rules.extend(_config.load_record_config('common'))
-    _rules.extend(_config.load_group_config('common'))
-
-    _decorators = {'transaction_record': RecordRuleDecorator(_factory_field, _default_record_decoders()),
-                   'record': RecordRuleDecorator(_factory_field, _default_record_decoders()),
-                   'group': GroupRuleDecorator(_default_group_decoders())}
-    _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
-
-    return FileDecoder(_group_rule_factory.get_rule('transmission'), default_filename_decoder())
+    return FileDecoder(default_grammar_factory().get_rule('transmission'), default_filename_decoder())
 
 
 def default_filename_decoder():
@@ -147,18 +161,10 @@ def default_filename_decoder():
 
     :return: a CWR filename decoder for the old and the new conventions
     """
-    _config = CWRConfiguration()
+    factory = default_filename_grammar_factory()
 
-    _data = _config.load_field_config('table')
-    _data.update(_config.load_field_config('common'))
-    _data.update(_config.load_field_config('filename'))
-
-    _factory_field = DefaultFieldTerminalRuleFactory(_data, _default_adapters(), field_values=CWRTables())
-
-    _group_rule_factory = DefaultRuleFactory(_config.load_record_config('filename'), _factory_field)
-
-    grammar_old = _group_rule_factory.get_rule('filename_old')
-    grammar_new = _group_rule_factory.get_rule('filename_new')
+    grammar_old = factory.get_rule('filename_old')
+    grammar_new = factory.get_rule('filename_new')
 
     return FileNameDecoder(grammar_old, grammar_new)
 
