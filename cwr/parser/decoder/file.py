@@ -122,7 +122,14 @@ def default_grammar_factory():
     data = config.load_field_config('table')
     data.update(config.load_field_config('common'))
 
-    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
+    field_values = CWRTables()
+
+    for entry in data.values():
+        if 'source' in entry:
+            values_id = entry['source']
+            entry['values'] = field_values.get_data(values_id)
+
+    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters())
 
     rules = config.load_transaction_config('common')
     rules.extend(config.load_record_config('common'))
@@ -141,7 +148,14 @@ def default_filename_grammar_factory():
     data.update(config.load_field_config('common'))
     data.update(config.load_field_config('filename'))
 
-    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
+    field_values = CWRTables()
+
+    for entry in data.values():
+        if 'source' in entry:
+            values_id = entry['source']
+            entry['values'] = field_values.get_data(values_id)
+
+    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters())
 
     return DefaultRuleFactory(config.load_record_config('filename'), factory_field)
 

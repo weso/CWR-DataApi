@@ -19,7 +19,7 @@ class FieldTerminalRuleFactory(RuleFactory):
     Factory for acquiring field rules.
     """
 
-    def __init__(self, field_configs, adapters, field_values=None):
+    def __init__(self, field_configs, adapters):
         super(FieldTerminalRuleFactory, self).__init__()
         # Fields already created
         self._fields = {}
@@ -27,8 +27,6 @@ class FieldTerminalRuleFactory(RuleFactory):
         self._adapters = adapters
         # Configuration for creating the fields
         self._field_configs = field_configs
-        # Field values are optional
-        self._field_values = field_values
 
     def get_rule(self, field_id):
         """
@@ -80,9 +78,6 @@ class FieldTerminalRuleFactory(RuleFactory):
 
         if 'values' in config:
             values = config['values']
-        elif self._field_values and 'source' in config:
-            values_id = config['source']
-            values = self._field_values.get_data(values_id)
         else:
             values = None
 
@@ -108,10 +103,10 @@ class OptionFieldTerminalRuleFactory(object):
     be returned.
     """
 
-    def __init__(self, field_configs, adapters, field_values=None):
+    def __init__(self, field_configs, adapters):
         super(OptionFieldTerminalRuleFactory, self).__init__()
 
-        self._field_factory = FieldTerminalRuleFactory(field_configs,adapters,field_values)
+        self._field_factory = FieldTerminalRuleFactory(field_configs,adapters)
         self._field_configs = field_configs
         self._adapters = adapters
 
@@ -143,7 +138,8 @@ class OptionFieldTerminalRuleFactory(object):
                 field = self._field_factory.get_rule(field_id)
 
                 # It is not compulsory, the wrapped is added
-                field = self.not_compulsory_wrapper(field, config['type'], config['name'], config['size'])
+                adapter = self._adapters[config['type']]
+                field = adapter.wrap_as_optional(field, config['name'], config['size'])
 
                 # Wrapped field is saved
                 self._fields_optional[field_id] = field
@@ -151,22 +147,4 @@ class OptionFieldTerminalRuleFactory(object):
             field = self._field_factory.get_rule(field_id)
 
         return field
-
-    @abstractmethod
-    def not_compulsory_wrapper(self, field, type, name, columns):
-        """
-        Adds a wrapper rule to the field to accept empty strings.
-
-        This empty string should be of the same size as the columns parameter. One smaller or bigger will be rejected.
-
-        This wrapper will return None if the field is empty.
-
-        :param field: the field to wrap
-        :param name: name of the field
-        :param columns: number of columns it takes
-        :return: the field with an additional rule to allow empty strings
-        """
-        adapter = self._adapters[type]
-
-        return adapter.wrap_as_optional(field, name, columns)
 
