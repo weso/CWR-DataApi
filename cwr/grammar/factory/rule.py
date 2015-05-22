@@ -53,11 +53,12 @@ class DefaultRuleFactory(RuleFactory):
             total_monetary_value (rule)
     """
 
-    def __init__(self, record_configs, terminal_rule_factory, decorators=None):
+    def __init__(self, record_configs, terminal_rule_factory, optional_terminal_rule_decorator, decorators=None):
         super(DefaultRuleFactory, self).__init__()
         # Configuration for creating the record
         self._record_configs = record_configs
         self._terminal_rule_factory = terminal_rule_factory
+        self._optional_terminal_rule_decorator = optional_terminal_rule_decorator
 
         if decorators:
             self._decorators = decorators
@@ -135,7 +136,7 @@ class DefaultRuleFactory(RuleFactory):
         if self._is_terminal(rule_type):
             rule = self._terminal_rule_factory.get_rule(rule_id)
             if 'compulsory' not in modifiers:
-                rule = self._terminal_rule_factory.get_optional(rule, rule_id)
+                rule = self._optional_terminal_rule_decorator.decorate(rule, rule_id)
         else:
             rule = self.get_rule(rule_id)
 

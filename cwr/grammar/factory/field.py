@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from cwr.grammar.factory.adapter import *
 from cwr.grammar.factory.rule import RuleFactory
-import logging
 
 
 """
@@ -87,45 +85,6 @@ class FieldRuleFactory(RuleFactory):
             field = field.setResultsName(config['results_name'])
         else:
             field = field.setResultsName(field_id)
-
-        return field
-
-
-class OptionFieldRuleFactory(FieldRuleFactory):
-    """
-    Factory for acquiring field rules where those rules can be optional.
-
-    This factory gives support to optional field rules.
-
-    An optional field is one where a string composed only of white characters is valid.
-
-    Field rules will be created only once. If the same one is required again, then the one created the first time will
-    be returned.
-    """
-
-    def __init__(self, field_configs, adapters):
-        super(OptionFieldRuleFactory, self).__init__(field_configs,adapters)
-
-        self._field_configs = field_configs
-        self._adapters = adapters
-
-        # Fields already wrapped with the optional wrapper
-        self._fields_optional = {}
-
-    def get_optional(self, field_base, field_id):
-        if field_id in self._fields_optional:
-            # Wrapped field already exists
-            field = self._fields_optional[field_id]
-        else:
-            # Field configuration info
-            config = self._field_configs[field_id]
-
-            # It is not compulsory, the wrapped is added
-            adapter = self._adapters[config['type']]
-            field = adapter.wrap_as_optional(field_base, config['name'], config['size'])
-
-            # Wrapped field is saved
-            self._fields_optional[field_id] = field
 
         return field
 

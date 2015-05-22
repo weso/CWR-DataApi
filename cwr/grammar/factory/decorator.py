@@ -96,19 +96,24 @@ class RecordRuleDecorator(RuleDecorator):
 
 
 class TransactionRecordRuleDecorator(RecordRuleDecorator):
-
     def __init__(self, factory, decoders):
         super(TransactionRecordRuleDecorator, self).__init__(factory, decoders)
 
     def _get_prefix(self, config):
         return field_record.record_prefix(config['head'], self._factory)
 
-class OptionalFieldRuleDecorator(object):
 
-    def __init__(self, adapters):
+class OptionalFieldRuleDecorator(object):
+    def __init__(self, field_configs, adapters):
+        self._field_configs = field_configs
         self._adapters = adapters
 
-    def decorate(self, rule, type, name, size):
-        adapter = self._adapters[type]
+    def decorate(self, field_base, field_id):
+        # Field configuration info
+        config = self._field_configs[field_id]
 
-        return adapter.wrap_as_optional(rule, name, size)
+        # It is not compulsory, the wrapped is added
+        adapter = self._adapters[config['type']]
+        field = adapter.wrap_as_optional(field_base, config['name'], config['size'])
+
+        return field

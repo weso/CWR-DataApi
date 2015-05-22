@@ -5,7 +5,7 @@ from pyparsing import ParseException
 
 from config_cwr.accessor import CWRConfiguration
 from cwr.grammar.field.record import record_prefix
-from cwr.grammar.factory.field import OptionFieldRuleFactory
+from cwr.grammar.factory.field import FieldRuleFactory
 from cwr.parser.decoder.file import default_adapters
 
 """
@@ -19,7 +19,7 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_common_factory = OptionFieldRuleFactory(_config.load_field_config('common'), default_adapters())
+_common_factory = FieldRuleFactory(_config.load_field_config('common'), default_adapters())
 
 
 class TestParseTransactionRecordPrefixValid(unittest.TestCase):
