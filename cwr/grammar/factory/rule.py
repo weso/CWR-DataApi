@@ -69,17 +69,23 @@ class DefaultRuleFactory(RuleFactory):
         record_config = self._record_configs[rule_id]
         sequence = []
 
-        for rules in record_config['rules']:
-            sequence.append(self._process_rules_list(rules))
-
-        record = pp.And(sequence)
-
         rule_type = record_config['rule_type']
+        if 'rules' in record_config:
+            # Rules list
+            for rules in record_config['rules']:
+                sequence.append(self._process_rules_list(rules))
+
+            record = pp.And(sequence)
+        else:
+            # Rule
+            print rule_id
+            record = None
+
+            if self._is_terminal(rule_type):
+                print record_config['rules']
+
         if rule_type in self._decorators:
             record = self._decorators[rule_type].decorate(record, record_config)
-
-        if self._is_terminal(rule_type):
-            print record_config['rules']
 
         if 'results_name' in record_config:
             record = record.setResultsName(record_config['results_name'])
