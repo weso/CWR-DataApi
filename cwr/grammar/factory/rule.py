@@ -17,9 +17,8 @@ __status__ = 'Development'
 class RuleFactory(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, logger=None):
-        # Logger
-        self._logger = logger
+    def __init__(self):
+        pass
 
     @abstractmethod
     def get_rule(self, rule_id):
@@ -27,6 +26,7 @@ class RuleFactory(object):
 
 
 class DefaultRuleFactory(RuleFactory):
+
     def __init__(self, record_configs, terminal_rule_factory, decorators=None):
         super(DefaultRuleFactory, self).__init__()
         # Configuration for creating the record
@@ -42,43 +42,16 @@ class DefaultRuleFactory(RuleFactory):
         processed = {}
 
         for rule in rules:
-            rule_type = list(rule.keys())[0]
             data = list(rule.values())[0]
+            data['rule_type'] = list(rule.keys())[0]
+
             id = data['id']
-            rules = data['rules']
-            if 'results_name' in data:
-                results_name = data['results_name']
-            else:
-                results_name = None
-            if 'head' in data:
-                head = data['head']
-            else:
-                head = None
 
-            rule = {}
-            rule['id'] = id
-            rule['rule_type'] = rule_type
-            rule['rules'] = rules
-            if results_name:
-                rule['results_name'] = results_name
-            if rule_type == 'group':
-                pass
-            elif rule_type == 'transaction_record':
-                rule['head'] = head
-            elif rule_type == 'record':
-                rule['head'] = head
-            elif rule_type == 'filename':
-                pass
-            else:
-                pass
-
-            processed[id] = rule
+            processed[id] = data
 
         return processed
 
     def get_rule(self, id):
-        if self._logger:
-            self._logger.info('Acquiring rule %s' % id)
 
         record_config = self._record_configs[id]
         sequence = []
