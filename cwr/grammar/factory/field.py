@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from config_cwr.accessor import CWRConfiguration
 from cwr.grammar.factory.adapter import *
 from cwr.grammar.factory.rule import TerminalRuleFactory
 
@@ -24,7 +23,7 @@ class FieldTerminalRuleFactory(TerminalRuleFactory):
         super(FieldTerminalRuleFactory, self).__init__()
         # Fields already created
         self._fields = {}
-        # Field builders being used
+        # Field adapters being used
         self._adapters = {}
         # Logger
         self._logger = logger
@@ -159,23 +158,13 @@ class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
     Factory for acquiring fields rules using the default configuration.
     """
 
-    def __init__(self, field_configs, adapters, field_values=None, field_rules=None, actions=None):
+    def __init__(self, field_configs, adapters, field_values=None):
         super(DefaultFieldTerminalRuleFactory, self).__init__(field_configs)
 
         self._adapters = adapters
 
         # Field values are optional
         self._field_values = field_values
-
-        if field_rules is None:
-            self._field_rules = basic
-        else:
-            self._field_rules = field_rules
-
-        if actions is None:
-            self._actions = DefaultActionsSource()
-        else:
-            self._actions = actions
 
     def get_rule(self, id, modifiers):
         compulsory = 'compulsory' in modifiers
@@ -218,10 +207,6 @@ class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
         else:
             field = field.setResultsName(id)
 
-        # Actions are added
-        if 'actions' in config:
-            self.__add_actions(field, config['actions'])
-
         return field
 
     def is_terminal(self, type):
@@ -233,45 +218,3 @@ class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
 
         return adapter.wrap_as_optional(field, name, columns)
 
-    def __add_actions(self, field, actions):
-        """
-        Adds parsing actions to the rule.
-
-        :param field: field rule where the actions are to be added
-        :param actions: identifiers for the actions to add
-        """
-        for action in actions:
-            action_method = getattr(self._actions, action)
-
-            field.setParseAction(lambda p: action_method(p))
-
-
-class DefaultActionsSource():
-    def __init__(self):
-        self._config = CWRConfiguration()
-
-    def to_default_filename_version(self, parsed):
-        return self._config.default_version()
-
-    def to_int(self, parsed):
-        value = parsed[0]
-
-        if value is None:
-            return None
-        else:
-            return int(parsed[0])
-
-    def to_year(self, parsed):
-        """
-        Transforms the parsed two digits integer into a valid year value.
-
-        :param parsed: the parsed value
-        """
-        value = parsed[0]
-
-        if not isinstance(value, int):
-            value = int(value)
-        else:
-            value = parsed
-
-        return 2000 + value

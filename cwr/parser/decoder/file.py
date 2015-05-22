@@ -109,6 +109,9 @@ def _default_adapters():
     adapters['charset'] = CharSetAdapter()
     adapters['alphanum_variable'] = VariableAlphanumAdapter()
     adapters['numeric_float'] = NumericFloatAdapter()
+    adapters['year'] = YearAdapter()
+    adapters['filename_version'] = FilenameVersionAdapter()
+    adapters['lookup_int'] = LookupIntAdapter()
 
     return adapters
 

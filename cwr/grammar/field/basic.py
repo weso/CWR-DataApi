@@ -451,6 +451,7 @@ def lookup(values, name=None):
 
     Like in the Alphanumeric field, the result will be stripped of all heading and trailing whitespaces.
 
+    :param values: values allowed
     :param name: name for the field
     :return: grammar for the lookup field
     """

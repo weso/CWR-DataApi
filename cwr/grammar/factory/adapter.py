@@ -402,3 +402,40 @@ class NumericFloatAdapter(FieldAdapter):
             nums_int = columns
 
         return basic.numeric_float(columns=columns, nums_int=nums_int, name=name)
+
+
+class YearAdapter(FieldAdapter):
+    """
+    Creates the grammar for a year field, accepting only the specified number of integers.
+    """
+
+    def __init__(self):
+        super(YearAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return filename.year(columns=columns, name=name)
+
+
+class FilenameVersionAdapter(FieldAdapter):
+    """
+    Creates the grammar for a filename version field, accepting only specific delimiters.
+    """
+
+    def __init__(self):
+        super(FilenameVersionAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return filename.filename_version(values=values, name=name)
+
+
+class LookupIntAdapter(FieldAdapter):
+    """
+    Creates the grammar for an integer lookup field, accepting only specific values, and transforming them to an
+    integer.
+    """
+
+    def __init__(self):
+        super(LookupIntAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        return special.lookup_int(values=values, name=name)
