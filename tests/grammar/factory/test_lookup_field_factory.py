@@ -3,7 +3,7 @@ import unittest
 
 from pyparsing import ParseException
 
-from cwr.grammar.factory.field import OptionFieldTerminalRuleFactory
+from cwr.grammar.factory.field import OptionFieldRuleFactory
 from cwr.grammar.factory.adapter import LookupAdapter
 
 
@@ -24,7 +24,7 @@ def _factory():
     config_fields = {
         'test_lookup': {'type': 'lookup', 'name': 'Test Lookup Field', 'size': 3, 'values': ['AB1', 'CD2', 'EF3']}}
 
-    return OptionFieldTerminalRuleFactory(config_fields, adapters)
+    return OptionFieldRuleFactory(config_fields, adapters)
 
 
 class TestLookupFieldFactoryValid(unittest.TestCase):

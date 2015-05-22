@@ -14,13 +14,13 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class FieldTerminalRuleFactory(RuleFactory):
+class FieldRuleFactory(RuleFactory):
     """
     Factory for acquiring field rules.
     """
 
     def __init__(self, field_configs, adapters):
-        super(FieldTerminalRuleFactory, self).__init__()
+        super(FieldRuleFactory, self).__init__()
         # Fields already created
         self._fields = {}
         # Field adapters being used
@@ -91,7 +91,7 @@ class FieldTerminalRuleFactory(RuleFactory):
         return field
 
 
-class OptionFieldTerminalRuleFactory(object):
+class OptionFieldRuleFactory(object):
     """
     Factory for acquiring field rules where those rules can be optional.
 
@@ -104,9 +104,9 @@ class OptionFieldTerminalRuleFactory(object):
     """
 
     def __init__(self, field_configs, adapters):
-        super(OptionFieldTerminalRuleFactory, self).__init__()
+        super(OptionFieldRuleFactory, self).__init__()
 
-        self._field_factory = FieldTerminalRuleFactory(field_configs,adapters)
+        self._field_factory = FieldRuleFactory(field_configs,adapters)
         self._field_configs = field_configs
         self._adapters = adapters
 

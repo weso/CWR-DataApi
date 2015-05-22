@@ -41,15 +41,15 @@ class GroupRuleDecorator(RuleDecorator):
         self._decoders = decoders
 
     def decorate(self, rule, data):
-        id = data['id']
+        rule_id = data['id']
 
         record = rule
 
-        if id in self._decoders:
-            decoder = self._decoders[id]
+        if rule_id in self._decoders:
+            decoder = self._decoders[rule_id]
             record.setParseAction(lambda p: decoder.decode(p))
 
-        return record.setResultsName(id)
+        return record.setResultsName(rule_id)
 
 
 class RecordRuleDecorator(RuleDecorator):
@@ -66,37 +66,39 @@ class RecordRuleDecorator(RuleDecorator):
         self._decoders = decoders
 
     def decorate(self, rule, data):
-        sequence = []
+        rule_id = data['id']
 
-        id = data['id']
+        record = self._build_rule_sequence(rule, data)
 
-        sequence.append(self._lineStart)
-
-        prefix = self._get_prefix(data)
-
-        if prefix is not None:
-            sequence.append(prefix)
-
-        sequence.append(rule)
-
-        sequence.append(self._lineEnd)
-
-        record = pp.And(sequence)
-
-        if id in self._decoders:
-            decoder = self._decoders[id]
+        if rule_id in self._decoders:
+            decoder = self._decoders[rule_id]
             record.setParseAction(lambda p: decoder.decode(p))
 
-        return record.setResultsName(id)
+        return record.setResultsName(rule_id)
+
+    def _build_rule_sequence(self, rule, data):
+        # Line start
+        result = self._lineStart
+
+        # Record prefix
+        result = result + self._get_prefix(data)
+
+        # Record rule
+        result = result + rule
+
+        # Line end
+        result = result + self._lineEnd
+
+        return result
 
     def _get_prefix(self, config):
-        rule_type = config['rule_type']
+        return field_record.record_type(config['head'])
 
-        if rule_type == 'transaction_record':
-            header = field_record.record_prefix(config['head'], self._factory)
-        elif rule_type == 'record':
-            header = field_record.record_type(config['head'])
-        else:
-            header = None
 
-        return header
+class TransactionRecordRuleDecorator(RecordRuleDecorator):
+
+    def __init__(self, factory, decoders):
+        super(TransactionRecordRuleDecorator, self).__init__(factory, decoders)
+
+    def _get_prefix(self, config):
+        return field_record.record_prefix(config['head'], self._factory)

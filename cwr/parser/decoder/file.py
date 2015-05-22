@@ -3,10 +3,10 @@ import logging
 
 from cwr.parser.decoder.common import GrammarDecoder
 from config_cwr.accessor import CWRConfiguration
-from cwr.grammar.factory.field import OptionFieldTerminalRuleFactory
+from cwr.grammar.factory.field import OptionFieldRuleFactory
 from data_cwr.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
-from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
+from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator, TransactionRecordRuleDecorator
 from cwr.parser.decoder.dictionary import *
 from cwr.grammar.factory.adapter import *
 
@@ -129,13 +129,13 @@ def default_grammar_factory():
             values_id = entry['source']
             entry['values'] = field_values.get_data(values_id)
 
-    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters())
+    factory_field = OptionFieldRuleFactory(data, default_adapters())
 
     rules = config.load_transaction_config('common')
     rules.extend(config.load_record_config('common'))
     rules.extend(config.load_group_config('common'))
 
-    decorators = {'transaction_record': RecordRuleDecorator(factory_field, _default_record_decoders()),
+    decorators = {'transaction_record': TransactionRecordRuleDecorator(factory_field, _default_record_decoders()),
                    'record': RecordRuleDecorator(factory_field, _default_record_decoders()),
                    'group': GroupRuleDecorator(_default_group_decoders())}
     return DefaultRuleFactory(rules, factory_field, decorators)
@@ -155,7 +155,7 @@ def default_filename_grammar_factory():
             values_id = entry['source']
             entry['values'] = field_values.get_data(values_id)
 
-    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters())
+    factory_field = OptionFieldRuleFactory(data, default_adapters())
 
     return DefaultRuleFactory(config.load_record_config('filename'), factory_field)
 
