@@ -14,21 +14,6 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class TerminalRuleFactory(object):
-    __metaclass__ = ABCMeta
-
-    def __init__(self):
-        pass
-
-    @abstractmethod
-    def get_rule(self, id, modifiers):
-        raise NotImplementedError("The get_rule method is not implemented")
-
-    @abstractmethod
-    def is_terminal(self, type):
-        raise NotImplementedError("The is_terminal method is not implemented")
-
-
 class RuleFactory(object):
     __metaclass__ = ABCMeta
 
@@ -37,7 +22,7 @@ class RuleFactory(object):
         self._logger = logger
 
     @abstractmethod
-    def get_rule(self, groups):
+    def get_rule(self, rule_id):
         raise NotImplementedError("The get_rule method is not implemented")
 
 
@@ -169,14 +154,19 @@ class DefaultRuleFactory(RuleFactory):
         if 'rule_type' in rule_data:
             rule_type = rule_data['rule_type']
 
-            if self._terminal_rule_factory.is_terminal(rule_type):
-                rule = self._terminal_rule_factory.get_rule(rule_data['id'], modifiers)
+            if self._is_terminal(rule_type):
+                compulsory = 'compulsory' in modifiers
+
+                rule = self._terminal_rule_factory.get_rule(rule_data['id'], compulsory)
             else:
                 rule = self.get_rule(rule_data['id'])
         else:
             rule = self._get_group(rule_data)
 
         return rule
+
+    def _is_terminal(self, rule_type):
+        return rule_type == 'field'
 
     def _apply_modifiers(self, rule, modifiers):
         if 'grouped' in modifiers:

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from cwr.grammar.factory.adapter import *
-from cwr.grammar.factory.rule import TerminalRuleFactory
+from cwr.grammar.factory.rule import RuleFactory
+import logging
 
 
 """
@@ -13,169 +14,54 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class FieldTerminalRuleFactory(TerminalRuleFactory):
+class FieldTerminalRuleFactory(RuleFactory):
     """
     Factory for acquiring field rules.
     """
-    __metaclass__ = ABCMeta
 
-    def __init__(self, field_configs, logger=None):
+    def __init__(self, field_configs, adapters, field_values=None):
         super(FieldTerminalRuleFactory, self).__init__()
         # Fields already created
         self._fields = {}
         # Field adapters being used
-        self._adapters = {}
-        # Logger
-        self._logger = logger
+        self._adapters = adapters
         # Configuration for creating the fields
         self._field_configs = field_configs
+        # Field values are optional
+        self._field_values = field_values
 
-    def get_field_base(self, id):
+    def get_rule(self, field_id):
         """
         Returns the rule for the field identified by the id.
 
         If it is set as not being compulsory, the rule will be adapted to accept string composed only of white
         characters.
 
-        :param id: unique id in the system for the field
+        :param field_id: unique id in the system for the field
         :return: the rule of a field
         """
-        if self._logger:
-            self._logger.info('Acquiring base field %s' % id)
 
-        # Field configuration info
-        config = self._field_configs[id]
-
-        if id in self._fields:
+        if field_id in self._fields:
             # Field already exists
-            if self._logger:
-                self._logger.info('Field %s already exists, using saved instance' % id)
-            field = self._fields[id]
+            field = self._fields[field_id]
         else:
+            # Field configuration info
+            config = self._field_configs[field_id]
+
             # Field does not exist
             # It is created
-            if self._logger:
-                self._logger.info('Field %s does not exist, creating new instance' % id)
-            field = self.create_field(id, config)
+            field = self.create_field(field_id, config)
 
             # Field is saved
-            self._fields[id] = field
+            self._fields[field_id] = field
 
         return field
 
-    @abstractmethod
-    def create_field(self, id, config):
+    def create_field(self, field_id, config):
         """
         Creates the field with the specified parameters.
 
-        :param id: identifier for the field
-        :param config: configuration info for the field
-        :return: the basic rule for the field
-        """
-        raise NotImplementedError("The create_field method is not implemented")
-
-
-class OptionFieldTerminalRuleFactory(FieldTerminalRuleFactory):
-    """
-    Factory for acquiring field rules where those rules can be optional.
-
-    This factory gives support to optional field rules.
-
-    An optional field is one where a string composed only of white characters is valid.
-
-    Field rules will be created only once. If the same one is required again, then the one created the first time will
-    be returned.
-    """
-    __metaclass__ = ABCMeta
-
-    def __init__(self, field_configs):
-        super(OptionFieldTerminalRuleFactory, self).__init__(field_configs)
-
-        # Fields already wrapped with the optional wrapper
-        self._fields_optional = {}
-
-    def get_field(self, id, compulsory=False):
-        """
-        Returns the field identified by the id.
-
-        This field is unique, it will be created just once and reused for all the following calls of the method.
-
-        If it is set as not being compulsory, a special wrapping rule, allowing an empty string, will be added to
-        the field.
-
-        :param id: unique id in the system for the field
-        :param compulsory: indicates if the empty string is rejected or not
-        :return: a lookup field
-        """
-        if self._logger:
-            self._logger.info('Acquiring field %s' % id)
-
-        if not compulsory:
-            if id in self._fields_optional:
-                # Wrapped field already exists
-                if self._logger:
-                    self._logger.info('Wrapped field %s already exists, using saved instance' % id)
-                field = self._fields_optional[id]
-            else:
-                # Field configuration info
-                config = self._field_configs[id]
-
-                field = self.get_field_base(id)
-
-                # It is not compulsory, the wrapped is added
-                if self._logger:
-                    self._logger.info('Wrapped field %s does not exist, creating new instance' % id)
-                field = self.not_compulsory_wrapper(field, config['type'], config['name'], config['size'])
-
-                # Wrapped field is saved
-                self._fields_optional[id] = field
-        else:
-            if self._logger:
-                self._logger.info('The %s is compulsory' % id)
-            field = self.get_field_base(id)
-
-        return field
-
-    @abstractmethod
-    def not_compulsory_wrapper(self, field, type, name, columns):
-        """
-        Adds a wrapper rule to the field to accept empty strings.
-
-        This empty string should be of the same size as the columns parameter. One smaller or bigger will be rejected.
-
-        This wrapper will return None if the field is empty.
-
-        :param field: the field to wrap
-        :param name: name of the field
-        :param columns: number of columns it takes
-        :return: the field with an additional rule to allow empty strings
-        """
-        raise NotImplementedError("The create_field method is not implemented")
-
-
-class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
-    """
-    Factory for acquiring fields rules using the default configuration.
-    """
-
-    def __init__(self, field_configs, adapters, field_values=None):
-        super(DefaultFieldTerminalRuleFactory, self).__init__(field_configs)
-
-        self._adapters = adapters
-
-        # Field values are optional
-        self._field_values = field_values
-
-    def get_rule(self, id, modifiers):
-        compulsory = 'compulsory' in modifiers
-
-        return self.get_field(id, compulsory=compulsory)
-
-    def create_field(self, id, config):
-        """
-        Creates the field with the specified parameters.
-
-        :param id: identifier for the field
+        :param field_id: identifier for the field
         :param config: configuration info for the field
         :return: the basic rule for the field
         """
@@ -205,15 +91,81 @@ class DefaultFieldTerminalRuleFactory(OptionFieldTerminalRuleFactory):
         if 'results_name' in config:
             field = field.setResultsName(config['results_name'])
         else:
-            field = field.setResultsName(id)
+            field = field.setResultsName(field_id)
 
         return field
 
-    def is_terminal(self, type):
-        return type == 'field'
 
+class OptionFieldTerminalRuleFactory(object):
+    """
+    Factory for acquiring field rules where those rules can be optional.
+
+    This factory gives support to optional field rules.
+
+    An optional field is one where a string composed only of white characters is valid.
+
+    Field rules will be created only once. If the same one is required again, then the one created the first time will
+    be returned.
+    """
+
+    def __init__(self, field_configs, adapters, field_values=None):
+        super(OptionFieldTerminalRuleFactory, self).__init__()
+
+        self._field_factory = FieldTerminalRuleFactory(field_configs,adapters,field_values)
+        self._field_configs = field_configs
+        self._adapters = adapters
+
+        # Fields already wrapped with the optional wrapper
+        self._fields_optional = {}
+
+    def get_rule(self, field_id, compulsory=False):
+        """
+        Returns the field identified by the id.
+
+        This field is unique, it will be created just once and reused for all the following calls of the method.
+
+        If it is set as not being compulsory, a special wrapping rule, allowing an empty string, will be added to
+        the field.
+
+        :param field_id: unique id in the system for the field
+        :param compulsory: indicates if the empty string is rejected or not
+        :return: a lookup field
+        """
+
+        if not compulsory:
+            if field_id in self._fields_optional:
+                # Wrapped field already exists
+                field = self._fields_optional[field_id]
+            else:
+                # Field configuration info
+                config = self._field_configs[field_id]
+
+                field = self._field_factory.get_rule(field_id)
+
+                # It is not compulsory, the wrapped is added
+                field = self.not_compulsory_wrapper(field, config['type'], config['name'], config['size'])
+
+                # Wrapped field is saved
+                self._fields_optional[field_id] = field
+        else:
+            field = self._field_factory.get_rule(field_id)
+
+        return field
+
+    @abstractmethod
     def not_compulsory_wrapper(self, field, type, name, columns):
+        """
+        Adds a wrapper rule to the field to accept empty strings.
 
+        This empty string should be of the same size as the columns parameter. One smaller or bigger will be rejected.
+
+        This wrapper will return None if the field is empty.
+
+        :param field: the field to wrap
+        :param name: name of the field
+        :param columns: number of columns it takes
+        :return: the field with an additional rule to allow empty strings
+        """
         adapter = self._adapters[type]
 
         return adapter.wrap_as_optional(field, name, columns)

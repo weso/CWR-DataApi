@@ -3,7 +3,7 @@ import logging
 
 from cwr.parser.decoder.common import GrammarDecoder
 from config_cwr.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
+from cwr.grammar.factory.field import OptionFieldTerminalRuleFactory
 from data_cwr.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
 from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
@@ -122,7 +122,7 @@ def default_grammar_factory():
     data = config.load_field_config('table')
     data.update(config.load_field_config('common'))
 
-    factory_field = DefaultFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
+    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
 
     rules = config.load_transaction_config('common')
     rules.extend(config.load_record_config('common'))
@@ -141,7 +141,7 @@ def default_filename_grammar_factory():
     data.update(config.load_field_config('common'))
     data.update(config.load_field_config('filename'))
 
-    factory_field = DefaultFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
+    factory_field = OptionFieldTerminalRuleFactory(data, default_adapters(), field_values=CWRTables())
 
     return DefaultRuleFactory(config.load_record_config('filename'), factory_field)
 
