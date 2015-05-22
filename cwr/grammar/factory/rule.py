@@ -30,7 +30,7 @@ class DefaultRuleFactory(RuleFactory):
     def __init__(self, record_configs, terminal_rule_factory, decorators=None):
         super(DefaultRuleFactory, self).__init__()
         # Configuration for creating the record
-        self._record_configs = self._process_rules(record_configs)
+        self._record_configs = record_configs
         self._terminal_rule_factory = terminal_rule_factory
 
         if decorators:
@@ -38,22 +38,8 @@ class DefaultRuleFactory(RuleFactory):
         else:
             self._decorators = {}
 
-    def _process_rules(self, rules):
-        processed = {}
-
-        for rule in rules:
-            data = list(rule.values())[0]
-            data['rule_type'] = list(rule.keys())[0]
-
-            id = data['id']
-
-            processed[id] = data
-
-        return processed
-
-    def get_rule(self, id):
-
-        record_config = self._record_configs[id]
+    def get_rule(self, rule_id):
+        record_config = self._record_configs[rule_id]
         sequence = []
 
         for rules in record_config['rules']:
@@ -69,7 +55,7 @@ class DefaultRuleFactory(RuleFactory):
         if 'results_name' in record_config:
             record = record.setResultsName(record_config['results_name'])
         else:
-            record = record.setResultsName(id)
+            record = record.setResultsName(rule_id)
 
         return record
 

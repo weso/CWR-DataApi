@@ -138,7 +138,7 @@ def default_grammar_factory():
     decorators = {'transaction_record': TransactionRecordRuleDecorator(factory_field, _default_record_decoders()),
                    'record': RecordRuleDecorator(factory_field, _default_record_decoders()),
                    'group': GroupRuleDecorator(_default_group_decoders())}
-    return DefaultRuleFactory(rules, factory_field, decorators)
+    return DefaultRuleFactory(_process_rules(rules), factory_field, decorators)
 
 
 def default_filename_grammar_factory():
@@ -157,8 +157,20 @@ def default_filename_grammar_factory():
 
     factory_field = OptionFieldRuleFactory(data, default_adapters())
 
-    return DefaultRuleFactory(config.load_record_config('filename'), factory_field)
+    return DefaultRuleFactory(_process_rules(config.load_record_config('filename')), factory_field)
 
+def _process_rules(rules):
+    processed = {}
+
+    for rule in rules:
+        data = list(rule.values())[0]
+        data['rule_type'] = list(rule.keys())[0]
+
+        id = data['id']
+
+        processed[id] = data
+
+    return processed
 
 def default_file_decoder():
     """
