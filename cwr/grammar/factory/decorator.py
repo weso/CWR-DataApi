@@ -102,3 +102,13 @@ class TransactionRecordRuleDecorator(RecordRuleDecorator):
 
     def _get_prefix(self, config):
         return field_record.record_prefix(config['head'], self._factory)
+
+class OptionalFieldRuleDecorator(object):
+
+    def __init__(self, adapters):
+        self._adapters = adapters
+
+    def decorate(self, rule, type, name, size):
+        adapter = self._adapters[type]
+
+        return adapter.wrap_as_optional(rule, name, size)

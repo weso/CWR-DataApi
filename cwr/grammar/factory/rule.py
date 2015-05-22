@@ -26,6 +26,32 @@ class RuleFactory(object):
 
 
 class DefaultRuleFactory(RuleFactory):
+    """
+    Rules are a tree:
+
+    root
+        rules_list
+            rule
+            rule
+            rule
+            rules_list
+                rule
+                rule
+        rules_list
+            rule
+            rule
+
+    For example:
+
+    group_trailer rules tree:
+    rules (root)
+        group_id (rule)
+        transaction_count (rule)
+        record_count (rule)
+        optional (rules_list)
+            currency_indicator (rule)
+            total_monetary_value (rule)
+    """
 
     def __init__(self, record_configs, terminal_rule_factory, decorators=None):
         super(DefaultRuleFactory, self).__init__()
@@ -43,14 +69,16 @@ class DefaultRuleFactory(RuleFactory):
         sequence = []
 
         for rules in record_config['rules']:
-            sequence.append(self._get_group(rules))
+            sequence.append(self._process_rules_list(rules))
 
         record = pp.And(sequence)
 
-        if 'rule_type' in record_config:
-            rule_type = record_config['rule_type']
-            if rule_type in self._decorators:
-                record = self._decorators[rule_type].decorate(record, record_config)
+        rule_type = record_config['rule_type']
+        if rule_type in self._decorators:
+            record = self._decorators[rule_type].decorate(record, record_config)
+
+        if self._is_terminal(rule_type):
+            print record_config['rules']
 
         if 'results_name' in record_config:
             record = record.setResultsName(record_config['results_name'])
@@ -59,18 +87,18 @@ class DefaultRuleFactory(RuleFactory):
 
         return record
 
-    def _get_group(self, rules, joiner=None):
+    def _process_rules_list(self, rules):
         group = None
 
         group_type = list(rules.keys())[0]
         data = list(rules.values())[0]
 
         if group_type == 'sequence':
-            group = self._build_group(data, pp.And)
+            group = self._build_from_rules_list(data, pp.And)
         elif group_type == 'option':
-            group = self._build_group(data, pp.MatchFirst)
+            group = self._build_from_rules_list(data, pp.MatchFirst)
         elif group_type == 'optional':
-            group = pp.Optional(self._build_group(data, pp.And))
+            group = pp.Optional(self._build_from_rules_list(data, pp.And))
 
         if 'modifiers' in rules:
             modifiers = rules['modifiers']
@@ -81,7 +109,7 @@ class DefaultRuleFactory(RuleFactory):
 
         return group
 
-    def _build_group(self, rules_data, strategy):
+    def _build_from_rules_list(self, rules_data, strategy):
         sequence = []
 
         for rule in rules_data:
@@ -94,31 +122,24 @@ class DefaultRuleFactory(RuleFactory):
                 modifiers = []
                 rule_id = rule_values
 
-            data_rule = {}
             if isinstance(rule_id, dict):
-                data_rule = rule
+                rule = self._process_rules_list(rule)
             else:
-                data_rule['id'] = rule_id
-                data_rule['rule_type'] = rule_type
-
-            rule = self._build_rule(data_rule, 'compulsory' in modifiers)
-
-            rule = self._apply_modifiers(rule, modifiers)
+                rule = self._build_rule(rule_id, rule_type, modifiers)
 
             sequence.append(rule)
 
         return strategy(sequence)
 
-    def _build_rule(self, rule_data, compulsory):
-        if 'rule_type' in rule_data:
-            rule_type = rule_data['rule_type']
-
-            if self._is_terminal(rule_type):
-                rule = self._terminal_rule_factory.get_rule(rule_data['id'], compulsory)
-            else:
-                rule = self.get_rule(rule_data['id'])
+    def _build_rule(self, rule_id, rule_type, modifiers):
+        if self._is_terminal(rule_type):
+            rule = self._terminal_rule_factory.get_rule(rule_id)
+            if 'compulsory' not in modifiers:
+                rule = self._terminal_rule_factory.get_optional(rule, rule_id)
         else:
-            rule = self._get_group(rule_data)
+            rule = self.get_rule(rule_id)
+
+        rule = self._apply_modifiers(rule, modifiers)
 
         return rule
 

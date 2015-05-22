@@ -49,20 +49,10 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
     def test_compulsory_trailing_whitespace(self):
         id = 'test_lookup'
 
-        result = self.factory.get_rule(id, compulsory=True)
+        result = self.factory.get_rule(id)
         result = result.parseString('CD2  ')[0]
 
         self.assertEqual('CD2', result)
-
-    def test_optional_heading_whitespaces(self):
-        id = 'test_lookup'
-
-        field = self.factory.get_rule(id)
-
-        result = self.factory.get_rule(id)
-        result = result.parseString('   CD2')[0]
-
-        self.assertEqual(None, result)
 
     def test_returns_same(self):
         id = 'test_lookup'
@@ -80,8 +70,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
     def test_compulsory_heading_whitespace(self):
         id = 'test_lookup'
 
-        field = self.factory.get_rule(id,
-                                       compulsory=True)
+        field = self.factory.get_rule(id)
 
         self.assertRaises(ParseException, field.parseString, '   CD2')
 
@@ -91,23 +80,11 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         id = 'test_lookup'
 
-        field = self.factory.get_rule(id,
-                                       compulsory=True)
+        field = self.factory.get_rule(id)
 
         self.assertRaises(ParseException, field.parseString, '   ')
 
     def test_empty_compulsory(self):
-        """
-        Tests that an exception is thrown when the field is empty and it shouldn't be.
-        """
-        id = 'test_lookup'
-
-        field = self.factory.get_rule(id,
-                                       compulsory=True)
-
-        self.assertRaises(ParseException, field.parseString, '')
-
-    def test_empty(self):
         """
         Tests that an exception is thrown when the field is empty and it shouldn't be.
         """

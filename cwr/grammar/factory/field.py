@@ -91,7 +91,7 @@ class FieldRuleFactory(RuleFactory):
         return field
 
 
-class OptionFieldRuleFactory(object):
+class OptionFieldRuleFactory(FieldRuleFactory):
     """
     Factory for acquiring field rules where those rules can be optional.
 
@@ -104,47 +104,28 @@ class OptionFieldRuleFactory(object):
     """
 
     def __init__(self, field_configs, adapters):
-        super(OptionFieldRuleFactory, self).__init__()
+        super(OptionFieldRuleFactory, self).__init__(field_configs,adapters)
 
-        self._field_factory = FieldRuleFactory(field_configs,adapters)
         self._field_configs = field_configs
         self._adapters = adapters
 
         # Fields already wrapped with the optional wrapper
         self._fields_optional = {}
 
-    def get_rule(self, field_id, compulsory=False):
-        """
-        Returns the field identified by the id.
-
-        This field is unique, it will be created just once and reused for all the following calls of the method.
-
-        If it is set as not being compulsory, a special wrapping rule, allowing an empty string, will be added to
-        the field.
-
-        :param field_id: unique id in the system for the field
-        :param compulsory: indicates if the empty string is rejected or not
-        :return: a lookup field
-        """
-
-        if not compulsory:
-            if field_id in self._fields_optional:
-                # Wrapped field already exists
-                field = self._fields_optional[field_id]
-            else:
-                # Field configuration info
-                config = self._field_configs[field_id]
-
-                field = self._field_factory.get_rule(field_id)
-
-                # It is not compulsory, the wrapped is added
-                adapter = self._adapters[config['type']]
-                field = adapter.wrap_as_optional(field, config['name'], config['size'])
-
-                # Wrapped field is saved
-                self._fields_optional[field_id] = field
+    def get_optional(self, field_base, field_id):
+        if field_id in self._fields_optional:
+            # Wrapped field already exists
+            field = self._fields_optional[field_id]
         else:
-            field = self._field_factory.get_rule(field_id)
+            # Field configuration info
+            config = self._field_configs[field_id]
+
+            # It is not compulsory, the wrapped is added
+            adapter = self._adapters[config['type']]
+            field = adapter.wrap_as_optional(field_base, config['name'], config['size'])
+
+            # Wrapped field is saved
+            self._fields_optional[field_id] = field
 
         return field
 
