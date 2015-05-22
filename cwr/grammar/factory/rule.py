@@ -101,7 +101,7 @@ class DefaultRuleFactory(RuleFactory):
                 data_rule['id'] = rule_id
                 data_rule['rule_type'] = rule_type
 
-            rule = self._build_rule(data_rule, modifiers)
+            rule = self._build_rule(data_rule, 'compulsory' in modifiers)
 
             rule = self._apply_modifiers(rule, modifiers)
 
@@ -109,13 +109,11 @@ class DefaultRuleFactory(RuleFactory):
 
         return strategy(sequence)
 
-    def _build_rule(self, rule_data, modifiers):
+    def _build_rule(self, rule_data, compulsory):
         if 'rule_type' in rule_data:
             rule_type = rule_data['rule_type']
 
             if self._is_terminal(rule_type):
-                compulsory = 'compulsory' in modifiers
-
                 rule = self._terminal_rule_factory.get_rule(rule_data['id'], compulsory)
             else:
                 rule = self.get_rule(rule_data['id'])
