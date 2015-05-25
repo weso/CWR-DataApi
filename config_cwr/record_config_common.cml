@@ -303,10 +303,7 @@ transaction_record:
 
 transaction_record:
     id: nra_work
-    head:
-      NCT
-      NET
-      NVT
+    head: NCT,NET,NVT
     rules:
       [
       sequence
@@ -369,9 +366,7 @@ transaction_record:
 
 transaction_record:
     id: publisher
-    head:
-      SPU
-      OPU
+    head: SPU,OPU
     rules:
       [
       sequence
@@ -492,10 +487,7 @@ record:
 
 transaction_record:
     id: work
-    head:
-      NWR
-      REV
-      ISW
+    head: NWR,REV,ISW
     rules:
       [
       sequence
@@ -600,9 +592,7 @@ transaction_record:
 
 transaction_record:
     id: writer
-    head:
-      SWR
-      OWR
+    head: SWR,OWR
     rules:
       [
       sequence
@@ -619,7 +609,7 @@ transaction_record:
         field: mr_society
         field: mr_ownership_share (compulsory)
         field: sr_society
-        field: sr_ownership_share (compulsory9
+        field: sr_ownership_share (compulsory)
         field: reversionary
         field: first_recording_refusal
         field: work_for_hire

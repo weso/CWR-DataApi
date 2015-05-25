@@ -134,8 +134,8 @@ def default_grammar_factory():
 
     optional_decorator = OptionalFieldRuleDecorator(data, default_adapters())
 
-    rules = config.load_transaction_config('common')
-    rules.extend(config.load_record_config('common'))
+    rules = config.load_record_config('common')
+    rules.extend(config.load_transaction_config('common'))
     rules.extend(config.load_group_config('common'))
 
     decorators = {'transaction_record': TransactionRecordRuleDecorator(factory_field, _default_record_decoders()),
@@ -168,7 +168,6 @@ def process_rules(rules):
     processed = {}
     for rule in rules:
         id = rule.id
-        print id
         processed[id] = rule
 
     return processed

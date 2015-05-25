@@ -28,6 +28,26 @@ class TestConfigTerminalRule(unittest.TestCase):
 
         self.assertEqual(0, len(result.rules))
 
+    def test_multiple_head(self):
+        line = 'filename:' + '\n' + \
+               '    id: filename_old' + '\n' + \
+               '    head: ABC,DEF,GHI' + '\n' + \
+               '    rules:' + '\n' + \
+               '      [' + '\n' + \
+               '      ]'
+
+        result = self._rule.parseString(line)
+
+        self.assertEqual('filename', result.rule_type)
+        self.assertEqual('filename_old', result.id)
+
+        self.assertEqual(3, len(result.head))
+        self.assertEqual('ABC', result.head[0])
+        self.assertEqual('DEF', result.head[1])
+        self.assertEqual('GHI', result.head[2])
+
+        self.assertEqual(0, len(result.rules))
+
     def test_small(self):
         line = 'filename:' + '\n' + \
                '    id: filename_old' + '\n' + \
@@ -80,7 +100,7 @@ class TestConfigTerminalRule(unittest.TestCase):
 
         self.assertEqual('filename', result.rule_type)
         self.assertEqual('filename_old', result.id)
-        self.assertEqual('ABC', result.head)
+        self.assertEqual('ABC', result.head[0])
         self.assertEqual('name', result.results_name)
 
         self.assertEqual(2, len(result.rules))

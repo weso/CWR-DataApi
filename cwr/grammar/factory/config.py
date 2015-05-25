@@ -31,7 +31,7 @@ rule_id.setName('ID field')
 rule_id.setParseAction(lambda id: id[0])
 rule_id.addParseAction(lambda id: id.value)
 
-rule_head = pp.Group(pp.Literal('head:') + _rule_config_string.setResultsName('value'))
+rule_head = pp.Group(pp.Literal('head:') + _rule_options_list.setResultsName('value'))
 rule_head.setName('Head field')
 rule_head.setParseAction(lambda id: id[0])
 rule_head.addParseAction(lambda id: id.value)
