@@ -5,7 +5,6 @@ import json
 from cwr.parser.encoder.dictionary import FileDictionaryDictionaryEncoder
 from cwr.parser.encoder.common import Encoder
 
-
 """
 Classes for encoding CWR classes into JSON dictionaries.
 

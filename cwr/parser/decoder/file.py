@@ -9,8 +9,6 @@ from cwr.grammar.factory.rule import DefaultRuleFactory
 from cwr.grammar.factory.decorator import *
 from cwr.parser.decoder.dictionary import *
 from cwr.grammar.factory.adapter import *
-from cwr.grammar.factory.config import rule_config_file
-
 
 """
 Classes for processing CWR files, creating a graph of CWR model instances from it.

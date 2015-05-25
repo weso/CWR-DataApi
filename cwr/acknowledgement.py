@@ -2,7 +2,6 @@
 
 from cwr.record import TransactionRecord
 
-
 """
 Acknowledgement entity model classes.
 """

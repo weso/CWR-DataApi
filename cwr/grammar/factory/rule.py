@@ -4,7 +4,6 @@ from abc import ABCMeta, abstractmethod
 
 import pyparsing as pp
 
-
 """
 Rules factories.
 """
@@ -96,8 +95,8 @@ class DefaultRuleFactory(RuleFactory):
     def _process_rules_list(self, rules):
         group = None
 
-        group_type = list(rules.keys())[0]
-        data = list(rules.values())[0]
+        group_type = rules.list_type
+        data = rules.rules
 
         if group_type == 'sequence':
             group = self._build_from_rules_list(data, pp.And)
@@ -119,14 +118,11 @@ class DefaultRuleFactory(RuleFactory):
         sequence = []
 
         for rule in rules_data:
-            rule_type = list(rule.keys())[0]
-            rule_values = list(rule.values())[0]
-            if isinstance(rule_values, list):
-                modifiers = rule_values[1:]
-                rule_id = rule_values[0]
-            else:
+            rule_type = rule.rule_type
+            rule_id = rule.rule_name
+            modifiers = rule.rule_options
+            if not modifiers:
                 modifiers = []
-                rule_id = rule_values
 
             if isinstance(rule_id, dict):
                 rule = self._process_rules_list(rule)

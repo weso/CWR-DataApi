@@ -5,7 +5,6 @@ import pyparsing as pp
 from config_cwr.accessor import CWRConfiguration
 from data_cwr.accessor import CWRTables
 
-
 """
 Grammar rules for concrete CWR Table/List Lookup fields.
 

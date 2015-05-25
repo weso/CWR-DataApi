@@ -2,7 +2,6 @@
 
 import pyparsing as pp
 
-
 """
 Classes for handling the configuration files.
 """
@@ -22,19 +21,18 @@ def _clear_str(str):
 _rule_identifier = _rule_config_string + pp.Literal(':').suppress()
 _rule_identifier.setParseAction(lambda id: id[0])
 
-_rule_options_list = pp.delimitedList(_rule_config_string)
+_rule_options_list = pp.Group(pp.delimitedList(_rule_config_string))
+_rule_options_list.setParseAction(lambda id: id[0].asList())
+
 rule_options = pp.Literal('(').suppress() + pp.Optional(_rule_options_list).setResultsName('values') + pp.Literal(
     ')').suppress()
 
-rule_id = pp.Group(pp.Literal('id:') + _rule_config_string.setResultsName('value'))
+rule_id = pp.Literal('id:').suppress() + _rule_config_string.setResultsName('value')
 rule_id.setName('ID field')
 rule_id.setParseAction(lambda id: id[0])
-rule_id.addParseAction(lambda id: id.value)
 
-rule_head = pp.Group(pp.Literal('head:') + _rule_options_list.setResultsName('value'))
+rule_head = pp.Literal('head:').suppress() + _rule_options_list.setResultsName('value')
 rule_head.setName('Head field')
-rule_head.setParseAction(lambda id: id[0])
-rule_head.addParseAction(lambda id: id.value)
 
 rule_results = pp.Group(pp.Literal('results_name:') + _rule_config_string.setResultsName('value'))
 rule_results.setName('Results name field')
@@ -49,9 +47,11 @@ rule_terminal = rule_terminal
 _rule_rules_tree_terminal = pp.OneOrMore(pp.Group(rule_terminal))
 _rule_rules_tree_recursive = pp.Forward()
 _rule_rules_tree_recursive << _rule_config_string.setResultsName('list_type') + \
-                        pp.Literal('[').suppress() + \
-                        pp.ZeroOrMore(pp.Group(_rule_rules_tree_recursive)|pp.Group(rule_terminal)).setResultsName('rules') + \
-                        pp.Literal(']').suppress()
+                              pp.Literal('[').suppress() + \
+                              pp.ZeroOrMore(
+                                  pp.Group(_rule_rules_tree_recursive) | pp.Group(rule_terminal)).setResultsName(
+                                  'rules') + \
+                              pp.Literal(']').suppress()
 _rule_rules_tree_recursive = pp.ZeroOrMore(pp.Group(_rule_rules_tree_recursive)) + \
                              (pp.Group(_rule_rules_tree_recursive) | pp.ZeroOrMore(pp.Group(rule_terminal))) + \
                              pp.ZeroOrMore(pp.Group(_rule_rules_tree_recursive))

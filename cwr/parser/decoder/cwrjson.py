@@ -5,7 +5,6 @@ import json
 from cwr.parser.decoder.common import Decoder
 from cwr.parser.decoder.dictionary import FileDictionaryDecoder
 
-
 """
 Classes for decoding CWR classes from JSON dictionaries.
 """

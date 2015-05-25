@@ -7,7 +7,6 @@ import pyparsing as pp
 from cwr.grammar.field import record as field_record
 from cwr.parser.decoder.dictionary import *
 
-
 """
 Decorators for the grammar rules.
 

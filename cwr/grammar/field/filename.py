@@ -5,7 +5,6 @@ import pyparsing as pp
 from cwr.grammar.field.basic import numeric, lookup
 from config_cwr.accessor import CWRConfiguration
 
-
 """
 CWR filename fields grammar.
 """

@@ -3,7 +3,6 @@ from abc import ABCMeta
 
 from cwr.record import TransactionRecord
 
-
 """
 Interested party model classes.
 """
@@ -857,5 +856,3 @@ class WriterRecord(InterestedPartyRecord):
         :return: 'Y' if the Writer is unknown, 'F' otherwise, 'U' in special cases
         """
         return self._writer_unknown
-
-

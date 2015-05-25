@@ -9,7 +9,6 @@ from cwr.grammar.field import basic
 from config_cwr.accessor import CWRConfiguration
 from data_cwr.accessor import CWRTables
 
-
 """
 Grammar for special cases and other fields.
 

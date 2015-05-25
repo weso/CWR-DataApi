@@ -35,7 +35,7 @@ def record_type(values):
     :param values: allowed record type codes
     :return: grammar for the record type field
     """
-    field = basic.lookup(values, name='Record Type (one of ' + str(values) + ')')
+    field = basic.lookup(values, name='Record Type (one of %s)' % values)
 
     return field.setResultsName('record_type')
 

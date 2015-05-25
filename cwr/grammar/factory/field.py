@@ -2,7 +2,6 @@
 
 from cwr.grammar.factory.rule import RuleFactory
 
-
 """
 Grammar fields factories.
 """
@@ -87,4 +86,3 @@ class FieldRuleFactory(RuleFactory):
             field = field.setResultsName(field_id)
 
         return field
-

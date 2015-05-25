@@ -3,7 +3,7 @@
 import datetime
 
 import pyparsing as pp
-
+from pyparsing import ParseResults
 
 """
 CWR fields grammar.
@@ -460,6 +460,10 @@ def lookup(values, name=None):
 
     if values is None:
         raise ValueError('The values can no be None')
+
+    # TODO: This should not be needed, it is just a patch. Fix this.
+    if isinstance(values, ParseResults):
+        values = values.asList()
 
     # Only the specified values are allowed
     lookup_field = pp.oneOf(values)
