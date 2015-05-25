@@ -1,0 +1,668 @@
+transaction_record:
+    id: acknowledgement
+    head: ACK
+    rules:
+      [
+      sequence:
+        [
+        field: creation_date_time
+        field: original_group_id
+        field: original_transaction_sequence_n
+        field: original_transaction_type
+        field: creation_title
+        field: submitter_creation_n
+        field: recipient_creation_n
+        field: processing_date
+        field: transaction_status
+		]
+	  ]
+
+transaction_record:
+    id: additional_related_information
+    head: ARI
+    rules:
+      [
+      sequence:
+        [
+        field: society_n
+        field: work_n
+        field: type_of_right
+        field: subject_code
+        field: note
+		]
+	]
+
+transaction_record:
+    id: agreement
+    head: AGR
+    rules:
+      [
+      sequence:
+        [
+        field: submitter_agreement_n
+        field: international_standard_code
+        field: agreement_type
+        field: agreement_start_date
+        field: agreement_end_date
+        field: retention_end_date
+        field: prior_royalty_status
+        field: prior_royalty_start_date
+        field: post_term_collection_status
+        field: post_term_collection_end_date
+        field: date_of_signature
+        field: number_of_works
+        field: sales_manufacture_clause
+        field: shares_change
+        field: advance_given
+        field: society_assigned_agreement_n
+		]
+	]
+
+transaction_record:
+    id: component
+    head: COM
+    rules:
+      [
+      sequence:
+        [
+        field: component_title
+        field: iswc
+        field: submitter_work_n
+        field: component_duration
+        field: writer_1_last_name
+        field: writer_1_first_name
+        field: writer_1_ipi_name_n
+        field: writer_2_last_name
+        field: writer_2_first_name
+        field: writer_2_ipi_name_n
+        field: writer_1_ipi_base_n
+        field: writer_2_ipi_base_n
+		]
+	]
+
+transaction_record:
+    id: entire_work_title
+    head: EWT
+    rules:
+      [
+      sequence:
+        [
+        field: entire_work_title
+        field: iswc
+        field: language_code
+        field: writer_1_last_name
+        field: writer_1_first_name
+        field: source
+        field: writer_1_ipi_name_n
+        field: writer_1_ipi_base_n
+        field: writer_2_last_name
+        field: writer_2_first_name
+        field: writer_2_ipi_name_n
+        field: writer_2_ipi_base_n
+        field: submitter_work_n
+		]
+	]
+
+record:
+    id: group_header
+    head: GRH
+    rules:
+      [
+      sequence:
+        [
+        field: transaction_type
+        field: group_id
+        field: version_number
+        field: batch_request_id
+        field: sd_type
+		]
+	]
+
+record:
+    id: group_trailer
+    head: GRT
+    rules:
+      [
+      sequence:
+        [
+        field: group_id
+        field: transaction_count
+        field: record_count
+        optional:
+		  [
+		  field: currency_indicator
+		  field: total_monetary_value
+		  ]
+		]
+	  ]
+
+record:
+    id: group_trailer_base
+    head: GRT
+    results_name: group_trailer
+    rules:
+      [
+      sequence:
+        [
+        field: group_id
+        field: transaction_count
+        field: record_count
+        field: currency_indicator
+        field: total_monetary_value
+		]
+	  ]
+
+record:
+    id: group_trailer_short
+    head: GRT
+    results_name: group_trailer
+    rules:
+      [
+      sequence:
+        [
+        field: group_id
+        field: transaction_count
+        field: record_count
+		]
+	  ]
+
+transaction_record:
+    id: instrumentation_detail
+    head: IND
+    rules:
+      [
+      sequence:
+        [
+        field: instrument_code
+        field: number_players
+		]
+	  ]
+
+transaction_record:
+    id: instrumentation_summary
+    head: INS
+    rules:
+      [
+      sequence:
+        [
+        field: number_voices
+        field: standard_instrumentation_type
+        field: instrumentation_description
+		]
+	  ]
+
+transaction_record:
+    id: interested_party_agreement
+    head: IPA
+    rules:
+      [
+      sequence:
+        [
+        field: agreement_role_code
+        field: ipi_name_n
+        field: ipi_base_n
+        field: ip_n
+        field: ip_last_name
+        field: ip_writer_first_name
+        field: pr_society
+        field: pr_share (compulsory)
+        field: mr_society
+        field: mr_share (compulsory)
+        field: sr_society
+        field: sr_share (compulsory)
+		]
+	  ]
+
+transaction_record:
+    id: message
+    head: MSG
+    rules:
+      [
+      sequence:
+        [
+        field: message_type
+        field: original_record_sequence_n
+        field: message_record_type
+        field: message_level
+        field: validation_n
+        field: message_text
+		]
+	  ]
+
+transaction_record:
+    id: nra_agreement_party
+    head: NPA
+    rules:
+      [
+      sequence:
+        [
+        field: ip_n
+        field: ip_name_ext
+        field: ip_writer_name_ext
+        field: language_code
+		]
+	  ]
+
+transaction_record:
+    id: nra_other_writer
+    head: NOW
+    rules:
+      [
+      sequence:
+        [
+        field: writer_name_ext
+        field: writer_first_name_long_ext
+        field: language_code
+        field: position
+		]
+	  ]
+
+transaction_record:
+    id: nra_performance_data
+    head: NPR
+    rules:
+      [
+      sequence:
+        [
+        field: performing_artist_name_ext
+        field: performing_artist_first_name_long_ext
+        field: performing_artist_ipi_name_n
+        field: performing_artist_ipi_base_n
+        field: language_code
+        field: performance_language
+        field: performance_dialect
+		]
+	  ]
+
+transaction_record:
+    id: nra_publisher_name
+    head: NPN
+    rules:
+      [
+      sequence:
+        [
+        field: publisher_sequence_n
+        field: ip_n
+        field: publisher_name_long_ext
+        field: language_code
+		]
+	  ]
+
+transaction_record:
+    id: nra_title
+    head: NAT
+    rules:
+      [
+      sequence:
+        [
+        field: title_ext
+        field: title_type
+        field: language_code
+		]
+	  ]
+
+transaction_record:
+    id: nra_work
+    head:
+      NCT
+      NET
+      NVT
+    rules:
+      [
+      sequence:
+        [
+        field: title_ext
+        field: language_code
+		]
+	  ]
+
+transaction_record:
+    id: nra_writer_name
+    head: NWN
+    rules:
+      [
+      sequence:
+        [
+        field: ip_n
+        field: writer_last_name_long_ext
+        field: writer_first_name_long_ext
+        field: language_code
+		]
+	  ]
+
+transaction_record:
+    id: original_work_title
+    head: VER
+    rules:
+      [
+      sequence:
+        [
+        field: original_title
+        field: iswc
+        field: language_code
+        field: writer_1_last_name
+        field: writer_1_first_name
+        field: source
+        field: writer_1_ipi_name_n
+        field: writer_1_ipi_base_n
+        field: writer_2_last_name
+        field: writer_2_first_name
+        field: writer_2_ipi_name_n
+        field: writer_2_ipi_base_n
+        field: submitter_work_n
+		]
+	  ]
+
+transaction_record:
+    id: performing_artist
+    head: PER
+    rules:
+      [
+      sequence:
+        [
+        field: performing_artist_last_name
+        field: performing_artist_first_name
+        field: performing_artist_ipi_name_n
+        field: performing_artist_ipi_base_n
+		]
+	  ]
+
+transaction_record:
+    id: publisher
+    head:
+      SPU
+      OPU
+    rules:
+      [
+      sequence:
+        [
+        field: publisher_sequence_n
+        field: ip_n
+        field: publisher_name
+        field: publisher_unknown
+        field: publisher_type
+        field: tax_id
+        field: ipi_name_n
+        field: submitter_agreement_n
+        field: pr_society
+        field: pr_ownership_share (compulsory)
+        field: mr_society
+        field: mr_ownership_share (compulsory)
+        field: sr_society
+        field: sr_ownership_share (compulsory)
+        field: special_agreements
+        field: first_recording_refusal
+        field: blank
+        field: ipi_base_n
+        field: international_standard_code
+        field: society_assigned_agreement_n
+        field: agreement_type
+        field: usa_license
+		]
+	  ]
+
+transaction_record:
+    id: publisher_territory
+    head: SPT
+    rules:
+      [
+      sequence:
+        [
+        field: ip_n
+        field: constant
+        field: pr_collection_share (compulsory)
+        field: mr_collection_share (compulsory)
+        field: sr_collection_share (compulsory)
+        field: inclusion_exclusion_indicator
+        field: tis_numeric_code
+        field: shares_change
+        option:
+		  [
+          field: sequence_n
+          field: sequence_n_2
+		  ]
+		]
+	  ]
+
+transaction_record:
+    id: recording_detail
+    head: REC
+    rules:
+      [
+      sequence:
+        [
+        field: first_release_date
+        field: constant_1
+        field: first_release_duration
+        field: constant_2
+        field: first_album_title
+        field: first_album_label
+        field: first_release_catalog_n
+        field: ean13
+        field: isrc
+        field: recording_format
+        field: recording_technique
+        field: media_type
+		]
+	  ]
+
+transaction_record:
+    id: territory_in_agreement
+    head: TER
+    rules:
+      [
+      sequence:
+        [
+        field: inclusion_exclusion_indicator
+        field: tis_numeric_code
+		]
+	  ]
+
+record:
+    id: transmission_header
+    head: HDR
+    results_name: header
+    rules:
+      [
+      sequence:
+        [
+        field: sender_type
+        field: sender_id
+        field: sender_name
+        field: edi_standard
+        field: creation_date_time
+        field: transmission_date
+        field: character_set
+		]
+	  ]
+
+record:
+    id: transmission_trailer
+    head: TRL
+    results_name: trailer
+    rules:
+      [
+      sequence:
+        [
+        field: group_count
+        field: transaction_count
+        field: record_count
+		]
+	  ]
+
+transaction_record:
+    id: work
+    head:
+      NWR
+      REV
+      ISW
+    rules:
+      [
+      sequence:
+        [
+        field: work_title
+        field: language_code
+        field: submitter_work_n
+        field: iswc
+        field: copyright_date
+        field: copyright_number
+        field: musical_work_distribution_category
+        field: duration
+        field: recorded_indicator
+        field: text_music_relationship
+        field: composite_type
+        field: version_type
+        field: excerpt_type
+        field: music_arrangement
+        field: lyric_adaptation
+        field: contact_name
+        field: contact_id
+        field: work_type
+        field: grand_rights_indicator
+        field: composite_component_count
+        field: date_publication_printed_edition
+        field: exceptional_clause
+        field: opus_number
+        field: catalogue_number
+        field: priority_flag
+		]
+	  ]
+
+transaction_record:
+    id: work_alternate_title
+    head: ALT
+    rules:
+      [
+      sequence:
+        [
+        field: alternate_title
+        field: title_type
+        field: language_code
+		]
+	  ]
+
+transaction_record:
+    id: work_conflict
+    head: EXC
+    rules:
+      [
+      sequence:
+        [
+        field: work_title
+        field: language_code
+        field: submitter_work_n
+        field: iswc
+        field: copyright_date
+        field: copyright_number
+        field: musical_work_distribution_category
+        field: duration
+        field: recorded_indicator
+        field: text_music_relationship
+        field: composite_type
+        field: version_type
+        field: excerpt_type
+        field: music_arrangement
+        field: lyric_adaptation
+        field: contact_name
+        field: contact_id
+        field: work_type
+        field: grand_rights_indicator
+        field: composite_component_count
+        field: date_publication_printed_edition
+        field: exceptional_clause
+        field: opus_number
+        field: catalogue_number
+        field: priority_flag
+		]
+	  ]
+
+transaction_record:
+    id: work_origin
+    head: ORN
+    rules:
+      [
+      sequence:
+        [
+        field: intended_purpose
+        field: production_title
+        field: cd_identifier
+        field: cut_number
+        field: library
+        field: bltvr
+        field: visan
+        field: production_n
+        field: episode_title
+        field: episode_n
+        field: year_production
+        field: audio_visual_key
+		]
+	  ]
+
+transaction_record:
+    id: writer
+    head:
+      SWR
+      OWR
+    rules:
+      [
+      sequence:
+        [
+        field: ip_n
+        field: writer_last_name
+        field: writer_first_name
+        field: writer_unknown
+        field: writer_designation
+        field: tax_id
+        field: ipi_name_n
+        field: pr_society
+        field: pr_ownership_share (compulsory)
+        field: mr_society
+        field: mr_ownership_share (compulsory)
+        field: sr_society
+        field: sr_ownership_share (compulsory9
+        field: reversionary
+        field: first_recording_refusal
+        field: work_for_hire
+        field: filler
+        field: ipi_base_n
+        field: personal_number
+        field: usa_license
+		]
+	  ]
+
+transaction_record:
+    id: writer_publisher
+    head: PWR
+    rules:
+      [
+      sequence:
+        [
+        field: publisher_ip_n
+        field: publisher_name
+        field: submitter_agreement_n
+        field: society_assigned_agreement_n
+        field: writer_ip_n
+		]
+	  ]
+
+transaction_record:
+    id: writer_territory
+    head: SWT
+    rules:
+      [
+      sequence:
+        [
+        field: ip_n
+        field: pr_collection_share (compulsory)
+        field: mr_collection_share (compulsory)
+        field: sr_collection_share (compulsory)
+        field: inclusion_exclusion_indicator
+        field: tis_numeric_code
+        field: shares_change
+        option:
+		  [
+          field: sequence_n
+          field: sequence_n_2
+		  ]
+		]
+	  ]

@@ -9,6 +9,7 @@ from cwr.grammar.factory.rule import DefaultRuleFactory
 from cwr.grammar.factory.decorator import *
 from cwr.parser.decoder.dictionary import *
 from cwr.grammar.factory.adapter import *
+from cwr.grammar.factory.config import rule_config_file
 
 
 """
@@ -140,7 +141,7 @@ def default_grammar_factory():
     decorators = {'transaction_record': TransactionRecordRuleDecorator(factory_field, _default_record_decoders()),
                   'record': RecordRuleDecorator(factory_field, _default_record_decoders()),
                   'group': GroupRuleDecorator(_default_group_decoders())}
-    return DefaultRuleFactory(_process_rules(rules), factory_field, optional_decorator, decorators)
+    return DefaultRuleFactory(process_rules(rules), factory_field, optional_decorator, decorators)
 
 
 def default_filename_grammar_factory():
@@ -160,19 +161,12 @@ def default_filename_grammar_factory():
 
     optional_decorator = OptionalFieldRuleDecorator(data, default_adapters())
 
-    return DefaultRuleFactory(_process_rules(config.load_record_config('filename')), factory_field, optional_decorator)
+    return DefaultRuleFactory(process_rules(config.load_record_config('filename')), factory_field, optional_decorator)
 
 
-def _process_rules(rules):
-    processed = {}
-
-    for rule in rules:
-        data = list(rule.values())[0]
-        data['rule_type'] = list(rule.keys())[0]
-
-        id = data['id']
-
-        processed[id] = data
+def process_rules(rules):
+    parser = rule_config_file
+    processed = parser.parseString(rules)
 
     return processed
 

@@ -45,6 +45,16 @@ class _FileReader(object):
         with open(os.path.join(self.__path(), os.path.basename(file_name)), 'rt') as yamlfile:
             return yaml.load(yamlfile)
 
+    def read_file(self, file_name):
+        """
+        Reads a text file.
+
+        :param file_name: name of the text file
+        :return: the file's contents
+        """
+        with open(os.path.join(self.__path(), os.path.basename(file_name)), 'rt') as file:
+            return file.read()
+
 
 class CWRConfiguration(object):
     """
@@ -100,7 +110,7 @@ class CWRConfiguration(object):
         :return: the fields configuration
         """
         if id not in self._group_configs:
-            self._group_configs[id] = self._reader.read_yaml_file('group_config_%s.yml' % id)
+            self._group_configs[id] = self._reader.read_file('group_config_%s.cml' % id)
 
         return self._group_configs[id]
 
@@ -112,7 +122,7 @@ class CWRConfiguration(object):
         :return: the fields configuration
         """
         if id not in self._record_configs:
-            self._record_configs[id] = self._reader.read_yaml_file('record_config_%s.yml' % id)
+            self._record_configs[id] = self._reader.read_file('record_config_%s.cml' % id)
 
         return self._record_configs[id]
 
@@ -124,7 +134,7 @@ class CWRConfiguration(object):
         :return: the fields configuration
         """
         if id not in self._transaction_configs:
-            self._transaction_configs[id] = self._reader.read_yaml_file('transaction_config_%s.yml' % id)
+            self._transaction_configs[id] = self._reader.read_file('transaction_config_%s.cml' % id)
 
         return self._transaction_configs[id]
 
