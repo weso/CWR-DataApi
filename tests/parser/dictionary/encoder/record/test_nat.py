@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import NonRomanAlphabetTitleDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetTitleRecord
 
-
 """
 NATRecord to dictionary encoding tests.
 

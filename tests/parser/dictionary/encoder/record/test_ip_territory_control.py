@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import IPTerritoryOfControlDictionaryEncoder
 from cwr.interested_party import IPTerritoryOfControlRecord
 
-
 """
 Publisher or Writer Territory of Control to dictionary encoding tests.
 

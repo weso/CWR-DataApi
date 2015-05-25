@@ -4,7 +4,6 @@ import unittest
 
 from cwr.grammar.factory.config import rule_id
 
-
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'

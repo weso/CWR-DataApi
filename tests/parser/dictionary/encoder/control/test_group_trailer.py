@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import GroupTrailerDictionaryEncoder
 from cwr.group import GroupTrailer
 
-
 """
 Group Trailer to dictionary encoding tests.
 

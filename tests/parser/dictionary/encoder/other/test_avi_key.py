@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import AVIKeyDictionaryEncoder
 from cwr.other import AVIKey
 
-
 """
 Acknowledgement to dictionary encoding tests.
 

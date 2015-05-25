@@ -19,9 +19,6 @@ def _clear_str(str):
     return str[0].strip()
 
 
-_line_end = pp.LineEnd()
-_line_end.suppress()
-
 _rule_identifier = _rule_config_string + pp.Literal(':').suppress()
 _rule_identifier.setParseAction(lambda id: id[0])
 
@@ -47,35 +44,28 @@ rule_results.addParseAction(lambda id: id.value)
 rule_terminal = _rule_identifier.setResultsName('rule_type') + \
                 _rule_config_string.setResultsName('rule_name') + \
                 pp.Optional(rule_options).setResultsName('rule_options')
+rule_terminal = rule_terminal
 
-rule_rules_list = _rule_identifier.setResultsName('list_type') + \
-                  pp.Literal('[').suppress() + \
-                  pp.ZeroOrMore(pp.Group(rule_terminal)).setResultsName('rules') + \
-                  pp.Literal(']').suppress()
-
-rule_rules_list_group = _rule_identifier.setResultsName('list_type') + \
+_rule_rules_tree_terminal = pp.OneOrMore(pp.Group(rule_terminal))
+_rule_rules_tree_recursive = pp.Forward()
+_rule_rules_tree_recursive << _rule_config_string.setResultsName('list_type') + \
                         pp.Literal('[').suppress() + \
-                        pp.ZeroOrMore(pp.Group(rule_rules_list)).setResultsName('rules') + \
+                        pp.ZeroOrMore(pp.Group(_rule_rules_tree_recursive)|pp.Group(rule_terminal)).setResultsName('rules') + \
                         pp.Literal(']').suppress()
-
-rule_rules_tree = pp.Forward()
-_rule_rules_tree_part = _rule_identifier.setResultsName('list_type') + \
-                        pp.Literal('[').suppress() + \
-                        pp.ZeroOrMore(pp.Group(rule_rules_tree)).setResultsName('rules') + \
-                        pp.Literal(']').suppress()
-rule_rules_tree << (rule_rules_list | _rule_rules_tree_part | pp.Group(rule_terminal).setResultsName('rules'))
-rule_rules_tree = pp.OneOrMore(rule_rules_tree)
+_rule_rules_tree_recursive = pp.ZeroOrMore(pp.Group(_rule_rules_tree_recursive)) + \
+                             (pp.Group(_rule_rules_tree_recursive) | pp.ZeroOrMore(pp.Group(rule_terminal))) + \
+                             pp.ZeroOrMore(pp.Group(_rule_rules_tree_recursive))
+rule_rules_tree = _rule_rules_tree_recursive
 
 _rule_rules_root = pp.Literal('rules:').suppress() + \
                    pp.Literal('[').suppress() + \
-                   pp.Group(rule_rules_tree).setResultsName('rules') + \
+                   pp.Optional(rule_rules_tree) + \
                    pp.Literal(']').suppress()
-_rule_rules_root.setParseAction(lambda r: r[0].rules)
 
 rule_config_set = _rule_identifier.setResultsName('rule_type') + \
                   rule_id.setResultsName('id') + \
                   pp.Optional(rule_head.setResultsName('head')) + \
                   pp.Optional(rule_results.setResultsName('results_name')) + \
-                  _rule_rules_root.setResultsName('rules')
+                  pp.Group(_rule_rules_root).setResultsName('rules')
 
 rule_config_file = pp.ZeroOrMore(pp.Group(rule_config_set))

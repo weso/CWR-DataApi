@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import NonRomanAlphabetPublisherNameDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetPublisherNameRecord
 
-
 """
 NPNRecord to dictionary encoding tests.
 

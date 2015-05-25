@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import FileTagDictionaryDecoder
 
-
 """
 Group Header to dictionary encoding tests.
 

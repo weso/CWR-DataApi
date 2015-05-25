@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.decoder.dictionary import WorkOriginDictionaryDecoder
 from cwr.other import VISAN
 
-
 """
 Dictionary to Message decoding tests.
 

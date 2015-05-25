@@ -3,6 +3,7 @@
 import os
 
 import yaml
+from cwr.grammar.factory.config import rule_config_file
 
 
 """
@@ -19,11 +20,8 @@ class _FileReader(object):
     Offers methods to read the data files.
     """
 
-    # Singleton control object
-    __shared_state = {}
-
     def __init__(self):
-        self.__dict__ = self.__shared_state
+        self._parser = rule_config_file
 
     def __path(self):
         """
@@ -45,15 +43,15 @@ class _FileReader(object):
         with open(os.path.join(self.__path(), os.path.basename(file_name)), 'rt') as yamlfile:
             return yaml.load(yamlfile)
 
-    def read_file(self, file_name):
+    def read_config_file(self, file_name):
         """
-        Reads a text file.
+        Reads a CWR grammar config file.
 
         :param file_name: name of the text file
         :return: the file's contents
         """
         with open(os.path.join(self.__path(), os.path.basename(file_name)), 'rt') as file:
-            return file.read()
+            return self._parser.parseString(file.read())
 
 
 class CWRConfiguration(object):
@@ -110,7 +108,7 @@ class CWRConfiguration(object):
         :return: the fields configuration
         """
         if id not in self._group_configs:
-            self._group_configs[id] = self._reader.read_file('group_config_%s.cml' % id)
+            self._group_configs[id] = self._reader.read_config_file('group_config_%s.cml' % id)
 
         return self._group_configs[id]
 
@@ -122,7 +120,7 @@ class CWRConfiguration(object):
         :return: the fields configuration
         """
         if id not in self._record_configs:
-            self._record_configs[id] = self._reader.read_file('record_config_%s.cml' % id)
+            self._record_configs[id] = self._reader.read_config_file('record_config_%s.cml' % id)
 
         return self._record_configs[id]
 
@@ -134,7 +132,7 @@ class CWRConfiguration(object):
         :return: the fields configuration
         """
         if id not in self._transaction_configs:
-            self._transaction_configs[id] = self._reader.read_file('transaction_config_%s.cml' % id)
+            self._transaction_configs[id] = self._reader.read_config_file('transaction_config_%s.cml' % id)
 
         return self._transaction_configs[id]
 

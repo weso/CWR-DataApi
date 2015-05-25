@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import MessageDictionaryEncoder
 from cwr.acknowledgement import MessageRecord
 
-
 """
 Message to dictionary encoding tests.
 

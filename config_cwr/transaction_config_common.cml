@@ -2,7 +2,7 @@ group:
     id: administrator_information
     rules:
       [
-      sequence:
+      sequence
         [
         record: publisher
         record: nra_publisher_name (optional)
@@ -14,18 +14,18 @@ group:
     id: acknowledgement_transaction
     rules:
       [
-      sequence:
+      sequence
         [
         record: acknowledgement
         record: message (optional, at_least_one)
 		]
-      option:
+      option
 	    [
-        sequence:
+        sequence
           [
           record: agreement
 		  ]
-        sequence:
+        sequence
           [
           record: work
           record: work_conflict (optional)
@@ -37,7 +37,7 @@ group:
     id: agreement_transaction
     rules:
       [
-      sequence:
+      sequence
         [
         record: agreement
         transaction: territory_information (at_least_one)
@@ -48,7 +48,7 @@ group:
     id: controlled_publisher_information
     rules:
       [
-      sequence:
+      sequence
         [
         transaction: original_publisher_information
         transaction: administrator_information (optional, at_least_one)
@@ -61,7 +61,7 @@ group:
     id: controlled_writer_information
     rules:
       [
-      sequence:
+      sequence
         [
         record: writer
         record: nra_writer_name (optional)
@@ -74,7 +74,7 @@ group:
     id: information_for_excerpts
     rules:
       [
-      sequence:
+      sequence
         [
         record: entire_work_title
         record: nra_work (optional)
@@ -86,7 +86,7 @@ group:
     id: information_for_versions
     rules:
       [
-      sequence:
+      sequence
         [
         record: original_work_title
         record: nra_work (optional)
@@ -98,7 +98,7 @@ group:
     id: information_for_components
     rules:
       [
-      sequence:
+      sequence
         [
         record: component
         record: nra_work (optional)
@@ -110,7 +110,7 @@ group:
     id: instrumentation_information
     rules:
       [
-      sequence:
+      sequence
         [
         record: instrumentation_summary
         record: instrumentation_detail (optional, at_least_one)
@@ -121,7 +121,7 @@ group:
     id: ipa_information
     rules:
       [
-      sequence:
+      sequence
         [
         record: interested_party_agreement
         record: nra_agreement_party (optional)
@@ -132,7 +132,7 @@ group:
     id: original_publisher_information
     rules:
       [
-      sequence:
+      sequence
         [
         record: publisher
         record: nra_publisher_name (optional)
@@ -144,7 +144,7 @@ group:
     id: subpublisher_information
     rules:
       [
-      sequence:
+      sequence
         [
         record: publisher
         record: nra_publisher_name (optional)
@@ -156,7 +156,7 @@ group:
     id: territory_information
     rules:
       [
-      sequence:
+      sequence
         [
         record: territory_in_agreement (at_least_one)
         record: ipa_information (at_least_two)
@@ -167,7 +167,7 @@ group:
     id: work_transaction
     rules:
       [
-      sequence:
+      sequence
         [
         record: work
         record: controlled_publisher_information (optional, at_least_one)

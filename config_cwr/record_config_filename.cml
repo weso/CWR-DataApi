@@ -2,7 +2,7 @@ filename:
     id: filename_old
     rules:
       [
-      sequence:
+      sequence
         [
         field: header (compulsory)
         field: year (compulsory)
@@ -11,14 +11,14 @@ filename:
         field: delimiter_ip (compulsory)
         field: receiver (compulsory)
         ]
-      option:
+      option
         [
-        sequence:
+        sequence
           [
           field: delimiter_version (compulsory)
           field: version (compulsory)
           ]
-        sequence:
+        sequence
           [
           field: delimiter_zip (compulsory)
           ]
@@ -29,7 +29,7 @@ filename:
     id: filename_new
     rules:
       [
-      sequence:
+      sequence
         [
         field: header (compulsory)
         field: year (compulsory)
@@ -38,14 +38,14 @@ filename:
         field: delimiter_ip (compulsory)
         field: receiver (compulsory)
         ]
-      option:
+      option
         [
-        sequence:
+        sequence
           [
           field: delimiter_version (compulsory)
           field: version (compulsory)
           ]
-        sequence:
+        sequence
           [
           field: delimiter_zip (compulsory)
           ]

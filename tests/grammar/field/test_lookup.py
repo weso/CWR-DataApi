@@ -5,7 +5,6 @@ from pyparsing import ParseException
 
 from cwr.grammar.field import basic
 
-
 """
 Tests for Table/List Lookup (L) fields.
 """

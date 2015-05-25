@@ -5,7 +5,6 @@ import os
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.parser.encoder.cwrjson import JSONEncoder
 
-
 """
 Visual test for transforming file into a JSON.
 

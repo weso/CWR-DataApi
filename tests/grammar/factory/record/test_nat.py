@@ -5,7 +5,6 @@ from pyparsing import ParseException
 
 from tests.utils.grammar import get_record_grammar
 
-
 """
 CWR Non-Roman Alphabet Title grammar tests.
 

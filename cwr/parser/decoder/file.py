@@ -165,8 +165,11 @@ def default_filename_grammar_factory():
 
 
 def process_rules(rules):
-    parser = rule_config_file
-    processed = parser.parseString(rules)
+    processed = {}
+    for rule in rules:
+        id = rule.id
+        print id
+        processed[id] = rule
 
     return processed
 

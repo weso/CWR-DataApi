@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import InstrumentationDetailDictionaryEncoder
 from cwr.work import InstrumentationDetailRecord
 
-
 """
 InstrumentationDetailRecord to dictionary encoding tests.
 

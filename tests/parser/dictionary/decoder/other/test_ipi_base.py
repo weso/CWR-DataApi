@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import IPIBaseDictionaryDecoder
 
-
 """
 Acknowledgement to dictionary encoding tests.
 

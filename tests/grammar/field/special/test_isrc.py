@@ -5,7 +5,6 @@ from pyparsing import ParseException
 
 from cwr.grammar.field import special
 
-
 """
 Tests for ISRC fields.
 """

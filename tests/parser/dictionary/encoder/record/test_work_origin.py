@@ -6,7 +6,6 @@ from cwr.parser.encoder.dictionary import WorkOriginDictionaryEncoder
 from cwr.work import WorkOriginRecord
 from cwr.other import VISAN, AVIKey
 
-
 """
 WorkOriginRecord to dictionary encoding tests.
 

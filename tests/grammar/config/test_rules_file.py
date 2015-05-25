@@ -4,7 +4,6 @@ import unittest
 
 from cwr.grammar.factory.config import rule_config_file
 
-
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __version__ = '0.0.0'
@@ -20,7 +19,7 @@ class TestConfigTerminalRule(unittest.TestCase):
               '    id: filename_old' + '\n' + \
               '    rules:' + '\n' + \
               '      [' + '\n' + \
-              '      sequence:' + '\n' + \
+              '      sequence' + '\n' + \
               '        [' + '\n' + \
               '        field: header (compulsory)' + '\n' + \
               '        field: year (compulsory)' + '\n' + \
@@ -29,14 +28,14 @@ class TestConfigTerminalRule(unittest.TestCase):
               '        field: delimiter_ip (compulsory)' + '\n' + \
               '        field: receiver (compulsory)' + '\n' + \
               '        ]' + '\n' + \
-              '      option:' + '\n' + \
+              '      option' + '\n' + \
               '        [' + '\n' + \
-              '        sequence:' + '\n' + \
+              '        sequence' + '\n' + \
               '          [' + '\n' + \
               '          field: delimiter_version (compulsory)' + '\n' + \
               '          field: version (compulsory)' + '\n' + \
               '          ]' + '\n' + \
-              '        sequence:' + '\n' + \
+              '        sequence' + '\n' + \
               '          [' + '\n' + \
               '          field: delimiter_zip (compulsory)' + '\n' + \
               '          ]' + '\n' + \

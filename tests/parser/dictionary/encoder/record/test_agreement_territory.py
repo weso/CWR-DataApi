@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import AgreementTerritoryDictionaryEncoder
 from cwr.agreement import AgreementTerritoryRecord
 
-
 """
 AgreementRecord to dictionary encoding tests.
 

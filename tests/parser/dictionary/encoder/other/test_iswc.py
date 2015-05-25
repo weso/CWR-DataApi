@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import ISWCDictionaryEncoder
 from cwr.other import ISWCCode
 
-
 """
 Acknowledgement to dictionary encoding tests.
 

@@ -7,7 +7,6 @@ from cwr.parser.encoder.dictionary import WorkDictionaryEncoder
 from cwr.work import WorkRecord
 from cwr.other import ISWCCode
 
-
 """
 WorkRecord to dictionary encoding tests.
 
@@ -66,7 +65,7 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('ORI', encoded['version_type'])
         self.assertEqual('SER', encoded['musical_work_distribution_category'])
         self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-            encoded['date_publication_printed_edition'])
+                         encoded['date_publication_printed_edition'])
         self.assertEqual('MTX', encoded['text_music_relationship'])
         self.assertEqual('ES', encoded['language_code'])
         self.assertEqual('ABDF146', encoded['copyright_number'])
@@ -132,7 +131,7 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('ORI', encoded['version_type'])
         self.assertEqual('SER', encoded['musical_work_distribution_category'])
         self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-            encoded['date_publication_printed_edition'])
+                         encoded['date_publication_printed_edition'])
         self.assertEqual('MTX', encoded['text_music_relationship'])
         self.assertEqual('ES', encoded['language_code'])
         self.assertEqual('ABDF146', encoded['copyright_number'])

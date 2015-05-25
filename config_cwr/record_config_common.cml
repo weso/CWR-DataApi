@@ -3,7 +3,7 @@ transaction_record:
     head: ACK
     rules:
       [
-      sequence:
+      sequence
         [
         field: creation_date_time
         field: original_group_id
@@ -22,7 +22,7 @@ transaction_record:
     head: ARI
     rules:
       [
-      sequence:
+      sequence
         [
         field: society_n
         field: work_n
@@ -37,7 +37,7 @@ transaction_record:
     head: AGR
     rules:
       [
-      sequence:
+      sequence
         [
         field: submitter_agreement_n
         field: international_standard_code
@@ -63,7 +63,7 @@ transaction_record:
     head: COM
     rules:
       [
-      sequence:
+      sequence
         [
         field: component_title
         field: iswc
@@ -85,7 +85,7 @@ transaction_record:
     head: EWT
     rules:
       [
-      sequence:
+      sequence
         [
         field: entire_work_title
         field: iswc
@@ -108,7 +108,7 @@ record:
     head: GRH
     rules:
       [
-      sequence:
+      sequence
         [
         field: transaction_type
         field: group_id
@@ -123,7 +123,7 @@ record:
     head: GRT
     rules:
       [
-      sequence:
+      sequence
         [
         field: group_id
         field: transaction_count
@@ -142,7 +142,7 @@ record:
     results_name: group_trailer
     rules:
       [
-      sequence:
+      sequence
         [
         field: group_id
         field: transaction_count
@@ -158,7 +158,7 @@ record:
     results_name: group_trailer
     rules:
       [
-      sequence:
+      sequence
         [
         field: group_id
         field: transaction_count
@@ -171,7 +171,7 @@ transaction_record:
     head: IND
     rules:
       [
-      sequence:
+      sequence
         [
         field: instrument_code
         field: number_players
@@ -183,7 +183,7 @@ transaction_record:
     head: INS
     rules:
       [
-      sequence:
+      sequence
         [
         field: number_voices
         field: standard_instrumentation_type
@@ -196,7 +196,7 @@ transaction_record:
     head: IPA
     rules:
       [
-      sequence:
+      sequence
         [
         field: agreement_role_code
         field: ipi_name_n
@@ -218,7 +218,7 @@ transaction_record:
     head: MSG
     rules:
       [
-      sequence:
+      sequence
         [
         field: message_type
         field: original_record_sequence_n
@@ -234,7 +234,7 @@ transaction_record:
     head: NPA
     rules:
       [
-      sequence:
+      sequence
         [
         field: ip_n
         field: ip_name_ext
@@ -248,7 +248,7 @@ transaction_record:
     head: NOW
     rules:
       [
-      sequence:
+      sequence
         [
         field: writer_name_ext
         field: writer_first_name_long_ext
@@ -262,7 +262,7 @@ transaction_record:
     head: NPR
     rules:
       [
-      sequence:
+      sequence
         [
         field: performing_artist_name_ext
         field: performing_artist_first_name_long_ext
@@ -279,7 +279,7 @@ transaction_record:
     head: NPN
     rules:
       [
-      sequence:
+      sequence
         [
         field: publisher_sequence_n
         field: ip_n
@@ -293,7 +293,7 @@ transaction_record:
     head: NAT
     rules:
       [
-      sequence:
+      sequence
         [
         field: title_ext
         field: title_type
@@ -309,7 +309,7 @@ transaction_record:
       NVT
     rules:
       [
-      sequence:
+      sequence
         [
         field: title_ext
         field: language_code
@@ -321,7 +321,7 @@ transaction_record:
     head: NWN
     rules:
       [
-      sequence:
+      sequence
         [
         field: ip_n
         field: writer_last_name_long_ext
@@ -335,7 +335,7 @@ transaction_record:
     head: VER
     rules:
       [
-      sequence:
+      sequence
         [
         field: original_title
         field: iswc
@@ -358,7 +358,7 @@ transaction_record:
     head: PER
     rules:
       [
-      sequence:
+      sequence
         [
         field: performing_artist_last_name
         field: performing_artist_first_name
@@ -374,7 +374,7 @@ transaction_record:
       OPU
     rules:
       [
-      sequence:
+      sequence
         [
         field: publisher_sequence_n
         field: ip_n
@@ -406,7 +406,7 @@ transaction_record:
     head: SPT
     rules:
       [
-      sequence:
+      sequence
         [
         field: ip_n
         field: constant
@@ -416,7 +416,7 @@ transaction_record:
         field: inclusion_exclusion_indicator
         field: tis_numeric_code
         field: shares_change
-        option:
+        option
 		  [
           field: sequence_n
           field: sequence_n_2
@@ -429,7 +429,7 @@ transaction_record:
     head: REC
     rules:
       [
-      sequence:
+      sequence
         [
         field: first_release_date
         field: constant_1
@@ -451,7 +451,7 @@ transaction_record:
     head: TER
     rules:
       [
-      sequence:
+      sequence
         [
         field: inclusion_exclusion_indicator
         field: tis_numeric_code
@@ -464,7 +464,7 @@ record:
     results_name: header
     rules:
       [
-      sequence:
+      sequence
         [
         field: sender_type
         field: sender_id
@@ -482,7 +482,7 @@ record:
     results_name: trailer
     rules:
       [
-      sequence:
+      sequence
         [
         field: group_count
         field: transaction_count
@@ -498,7 +498,7 @@ transaction_record:
       ISW
     rules:
       [
-      sequence:
+      sequence
         [
         field: work_title
         field: language_code
@@ -533,7 +533,7 @@ transaction_record:
     head: ALT
     rules:
       [
-      sequence:
+      sequence
         [
         field: alternate_title
         field: title_type
@@ -546,7 +546,7 @@ transaction_record:
     head: EXC
     rules:
       [
-      sequence:
+      sequence
         [
         field: work_title
         field: language_code
@@ -581,7 +581,7 @@ transaction_record:
     head: ORN
     rules:
       [
-      sequence:
+      sequence
         [
         field: intended_purpose
         field: production_title
@@ -605,7 +605,7 @@ transaction_record:
       OWR
     rules:
       [
-      sequence:
+      sequence
         [
         field: ip_n
         field: writer_last_name
@@ -635,7 +635,7 @@ transaction_record:
     head: PWR
     rules:
       [
-      sequence:
+      sequence
         [
         field: publisher_ip_n
         field: publisher_name
@@ -650,7 +650,7 @@ transaction_record:
     head: SWT
     rules:
       [
-      sequence:
+      sequence
         [
         field: ip_n
         field: pr_collection_share (compulsory)
@@ -659,7 +659,7 @@ transaction_record:
         field: inclusion_exclusion_indicator
         field: tis_numeric_code
         field: shares_change
-        option:
+        option
 		  [
           field: sequence_n
           field: sequence_n_2
