@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import WriterDictionaryEncoder
 from cwr.interested_party import Writer
 
-
 """
 Writer to dictionary encoding tests.
 

@@ -4,7 +4,6 @@ import datetime
 
 from cwr.record import TransactionRecord
 
-
 """
 Work entity model classes.
 
@@ -1420,5 +1419,3 @@ class PerformingArtistRecord(TransactionRecord):
         :return: the Performing Artist last name
         """
         return self._performing_artist_last_name
-
-

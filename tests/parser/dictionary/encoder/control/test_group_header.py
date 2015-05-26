@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import GroupHeaderDictionaryEncoder
 from cwr.group import GroupHeader
 
-
 """
 Group Header to dictionary encoding tests.
 

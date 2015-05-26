@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.decoder.dictionary import PublisherDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
-
 """
 Dictionary to Message decoding tests.
 

@@ -5,7 +5,6 @@ import datetime
 
 from cwr.parser.decoder.dictionary import AcknowledgementDictionaryDecoder
 
-
 """
 Dictionary to Acknowledgement decoding tests.
 

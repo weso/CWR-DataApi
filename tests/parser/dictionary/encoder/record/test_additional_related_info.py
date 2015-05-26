@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import AdditionalRecordRelatedInfoDictionaryEncoder
 from cwr.info import AdditionalRelatedInfoRecord
 
-
 """
 Additional Related Info to dictionary encoding tests.
 

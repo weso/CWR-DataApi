@@ -3,7 +3,6 @@ import unittest
 
 from cwr.grammar.field import special
 
-
 """
 Tests for EAN 13 fields.
 """

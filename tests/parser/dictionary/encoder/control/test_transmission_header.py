@@ -6,7 +6,6 @@ import datetime
 from cwr.parser.encoder.dictionary import TransmissionHeaderDictionaryEncoder
 from cwr.transmission import TransmissionHeader
 
-
 """
 TransmissionHeader to dictionary encoding tests.
 

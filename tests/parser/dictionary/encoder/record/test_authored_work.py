@@ -6,7 +6,6 @@ from cwr.parser.encoder.dictionary import AuthoredWorkDictionaryEncoder
 from cwr.work import AuthoredWorkRecord
 from cwr.other import ISWCCode
 
-
 """
 AuthoredWorkRecord to dictionary encoding tests.
 

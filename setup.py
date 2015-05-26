@@ -2,13 +2,11 @@
 import ast
 import re
 import sys
-
 from codecs import open
 from os import path
 
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
-
 
 """
 PyPI configuration module.
@@ -40,17 +38,18 @@ with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
 
 
 class _ToxTester(TestCommand):
-
     def finalize_options(self):
         TestCommand.finalize_options(self)
         self.test_args = []
         self.test_suite = True
 
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, cause outside the eggs aren't loaded
         import tox
+
         errcode = tox.cmdline(self.test_args)
         sys.exit(errcode)
+
 
 setup(
     name='CWR-API',
@@ -86,5 +85,5 @@ setup(
     ],
     tests_require=_tests_require,
     extras_require={'test': _tests_require},
-    cmdclass = {'test': _ToxTester},
+    cmdclass={'test': _ToxTester},
 )

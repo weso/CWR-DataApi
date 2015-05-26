@@ -2,6 +2,9 @@
 
 import pyparsing as pp
 
+from cwr.grammar.field.basic import numeric, lookup
+from config_cwr.accessor import CWRConfiguration
+
 """
 CWR filename fields grammar.
 """
@@ -43,3 +46,44 @@ def alphanum_variable(min, max, name=None):
     field.setName(name)
 
     return field
+
+
+def year(columns, name=None):
+    """
+    Creates the grammar for a field containing a year.
+
+    :param columns: the number of columns for the year
+    :param name: the name of the field
+    :return:
+    """
+
+    if columns < 0:
+        # Can't have negative size
+        raise BaseException()
+
+    field = numeric(columns, name)
+
+    # Parse action
+    field.addParseAction(lambda n: _to_year(n))
+
+    return field
+
+
+def filename_version(values, name=None):
+    field = lookup(values, name)
+
+    default_version = CWRConfiguration().default_version()
+
+    # Parse action
+    field.addParseAction(lambda n: default_version)
+
+    return field
+
+
+def _to_year(parsed):
+    """
+    Transforms the parsed two digits integer into a valid year value.
+
+    :param parsed: the parsed value
+    """
+    return 2000 + parsed[0]

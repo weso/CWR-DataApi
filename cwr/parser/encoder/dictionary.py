@@ -8,7 +8,6 @@ from cwr.interested_party import *
 from cwr.non_roman_alphabet import *
 from cwr.work import *
 
-
 """
 Classes for transforming instances of the CWR model into dictionaries.
 

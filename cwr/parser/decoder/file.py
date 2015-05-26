@@ -3,13 +3,12 @@ import logging
 
 from cwr.parser.decoder.common import GrammarDecoder
 from config_cwr.accessor import CWRConfiguration
-from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
+from cwr.grammar.factory.rule import FieldRuleFactory
 from data_cwr.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
-from cwr.grammar.factory.decorator import RecordRuleDecorator, GroupRuleDecorator
+from cwr.grammar.factory.decorator import *
 from cwr.parser.decoder.dictionary import *
 from cwr.grammar.factory.adapter import *
-
 
 """
 Classes for processing CWR files, creating a graph of CWR model instances from it.
@@ -85,7 +84,7 @@ def _default_record_decoders():
     return decoders
 
 
-def _default_adapters():
+def default_adapters():
     adapters = {}
 
     adapters['alphanum'] = AlphanumAdapter()
@@ -109,8 +108,67 @@ def _default_adapters():
     adapters['charset'] = CharSetAdapter()
     adapters['alphanum_variable'] = VariableAlphanumAdapter()
     adapters['numeric_float'] = NumericFloatAdapter()
+    adapters['year'] = YearAdapter()
+    adapters['filename_version'] = FilenameVersionAdapter()
+    adapters['lookup_int'] = LookupIntAdapter()
 
     return adapters
+
+
+def default_grammar_factory():
+    config = CWRConfiguration()
+
+    data = config.load_field_config('table')
+    data.update(config.load_field_config('common'))
+
+    field_values = CWRTables()
+
+    for entry in data.values():
+        if 'source' in entry:
+            values_id = entry['source']
+            entry['values'] = field_values.get_data(values_id)
+
+    factory_field = FieldRuleFactory(data, default_adapters())
+
+    optional_decorator = OptionalFieldRuleDecorator(data, default_adapters())
+
+    rules = _process_rules(config.load_record_config('common'))
+    rules.update(_process_rules(config.load_transaction_config('common')))
+    rules.update(_process_rules(config.load_group_config('common')))
+
+    decorators = {'transaction_record': TransactionRecordRuleDecorator(factory_field, _default_record_decoders()),
+                  'record': RecordRuleDecorator(factory_field, _default_record_decoders()),
+                  'group': GroupRuleDecorator(_default_group_decoders())}
+    return DefaultRuleFactory(rules, factory_field, optional_decorator, decorators)
+
+
+def default_filename_grammar_factory():
+    config = CWRConfiguration()
+
+    data = config.load_field_config('table')
+    data.update(config.load_field_config('common'))
+    data.update(config.load_field_config('filename'))
+    field_values = CWRTables()
+
+    for entry in data.values():
+        if 'source' in entry:
+            values_id = entry['source']
+            entry['values'] = field_values.get_data(values_id)
+
+    factory_field = FieldRuleFactory(data, default_adapters())
+
+    optional_decorator = OptionalFieldRuleDecorator(data, default_adapters())
+
+    return DefaultRuleFactory(_process_rules(config.load_record_config('filename')), factory_field, optional_decorator)
+
+
+def _process_rules(rules):
+    processed = {}
+    for rule in rules:
+        id = rule.id
+        processed[id] = rule
+
+    return processed
 
 
 def default_file_decoder():
@@ -119,23 +177,7 @@ def default_file_decoder():
 
     :return: a CWR file decoder for the default standard
     """
-    _config = CWRConfiguration()
-
-    _data = _config.load_field_config('table')
-    _data.update(_config.load_field_config('common'))
-
-    _factory_field = DefaultFieldTerminalRuleFactory(_data, _default_adapters(), field_values=CWRTables())
-
-    _rules = _config.load_transaction_config('common')
-    _rules.update(_config.load_record_config('common'))
-    _rules.update(_config.load_group_config('common'))
-
-    _decorators = {'transaction': RecordRuleDecorator(_factory_field, _default_record_decoders()),
-                   'record': RecordRuleDecorator(_factory_field, _default_record_decoders()),
-                   'group': GroupRuleDecorator(_default_group_decoders())}
-    _group_rule_factory = DefaultRuleFactory(_rules, _factory_field, _decorators)
-
-    return FileDecoder(_group_rule_factory.get_rule('transmission'), default_filename_decoder())
+    return FileDecoder(default_grammar_factory().get_rule('transmission'), default_filename_decoder())
 
 
 def default_filename_decoder():
@@ -144,18 +186,10 @@ def default_filename_decoder():
 
     :return: a CWR filename decoder for the old and the new conventions
     """
-    _config = CWRConfiguration()
+    factory = default_filename_grammar_factory()
 
-    _data = _config.load_field_config('table')
-    _data.update(_config.load_field_config('common'))
-    _data.update(_config.load_field_config('filename'))
-
-    _factory_field = DefaultFieldTerminalRuleFactory(_data, _default_adapters(), field_values=CWRTables())
-
-    _group_rule_factory = DefaultRuleFactory(_config.load_record_config('filename'), _factory_field)
-
-    grammar_old = _group_rule_factory.get_rule('filename_old')
-    grammar_new = _group_rule_factory.get_rule('filename_new')
+    grammar_old = factory.get_rule('filename_old')
+    grammar_new = factory.get_rule('filename_new')
 
     return FileNameDecoder(grammar_old, grammar_new)
 

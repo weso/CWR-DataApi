@@ -5,7 +5,6 @@ import datetime
 
 from cwr.parser.decoder.dictionary import AgreementDictionaryDecoder
 
-
 """
 Dictionary to Message decoding tests.
 

@@ -6,7 +6,6 @@ import datetime
 from cwr.parser.decoder.dictionary import ComponentDictionaryDecoder
 from cwr.other import ISWCCode
 
-
 """
 Dictionary to Message decoding tests.
 

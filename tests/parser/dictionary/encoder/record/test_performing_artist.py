@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import PerformingArtistDictionaryEncoder
 from cwr.work import PerformingArtistRecord
 
-
 """
 PerformingArtistRecord to dictionary encoding tests.
 

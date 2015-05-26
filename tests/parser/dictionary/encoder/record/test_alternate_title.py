@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import AlternateTitleDictionaryEncoder
 from cwr.work import AlternateTitleRecord
 
-
 """
 AlternateTitleRecord to dictionary encoding tests.
 

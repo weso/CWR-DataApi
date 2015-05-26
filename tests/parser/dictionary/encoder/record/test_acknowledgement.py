@@ -6,7 +6,6 @@ import datetime
 from cwr.parser.encoder.dictionary import AcknowledgementDictionaryEncoder
 from cwr.acknowledgement import AcknowledgementRecord
 
-
 """
 Acknowledgement to dictionary encoding tests.
 

@@ -2,7 +2,6 @@
 
 from cwr.parser.encoder.common import Encoder
 
-
 """
 Parsers for encoding CWR model classes, creating a text string for them which complies with the CWR standard.
 

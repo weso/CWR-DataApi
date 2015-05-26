@@ -5,7 +5,6 @@ from pyparsing import ParseException
 
 from tests.utils.grammar import get_record_grammar
 
-
 """
 CWR Group Header grammar tests.
 
@@ -88,7 +87,6 @@ class TestGrammarGroupHeaderGrammarException(unittest.TestCase):
 
     def setUp(self):
         self.grammar = get_record_grammar('group_header')
-
 
     def test_empty(self):
         record = ''

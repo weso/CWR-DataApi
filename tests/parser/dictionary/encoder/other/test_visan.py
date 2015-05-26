@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import VISANDictionaryEncoder
 from cwr.other import VISAN
 
-
 """
 Acknowledgement to dictionary encoding tests.
 

@@ -9,7 +9,6 @@ from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import AgreementRecord
 from cwr.transmission import TransmissionTrailer, TransmissionHeader, Transmission
 
-
 """
 Group Header to dictionary encoding tests.
 
@@ -79,7 +78,6 @@ class TestTransmissionDictionaryEncoding(unittest.TestCase):
         agreement = self._get_agreement()
 
         return [acknowledgement, message1, message2, agreement]
-
 
     def _get_ack(self):
         return AcknowledgementRecord(record_type='ACK',

@@ -7,7 +7,6 @@ import chardet
 
 from cwr.parser.decoder.file import default_file_decoder
 
-
 """
 Visual test for checking the parsing speed.
 

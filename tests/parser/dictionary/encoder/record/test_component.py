@@ -7,7 +7,6 @@ from cwr.parser.encoder.dictionary import ComponentDictionaryEncoder
 from cwr.work import ComponentRecord
 from cwr.other import ISWCCode
 
-
 """
 ComponentRecord to dictionary encoding tests.
 

@@ -4,7 +4,6 @@ import unittest
 
 from cwr.other import ISWCCode
 
-
 """
 Tests for miscellany model classes.
 """

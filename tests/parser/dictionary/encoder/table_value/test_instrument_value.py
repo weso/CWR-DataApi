@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import InstrumentValueDictionaryEncoder
 from cwr.table_value import InstrumentValue
 
-
 """
 Acknowledgement to dictionary encoding tests.
 
