@@ -2,8 +2,8 @@
 import unittest
 
 from pyparsing import ParseException
-from cwr.grammar.factory.rule import FieldRuleFactory
 
+from cwr.grammar.factory.rule import FieldRuleFactory
 from config_cwr.accessor import CWRConfiguration
 from cwr.grammar.field.record import record_prefix
 from cwr.parser.decoder.file import default_adapters

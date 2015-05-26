@@ -132,14 +132,14 @@ def default_grammar_factory():
 
     optional_decorator = OptionalFieldRuleDecorator(data, default_adapters())
 
-    rules = config.load_record_config('common')
-    rules.extend(config.load_transaction_config('common'))
-    rules.extend(config.load_group_config('common'))
+    rules = process_rules(config.load_record_config('common'))
+    rules.update(process_rules(config.load_transaction_config('common')))
+    rules.update(process_rules(config.load_group_config('common')))
 
     decorators = {'transaction_record': TransactionRecordRuleDecorator(factory_field, _default_record_decoders()),
                   'record': RecordRuleDecorator(factory_field, _default_record_decoders()),
                   'group': GroupRuleDecorator(_default_group_decoders())}
-    return DefaultRuleFactory(process_rules(rules), factory_field, optional_decorator, decorators)
+    return DefaultRuleFactory(rules, factory_field, optional_decorator, decorators)
 
 
 def default_filename_grammar_factory():

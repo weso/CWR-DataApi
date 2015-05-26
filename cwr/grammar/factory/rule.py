@@ -104,6 +104,8 @@ class FieldRuleFactory(RuleFactory):
 class DefaultRuleFactory(RuleFactory):
     def __init__(self, record_configs, field_rule_factory, optional_terminal_rule_decorator, decorators=None):
         super(DefaultRuleFactory, self).__init__()
+        self._debug = False
+
         # Configuration for creating the record
         self._record_configs = record_configs
         self._field_rule_factory = field_rule_factory
@@ -131,6 +133,11 @@ class DefaultRuleFactory(RuleFactory):
             rule = rule.setResultsName(rule_config['results_name'])
         else:
             rule = rule.setResultsName(rule_id)
+
+        rule.setName(rule_id)
+
+        if self._debug:
+            rule.setDebug()
 
         return rule
 
@@ -170,6 +177,9 @@ class DefaultRuleFactory(RuleFactory):
         if rule_type == 'field':
             rule = self._field_rule_factory.get_rule(rule_id)
 
+            if self._debug:
+                rule.setDebug()
+
             compulsory = False
             i = 0
             while not compulsory and i < len(modifiers):
@@ -180,7 +190,7 @@ class DefaultRuleFactory(RuleFactory):
         else:
             rule = self.get_rule(rule_id)
 
-        if modifiers and len(modifiers)>0:
+        if modifiers and len(modifiers) > 0:
             rule = self._apply_modifiers(rule, modifiers)
 
         rule.setName(rule_id)
@@ -192,12 +202,13 @@ class DefaultRuleFactory(RuleFactory):
             if modifier == 'grouped':
                 rule = pp.Group(rule)
 
-            if modifier == 'at_least_one':
+            if modifier == 'at_least_zero':
+                rule = pp.ZeroOrMore(rule)
+            elif modifier == 'at_least_one':
                 rule = pp.OneOrMore(rule)
             elif modifier == 'at_least_two':
-                rule = pp.And([(rule * 2), pp.ZeroOrMore(rule)])
-
-            if modifier == 'optional':
+                rule = pp.And(rule * 2) + pp.ZeroOrMore(rule)
+            elif modifier == 'optional':
                 rule = pp.Optional(rule)
 
         return rule
