@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import IPIBaseDictionaryEncoder
 from cwr.other import IPIBaseNumber
 
-
 """
 Acknowledgement to dictionary encoding tests.
 

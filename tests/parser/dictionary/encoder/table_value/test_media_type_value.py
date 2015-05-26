@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import MediaTypeDictionaryEncoder
 from cwr.table_value import MediaTypeValue
 
-
 """
 Acknowledgement to dictionary encoding tests.
 

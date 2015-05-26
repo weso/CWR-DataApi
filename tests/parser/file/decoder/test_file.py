@@ -7,7 +7,6 @@ from pyparsing import ParseException
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 from cwr.parser.decoder.file import default_file_decoder
 
-
 """
 CWR file encoder tests.
 

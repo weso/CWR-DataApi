@@ -87,5 +87,3 @@ class TestControlledPublisherInformationGrammarException(unittest.TestCase):
         record = 'This is an invalid string'
 
         self.assertRaises(ParseException, self.grammar.parseString, record)
-
-

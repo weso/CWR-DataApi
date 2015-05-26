@@ -13,7 +13,6 @@ from cwr.file import *
 from cwr.other import *
 from cwr.table_value import *
 
-
 """
 Classes for transforming dictionaries into instances of the CWR model.
 

@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import InterestedPartyForAgreementDictionaryEncoder
 from cwr.agreement import InterestedPartyForAgreementRecord
 
-
 """
 InterestedPartyForAgreementRecord to dictionary encoding tests.
 

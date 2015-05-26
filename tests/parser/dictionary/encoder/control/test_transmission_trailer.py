@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import TransmissionTrailerDictionaryEncoder
 from cwr.transmission import TransmissionTrailer
 
-
 """
 TransmissionTrailer to dictionary encoding tests.
 

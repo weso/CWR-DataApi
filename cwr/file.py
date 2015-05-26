@@ -172,5 +172,3 @@ class FileTag(object):
         :return: the CWR standard specification version used
         """
         return self._version
-
-

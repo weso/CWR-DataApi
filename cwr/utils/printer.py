@@ -12,7 +12,6 @@ from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord, NonRoma
     NonRomanAlphabetWriterNameRecord, NonRomanAlphabetTitleRecord, NonRomanAlphabetWorkRecord, \
     NonRomanAlphabetOtherWriterRecord, NonRomanAlphabetPerformanceDataRecord
 
-
 """
 A small tool to print the contents of a CWR on the console.
 

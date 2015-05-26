@@ -3,7 +3,6 @@ import unittest
 
 from cwr.grammar.field import special
 
-
 """
 Tests for the Date and Time field.
 """

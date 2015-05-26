@@ -7,7 +7,6 @@ import os
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.utils.printer import CWRPrinter
 
-
 """
 Visual test for checking a file contents.
 

@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import AdditionalRelatedInformationDictionaryDecoder
 
-
 """
 Dictionary to Message decoding tests.
 

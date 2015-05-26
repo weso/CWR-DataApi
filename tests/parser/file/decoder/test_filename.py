@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.file import default_filename_decoder
 
-
 """
 CWR file name encoder tests.
 
@@ -52,4 +51,3 @@ class TestFileNameCWRDecodeInvalid(unittest.TestCase):
         self.assertEqual('', result.sender)
         self.assertEqual('', result.receiver)
         self.assertEqual('', result.version)
-

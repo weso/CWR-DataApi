@@ -5,7 +5,6 @@ import csv
 
 import yaml
 
-
 """
 Facades for accessing the configuration data.
 """

@@ -6,7 +6,6 @@ import datetime
 from cwr.parser.encoder.dictionary import RecordingDetailDictionaryEncoder
 from cwr.work import RecordingDetailRecord
 
-
 """
 RecordingDetailRecord to dictionary encoding tests.
 

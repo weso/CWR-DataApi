@@ -5,7 +5,6 @@ import datetime
 
 from cwr.parser.decoder.dictionary import GroupDictionaryDecoder
 
-
 """
 Group from dictionary encoding tests.
 

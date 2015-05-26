@@ -7,7 +7,6 @@ from abc import ABCMeta
 
 from cwr.record import TransactionRecord
 
-
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __status__ = 'Development'

@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import NonRomanAlphabetPerformanceDataDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetPerformanceDataRecord
 
-
 """
 NPRRecord to dictionary encoding tests.
 

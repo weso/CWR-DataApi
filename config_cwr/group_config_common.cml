@@ -1,0 +1,49 @@
+group:
+    id: groups
+    rules:
+      [
+      sequence
+        [
+        group: group_info (at_least_1)
+		]
+	  ]
+
+group:
+    id: group_info
+    rules:
+      [
+      sequence
+        [
+        record: group_header
+        group: transactions (optional)
+        option
+		  [
+          record: group_trailer_base
+          record: group_trailer_short
+		  ]
+		]
+	  ]
+
+group:
+    id: transactions
+    rules:
+      [
+      option
+	    [
+        group: agreement_transaction (grouped, at_least_1)
+        group: work_transaction (grouped, at_least_1)
+        group: acknowledgement_transaction (grouped, at_least_1)
+		]
+	  ]
+
+group:
+    id: transmission
+    rules:
+      [
+      sequence
+        [
+        record: transmission_header
+        group: groups
+        record: transmission_trailer
+		]
+	  ]

@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import PublisherRecordDictionaryEncoder
 from cwr.interested_party import PublisherRecord, Publisher
 
-
 """
 Publisher to dictionary encoding tests.
 
