@@ -30,9 +30,9 @@ group:
       [
       option
 	    [
-        group: agreement_transaction (at_least_1, grouped)
-        group: work_transaction (at_least_1, grouped)
-        group: acknowledgement_transaction (at_least_1, grouped)
+        group: agreement_transaction (grouped, at_least_1)
+        group: work_transaction (grouped, at_least_1)
+        group: acknowledgement_transaction (grouped, at_least_1)
 		]
 	  ]
 

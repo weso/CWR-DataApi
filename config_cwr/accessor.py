@@ -3,8 +3,8 @@
 import os
 
 import yaml
-from cwr.grammar.factory.config import rule_config_file
 
+from cwr.grammar.factory.config import rule_config_file
 
 """
 Facades for accessing the configuration data.
