@@ -4,6 +4,8 @@ from abc import ABCMeta, abstractmethod
 
 import pyparsing as pp
 
+from cwr.grammar.factory.config import rule_at_least
+
 """
 Rules factories.
 """
@@ -187,13 +189,13 @@ class DefaultRuleFactory(RuleFactory):
 
             if not compulsory:
                 rule = self._optional_field_rule_decorator.decorate(rule, rule_id)
+
+            rule.setName(rule_id)
         else:
             rule = self.get_rule(rule_id)
 
         if modifiers and len(modifiers) > 0:
             rule = self._apply_modifiers(rule, modifiers)
-
-        rule.setName(rule_id)
 
         return rule
 
@@ -202,12 +204,15 @@ class DefaultRuleFactory(RuleFactory):
             if modifier == 'grouped':
                 rule = pp.Group(rule)
 
-            if modifier == 'at_least_zero':
-                rule = pp.ZeroOrMore(rule)
-            elif modifier == 'at_least_one':
-                rule = pp.OneOrMore(rule)
-            elif modifier == 'at_least_two':
-                rule = pp.And(rule * 2) + pp.ZeroOrMore(rule)
+            if modifier.startswith('at_least'):
+                times = rule_at_least.parseString(modifier)[0]
+                if times > 0:
+                    rule_multiple = rule
+                    for x in range(1, times):
+                        rule_multiple = rule_multiple + rule
+                    rule = rule_multiple + pp.ZeroOrMore(rule)
+                else:
+                    rule = pp.Optional(pp.ZeroOrMore(rule))
             elif modifier == 'optional':
                 rule = pp.Optional(rule)
 

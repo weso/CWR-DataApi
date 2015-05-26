@@ -10,6 +10,15 @@ __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
 __status__ = 'Development'
 
+rule_at_least = pp.Literal('at_least_').suppress() + \
+                pp.Word(pp.nums).setResultsName('count')
+rule_at_least.setParseAction(lambda c: _process_count(c))
+
+
+def _process_count(str):
+    return int(str[0])
+
+
 _rule_config_string = pp.Regex('[^()\[\]\\n,:]*')
 _rule_config_string.setParseAction(lambda s: _clear_str(s))
 

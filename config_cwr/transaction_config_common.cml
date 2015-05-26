@@ -5,7 +5,7 @@ group:
       sequence
         [
         record: acknowledgement
-        record: message (at_least_zero)
+        record: message (at_least_0)
 		]
       option
 	    [
@@ -29,7 +29,7 @@ group:
         [
         record: publisher
         record: nra_publisher_name (optional)
-        record: publisher_territory (at_least_zero)
+        record: publisher_territory (at_least_0)
 		]
 	  ]
 
@@ -40,7 +40,7 @@ group:
       sequence
         [
         record: agreement
-        transaction: territory_information (at_least_one)
+        transaction: territory_information (at_least_1)
 		]
 	  ]
 
@@ -51,9 +51,9 @@ group:
       sequence
         [
         transaction: original_publisher_information
-        transaction: administrator_information (at_least_zero)
-        transaction: subpublisher_information (at_least_zero)
-        record: publisher (at_least_zero)
+        transaction: administrator_information (at_least_0)
+        transaction: subpublisher_information (at_least_0)
+        record: publisher (at_least_0)
 		]
 	  ]
 
@@ -65,8 +65,8 @@ group:
         [
         record: writer
         record: nra_writer_name (optional)
-        record: writer_territory (at_least_zero)
-        record: writer_publisher (at_least_zero)
+        record: writer_territory (at_least_0)
+        record: writer_publisher (at_least_0)
 		]
 	  ]
 
@@ -78,7 +78,7 @@ group:
         [
         record: entire_work_title
         record: nra_work (optional)
-        record: nra_other_writer (at_least_zero)
+        record: nra_other_writer (at_least_0)
 		]
 	  ]
 
@@ -90,7 +90,7 @@ group:
         [
         record: original_work_title
         record: nra_work (optional)
-        record: nra_other_writer (at_least_zero)
+        record: nra_other_writer (at_least_0)
 		]
 	  ]
 
@@ -102,7 +102,7 @@ group:
         [
         record: component
         record: nra_work (optional)
-        record: nra_other_writer (at_least_zero)
+        record: nra_other_writer (at_least_0)
 		]
 	  ]
 
@@ -113,7 +113,7 @@ group:
       sequence
         [
         record: instrumentation_summary
-        record: instrumentation_detail (at_least_zero)
+        record: instrumentation_detail (at_least_0)
 		]
 	  ]
 
@@ -136,7 +136,7 @@ group:
         [
         record: publisher
         record: nra_publisher_name (optional)
-        record: publisher_territory (at_least_zero)
+        record: publisher_territory (at_least_0)
 		]
 	  ]
 
@@ -148,7 +148,7 @@ group:
         [
         record: publisher
         record: nra_publisher_name (optional)
-        record: publisher_territory (at_least_zero)
+        record: publisher_territory (at_least_0)
 		]
 	  ]
 
@@ -158,8 +158,8 @@ group:
       [
       sequence
         [
-        record: territory_in_agreement (at_least_one)
-        record: ipa_information (at_least_two)
+        record: territory_in_agreement (at_least_1)
+        record: ipa_information (at_least_2)
 		]
 	  ]
 
@@ -170,11 +170,11 @@ group:
       sequence
         [
         record: work
-        record: controlled_publisher_information (at_least_zero)
-        record: publisher (at_least_zero)
-        record: controlled_writer_information (at_least_zero)
-        record: writer (at_least_zero)
-        record: work_alternate_title (at_least_zero)
+        record: controlled_publisher_information (at_least_0)
+        record: publisher (at_least_0)
+        record: controlled_writer_information (at_least_0)
+        record: writer (at_least_0)
+        record: work_alternate_title (at_least_0)
         record: nra_title (optional)
         record: information_for_excerpts (optional)
         record: information_for_versions (optional)
@@ -182,8 +182,8 @@ group:
         record: nra_performance_data (optional)
         record: recording_detail (optional)
         record: work_origin (optional)
-        record: instrumentation_information (at_least_zero)
-        record: information_for_components (at_least_zero)
-        record: additional_related_information (at_least_zero)
+        record: instrumentation_information (at_least_0)
+        record: information_for_components (at_least_0)
+        record: additional_related_information (at_least_0)
 		]
 	  ]

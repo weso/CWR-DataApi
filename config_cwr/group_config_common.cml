@@ -4,7 +4,7 @@ group:
       [
       sequence
         [
-        group: group_info (at_least_one)
+        group: group_info (at_least_1)
 		]
 	  ]
 
@@ -30,9 +30,9 @@ group:
       [
       option
 	    [
-        group: agreement_transaction (at_least_one, grouped)
-        group: work_transaction (at_least_one, grouped)
-        group: acknowledgement_transaction (at_least_one, grouped)
+        group: agreement_transaction (at_least_1, grouped)
+        group: work_transaction (at_least_1, grouped)
+        group: acknowledgement_transaction (at_least_1, grouped)
 		]
 	  ]
 
