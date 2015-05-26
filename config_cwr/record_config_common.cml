@@ -128,7 +128,7 @@ record:
         field: group_id
         field: transaction_count
         field: record_count
-        optional:
+        optional
 		  [
 		  field: currency_indicator
 		  field: total_monetary_value

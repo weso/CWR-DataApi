@@ -2,7 +2,7 @@
 import unittest
 
 from pyparsing import ParseException
-from cwr.grammar.factory.field import FieldRuleFactory
+from cwr.grammar.factory.rule import FieldRuleFactory
 
 from cwr.grammar.factory.adapter import LookupAdapter
 

@@ -170,7 +170,12 @@ class DefaultRuleFactory(RuleFactory):
         if rule_type == 'field':
             rule = self._field_rule_factory.get_rule(rule_id)
 
-            if 'compulsory' not in modifiers:
+            compulsory = False
+            i = 0
+            while not compulsory and i < len(modifiers):
+                compulsory = modifiers[i] == 'compulsory'
+
+            if not compulsory:
                 rule = self._optional_field_rule_decorator.decorate(rule, rule_id)
         else:
             rule = self.get_rule(rule_id)
