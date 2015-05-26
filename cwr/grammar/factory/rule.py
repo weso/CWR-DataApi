@@ -175,20 +175,24 @@ class DefaultRuleFactory(RuleFactory):
         else:
             rule = self.get_rule(rule_id)
 
-        rule = self._apply_modifiers(rule, modifiers)
+        if modifiers and len(modifiers)>0:
+            rule = self._apply_modifiers(rule, modifiers)
+
+        rule.setName(rule_id)
 
         return rule
 
     def _apply_modifiers(self, rule, modifiers):
-        if 'grouped' in modifiers:
-            rule = pp.Group(rule)
+        for modifier in modifiers:
+            if modifier == 'grouped':
+                rule = pp.Group(rule)
 
-        if 'at_least_one' in modifiers:
-            rule = pp.OneOrMore(rule)
-        elif 'at_least_two' in modifiers:
-            rule = pp.And([(rule * 2), pp.ZeroOrMore(rule)])
+            if modifier == 'at_least_one':
+                rule = pp.OneOrMore(rule)
+            elif modifier == 'at_least_two':
+                rule = pp.And([(rule * 2), pp.ZeroOrMore(rule)])
 
-        if 'optional' in modifiers:
-            rule = pp.Optional(rule)
+            if modifier == 'optional':
+                rule = pp.Optional(rule)
 
         return rule
