@@ -107,7 +107,7 @@ class DefaultRuleFactory(RuleFactory):
         # Configuration for creating the record
         self._record_configs = record_configs
         self._field_rule_factory = field_rule_factory
-        self._optional_terminal_rule_decorator = optional_terminal_rule_decorator
+        self._optional_field_rule_decorator = optional_terminal_rule_decorator
 
         if decorators:
             self._decorators = decorators
@@ -170,8 +170,10 @@ class DefaultRuleFactory(RuleFactory):
         if rule_type == 'field':
             rule = self._field_rule_factory.get_rule(rule_id)
 
-        if 'compulsory' not in modifiers:
-            rule = self._optional_terminal_rule_decorator.decorate(rule, rule_id)
+            if 'compulsory' not in modifiers:
+                rule = self._optional_field_rule_decorator.decorate(rule, rule_id)
+        else:
+            rule = self.get_rule(rule_id)
 
         rule = self._apply_modifiers(rule, modifiers)
 
