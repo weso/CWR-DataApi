@@ -9,7 +9,6 @@ Tests for EAN 13 fields.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

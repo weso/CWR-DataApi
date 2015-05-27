@@ -8,7 +8,6 @@ Grammar utilities for the test classes.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 _group_rule_factory = default_grammar_factory()
