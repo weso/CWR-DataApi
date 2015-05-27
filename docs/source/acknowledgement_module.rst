@@ -15,4 +15,4 @@ Record classes
 --------------
 
 .. autoclass:: AcknowledgementRecord
-:members:
+    :members:

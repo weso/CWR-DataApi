@@ -11,6 +11,9 @@ env:
   - REQUIREMENTS=lowest
   - REQUIREMENTS=release
 matrix:
+  include:
+    - python: "2.7"
+      env: DOCS=true
   exclude:
     - python: "3.2"
       env: REQUIREMENTS=lowest
@@ -24,4 +27,5 @@ matrix:
 install:
   - pip install tox
 script:
-  - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS
+  - if [ -z "$DOCS" ]; tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS; fi
+  - if [ ! -z "$DOCS" ]; then tox -e docs; fi

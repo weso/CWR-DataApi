@@ -35,7 +35,7 @@ Some files contain information required to fill and validate the CWR files.
 - :download:`CWR Validation and Lookup Tables (CRF020) <_static/cwr_files/tables.rar>`
 - :download:`CWR Sender ID and Codes (CWR06-1972) <_static/cwr_files/sender_id_code.rar>`
 - :download:`CWR Error Messages (CWR08-2493) <_static/cwr_files/errors.rar>`
-- :download:`EDI Standards (IM0047) <>`
+- EDI Standards (IM0047) (MISSING)
 
 TIS information.
 
