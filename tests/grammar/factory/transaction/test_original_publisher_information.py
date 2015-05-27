@@ -13,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -77,7 +76,6 @@ class TestOriginalPublisherGrammar(unittest.TestCase):
 
         self.assertEqual('SPU', result[0].record_type)
         self.assertEqual('NPN', result[1].record_type)
-
 
     def test_valid_min(self):
         publisher = 'SPU000012340000002319A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'

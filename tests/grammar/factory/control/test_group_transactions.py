@@ -13,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -65,6 +64,49 @@ class TestTransactionInformationGrammar(unittest.TestCase):
         self.assertEqual('NPA', result[20].record_type)
 
         result = group[1]
+
+        self.assertEqual(21, len(result))
+
+        self.assertEqual('AGR', result[0].record_type)
+
+        self.assertEqual('TER', result[1].record_type)
+        self.assertEqual('TER', result[2].record_type)
+
+        self.assertEqual('IPA', result[3].record_type)
+        self.assertEqual('NPA', result[4].record_type)
+
+        self.assertEqual('IPA', result[5].record_type)
+        self.assertEqual('NPA', result[6].record_type)
+
+        self.assertEqual('IPA', result[7].record_type)
+        self.assertEqual('NPA', result[8].record_type)
+
+        self.assertEqual('IPA', result[9].record_type)
+        self.assertEqual('NPA', result[10].record_type)
+
+        self.assertEqual('TER', result[11].record_type)
+        self.assertEqual('TER', result[12].record_type)
+
+        self.assertEqual('IPA', result[13].record_type)
+        self.assertEqual('NPA', result[14].record_type)
+
+        self.assertEqual('IPA', result[15].record_type)
+        self.assertEqual('NPA', result[16].record_type)
+
+        self.assertEqual('IPA', result[17].record_type)
+        self.assertEqual('NPA', result[18].record_type)
+
+        self.assertEqual('IPA', result[19].record_type)
+        self.assertEqual('NPA', result[20].record_type)
+
+    def test_agreement_one(self):
+        record = _agreement_full()
+
+        group = self.grammar.parseString(record)
+
+        self.assertEqual(1, len(group))
+
+        result = group[0]
 
         self.assertEqual(21, len(result))
 

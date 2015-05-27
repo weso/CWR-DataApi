@@ -9,7 +9,6 @@ from cwr.grammar.field import basic
 from config_cwr.accessor import CWRConfiguration
 from data_cwr.accessor import CWRTables
 
-
 """
 Grammar for special cases and other fields.
 
@@ -486,3 +485,18 @@ def _combine_date_time(data):
     :return: the date and time combined
     """
     return datetime.datetime.combine(data.date, data.time)
+
+
+def lookup_int(values, name=None):
+    """
+    Lookup field which transforms the result into an integer.
+
+    :param values: values allowed
+    :param name: name for the field
+    :return: grammar for the lookup field
+    """
+    field = basic.lookup(values, name)
+
+    field.addParseAction(lambda l: int(l[0]))
+
+    return field

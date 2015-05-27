@@ -2,7 +2,6 @@
 
 from abc import ABCMeta, abstractmethod
 
-
 """
 Base classes for implementing encoder parsers.
 

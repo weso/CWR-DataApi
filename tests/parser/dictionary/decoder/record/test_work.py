@@ -6,7 +6,6 @@ import datetime
 from cwr.parser.decoder.dictionary import WorkDictionaryDecoder
 from cwr.other import ISWCCode
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -15,7 +14,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -65,7 +63,7 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self.assertEqual('ORI', record.version_type)
         self.assertEqual('SER', record.musical_work_distribution_category)
         self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-            record.date_publication_printed_edition)
+                         record.date_publication_printed_edition)
         self.assertEqual('MTX', record.text_music_relationship)
         self.assertEqual('ES', record.language_code)
         self.assertEqual('ABDF146', record.copyright_number)

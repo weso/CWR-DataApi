@@ -5,7 +5,6 @@ from pyparsing import ParseException
 
 from tests.utils.grammar import get_record_grammar
 
-
 """
 CWR Work Origin grammar tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

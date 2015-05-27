@@ -6,7 +6,6 @@ import datetime
 from cwr.parser.encoder.dictionary import AgreementDictionaryEncoder
 from cwr.agreement import AgreementRecord
 
-
 """
 AgreementRecord to dictionary encoding tests.
 
@@ -15,7 +14,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -63,6 +61,6 @@ class TestAgreementRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(datetime.datetime.strptime('20030218', '%Y%m%d').date(), encoded['retention_end_date'])
         self.assertEqual(datetime.datetime.strptime('20030219', '%Y%m%d').date(), encoded['prior_royalty_start_date'])
         self.assertEqual(datetime.datetime.strptime('20030220', '%Y%m%d').date(),
-            encoded['post_term_collection_end_date'])
+                         encoded['post_term_collection_end_date'])
         self.assertEqual(True, encoded['shares_change'])
         self.assertEqual(True, encoded['advance_given'])

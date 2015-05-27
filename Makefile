@@ -36,6 +36,7 @@ help:
 	@echo "  dist_source    to make the standard distribution"
 	@echo "  dist_binary    to make the binary distribution"
 	@echo "  install        to install the project"
+	@echo "  requirements   to install the project requirements"
 	@echo "  pypi_reg       to register on pypi"
 	@echo "  pypitest_reg   to register on testpypi"
 	@echo "  pypi           to upload to pypi"
@@ -60,6 +61,10 @@ dist_binary:
 # Install in local libraries repository
 install:
 	$(PYTHON) setup.py install
+
+# Install the project requirements
+requirements:
+	pip install --upgrade -r requirements.txt
  
 # Pypi registration.
 pypi_reg:

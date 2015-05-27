@@ -6,7 +6,6 @@ from cwr.parser.encoder.dictionary import AuthoredWorkDictionaryEncoder
 from cwr.work import AuthoredWorkRecord
 from cwr.other import ISWCCode
 
-
 """
 AuthoredWorkRecord to dictionary encoding tests.
 
@@ -15,7 +14,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

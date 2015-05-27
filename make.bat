@@ -44,6 +44,7 @@ if "%1" == "help" (
 	echo.  dist_source    to make the source distribution
 	echo.  dist_binary    to make the binary distribution
 	echo.  install        to install the project
+	echo.  requirements   to install the project requirements
 	echo.  pypi_reg       to register on pypi
 	echo.  pypitest_reg   to register on pypi-test
 	echo.  pypi           to upload to pypi
@@ -114,6 +115,11 @@ if "%1" == "install" (
 	echo.
 	echo.Installed the project into the local repository.
 	goto end
+)
+
+REM Install the project requirements
+if "%1" == "requirements" (
+	pip install --upgrade -r requirements.txt
 )
 
 REM Pypi registration.

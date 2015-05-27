@@ -7,7 +7,6 @@ import chardet
 
 from cwr.parser.decoder.file import default_file_decoder
 
-
 """
 Visual test for checking the parsing speed.
 
@@ -18,7 +17,6 @@ All the info will be printed on the console.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

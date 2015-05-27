@@ -138,5 +138,3 @@ class TransactionRecord(Record):
         :return: the transaction sequence number
         """
         return self._transaction_sequence_n
-
-

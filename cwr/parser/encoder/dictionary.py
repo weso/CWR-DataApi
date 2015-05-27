@@ -8,7 +8,6 @@ from cwr.interested_party import *
 from cwr.non_roman_alphabet import *
 from cwr.work import *
 
-
 """
 Classes for transforming instances of the CWR model into dictionaries.
 
@@ -371,7 +370,10 @@ class AuthoredWorkDictionaryEncoder(TransactionHeaderDictionaryEncoder):
     def encode(self, record):
         encoded = super(AuthoredWorkDictionaryEncoder, self).encode(record)
 
-        encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
+        if record.iswc:
+            encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
+        else:
+            encoded['iswc'] = None
         encoded['language_code'] = record.language_code
         encoded['source'] = record.source
         encoded['submitter_work_n'] = record.submitter_work_n
@@ -401,7 +403,10 @@ class ComponentDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded = super(ComponentDictionaryEncoder, self).encode(record)
 
         encoded['duration'] = record.duration
-        encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
+        if record.iswc:
+            encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
+        else:
+            encoded['iswc'] = None
         encoded['submitter_work_n'] = record.submitter_work_n
         encoded['title'] = record.title
         encoded['writer_1_first_name'] = record.writer_1_first_name
@@ -486,8 +491,14 @@ class WorkOriginDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded['production_title'] = record.production_title
         encoded['year_production'] = record.year_production
 
-        encoded['audio_visual_key'] = self._encoder_avk.encode(record.audio_visual_key)
-        encoded['visan'] = self._encoder_visan.encode(record.visan)
+        if record.audio_visual_key:
+            encoded['audio_visual_key'] = self._encoder_avk.encode(record.audio_visual_key)
+        else:
+            encoded['audio_visual_key'] = None
+        if record.visan:
+            encoded['visan'] = self._encoder_visan.encode(record.visan)
+        else:
+            encoded['visan'] = None
 
         return encoded
 
@@ -504,7 +515,10 @@ class BaseWorkDictionaryEncoder(TransactionHeaderDictionaryEncoder):
     def encode(self, record):
         encoded = super(BaseWorkDictionaryEncoder, self).encode(record)
 
-        encoded['iswc'] = self._encoder_iswc.encode(record.iswc)
+        if record.iswc:
+            encoded['iswc'] = self._encoder_iswc.encode(record.iswc)
+        else:
+            encoded['iswc'] = None
         encoded['language_code'] = record.language_code
         encoded['title'] = record.title
 
@@ -600,7 +614,10 @@ class PublisherRecordDictionaryEncoder(InterestedPartyRecordDictionaryEncoder):
         encoded['special_agreements'] = record.special_agreements
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
-        encoded['publisher'] = self._encoder_publisher.encode(record.publisher)
+        if record.publisher:
+            encoded['publisher'] = self._encoder_publisher.encode(record.publisher)
+        else:
+            encoded['publisher'] = None
 
         return encoded
 
@@ -621,7 +638,10 @@ class WriterRecordDictionaryEncoder(InterestedPartyRecordDictionaryEncoder):
         encoded['writer_unknown'] = record.writer_unknown
         encoded['work_for_hire'] = record.work_for_hire
 
-        encoded['writer'] = self._encoder_writer.encode(record.writer)
+        if record.writer:
+            encoded['writer'] = self._encoder_writer.encode(record.writer)
+        else:
+            encoded['writer'] = None
 
         return encoded
 
@@ -1026,7 +1046,10 @@ class FileDictionaryDictionaryEncoder(Encoder):
     def encode(self, value):
         encoded = {}
 
-        encoded['tag'] = self._encoder_tag.encode(value.tag)
+        if value.tag:
+            encoded['tag'] = self._encoder_tag.encode(value.tag)
+        else:
+            encoded['tag'] = None
         encoded['transmission'] = self._encoder_trans.encode(value.transmission)
 
         return encoded

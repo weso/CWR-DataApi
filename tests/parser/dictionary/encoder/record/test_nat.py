@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import NonRomanAlphabetTitleDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetTitleRecord
 
-
 """
 NATRecord to dictionary encoding tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

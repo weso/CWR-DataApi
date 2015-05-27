@@ -5,14 +5,12 @@ from pyparsing import ParseException
 
 from tests.utils.grammar import get_record_grammar
 
-
 """
 CWR Work conflict grammar tests.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

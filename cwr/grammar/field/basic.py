@@ -3,7 +3,7 @@
 import datetime
 
 import pyparsing as pp
-
+from pyparsing import ParseResults
 
 """
 CWR fields grammar.
@@ -451,6 +451,7 @@ def lookup(values, name=None):
 
     Like in the Alphanumeric field, the result will be stripped of all heading and trailing whitespaces.
 
+    :param values: values allowed
     :param name: name for the field
     :return: grammar for the lookup field
     """
@@ -459,6 +460,10 @@ def lookup(values, name=None):
 
     if values is None:
         raise ValueError('The values can no be None')
+
+    # TODO: This should not be needed, it is just a patch. Fix this.
+    if isinstance(values, ParseResults):
+        values = values.asList()
 
     # Only the specified values are allowed
     lookup_field = pp.oneOf(values)

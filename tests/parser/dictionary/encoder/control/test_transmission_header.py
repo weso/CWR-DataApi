@@ -6,7 +6,6 @@ import datetime
 from cwr.parser.encoder.dictionary import TransmissionHeaderDictionaryEncoder
 from cwr.transmission import TransmissionHeader
 
-
 """
 TransmissionHeader to dictionary encoding tests.
 
@@ -15,7 +14,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

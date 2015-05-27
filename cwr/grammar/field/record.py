@@ -35,7 +35,7 @@ def record_type(values):
     :param values: allowed record type codes
     :return: grammar for the record type field
     """
-    field = basic.lookup(values, name='Record Type (one of ' + str(values) + ')')
+    field = basic.lookup(values, name='Record Type (one of %s)' % values)
 
     return field.setResultsName('record_type')
 
@@ -50,8 +50,8 @@ def record_prefix(required_type, factory):
     :return: the record prefix
     """
     field = record_type(required_type)
-    field += factory.get_field('transaction_sequence_n')
-    field += factory.get_field('record_sequence_n')
+    field += factory.get_rule('transaction_sequence_n')
+    field += factory.get_rule('record_sequence_n')
 
     # field.leaveWhitespace()
 

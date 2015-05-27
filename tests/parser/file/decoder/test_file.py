@@ -2,10 +2,10 @@
 
 import unittest
 
-from cwr.transmission import TransmissionHeader, TransmissionTrailer
-from cwr.parser.decoder.file import default_file_decoder
 from pyparsing import ParseException
 
+from cwr.transmission import TransmissionHeader, TransmissionTrailer
+from cwr.parser.decoder.file import default_file_decoder
 
 """
 CWR file encoder tests.
@@ -15,7 +15,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

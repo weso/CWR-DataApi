@@ -8,7 +8,6 @@ from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import AgreementRecord
 
-
 """
 Group Header to dictionary encoding tests.
 
@@ -17,7 +16,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -56,7 +54,6 @@ class TestGroupDictionaryEncoding(unittest.TestCase):
         agreement = self._get_agreement()
 
         return [acknowledgement, message1, message2, agreement]
-
 
     def _get_ack(self):
         return AcknowledgementRecord(record_type='ACK',
