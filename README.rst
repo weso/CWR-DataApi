@@ -77,6 +77,6 @@ The project has been released under the `MIT License`_.
 .. _project issues page: https://github.com/weso/CWR-DataApi/issues
 .. _Pyparsing: https://pyparsing.wikispaces.com/
 .. _Sphinx: http://sphinx-doc.org/
-.. _latest docs: http://sphinx-doc.org/
+.. _latest docs: http://cwr-dataapi.readthedocs.org
 .. _GitHub project page: https://github.com/weso/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php
