@@ -14,8 +14,8 @@ transaction_record:
         field: recipient_creation_n
         field: processing_date
         field: transaction_status
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: additional_related_information
@@ -29,8 +29,8 @@ transaction_record:
         field: type_of_right
         field: subject_code
         field: note
-		]
-	]
+        ]
+    ]
 
 transaction_record:
     id: agreement
@@ -55,8 +55,8 @@ transaction_record:
         field: shares_change
         field: advance_given
         field: society_assigned_agreement_n
-		]
-	]
+        ]
+    ]
 
 transaction_record:
     id: component
@@ -77,8 +77,8 @@ transaction_record:
         field: writer_2_ipi_name_n
         field: writer_1_ipi_base_n
         field: writer_2_ipi_base_n
-		]
-	]
+        ]
+    ]
 
 transaction_record:
     id: entire_work_title
@@ -100,8 +100,8 @@ transaction_record:
         field: writer_2_ipi_name_n
         field: writer_2_ipi_base_n
         field: submitter_work_n
-		]
-	]
+        ]
+    ]
 
 record:
     id: group_header
@@ -115,8 +115,8 @@ record:
         field: version_number
         field: batch_request_id
         field: sd_type
-		]
-	]
+        ]
+    ]
 
 record:
     id: group_trailer
@@ -129,12 +129,12 @@ record:
         field: transaction_count
         field: record_count
         optional
-		  [
-		  field: currency_indicator
-		  field: total_monetary_value
-		  ]
-		]
-	  ]
+          [
+          field: currency_indicator
+          field: total_monetary_value
+          ]
+        ]
+      ]
 
 record:
     id: group_trailer_base
@@ -149,8 +149,8 @@ record:
         field: record_count
         field: currency_indicator
         field: total_monetary_value
-		]
-	  ]
+        ]
+      ]
 
 record:
     id: group_trailer_short
@@ -163,8 +163,8 @@ record:
         field: group_id
         field: transaction_count
         field: record_count
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: instrumentation_detail
@@ -175,8 +175,8 @@ transaction_record:
         [
         field: instrument_code
         field: number_players
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: instrumentation_summary
@@ -188,8 +188,8 @@ transaction_record:
         field: number_voices
         field: standard_instrumentation_type
         field: instrumentation_description
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: interested_party_agreement
@@ -210,8 +210,8 @@ transaction_record:
         field: mr_share (compulsory)
         field: sr_society
         field: sr_share (compulsory)
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: message
@@ -226,8 +226,8 @@ transaction_record:
         field: message_level
         field: validation_n
         field: message_text
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: nra_agreement_party
@@ -240,8 +240,8 @@ transaction_record:
         field: ip_name_ext
         field: ip_writer_name_ext
         field: language_code
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: nra_other_writer
@@ -254,8 +254,8 @@ transaction_record:
         field: writer_first_name_long_ext
         field: language_code
         field: position
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: nra_performance_data
@@ -271,8 +271,8 @@ transaction_record:
         field: language_code
         field: performance_language
         field: performance_dialect
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: nra_publisher_name
@@ -285,8 +285,8 @@ transaction_record:
         field: ip_n
         field: publisher_name_long_ext
         field: language_code
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: nra_title
@@ -298,8 +298,8 @@ transaction_record:
         field: title_ext
         field: title_type
         field: language_code
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: nra_work
@@ -310,8 +310,8 @@ transaction_record:
         [
         field: title_ext
         field: language_code
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: nra_writer_name
@@ -324,8 +324,8 @@ transaction_record:
         field: writer_last_name_long_ext
         field: writer_first_name_long_ext
         field: language_code
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: original_work_title
@@ -347,8 +347,8 @@ transaction_record:
         field: writer_2_ipi_name_n
         field: writer_2_ipi_base_n
         field: submitter_work_n
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: performing_artist
@@ -361,8 +361,8 @@ transaction_record:
         field: performing_artist_first_name
         field: performing_artist_ipi_name_n
         field: performing_artist_ipi_base_n
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: publisher
@@ -393,8 +393,8 @@ transaction_record:
         field: society_assigned_agreement_n
         field: agreement_type
         field: usa_license
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: publisher_territory
@@ -412,12 +412,12 @@ transaction_record:
         field: tis_numeric_code
         field: shares_change
         option
-		  [
+          [
           field: sequence_n
           field: sequence_n_2
-		  ]
-		]
-	  ]
+          ]
+        ]
+      ]
 
 transaction_record:
     id: recording_detail
@@ -438,8 +438,8 @@ transaction_record:
         field: recording_format
         field: recording_technique
         field: media_type
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: territory_in_agreement
@@ -450,8 +450,8 @@ transaction_record:
         [
         field: inclusion_exclusion_indicator
         field: tis_numeric_code
-		]
-	  ]
+        ]
+      ]
 
 record:
     id: transmission_header
@@ -468,8 +468,8 @@ record:
         field: creation_date_time
         field: transmission_date
         field: character_set
-		]
-	  ]
+        ]
+      ]
 
 record:
     id: transmission_trailer
@@ -482,8 +482,8 @@ record:
         field: group_count
         field: transaction_count
         field: record_count
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: work
@@ -517,8 +517,8 @@ transaction_record:
         field: opus_number
         field: catalogue_number
         field: priority_flag
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: work_alternate_title
@@ -530,8 +530,8 @@ transaction_record:
         field: alternate_title
         field: title_type
         field: language_code
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: work_conflict
@@ -565,8 +565,8 @@ transaction_record:
         field: opus_number
         field: catalogue_number
         field: priority_flag
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: work_origin
@@ -587,8 +587,8 @@ transaction_record:
         field: episode_n
         field: year_production
         field: audio_visual_key
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: writer
@@ -617,8 +617,8 @@ transaction_record:
         field: ipi_base_n
         field: personal_number
         field: usa_license
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: writer_publisher
@@ -632,8 +632,8 @@ transaction_record:
         field: submitter_agreement_n
         field: society_assigned_agreement_n
         field: writer_ip_n
-		]
-	  ]
+        ]
+      ]
 
 transaction_record:
     id: writer_territory
@@ -650,9 +650,9 @@ transaction_record:
         field: tis_numeric_code
         field: shares_change
         option
-		  [
+          [
           field: sequence_n
           field: sequence_n_2
-		  ]
-		]
-	  ]
+          ]
+        ]
+      ]

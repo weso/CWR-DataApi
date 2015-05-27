@@ -51,7 +51,7 @@ The project has been tested in the following versions of the interpreter:
 - Pypy
 - Pypy 3
 
-All other dependencies are indicated on the `requirements.txt`_ file.
+All other dependencies are indicated on the requirements.txt file.
 The included makefile can install them with the command:
 
 ``make requirements``
@@ -74,6 +74,5 @@ The project has been released under the `MIT License`_.
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://github.com/weso/CWR-DataApi/issues
 .. _Pyparsing: https://pyparsing.wikispaces.com/
-.. _requirements.txt: requirements.txt
 .. _GitHub project page: https://github.com/weso/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php
