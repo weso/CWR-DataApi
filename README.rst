@@ -19,7 +19,8 @@ encode JSON messages with the data model.
 Documentation
 -------------
 
-The current version is under development. No public documentation is still offered.
+The current version is under development. No public documentation is still
+offered.
 
 Status
 ------
@@ -34,7 +35,8 @@ Issues are managed at the GitHub `project issues page`_.
 Building the code
 -----------------
 
-The application has been coded in Python, without using any particular framework.
+The application has been coded in Python, without using any particular
+framework.
 
 Prerequisites
 ~~~~~~~~~~~~~
@@ -49,9 +51,13 @@ The project has been tested in the following versions of the interpreter:
 - Pypy
 - Pypy 3
 
-All other dependencies are indicated on requirements.txt. The included makefile can install them with the command:
+All other dependencies are indicated on the `requirements.txt`_ file.
+ The included makefile can install them with the command:
 
 ``make requirements``
+
+Among them, the most important is the `Pyparsing`_ library, which is used
+to create the CWR file parser.
 
 Getting the code
 ~~~~~~~~~~~~~~~~
@@ -67,5 +73,7 @@ The project has been released under the `MIT License`_.
 .. _BMAT: http://www.bmat.com/
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://github.com/weso/CWR-DataApi/issues
+.. _Pyparsing: https://pyparsing.wikispaces.com/
+.. _requirements.txt: requirements.txt
 .. _GitHub project page: https://github.com/weso/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php
