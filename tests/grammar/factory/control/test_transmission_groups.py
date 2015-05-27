@@ -13,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -70,6 +69,14 @@ class TestGroupsGrammar(unittest.TestCase):
         result = self.grammar.parseString(record)
 
         self.assertEqual(2, len(result))
+
+        self.assertEqual(1, len(result[0].transactions))
+
+        self.assertEqual(4, len(result[0].transactions[0]))
+
+        self.assertEqual(1, len(result[1].transactions))
+
+        self.assertEqual(10, len(result[1].transactions[0]))
 
     def test_2_short_mix(self):
         group1 = 'GRHAGR0000102.100130400001  ' + '\n' + \
