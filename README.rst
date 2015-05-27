@@ -19,8 +19,10 @@ encode JSON messages with the data model.
 Documentation
 -------------
 
-The current version is under development. No public documentation is still
-offered.
+Check the `latest docs`_ for the most current version of the documentation.
+
+They are generated with the help of `Sphinx`_. The source files for this are
+stored in the docs folder.
 
 Status
 ------
@@ -74,5 +76,7 @@ The project has been released under the `MIT License`_.
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://github.com/weso/CWR-DataApi/issues
 .. _Pyparsing: https://pyparsing.wikispaces.com/
+.. _Sphinx: http://sphinx-doc.org/
+.. _latest docs: http://sphinx-doc.org/
 .. _GitHub project page: https://github.com/weso/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php
