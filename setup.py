@@ -15,7 +15,6 @@ This is prepared for easing the generation of deployment files.
 """
 
 __license__ = 'MIT'
-__version__ = '1.0.0'
 
 # Regular expression for the version
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
