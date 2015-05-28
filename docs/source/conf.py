@@ -58,7 +58,7 @@ autodoc_member_order = 'groupwise'
 
 # General information about the project.
 project = 'CWR-API'
-copyright = '2015, Bernardo Martinez Garrido'
+copyright = '2015, WESO'
 author = 'Bernardo Martinez Garrido'
 
 # The version info for the project you're documenting, acts as replacement for

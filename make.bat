@@ -41,6 +41,7 @@ REM Shows the allowed commands to be received as parameters
 if "%1" == "help" (
 	:help
 	echo.Please use `make ^<target^>` where ^<target^> is one of
+	echo.  clean          to remove the distribution folders
 	echo.  dist_source    to make the source distribution
 	echo.  dist_binary    to make the binary distribution
 	echo.  install        to install the project
