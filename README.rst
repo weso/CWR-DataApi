@@ -28,11 +28,6 @@ Check the `latest docs`_ for the most current version of the documentation.
 They are generated with the help of `Sphinx`_. The source files for this are
 stored in the docs folder.
 
-Status
-------
-
-The project is still in the development phase.
-
 Building the code
 -----------------
 
