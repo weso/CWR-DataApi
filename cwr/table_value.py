@@ -40,6 +40,10 @@ class MediaTypeValue(object):
         """
         return self._code
 
+    @code.setter
+    def code(self, value):
+        self._code = value
+
     @property
     def duration_max(self):
         """
@@ -49,6 +53,10 @@ class MediaTypeValue(object):
         """
         return self._duration_max
 
+    @duration_max.setter
+    def duration_max(self, value):
+        self._duration_max = value
+
     @property
     def fragments_max(self):
         """
@@ -57,6 +65,10 @@ class MediaTypeValue(object):
         :return: the maximum number of fragments for the media
         """
         return self._fragments_max
+
+    @fragments_max.setter
+    def fragments_max(self, value):
+        self._fragments_max = value
 
     @property
     def media_type(self):
@@ -70,6 +82,10 @@ class MediaTypeValue(object):
         """
         return self._media_type
 
+    @media_type.setter
+    def media_type(self, value):
+        self._media_type = value
+
     @property
     def name(self):
         """
@@ -79,6 +95,10 @@ class MediaTypeValue(object):
         """
         return self._name
 
+    @name.setter
+    def name(self, value):
+        self._name = value
+
     @property
     def works_max(self):
         """
@@ -87,6 +107,10 @@ class MediaTypeValue(object):
         :return: the maximum number of works for the media
         """
         return self._works_max
+
+    @works_max.setter
+    def works_max(self, value):
+        self._works_max = value
 
 
 class TableValue(object):
@@ -135,6 +159,10 @@ class TableValue(object):
         """
         return self._code
 
+    @code.setter
+    def code(self, value):
+        self._code = value
+
     @property
     def description(self):
         """
@@ -144,6 +172,10 @@ class TableValue(object):
         """
         return self._description
 
+    @description.setter
+    def description(self, value):
+        self._description = value
+
     @property
     def name(self):
         """
@@ -152,6 +184,10 @@ class TableValue(object):
         :return: value name
         """
         return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
 
 
 class InstrumentValue(TableValue):
@@ -180,3 +216,7 @@ class InstrumentValue(TableValue):
         :return: the family of the instrument
         """
         return self._family
+
+    @family.setter
+    def family(self, value):
+        self._family = value

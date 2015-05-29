@@ -45,6 +45,10 @@ class InterestedParty(object):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def ipi_base_n(self):
         """
@@ -65,6 +69,10 @@ class InterestedParty(object):
         """
         return self._ipi_base_n
 
+    @ipi_base_n.setter
+    def ipi_base_n(self, value):
+        self._ipi_base_n = value
+
     @property
     def ipi_name_n(self):
         """
@@ -77,6 +85,10 @@ class InterestedParty(object):
         """
         return self._ipi_name
 
+    @ipi_name_n.setter
+    def ipi_name_n(self, value):
+        self._ipi_name = value
+
     @property
     def tax_id(self):
         """
@@ -87,6 +99,10 @@ class InterestedParty(object):
         :return: the Interested Party Tax ID
         """
         return self._tax_id
+
+    @tax_id.setter
+    def tax_id(self, value):
+        self._tax_id = value
 
 
 class InterestedPartyRecord(TransactionRecord):
@@ -148,6 +164,10 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._first_recording_refusal
 
+    @first_recording_refusal.setter
+    def first_recording_refusal(self, value):
+        self._first_recording_refusal = value
+
     @property
     def mr_ownership_share(self):
         """
@@ -162,6 +182,10 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._mr_ownership_share
 
+    @mr_ownership_share.setter
+    def mr_ownership_share(self, value):
+        self._mr_ownership_share = value
+
     @property
     def mr_society(self):
         """
@@ -174,6 +198,10 @@ class InterestedPartyRecord(TransactionRecord):
         :return: the Interested Party mechanical rights society
         """
         return self._mr_society
+
+    @mr_society.setter
+    def mr_society(self, value):
+        self._mr_society = value
 
     @property
     def pr_ownership_share(self):
@@ -191,6 +219,10 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._pr_ownership_share
 
+    @pr_ownership_share.setter
+    def pr_ownership_share(self, value):
+        self._pr_ownership_share = value
+
     @property
     def pr_society(self):
         """
@@ -203,6 +235,10 @@ class InterestedPartyRecord(TransactionRecord):
         :return: the Interested Party performing rights society
         """
         return self._pr_society
+
+    @pr_society.setter
+    def pr_society(self, value):
+        self._pr_society = value
 
     @property
     def sr_ownership_share(self):
@@ -218,6 +254,10 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._sr_ownership_share
 
+    @sr_ownership_share.setter
+    def sr_ownership_share(self, value):
+        self._sr_ownership_share = value
+
     @property
     def sr_society(self):
         """
@@ -231,6 +271,10 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._sr_society
 
+    @sr_society.setter
+    def sr_society(self, value):
+        self._sr_society = value
+
     @property
     def usa_license(self):
         """
@@ -242,6 +286,10 @@ class InterestedPartyRecord(TransactionRecord):
         :return: the first letter of the society with the USA rights
         """
         return self._usa_license
+
+    @usa_license.setter
+    def usa_license(self, value):
+        self._usa_license = value
 
 
 class IPTerritoryOfControlRecord(TransactionRecord):
@@ -308,6 +356,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._inclusion_exclusion_indicator
 
+    @inclusion_exclusion_indicator.setter
+    def inclusion_exclusion_indicator(self, value):
+        self._inclusion_exclusion_indicator = value
+
     @property
     def ip_n(self):
         """
@@ -318,6 +370,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         :return: the Interested Party ID
         """
         return self._ip_n
+
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
 
     @property
     def mr_collection_share(self):
@@ -334,6 +390,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._mr_collection_share
 
+    @mr_collection_share.setter
+    def mr_collection_share(self, value):
+        self._mr_collection_share = value
+
     @property
     def pr_collection_share(self):
         """
@@ -349,6 +409,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._pr_collection_share
 
+    @pr_collection_share.setter
+    def pr_collection_share(self, value):
+        self._pr_collection_share = value
+
     @property
     def sequence_n(self):
         """
@@ -360,6 +424,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         :return: the territory sequence number
         """
         return self._sequence_n
+
+    @sequence_n.setter
+    def sequence_n(self, value):
+        self._sequence_n = value
 
     @property
     def shares_change(self):
@@ -373,6 +441,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         :return: True if the shares change, False otherwise
         """
         return self._shares_change
+
+    @shares_change.setter
+    def shares_change(self, value):
+        self._shares_change = value
 
     @property
     def sr_collection_share(self):
@@ -389,6 +461,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._sr_collection_share
 
+    @sr_collection_share.setter
+    def sr_collection_share(self, value):
+        self._sr_collection_share = value
+
     @property
     def tis_numeric_code(self):
         """
@@ -399,6 +475,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         :return: the Territory TIS code
         """
         return self._tis_numeric_code
+
+    @tis_numeric_code.setter
+    def tis_numeric_code(self, value):
+        self._tis_numeric_code = value
 
 
 class Publisher(InterestedParty):
@@ -434,6 +514,10 @@ class Publisher(InterestedParty):
         :return: the Publisher's name
         """
         return self._publisher_name
+
+    @publisher_name.setter
+    def publisher_name(self, value):
+        self._publisher_name = value
 
 
 class PublisherRecord(InterestedPartyRecord):
@@ -530,6 +614,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._agreement_type
 
+    @agreement_type.setter
+    def agreement_type(self, value):
+        self._agreement_type = value
+
     @property
     def international_standard_code(self):
         """
@@ -542,6 +630,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._international_standard_code
 
+    @international_standard_code.setter
+    def international_standard_code(self, value):
+        self._international_standard_code = value
+
     @property
     def publisher(self):
         """
@@ -552,6 +644,10 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the publisher
         """
         return self._publisher
+
+    @publisher.setter
+    def publisher(self, value):
+        self._publisher = value
 
     @property
     def publisher_sequence_n(self):
@@ -564,6 +660,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._publisher_sequence_n
 
+    @publisher_sequence_n.setter
+    def publisher_sequence_n(self, value):
+        self._publisher_sequence_n = value
+
     @property
     def publisher_type(self):
         """
@@ -574,6 +674,10 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the Publisher's role
         """
         return self._publisher_type
+
+    @publisher_type.setter
+    def publisher_type(self, value):
+        self._publisher_type = value
 
     @property
     def publisher_unknown(self):
@@ -592,6 +696,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._publisher_unknown
 
+    @publisher_unknown.setter
+    def publisher_unknown(self, value):
+        self._publisher_unknown = value
+
     @property
     def special_agreements(self):
         """
@@ -607,6 +715,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._special_agreements
 
+    @special_agreements.setter
+    def special_agreements(self, value):
+        self._special_agreements = value
+
     @property
     def submitter_agreement_n(self):
         """
@@ -620,6 +732,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._submitter_agreement_n
 
+    @submitter_agreement_n.setter
+    def submitter_agreement_n(self, value):
+        self._submitter_agreement_n = value
+
     @property
     def society_assigned_agreement_n(self):
         """
@@ -630,6 +746,10 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the society-assigned Agreement number
         """
         return self._society_assigned_agreement_n
+
+    @society_assigned_agreement_n.setter
+    def society_assigned_agreement_n(self, value):
+        self._society_assigned_agreement_n = value
 
 
 class PublisherChain(object):
@@ -665,6 +785,7 @@ class PublisherChain(object):
                  ):
         self._original_publisher = original_publisher
 
+    @property
     def original_publisher(self):
         """
         Original publisher.
@@ -677,6 +798,10 @@ class PublisherChain(object):
         :return: the original Publisher
         """
         return self._original_publisher
+
+    @original_publisher.setter
+    def original_publisher(self, value):
+        self._original_publisher = value
 
 
 class PublisherChainNode(object):
@@ -706,6 +831,7 @@ class PublisherChainNode(object):
         else:
             self._territories = territories
 
+    @property
     def administrator(self):
         """
         Regional administrator.
@@ -716,6 +842,11 @@ class PublisherChainNode(object):
         """
         return self._administrator
 
+    @administrator.setter
+    def administrator(self, value):
+        self._administrator = value
+
+    @property
     def publisher(self):
         """
         Publisher Record.
@@ -726,6 +857,11 @@ class PublisherChainNode(object):
         """
         return self._publisher
 
+    @publisher.setter
+    def publisher(self, value):
+        self._publisher = value
+
+    @property
     def subpublishers(self):
         """
         Sub-publishers list.
@@ -736,6 +872,11 @@ class PublisherChainNode(object):
         """
         return self._subpublishers
 
+    @subpublishers.setter
+    def subpublishers(self, value):
+        self._subpublishers = value
+
+    @property
     def territories(self):
         """
         Publisher territories.
@@ -745,6 +886,10 @@ class PublisherChainNode(object):
         :return: territories under control of the Publisher
         """
         return self._territories
+
+    @territories.setter
+    def territories(self, value):
+        self._territories = value
 
 
 class Writer(InterestedParty):
@@ -787,6 +932,10 @@ class Writer(InterestedParty):
         """
         return self._personal_number
 
+    @personal_number.setter
+    def personal_number(self, value):
+        self._personal_number = value
+
     @property
     def writer_first_name(self):
         """
@@ -797,6 +946,10 @@ class Writer(InterestedParty):
         :return: the Writer first name
         """
         return self._writer_first_name
+
+    @writer_first_name.setter
+    def writer_first_name(self, value):
+        self._writer_first_name = value
 
     @property
     def writer_last_name(self):
@@ -810,6 +963,10 @@ class Writer(InterestedParty):
         :return: the Writer last name
         """
         return self._writer_last_name
+
+    @writer_last_name.setter
+    def writer_last_name(self, value):
+        self._writer_last_name = value
 
 
 class PublisherForWriterRecord(TransactionRecord):
@@ -866,6 +1023,10 @@ class PublisherForWriterRecord(TransactionRecord):
         """
         return self._publisher_ip_n
 
+    @publisher_ip_n.setter
+    def publisher_ip_n(self, value):
+        self._publisher_ip_n = value
+
     @property
     def society_assigned_agreement_n(self):
         """
@@ -876,6 +1037,10 @@ class PublisherForWriterRecord(TransactionRecord):
         :return: the society-given agreement ID
         """
         return self._society_assigned_agreement_n
+
+    @society_assigned_agreement_n.setter
+    def society_assigned_agreement_n(self, value):
+        self._society_assigned_agreement_n = value
 
     @property
     def submitter_agreement_n(self):
@@ -888,6 +1053,10 @@ class PublisherForWriterRecord(TransactionRecord):
         """
         return self._submitter_agreement_n
 
+    @submitter_agreement_n.setter
+    def submitter_agreement_n(self, value):
+        self._submitter_agreement_n = value
+
     @property
     def writer_ip_n(self):
         """
@@ -899,6 +1068,10 @@ class PublisherForWriterRecord(TransactionRecord):
         :return: the writer ID
         """
         return self._writer_ip_n
+
+    @writer_ip_n.setter
+    def writer_ip_n(self, value):
+        self._writer_ip_n = value
 
 
 class WriterRecord(InterestedPartyRecord):
@@ -967,6 +1140,10 @@ class WriterRecord(InterestedPartyRecord):
         """
         return self._reversionary
 
+    @reversionary.setter
+    def reversionary(self, value):
+        self._reversionary = value
+
     @property
     def work_for_hire(self):
         """
@@ -978,6 +1155,10 @@ class WriterRecord(InterestedPartyRecord):
         """
         return self._work_for_hire
 
+    @work_for_hire.setter
+    def work_for_hire(self, value):
+        self._work_for_hire = value
+
     @property
     def writer(self):
         """
@@ -988,6 +1169,10 @@ class WriterRecord(InterestedPartyRecord):
         :return: the Writer available information
         """
         return self._writer
+
+    @writer.setter
+    def writer(self, value):
+        self._writer = value
 
     @property
     def writer_designation(self):
@@ -1005,6 +1190,10 @@ class WriterRecord(InterestedPartyRecord):
         """
         return self._writer_designation
 
+    @writer_designation.setter
+    def writer_designation(self, value):
+        self._writer_designation = value
+
     @property
     def writer_unknown(self):
         """
@@ -1020,3 +1209,7 @@ class WriterRecord(InterestedPartyRecord):
         cases
         """
         return self._writer_unknown
+
+    @writer_unknown.setter
+    def writer_unknown(self, value):
+        self._writer_unknown = value

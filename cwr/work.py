@@ -104,6 +104,10 @@ class BaseWorkRecord(TransactionRecord):
         """
         return self._iswc
 
+    @iswc.setter
+    def iswc(self, value):
+        self._iswc = value
+
     @property
     def language_code(self):
         """
@@ -120,6 +124,10 @@ class BaseWorkRecord(TransactionRecord):
         """
         return self._language_code
 
+    @language_code.setter
+    def language_code(self, value):
+        self._language_code = value
+
     @property
     def title(self):
         """
@@ -134,6 +142,10 @@ class BaseWorkRecord(TransactionRecord):
         :return: the title by which the work is best known
         """
         return self._title
+
+    @title.setter
+    def title(self, value):
+        self._title = value
 
 
 class WorkRecord(BaseWorkRecord):
@@ -276,6 +288,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._catalogue_number
 
+    @catalogue_number.setter
+    def catalogue_number(self, value):
+        self._catalogue_number = value
+
     @property
     def composite_component_count(self):
         """
@@ -291,6 +307,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._composite_component_count
 
+    @composite_component_count.setter
+    def composite_component_count(self, value):
+        self._composite_component_count = value
+
     @property
     def composite_type(self):
         """
@@ -303,6 +323,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._composite_type
 
+    @composite_type.setter
+    def composite_type(self, value):
+        self._composite_type = value
+
     @property
     def contact_id(self):
         """
@@ -314,6 +338,10 @@ class WorkRecord(BaseWorkRecord):
         :return: the ID of a contact persion in the transaction's originator
         """
         return self._contact_id
+
+    @contact_id.setter
+    def contact_id(self, value):
+        self._contact_id = value
 
     @property
     def contact_name(self):
@@ -331,6 +359,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._contact_name
 
+    @contact_name.setter
+    def contact_name(self, value):
+        self._contact_name = value
+
     @property
     def copyright_date(self):
         """
@@ -344,6 +376,10 @@ class WorkRecord(BaseWorkRecord):
         :return: the date in which the Work was registered
         """
         return self._copyright_date
+
+    @copyright_date.setter
+    def copyright_date(self, value):
+        self._copyright_date = value
 
     @property
     def copyright_number(self):
@@ -359,6 +395,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._copyright_number
 
+    @copyright_number.setter
+    def copyright_number(self, value):
+        self._copyright_number = value
+
     @property
     def date_publication_printed_edition(self):
         """
@@ -373,6 +413,10 @@ class WorkRecord(BaseWorkRecord):
         :return: the date of the new edition
         """
         return self._date_publication_printed_edition
+
+    @date_publication_printed_edition.setter
+    def date_publication_printed_edition(self, value):
+        self._date_publication_printed_edition = value
 
     @property
     def duration(self):
@@ -391,6 +435,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._duration
 
+    @duration.setter
+    def duration(self, value):
+        self._duration = value
+
     @property
     def exceptional_clause(self):
         """
@@ -408,6 +456,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._exceptional_clause
 
+    @exceptional_clause.setter
+    def exceptional_clause(self, value):
+        self._exceptional_clause = value
+
     @property
     def excerpt_type(self):
         """
@@ -420,6 +472,10 @@ class WorkRecord(BaseWorkRecord):
         :return: this Work's type of excerpt
         """
         return self._excerpt_type
+
+    @excerpt_type.setter
+    def excerpt_type(self, value):
+        self._excerpt_type = value
 
     @property
     def grand_rights_indicator(self):
@@ -438,6 +494,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._grand_rights_indicator
 
+    @grand_rights_indicator.setter
+    def grand_rights_indicator(self, value):
+        self._grand_rights_indicator = value
+
     @property
     def lyric_adaptation(self):
         """
@@ -451,6 +511,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._lyric_adaptation
 
+    @lyric_adaptation.setter
+    def lyric_adaptation(self, value):
+        self._lyric_adaptation = value
+
     @property
     def music_arrangement(self):
         """
@@ -463,6 +527,10 @@ class WorkRecord(BaseWorkRecord):
         :return: the changes to the original music
         """
         return self._music_arrangement
+
+    @music_arrangement.setter
+    def music_arrangement(self, value):
+        self._music_arrangement = value
 
     @property
     def musical_work_distribution_category(self):
@@ -478,6 +546,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._musical_work_distribution_category
 
+    @musical_work_distribution_category.setter
+    def musical_work_distribution_category(self, value):
+        self._musical_work_distribution_category = value
+
     @property
     def opus_number(self):
         """
@@ -489,6 +561,10 @@ class WorkRecord(BaseWorkRecord):
         :return: opus number for the work
         """
         return self._opus_number
+
+    @opus_number.setter
+    def opus_number(self, value):
+        self._opus_number = value
 
     @property
     def priority_flag(self):
@@ -503,6 +579,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._priority_flag
 
+    @priority_flag.setter
+    def priority_flag(self, value):
+        self._priority_flag = value
+
     @property
     def recorded_indicator(self):
         """
@@ -516,6 +596,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._recorded_indicator
 
+    @recorded_indicator.setter
+    def recorded_indicator(self, value):
+        self._recorded_indicator = value
+
     @property
     def submitter_work_n(self):
         """
@@ -526,6 +610,10 @@ class WorkRecord(BaseWorkRecord):
         :return: the submitter's ID for this Work
         """
         return self._submitter_work_n
+
+    @submitter_work_n.setter
+    def submitter_work_n(self, value):
+        self._submitter_work_n = value
 
     @property
     def text_music_relationship(self):
@@ -541,6 +629,10 @@ class WorkRecord(BaseWorkRecord):
         :return: the lyrical and musical composition of the Work
         """
         return self._text_music_relationship
+
+    @text_music_relationship.setter
+    def text_music_relationship(self, value):
+        self._text_music_relationship = value
 
     @property
     def version_type(self):
@@ -559,6 +651,10 @@ class WorkRecord(BaseWorkRecord):
         """
         return self._version_type
 
+    @version_type.setter
+    def version_type(self, value):
+        self._version_type = value
+
     @property
     def work_type(self):
         """
@@ -569,6 +665,10 @@ class WorkRecord(BaseWorkRecord):
         :return: a CWR work type
         """
         return self._work_type
+
+    @work_type.setter
+    def work_type(self, value):
+        self._work_type = value
 
 
 class ComponentRecord(TransactionRecord):
@@ -652,6 +752,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._duration
 
+    @duration.setter
+    def duration(self, value):
+        self._duration = value
+
     @property
     def iswc(self):
         """
@@ -664,6 +768,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._iswc
 
+    @iswc.setter
+    def iswc(self, value):
+        self._iswc = value
+
     @property
     def submitter_work_n(self):
         """
@@ -674,6 +782,10 @@ class ComponentRecord(TransactionRecord):
         :return: the Work's ID
         """
         return self._submitter_work_n
+
+    @submitter_work_n.setter
+    def submitter_work_n(self, value):
+        self._submitter_work_n = value
 
     @property
     def title(self):
@@ -687,6 +799,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._title
 
+    @title.setter
+    def title(self, value):
+        self._title = value
+
     @property
     def writer_1_first_name(self):
         """
@@ -697,6 +813,10 @@ class ComponentRecord(TransactionRecord):
         :return: the first name of the first Writer
         """
         return self._writer_1_first_name
+
+    @writer_1_first_name.setter
+    def writer_1_first_name(self, value):
+        self._writer_1_first_name = value
 
     @property
     def writer_1_ipi_base_n(self):
@@ -714,6 +834,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._writer_1_ipi_base_n
 
+    @writer_1_ipi_base_n.setter
+    def writer_1_ipi_base_n(self, value):
+        self._writer_1_ipi_base_n = value
+
     @property
     def writer_1_ipi_name_n(self):
         """
@@ -730,6 +854,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._writer_1_ipi_name_n
 
+    @writer_1_ipi_name_n.setter
+    def writer_1_ipi_name_n(self, value):
+        self._writer_1_ipi_name_n = value
+
     @property
     def writer_1_last_name(self):
         """
@@ -744,6 +872,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._writer_1_last_name
 
+    @writer_1_last_name.setter
+    def writer_1_last_name(self, value):
+        self._writer_1_last_name = value
+
     @property
     def writer_2_first_name(self):
         """
@@ -754,6 +886,10 @@ class ComponentRecord(TransactionRecord):
         :return: the first name of the second Writer
         """
         return self._writer_2_first_name
+
+    @writer_2_first_name.setter
+    def writer_2_first_name(self, value):
+        self._writer_2_first_name = value
 
     @property
     def writer_2_ipi_base_n(self):
@@ -771,6 +907,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._writer_2_ipi_base_n
 
+    @writer_2_ipi_base_n.setter
+    def writer_2_ipi_base_n(self, value):
+        self._writer_2_ipi_base_n = value
+
     @property
     def writer_2_ipi_name_n(self):
         """
@@ -787,6 +927,10 @@ class ComponentRecord(TransactionRecord):
         """
         return self._writer_2_ipi_name_n
 
+    @writer_2_ipi_name_n.setter
+    def writer_2_ipi_name_n(self, value):
+        self._writer_2_ipi_name_n = value
+
     @property
     def writer_2_last_name(self):
         """
@@ -800,6 +944,10 @@ class ComponentRecord(TransactionRecord):
         :return: the second Writer's last name
         """
         return self._writer_2_last_name
+
+    @writer_2_last_name.setter
+    def writer_2_last_name(self, value):
+        self._writer_2_last_name = value
 
 
 class AuthoredWorkRecord(BaseWorkRecord):
@@ -898,6 +1046,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         """
         return self._source
 
+    @source.setter
+    def source(self, value):
+        self._source = value
+
     @property
     def submitter_work_n(self):
         """
@@ -909,6 +1061,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         """
         return self._submitter_work_n
 
+    @submitter_work_n.setter
+    def submitter_work_n(self, value):
+        self._submitter_work_n = value
+
     @property
     def writer_1_first_name(self):
         """
@@ -919,6 +1075,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         :return: the first name of the first Writer
         """
         return self._writer_1_first_name
+
+    @writer_1_first_name.setter
+    def writer_1_first_name(self, value):
+        self._writer_1_first_name = value
 
     @property
     def writer_1_ipi_base_n(self):
@@ -936,6 +1096,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         """
         return self._writer_1_ipi_base_n
 
+    @writer_1_ipi_base_n.setter
+    def writer_1_ipi_base_n(self, value):
+        self._writer_1_ipi_base_n = value
+
     @property
     def writer_1_ipi_name_n(self):
         """
@@ -952,6 +1116,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         """
         return self._writer_1_ipi_name_n
 
+    @writer_1_ipi_name_n.setter
+    def writer_1_ipi_name_n(self, value):
+        self._writer_1_ipi_name_n = value
+
     @property
     def writer_1_last_name(self):
         """
@@ -964,6 +1132,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         """
         return self._writer_1_last_name
 
+    @writer_1_last_name.setter
+    def writer_1_last_name(self, value):
+        self._writer_1_last_name = value
+
     @property
     def writer_2_first_name(self):
         """
@@ -974,6 +1146,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         :return: the first name of the second Writer
         """
         return self._writer_2_first_name
+
+    @writer_2_first_name.setter
+    def writer_2_first_name(self, value):
+        self._writer_2_first_name = value
 
     @property
     def writer_2_ipi_base_n(self):
@@ -991,6 +1167,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         """
         return self._writer_2_ipi_base_n
 
+    @writer_2_ipi_base_n.setter
+    def writer_2_ipi_base_n(self, value):
+        self._writer_2_ipi_base_n = value
+
     @property
     def writer_2_ipi_name_n(self):
         """
@@ -1007,6 +1187,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         """
         return self._writer_2_ipi_name_n
 
+    @writer_2_ipi_name_n.setter
+    def writer_2_ipi_name_n(self, value):
+        self._writer_2_ipi_name_n = value
+
     @property
     def writer_2_last_name(self):
         """
@@ -1018,6 +1202,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
         :return: the second Writer's last name
         """
         return self._writer_2_last_name
+
+    @writer_2_last_name.setter
+    def writer_2_last_name(self, value):
+        self._writer_2_last_name = value
 
 
 class AlternateTitleRecord(TransactionRecord):
@@ -1073,6 +1261,10 @@ class AlternateTitleRecord(TransactionRecord):
         """
         return self._alternate_title
 
+    @alternate_title.setter
+    def alternate_title(self, value):
+        self._alternate_title = value
+
     @property
     def language_code(self):
         """
@@ -1085,6 +1277,10 @@ class AlternateTitleRecord(TransactionRecord):
         """
         return self._language_code
 
+    @language_code.setter
+    def language_code(self, value):
+        self._language_code = value
+
     @property
     def title_type(self):
         """
@@ -1095,6 +1291,10 @@ class AlternateTitleRecord(TransactionRecord):
         :return: the type of alternate title
         """
         return self._title_type
+
+    @title_type.setter
+    def title_type(self, value):
+        self._title_type = value
 
 
 class RecordingDetailRecord(TransactionRecord):
@@ -1154,6 +1354,10 @@ class RecordingDetailRecord(TransactionRecord):
         """
         return self._ean
 
+    @ean.setter
+    def ean(self, value):
+        self._ean = value
+
     @property
     def first_album_label(self):
         """
@@ -1166,6 +1370,10 @@ class RecordingDetailRecord(TransactionRecord):
         """
         return self._first_album_label
 
+    @first_album_label.setter
+    def first_album_label(self, value):
+        self._first_album_label = value
+
     @property
     def first_album_title(self):
         """
@@ -1177,6 +1385,10 @@ class RecordingDetailRecord(TransactionRecord):
         :return: the title of the first album
         """
         return self._first_album_title
+
+    @first_album_title.setter
+    def first_album_title(self, value):
+        self._first_album_title = value
 
     @property
     def first_release_catalog_n(self):
@@ -1191,6 +1403,10 @@ class RecordingDetailRecord(TransactionRecord):
         """
         return self._first_release_catalog_n
 
+    @first_release_catalog_n.setter
+    def first_release_catalog_n(self, value):
+        self._first_release_catalog_n = value
+
     @property
     def first_release_date(self):
         """
@@ -1204,6 +1420,10 @@ class RecordingDetailRecord(TransactionRecord):
         """
         return self._first_release_date
 
+    @first_release_date.setter
+    def first_release_date(self, value):
+        self._first_release_date = value
+
     @property
     def first_release_duration(self):
         """
@@ -1214,6 +1434,10 @@ class RecordingDetailRecord(TransactionRecord):
         :return: the duration of the first release of the work
         """
         return self._first_release_duration
+
+    @first_release_duration.setter
+    def first_release_duration(self, value):
+        self._first_release_duration = value
 
     @property
     def isrc(self):
@@ -1227,6 +1451,10 @@ class RecordingDetailRecord(TransactionRecord):
         """
         return self._isrc
 
+    @isrc.setter
+    def isrc(self, value):
+        self._isrc = value
+
     @property
     def media_type(self):
         """
@@ -1237,6 +1465,10 @@ class RecordingDetailRecord(TransactionRecord):
         :return: the media type
         """
         return self._media_type
+
+    @media_type.setter
+    def media_type(self, value):
+        self._media_type = value
 
     @property
     def recording_format(self):
@@ -1250,6 +1482,10 @@ class RecordingDetailRecord(TransactionRecord):
         """
         return self._recording_format
 
+    @recording_format.setter
+    def recording_format(self, value):
+        self._recording_format = value
+
     @property
     def recording_technique(self):
         """
@@ -1261,6 +1497,10 @@ class RecordingDetailRecord(TransactionRecord):
         :return: the recording technique
         """
         return self._recording_technique
+
+    @recording_technique.setter
+    def recording_technique(self, value):
+        self._recording_technique = value
 
 
 class InstrumentationDetailRecord(TransactionRecord):
@@ -1301,6 +1541,10 @@ class InstrumentationDetailRecord(TransactionRecord):
         """
         return self._instrument_code
 
+    @instrument_code.setter
+    def instrument_code(self, value):
+        self._instrument_code = value
+
     @property
     def number_players(self):
         """
@@ -1311,6 +1555,10 @@ class InstrumentationDetailRecord(TransactionRecord):
         :return: the number of players
         """
         return self._number_players
+
+    @number_players.setter
+    def number_players(self, value):
+        self._number_players = value
 
 
 class WorkOriginRecord(TransactionRecord):
@@ -1372,6 +1620,10 @@ class WorkOriginRecord(TransactionRecord):
         """
         return self._audio_visual_key
 
+    @audio_visual_key.setter
+    def audio_visual_key(self, value):
+        self._audio_visual_key = value
+
     @property
     def bltvr(self):
         """
@@ -1385,6 +1637,10 @@ class WorkOriginRecord(TransactionRecord):
         """
         return self._bltvr
 
+    @bltvr.setter
+    def bltvr(self, value):
+        self._bltvr = value
+
     @property
     def cd_identifier(self):
         """
@@ -1396,6 +1652,10 @@ class WorkOriginRecord(TransactionRecord):
         :return: CD identifier
         """
         return self._cd_identifier
+
+    @cd_identifier.setter
+    def cd_identifier(self, value):
+        self._cd_identifier = value
 
     @property
     def cut_number(self):
@@ -1410,6 +1670,10 @@ class WorkOriginRecord(TransactionRecord):
         """
         return self._cut_number
 
+    @cut_number.setter
+    def cut_number(self, value):
+        self._cut_number = value
+
     @property
     def episode_n(self):
         """
@@ -1420,6 +1684,10 @@ class WorkOriginRecord(TransactionRecord):
         :return: the episode number
         """
         return self._episode_n
+
+    @episode_n.setter
+    def episode_n(self, value):
+        self._episode_n = value
 
     @property
     def episode_title(self):
@@ -1432,6 +1700,10 @@ class WorkOriginRecord(TransactionRecord):
         """
         return self._episode_title
 
+    @episode_title.setter
+    def episode_title(self, value):
+        self._episode_title = value
+
     @property
     def intended_purpose(self):
         """
@@ -1442,6 +1714,10 @@ class WorkOriginRecord(TransactionRecord):
         :return: the inteded purpose
         """
         return self._intended_purpose
+
+    @intended_purpose.setter
+    def intended_purpose(self, value):
+        self._intended_purpose = value
 
     @property
     def library(self):
@@ -1454,6 +1730,10 @@ class WorkOriginRecord(TransactionRecord):
         """
         return self._library
 
+    @library.setter
+    def library(self, value):
+        self._library = value
+
     @property
     def production_n(self):
         """
@@ -1464,6 +1744,10 @@ class WorkOriginRecord(TransactionRecord):
         :return: the production number field
         """
         return self._production_n
+
+    @production_n.setter
+    def production_n(self, value):
+        self._production_n = value
 
     @property
     def production_title(self):
@@ -1476,6 +1760,10 @@ class WorkOriginRecord(TransactionRecord):
         """
         return self._production_title
 
+    @production_title.setter
+    def production_title(self, value):
+        self._production_title = value
+
     @property
     def visan(self):
         """
@@ -1487,6 +1775,10 @@ class WorkOriginRecord(TransactionRecord):
         """
         return self._visan
 
+    @visan.setter
+    def visan(self, value):
+        self._visan = value
+
     @property
     def year_production(self):
         """
@@ -1497,6 +1789,10 @@ class WorkOriginRecord(TransactionRecord):
         :return: the year of production
         """
         return self._year_production
+
+    @year_production.setter
+    def year_production(self, value):
+        self._year_production = value
 
 
 class InstrumentationSummaryRecord(TransactionRecord):
@@ -1553,6 +1849,10 @@ class InstrumentationSummaryRecord(TransactionRecord):
         """
         return self._instrumentation_description
 
+    @instrumentation_description.setter
+    def instrumentation_description(self, value):
+        self._instrumentation_description = value
+
     @property
     def number_voices(self):
         """
@@ -1563,6 +1863,10 @@ class InstrumentationSummaryRecord(TransactionRecord):
         :return: the number of voices
         """
         return self._number_voices
+
+    @number_voices.setter
+    def number_voices(self, value):
+        self._number_voices = value
 
     @property
     def standard_instrumentation_type(self):
@@ -1577,6 +1881,10 @@ class InstrumentationSummaryRecord(TransactionRecord):
         :return: the Standard Instrumentation Type
         """
         return self._standard_instrumentation_type
+
+    @standard_instrumentation_type.setter
+    def standard_instrumentation_type(self, value):
+        self._standard_instrumentation_type = value
 
 
 class PerformingArtistRecord(TransactionRecord):
@@ -1623,6 +1931,10 @@ class PerformingArtistRecord(TransactionRecord):
         """
         return self._performing_artist_first_name
 
+    @performing_artist_first_name.setter
+    def performing_artist_first_name(self, value):
+        self._performing_artist_first_name = value
+
     @property
     def performing_artist_ipi_base_n(self):
         """
@@ -1633,6 +1945,10 @@ class PerformingArtistRecord(TransactionRecord):
         :return: the IPI base number
         """
         return self._performing_artist_ipi_base_n
+
+    @performing_artist_ipi_base_n.setter
+    def performing_artist_ipi_base_n(self, value):
+        self._performing_artist_ipi_base_n = value
 
     @property
     def performing_artist_ipi_name_n(self):
@@ -1648,6 +1964,10 @@ class PerformingArtistRecord(TransactionRecord):
         """
         return self._performing_artist_ipi_name_n
 
+    @performing_artist_ipi_name_n.setter
+    def performing_artist_ipi_name_n(self, value):
+        self._performing_artist_ipi_name_n = value
+
     @property
     def performing_artist_last_name(self):
         """
@@ -1662,3 +1982,7 @@ class PerformingArtistRecord(TransactionRecord):
         :return: the Performing Artist last name
         """
         return self._performing_artist_last_name
+
+    @performing_artist_last_name.setter
+    def performing_artist_last_name(self, value):
+        self._performing_artist_last_name = value

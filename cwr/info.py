@@ -63,6 +63,10 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
         """
         return self._note
 
+    @note.setter
+    def note(self, value):
+        self._note = value
+
     @property
     def society_n(self):
         """
@@ -77,6 +81,10 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
         """
         return self._society_n
 
+    @society_n.setter
+    def society_n(self, value):
+        self._society_n = value
+
     @property
     def subject_code(self):
         """
@@ -88,6 +96,10 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
         """
         return self._subject_code
 
+    @subject_code.setter
+    def subject_code(self, value):
+        self._subject_code = value
+
     @property
     def type_of_right(self):
         """
@@ -98,6 +110,10 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
         :return: the type of right the information is for
         """
         return self._type_of_right
+
+    @type_of_right.setter
+    def type_of_right(self, value):
+        self._type_of_right = value
 
     @property
     def work_n(self):
@@ -111,3 +127,7 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
         :return: the work id
         """
         return self._work_n
+
+    @work_n.setter
+    def work_n(self, value):
+        self._work_n = value

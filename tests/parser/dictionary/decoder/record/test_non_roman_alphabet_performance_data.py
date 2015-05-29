@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import NonRomanAlphabetPerformanceDataDictionaryDecoder
+from cwr.parser.decoder.dictionary import \
+    NonRomanAlphabetPerformanceDataDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
 """

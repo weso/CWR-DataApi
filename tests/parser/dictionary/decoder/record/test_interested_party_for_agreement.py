@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import InterestedPartyForAgreementDictionaryDecoder
+from cwr.parser.decoder.dictionary import \
+    InterestedPartyForAgreementDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
 """

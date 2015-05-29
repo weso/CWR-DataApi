@@ -59,6 +59,10 @@ class _ThreePartsCode(object):
         """
         return self._header
 
+    @header.setter
+    def header(self, value):
+        self._header = value
+
     @property
     def id_code(self):
         """
@@ -70,6 +74,10 @@ class _ThreePartsCode(object):
         """
         return self._id_code
 
+    @id_code.setter
+    def id_code(self, value):
+        self._id_code = value
+
     @property
     def check_digit(self):
         """
@@ -80,6 +88,10 @@ class _ThreePartsCode(object):
         :return: the check digit
         """
         return self._check_digit
+
+    @check_digit.setter
+    def check_digit(self, value):
+        self._check_digit = value
 
 
 class ISWCCode(_ThreePartsCode):
@@ -154,7 +166,7 @@ class IPIBaseNumber(_ThreePartsCode):
 
     def __str__(self):
         return '%s-%s-%s' % (
-        self.header, self._printable_id_code(), self.check_digit)
+            self.header, self._printable_id_code(), self.check_digit)
 
     def __repr__(self):
         return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % (
@@ -189,6 +201,10 @@ class VISAN(object):
         """
         return self._check_digit
 
+    @check_digit.setter
+    def check_digit(self, value):
+        self._check_digit = value
+
     @property
     def episode(self):
         """
@@ -196,6 +212,10 @@ class VISAN(object):
         :return: the episode number
         """
         return self._episode
+
+    @episode.setter
+    def episode(self, value):
+        self._episode = value
 
     @property
     def isan(self):
@@ -205,6 +225,10 @@ class VISAN(object):
         """
         return self._isan
 
+    @isan.setter
+    def isan(self, value):
+        self._isan = value
+
     @property
     def version(self):
         """
@@ -212,6 +236,10 @@ class VISAN(object):
         :return: the version number
         """
         return self._version
+
+    @version.setter
+    def version(self, value):
+        self._version = value
 
     def __str__(self):
         return '%s %s %s %s' % (self._version, self._isan, self._episode,
@@ -238,6 +266,10 @@ class AVIKey(object):
         """
         return self._av_number
 
+    @av_number.setter
+    def av_number(self, value):
+        self._av_number = value
+
     @property
     def society_code(self):
         """
@@ -245,6 +277,10 @@ class AVIKey(object):
         :return: the society code
         """
         return self._society_code
+
+    @society_code.setter
+    def society_code(self, value):
+        self._society_code = value
 
     def __str__(self):
         return '%s %s' % (self._av_number, self._society_code)

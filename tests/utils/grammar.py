@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from cwr.parser.decoder.file import default_grammar_factory, default_filename_grammar_factory
+from cwr.parser.decoder.file import default_grammar_factory, \
+    default_filename_grammar_factory
 
 """
 Grammar utilities for the test classes.

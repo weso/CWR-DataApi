@@ -9,7 +9,8 @@ from cwr.file import FileTag, CWRFile
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.work import WorkRecord
 from cwr.agreement import AgreementRecord
-from cwr.transmission import TransmissionTrailer, TransmissionHeader, Transmission
+from cwr.transmission import TransmissionTrailer, TransmissionHeader, \
+    Transmission
 
 """
 Group from dictionary encoding tests.
@@ -64,8 +65,10 @@ class TestFileJSONEncoding(unittest.TestCase):
                                     sender_id='ABC334',
                                     sender_name='SENDER',
                                     sender_type='SO',
-                                    creation_date_time=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                                    transmission_date=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+                                    creation_date_time=datetime.datetime.strptime(
+                                        '20030216', '%Y%m%d').date(),
+                                    transmission_date=datetime.datetime.strptime(
+                                        '20030217', '%Y%m%d').date(),
                                     edi_standard='01.10',
                                     character_set='ASCII')
         trailer = TransmissionTrailer(record_type='TRL',
@@ -81,8 +84,10 @@ class TestFileJSONEncoding(unittest.TestCase):
                                     sender_id='ABC334',
                                     sender_name='SENDER',
                                     sender_type='SO',
-                                    creation_date_time=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                                    transmission_date=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+                                    creation_date_time=datetime.datetime.strptime(
+                                        '20030216', '%Y%m%d').date(),
+                                    transmission_date=datetime.datetime.strptime(
+                                        '20030217', '%Y%m%d').date(),
                                     edi_standard='01.10',
                                     character_set='ASCII')
         trailer = TransmissionTrailer(record_type='TRL',
@@ -103,7 +108,8 @@ class TestFileJSONEncoding(unittest.TestCase):
                                group_id=3,
                                transaction_count=15,
                                record_count=20)
-        transactions = [self._get_transaction_agreement(), self._get_transaction_agreement()]
+        transactions = [self._get_transaction_agreement(),
+                        self._get_transaction_agreement()]
 
         return Group(header, trailer, transactions)
 
@@ -133,18 +139,24 @@ class TestFileJSONEncoding(unittest.TestCase):
                                record_sequence_n=15,
                                submitter_agreement_n='AB12',
                                agreement_type='OS',
-                               agreement_start_date=datetime.datetime.strptime('20030215', '%Y%m%d').date(),
+                               agreement_start_date=datetime.datetime.strptime(
+                                   '20030215', '%Y%m%d').date(),
                                number_of_works=12,
                                prior_royalty_status='D',
                                post_term_collection_status='D',
                                international_standard_code='DFG135',
                                society_assigned_agreement_n='DF35',
                                sales_manufacture_clause='M',
-                               agreement_end_date=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                               date_of_signature=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
-                               retention_end_date=datetime.datetime.strptime('20030218', '%Y%m%d').date(),
-                               prior_royalty_start_date=datetime.datetime.strptime('20030219', '%Y%m%d').date(),
-                               post_term_collection_end_date=datetime.datetime.strptime('20030220', '%Y%m%d').date(),
+                               agreement_end_date=datetime.datetime.strptime(
+                                   '20030216', '%Y%m%d').date(),
+                               date_of_signature=datetime.datetime.strptime(
+                                   '20030217', '%Y%m%d').date(),
+                               retention_end_date=datetime.datetime.strptime(
+                                   '20030218', '%Y%m%d').date(),
+                               prior_royalty_start_date=datetime.datetime.strptime(
+                                   '20030219', '%Y%m%d').date(),
+                               post_term_collection_end_date=datetime.datetime.strptime(
+                                   '20030220', '%Y%m%d').date(),
                                shares_change=True,
                                advance_given=True)
 
@@ -156,11 +168,13 @@ class TestFileJSONEncoding(unittest.TestCase):
                           title='TITLE',
                           version_type='ORI',
                           musical_work_distribution_category='SER',
-                          date_publication_printed_edition=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+                          date_publication_printed_edition=datetime.datetime.strptime(
+                              '20030216', '%Y%m%d').date(),
                           text_music_relationship='MTX',
                           language_code='ES',
                           copyright_number='ABDF146',
-                          copyright_date=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+                          copyright_date=datetime.datetime.strptime('20030217',
+                                                                    '%Y%m%d').date(),
                           music_arrangement='ORI',
                           lyric_adaptation='MOD',
                           excerpt_type='MOV',
@@ -168,7 +182,8 @@ class TestFileJSONEncoding(unittest.TestCase):
                           composite_component_count=5,
                           iswc=None,
                           work_type='BL',
-                          duration=datetime.datetime.strptime('011200', '%H%M%S').time(),
+                          duration=datetime.datetime.strptime('011200',
+                                                              '%H%M%S').time(),
                           catalogue_number='GGH97',
                           opus_number='OP35',
                           contact_id='123CONTACT',

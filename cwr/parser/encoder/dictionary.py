@@ -336,7 +336,7 @@ class AgreementDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded['sales_manufacture_clause'] = record.sales_manufacture_clause
         encoded['shares_change'] = record.shares_change
         encoded[
-            'society_assigned_agreement_n'] =\
+            'society_assigned_agreement_n'] = \
             record.society_assigned_agreement_n
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
@@ -652,7 +652,7 @@ class PublisherRecordDictionaryEncoder(InterestedPartyRecordDictionaryEncoder):
         encoded['publisher_type'] = record.publisher_type
         encoded['publisher_unknown'] = record.publisher_unknown
         encoded[
-            'society_assigned_agreement_n'] =\
+            'society_assigned_agreement_n'] = \
             record.society_assigned_agreement_n
         encoded['special_agreements'] = record.special_agreements
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
@@ -800,7 +800,7 @@ class NonRomanAlphabetPerformanceDataDictionaryEncoder(NRADictionaryEncoder):
         encoded['performance_dialect'] = record.performance_dialect
         encoded['performance_language'] = record.performance_language
         encoded[
-            'performing_artist_first_name'] =\
+            'performing_artist_first_name'] = \
             record.performing_artist_first_name
         encoded[
             'performing_artist_ipi_base_n'] = \

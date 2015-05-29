@@ -61,6 +61,10 @@ class Record(object):
         """
         return self._record_type
 
+    @record_type.setter
+    def record_type(self, value):
+        self._record_type = value
+
 
 class TransactionRecord(Record):
     """
@@ -141,6 +145,10 @@ class TransactionRecord(Record):
         """
         return self._record_sequence_n
 
+    @record_sequence_n.setter
+    def record_sequence_n(self, value):
+        self._record_sequence_n = value
+
     @property
     def transaction_sequence_n(self):
         """
@@ -159,3 +167,7 @@ class TransactionRecord(Record):
         :return: the transaction sequence number
         """
         return self._transaction_sequence_n
+
+    @transaction_sequence_n.setter
+    def transaction_sequence_n(self, value):
+        self._transaction_sequence_n = value

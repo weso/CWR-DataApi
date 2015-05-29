@@ -95,6 +95,10 @@ class TransmissionHeader(Record):
         """
         return self._character_set
 
+    @character_set.setter
+    def character_set(self, value):
+        self._character_set = value
+
     @property
     def creation_date_time(self):
         """
@@ -105,6 +109,10 @@ class TransmissionHeader(Record):
         :return: the creation date
         """
         return self._creation_date_time
+
+    @creation_date_time.setter
+    def creation_date_time(self, value):
+        self._creation_date_time = value
 
     @property
     def edi_standard(self):
@@ -120,6 +128,10 @@ class TransmissionHeader(Record):
         """
         return self._edi_standard
 
+    @edi_standard.setter
+    def edi_standard(self, value):
+        self._edi_standard = value
+
     @property
     def record_type(self):
         """
@@ -130,6 +142,10 @@ class TransmissionHeader(Record):
         :return: the record Type
         """
         return self._record_type
+
+    @record_type.setter
+    def record_type(self, value):
+        self._record_type = value
 
     @property
     def sender_id(self):
@@ -150,6 +166,10 @@ class TransmissionHeader(Record):
         """
         return self._sender_id
 
+    @sender_id.setter
+    def sender_id(self, value):
+        self._sender_id = value
+
     @property
     def sender_name(self):
         """
@@ -160,6 +180,10 @@ class TransmissionHeader(Record):
         :return: name of the sender
         """
         return self._sender_name
+
+    @sender_name.setter
+    def sender_name(self, value):
+        self._sender_name = value
 
     @property
     def sender_type(self):
@@ -178,6 +202,10 @@ class TransmissionHeader(Record):
         """
         return self._sender_type
 
+    @sender_type.setter
+    def sender_type(self, value):
+        self._sender_type = value
+
     @property
     def transmission_date(self):
         """
@@ -188,6 +216,10 @@ class TransmissionHeader(Record):
         :return: the transmission date
         """
         return self._transmission_date
+
+    @transmission_date.setter
+    def transmission_date(self, value):
+        self._transmission_date = value
 
 
 class TransmissionTrailer(Record):
@@ -242,6 +274,10 @@ class TransmissionTrailer(Record):
         """
         return self._group_count
 
+    @group_count.setter
+    def group_count(self, value):
+        self._group_count = value
+
     @property
     def record_count(self):
         """
@@ -254,6 +290,10 @@ class TransmissionTrailer(Record):
         """
         return self._record_count
 
+    @record_count.setter
+    def record_count(self, value):
+        self._record_count = value
+
     @property
     def transaction_count(self):
         """
@@ -264,6 +304,10 @@ class TransmissionTrailer(Record):
         :return: the total transaction count
         """
         return self._transaction_count
+
+    @transaction_count.setter
+    def transaction_count(self, value):
+        self._transaction_count = value
 
 
 class Transmission(object):
@@ -281,7 +325,7 @@ class Transmission(object):
     def __init__(self,
                  header,
                  trailer,
-                 groups = None
+                 groups=None
                  ):
         """
         Constructs a Transmission.
@@ -320,6 +364,10 @@ class Transmission(object):
         """
         return self._groups
 
+    @groups.setter
+    def groups(self, value):
+        self._groups = value
+
     @property
     def header(self):
         """
@@ -329,6 +377,10 @@ class Transmission(object):
         """
         return self._header
 
+    @header.setter
+    def header(self, value):
+        self._header = value
+
     @property
     def trailer(self):
         """
@@ -337,3 +389,7 @@ class Transmission(object):
         :return: the transmission trailer
         """
         return self._trailer
+
+    @trailer.setter
+    def trailer(self, value):
+        self._trailer = value

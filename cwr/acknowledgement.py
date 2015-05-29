@@ -17,15 +17,15 @@ class AcknowledgementRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type = '',
-                 transaction_sequence_n = 0,
-                 record_sequence_n = 0,
-                 original_group_id = 0,
-                 original_transaction_sequence_n = 0,
-                 original_transaction_type = '',
-                 transaction_status = None,
-                 creation_date_time = None,
-                 processing_date = None,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 original_group_id=0,
+                 original_transaction_sequence_n=0,
+                 original_transaction_type='',
+                 transaction_status=None,
+                 creation_date_time=None,
+                 processing_date=None,
                  creation_title='',
                  submitter_creation_n='',
                  recipient_creation_n=''
@@ -65,6 +65,10 @@ class AcknowledgementRecord(TransactionRecord):
         """
         return self._creation_date_time
 
+    @creation_date_time.setter
+    def creation_date_time(self, value):
+        self._creation_date_time = value
+
     @property
     def creation_title(self):
         """
@@ -81,6 +85,10 @@ class AcknowledgementRecord(TransactionRecord):
         """
         return self._creation_title
 
+    @creation_title.setter
+    def creation_title(self, value):
+        self._creation_title = value
+
     @property
     def original_group_id(self):
         """
@@ -95,6 +103,10 @@ class AcknowledgementRecord(TransactionRecord):
         :return: the original transaction group id
         """
         return self._original_group_id
+
+    @original_group_id.setter
+    def original_group_id(self, value):
+        self._original_group_id = value
 
     @property
     def original_transaction_sequence_n(self):
@@ -111,6 +123,10 @@ class AcknowledgementRecord(TransactionRecord):
         """
         return self._original_transaction_sequence_n
 
+    @original_transaction_sequence_n.setter
+    def original_transaction_sequence_n(self, value):
+        self._original_transaction_sequence_n = value
+
     @property
     def original_transaction_type(self):
         """
@@ -126,6 +142,10 @@ class AcknowledgementRecord(TransactionRecord):
         """
         return self._original_transaction_type
 
+    @original_transaction_type.setter
+    def original_transaction_type(self, value):
+        self._original_transaction_type = value
+
     @property
     def processing_date(self):
         """
@@ -137,6 +157,10 @@ class AcknowledgementRecord(TransactionRecord):
         :return: the date in which the transaction or file was processed
         """
         return self._processing_date
+
+    @processing_date.setter
+    def processing_date(self, value):
+        self._processing_date = value
 
     @property
     def recipient_creation_n(self):
@@ -153,6 +177,10 @@ class AcknowledgementRecord(TransactionRecord):
         """
         return self._recipient_creation_n
 
+    @recipient_creation_n.setter
+    def recipient_creation_n(self, value):
+        self._recipient_creation_n = value
+
     @property
     def submitter_creation_n(self):
         """
@@ -166,6 +194,10 @@ class AcknowledgementRecord(TransactionRecord):
         """
         return self._submitter_creation_n
 
+    @submitter_creation_n.setter
+    def submitter_creation_n(self, value):
+        self._submitter_creation_n = value
+
     @property
     def transaction_status(self):
         """
@@ -176,6 +208,10 @@ class AcknowledgementRecord(TransactionRecord):
         :return: the transaction status
         """
         return self._transaction_status
+
+    @transaction_status.setter
+    def transaction_status(self, value):
+        self._transaction_status = value
 
 
 class MessageRecord(TransactionRecord):
@@ -204,15 +240,15 @@ class MessageRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type= '',
-                 transaction_sequence_n = 0,
-                 record_sequence_n = 0,
-                 message_level = None,
-                 validation_n = '',
-                 message_type = '',
-                 message_text = '',
-                 original_record_sequence_n = 0,
-                 message_record_type = ''
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 message_level=None,
+                 validation_n='',
+                 message_type='',
+                 message_text='',
+                 original_record_sequence_n=0,
+                 message_record_type=''
                  ):
         super(MessageRecord, self).__init__(
             record_type,
@@ -250,6 +286,10 @@ class MessageRecord(TransactionRecord):
         """
         return self._message_level
 
+    @message_level.setter
+    def message_level(self, value):
+        self._message_level = value
+
     @property
     def message_record_type(self):
         """
@@ -261,6 +301,10 @@ class MessageRecord(TransactionRecord):
         :return: the record type
         """
         return self._message_record_type
+
+    @message_record_type.setter
+    def message_record_type(self, value):
+        self._message_record_type = value
 
     @property
     def message_type(self):
@@ -281,6 +325,10 @@ class MessageRecord(TransactionRecord):
         """
         return self._message_type
 
+    @message_type.setter
+    def message_type(self, value):
+        self._message_type = value
+
     @property
     def original_record_sequence_n(self):
         """
@@ -293,6 +341,10 @@ class MessageRecord(TransactionRecord):
         """
         return self._original_record_sequence_n
 
+    @original_record_sequence_n.setter
+    def original_record_sequence_n(self, value):
+        self._original_record_sequence_n = value
+
     @property
     def message_text(self):
         """
@@ -303,6 +355,10 @@ class MessageRecord(TransactionRecord):
         :return: the message text
         """
         return self._message_text
+
+    @message_text.setter
+    def message_text(self, value):
+        self._message_text = value
 
     @property
     def validation_n(self):
@@ -316,3 +372,7 @@ class MessageRecord(TransactionRecord):
         :return: the validation number field
         """
         return self._validation_n
+
+    @validation_n.setter
+    def validation_n(self, value):
+        self._validation_n = value

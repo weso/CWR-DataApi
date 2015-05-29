@@ -337,7 +337,7 @@ class CWRPrinter:
         print('Excerpt Type: %s' % record.excerpt_type)
         print('Composite Type: %s' % record.composite_type)
         print(
-        'Composite Component Count: %s' % record.composite_component_count)
+            'Composite Component Count: %s' % record.composite_component_count)
         print('Recorded Indicator: %s' % record.recorded_indicator)
         print('Priority Flag: %s' % record.priority_flag)
         print('Exceptional Clause: %s' % record.exceptional_clause)

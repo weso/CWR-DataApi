@@ -81,6 +81,10 @@ class GroupHeader(Record):
         """
         return self._batch_request_id
 
+    @batch_request_id.setter
+    def batch_request_id(self, value):
+        self._batch_request_id = value
+
     @property
     def group_id(self):
         """
@@ -91,6 +95,10 @@ class GroupHeader(Record):
         :return: the group id
         """
         return self._group_id
+
+    @group_id.setter
+    def group_id(self, value):
+        self._group_id = value
 
     @property
     def transaction_type(self):
@@ -106,6 +114,10 @@ class GroupHeader(Record):
         """
         return self._transaction_type
 
+    @transaction_type.setter
+    def transaction_type(self, value):
+        self._transaction_type = value
+
     @property
     def version_number(self):
         """
@@ -118,6 +130,10 @@ class GroupHeader(Record):
         :return: transaction version number
         """
         return self._version_number
+
+    @version_number.setter
+    def version_number(self, value):
+        self._version_number = value
 
 
 class GroupTrailer(Record):
@@ -174,6 +190,10 @@ class GroupTrailer(Record):
         """
         return self._group_id
 
+    @group_id.setter
+    def group_id(self, value):
+        self._group_id = value
+
     @property
     def record_count(self):
         """
@@ -186,6 +206,10 @@ class GroupTrailer(Record):
         """
         return self._record_count
 
+    @record_count.setter
+    def record_count(self, value):
+        self._record_count = value
+
     @property
     def transaction_count(self):
         """
@@ -196,6 +220,10 @@ class GroupTrailer(Record):
         :return: the number of transactions
         """
         return self._transaction_count
+
+    @transaction_count.setter
+    def transaction_count(self, value):
+        self._transaction_count = value
 
 
 class Group(object):
@@ -259,6 +287,10 @@ class Group(object):
         """
         return self._group_header
 
+    @group_header.setter
+    def group_header(self, value):
+        self._group_header = value
+
     @property
     def group_trailer(self):
         """
@@ -267,6 +299,10 @@ class Group(object):
         :return: group's trailer
         """
         return self._group_trailer
+
+    @group_trailer.setter
+    def group_trailer(self, value):
+        self._group_trailer = value
 
     @property
     def transactions(self):
@@ -279,3 +315,7 @@ class Group(object):
         :return: the group transactions
         """
         return self._transactions
+
+    @transactions.setter
+    def transactions(self, value):
+        self._transactions = value

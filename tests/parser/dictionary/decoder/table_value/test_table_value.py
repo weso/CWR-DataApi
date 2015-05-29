@@ -24,11 +24,13 @@ class TestTableValueDecoder(unittest.TestCase):
 
         data['code'] = 'AS'
         data['name'] = 'Assignor'
-        data['description'] = 'The entitled party who is assigning the rights to a musical work within an agreement'
+        data[
+            'description'] = 'The entitled party who is assigning the rights to a musical work within an agreement'
 
         record = self._decoder.decode(data)
 
         self.assertEqual('AS', record.code)
         self.assertEqual('Assignor', record.name)
-        self.assertEqual('The entitled party who is assigning the rights to a musical work within an agreement',
-                         record.description)
+        self.assertEqual(
+            'The entitled party who is assigning the rights to a musical work within an agreement',
+            record.description)

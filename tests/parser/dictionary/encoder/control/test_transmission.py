@@ -7,7 +7,8 @@ from cwr.parser.encoder.dictionary import TransmissionDictionaryEncoder
 from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import AgreementRecord
-from cwr.transmission import TransmissionTrailer, TransmissionHeader, Transmission
+from cwr.transmission import TransmissionTrailer, TransmissionHeader, \
+    Transmission
 
 """
 Group Header to dictionary encoding tests.
@@ -29,8 +30,10 @@ class TestTransmissionDictionaryEncoding(unittest.TestCase):
                                     sender_id='ABC334',
                                     sender_name='SENDER',
                                     sender_type='SO',
-                                    creation_date_time=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                                    transmission_date=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+                                    creation_date_time=datetime.datetime.strptime(
+                                        '20030216', '%Y%m%d').date(),
+                                    transmission_date=datetime.datetime.strptime(
+                                        '20030217', '%Y%m%d').date(),
                                     edi_standard='01.10',
                                     character_set='ASCII')
         trailer = TransmissionTrailer(record_type='TRL',
@@ -86,8 +89,10 @@ class TestTransmissionDictionaryEncoding(unittest.TestCase):
                                      original_transaction_sequence_n=5,
                                      original_transaction_type='AGR',
                                      transaction_status='AS',
-                                     creation_date_time=datetime.datetime.strptime('20030215', '%Y%m%d').date(),
-                                     processing_date=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+                                     creation_date_time=datetime.datetime.strptime(
+                                         '20030215', '%Y%m%d').date(),
+                                     processing_date=datetime.datetime.strptime(
+                                         '20030216', '%Y%m%d').date(),
                                      creation_title='TITLE',
                                      submitter_creation_n='A123',
                                      recipient_creation_n='B124')
@@ -109,17 +114,23 @@ class TestTransmissionDictionaryEncoding(unittest.TestCase):
                                record_sequence_n=15,
                                submitter_agreement_n='AB12',
                                agreement_type='OS',
-                               agreement_start_date=datetime.datetime.strptime('20030215', '%Y%m%d').date(),
+                               agreement_start_date=datetime.datetime.strptime(
+                                   '20030215', '%Y%m%d').date(),
                                number_of_works=12,
                                prior_royalty_status='D',
                                post_term_collection_status='D',
                                international_standard_code='DFG135',
                                society_assigned_agreement_n='DF35',
                                sales_manufacture_clause='M',
-                               agreement_end_date=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                               date_of_signature=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
-                               retention_end_date=datetime.datetime.strptime('20030218', '%Y%m%d').date(),
-                               prior_royalty_start_date=datetime.datetime.strptime('20030219', '%Y%m%d').date(),
-                               post_term_collection_end_date=datetime.datetime.strptime('20030220', '%Y%m%d').date(),
+                               agreement_end_date=datetime.datetime.strptime(
+                                   '20030216', '%Y%m%d').date(),
+                               date_of_signature=datetime.datetime.strptime(
+                                   '20030217', '%Y%m%d').date(),
+                               retention_end_date=datetime.datetime.strptime(
+                                   '20030218', '%Y%m%d').date(),
+                               prior_royalty_start_date=datetime.datetime.strptime(
+                                   '20030219', '%Y%m%d').date(),
+                               post_term_collection_end_date=datetime.datetime.strptime(
+                                   '20030220', '%Y%m%d').date(),
                                shares_change=True,
                                advance_given=True)

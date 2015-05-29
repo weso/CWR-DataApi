@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import InstrumentationSummaryDictionaryDecoder
+from cwr.parser.decoder.dictionary import \
+    InstrumentationSummaryDictionaryDecoder
 
 """
 Dictionary to Message decoding tests.

@@ -58,4 +58,5 @@ class TestComponentDictionaryDecoder(unittest.TestCase):
         self.assertEqual(14107400, record.writer_2_ipi_name_n)
         self.assertEqual(12345678, record.iswc.id_code)
         self.assertEqual(9, record.iswc.check_digit)
-        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), record.duration)
+        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(),
+                         record.duration)

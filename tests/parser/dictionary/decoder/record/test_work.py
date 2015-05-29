@@ -31,11 +31,13 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         data['title'] = 'TITLE'
         data['version_type'] = 'ORI'
         data['musical_work_distribution_category'] = 'SER'
-        data['date_publication_printed_edition'] = datetime.datetime.strptime('20030216', '%Y%m%d').date()
+        data['date_publication_printed_edition'] = datetime.datetime.strptime(
+            '20030216', '%Y%m%d').date()
         data['text_music_relationship'] = 'MTX'
         data['language_code'] = 'ES'
         data['copyright_number'] = 'ABDF146'
-        data['copyright_date'] = datetime.datetime.strptime('20030217', '%Y%m%d').date()
+        data['copyright_date'] = datetime.datetime.strptime('20030217',
+                                                            '%Y%m%d').date()
         data['music_arrangement'] = 'ORI'
         data['lyric_adaptation'] = 'MOD'
         data['excerpt_type'] = 'MOV'
@@ -62,12 +64,15 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self.assertEqual('TITLE', record.title)
         self.assertEqual('ORI', record.version_type)
         self.assertEqual('SER', record.musical_work_distribution_category)
-        self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                         record.date_publication_printed_edition)
+        self.assertEqual(
+            datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+            record.date_publication_printed_edition)
         self.assertEqual('MTX', record.text_music_relationship)
         self.assertEqual('ES', record.language_code)
         self.assertEqual('ABDF146', record.copyright_number)
-        self.assertEqual(datetime.datetime.strptime('20030217', '%Y%m%d').date(), record.copyright_date)
+        self.assertEqual(
+            datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+            record.copyright_date)
         self.assertEqual('ORI', record.music_arrangement)
         self.assertEqual('MOD', record.lyric_adaptation)
         self.assertEqual('MOV', record.excerpt_type)
@@ -76,7 +81,8 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self.assertEqual(12345678, record.iswc.id_code)
         self.assertEqual(9, record.iswc.check_digit)
         self.assertEqual('BL', record.work_type)
-        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), record.duration)
+        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(),
+                         record.duration)
         self.assertEqual('GGH97', record.catalogue_number)
         self.assertEqual('OP35', record.opus_number)
         self.assertEqual('123CONTACT', record.contact_id)

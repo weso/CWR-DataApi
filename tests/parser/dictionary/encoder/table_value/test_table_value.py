@@ -28,5 +28,6 @@ class TestTableValueEncoding(unittest.TestCase):
 
         self.assertEqual('AS', encoded['code'])
         self.assertEqual('Assignor', encoded['name'])
-        self.assertEqual('The entitled party who is assigning the rights to a musical work within an agreement',
-                         encoded['description'])
+        self.assertEqual(
+            'The entitled party who is assigning the rights to a musical work within an agreement',
+            encoded['description'])

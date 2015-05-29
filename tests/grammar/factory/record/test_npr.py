@@ -57,7 +57,8 @@ class TestNPRGrammar(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('NAME \xc6\x8f', result.performing_artist_name)
-        self.assertEqual('FIRST NAME \xc6\x8f', result.performing_artist_first_name)
+        self.assertEqual('FIRST NAME \xc6\x8f',
+                         result.performing_artist_first_name)
         self.assertEqual(14107338, result.performing_artist_ipi_name_n)
         self.assertEqual('I', result.performing_artist_ipi_base_n.header)
         self.assertEqual(229, result.performing_artist_ipi_base_n.id_code)

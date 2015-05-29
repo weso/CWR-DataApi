@@ -43,6 +43,10 @@ class NonRomanAlphabetRecord(TransactionRecord):
         """
         return self._language_code
 
+    @language_code.setter
+    def language_code(self, value):
+        self._language_code = value
+
 
 class NonRomanAlphabetWorkRecord(NonRomanAlphabetRecord):
     """
@@ -84,6 +88,10 @@ class NonRomanAlphabetWorkRecord(NonRomanAlphabetRecord):
         """
         return self._title
 
+    @title.setter
+    def title(self, value):
+        self._title = value
+
 
 class NonRomanAlphabetTitleRecord(NonRomanAlphabetRecord):
     """
@@ -123,6 +131,10 @@ class NonRomanAlphabetTitleRecord(NonRomanAlphabetRecord):
         """
         return self._title
 
+    @title.setter
+    def title(self, value):
+        self._title = value
+
     @property
     def title_type(self):
         """
@@ -134,6 +146,10 @@ class NonRomanAlphabetTitleRecord(NonRomanAlphabetRecord):
         :return: the type of the title
         """
         return self._title_type
+
+    @title_type.setter
+    def title_type(self, value):
+        self._title_type = value
 
 
 class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
@@ -178,6 +194,10 @@ class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
         """
         return self._position
 
+    @position.setter
+    def position(self, value):
+        self._position = value
+
     @property
     def writer_first_name(self):
         """
@@ -189,6 +209,10 @@ class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
         """
         return self._writer_first_name
 
+    @writer_first_name.setter
+    def writer_first_name(self, value):
+        self._writer_first_name = value
+
     @property
     def writer_name(self):
         """
@@ -199,6 +223,10 @@ class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
         :return: the name of this writer
         """
         return self._writer_name
+
+    @writer_name.setter
+    def writer_name(self, value):
+        self._writer_name = value
 
 
 class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
@@ -242,6 +270,10 @@ class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def ip_name(self):
         """
@@ -253,6 +285,10 @@ class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
         """
         return self._ip_name
 
+    @ip_name.setter
+    def ip_name(self, value):
+        self._ip_name = value
+
     @property
     def ip_writer_name(self):
         """
@@ -263,6 +299,10 @@ class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
         :return: the first name of a writer
         """
         return self._ip_writer_name
+
+    @ip_writer_name.setter
+    def ip_writer_name(self, value):
+        self._ip_writer_name = value
 
 
 class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
@@ -304,6 +344,10 @@ class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def publisher_name(self):
         """
@@ -315,6 +359,10 @@ class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
         """
         return self._publisher_name
 
+    @publisher_name.setter
+    def publisher_name(self, value):
+        self._publisher_name = value
+
     @property
     def publisher_sequence_n(self):
         """
@@ -325,6 +373,10 @@ class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
         :return: the publisher sequential id
         """
         return self._publisher_sequence_n
+
+    @publisher_sequence_n.setter
+    def publisher_sequence_n(self, value):
+        self._publisher_sequence_n = value
 
 
 class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
@@ -379,6 +431,10 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         """
         return self._performance_dialect
 
+    @performance_dialect.setter
+    def performance_dialect(self, value):
+        self._performance_dialect = value
+
     @property
     def performing_artist_ipi_base_n(self):
         """
@@ -389,6 +445,10 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         :return: the performer's IPI base number
         """
         return self._performing_artist_ipi_base_n
+
+    @performing_artist_ipi_base_n.setter
+    def performing_artist_ipi_base_n(self, value):
+        self._performing_artist_ipi_base_n = value
 
     @property
     def performing_artist_ipi_name_n(self):
@@ -402,6 +462,10 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         """
         return self._performing_artist_ipi_name_n
 
+    @performing_artist_ipi_name_n.setter
+    def performing_artist_ipi_name_n(self, value):
+        self._performing_artist_ipi_name_n = value
+
     @property
     def performance_language(self):
         """
@@ -412,6 +476,10 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         :return: the language used in the performance
         """
         return self._performance_language
+
+    @performance_language.setter
+    def performance_language(self, value):
+        self._performance_language = value
 
     @property
     def performing_artist_first_name(self):
@@ -425,6 +493,10 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         """
         return self._performing_artist_first_name
 
+    @performing_artist_first_name.setter
+    def performing_artist_first_name(self, value):
+        self._performing_artist_first_name = value
+
     @property
     def performing_artist_name(self):
         """
@@ -437,6 +509,10 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         :return: the performer's name
         """
         return self._performing_artist_name
+
+    @performing_artist_name.setter
+    def performing_artist_name(self, value):
+        self._performing_artist_name = value
 
 
 class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
@@ -479,6 +555,10 @@ class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def writer_first_name(self):
         """
@@ -490,6 +570,10 @@ class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
         """
         return self._writer_first_name
 
+    @writer_first_name.setter
+    def writer_first_name(self, value):
+        self._writer_first_name = value
+
     @property
     def writer_last_name(self):
         """
@@ -500,3 +584,7 @@ class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
         :return: the last or single name of this writer
         """
         return self._writer_last_name
+
+    @writer_last_name.setter
+    def writer_last_name(self, value):
+        self._writer_last_name = value

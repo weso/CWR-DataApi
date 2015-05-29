@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import NonRomanAlphabetWriterNameDictionaryDecoder
+from cwr.parser.decoder.dictionary import \
+    NonRomanAlphabetWriterNameDictionaryDecoder
 
 """
 Dictionary to Message decoding tests.

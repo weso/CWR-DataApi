@@ -39,7 +39,8 @@ class TestComponentRecordDictionaryEncoding(unittest.TestCase):
                                writer_2_ipi_base_n='I-000000339-7',
                                writer_2_ipi_name_n=14107400,
                                iswc=iswc,
-                               duration=datetime.datetime.strptime('011200', '%H%M%S').time())
+                               duration=datetime.datetime.strptime('011200',
+                                                                   '%H%M%S').time())
 
         encoded = self._encoder.encode(data)
 
@@ -57,7 +58,8 @@ class TestComponentRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(14107338, encoded['writer_1_ipi_name_n'])
         self.assertEqual('I-000000339-7', encoded['writer_2_ipi_base_n'])
         self.assertEqual(14107400, encoded['writer_2_ipi_name_n'])
-        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), encoded['duration'])
+        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(),
+                         encoded['duration'])
 
         self.assertEqual(12345678, encoded['iswc']['id_code'])
         self.assertEqual(9, encoded['iswc']['check_digit'])

@@ -226,16 +226,20 @@ class TestFileNameGrammarException(unittest.TestCase):
         self.assertRaises(ParseException, self.grammar.parseString, record)
 
     def test_sequence_too_long(self):
-        self.assertRaises(ParseException, self.grammar.parseString, 'CW0000012AB2_234.V21')
+        self.assertRaises(ParseException, self.grammar.parseString,
+                          'CW0000012AB2_234.V21')
 
     def test_sequence_too_short(self):
-        self.assertRaises(ParseException, self.grammar.parseString, 'CW00012AB2_234.V21')
+        self.assertRaises(ParseException, self.grammar.parseString,
+                          'CW00012AB2_234.V21')
 
     def test_sender_spaces(self):
-        self.assertRaises(ParseException, self.grammar.parseString, 'CW000012A 2_234.V21')
+        self.assertRaises(ParseException, self.grammar.parseString,
+                          'CW000012A 2_234.V21')
 
     def test_receiver_spaces(self):
-        self.assertRaises(ParseException, self.grammar.parseString, 'CW000012AB2_2 4.V21')
+        self.assertRaises(ParseException, self.grammar.parseString,
+                          'CW000012AB2_2 4.V21')
 
 
 class TestFileNameOldException(unittest.TestCase):

@@ -78,6 +78,10 @@ class CWRFile(object):
         """
         return self._tag
 
+    @tag.setter
+    def tag(self, value):
+        self._tag = value
+
     @property
     def transmission(self):
         """
@@ -88,6 +92,10 @@ class CWRFile(object):
         :return: the file's transmission
         """
         return self._transmission
+
+    @transmission.setter
+    def transmission(self, value):
+        self._transmission = value
 
 
 class FileTag(object):
@@ -139,10 +147,10 @@ class FileTag(object):
     def __repr__(self):
         return '<class %s>(year=%s, sequence_n=%r, sender=%r, ' \
                'receiver=%r, version=%r)' % (
-            self.__class__.__name__, self._year,
-            self._sequence_n,
-            self._sender, self._receiver,
-            self._version)
+                   self.__class__.__name__, self._year,
+                   self._sequence_n,
+                   self._sender, self._receiver,
+                   self._version)
 
     @property
     def year(self):
@@ -152,6 +160,10 @@ class FileTag(object):
         :return: the file's year
         """
         return self._year
+
+    @year.setter
+    def year(self, value):
+        self._year = value
 
     @property
     def sequence_n(self):
@@ -167,6 +179,10 @@ class FileTag(object):
         """
         return self._sequence_n
 
+    @sequence_n.setter
+    def sequence_n(self, value):
+        self._sequence_n = value
+
     @property
     def sender(self):
         """
@@ -175,6 +191,10 @@ class FileTag(object):
         :return: the file sender ID
         """
         return self._sender
+
+    @sender.setter
+    def sender(self, value):
+        self._sender = value
 
     @property
     def receiver(self):
@@ -185,6 +205,10 @@ class FileTag(object):
         """
         return self._receiver
 
+    @receiver.setter
+    def receiver(self, value):
+        self._receiver = value
+
     @property
     def version(self):
         """
@@ -194,3 +218,7 @@ class FileTag(object):
         :return: the CWR standard specification version used
         """
         return self._version
+
+    @version.setter
+    def version(self, value):
+        self._version = value

@@ -25,11 +25,11 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type = '',
-                 transaction_sequence_n = 0,
-                 record_sequence_n = 0,
-                 ip_n = '',
-                 ip_last_name = '',
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 ip_n='',
+                 ip_last_name='',
                  agreement_role_code=None,
                  ip_writer_first_name='',
                  ipi_name_n=None,
@@ -84,6 +84,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         """
         return self._agreement_role_code
 
+    @agreement_role_code.setter
+    def agreement_role_code(self, value):
+        self._agreement_role_code = value
+
     @property
     def ip_last_name(self):
         """
@@ -100,6 +104,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         """
         return self._ip_last_name
 
+    @ip_last_name.setter
+    def ip_last_name(self, value):
+        self._ip_last_name = value
+
     @property
     def ip_n(self):
         """
@@ -110,6 +118,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         :return: ID for the interested party
         """
         return self._ip_n
+
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
 
     @property
     def ip_writer_first_name(self):
@@ -123,6 +135,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         """
         return self._ip_writer_first_name
 
+    @ip_writer_first_name.setter
+    def ip_writer_first_name(self, value):
+        self._ip_writer_first_name = value
+
     @property
     def ipi_base_n(self):
         """
@@ -134,6 +150,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         :return: IPI base number for the interested party
         """
         return self._ipi_base_n
+
+    @ipi_base_n.setter
+    def ipi_base_n(self, value):
+        self._ipi_base_n = value
 
     @property
     def ipi_name_n(self):
@@ -148,6 +168,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         :return: the IPI name number for this interested party
         """
         return self._ipi_name_n
+
+    @ipi_name_n.setter
+    def ipi_name_n(self, value):
+        self._ipi_name_n = value
 
     @property
     def mr_share(self):
@@ -166,6 +190,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         """
         return self._mr_share
 
+    @mr_share.setter
+    def mr_share(self, value):
+        self._mr_share = value
+
     @property
     def mr_society(self):
         """
@@ -176,6 +204,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         :return: the Interested Party's mechanical rights society
         """
         return self._mr_society
+
+    @mr_society.setter
+    def mr_society(self, value):
+        self._mr_society = value
 
     @property
     def pr_share(self):
@@ -194,6 +226,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         """
         return self._pr_share
 
+    @pr_share.setter
+    def pr_share(self, value):
+        self._pr_share = value
+
     @property
     def pr_society(self):
         """
@@ -206,6 +242,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         :return: the Interested Party's performing rights society
         """
         return self._pr_society
+
+    @pr_society.setter
+    def pr_society(self, value):
+        self._pr_society = value
 
     @property
     def sr_share(self):
@@ -224,6 +264,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         """
         return self._sr_share
 
+    @sr_share.setter
+    def sr_share(self, value):
+        self._sr_share = value
+
     @property
     def sr_society(self):
         """
@@ -235,6 +279,10 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
         :return: the Interested Party's synchronization rights society
         """
         return self._sr_society
+
+    @sr_society.setter
+    def sr_society(self, value):
+        self._sr_society = value
 
 
 class AgreementRecord(TransactionRecord):
@@ -348,6 +396,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._advance_given
 
+    @advance_given.setter
+    def advance_given(self, value):
+        self._advance_given = value
+
     @property
     def agreement_end_date(self):
         """
@@ -366,6 +418,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._agreement_end_date
 
+    @agreement_end_date.setter
+    def agreement_end_date(self, value):
+        self._agreement_end_date = value
+
     @property
     def agreement_start_date(self):
         """
@@ -378,6 +434,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._agreement_start_date
 
+    @agreement_start_date.setter
+    def agreement_start_date(self, value):
+        self._agreement_start_date = value
+
     @property
     def agreement_type(self):
         """
@@ -388,6 +448,10 @@ class AgreementRecord(TransactionRecord):
         :return: the Agreement's type
         """
         return self._agreement_type
+
+    @agreement_type.setter
+    def agreement_type(self, value):
+        self._agreement_type = value
 
     @property
     def date_of_signature(self):
@@ -400,6 +464,10 @@ class AgreementRecord(TransactionRecord):
         :return the date when the agreement contract was signed
         """
         return self._date_of_signature
+
+    @date_of_signature.setter
+    def date_of_signature(self, value):
+        self._date_of_signature = value
 
     @property
     def international_standard_code(self):
@@ -416,6 +484,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._international_standard_code
 
+    @international_standard_code.setter
+    def international_standard_code(self, value):
+        self._international_standard_code = value
+
     @property
     def number_of_works(self):
         """
@@ -427,6 +499,10 @@ class AgreementRecord(TransactionRecord):
         :return: number of works under this Agreement
         """
         return self._number_of_works
+
+    @number_of_works.setter
+    def number_of_works(self, value):
+        self._number_of_works = value
 
     @property
     def post_term_collection_end_date(self):
@@ -447,6 +523,10 @@ class AgreementRecord(TransactionRecord):
         end
         """
         return self._post_term_collection_end_date
+
+    @post_term_collection_end_date.setter
+    def post_term_collection_end_date(self, value):
+        self._post_term_collection_end_date = value
 
     @property
     def post_term_collection_status(self):
@@ -470,6 +550,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._post_term_collection_status
 
+    @post_term_collection_status.setter
+    def post_term_collection_status(self, value):
+        self._post_term_collection_status = value
+
     @property
     def prior_royalty_status(self):
         """
@@ -490,6 +574,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._prior_royalty_status
 
+    @prior_royalty_status.setter
+    def prior_royalty_status(self, value):
+        self._prior_royalty_status = value
+
     @property
     def prior_royalty_start_date(self):
         """
@@ -508,6 +596,10 @@ class AgreementRecord(TransactionRecord):
         return the collection start date before the start of the Agreement
         """
         return self._prior_royalty_start_date
+
+    @prior_royalty_start_date.setter
+    def prior_royalty_start_date(self, value):
+        self._prior_royalty_start_date = value
 
     @property
     def retention_end_date(self):
@@ -529,6 +621,10 @@ class AgreementRecord(TransactionRecord):
         :return: the collection end date after the end of the Agreement
         """
         return self._retention_end_date
+
+    @retention_end_date.setter
+    def retention_end_date(self, value):
+        self._retention_end_date = value
 
     @property
     def sales_manufacture_clause(self):
@@ -554,6 +650,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._sales_manufacture_clause
 
+    @sales_manufacture_clause.setter
+    def sales_manufacture_clause(self, value):
+        self._sales_manufacture_clause = value
+
     @property
     def shares_change(self):
         """
@@ -565,6 +665,10 @@ class AgreementRecord(TransactionRecord):
         :return: True if the writer shares can change, False otherwise
         """
         return self._shares_change
+
+    @shares_change.setter
+    def shares_change(self, value):
+        self._shares_change = value
 
     @property
     def society_assigned_agreement_n(self):
@@ -580,6 +684,10 @@ class AgreementRecord(TransactionRecord):
         """
         return self._society_assigned_agreement_n
 
+    @society_assigned_agreement_n.setter
+    def society_assigned_agreement_n(self, value):
+        self._society_assigned_agreement_n = value
+
     @property
     def submitter_agreement_n(self):
         """
@@ -590,6 +698,10 @@ class AgreementRecord(TransactionRecord):
         :return: the submitter's ID for this Agreement
         """
         return self._submitter_agreement_n
+
+    @submitter_agreement_n.setter
+    def submitter_agreement_n(self, value):
+        self._submitter_agreement_n = value
 
 
 class AgreementTerritoryRecord(TransactionRecord):
@@ -643,6 +755,10 @@ class AgreementTerritoryRecord(TransactionRecord):
         """
         return self._inclusion_exclusion_indicator
 
+    @inclusion_exclusion_indicator.setter
+    def inclusion_exclusion_indicator(self, value):
+        self._inclusion_exclusion_indicator = value
+
     @property
     def tis_numeric_code(self):
         """
@@ -654,3 +770,7 @@ class AgreementTerritoryRecord(TransactionRecord):
         :return: the TIS numeric code
         """
         return self._tis_numeric_code
+
+    @tis_numeric_code.setter
+    def tis_numeric_code(self, value):
+        self._tis_numeric_code = value

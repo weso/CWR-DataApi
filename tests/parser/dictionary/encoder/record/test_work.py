@@ -32,11 +32,13 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
                           title='TITLE',
                           version_type='ORI',
                           musical_work_distribution_category='SER',
-                          date_publication_printed_edition=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+                          date_publication_printed_edition=datetime.datetime.strptime(
+                              '20030216', '%Y%m%d').date(),
                           text_music_relationship='MTX',
                           language_code='ES',
                           copyright_number='ABDF146',
-                          copyright_date=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+                          copyright_date=datetime.datetime.strptime('20030217',
+                                                                    '%Y%m%d').date(),
                           music_arrangement='ORI',
                           lyric_adaptation='MOD',
                           excerpt_type='MOV',
@@ -44,7 +46,8 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
                           composite_component_count=5,
                           iswc=iswc,
                           work_type='BL',
-                          duration=datetime.datetime.strptime('011200', '%H%M%S').time(),
+                          duration=datetime.datetime.strptime('011200',
+                                                              '%H%M%S').time(),
                           catalogue_number='GGH97',
                           opus_number='OP35',
                           contact_id='123CONTACT',
@@ -63,19 +66,23 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('TITLE', encoded['title'])
         self.assertEqual('ORI', encoded['version_type'])
         self.assertEqual('SER', encoded['musical_work_distribution_category'])
-        self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                         encoded['date_publication_printed_edition'])
+        self.assertEqual(
+            datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+            encoded['date_publication_printed_edition'])
         self.assertEqual('MTX', encoded['text_music_relationship'])
         self.assertEqual('ES', encoded['language_code'])
         self.assertEqual('ABDF146', encoded['copyright_number'])
-        self.assertEqual(datetime.datetime.strptime('20030217', '%Y%m%d').date(), encoded['copyright_date'])
+        self.assertEqual(
+            datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+            encoded['copyright_date'])
         self.assertEqual('ORI', encoded['music_arrangement'])
         self.assertEqual('MOD', encoded['lyric_adaptation'])
         self.assertEqual('MOV', encoded['excerpt_type'])
         self.assertEqual('MED', encoded['composite_type'])
         self.assertEqual(5, encoded['composite_component_count'])
         self.assertEqual('BL', encoded['work_type'])
-        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), encoded['duration'])
+        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(),
+                         encoded['duration'])
         self.assertEqual('GGH97', encoded['catalogue_number'])
         self.assertEqual('OP35', encoded['opus_number'])
         self.assertEqual('123CONTACT', encoded['contact_id'])
@@ -98,11 +105,13 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
                           title='TITLE',
                           version_type='ORI',
                           musical_work_distribution_category='SER',
-                          date_publication_printed_edition=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+                          date_publication_printed_edition=datetime.datetime.strptime(
+                              '20030216', '%Y%m%d').date(),
                           text_music_relationship='MTX',
                           language_code='ES',
                           copyright_number='ABDF146',
-                          copyright_date=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+                          copyright_date=datetime.datetime.strptime('20030217',
+                                                                    '%Y%m%d').date(),
                           music_arrangement='ORI',
                           lyric_adaptation='MOD',
                           excerpt_type='MOV',
@@ -110,7 +119,8 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
                           composite_component_count=5,
                           iswc=iswc,
                           work_type='BL',
-                          duration=datetime.datetime.strptime('011200', '%H%M%S').time(),
+                          duration=datetime.datetime.strptime('011200',
+                                                              '%H%M%S').time(),
                           catalogue_number='GGH97',
                           opus_number='OP35',
                           contact_id='123CONTACT',
@@ -129,19 +139,23 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('TITLE', encoded['title'])
         self.assertEqual('ORI', encoded['version_type'])
         self.assertEqual('SER', encoded['musical_work_distribution_category'])
-        self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                         encoded['date_publication_printed_edition'])
+        self.assertEqual(
+            datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+            encoded['date_publication_printed_edition'])
         self.assertEqual('MTX', encoded['text_music_relationship'])
         self.assertEqual('ES', encoded['language_code'])
         self.assertEqual('ABDF146', encoded['copyright_number'])
-        self.assertEqual(datetime.datetime.strptime('20030217', '%Y%m%d').date(), encoded['copyright_date'])
+        self.assertEqual(
+            datetime.datetime.strptime('20030217', '%Y%m%d').date(),
+            encoded['copyright_date'])
         self.assertEqual('ORI', encoded['music_arrangement'])
         self.assertEqual('MOD', encoded['lyric_adaptation'])
         self.assertEqual('MOV', encoded['excerpt_type'])
         self.assertEqual('MED', encoded['composite_type'])
         self.assertEqual(5, encoded['composite_component_count'])
         self.assertEqual('BL', encoded['work_type'])
-        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), encoded['duration'])
+        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(),
+                         encoded['duration'])
         self.assertEqual('GGH97', encoded['catalogue_number'])
         self.assertEqual('OP35', encoded['opus_number'])
         self.assertEqual('123CONTACT', encoded['contact_id'])

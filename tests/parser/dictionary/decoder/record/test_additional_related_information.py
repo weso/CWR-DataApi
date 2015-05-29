@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import AdditionalRelatedInformationDictionaryDecoder
+from cwr.parser.decoder.dictionary import \
+    AdditionalRelatedInformationDictionaryDecoder
 
 """
 Dictionary to Message decoding tests.
@@ -15,7 +16,8 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class TestAdditionalRelatedInformationRecordDictionaryEncoding(unittest.TestCase):
+class TestAdditionalRelatedInformationRecordDictionaryEncoding(
+    unittest.TestCase):
     def setUp(self):
         self._decoder = AdditionalRelatedInformationDictionaryDecoder()
 
