@@ -27,12 +27,12 @@ class TransmissionHeader(Record):
     """
 
     def __init__(self,
-                 record_type,
-                 sender_id,
-                 sender_name,
-                 sender_type,
-                 creation_date_time,
-                 transmission_date,
+                 record_type='',
+                 sender_id=0,
+                 sender_name='',
+                 sender_type='',
+                 creation_date_time=None,
+                 transmission_date=None,
                  edi_standard='01.10',
                  character_set=None
                  ):
@@ -201,10 +201,11 @@ class TransmissionTrailer(Record):
     """
 
     def __init__(self,
-                 record_type,
-                 group_count,
-                 transaction_count,
-                 record_count):
+                 record_type='',
+                 group_count=0,
+                 transaction_count=0,
+                 record_count=0
+                 ):
         """
         Constructs a TransmissionTrailer.
 
@@ -280,7 +281,7 @@ class Transmission(object):
     def __init__(self,
                  header,
                  trailer,
-                 groups
+                 groups = None
                  ):
         """
         Constructs a Transmission.
@@ -295,7 +296,10 @@ class Transmission(object):
         """
         self._header = header
         self._trailer = trailer
-        self._groups = groups
+        if not groups:
+            self._groups = []
+        else:
+            self._groups = groups
 
     def __str__(self):
         return '%s to %s [%s]' % (

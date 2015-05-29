@@ -65,10 +65,10 @@ class BaseWorkRecord(TransactionRecord):
     __metaclass__ = ABCMeta
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 title,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 title='',
                  language_code=None,
                  iswc=None
                  ):
@@ -153,13 +153,13 @@ class WorkRecord(BaseWorkRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 submitter_work_n,
-                 title,
-                 version_type,
-                 musical_work_distribution_category,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 submitter_work_n='',
+                 title='',
+                 version_type=None,
+                 musical_work_distribution_category=None,
                  date_publication_printed_edition=None,
                  text_music_relationship=None,
                  language_code=None,
@@ -583,11 +583,11 @@ class ComponentRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 title,
-                 writer_1_last_name,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 title='',
+                 writer_1_last_name='',
                  submitter_work_n='',
                  writer_1_first_name='',
                  writer_2_first_name='',
@@ -824,10 +824,10 @@ class AuthoredWorkRecord(BaseWorkRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 title,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 title='',
                  submitter_work_n='',
                  writer_1_first_name='',
                  writer_1_last_name='',
@@ -862,12 +862,12 @@ class AuthoredWorkRecord(BaseWorkRecord):
         :param iswc: ISWC for the work
         """
         super(AuthoredWorkRecord, self).__init__(
-            record_type,
-            transaction_sequence_n,
-            record_sequence_n,
-            title,
-            language_code,
-            iswc
+            record_type='',
+            transaction_sequence_n=0,
+            record_sequence_n=0,
+            title='',
+            language_code=None,
+            iswc=None
         )
 
         # Work's info
@@ -1035,11 +1035,11 @@ class AlternateTitleRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 alternate_title,
-                 title_type,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 alternate_title='',
+                 title_type=None,
                  language_code=None
                  ):
         """
@@ -1109,9 +1109,9 @@ class RecordingDetailRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
                  first_release_date=None,
                  first_release_duration=None,
                  first_album_title='',
@@ -1275,10 +1275,10 @@ class InstrumentationDetailRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 instrument_code,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 instrument_code=None,
                  number_players=0
                  ):
         super(InstrumentationDetailRecord, self).__init__(
@@ -1330,10 +1330,10 @@ class WorkOriginRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 intended_purpose,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 intended_purpose=None,
                  production_title='',
                  cd_identifier='',
                  cut_number=0,
@@ -1524,9 +1524,9 @@ class InstrumentationSummaryRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
                  number_voices=0,
                  standard_instrumentation_type=None,
                  instrumentation_description=''
@@ -1591,10 +1591,10 @@ class PerformingArtistRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 performing_artist_last_name,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 performing_artist_last_name='',
                  performing_artist_first_name='',
                  performing_artist_ipi_name_n=None,
                  performing_artist_ipi_base_n=None

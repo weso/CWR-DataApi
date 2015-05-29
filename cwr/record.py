@@ -33,7 +33,7 @@ class Record(object):
     """
 
     def __init__(self,
-                 record_type
+                 record_type=''
                  ):
         """
         Constructs a RecordPrefix.
@@ -88,9 +88,9 @@ class TransactionRecord(Record):
     __metaclass__ = ABCMeta
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0
                  ):
         """
         Constructs a record with the specified information.

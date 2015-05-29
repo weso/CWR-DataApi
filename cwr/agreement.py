@@ -25,11 +25,12 @@ class InterestedPartyForAgreementRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 ip_n, ip_last_name,
-                 agreement_role_code,
+                 record_type = '',
+                 transaction_sequence_n = 0,
+                 record_sequence_n = 0,
+                 ip_n = '',
+                 ip_last_name = '',
+                 agreement_role_code=None,
                  ip_writer_first_name='',
                  ipi_name_n=None,
                  ipi_base_n=None,
@@ -253,15 +254,15 @@ class AgreementRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 submitter_agreement_n,
-                 agreement_type,
-                 agreement_start_date,
-                 number_of_works,
-                 prior_royalty_status,
-                 post_term_collection_status,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 submitter_agreement_n='',
+                 agreement_type=None,
+                 agreement_start_date=None,
+                 number_of_works=0,
+                 prior_royalty_status='',
+                 post_term_collection_status='',
                  international_standard_code='',
                  society_assigned_agreement_n='',
                  sales_manufacture_clause='S',
@@ -606,11 +607,11 @@ class AgreementTerritoryRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 tis_numeric_code,
-                 inclusion_exclusion_indicator
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 tis_numeric_code=None,
+                 inclusion_exclusion_indicator=None
                  ):
         """
         Constructs an AgreementTerritory.
@@ -653,73 +654,3 @@ class AgreementTerritoryRecord(TransactionRecord):
         :return: the TIS numeric code
         """
         return self._tis_numeric_code
-
-
-class AgreementTransaction(object):
-    """
-    Represents a CWR Agreement Supporting Work Registration Transaction (AGR).
-
-    These transactions document agreements between interested parties, not
-    general agreements, where at least two IPAs (one assignor and one
-    acquirer) form an Agreement for at least one Territory.
-
-    The transaction contains only details of the Agreement itself, and the
-    Territories-IPAs relationships, but not about the works covered by it,
-    which are stored elsewhere in the same file, and connected to this
-    Agreement based on the Submitter Agreement Number that is included in the
-    header record.
-
-    So an Agreement record is composed of three pieces:
-    - The Agreement details (AGR)
-    - The Territories covered (TER)
-    - The IPAs of each territory (IPA)
-
-    Or, in a more visual way an Agreement Transaction is: [AGR, [TER, IPA*]*].
-
-    It must be noted that the total sum of all the shares of the Interested
-    Parties should be 100% for each type of share.
-    """
-
-    def __init__(self,
-                 agreement,
-                 territories
-                 ):
-        """
-        Constructs an AgreementTransaction.
-
-        :param agreement: the Agreement record
-        :param territories: the Territories and their IPAs
-        """
-        super(AgreementTransaction, self).__init__()
-        self._agreement = agreement
-        self._territories = territories
-
-    @property
-    def agreement(self):
-        """
-        Agreement record field. This is an AgreementRecord.
-
-        The details of the Agreement Transaction.
-
-        :return: the agreement details
-        """
-        return self._agreement
-
-    @property
-    def territories(self):
-        """
-        The territories affected by this Agreement and their IPAs.
-
-        This is a matrix of two columns, one containing a single Territory and
-        another containing a collection with all the Interested Parties
-        affecting this territory.
-
-        Graphically this is: [territory_1, IPA*]*.
-
-        These territories are instances of AgreementTerritory and the
-        Interested Parties are instances of AgreementInterestedParty.
-
-        :return: the territories affected by this Agreement and their IPAs as
-        a dictionary
-        """
-        return self._territories

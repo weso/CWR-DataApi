@@ -19,10 +19,10 @@ class InterestedParty(object):
     __metaclass__ = ABCMeta
 
     def __init__(self,
-                 ip_n,
-                 ipi_base_n,
-                 tax_id,
-                 ipi_name
+                 ip_n='',
+                 ipi_base_n=None,
+                 tax_id='',
+                 ipi_name=''
                  ):
         # IP info
         self._ip_n = ip_n
@@ -98,9 +98,9 @@ class InterestedPartyRecord(TransactionRecord):
     __metaclass__ = ABCMeta
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
                  first_recording_refusal='U',
                  usa_license='',
                  pr_society=None,
@@ -262,13 +262,13 @@ class IPTerritoryOfControlRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 ip_n,
-                 inclusion_exclusion_indicator,
-                 tis_numeric_code,
-                 sequence_n,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 ip_n='',
+                 inclusion_exclusion_indicator=None,
+                 tis_numeric_code=None,
+                 sequence_n=0,
                  pr_collection_share=0,
                  mr_collection_share=0,
                  sr_collection_share=0,
@@ -410,8 +410,8 @@ class Publisher(InterestedParty):
     """
 
     def __init__(self,
-                 ip_n,
-                 publisher_name,
+                 ip_n='',
+                 publisher_name='',
                  ipi_base_n=None,
                  tax_id=None,
                  ipi_name_n=None
@@ -451,10 +451,11 @@ class PublisherRecord(InterestedPartyRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 publisher, publisher_sequence_n,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 publisher=None,
+                 publisher_sequence_n=0,
                  submitter_agreement_n='',
                  publisher_type=None,
                  publisher_unknown='N',
@@ -754,8 +755,8 @@ class Writer(InterestedParty):
     """
 
     def __init__(self,
-                 ip_n,
-                 personal_number,
+                 ip_n='',
+                 personal_number=0,
                  ipi_base_n=None,
                  writer_first_name='',
                  writer_last_name='',
@@ -831,11 +832,11 @@ class PublisherForWriterRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 publisher_ip_n,
-                 writer_ip_n,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 publisher_ip_n='',
+                 writer_ip_n='',
                  submitter_agreement_n=None,
                  society_assigned_agreement_n=None
                  ):
@@ -911,10 +912,10 @@ class WriterRecord(InterestedPartyRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 writer,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 writer=None,
                  writer_designation=None,
                  work_for_hire=False,
                  writer_unknown='F',

@@ -31,11 +31,11 @@ class AdditionalRelatedInfoRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 society_n,
-                 type_of_right,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 society_n=None,
+                 type_of_right=None,
                  work_n='',
                  subject_code=None,
                  note=''

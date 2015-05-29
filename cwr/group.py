@@ -41,9 +41,9 @@ class GroupHeader(Record):
     """
 
     def __init__(self,
-                 record_type,
-                 group_id,
-                 transaction_type,
+                 record_type='',
+                 group_id=0,
+                 transaction_type='',
                  version_number='02.10',
                  batch_request_id=0
                  ):
@@ -129,10 +129,10 @@ class GroupTrailer(Record):
     """
 
     def __init__(self,
-                 record_type,
-                 group_id,
-                 transaction_count,
-                 record_count
+                 record_type='',
+                 group_id=0,
+                 transaction_count=0,
+                 record_count=0
                  ):
         """
         Constructs a GroupTrailer.
@@ -213,7 +213,7 @@ class Group(object):
     def __init__(self,
                  group_header,
                  group_trailer,
-                 transactions
+                 transactions=None
                  ):
         """
         Constructs a TransactionGroup.
@@ -235,7 +235,10 @@ class Group(object):
         """
         self._group_header = group_header
         self._group_trailer = group_trailer
-        self._transactions = transactions
+        if not transactions:
+            self._transactions = []
+        else:
+            self._transactions = transactions
 
     def __str__(self):
         return '%s to %s [%s]' % (

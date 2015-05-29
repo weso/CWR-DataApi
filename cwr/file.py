@@ -43,7 +43,10 @@ class CWRFile(object):
     the metadata, and Transmission for the file contents.
     """
 
-    def __init__(self, tag, transmission):
+    def __init__(self,
+                 tag,
+                 transmission
+                 ):
         """
         Constructs a CWRFile.
 
@@ -106,7 +109,13 @@ class FileTag(object):
     indicating the version of the CWR standard specification used on the file.
     """
 
-    def __init__(self, year, sequence_n, sender, receiver, version):
+    def __init__(self,
+                 year,
+                 sequence_n,
+                 sender,
+                 receiver,
+                 version
+                 ):
         """
         Constructs a FileTag.
 

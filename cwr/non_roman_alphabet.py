@@ -21,9 +21,9 @@ class NonRomanAlphabetRecord(TransactionRecord):
     __metaclass__ = ABCMeta
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
                  language_code=None):
         super(NonRomanAlphabetRecord, self).__init__(
             record_type,
@@ -60,10 +60,10 @@ class NonRomanAlphabetWorkRecord(NonRomanAlphabetRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 title,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 title='',
                  language_code=None):
         super(NonRomanAlphabetWorkRecord, self).__init__(
             record_type,
@@ -96,10 +96,11 @@ class NonRomanAlphabetTitleRecord(NonRomanAlphabetRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 title, title_type,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 title='',
+                 title_type=None,
                  language_code=None):
         super(NonRomanAlphabetTitleRecord, self).__init__(
             record_type,
@@ -146,11 +147,11 @@ class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 writer_first_name,
-                 writer_name,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 writer_first_name='',
+                 writer_name='',
                  position=None,
                  language_code=None
                  ):
@@ -211,11 +212,11 @@ class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 ip_name,
-                 ip_writer_name,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 ip_name='',
+                 ip_writer_name='',
                  ip_n='',
                  language_code=None
                  ):
@@ -275,12 +276,12 @@ class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 publisher_sequence_n,
-                 ip_n,
-                 publisher_name,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 publisher_sequence_n=0,
+                 ip_n='',
+                 publisher_name='',
                  language_code=None):
         super(NonRomanAlphabetPublisherNameRecord, self).__init__(
             record_type,
@@ -337,9 +338,10 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
     be a valid code from ISO 639-2(T).
     """
 
-    def __init__(self, record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
                  performing_artist_first_name='',
                  performing_artist_name='',
                  performing_artist_ipi_name_n=None,
@@ -446,11 +448,12 @@ class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
     used to identify the name of the writer in the preceding SWR/OWR record.
     """
 
-    def __init__(self, record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 writer_first_name,
-                 writer_last_name,
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 writer_first_name='',
+                 writer_last_name='',
                  ip_n='',
                  language_code=None
                  ):

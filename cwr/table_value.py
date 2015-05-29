@@ -17,12 +17,13 @@ class MediaTypeValue(object):
     """
 
     def __init__(self,
-                 code,
-                 name,
-                 media_type,
-                 duration_max,
-                 works_max,
-                 fragments_max):
+                 code='',
+                 name='',
+                 media_type=None,
+                 duration_max=0,
+                 works_max=0,
+                 fragments_max=0
+                 ):
         self._code = code
         self._name = name
         self._media_type = media_type
@@ -117,8 +118,8 @@ class TableValue(object):
     """
 
     def __init__(self,
-                 code,
-                 name,
+                 code='',
+                 name='',
                  description=''
                  ):
         self._code = code
@@ -159,9 +160,9 @@ class InstrumentValue(TableValue):
     """
 
     def __init__(self,
-                 code,
-                 name,
-                 family,
+                 code='',
+                 name='',
+                 family=None,
                  description=''
                  ):
         super(InstrumentValue, self).__init__(

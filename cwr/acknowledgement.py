@@ -17,15 +17,15 @@ class AcknowledgementRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 original_group_id,
-                 original_transaction_sequence_n,
-                 original_transaction_type,
-                 transaction_status,
-                 creation_date_time,
-                 processing_date,
+                 record_type = '',
+                 transaction_sequence_n = 0,
+                 record_sequence_n = 0,
+                 original_group_id = 0,
+                 original_transaction_sequence_n = 0,
+                 original_transaction_type = '',
+                 transaction_status = None,
+                 creation_date_time = None,
+                 processing_date = None,
                  creation_title='',
                  submitter_creation_n='',
                  recipient_creation_n=''
@@ -204,15 +204,15 @@ class MessageRecord(TransactionRecord):
     """
 
     def __init__(self,
-                 record_type,
-                 transaction_sequence_n,
-                 record_sequence_n,
-                 message_level,
-                 validation_n,
-                 message_type,
-                 message_text,
-                 original_record_sequence_n,
-                 message_record_type
+                 record_type= '',
+                 transaction_sequence_n = 0,
+                 record_sequence_n = 0,
+                 message_level = None,
+                 validation_n = '',
+                 message_type = '',
+                 message_text = '',
+                 original_record_sequence_n = 0,
+                 message_record_type = ''
                  ):
         super(MessageRecord, self).__init__(
             record_type,
