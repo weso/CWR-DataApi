@@ -11,13 +11,3 @@ with the data they contain.
 
 This library has been developed based on CWR specification version 2.1 revision
 3, from December 10th 2004.
-
-------------------
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-.. include:: contents.rst.inc

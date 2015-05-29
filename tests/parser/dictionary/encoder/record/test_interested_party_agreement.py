@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import InterestedPartyForAgreementDictionaryEncoder
+from cwr.parser.encoder.dictionary import \
+    InterestedPartyForAgreementDictionaryEncoder
 from cwr.agreement import InterestedPartyForAgreementRecord
 
 """

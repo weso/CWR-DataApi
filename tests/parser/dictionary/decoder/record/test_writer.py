@@ -20,33 +20,33 @@ class TestWriterRecordDictionaryDecoder(unittest.TestCase):
         self._decoder = WriterRecordDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['ip_n'] = 'ABC15'
-        dict['personal_number'] = 'ABC1234'
-        dict['ipi_name_n'] = 14107338
-        dict['ipi_base_n'] = 'I-000000229-7'
-        dict['writer_first_name'] = 'NAME'
-        dict['writer_last_name'] = 'LAST NAME'
-        dict['tax_id'] = 923703412
+        data['ip_n'] = 'ABC15'
+        data['personal_number'] = 'ABC1234'
+        data['ipi_name_n'] = 14107338
+        data['ipi_base_n'] = 'I-000000229-7'
+        data['writer_first_name'] = 'NAME'
+        data['writer_last_name'] = 'LAST NAME'
+        data['tax_id'] = 923703412
 
-        dict['record_type'] = 'SWR'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['writer_designation'] = 'AD'
-        dict['work_for_hire'] = True
-        dict['writer_unknown'] = 'T'
-        dict['reversionary'] = 'T'
-        dict['first_recording_refusal'] = 'T'
-        dict['usa_license'] = 'B'
-        dict['pr_society'] = 13
-        dict['pr_ownership_share'] = 50.5
-        dict['mr_society'] = 14
-        dict['mr_ownership_share'] = 60.5
-        dict['sr_society'] = 15
-        dict['sr_ownership_share'] = 70.5
+        data['record_type'] = 'SWR'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['writer_designation'] = 'AD'
+        data['work_for_hire'] = True
+        data['writer_unknown'] = 'T'
+        data['reversionary'] = 'T'
+        data['first_recording_refusal'] = 'T'
+        data['usa_license'] = 'B'
+        data['pr_society'] = 13
+        data['pr_ownership_share'] = 50.5
+        data['mr_society'] = 14
+        data['mr_ownership_share'] = 60.5
+        data['sr_society'] = 15
+        data['sr_ownership_share'] = 70.5
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('ABC15', record.writer.ip_n)
         self.assertEqual('ABC1234', record.writer.personal_number)

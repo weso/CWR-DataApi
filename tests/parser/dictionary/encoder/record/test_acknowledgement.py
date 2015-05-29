@@ -29,8 +29,10 @@ class TestAcknowledgementRecordDictionaryEncoding(unittest.TestCase):
                                      original_transaction_sequence_n=5,
                                      original_transaction_type='AGR',
                                      transaction_status='AS',
-                                     creation_date_time=datetime.datetime.strptime('20030215', '%Y%m%d').date(),
-                                     processing_date=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+                                     creation_date_time=datetime.datetime.strptime(
+                                         '20030215', '%Y%m%d').date(),
+                                     processing_date=datetime.datetime.strptime(
+                                         '20030216', '%Y%m%d').date(),
                                      creation_title='TITLE',
                                      submitter_creation_n='A123',
                                      recipient_creation_n='B124')
@@ -44,8 +46,12 @@ class TestAcknowledgementRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(5, encoded['original_transaction_sequence_n'])
         self.assertEqual('AGR', encoded['original_transaction_type'])
         self.assertEqual('AS', encoded['transaction_status'])
-        self.assertEqual(datetime.datetime.strptime('20030215', '%Y%m%d').date(), encoded['creation_date_time'])
-        self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(), encoded['processing_date'])
+        self.assertEqual(
+            datetime.datetime.strptime('20030215', '%Y%m%d').date(),
+            encoded['creation_date_time'])
+        self.assertEqual(
+            datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+            encoded['processing_date'])
         self.assertEqual('TITLE', encoded['creation_title'])
         self.assertEqual('A123', encoded['submitter_creation_n'])
         self.assertEqual('B124', encoded['recipient_creation_n'])

@@ -14,12 +14,13 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-def alphanum_variable(min, max, name=None):
+def alphanum_variable(min_size, max_size, name=None):
     """
-    Creates the grammar for an alphanumeric code where the size ranges between two values.
+    Creates the grammar for an alphanumeric code where the size ranges between
+    two values.
 
-    :param min: minimum size
-    :param max: maximum size
+    :param min_size: minimum size
+    :param max_size: maximum size
     :param name: name for the field
     :return: grammar for an alphanumeric field of a variable size
     """
@@ -27,14 +28,14 @@ def alphanum_variable(min, max, name=None):
     if name is None:
         name = 'Alphanumeric Field'
 
-    if min < 0:
+    if min_size < 0:
         # Can't have negative min
         raise BaseException()
-    if max < min:
+    if max_size < min_size:
         # Max can't be lower than min
         raise BaseException()
 
-    field = pp.Word(pp.alphanums, min=min, max=max)
+    field = pp.Word(pp.alphanums, min=min_size, max=max_size)
 
     # Parse action
     field.setParseAction(lambda s: s[0].strip())

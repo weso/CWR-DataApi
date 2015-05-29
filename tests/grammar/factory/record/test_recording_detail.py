@@ -25,6 +25,24 @@ class TestRecordingDetailGrammar(unittest.TestCase):
 
         result = self.grammar.parseString(record)[0]
 
+        self.assertEqual('REC', result.record_type)
+        self.assertEqual(531, result.transaction_sequence_n)
+        self.assertEqual(5164, result.record_sequence_n)
+        self.assertEqual(2008, result.first_release_date.year)
+        self.assertEqual(3, result.first_release_date.month)
+        self.assertEqual(4, result.first_release_date.day)
+        self.assertEqual(0, result.first_release_duration.hour)
+        self.assertEqual(3, result.first_release_duration.minute)
+        self.assertEqual(0, result.first_release_duration.second)
+        self.assertEqual('A NAME _ AND 1999', result.first_album_title)
+        self.assertEqual('THIS IS THE LABEL', result.first_album_label)
+        self.assertEqual('G0100007401741', result.first_release_catalog_n)
+        self.assertEqual(None, result.ean)
+        self.assertEqual('GBBBN0009590', result.isrc)
+        self.assertEqual(None, result.recording_format)
+        self.assertEqual('U', result.recording_technique)
+        self.assertEqual(None, result.media_type)
+
     def test_common_2(self):
         record = 'REC000004230000318620080715                                                            000248     A NAME _ AND 1999                                           THIS IS THE LABEL                                           60251768039                    BR-UM7-08-00 U   '
 

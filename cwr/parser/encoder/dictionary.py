@@ -11,8 +11,8 @@ from cwr.work import *
 """
 Classes for transforming instances of the CWR model into dictionaries.
 
-A single monolithic encoder takes care of this process. It will just check the class of the received object and encode
-it accordingly.
+A single monolithic encoder takes care of this process. It will just check the
+class of the received object and encode it accordingly.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -51,11 +51,14 @@ class TransactionRecordDictionaryEncoder(Encoder):
         self._encoder_msg = MessageDictionaryEncoder()
         self._encoder_per = PerformingArtistDictionaryEncoder()
         self._encoder_pub_wr = PublisherForWriterDictionaryEncoder()
-        self._encoder_pub_rec = PublisherRecordDictionaryEncoder(self._encoder_publisher)
+        self._encoder_pub_rec = PublisherRecordDictionaryEncoder(
+            self._encoder_publisher)
         self._encoder_red = RecordingDetailDictionaryEncoder()
         self._encoder_work = WorkDictionaryEncoder(self._encoder_iswc)
-        self._encoder_work_origin = WorkOriginDictionaryEncoder(self._encoder_avk, self._encoder_visan)
-        self._encoder_wri_rec = WriterRecordDictionaryEncoder(self._encoder_writer)
+        self._encoder_work_origin = WorkOriginDictionaryEncoder(
+            self._encoder_avk, self._encoder_visan)
+        self._encoder_wri_rec = WriterRecordDictionaryEncoder(
+            self._encoder_writer)
 
         self._encoder_nat = NonRomanAlphabetTitleDictionaryEncoder()
         self._encoder_now = NonRomanAlphabetOtherWriterDictionaryEncoder()
@@ -65,91 +68,91 @@ class TransactionRecordDictionaryEncoder(Encoder):
         self._encoder_nra_work = NonRomanAlphabetWorkDictionaryEncoder()
         self._encoder_nwn = NonRomanAlphabetWriterNameDictionaryEncoder()
 
-    def encode(self, object):
-        if isinstance(object, AcknowledgementRecord):
+    def encode(self, entity):
+        if isinstance(entity, AcknowledgementRecord):
             # Acknowledgement
-            encoded = self._encoder_ack.encode(object)
-        elif isinstance(object, AdditionalRelatedInfoRecord):
+            encoded = self._encoder_ack.encode(entity)
+        elif isinstance(entity, AdditionalRelatedInfoRecord):
             # Additional Related Info
-            encoded = self._encoder_ari.encode(object)
-        elif isinstance(object, AgreementRecord):
+            encoded = self._encoder_ari.encode(entity)
+        elif isinstance(entity, AgreementRecord):
             # Agreement
-            encoded = self._encoder_agr.encode(object)
-        elif isinstance(object, AgreementTerritoryRecord):
+            encoded = self._encoder_agr.encode(entity)
+        elif isinstance(entity, AgreementTerritoryRecord):
             # Agreement Territory
-            encoded = self._encoder_agr_ter.encode(object)
-        elif isinstance(object, AlternateTitleRecord):
+            encoded = self._encoder_agr_ter.encode(entity)
+        elif isinstance(entity, AlternateTitleRecord):
             # Alternate Title
-            encoded = self._encoder_alt.encode(object)
-        elif isinstance(object, AuthoredWorkRecord):
+            encoded = self._encoder_alt.encode(entity)
+        elif isinstance(entity, AuthoredWorkRecord):
             # Authored Work
-            encoded = self._encoder_authored.encode(object)
-        elif isinstance(object, ComponentRecord):
+            encoded = self._encoder_authored.encode(entity)
+        elif isinstance(entity, ComponentRecord):
             # Component
-            encoded = self._encoder_com.encode(object)
-        elif isinstance(object, InstrumentationDetailRecord):
+            encoded = self._encoder_com.encode(entity)
+        elif isinstance(entity, InstrumentationDetailRecord):
             # Instrumentation Detail
-            encoded = self._encoder_ind.encode(object)
-        elif isinstance(object, InstrumentationSummaryRecord):
+            encoded = self._encoder_ind.encode(entity)
+        elif isinstance(entity, InstrumentationSummaryRecord):
             # Instrumentation Summary
-            encoded = self._encoder_ins.encode(object)
-        elif isinstance(object, InterestedPartyForAgreementRecord):
+            encoded = self._encoder_ins.encode(entity)
+        elif isinstance(entity, InterestedPartyForAgreementRecord):
             # Interested Party for Agreement
-            encoded = self._encoder_ipa.encode(object)
-        elif isinstance(object, IPTerritoryOfControlRecord):
+            encoded = self._encoder_ipa.encode(entity)
+        elif isinstance(entity, IPTerritoryOfControlRecord):
             # Interested Party (Writer/Publisher) Territory of Control
-            encoded = self._encoder_itc.encode(object)
-        elif isinstance(object, MessageRecord):
+            encoded = self._encoder_itc.encode(entity)
+        elif isinstance(entity, MessageRecord):
             # Message
-            encoded = self._encoder_msg.encode(object)
-        elif isinstance(object, NonRomanAlphabetTitleRecord):
+            encoded = self._encoder_msg.encode(entity)
+        elif isinstance(entity, NonRomanAlphabetTitleRecord):
             # NAT Record
-            encoded = self._encoder_nat.encode(object)
-        elif isinstance(object, NonRomanAlphabetOtherWriterRecord):
+            encoded = self._encoder_nat.encode(entity)
+        elif isinstance(entity, NonRomanAlphabetOtherWriterRecord):
             # NOW Record
-            encoded = self._encoder_now.encode(object)
-        elif isinstance(object, NonRomanAlphabetAgreementPartyRecord):
+            encoded = self._encoder_now.encode(entity)
+        elif isinstance(entity, NonRomanAlphabetAgreementPartyRecord):
             # NPA Record
-            encoded = self._encoder_npa.encode(object)
-        elif isinstance(object, NonRomanAlphabetPublisherNameRecord):
+            encoded = self._encoder_npa.encode(entity)
+        elif isinstance(entity, NonRomanAlphabetPublisherNameRecord):
             # NPN Record
-            encoded = self._encoder_npn.encode(object)
-        elif isinstance(object, NonRomanAlphabetPerformanceDataRecord):
+            encoded = self._encoder_npn.encode(entity)
+        elif isinstance(entity, NonRomanAlphabetPerformanceDataRecord):
             # NPR Record
-            encoded = self._encoder_npr.encode(object)
-        elif isinstance(object, NonRomanAlphabetWorkRecord):
+            encoded = self._encoder_npr.encode(entity)
+        elif isinstance(entity, NonRomanAlphabetWorkRecord):
             # NRA Record for Works
-            encoded = self._encoder_nra_work.encode(object)
-        elif isinstance(object, NonRomanAlphabetWriterNameRecord):
+            encoded = self._encoder_nra_work.encode(entity)
+        elif isinstance(entity, NonRomanAlphabetWriterNameRecord):
             # NWN Record for Works
-            encoded = self._encoder_nwn.encode(object)
-        elif isinstance(object, PerformingArtistRecord):
+            encoded = self._encoder_nwn.encode(entity)
+        elif isinstance(entity, PerformingArtistRecord):
             # Performing Artist
-            encoded = self._encoder_per.encode(object)
-        elif isinstance(object, Publisher):
+            encoded = self._encoder_per.encode(entity)
+        elif isinstance(entity, Publisher):
             # Publisher IP
-            encoded = self._encoder_publisher.encode(object)
-        elif isinstance(object, PublisherForWriterRecord):
+            encoded = self._encoder_publisher.encode(entity)
+        elif isinstance(entity, PublisherForWriterRecord):
             # Publisher For Writer
-            encoded = self._encoder_pub_wr.encode(object)
-        elif isinstance(object, PublisherRecord):
+            encoded = self._encoder_pub_wr.encode(entity)
+        elif isinstance(entity, PublisherRecord):
             # Publisher
-            encoded = self._encoder_pub_rec.encode(object)
-        elif isinstance(object, RecordingDetailRecord):
+            encoded = self._encoder_pub_rec.encode(entity)
+        elif isinstance(entity, RecordingDetailRecord):
             # Recording Detail
-            encoded = self._encoder_red.encode(object)
-        elif isinstance(object, WorkRecord):
+            encoded = self._encoder_red.encode(entity)
+        elif isinstance(entity, WorkRecord):
             # Work
-            encoded = self._encoder_work.encode(object)
-        elif isinstance(object, WorkOriginRecord):
+            encoded = self._encoder_work.encode(entity)
+        elif isinstance(entity, WorkOriginRecord):
             # Work Origin
-            encoded = self._encoder_work_origin.encode(object)
-        elif isinstance(object, Writer):
+            encoded = self._encoder_work_origin.encode(entity)
+        elif isinstance(entity, Writer):
             # Writer IP
-            encoded = self._encoder_writer.encode(object)
-        elif isinstance(object, WriterRecord):
+            encoded = self._encoder_writer.encode(entity)
+        elif isinstance(entity, WriterRecord):
             # Writer
-            encoded = self._encoder_wri_rec.encode(object)
+            encoded = self._encoder_wri_rec.encode(entity)
         else:
             encoded = None
 
@@ -258,12 +261,12 @@ class TransactionHeaderDictionaryEncoder(Encoder):
     def __init__(self):
         super(TransactionHeaderDictionaryEncoder, self).__init__()
 
-    def encode(self, object):
+    def encode(self, entity):
         encoded = {}
 
-        encoded['record_type'] = object.record_type
-        encoded['transaction_sequence_n'] = object.transaction_sequence_n
-        encoded['record_sequence_n'] = object.record_sequence_n
+        encoded['record_type'] = entity.record_type
+        encoded['transaction_sequence_n'] = entity.transaction_sequence_n
+        encoded['record_sequence_n'] = entity.record_sequence_n
 
         return encoded
 
@@ -278,7 +281,9 @@ class AcknowledgementDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded['creation_date_time'] = record.creation_date_time
         encoded['creation_title'] = record.creation_title
         encoded['original_group_id'] = record.original_group_id
-        encoded['original_transaction_sequence_n'] = record.original_transaction_sequence_n
+        encoded[
+            'original_transaction_sequence_n'] = \
+            record.original_transaction_sequence_n
         encoded['original_transaction_type'] = record.original_transaction_type
         encoded['processing_date'] = record.processing_date
         encoded['recipient_creation_n'] = record.recipient_creation_n
@@ -288,12 +293,14 @@ class AcknowledgementDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         return encoded
 
 
-class AdditionalRecordRelatedInfoDictionaryEncoder(TransactionHeaderDictionaryEncoder):
+class AdditionalRecordRelatedInfoDictionaryEncoder(
+    TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(AdditionalRecordRelatedInfoDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(AdditionalRecordRelatedInfoDictionaryEncoder, self).encode(record)
+        encoded = super(AdditionalRecordRelatedInfoDictionaryEncoder,
+                        self).encode(record)
 
         encoded['note'] = record.note
         encoded['society_n'] = record.society_n
@@ -316,16 +323,21 @@ class AgreementDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded['date_of_signature'] = record.date_of_signature
         encoded['agreement_start_date'] = record.agreement_start_date
         encoded['agreement_type'] = record.agreement_type
-        encoded['international_standard_code'] = record.international_standard_code
+        encoded[
+            'international_standard_code'] = record.international_standard_code
         encoded['number_of_works'] = record.number_of_works
-        encoded['post_term_collection_end_date'] = record.post_term_collection_end_date
-        encoded['post_term_collection_status'] = record.post_term_collection_status
+        encoded[
+            'post_term_collection_end_date'] = record.post_term_collection_end_date
+        encoded[
+            'post_term_collection_status'] = record.post_term_collection_status
         encoded['prior_royalty_start_date'] = record.prior_royalty_start_date
         encoded['prior_royalty_status'] = record.prior_royalty_status
         encoded['retention_end_date'] = record.retention_end_date
         encoded['sales_manufacture_clause'] = record.sales_manufacture_clause
         encoded['shares_change'] = record.shares_change
-        encoded['society_assigned_agreement_n'] = record.society_assigned_agreement_n
+        encoded[
+            'society_assigned_agreement_n'] = \
+            record.society_assigned_agreement_n
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
         return encoded
@@ -336,9 +348,12 @@ class AgreementTerritoryDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         super(AgreementTerritoryDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(AgreementTerritoryDictionaryEncoder, self).encode(record)
+        encoded = super(AgreementTerritoryDictionaryEncoder, self).encode(
+            record)
 
-        encoded['inclusion_exclusion_indicator'] = record.inclusion_exclusion_indicator
+        encoded[
+            'inclusion_exclusion_indicator'] = \
+            record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
 
         return encoded
@@ -421,12 +436,14 @@ class ComponentDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         return encoded
 
 
-class InstrumentationDetailDictionaryEncoder(TransactionHeaderDictionaryEncoder):
+class InstrumentationDetailDictionaryEncoder(
+    TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InstrumentationDetailDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(InstrumentationDetailDictionaryEncoder, self).encode(record)
+        encoded = super(InstrumentationDetailDictionaryEncoder, self).encode(
+            record)
 
         encoded['instrument_code'] = record.instrument_code
         encoded['number_players'] = record.number_players
@@ -434,16 +451,21 @@ class InstrumentationDetailDictionaryEncoder(TransactionHeaderDictionaryEncoder)
         return encoded
 
 
-class InstrumentationSummaryDictionaryEncoder(TransactionHeaderDictionaryEncoder):
+class InstrumentationSummaryDictionaryEncoder(
+    TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InstrumentationSummaryDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(InstrumentationSummaryDictionaryEncoder, self).encode(record)
+        encoded = super(InstrumentationSummaryDictionaryEncoder, self).encode(
+            record)
 
-        encoded['instrumentation_description'] = record.instrumentation_description
+        encoded[
+            'instrumentation_description'] = record.instrumentation_description
         encoded['number_voices'] = record.number_voices
-        encoded['standard_instrumentation_type'] = record.standard_instrumentation_type
+        encoded[
+            'standard_instrumentation_type'] = \
+            record.standard_instrumentation_type
 
         return encoded
 
@@ -455,10 +477,18 @@ class PerformingArtistDictionaryEncoder(TransactionHeaderDictionaryEncoder):
     def encode(self, record):
         encoded = super(PerformingArtistDictionaryEncoder, self).encode(record)
 
-        encoded['performing_artist_first_name'] = record.performing_artist_first_name
-        encoded['performing_artist_ipi_base_n'] = record.performing_artist_ipi_base_n
-        encoded['performing_artist_ipi_name_n'] = record.performing_artist_ipi_name_n
-        encoded['performing_artist_last_name'] = record.performing_artist_last_name
+        encoded[
+            'performing_artist_first_name'] = \
+            record.performing_artist_first_name
+        encoded[
+            'performing_artist_ipi_base_n'] = \
+            record.performing_artist_ipi_base_n
+        encoded[
+            'performing_artist_ipi_name_n'] = \
+            record.performing_artist_ipi_name_n
+        encoded[
+            'performing_artist_last_name'] = \
+            record.performing_artist_last_name
 
         return encoded
 
@@ -492,7 +522,8 @@ class WorkOriginDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded['year_production'] = record.year_production
 
         if record.audio_visual_key:
-            encoded['audio_visual_key'] = self._encoder_avk.encode(record.audio_visual_key)
+            encoded['audio_visual_key'] = self._encoder_avk.encode(
+                record.audio_visual_key)
         else:
             encoded['audio_visual_key'] = None
         if record.visan:
@@ -540,14 +571,18 @@ class WorkDictionaryEncoder(BaseWorkDictionaryEncoder):
         encoded['copyright_date'] = record.copyright_date
         encoded['copyright_number'] = record.copyright_number
         encoded['work_type'] = record.work_type
-        encoded['date_publication_printed_edition'] = record.date_publication_printed_edition
+        encoded[
+            'date_publication_printed_edition'] = \
+            record.date_publication_printed_edition
         encoded['duration'] = record.duration
         encoded['exceptional_clause'] = record.exceptional_clause
         encoded['excerpt_type'] = record.excerpt_type
         encoded['grand_rights_indicator'] = record.grand_rights_indicator
         encoded['lyric_adaptation'] = record.lyric_adaptation
         encoded['music_arrangement'] = record.music_arrangement
-        encoded['musical_work_distribution_category'] = record.musical_work_distribution_category
+        encoded[
+            'musical_work_distribution_category'] = \
+            record.musical_work_distribution_category
         encoded['opus_number'] = record.opus_number
         encoded['priority_flag'] = record.priority_flag
         encoded['recorded_indicator'] = record.recorded_indicator
@@ -563,22 +598,27 @@ class PublisherForWriterDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         super(PublisherForWriterDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(PublisherForWriterDictionaryEncoder, self).encode(record)
+        encoded = super(PublisherForWriterDictionaryEncoder, self).encode(
+            record)
 
         encoded['publisher_ip_n'] = record.publisher_ip_n
-        encoded['society_assigned_agreement_n'] = record.society_assigned_agreement_n
+        encoded[
+            'society_assigned_agreement_n'] = \
+            record.society_assigned_agreement_n
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
         encoded['writer_ip_n'] = record.writer_ip_n
 
         return encoded
 
 
-class InterestedPartyRecordDictionaryEncoder(TransactionHeaderDictionaryEncoder):
+class InterestedPartyRecordDictionaryEncoder(
+    TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InterestedPartyRecordDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(InterestedPartyRecordDictionaryEncoder, self).encode(record)
+        encoded = super(InterestedPartyRecordDictionaryEncoder, self).encode(
+            record)
 
         encoded['first_recording_refusal'] = record.first_recording_refusal
         encoded['pr_society'] = record.pr_society
@@ -604,18 +644,22 @@ class PublisherRecordDictionaryEncoder(InterestedPartyRecordDictionaryEncoder):
         encoded = super(PublisherRecordDictionaryEncoder, self).encode(record)
 
         encoded['agreement_type'] = record.agreement_type
-        encoded['international_standard_code'] = record.international_standard_code
+        encoded[
+            'international_standard_code'] = record.international_standard_code
         encoded['pr_society'] = record.pr_society
         encoded['pr_ownership_share'] = record.pr_ownership_share
         encoded['publisher_sequence_n'] = record.publisher_sequence_n
         encoded['publisher_type'] = record.publisher_type
         encoded['publisher_unknown'] = record.publisher_unknown
-        encoded['society_assigned_agreement_n'] = record.society_assigned_agreement_n
+        encoded[
+            'society_assigned_agreement_n'] = \
+            record.society_assigned_agreement_n
         encoded['special_agreements'] = record.special_agreements
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
 
         if record.publisher:
-            encoded['publisher'] = self._encoder_publisher.encode(record.publisher)
+            encoded['publisher'] = self._encoder_publisher.encode(
+                record.publisher)
         else:
             encoded['publisher'] = None
 
@@ -663,7 +707,8 @@ class NonRomanAlphabetTitleDictionaryEncoder(NRADictionaryEncoder):
         super(NonRomanAlphabetTitleDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NonRomanAlphabetTitleDictionaryEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetTitleDictionaryEncoder, self).encode(
+            record)
 
         encoded['title'] = record.title
         encoded['title_type'] = record.title_type
@@ -676,7 +721,8 @@ class NonRomanAlphabetOtherWriterDictionaryEncoder(NRADictionaryEncoder):
         super(NonRomanAlphabetOtherWriterDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NonRomanAlphabetOtherWriterDictionaryEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetOtherWriterDictionaryEncoder,
+                        self).encode(record)
 
         encoded['position'] = record.position
         encoded['writer_first_name'] = record.writer_first_name
@@ -690,7 +736,8 @@ class NonRomanAlphabetAgreementPartyDictionaryEncoder(NRADictionaryEncoder):
         super(NonRomanAlphabetAgreementPartyDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NonRomanAlphabetAgreementPartyDictionaryEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetAgreementPartyDictionaryEncoder,
+                        self).encode(record)
 
         encoded['ip_name'] = record.ip_name
         encoded['ip_writer_name'] = record.ip_writer_name
@@ -704,7 +751,8 @@ class NonRomanAlphabetPublisherNameDictionaryEncoder(NRADictionaryEncoder):
         super(NonRomanAlphabetPublisherNameDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NonRomanAlphabetPublisherNameDictionaryEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetPublisherNameDictionaryEncoder,
+                        self).encode(record)
 
         encoded['ip_n'] = record.ip_n
         encoded['publisher_name'] = record.publisher_name
@@ -718,7 +766,8 @@ class NonRomanAlphabetWorkDictionaryEncoder(NRADictionaryEncoder):
         super(NonRomanAlphabetWorkDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NonRomanAlphabetWorkDictionaryEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetWorkDictionaryEncoder, self).encode(
+            record)
 
         encoded['title'] = record.title
 
@@ -730,7 +779,8 @@ class NonRomanAlphabetWriterNameDictionaryEncoder(NRADictionaryEncoder):
         super(NonRomanAlphabetWriterNameDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NonRomanAlphabetWriterNameDictionaryEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetWriterNameDictionaryEncoder,
+                        self).encode(record)
 
         encoded['writer_first_name'] = record.writer_first_name
         encoded['writer_last_name'] = record.writer_last_name
@@ -744,13 +794,20 @@ class NonRomanAlphabetPerformanceDataDictionaryEncoder(NRADictionaryEncoder):
         super(NonRomanAlphabetPerformanceDataDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(NonRomanAlphabetPerformanceDataDictionaryEncoder, self).encode(record)
+        encoded = super(NonRomanAlphabetPerformanceDataDictionaryEncoder,
+                        self).encode(record)
 
         encoded['performance_dialect'] = record.performance_dialect
         encoded['performance_language'] = record.performance_language
-        encoded['performing_artist_first_name'] = record.performing_artist_first_name
-        encoded['performing_artist_ipi_base_n'] = record.performing_artist_ipi_base_n
-        encoded['performing_artist_ipi_name_n'] = record.performing_artist_ipi_name_n
+        encoded[
+            'performing_artist_first_name'] = \
+            record.performing_artist_first_name
+        encoded[
+            'performing_artist_ipi_base_n'] = \
+            record.performing_artist_ipi_base_n
+        encoded[
+            'performing_artist_ipi_name_n'] = \
+            record.performing_artist_ipi_name_n
         encoded['performing_artist_name'] = record.performing_artist_name
 
         return encoded
@@ -761,7 +818,8 @@ class IPTerritoryOfControlDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         super(IPTerritoryOfControlDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(IPTerritoryOfControlDictionaryEncoder, self).encode(record)
+        encoded = super(IPTerritoryOfControlDictionaryEncoder, self).encode(
+            record)
 
         encoded['ip_n'] = record.ip_n
         encoded['ie_indicator'] = record.inclusion_exclusion_indicator
@@ -786,18 +844,21 @@ class MessageDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded['message_record_type'] = record.message_record_type
         encoded['message_text'] = record.message_text
         encoded['message_type'] = record.message_type
-        encoded['original_record_sequence_n'] = record.original_record_sequence_n
+        encoded[
+            'original_record_sequence_n'] = record.original_record_sequence_n
         encoded['validation_n'] = record.validation_n
 
         return encoded
 
 
-class InterestedPartyForAgreementDictionaryEncoder(TransactionHeaderDictionaryEncoder):
+class InterestedPartyForAgreementDictionaryEncoder(
+    TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InterestedPartyForAgreementDictionaryEncoder, self).__init__()
 
     def encode(self, record):
-        encoded = super(InterestedPartyForAgreementDictionaryEncoder, self).encode(record)
+        encoded = super(InterestedPartyForAgreementDictionaryEncoder,
+                        self).encode(record)
 
         encoded['agreement_role_code'] = record.agreement_role_code
         encoded['ip_last_name'] = record.ip_last_name
@@ -837,7 +898,8 @@ class RecordingDetailDictionaryEncoder(TransactionHeaderDictionaryEncoder):
 
 
 class GroupDictionaryEncoder(Encoder):
-    def __init__(self, header_encoder=None, trailer_encoder=None, trans_encoder=None):
+    def __init__(self, header_encoder=None, trailer_encoder=None,
+                 trans_encoder=None):
         super(GroupDictionaryEncoder, self).__init__()
 
         if header_encoder:
@@ -858,8 +920,10 @@ class GroupDictionaryEncoder(Encoder):
     def encode(self, record):
         encoded = {}
 
-        encoded['group_header'] = self._header_encoder.encode(record.group_header)
-        encoded['group_trailer'] = self._trailer_encoder.encode(record.group_trailer)
+        encoded['group_header'] = self._header_encoder.encode(
+            record.group_header)
+        encoded['group_trailer'] = self._trailer_encoder.encode(
+            record.group_trailer)
 
         transactions = []
         for trs in record.transactions:
@@ -946,7 +1010,8 @@ class WriterDictionaryEncoder(InterestedPartyDictionaryEncoder):
 
 
 class TransmissionDictionaryEncoder(Encoder):
-    def __init__(self, header_encoder=None, trailer_encoder=None, groups_encoder=None):
+    def __init__(self, header_encoder=None, trailer_encoder=None,
+                 groups_encoder=None):
         super(TransmissionDictionaryEncoder, self).__init__()
 
         if header_encoder:

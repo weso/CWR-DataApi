@@ -20,12 +20,12 @@ class TestAVIKeyDecoder(unittest.TestCase):
         self._decoder = AVIKeyDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['society_code'] = 1
-        dict['av_number'] = 2
+        data['society_code'] = 1
+        data['av_number'] = 2
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual(1, record.society_code)
         self.assertEqual(2, record.av_number)

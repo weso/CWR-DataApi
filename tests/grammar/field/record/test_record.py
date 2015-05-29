@@ -18,7 +18,8 @@ __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_common_factory = FieldRuleFactory(_config.load_field_config('common'), default_adapters())
+_common_factory = FieldRuleFactory(_config.load_field_config('common'),
+                                   default_adapters())
 
 
 class TestParseTransactionRecordPrefixValid(unittest.TestCase):

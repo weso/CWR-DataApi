@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import AdditionalRecordRelatedInfoDictionaryEncoder
+from cwr.parser.encoder.dictionary import \
+    AdditionalRecordRelatedInfoDictionaryEncoder
 from cwr.info import AdditionalRelatedInfoRecord
 
 """

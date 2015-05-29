@@ -8,8 +8,8 @@ from cwr.parser.encoder.common import Encoder
 """
 Classes for encoding CWR classes into JSON dictionaries.
 
-It just consists of a single parser, the JSONEncoder, which delegates most of the work to an instance of the
-CWRDictionaryEncoder.
+It just consists of a single parser, the JSONEncoder, which delegates most of
+the work to an instance of the CWRDictionaryEncoder.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -21,30 +21,35 @@ class JSONEncoder(Encoder):
     """
     Encodes a CWR class instance into a JSON.
 
-    For this, first the instance is transformed into a dictionary, then dumped into a JSON.
+    For this, first the instance is transformed into a dictionary, then dumped
+    into a JSON.
 
-    A bit of additional work is done for handling the dates, which are transformed into the ISO format.
+    A bit of additional work is done for handling the dates, which are
+    transformed into the ISO format.
     """
 
     def __init__(self):
         super(JSONEncoder, self).__init__()
         self._dict_encoder = FileDictionaryDictionaryEncoder()
 
-    def encode(self, instance):
+    def encode(self, entity):
         """
-        Encodes the data, creating a JSON structure from an instance from the domain model.
+        Encodes the data, creating a JSON structure from an instance from the
+        domain model.
 
-        :param instance: the instance to encode
+        :param entity: the instance to encode
         :return: a JSON structure created from the received data
         """
-        encoded = self._dict_encoder.encode(instance)
+        encoded = self._dict_encoder.encode(entity)
 
         try:
-            result = json.dumps(encoded, ensure_ascii=False, default=_iso_handler, encoding='latin1')
+            result = json.dumps(encoded, ensure_ascii=False,
+                                default=_iso_handler, encoding='latin1')
         except TypeError:
             # TODO: Is this really the best way to handle this?
             # For Python 3
-            result = json.dumps(encoded, ensure_ascii=False, default=_iso_handler)
+            result = json.dumps(encoded, ensure_ascii=False,
+                                default=_iso_handler)
 
         return result
 
@@ -69,9 +74,11 @@ def _iso_handler(obj):
     """
     Transforms an object into it's ISO format, if possible.
 
-    If the object can't be transformed, then an error is raised for the JSON parser.
+    If the object can't be transformed, then an error is raised for the JSON
+    parser.
 
-    This is meant to be used on datetime instances, but will work with any object having a method called isoformat.
+    This is meant to be used on datetime instances, but will work with any
+    object having a method called isoformat.
 
     :param obj: object to transform into it's ISO format
     :return: the ISO format of the object

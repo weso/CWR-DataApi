@@ -16,7 +16,7 @@ DISTDIR   = dist
  
 # Sets the .egg file path.
 # The file will be located at the project's root.
-EGGDIR    = CWR_API.egg-info
+EGGDIR    = *.egg-info
 
 # Sets the tox folder path.
 # It will be the '.tox' folder.
@@ -33,6 +33,7 @@ endif
 # Shows the allowed commands to be received as parameters
 help:
 	@echo "Please use 'make <target>' where <target> is one of"
+	@echo "  clean          to remove the distribution folders"
 	@echo "  dist_source    to make the standard distribution"
 	@echo "  dist_binary    to make the binary distribution"
 	@echo "  install        to install the project"

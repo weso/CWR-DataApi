@@ -20,8 +20,16 @@ class NonRomanAlphabetRecord(TransactionRecord):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, language_code=None):
-        super(NonRomanAlphabetRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 language_code=None):
+        super(NonRomanAlphabetRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n
+        )
         self._language_code = language_code
 
     @property
@@ -35,6 +43,10 @@ class NonRomanAlphabetRecord(TransactionRecord):
         """
         return self._language_code
 
+    @language_code.setter
+    def language_code(self, value):
+        self._language_code = value
+
 
 class NonRomanAlphabetWorkRecord(NonRomanAlphabetRecord):
     """
@@ -45,14 +57,24 @@ class NonRomanAlphabetWorkRecord(NonRomanAlphabetRecord):
     - Non-Roman Alphabet Title for Components (NCT).
     - Non-Roman Alphabet Original Title for Version (NVT).
 
-    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
-    This record can be used to describe the original title of a work, and it can also be used to describe alternate
-    titles.
+    This record identifies titles in other alphabets for this work. The
+    language code is used to identify the alphabet.  This record can be used
+    to describe the original title of a work, and it can also be used to
+    describe alternate titles.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, language_code=None):
-        super(NonRomanAlphabetWorkRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
-                                                         language_code)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 title='',
+                 language_code=None):
+        super(NonRomanAlphabetWorkRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            language_code
+        )
         self._title = title
 
     @property
@@ -66,19 +88,34 @@ class NonRomanAlphabetWorkRecord(NonRomanAlphabetRecord):
         """
         return self._title
 
+    @title.setter
+    def title(self, value):
+        self._title = value
+
 
 class NonRomanAlphabetTitleRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Title (NAT) record.
 
-    This record identifies titles in other alphabets for this work. The language code is used to identify the alphabet.
-    This record can be used to describe the original title of a work, and it can also be used to describe alternate
-    titles.
+    This record identifies titles in other alphabets for this work. The
+    language code is used to identify the alphabet. This record can be used to
+    describe the original title of a work, and it can also be used to describe
+    alternate titles.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, title, title_type, language_code=None):
-        super(NonRomanAlphabetTitleRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
-                                                          language_code)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 title='',
+                 title_type=None,
+                 language_code=None):
+        super(NonRomanAlphabetTitleRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            language_code
+        )
         # Title info
         self._title = title
         self._title_type = title_type
@@ -94,33 +131,52 @@ class NonRomanAlphabetTitleRecord(NonRomanAlphabetRecord):
         """
         return self._title
 
+    @title.setter
+    def title(self, value):
+        self._title = value
+
     @property
     def title_type(self):
         """
         Title Type field. Table Lookup (Title Type Table).
 
-        Indicates the type of title presented on this record (original, alternate etc.).
+        Indicates the type of title presented on this record (original,
+        alternate etc.).
 
         :return: the type of the title
         """
         return self._title_type
+
+    @title_type.setter
+    def title_type(self, value):
+        self._title_type = value
 
 
 class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Other Writer Name (NOW) record.
 
-    This record identifies writer names in non-roman alphabets for the work named in an EWT (entire work for an
-    excerpt), VER (original work for a version), or COM (component) record. The language code is used to identify the
-    alphabet.
+    This record identifies writer names in non-roman alphabets for the work
+    named in an EWT (entire work for an excerpt), VER (original work for a
+    version), or COM (component) record. The language code is used to identify
+    the alphabet.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
-                 writer_first_name, writer_name,
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 writer_first_name='',
+                 writer_name='',
                  position=None,
-                 language_code=None):
-        super(NonRomanAlphabetOtherWriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
-                                                                language_code)
+                 language_code=None
+                 ):
+        super(NonRomanAlphabetOtherWriterRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            language_code
+        )
         # Writer information
         self._writer_first_name = writer_first_name
         self._writer_name = writer_name
@@ -131,11 +187,16 @@ class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
         """
         Writer Position field. List lookup (previous record).
 
-        The position of the writer in the corresponding EWT, VER, or COM record.
+        The position of the writer in the corresponding EWT, VER, or COM
+        record.
 
         :return: the position of the writer in the previous record
         """
         return self._position
+
+    @position.setter
+    def position(self, value):
+        self._position = value
 
     @property
     def writer_first_name(self):
@@ -148,6 +209,10 @@ class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
         """
         return self._writer_first_name
 
+    @writer_first_name.setter
+    def writer_first_name(self, value):
+        self._writer_first_name = value
+
     @property
     def writer_name(self):
         """
@@ -159,20 +224,36 @@ class NonRomanAlphabetOtherWriterRecord(NonRomanAlphabetRecord):
         """
         return self._writer_name
 
+    @writer_name.setter
+    def writer_name(self, value):
+        self._writer_name = value
+
 
 class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Agreement Party Name Record (NPA).
 
-    This record identifies names in a non-roman alphabet for the acquiring parties of this agreement. The language code
-    is used to identify the alphabet. This record can be used to identify the name of the party in the preceding IPA
-    record.
+    This record identifies names in a non-roman alphabet for the acquiring
+    parties of this agreement. The language code is used to identify the
+    alphabet. This record can be used to identify the name of the party in the
+    preceding IPA record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_name, ip_writer_name, ip_n='',
-                 language_code=None):
-        super(NonRomanAlphabetAgreementPartyRecord, self).__init__(record_type, transaction_sequence_n,
-                                                                   record_sequence_n, language_code)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 ip_name='',
+                 ip_writer_name='',
+                 ip_n='',
+                 language_code=None
+                 ):
+        super(NonRomanAlphabetAgreementPartyRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            language_code
+        )
         # IP info
         self._ip_name = ip_name
         self._ip_writer_name = ip_writer_name
@@ -189,6 +270,10 @@ class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def ip_name(self):
         """
@@ -199,6 +284,10 @@ class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
         :return: the last name of a writer of the publisher name
         """
         return self._ip_name
+
+    @ip_name.setter
+    def ip_name(self, value):
+        self._ip_name = value
 
     @property
     def ip_writer_name(self):
@@ -211,19 +300,34 @@ class NonRomanAlphabetAgreementPartyRecord(NonRomanAlphabetRecord):
         """
         return self._ip_writer_name
 
+    @ip_writer_name.setter
+    def ip_writer_name(self, value):
+        self._ip_writer_name = value
+
 
 class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Publisher Name Record (NPN).
 
-    This record identifies publisher names in non-roman alphabets for this work. The language code is used to identify
-    the alphabet. This record can be used to identify the name of the publisher in the preceding SPU/OPU record.
+    This record identifies publisher names in non-roman alphabets for this
+    work. The language code is used to identify the alphabet. This record can
+    be used to identify the name of the publisher in the preceding SPU/OPU
+    record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_sequence_n, ip_n,
-                 publisher_name, language_code=None):
-        super(NonRomanAlphabetPublisherNameRecord, self).__init__(record_type, transaction_sequence_n,
-                                                                  record_sequence_n, language_code)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 publisher_sequence_n=0,
+                 ip_n='',
+                 publisher_name='',
+                 language_code=None):
+        super(NonRomanAlphabetPublisherNameRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            language_code)
         # Publisher info
         self._publisher_sequence_n = publisher_sequence_n
         self._ip_n = ip_n
@@ -240,6 +344,10 @@ class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def publisher_name(self):
         """
@@ -250,6 +358,10 @@ class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
         :return: the name of this publishing company in non-roman alphabet
         """
         return self._publisher_name
+
+    @publisher_name.setter
+    def publisher_name(self, value):
+        self._publisher_name = value
 
     @property
     def publisher_sequence_n(self):
@@ -262,22 +374,39 @@ class NonRomanAlphabetPublisherNameRecord(NonRomanAlphabetRecord):
         """
         return self._publisher_sequence_n
 
+    @publisher_sequence_n.setter
+    def publisher_sequence_n(self, value):
+        self._publisher_sequence_n = value
+
 
 class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Performance Data in non-roman alphabet (NPR) record.
 
-    This record contains either the non-roman alphabet name of a person or group performing this work either in public
-    or on a recording, or the language/dialect of the performance. This is particularly important for Chinese dialects
-    such as Cantonese. Performance Dialect, if entered, must be a valid code from ISO 639-2(T).
+    This record contains either the non-roman alphabet name of a person or
+    group performing this work either in public or on a recording, or the
+    language/dialect of the performance. This is particularly important for
+    Chinese dialects such as Cantonese. Performance Dialect, if entered, must
+    be a valid code from ISO 639-2(T).
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, performing_artist_first_name='',
-                 performing_artist_name='', performing_artist_ipi_name_n=None,
-                 performing_artist_ipi_base_n=None, language_code=None, performance_language=None,
-                 performance_dialect=None):
-        super(NonRomanAlphabetPerformanceDataRecord, self).__init__(record_type, transaction_sequence_n,
-                                                                    record_sequence_n, language_code)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 performing_artist_first_name='',
+                 performing_artist_name='',
+                 performing_artist_ipi_name_n=None,
+                 performing_artist_ipi_base_n=None,
+                 language_code=None,
+                 performance_language=None,
+                 performance_dialect=None
+                 ):
+        super(NonRomanAlphabetPerformanceDataRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            language_code)
         # Artist data
         self._performing_artist_first_name = performing_artist_first_name
         self._performing_artist_name = performing_artist_name
@@ -295,11 +424,16 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
 
         The dialect used in the performance.
 
-        e.g. if the performance is in Mandarin, YUE Cantonese, MIN NAN or HAKKA, then use: CHN, YUH, CFR or HAK.
+        e.g. if the performance is in Mandarin, YUE Cantonese, MIN NAN or
+        HAKKA, then use: CHN, YUH, CFR or HAK.
 
         :return: the dialect used in the performance
         """
         return self._performance_dialect
+
+    @performance_dialect.setter
+    def performance_dialect(self, value):
+        self._performance_dialect = value
 
     @property
     def performing_artist_ipi_base_n(self):
@@ -312,16 +446,25 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         """
         return self._performing_artist_ipi_base_n
 
+    @performing_artist_ipi_base_n.setter
+    def performing_artist_ipi_base_n(self, value):
+        self._performing_artist_ipi_base_n = value
+
     @property
     def performing_artist_ipi_name_n(self):
         """
         Performing Artist IPI Name # field. Table Lookup (IPI database).
 
-        The IPI Name # corresponding to this performing artist. Values reside in the IPI database.
+        The IPI Name # corresponding to this performing artist. Values reside
+        in the IPI database.
 
         :return: the IPI name number
         """
         return self._performing_artist_ipi_name_n
+
+    @performing_artist_ipi_name_n.setter
+    def performing_artist_ipi_name_n(self, value):
+        self._performing_artist_ipi_name_n = value
 
     @property
     def performance_language(self):
@@ -334,43 +477,68 @@ class NonRomanAlphabetPerformanceDataRecord(NonRomanAlphabetRecord):
         """
         return self._performance_language
 
+    @performance_language.setter
+    def performance_language(self, value):
+        self._performance_language = value
+
     @property
     def performing_artist_first_name(self):
         """
         Performing Artist First Name field. Alphanumeric.
 
-        First name of a person that has performed the work on a recording or in public.
+        First name of a person that has performed the work on a recording or
+        in public.
 
         :return: the performer's first name
         """
         return self._performing_artist_first_name
+
+    @performing_artist_first_name.setter
+    def performing_artist_first_name(self, value):
+        self._performing_artist_first_name = value
 
     @property
     def performing_artist_name(self):
         """
         Performing Artist Name. Alphanumeric.
 
-        Name of a person or full name of a group that has performed the work on a recording or in public. Note that if
-        the performer is known by a single name, it should be entered in this field.
+        Name of a person or full name of a group that has performed the work
+        on a recording or in public. Note that if the performer is known by a
+        single name, it should be entered in this field.
 
         :return: the performer's name
         """
         return self._performing_artist_name
+
+    @performing_artist_name.setter
+    def performing_artist_name(self, value):
+        self._performing_artist_name = value
 
 
 class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
     """
     Represents a CWR Non-Roman Alphabet Writer Name Record (NWN).
 
-    This record identifies writer names in non-roman alphabets for this work. The language code is used to identify the
-    alphabet. This record can be used to identify the name of the writer in the preceding SWR/OWR record.
+    This record identifies writer names in non-roman alphabets for this work.
+    The language code is used to identify the alphabet. This record can be
+    used to identify the name of the writer in the preceding SWR/OWR record.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer_first_name, writer_last_name,
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 writer_first_name='',
+                 writer_last_name='',
                  ip_n='',
-                 language_code=None):
-        super(NonRomanAlphabetWriterNameRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
-                                                               language_code)
+                 language_code=None
+                 ):
+        super(NonRomanAlphabetWriterNameRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            language_code
+        )
         # Writer info
         self._writer_first_name = writer_first_name
         self._writer_last_name = writer_last_name
@@ -387,6 +555,10 @@ class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def writer_first_name(self):
         """
@@ -398,6 +570,10 @@ class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
         """
         return self._writer_first_name
 
+    @writer_first_name.setter
+    def writer_first_name(self, value):
+        self._writer_first_name = value
+
     @property
     def writer_last_name(self):
         """
@@ -408,3 +584,7 @@ class NonRomanAlphabetWriterNameRecord(NonRomanAlphabetRecord):
         :return: the last or single name of this writer
         """
         return self._writer_last_name
+
+    @writer_last_name.setter
+    def writer_last_name(self, value):
+        self._writer_last_name = value

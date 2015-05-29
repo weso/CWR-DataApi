@@ -21,7 +21,8 @@ class TestInstrumentValueEncoding(unittest.TestCase):
         self._encoder = InstrumentValueDictionaryEncoder()
 
     def test_encoded(self):
-        data = InstrumentValue('BBF', 'Bamboo Flute', 'National/Folk', 'same as Dizi or D\'Tzu')
+        data = InstrumentValue('BBF', 'Bamboo Flute', 'National/Folk',
+                               'same as Dizi or D\'Tzu')
 
         encoded = self._encoder.encode(data)
 

@@ -12,7 +12,8 @@ from data_cwr.accessor import CWRTables
 """
 Grammar for special cases and other fields.
 
-These are miscellany fields and nodes, such as line limiters, or the character encoding field.
+These are miscellany fields and nodes, such as line limiters, or the character
+encoding field.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -37,7 +38,8 @@ def ipi_base_number(name=None):
     """
     IPI Base Number field.
 
-    An IPI Base Number code written on a field follows the Pattern C-NNNNNNNNN-M. This being:
+    An IPI Base Number code written on a field follows the Pattern
+    C-NNNNNNNNN-M. This being:
     - C: header, a character.
     - N: numeric value.
     - M: control digit.
@@ -53,7 +55,8 @@ def ipi_base_number(name=None):
 
     # Separators are '-'
     separator = pp.Literal('-').suppress()
-    separator = separator.setName('IPI Base Number Separator').setResultsName('separator')
+    separator = separator.setName('IPI Base Number Separator') \
+        .setResultsName('separator')
 
     # Header is a digit in uppercase
     header = pp.Literal('I')
@@ -66,7 +69,8 @@ def ipi_base_number(name=None):
 
     # Check digit is a single number
     check_digit = pp.Regex('[0-9]')
-    check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
+    check_digit = check_digit.setName('Check Digit') \
+        .setResultsName('check_digit')
     check_digit = check_digit.setParseAction(lambda c: int(c[0]))
 
     # Digit followed separator, 9 numbers, separator and 1 number
@@ -91,7 +95,8 @@ def ipi_base_number(name=None):
 
 def _to_ipibasecode(code):
     """
-    Transforms the result of parsing an IPI Base Number code string into a IPIBaseNumber instance.
+    Transforms the result of parsing an IPI Base Number code string into a
+    IPIBaseNumber instance.
 
     :param code: the parsed code
     :return: a IPIBaseNumber instance
@@ -129,7 +134,8 @@ def iswc(name=None):
     """
     ISWC field.
 
-    A ISWC code written on a field follows the Pattern TNNNNNNNNNC. This being:
+    A ISWC code written on a field follows the Pattern TNNNNNNNNNC.
+    This being:
     - T: header, it is always T.
     - N: numeric value.
     - C: control digit.
@@ -153,7 +159,8 @@ def iswc(name=None):
 
     # Check digit is a single number
     check_digit = basic.numeric(1)
-    check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
+    check_digit = check_digit.setName('Check Digit') \
+        .setResultsName('check_digit')
 
     # T followed by 10 numbers
     field = pp.Group(header + id_code + check_digit)
@@ -172,7 +179,8 @@ def iswc(name=None):
 
 def _to_iswccode(code):
     """
-    Transforms the result of parsing a ISWC code string into a ISWCCode instance.
+    Transforms the result of parsing a ISWC code string into a ISWCCode
+    instance.
 
     :param code: the parsed code
     :return: a ISWCCode instance
@@ -185,11 +193,11 @@ def _to_iswccode(code):
 
 def percentage(columns, maximum=100, name=None):
     """
-    Creates the grammar for a Numeric (N) field storing a percentage and accepting only the specified number of
-    characters.
+    Creates the grammar for a Numeric (N) field storing a percentage and
+    accepting only the specified number of characters.
 
-    It is possible to set the maximum allowed value. By default this is 100 (for 100%), and if modified it is
-    expected to be reduced, not increased.
+    It is possible to set the maximum allowed value. By default this is 100
+    (for 100%), and if modified it is expected to be reduced, not increased.
 
     The three first digits will be for the integer value.
 
@@ -219,13 +227,15 @@ def percentage(columns, maximum=100, name=None):
 
 def _assert_is_percentage(value, maximum=100):
     """
-    Makes sure the received value is a percentage. Otherwise an exception is thrown.
+    Makes sure the received value is a percentage. Otherwise an exception is
+    thrown.
 
     :param value: the value to check
     """
 
     if value < 0 or value > maximum:
-        message = 'The value on a percentage field should be between 0 and %s' % maximum
+        message = 'The value on a percentage field should be between 0 and %s' \
+                  % maximum
         raise pp.ParseException(message)
 
 
@@ -253,23 +263,16 @@ def isrc(name=None):
     """
     Creates the grammar for an ISRC code.
 
-    ISRC stands for International Standard Recording Code, which is the standard ISO 3901. This stores information
-    identifying a particular recording.
+    ISRC stands for International Standard Recording Code, which is the
+    standard ISO 3901. This stores information identifying a particular
+    recording.
 
     :param name: name for the field
     :return: grammar for an ISRC field
     """
 
-    config = CWRTables()
-
     if name is None:
         name = 'ISRC Field'
-
-    separator = pp.Literal('-')
-    country = basic.lookup(config.get_data('isrc_country_code'))
-    registrant = basic.alphanum(3)
-    year = pp.Regex('[0-9]{2}')
-    work_id = pp.Regex('[0-9]{2}')
 
     field = _isrc_short(name) | _isrc_long(name)
 
@@ -282,8 +285,9 @@ def _isrc_short(name=None):
     """
     Creates the grammar for a short ISRC code.
 
-    ISRC stands for International Standard Recording Code, which is the standard ISO 3901. This stores information
-    identifying a particular recording.
+    ISRC stands for International Standard Recording Code, which is the
+    standard ISO 3901. This stores information identifying a particular
+    recording.
 
     This variant contains separator for the parts, and follows the pattern:
     CC-XXX-YY-NN
@@ -309,7 +313,8 @@ def _isrc_short(name=None):
     year = pp.Regex('[0-9]{2}')
     work_id = pp.Regex('[0-9]{2}')
 
-    field = pp.Combine(country + separator + registrant + separator + year + separator + work_id)
+    field = pp.Combine(country + separator + registrant + separator + year +
+                       separator + work_id)
 
     country.setName('ISO-2 Country Code')
     registrant.setName('Registrant')
@@ -325,8 +330,9 @@ def _isrc_long(name=None):
     """
     Creates the grammar for a short ISRC code.
 
-    ISRC stands for International Standard Recording Code, which is the standard ISO 3901. This stores information
-    identifying a particular recording.
+    ISRC stands for International Standard Recording Code, which is the
+    standard ISO 3901. This stores information identifying a particular
+    recording.
 
     This variant contain no separator for the parts, and follows the pattern:
     CCXXXYYNNNNN
@@ -346,7 +352,6 @@ def _isrc_long(name=None):
     if name is None:
         name = 'ISRC Field'
 
-    separator = pp.Literal('-')
     country = basic.lookup(config.get_data('isrc_country_code'))
     registrant = basic.alphanum(3)
     year = pp.Regex('[0-9]{2}')
@@ -387,7 +392,8 @@ def visan(name=None):
     episode = episode.setName('Episode').setResultsName('episode')
 
     check_digit = basic.numeric(1)
-    check_digit = check_digit.setName('Check Digit').setResultsName('check_digit')
+    check_digit = check_digit.setName('Check Digit') \
+        .setResultsName('check_digit')
 
     field = pp.Group(version + isan + episode + check_digit)
 
@@ -405,7 +411,8 @@ def _to_visan(parsed):
     :param parsed: the data parsed from a V-ISAN field
     :return: a VISAN instance created from the data
     """
-    return VISAN(parsed.version, parsed.isan, parsed.episode, parsed.check_digit)
+    return VISAN(parsed.version, parsed.isan, parsed.episode,
+                 parsed.check_digit)
 
 
 def audio_visual_key(name=None):
@@ -422,13 +429,15 @@ def audio_visual_key(name=None):
         name = 'AVI Field'
 
     society_code = basic.numeric(3)
-    society_code = society_code.setName('Society Code').setResultsName('society_code')
+    society_code = society_code.setName('Society Code') \
+        .setResultsName('society_code')
 
     av_number = basic.alphanum(15)
     field_empty = pp.Regex('[ ]{15}')
     field_empty.setParseAction(pp.replaceWith(''))
     av_number = av_number | field_empty
-    av_number = av_number.setName('Audio-Visual Number').setResultsName('av_number')
+    av_number = av_number.setName('Audio-Visual Number') \
+        .setResultsName('av_number')
 
     field = pp.Group(society_code + av_number)
 
@@ -451,10 +460,11 @@ def _to_avi(parsed):
 
 def date_time(name=None):
     """
-    Creates the grammar for a date and time field, which is a combination of the Date (D) and Time or Duration field (T)
-    .
+    Creates the grammar for a date and time field, which is a combination of
+    the Date (D) and Time or Duration field (T).
 
-    This field requires first a Date, and then a Time, without any space in between.
+    This field requires first a Date, and then a Time, without any space in
+    between.
 
     :param name: name for the field
     :return: grammar for a Date and Time field

@@ -25,8 +25,10 @@ class TestRecordingDetailRecordDictionaryEncoding(unittest.TestCase):
         data = RecordingDetailRecord(record_type='SWR',
                                      transaction_sequence_n=3,
                                      record_sequence_n=15,
-                                     first_release_date=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                                     first_release_duration=datetime.datetime.strptime('011200', '%H%M%S').time(),
+                                     first_release_date=datetime.datetime.strptime(
+                                         '20030216', '%Y%m%d').date(),
+                                     first_release_duration=datetime.datetime.strptime(
+                                         '011200', '%H%M%S').time(),
                                      first_album_title='FIRST TITLE',
                                      first_album_label='FIRST LABEL',
                                      first_release_catalog_n='ABF35',
@@ -41,8 +43,11 @@ class TestRecordingDetailRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('SWR', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
-        self.assertEqual(datetime.datetime.strptime('20030216', '%Y%m%d').date(), encoded['first_release_date'])
-        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(), encoded['first_release_duration'])
+        self.assertEqual(
+            datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+            encoded['first_release_date'])
+        self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(),
+                         encoded['first_release_duration'])
         self.assertEqual('FIRST TITLE', encoded['first_album_title'])
         self.assertEqual('FIRST LABEL', encoded['first_album_label'])
         self.assertEqual('ABF35', encoded['first_release_catalog_n'])

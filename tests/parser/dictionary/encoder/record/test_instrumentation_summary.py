@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import InstrumentationSummaryDictionaryEncoder
+from cwr.parser.encoder.dictionary import \
+    InstrumentationSummaryDictionaryEncoder
 from cwr.work import InstrumentationSummaryRecord
 
 """

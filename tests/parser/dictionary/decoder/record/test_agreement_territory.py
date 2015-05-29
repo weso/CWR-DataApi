@@ -20,15 +20,15 @@ class TestAgreementTerritoryRecordDictionaryEncoding(unittest.TestCase):
         self._decoder = AgreementTerritoryDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'TER'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['tis_numeric_code'] = 28
-        dict['inclusion_exclusion_indicator'] = 'I'
+        data['record_type'] = 'TER'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['tis_numeric_code'] = 28
+        data['inclusion_exclusion_indicator'] = 'I'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('TER', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

@@ -20,14 +20,14 @@ class TestInstrumentValueDecoder(unittest.TestCase):
         self._decoder = InstrumentValueDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['code'] = 'BBF'
-        dict['name'] = 'Bamboo Flute'
-        dict['family'] = 'National/Folk'
-        dict['description'] = 'same as Dizi or D\'Tzu'
+        data['code'] = 'BBF'
+        data['name'] = 'Bamboo Flute'
+        data['family'] = 'National/Folk'
+        data['description'] = 'same as Dizi or D\'Tzu'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('BBF', record.code)
         self.assertEqual('Bamboo Flute', record.name)

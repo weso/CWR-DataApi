@@ -2,7 +2,8 @@
 
 import unittest
 
-from cwr.parser.encoder.file import default_filename_encoder, old_filename_encoder
+from cwr.parser.encoder.file import default_filename_encoder, \
+    old_filename_encoder
 from cwr.file import FileTag
 
 """
