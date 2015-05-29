@@ -14,7 +14,7 @@ class TestConfigTerminalRule(unittest.TestCase):
         self._rule = rule_config_file
 
     def test_common(self):
-        set = 'filename:' + '\n' + \
+        rule_data = 'filename:' + '\n' + \
               '    id: filename_old' + '\n' + \
               '    rules:' + '\n' + \
               '      [' + '\n' + \
@@ -41,8 +41,8 @@ class TestConfigTerminalRule(unittest.TestCase):
               '        ]' + '\n' + \
               '      ]'
 
-        file = set + '\n' + set
+        rule_data = rule_data + '\n' + rule_data
 
-        result = self._rule.parseString(file)
+        result = self._rule.parseString(rule_data)
 
         self.assertEqual(2, len(result))

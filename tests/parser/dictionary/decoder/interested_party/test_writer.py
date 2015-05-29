@@ -20,17 +20,17 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self._decoder = WriterDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['ip_n'] = 'ABC15'
-        dict['personal_number'] = 'ABC1234'
-        dict['ipi_name_n'] = 14107338
-        dict['ipi_base_n'] = 'I-000000229-7'
-        dict['writer_first_name'] = 'NAME'
-        dict['writer_last_name'] = 'LAST NAME'
-        dict['tax_id'] = 923703412
+        data['ip_n'] = 'ABC15'
+        data['personal_number'] = 'ABC1234'
+        data['ipi_name_n'] = 14107338
+        data['ipi_base_n'] = 'I-000000229-7'
+        data['writer_first_name'] = 'NAME'
+        data['writer_last_name'] = 'LAST NAME'
+        data['tax_id'] = 923703412
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('ABC15', record.ip_n)
         self.assertEqual('ABC1234', record.personal_number)

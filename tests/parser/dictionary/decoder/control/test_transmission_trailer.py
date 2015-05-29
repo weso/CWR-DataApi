@@ -20,14 +20,14 @@ class TestTransmissionTrailerDecoder(unittest.TestCase):
         self._decoder = TransmissionTrailerDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'TRL'
-        dict['group_count'] = 11
-        dict['transaction_count'] = 22
-        dict['record_count'] = 33
+        data['record_type'] = 'TRL'
+        data['group_count'] = 11
+        data['transaction_count'] = 22
+        data['record_count'] = 33
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('TRL', record.record_type)
         self.assertEqual(11, record.group_count)

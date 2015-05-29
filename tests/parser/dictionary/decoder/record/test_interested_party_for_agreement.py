@@ -21,25 +21,25 @@ class TestInterestedPartyForAgreementDictionaryEncoding(unittest.TestCase):
         self._decoder = InterestedPartyForAgreementDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'IPA'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['ip_n'] = 'IP123'
-        dict['ip_last_name'] = 'LAST NAME'
-        dict['agreement_role_code'] = 'AS'
-        dict['ip_writer_first_name'] = 'FIRST NAME'
-        dict['ipi_name_n'] = 250165006
-        dict['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
-        dict['pr_society'] = 1
-        dict['pr_share'] = 50.1
-        dict['mr_society'] = 2
-        dict['mr_share'] = 50.2
-        dict['sr_society'] = 3
-        dict['sr_share'] = 50.3
+        data['record_type'] = 'IPA'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['ip_n'] = 'IP123'
+        data['ip_last_name'] = 'LAST NAME'
+        data['agreement_role_code'] = 'AS'
+        data['ip_writer_first_name'] = 'FIRST NAME'
+        data['ipi_name_n'] = 250165006
+        data['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
+        data['pr_society'] = 1
+        data['pr_share'] = 50.1
+        data['mr_society'] = 2
+        data['mr_share'] = 50.2
+        data['sr_society'] = 3
+        data['sr_share'] = 50.3
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('IPA', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

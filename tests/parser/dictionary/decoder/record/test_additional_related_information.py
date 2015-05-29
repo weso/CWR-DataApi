@@ -20,18 +20,18 @@ class TestAdditionalRelatedInformationRecordDictionaryEncoding(unittest.TestCase
         self._decoder = AdditionalRelatedInformationDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'ARI'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['society_n'] = 1
-        dict['type_of_right'] = 'PER'
-        dict['work_n'] = 'WORK123'
-        dict['subject_code'] = 'SUB123'
-        dict['note'] = 'A NOTE'
+        data['record_type'] = 'ARI'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['society_n'] = 1
+        data['type_of_right'] = 'PER'
+        data['work_n'] = 'WORK123'
+        data['subject_code'] = 'SUB123'
+        data['note'] = 'A NOTE'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('ARI', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

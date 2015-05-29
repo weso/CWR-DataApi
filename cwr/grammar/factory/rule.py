@@ -44,8 +44,8 @@ class FieldRuleFactory(RuleFactory):
         """
         Returns the rule for the field identified by the id.
 
-        If it is set as not being compulsory, the rule will be adapted to accept string composed only of white
-        characters.
+        If it is set as not being compulsory, the rule will be adapted to
+        accept string composed only of white characters.
 
         :param field_id: unique id in the system for the field
         :return: the rule of a field
@@ -104,7 +104,8 @@ class FieldRuleFactory(RuleFactory):
 
 
 class DefaultRuleFactory(RuleFactory):
-    def __init__(self, record_configs, field_rule_factory, optional_terminal_rule_decorator, decorators=None):
+    def __init__(self, record_configs, field_rule_factory,
+                 optional_terminal_rule_decorator, decorators=None):
         super(DefaultRuleFactory, self).__init__()
         self._debug = False
 
@@ -188,7 +189,8 @@ class DefaultRuleFactory(RuleFactory):
                 compulsory = modifiers[i] == 'compulsory'
 
             if not compulsory:
-                rule = self._optional_field_rule_decorator.decorate(rule, rule_id)
+                rule = self._optional_field_rule_decorator.decorate(rule,
+                                                                    rule_id)
 
             rule.setName(rule_id)
         else:

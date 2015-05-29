@@ -20,16 +20,16 @@ class TestInstrumentationSummaryDecoder(unittest.TestCase):
         self._decoder = InstrumentationSummaryDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'SWR'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['number_voices'] = 2
-        dict['standard_instrumentation_type'] = 'BQU'
-        dict['instrumentation_description'] = 'DESCRIPTION'
+        data['record_type'] = 'SWR'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['number_voices'] = 2
+        data['standard_instrumentation_type'] = 'BQU'
+        data['instrumentation_description'] = 'DESCRIPTION'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('SWR', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

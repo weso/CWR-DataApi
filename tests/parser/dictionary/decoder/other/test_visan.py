@@ -20,14 +20,14 @@ class TestVISANDecoder(unittest.TestCase):
         self._decoder = VISANDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['version'] = 1
-        dict['isan'] = 2
-        dict['episode'] = 3
-        dict['check_digit'] = 4
+        data['version'] = 1
+        data['isan'] = 2
+        data['episode'] = 3
+        data['check_digit'] = 4
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual(1, record.version)
         self.assertEqual(2, record.isan)

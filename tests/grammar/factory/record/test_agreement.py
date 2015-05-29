@@ -20,15 +20,38 @@ class TestAgreementGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('agreement')
 
-    def test(self):
+    def test_common(self):
         record = 'AGR000000010000000000041383606100              OS200006062017010120170101N        D20170101        00001SYY              '
 
         result = self.grammar.parseString(record)[0]
+        self.assertEqual(1, result.transaction_sequence_n)
+        self.assertEqual(0, result.record_sequence_n)
+        self.assertEqual('00041383606100', result.submitter_agreement_n)
+        self.assertEqual(None, result.international_standard_code)
+        self.assertEqual('OS', result.agreement_type)
+        self.assertEqual(2000, result.agreement_start_date.year)
+        self.assertEqual(6, result.agreement_start_date.month)
+        self.assertEqual(6, result.agreement_start_date.day)
+        self.assertEqual(2017, result.agreement_end_date.year)
+        self.assertEqual(1, result.agreement_end_date.month)
+        self.assertEqual(1, result.agreement_end_date.day)
+        self.assertEqual(2017, result.retention_end_date.year)
+        self.assertEqual(1, result.retention_end_date.month)
+        self.assertEqual(1, result.retention_end_date.day)
+        self.assertEqual('N', result.prior_royalty_status)
+        self.assertEqual(None, result.prior_royalty_start_date)
+        self.assertEqual('D', result.post_term_collection_status)
+        self.assertEqual(2017, result.post_term_collection_end_date.year)
+        self.assertEqual(1, result.post_term_collection_end_date.month)
+        self.assertEqual(1, result.post_term_collection_end_date.day)
+        self.assertEqual(None, result.date_of_signature)
+        self.assertEqual(1, result.number_of_works)
+        self.assertEqual('S', result.sales_manufacture_clause)
+        self.assertEqual(True, result.shares_change)
+        self.assertEqual(True, result.advance_given)
+        self.assertEqual(None, result.society_assigned_agreement_n)
 
-    def test_full(self):
-        record = 'AGR000000000000000000023683606100              OS200311182013111820131118N        D20131118        00009SYY              '
-
-        result = self.grammar.parseString(record)[0]
+        self.assertEqual('AGR', result.record_type)
 
     def test_valid_full(self):
         """

@@ -20,13 +20,13 @@ class TestTableValueDecoder(unittest.TestCase):
         self._decoder = TableValueDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['code'] = 'AS'
-        dict['name'] = 'Assignor'
-        dict['description'] = 'The entitled party who is assigning the rights to a musical work within an agreement'
+        data['code'] = 'AS'
+        data['name'] = 'Assignor'
+        data['description'] = 'The entitled party who is assigning the rights to a musical work within an agreement'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('AS', record.code)
         self.assertEqual('Assignor', record.name)

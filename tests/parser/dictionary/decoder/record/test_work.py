@@ -22,38 +22,38 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self._decoder = WorkDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'NWR'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['submitter_work_n'] = 'ABC123'
-        dict['title'] = 'TITLE'
-        dict['version_type'] = 'ORI'
-        dict['musical_work_distribution_category'] = 'SER'
-        dict['date_publication_printed_edition'] = datetime.datetime.strptime('20030216', '%Y%m%d').date()
-        dict['text_music_relationship'] = 'MTX'
-        dict['language_code'] = 'ES'
-        dict['copyright_number'] = 'ABDF146'
-        dict['copyright_date'] = datetime.datetime.strptime('20030217', '%Y%m%d').date()
-        dict['music_arrangement'] = 'ORI'
-        dict['lyric_adaptation'] = 'MOD'
-        dict['excerpt_type'] = 'MOV'
-        dict['composite_type'] = 'MED'
-        dict['composite_component_count'] = 5
-        dict['iswc'] = ISWCCode(12345678, 9)
-        dict['work_type'] = 'BL'
-        dict['duration'] = datetime.datetime.strptime('011200', '%H%M%S').time()
-        dict['catalogue_number'] = 'GGH97'
-        dict['opus_number'] = 'OP35'
-        dict['contact_id'] = '123CONTACT'
-        dict['contact_name'] = 'THE CONTACT'
-        dict['recorded_indicator'] = 'Y'
-        dict['priority_flag'] = 'Y'
-        dict['exceptional_clause'] = 'Y'
-        dict['grand_rights_indicator'] = True
+        data['record_type'] = 'NWR'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['submitter_work_n'] = 'ABC123'
+        data['title'] = 'TITLE'
+        data['version_type'] = 'ORI'
+        data['musical_work_distribution_category'] = 'SER'
+        data['date_publication_printed_edition'] = datetime.datetime.strptime('20030216', '%Y%m%d').date()
+        data['text_music_relationship'] = 'MTX'
+        data['language_code'] = 'ES'
+        data['copyright_number'] = 'ABDF146'
+        data['copyright_date'] = datetime.datetime.strptime('20030217', '%Y%m%d').date()
+        data['music_arrangement'] = 'ORI'
+        data['lyric_adaptation'] = 'MOD'
+        data['excerpt_type'] = 'MOV'
+        data['composite_type'] = 'MED'
+        data['composite_component_count'] = 5
+        data['iswc'] = ISWCCode(12345678, 9)
+        data['work_type'] = 'BL'
+        data['duration'] = datetime.datetime.strptime('011200', '%H%M%S').time()
+        data['catalogue_number'] = 'GGH97'
+        data['opus_number'] = 'OP35'
+        data['contact_id'] = '123CONTACT'
+        data['contact_name'] = 'THE CONTACT'
+        data['recorded_indicator'] = 'Y'
+        data['priority_flag'] = 'Y'
+        data['exceptional_clause'] = 'Y'
+        data['grand_rights_indicator'] = True
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('NWR', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

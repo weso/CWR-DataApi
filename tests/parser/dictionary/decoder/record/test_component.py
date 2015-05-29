@@ -22,25 +22,25 @@ class TestComponentDictionaryDecoder(unittest.TestCase):
         self._decoder = ComponentDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'COM'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['title'] = 'TITLE'
-        dict['submitter_work_n'] = 'ABCD123'
-        dict['writer_1_last_name'] = 'LAST NAME 1'
-        dict['writer_1_first_name'] = 'FIRST NAME 1'
-        dict['writer_2_last_name'] = 'LAST NAME 2'
-        dict['writer_2_first_name'] = 'FIRST NAME 2'
-        dict['writer_1_ipi_name_n'] = 14107338
-        dict['writer_1_ipi_base_n'] = 'I-000000229-7'
-        dict['writer_2_ipi_name_n'] = 14107400
-        dict['writer_2_ipi_base_n'] = 'I-000000339-7'
-        dict['iswc'] = ISWCCode(12345678, 9)
-        dict['duration'] = datetime.datetime.strptime('011200', '%H%M%S').time()
+        data['record_type'] = 'COM'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['title'] = 'TITLE'
+        data['submitter_work_n'] = 'ABCD123'
+        data['writer_1_last_name'] = 'LAST NAME 1'
+        data['writer_1_first_name'] = 'FIRST NAME 1'
+        data['writer_2_last_name'] = 'LAST NAME 2'
+        data['writer_2_first_name'] = 'FIRST NAME 2'
+        data['writer_1_ipi_name_n'] = 14107338
+        data['writer_1_ipi_base_n'] = 'I-000000229-7'
+        data['writer_2_ipi_name_n'] = 14107400
+        data['writer_2_ipi_base_n'] = 'I-000000339-7'
+        data['iswc'] = ISWCCode(12345678, 9)
+        data['duration'] = datetime.datetime.strptime('011200', '%H%M%S').time()
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('COM', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

@@ -11,21 +11,24 @@ from cwr.parser.decoder.dictionary import *
 from cwr.grammar.factory.adapter import *
 
 """
-Classes for processing CWR files, creating a graph of CWR model instances from it.
+Classes for processing CWR files, creating a graph of CWR model instances from
+it.
 
-While the decoder classes are accessible, they are meant to be used directly only for creating custom versions,
-by default the factory methods default_file_decoder() and default_filename_decoder() should be used to acquire
+While the decoder classes are accessible, they are meant to be used directly
+only for creating custom versions, by default the factory methods
+default_file_decoder() and default_filename_decoder() should be used to acquire
 the decoders to use when reading a file.
 
-The default_file_decoder() will return a decoder which parses a CWR file complying with the standard, while the
-default_filename_decoder() method will return a decoder which parses a CWR filename which follows the old or the new
+The default_file_decoder() will return a decoder which parses a CWR file
+complying with the standard, while the default_filename_decoder() method will
+return a decoder which parses a CWR filename which follows the old or the new
 file naming convention.
 
-The file decoder will also parse the filename, using the second parser for it, and return a CWRFile instance. The
-filename decoder will return a FileTag.
+The file decoder will also parse the filename, using the second parser for it,
+and return a CWRFile instance. The filename decoder will return a FileTag.
 
-The base classes used on these parsers are FileDecoder and FileNameDecoder, both of them requiring information about
-the grammar to be used when parsing.
+The base classes used on these parsers are FileDecoder and FileNameDecoder,
+both of them requiring information about the grammar to be used when parsing.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -49,17 +52,23 @@ def _default_record_decoders():
     decoders['message'] = MessageDictionaryDecoder()
     decoders['agreement'] = AgreementDictionaryDecoder()
     decoders['territory_in_agreement'] = AgreementTerritoryDictionaryDecoder()
-    decoders['additional_related_information'] = AdditionalRelatedInformationDictionaryDecoder()
+    decoders['additional_related_information'] = \
+        AdditionalRelatedInformationDictionaryDecoder()
     decoders['group_header'] = GroupHeaderDictionaryDecoder()
     decoders['group_trailer'] = GroupTrailerDictionaryDecoder()
-    decoders['interested_party_agreement'] = InterestedPartyForAgreementDictionaryDecoder()
-    decoders['nra_agreement_party'] = NonRomanAlphabetAgreementPartyDictionaryDecoder()
-    decoders['nra_publisher_name'] = NonRomanAlphabetPublisherNameDictionaryDecoder()
+    decoders['interested_party_agreement'] = \
+        InterestedPartyForAgreementDictionaryDecoder()
+    decoders['nra_agreement_party'] = \
+        NonRomanAlphabetAgreementPartyDictionaryDecoder()
+    decoders['nra_publisher_name'] = \
+        NonRomanAlphabetPublisherNameDictionaryDecoder()
     decoders['nra_writer_name'] = NonRomanAlphabetWriterNameDictionaryDecoder()
     decoders['nra_title'] = NonRomanAlphabetTitleDictionaryDecoder()
-    decoders['nra_performance_data'] = NonRomanAlphabetPerformanceDataDictionaryDecoder()
+    decoders['nra_performance_data'] = \
+        NonRomanAlphabetPerformanceDataDictionaryDecoder()
     decoders['nra_work'] = NonRomanAlphabetWorkDictionaryDecoder()
-    decoders['nra_other_writer'] = NonRomanAlphabetOtherWriterDictionaryDecoder()
+    decoders['nra_other_writer'] = \
+        NonRomanAlphabetOtherWriterDictionaryDecoder()
     decoders['publisher'] = PublisherRecordDictionaryDecoder()
     decoders['publisher_territory'] = IPTerritoryOfControlDictionaryDecoder()
     decoders['transmission_header'] = TransmissionHeaderDictionaryDecoder()
@@ -72,8 +81,10 @@ def _default_record_decoders():
     decoders['performing_artist'] = PerformingArtistDictionaryDecoder()
     decoders['recording_detail'] = RecordingDetailDictionaryDecoder()
     decoders['work_origin'] = WorkOriginDictionaryDecoder()
-    decoders['instrumentation_summary'] = InstrumentationSummaryDictionaryDecoder()
-    decoders['instrumentation_detail'] = InstrumentationDetailDictionaryDecoder()
+    decoders['instrumentation_summary'] = \
+        InstrumentationSummaryDictionaryDecoder()
+    decoders['instrumentation_detail'] = \
+        InstrumentationDetailDictionaryDecoder()
     decoders['component'] = ComponentDictionaryDecoder()
     decoders['writer'] = WriterRecordDictionaryDecoder()
     decoders['writer_publisher'] = PublisherForWriterDictionaryDecoder()
@@ -136,10 +147,21 @@ def default_grammar_factory():
     rules.update(_process_rules(config.load_transaction_config('common')))
     rules.update(_process_rules(config.load_group_config('common')))
 
-    decorators = {'transaction_record': TransactionRecordRuleDecorator(factory_field, _default_record_decoders()),
-                  'record': RecordRuleDecorator(factory_field, _default_record_decoders()),
-                  'group': GroupRuleDecorator(_default_group_decoders())}
-    return DefaultRuleFactory(rules, factory_field, optional_decorator, decorators)
+    decorators = {'transaction_record': TransactionRecordRuleDecorator(
+        factory_field,
+        _default_record_decoders()
+    ),
+        'record': RecordRuleDecorator(
+            factory_field,
+            _default_record_decoders()
+        ),
+        'group': GroupRuleDecorator(_default_group_decoders())}
+    return DefaultRuleFactory(
+        rules,
+        factory_field,
+        optional_decorator,
+        decorators
+    )
 
 
 def default_filename_grammar_factory():
@@ -159,30 +181,39 @@ def default_filename_grammar_factory():
 
     optional_decorator = OptionalFieldRuleDecorator(data, default_adapters())
 
-    return DefaultRuleFactory(_process_rules(config.load_record_config('filename')), factory_field, optional_decorator)
+    return DefaultRuleFactory(
+        _process_rules(config.load_record_config('filename')),
+        factory_field,
+        optional_decorator
+    )
 
 
 def _process_rules(rules):
     processed = {}
     for rule in rules:
-        id = rule.id
-        processed[id] = rule
+        rule_id = rule.id
+        processed[rule_id] = rule
 
     return processed
 
 
 def default_file_decoder():
     """
-    Creates a decoder which parses a CWR file, creating a CWRFile class instance from it.
+    Creates a decoder which parses a CWR file, creating a CWRFile class
+    instance from it.
 
     :return: a CWR file decoder for the default standard
     """
-    return FileDecoder(default_grammar_factory().get_rule('transmission'), default_filename_decoder())
+    return FileDecoder(
+        default_grammar_factory().get_rule('transmission'),
+        default_filename_decoder()
+    )
 
 
 def default_filename_decoder():
     """
-    Creates a decoder which parses CWR filenames following the old or the new convention.
+    Creates a decoder which parses CWR filenames following the old or the new
+    convention.
 
     :return: a CWR filename decoder for the old and the new conventions
     """
@@ -196,9 +227,11 @@ def default_filename_decoder():
 
 class FileDecoder(Decoder):
     """
-    Parses a CWR file, both its contents and the file name, to create a CWRFile instance.
+    Parses a CWR file, both its contents and the file name, to create a CWRFile
+     instance.
 
-    As the CWRFile contains a FileTag, this decoder will also try to decode the file's name.
+    As the CWRFile contains a FileTag, this decoder will also try to decode the
+    file's name.
 
     For this it will use a second decoder, which will take care of the filename.
     """
@@ -223,27 +256,29 @@ class FileDecoder(Decoder):
         :param data: dictionary with the data to parse
         :return: a CWRFile instance
         """
-        filename = self._filename_decoder.decode(data['filename'])
+        file_name = self._filename_decoder.decode(data['filename'])
 
         file_data = data['contents']
         i = 0
-        max = len(file_data)
-        while file_data[i:i + 1] != 'H' and i < max:
+        max_size = len(file_data)
+        while file_data[i:i + 1] != 'H' and i < max_size:
             i += 1
         if i > 0:
             data['contents'] = file_data[i:]
 
         transmission = self._file_decoder.decode(data['contents'])[0]
 
-        return CWRFile(filename, transmission)
+        return CWRFile(file_name, transmission)
 
 
 class FileNameDecoder(Decoder):
     """
-    Parses a CWR filename to create a FileTag instance. It is meant to take care of the old and the new naming
-    conventions, and so it will require one grammar rule for each.
+    Parses a CWR filename to create a FileTag instance. It is meant to take
+    care of the old and the new naming conventions, and so it will require one
+    grammar rule for each.
 
-    If the filename does not conform any of the two conventions, then an empty FileTag will be returned.
+    If the filename does not conform any of the two conventions, then an empty
+    FileTag will be returned.
     """
 
     def __init__(self, grammar_old, grammar_new):
@@ -252,21 +287,21 @@ class FileNameDecoder(Decoder):
         self._filename_decoder_old = GrammarDecoder(grammar_old)
         self._filename_decoder_new = GrammarDecoder(grammar_new)
 
-    def decode(self, filename):
+    def decode(self, file_name):
         """
         Parses the filename, creating a FileTag from it.
 
-        It will try both the old and the new conventions, if the filename does not conform any of them, then an empty
-        FileTag will be returned.
+        It will try both the old and the new conventions, if the filename does
+        not conform any of them, then an empty FileTag will be returned.
 
-        :param filename: filename to parse
+        :param file_name: filename to parse
         :return: a FileTag instance
         """
         try:
-            file_tag = self._filename_decoder_new.decode(filename)
+            file_tag = self._filename_decoder_new.decode(file_name)
         except:
             try:
-                file_tag = self._filename_decoder_old.decode(filename)
+                file_tag = self._filename_decoder_old.decode(file_name)
             except:
                 file_tag = FileTag(0, 0, '', '', '')
 

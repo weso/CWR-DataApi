@@ -20,15 +20,15 @@ class TestInstrumentationDetailDecoder(unittest.TestCase):
         self._decoder = InstrumentationDetailDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'IND'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['instrument_code'] = 'AHN'
-        dict['number_players'] = 2
+        data['record_type'] = 'IND'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['instrument_code'] = 'AHN'
+        data['number_players'] = 2
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('IND', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

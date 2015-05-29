@@ -10,11 +10,11 @@ from cwr.parser.decoder.dictionary import *
 """
 Decorators for the grammar rules.
 
-These serve to adapt a basic set of rules for a certain type of work. For example, for converting a group of rules
-into the rule for a record.
+These serve to adapt a basic set of rules for a certain type of work. For
+example, for converting a group of rules into the rule for a record.
 
-This works through the basic interface RuleDecorator, which will receive the rule, and any required additional data, and
-return the adapted rule.
+This works through the basic interface RuleDecorator, which will receive the
+rule, and any required additional data, and return the adapted rule.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -113,6 +113,7 @@ class OptionalFieldRuleDecorator(object):
 
         # It is not compulsory, the wrapped is added
         adapter = self._adapters[config['type']]
-        field = adapter.wrap_as_optional(field_base, config['name'], config['size'])
+        field = adapter.wrap_as_optional(field_base, config['name'],
+                                         config['size'])
 
         return field

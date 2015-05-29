@@ -20,17 +20,17 @@ class TestPublisherForWriterDecoder(unittest.TestCase):
         self._decoder = PublisherForWriterDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'SPU'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['publisher_ip_n'] = '111'
-        dict['writer_ip_n'] = '222'
-        dict['submitter_agreement_n'] = '333'
-        dict['society_assigned_agreement_n'] = '444'
+        data['record_type'] = 'SPU'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['publisher_ip_n'] = '111'
+        data['writer_ip_n'] = '222'
+        data['submitter_agreement_n'] = '333'
+        data['society_assigned_agreement_n'] = '444'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('SPU', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

@@ -21,22 +21,22 @@ class TestAcknowledgementRecordDictionaryEncoding(unittest.TestCase):
         self._decoder = AcknowledgementDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'ACK'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['original_group_id'] = 4
-        dict['original_transaction_sequence_n'] = 5
-        dict['original_transaction_type'] = 'AGR'
-        dict['transaction_status'] = 'AS'
-        dict['creation_date_time'] = datetime.datetime.strptime('20030215', '%Y%m%d').date()
-        dict['processing_date'] = datetime.datetime.strptime('20030216', '%Y%m%d').date()
-        dict['creation_title'] = 'TITLE'
-        dict['submitter_creation_n'] = 'A123'
-        dict['recipient_creation_n'] = 'B124'
+        data['record_type'] = 'ACK'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['original_group_id'] = 4
+        data['original_transaction_sequence_n'] = 5
+        data['original_transaction_type'] = 'AGR'
+        data['transaction_status'] = 'AS'
+        data['creation_date_time'] = datetime.datetime.strptime('20030215', '%Y%m%d').date()
+        data['processing_date'] = datetime.datetime.strptime('20030216', '%Y%m%d').date()
+        data['creation_title'] = 'TITLE'
+        data['submitter_creation_n'] = 'A123'
+        data['recipient_creation_n'] = 'B124'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('ACK', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

@@ -84,7 +84,7 @@ class TestAlphanumName(unittest.TestCase):
         self.assertEqual('field2', field2.name)
 
 
-class _BaseAlphanumValid():
+class _BaseAlphanumValid:
     """
     Base test for valid Alphanumeric fields.
 
@@ -268,7 +268,7 @@ class TestAlphanumConstructorException(unittest.TestCase):
         self.assertRaises(BaseException, basic.alphanum, -1)
 
 
-class _BaseAlphanumException():
+class _BaseAlphanumException:
     """
     Base test for Alphanumeric fields exceptions.
 

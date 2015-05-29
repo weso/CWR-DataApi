@@ -16,11 +16,13 @@ from cwr.table_value import *
 """
 Classes for transforming dictionaries into instances of the CWR model.
 
-There is a decoder for each of the model classes, and all of them expect a dictionary having at least one key for each
-field, having the same name as the field, which will refer to a valid value.
+There is a decoder for each of the model classes, and all of them expect a
+dictionary having at least one key for each field, having the same name as the
+field, which will refer to a valid value.
 
-As said, the values on the dictionary should be valid values, for example if an integer is expected, then the dictionary
-contains an integer. The values contained in the dictionary entries should not need to be parsed.
+As said, the values on the dictionary should be valid values, for example if
+an integer is expected, then the dictionary contains an integer. The values
+contained in the dictionary entries should not need to be parsed.
 
 These decoders are useful for handling JSON transmissions or Mongo databases.
 """
@@ -60,9 +62,11 @@ class TransactionRecordDictionaryDecoder(Decoder):
         self._decoders['SWR'] = WriterRecordDictionaryDecoder()
         self._decoders['OWR'] = WriterRecordDictionaryDecoder()
         self._decoders['OWR'] = WriterRecordDictionaryDecoder()
-        self._decoders['NPA'] = NonRomanAlphabetAgreementPartyDictionaryDecoder()
+        self._decoders[
+            'NPA'] = NonRomanAlphabetAgreementPartyDictionaryDecoder()
         self._decoders['NOW'] = NonRomanAlphabetOtherWriterDictionaryDecoder()
-        self._decoders['NPR'] = NonRomanAlphabetPerformanceDataDictionaryDecoder()
+        self._decoders[
+            'NPR'] = NonRomanAlphabetPerformanceDataDictionaryDecoder()
         self._decoders['NPN'] = NonRomanAlphabetPublisherNameDictionaryDecoder()
         self._decoders['NAT'] = NonRomanAlphabetTitleDictionaryDecoder()
         self._decoders['NET'] = NonRomanAlphabetWorkDictionaryDecoder()
@@ -82,17 +86,26 @@ class AcknowledgementDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return AcknowledgementRecord(record_type=data['record_type'],
-                                     transaction_sequence_n=data['transaction_sequence_n'],
-                                     record_sequence_n=data['record_sequence_n'],
-                                     original_group_id=data['original_group_id'],
-                                     original_transaction_sequence_n=data['original_transaction_sequence_n'],
-                                     original_transaction_type=data['original_transaction_type'],
-                                     transaction_status=data['transaction_status'],
-                                     creation_date_time=data['creation_date_time'],
+                                     transaction_sequence_n=data[
+                                         'transaction_sequence_n'],
+                                     record_sequence_n=data[
+                                         'record_sequence_n'],
+                                     original_group_id=data[
+                                         'original_group_id'],
+                                     original_transaction_sequence_n=data[
+                                         'original_transaction_sequence_n'],
+                                     original_transaction_type=data[
+                                         'original_transaction_type'],
+                                     transaction_status=data[
+                                         'transaction_status'],
+                                     creation_date_time=data[
+                                         'creation_date_time'],
                                      processing_date=data['processing_date'],
                                      creation_title=data['creation_title'],
-                                     submitter_creation_n=data['submitter_creation_n'],
-                                     recipient_creation_n=data['recipient_creation_n'])
+                                     submitter_creation_n=data[
+                                         'submitter_creation_n'],
+                                     recipient_creation_n=data[
+                                         'recipient_creation_n'])
 
 
 class AgreementDictionaryDecoder(Decoder):
@@ -101,22 +114,32 @@ class AgreementDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return AgreementRecord(record_type=data['record_type'],
-                               transaction_sequence_n=data['transaction_sequence_n'],
+                               transaction_sequence_n=data[
+                                   'transaction_sequence_n'],
                                record_sequence_n=data['record_sequence_n'],
-                               submitter_agreement_n=data['submitter_agreement_n'],
+                               submitter_agreement_n=data[
+                                   'submitter_agreement_n'],
                                agreement_type=data['agreement_type'],
-                               agreement_start_date=data['agreement_start_date'],
-                               prior_royalty_status=data['prior_royalty_status'],
-                               post_term_collection_status=data['post_term_collection_status'],
+                               agreement_start_date=data[
+                                   'agreement_start_date'],
+                               prior_royalty_status=data[
+                                   'prior_royalty_status'],
+                               post_term_collection_status=data[
+                                   'post_term_collection_status'],
                                number_of_works=data['number_of_works'],
-                               society_assigned_agreement_n=data['society_assigned_agreement_n'],
-                               international_standard_code=data['international_standard_code'],
-                               sales_manufacture_clause=data['sales_manufacture_clause'],
+                               society_assigned_agreement_n=data[
+                                   'society_assigned_agreement_n'],
+                               international_standard_code=data[
+                                   'international_standard_code'],
+                               sales_manufacture_clause=data[
+                                   'sales_manufacture_clause'],
                                agreement_end_date=data['agreement_end_date'],
                                date_of_signature=data['date_of_signature'],
                                retention_end_date=data['retention_end_date'],
-                               prior_royalty_start_date=data['prior_royalty_start_date'],
-                               post_term_collection_end_date=data['post_term_collection_end_date'],
+                               prior_royalty_start_date=data[
+                                   'prior_royalty_start_date'],
+                               post_term_collection_end_date=data[
+                                   'post_term_collection_end_date'],
                                shares_change=data['shares_change'],
                                advance_given=data['advance_given'])
 
@@ -127,10 +150,14 @@ class AgreementTerritoryDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return AgreementTerritoryRecord(record_type=data['record_type'],
-                                        transaction_sequence_n=data['transaction_sequence_n'],
-                                        record_sequence_n=data['record_sequence_n'],
-                                        tis_numeric_code=data['tis_numeric_code'],
-                                        inclusion_exclusion_indicator=data['inclusion_exclusion_indicator'])
+                                        transaction_sequence_n=data[
+                                            'transaction_sequence_n'],
+                                        record_sequence_n=data[
+                                            'record_sequence_n'],
+                                        tis_numeric_code=data[
+                                            'tis_numeric_code'],
+                                        inclusion_exclusion_indicator=data[
+                                            'inclusion_exclusion_indicator'])
 
 
 class AdditionalRelatedInformationDictionaryDecoder(Decoder):
@@ -139,11 +166,14 @@ class AdditionalRelatedInformationDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return AdditionalRelatedInfoRecord(record_type=data['record_type'],
-                                           transaction_sequence_n=data['transaction_sequence_n'],
-                                           record_sequence_n=data['record_sequence_n'],
+                                           transaction_sequence_n=data[
+                                               'transaction_sequence_n'],
+                                           record_sequence_n=data[
+                                               'record_sequence_n'],
                                            society_n=data['society_n'],
                                            type_of_right=data['type_of_right'],
-                                           work_n=data['work_n'], subject_code=data['subject_code'],
+                                           work_n=data['work_n'],
+                                           subject_code=data['subject_code'],
                                            note=data['note'])
 
 
@@ -153,7 +183,8 @@ class AlternateTitleDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return AlternateTitleRecord(record_type=data['record_type'],
-                                    transaction_sequence_n=data['transaction_sequence_n'],
+                                    transaction_sequence_n=data[
+                                        'transaction_sequence_n'],
                                     record_sequence_n=data['record_sequence_n'],
                                     alternate_title=data['alternate_title'],
                                     title_type=data['title_type'],
@@ -166,18 +197,25 @@ class AuthoredWorkDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return AuthoredWorkRecord(record_type=data['record_type'],
-                                  transaction_sequence_n=data['transaction_sequence_n'],
+                                  transaction_sequence_n=data[
+                                      'transaction_sequence_n'],
                                   record_sequence_n=data['record_sequence_n'],
                                   title=data['title'],
                                   submitter_work_n=data['submitter_work_n'],
-                                  writer_1_first_name=data['writer_1_first_name'],
+                                  writer_1_first_name=data[
+                                      'writer_1_first_name'],
                                   writer_1_last_name=data['writer_1_last_name'],
-                                  writer_2_first_name=data['writer_2_first_name'],
+                                  writer_2_first_name=data[
+                                      'writer_2_first_name'],
                                   writer_2_last_name=data['writer_2_last_name'],
-                                  writer_1_ipi_base_n=data['writer_1_ipi_base_n'],
-                                  writer_1_ipi_name_n=data['writer_1_ipi_name_n'],
-                                  writer_2_ipi_base_n=data['writer_2_ipi_base_n'],
-                                  writer_2_ipi_name_n=data['writer_2_ipi_name_n'],
+                                  writer_1_ipi_base_n=data[
+                                      'writer_1_ipi_base_n'],
+                                  writer_1_ipi_name_n=data[
+                                      'writer_1_ipi_name_n'],
+                                  writer_2_ipi_base_n=data[
+                                      'writer_2_ipi_base_n'],
+                                  writer_2_ipi_name_n=data[
+                                      'writer_2_ipi_name_n'],
                                   source=data['source'],
                                   language_code=data['language_code'],
                                   iswc=data['iswc'])
@@ -189,7 +227,8 @@ class ComponentDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return ComponentRecord(record_type=data['record_type'],
-                               transaction_sequence_n=data['transaction_sequence_n'],
+                               transaction_sequence_n=data[
+                                   'transaction_sequence_n'],
                                record_sequence_n=data['record_sequence_n'],
                                title=data['title'],
                                submitter_work_n=data['submitter_work_n'],
@@ -233,17 +272,18 @@ class InterestedPartyForAgreementDictionaryDecoder(Decoder):
         super(InterestedPartyForAgreementDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return InterestedPartyForAgreementRecord(record_type=data['record_type'],
-                                                 transaction_sequence_n=data['transaction_sequence_n'],
-                                                 record_sequence_n=data['record_sequence_n'],
-                                                 ip_n=data['ip_n'],
-                                                 ip_last_name=data['ip_last_name'],
-                                                 agreement_role_code=data['agreement_role_code'],
-                                                 ip_writer_first_name=data['ip_writer_first_name'],
-                                                 ipi_name_n=data['ipi_name_n'], ipi_base_n=data['ipi_base_n'],
-                                                 pr_society=data['pr_society'], pr_share=data['pr_share'],
-                                                 mr_society=data['mr_society'], mr_share=data['mr_share'],
-                                                 sr_society=data['sr_society'], sr_share=data['sr_share'])
+        return InterestedPartyForAgreementRecord(
+            record_type=data['record_type'],
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            ip_n=data['ip_n'],
+            ip_last_name=data['ip_last_name'],
+            agreement_role_code=data['agreement_role_code'],
+            ip_writer_first_name=data['ip_writer_first_name'],
+            ipi_name_n=data['ipi_name_n'], ipi_base_n=data['ipi_base_n'],
+            pr_society=data['pr_society'], pr_share=data['pr_share'],
+            mr_society=data['mr_society'], mr_share=data['mr_share'],
+            sr_society=data['sr_society'], sr_share=data['sr_share'])
 
 
 class IPTerritoryOfControlDictionaryDecoder(Decoder):
@@ -252,15 +292,22 @@ class IPTerritoryOfControlDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return IPTerritoryOfControlRecord(record_type=data['record_type'],
-                                          transaction_sequence_n=data['transaction_sequence_n'],
-                                          record_sequence_n=data['record_sequence_n'],
+                                          transaction_sequence_n=data[
+                                              'transaction_sequence_n'],
+                                          record_sequence_n=data[
+                                              'record_sequence_n'],
                                           ip_n=data['ip_n'],
-                                          inclusion_exclusion_indicator=data['inclusion_exclusion_indicator'],
-                                          tis_numeric_code=data['tis_numeric_code'],
+                                          inclusion_exclusion_indicator=data[
+                                              'inclusion_exclusion_indicator'],
+                                          tis_numeric_code=data[
+                                              'tis_numeric_code'],
                                           sequence_n=data['sequence_n'],
-                                          pr_collection_share=data['pr_collection_share'],
-                                          mr_collection_share=data['mr_collection_share'],
-                                          sr_collection_share=data['sr_collection_share'],
+                                          pr_collection_share=data[
+                                              'pr_collection_share'],
+                                          mr_collection_share=data[
+                                              'mr_collection_share'],
+                                          sr_collection_share=data[
+                                              'sr_collection_share'],
                                           shares_change=data['shares_change'])
 
 
@@ -270,10 +317,14 @@ class InstrumentationDetailDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return InstrumentationDetailRecord(record_type=data['record_type'],
-                                           transaction_sequence_n=data['transaction_sequence_n'],
-                                           record_sequence_n=data['record_sequence_n'],
-                                           instrument_code=data['instrument_code'],
-                                           number_players=data['number_players'])
+                                           transaction_sequence_n=data[
+                                               'transaction_sequence_n'],
+                                           record_sequence_n=data[
+                                               'record_sequence_n'],
+                                           instrument_code=data[
+                                               'instrument_code'],
+                                           number_players=data[
+                                               'number_players'])
 
 
 class InstrumentationSummaryDictionaryDecoder(Decoder):
@@ -282,11 +333,15 @@ class InstrumentationSummaryDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return InstrumentationSummaryRecord(record_type=data['record_type'],
-                                            transaction_sequence_n=data['transaction_sequence_n'],
-                                            record_sequence_n=data['record_sequence_n'],
+                                            transaction_sequence_n=data[
+                                                'transaction_sequence_n'],
+                                            record_sequence_n=data[
+                                                'record_sequence_n'],
                                             number_voices=data['number_voices'],
-                                            standard_instrumentation_type=data['standard_instrumentation_type'],
-                                            instrumentation_description=data['instrumentation_description'])
+                                            standard_instrumentation_type=data[
+                                                'standard_instrumentation_type'],
+                                            instrumentation_description=data[
+                                                'instrumentation_description'])
 
 
 class MessageDictionaryDecoder(Decoder):
@@ -295,11 +350,13 @@ class MessageDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return MessageRecord(record_type=data['record_type'],
-                             transaction_sequence_n=data['transaction_sequence_n'],
+                             transaction_sequence_n=data[
+                                 'transaction_sequence_n'],
                              record_sequence_n=data['record_sequence_n'],
                              message_type=data['message_type'],
                              message_text=data['message_text'],
-                             original_record_sequence_n=data['original_record_sequence_n'],
+                             original_record_sequence_n=data[
+                                 'original_record_sequence_n'],
                              message_record_type=data['message_record_type'],
                              message_level=data['message_level'],
                              validation_n=data['validation_n'])
@@ -311,12 +368,18 @@ class PerformingArtistDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return PerformingArtistRecord(record_type=data['record_type'],
-                                      transaction_sequence_n=data['transaction_sequence_n'],
-                                      record_sequence_n=data['record_sequence_n'],
-                                      performing_artist_last_name=data['performing_artist_last_name'],
-                                      performing_artist_first_name=data['performing_artist_first_name'],
-                                      performing_artist_ipi_name_n=data['performing_artist_ipi_name_n'],
-                                      performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'])
+                                      transaction_sequence_n=data[
+                                          'transaction_sequence_n'],
+                                      record_sequence_n=data[
+                                          'record_sequence_n'],
+                                      performing_artist_last_name=data[
+                                          'performing_artist_last_name'],
+                                      performing_artist_first_name=data[
+                                          'performing_artist_first_name'],
+                                      performing_artist_ipi_name_n=data[
+                                          'performing_artist_ipi_name_n'],
+                                      performing_artist_ipi_base_n=data[
+                                          'performing_artist_ipi_base_n'])
 
 
 class PublisherForWriterDictionaryDecoder(Decoder):
@@ -325,12 +388,16 @@ class PublisherForWriterDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return PublisherForWriterRecord(record_type=data['record_type'],
-                                        transaction_sequence_n=data['transaction_sequence_n'],
-                                        record_sequence_n=data['record_sequence_n'],
+                                        transaction_sequence_n=data[
+                                            'transaction_sequence_n'],
+                                        record_sequence_n=data[
+                                            'record_sequence_n'],
                                         publisher_ip_n=data['publisher_ip_n'],
                                         writer_ip_n=data['writer_ip_n'],
-                                        submitter_agreement_n=data['submitter_agreement_n'],
-                                        society_assigned_agreement_n=data['society_assigned_agreement_n'])
+                                        submitter_agreement_n=data[
+                                            'submitter_agreement_n'],
+                                        society_assigned_agreement_n=data[
+                                            'society_assigned_agreement_n'])
 
 
 class RecordingDetailDictionaryDecoder(Decoder):
@@ -339,17 +406,25 @@ class RecordingDetailDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return RecordingDetailRecord(record_type=data['record_type'],
-                                     transaction_sequence_n=data['transaction_sequence_n'],
-                                     record_sequence_n=data['record_sequence_n'],
-                                     first_release_date=data['first_release_date'],
-                                     first_release_duration=data['first_release_duration'],
-                                     first_album_title=data['first_album_title'],
-                                     first_album_label=data['first_album_label'],
-                                     first_release_catalog_n=data['first_release_catalog_n'],
+                                     transaction_sequence_n=data[
+                                         'transaction_sequence_n'],
+                                     record_sequence_n=data[
+                                         'record_sequence_n'],
+                                     first_release_date=data[
+                                         'first_release_date'],
+                                     first_release_duration=data[
+                                         'first_release_duration'],
+                                     first_album_title=data[
+                                         'first_album_title'],
+                                     first_album_label=data[
+                                         'first_album_label'],
+                                     first_release_catalog_n=data[
+                                         'first_release_catalog_n'],
                                      ean=data['ean'],
                                      isrc=data['isrc'],
                                      recording_format=data['recording_format'],
-                                     recording_technique=data['recording_technique'],
+                                     recording_technique=data[
+                                         'recording_technique'],
                                      media_type=data['media_type'])
 
 
@@ -423,7 +498,8 @@ class GroupDictionaryDecoder(Decoder):
                 for transaction in data['transactions']:
                     transaction_records = []
                     for record in transaction:
-                        transaction_records.append(self._transaction_decoder.decode(record))
+                        transaction_records.append(
+                            self._transaction_decoder.decode(record))
                     transactions.append(transaction_records)
             else:
                 transactions = data['transactions']
@@ -468,9 +544,12 @@ class WorkDictionaryDecoder(Decoder):
                           submitter_work_n=data['submitter_work_n'],
                           title=data['title'],
                           version_type=data['version_type'],
-                          musical_work_distribution_category=data['musical_work_distribution_category'],
-                          date_publication_printed_edition=data['date_publication_printed_edition'],
-                          text_music_relationship=data['text_music_relationship'],
+                          musical_work_distribution_category=data[
+                              'musical_work_distribution_category'],
+                          date_publication_printed_edition=data[
+                              'date_publication_printed_edition'],
+                          text_music_relationship=data[
+                              'text_music_relationship'],
                           language_code=data['language_code'],
                           copyright_number=data['copyright_number'],
                           copyright_date=data['copyright_date'],
@@ -478,7 +557,8 @@ class WorkDictionaryDecoder(Decoder):
                           lyric_adaptation=data['lyric_adaptation'],
                           excerpt_type=data['excerpt_type'],
                           composite_type=data['composite_type'],
-                          composite_component_count=data['composite_component_count'],
+                          composite_component_count=data[
+                              'composite_component_count'],
                           iswc=data['iswc'],
                           work_type=data['work_type'],
                           duration=data['duration'],
@@ -498,7 +578,8 @@ class WorkOriginDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return WorkOriginRecord(record_type=data['record_type'],
-                                transaction_sequence_n=data['transaction_sequence_n'],
+                                transaction_sequence_n=data[
+                                    'transaction_sequence_n'],
                                 record_sequence_n=data['record_sequence_n'],
                                 intended_purpose=data['intended_purpose'],
                                 production_title=data['production_title'],
@@ -537,14 +618,16 @@ class WriterRecordDictionaryDecoder(Decoder):
         writer = self._writer_decoder.decode(data)
 
         return WriterRecord(record_type=data['record_type'],
-                            transaction_sequence_n=data['transaction_sequence_n'],
+                            transaction_sequence_n=data[
+                                'transaction_sequence_n'],
                             record_sequence_n=data['record_sequence_n'],
                             writer=writer,
                             writer_designation=data['writer_designation'],
                             work_for_hire=data['work_for_hire'],
                             writer_unknown=data['writer_unknown'],
                             reversionary=data['reversionary'],
-                            first_recording_refusal=data['first_recording_refusal'],
+                            first_recording_refusal=data[
+                                'first_recording_refusal'],
                             usa_license=data['usa_license'],
                             pr_society=data['pr_society'],
                             pr_ownership_share=data['pr_ownership_share'],
@@ -559,13 +642,14 @@ class NonRomanAlphabetAgreementPartyDictionaryDecoder(Decoder):
         super(NonRomanAlphabetAgreementPartyDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return NonRomanAlphabetAgreementPartyRecord(record_type=data['record_type'],
-                                                    transaction_sequence_n=data['transaction_sequence_n'],
-                                                    record_sequence_n=data['record_sequence_n'],
-                                                    ip_name=data['ip_name'],
-                                                    ip_writer_name=data['ip_writer_name'],
-                                                    ip_n=data['ip_n'],
-                                                    language_code=data['language_code'])
+        return NonRomanAlphabetAgreementPartyRecord(
+            record_type=data['record_type'],
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            ip_name=data['ip_name'],
+            ip_writer_name=data['ip_writer_name'],
+            ip_n=data['ip_n'],
+            language_code=data['language_code'])
 
 
 class NonRomanAlphabetOtherWriterDictionaryDecoder(Decoder):
@@ -573,13 +657,14 @@ class NonRomanAlphabetOtherWriterDictionaryDecoder(Decoder):
         super(NonRomanAlphabetOtherWriterDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return NonRomanAlphabetOtherWriterRecord(record_type=data['record_type'],
-                                                 transaction_sequence_n=data['transaction_sequence_n'],
-                                                 record_sequence_n=data['record_sequence_n'],
-                                                 writer_first_name=data['writer_first_name'],
-                                                 writer_name=data['writer_name'],
-                                                 position=data['position'],
-                                                 language_code=data['language_code'])
+        return NonRomanAlphabetOtherWriterRecord(
+            record_type=data['record_type'],
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            writer_first_name=data['writer_first_name'],
+            writer_name=data['writer_name'],
+            position=data['position'],
+            language_code=data['language_code'])
 
 
 class NonRomanAlphabetPerformanceDataDictionaryDecoder(Decoder):
@@ -587,16 +672,17 @@ class NonRomanAlphabetPerformanceDataDictionaryDecoder(Decoder):
         super(NonRomanAlphabetPerformanceDataDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return NonRomanAlphabetPerformanceDataRecord(record_type=data['record_type'],
-                                                     transaction_sequence_n=data['transaction_sequence_n'],
-                                                     record_sequence_n=data['record_sequence_n'],
-                                                     performing_artist_first_name=data['performing_artist_first_name'],
-                                                     performing_artist_name=data['performing_artist_name'],
-                                                     performing_artist_ipi_name_n=data['performing_artist_ipi_name_n'],
-                                                     performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'],
-                                                     language_code=data['language_code'],
-                                                     performance_language=data['performance_language'],
-                                                     performance_dialect=data['performance_dialect'])
+        return NonRomanAlphabetPerformanceDataRecord(
+            record_type=data['record_type'],
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            performing_artist_first_name=data['performing_artist_first_name'],
+            performing_artist_name=data['performing_artist_name'],
+            performing_artist_ipi_name_n=data['performing_artist_ipi_name_n'],
+            performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'],
+            language_code=data['language_code'],
+            performance_language=data['performance_language'],
+            performance_dialect=data['performance_dialect'])
 
 
 class NonRomanAlphabetPublisherNameDictionaryDecoder(Decoder):
@@ -604,13 +690,14 @@ class NonRomanAlphabetPublisherNameDictionaryDecoder(Decoder):
         super(NonRomanAlphabetPublisherNameDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return NonRomanAlphabetPublisherNameRecord(record_type=data['record_type'],
-                                                   transaction_sequence_n=data['transaction_sequence_n'],
-                                                   record_sequence_n=data['record_sequence_n'],
-                                                   publisher_sequence_n=data['publisher_sequence_n'],
-                                                   ip_n=data['ip_n'],
-                                                   publisher_name=data['publisher_name'],
-                                                   language_code=data['language_code'])
+        return NonRomanAlphabetPublisherNameRecord(
+            record_type=data['record_type'],
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            publisher_sequence_n=data['publisher_sequence_n'],
+            ip_n=data['ip_n'],
+            publisher_name=data['publisher_name'],
+            language_code=data['language_code'])
 
 
 class NonRomanAlphabetTitleDictionaryDecoder(Decoder):
@@ -619,8 +706,10 @@ class NonRomanAlphabetTitleDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return NonRomanAlphabetTitleRecord(record_type=data['record_type'],
-                                           transaction_sequence_n=data['transaction_sequence_n'],
-                                           record_sequence_n=data['record_sequence_n'],
+                                           transaction_sequence_n=data[
+                                               'transaction_sequence_n'],
+                                           record_sequence_n=data[
+                                               'record_sequence_n'],
                                            title=data['title'],
                                            title_type=data['title_type'],
                                            language_code=data['language_code'])
@@ -632,8 +721,10 @@ class NonRomanAlphabetWorkDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return NonRomanAlphabetWorkRecord(record_type=data['record_type'],
-                                          transaction_sequence_n=data['transaction_sequence_n'],
-                                          record_sequence_n=data['record_sequence_n'],
+                                          transaction_sequence_n=data[
+                                              'transaction_sequence_n'],
+                                          record_sequence_n=data[
+                                              'record_sequence_n'],
                                           title=data['title'],
                                           language_code=data['language_code'])
 
@@ -644,12 +735,17 @@ class NonRomanAlphabetWriterNameDictionaryDecoder(Decoder):
 
     def decode(self, data):
         return NonRomanAlphabetWriterNameRecord(record_type=data['record_type'],
-                                                transaction_sequence_n=data['transaction_sequence_n'],
-                                                record_sequence_n=data['record_sequence_n'],
-                                                writer_first_name=data['writer_first_name'],
-                                                writer_last_name=data['writer_last_name'],
+                                                transaction_sequence_n=data[
+                                                    'transaction_sequence_n'],
+                                                record_sequence_n=data[
+                                                    'record_sequence_n'],
+                                                writer_first_name=data[
+                                                    'writer_first_name'],
+                                                writer_last_name=data[
+                                                    'writer_last_name'],
                                                 ip_n=data['ip_n'],
-                                                language_code=data['language_code'])
+                                                language_code=data[
+                                                    'language_code'])
 
 
 class PublisherDictionaryDecoder(Decoder):
@@ -672,21 +768,30 @@ class PublisherRecordDictionaryDecoder(Decoder):
     def decode(self, data):
         publisher = self._publisher_decoder.decode(data)
 
-        return PublisherRecord(record_type=data['record_type'], transaction_sequence_n=data['transaction_sequence_n'],
+        return PublisherRecord(record_type=data['record_type'],
+                               transaction_sequence_n=data[
+                                   'transaction_sequence_n'],
                                record_sequence_n=data['record_sequence_n'],
-                               publisher=publisher, publisher_sequence_n=data['publisher_sequence_n'],
-                               submitter_agreement_n=data['submitter_agreement_n'],
+                               publisher=publisher, publisher_sequence_n=data[
+                'publisher_sequence_n'],
+                               submitter_agreement_n=data[
+                                   'submitter_agreement_n'],
                                publisher_type=data['publisher_type'],
-                               publisher_unknown=data['publisher_unknown'], agreement_type=data['agreement_type'],
-                               international_standard_code=data['international_standard_code'],
-                               society_assigned_agreement_n=data['society_assigned_agreement_n'],
+                               publisher_unknown=data['publisher_unknown'],
+                               agreement_type=data['agreement_type'],
+                               international_standard_code=data[
+                                   'international_standard_code'],
+                               society_assigned_agreement_n=data[
+                                   'society_assigned_agreement_n'],
                                pr_society=data['pr_society'],
                                pr_ownership_share=data['pr_ownership_share'],
-                               mr_society=data['mr_society'], mr_ownership_share=data['mr_ownership_share'],
+                               mr_society=data['mr_society'],
+                               mr_ownership_share=data['mr_ownership_share'],
                                sr_society=data['sr_society'],
                                sr_ownership_share=data['sr_ownership_share'],
                                special_agreements=data['special_agreements'],
-                               first_recording_refusal=data['first_recording_refusal'],
+                               first_recording_refusal=data[
+                                   'first_recording_refusal'],
                                usa_license=data['usa_license'])
 
 

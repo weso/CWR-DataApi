@@ -21,25 +21,25 @@ class TestWorkOriginDictionaryDecoder(unittest.TestCase):
         self._decoder = WorkOriginDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'ORN'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['intended_purpose'] = 'PURPOSE'
-        dict['production_title'] = 'TITLE'
-        dict['cd_identifier'] = 'ID134'
-        dict['cut_number'] = 5
-        dict['library'] = 'LIB467'
-        dict['bltvr'] = 'BLTVR'
-        dict['visan'] = VISAN(1234567, 12345678912, 123, 1)
-        dict['production_n'] = 'PROD145'
-        dict['episode_title'] = 'EPISODE'
-        dict['episode_n'] = 'EP145'
-        dict['year_production'] = 1994
-        dict['audio_visual_key'] = 'KEY'
+        data['record_type'] = 'ORN'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['intended_purpose'] = 'PURPOSE'
+        data['production_title'] = 'TITLE'
+        data['cd_identifier'] = 'ID134'
+        data['cut_number'] = 5
+        data['library'] = 'LIB467'
+        data['bltvr'] = 'BLTVR'
+        data['visan'] = VISAN(1234567, 12345678912, 123, 1)
+        data['production_n'] = 'PROD145'
+        data['episode_title'] = 'EPISODE'
+        data['episode_n'] = 'EP145'
+        data['year_production'] = 1994
+        data['audio_visual_key'] = 'KEY'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('ORN', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

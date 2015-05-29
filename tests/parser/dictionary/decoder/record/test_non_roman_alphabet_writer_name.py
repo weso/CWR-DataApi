@@ -20,17 +20,17 @@ class TestNonRomanAlphabetWriterNameDictionaryDecoder(unittest.TestCase):
         self._decoder = NonRomanAlphabetWriterNameDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'NPN'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['writer_first_name'] = 'FIRST NAME'
-        dict['writer_last_name'] = 'LAST NAME'
-        dict['ip_n'] = 'IP123'
-        dict['language_code'] = 'ES'
+        data['record_type'] = 'NPN'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['writer_first_name'] = 'FIRST NAME'
+        data['writer_last_name'] = 'LAST NAME'
+        data['ip_n'] = 'IP123'
+        data['language_code'] = 'ES'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('NPN', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

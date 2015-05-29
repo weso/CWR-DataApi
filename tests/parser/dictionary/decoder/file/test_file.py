@@ -30,11 +30,11 @@ class TestFileDictionaryEncoding(unittest.TestCase):
 
         transmission = _get_transmission()
 
-        file = {}
-        file['tag'] = tag
-        file['transmission'] = transmission
+        file_data = {}
+        file_data['tag'] = tag
+        file_data['transmission'] = transmission
 
-        data = self._decoder.decode(file)
+        data = self._decoder.decode(file_data)
 
         tag = data.tag
 

@@ -3,19 +3,25 @@
 """
 CWR file structure and information model.
 
-These classes represent a CWR file. This consists on two parts: the metadata on the filename and data inside the file.
+These classes represent a CWR file. This consists on two parts: the metadata
+on the filename and data inside the file.
 
-The file data is stored into groups, which then are stored into a single transmission. Both of these structures contain
-a header and a trailer record, which serve not only to mark the beginning and end of them, but also, in the case of the
-trailer records, to validate the previous rows.
+The file data is stored into groups, which then are stored into a single
+transmission. Both of these structures contain a header and a trailer record,
+which serve not only to mark the beginning and end of them, but also, in the
+case of the trailer records, to validate the previous rows.
 
-Being these four header and trailer records, called control records, are Transmission Header (HDR), Transmission Trailer
-(TRL), Group Header (GRH) and Group Trailer (GRT).
+Being these four header and trailer records, called control records, are
+Transmission Header (HDR), Transmission Trailer (TRL), Group Header (GRH) and
+Group Trailer (GRT).
 
-These are grouped into a single transmission composed by several groups: [HDR, [GRH,GRT]*, TRL].
+These are grouped into a single transmission composed by several groups: [HDR,
+[GRH,GRT]*, TRL].
 
-Additionally to the internal data structure this module allows to represent the file's metadata, stored according to the
-standard in the file name, with FileTag, which stores the information used to identify and differentiate CWR files.
+Additionally to the internal data structure this module allows to represent
+the file's metadata, stored according to the standard in the file name, with
+FileTag, which stores the information used to identify and differentiate CWR
+files.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -27,12 +33,14 @@ class CWRFile(object):
     """
     Represents a CWR file and all the data contained in it.
 
-    This can be divided into two groups: the metadata and the transmission data.
+    This can be divided into two groups: the metadata and the transmission
+    data.
 
-    The first is indicated, according to the standard, by the file name. While the second is contained inside the file.
+    The first is indicated, according to the standard, by the file name. While
+    the second is contained inside the file.
 
-    Both are to be represented with the classes in this module. FileTag for the metadata, and Transmission for the
-    file contents.
+    Both are to be represented with the classes in this module. FileTag for
+    the metadata, and Transmission for the file contents.
     """
 
     def __init__(self, tag, transmission):
@@ -83,8 +91,9 @@ class FileTag(object):
     """
     Represents a CWR file metadata, which is tagged on the filename.
 
-    This data identifies a concrete file in the file system and, according to the standard, is indicated in the file
-    name, using the pattern CWyynnnnsss_rrr.Vxx,, where each section means the following:
+    This data identifies a concrete file in the file system and, according to
+    the standard, is indicated in the file name, using the pattern
+    CWyynnnnsss_rrr.Vxx,, where each section means the following:
     CW - Header indicating it is a CWR file.
     yy - Year.
     nnnn - Sequence. This was originally 2 numbers, later changed to 4.
@@ -92,8 +101,9 @@ class FileTag(object):
     rrr - Receiver. 2 or 3 digits.
     xx - Version of the CWR standard (version x.x).
 
-    So according to this, the files sent between a sender and a receiver each year are numerated following a sequence.
-    Then a termination is added indicating the version of the CWR standard specification used on the file.
+    So according to this, the files sent between a sender and a receiver each
+    year are numerated following a sequence.  Then a termination is added
+    indicating the version of the CWR standard specification used on the file.
     """
 
     def __init__(self, year, sequence_n, sender, receiver, version):
@@ -118,7 +128,8 @@ class FileTag(object):
             self._version)
 
     def __repr__(self):
-        return '<class %s>(year=%s, sequence_n=%r, sender=%r, receiver=%r, version=%r)' % (
+        return '<class %s>(year=%s, sequence_n=%r, sender=%r, ' \
+               'receiver=%r, version=%r)' % (
             self.__class__.__name__, self._year,
             self._sequence_n,
             self._sender, self._receiver,
@@ -138,7 +149,8 @@ class FileTag(object):
         """
         File sequence number. This is a numeric value.
 
-        This value indicates the position of this file among all those sent from the sender to the receiver.
+        This value indicates the position of this file among all those sent
+        from the sender to the receiver.
 
         So if the sequence number is 10 this would be the tenth file sent.
 
@@ -167,7 +179,8 @@ class FileTag(object):
     @property
     def version(self):
         """
-        The CWR standard specification used to code the file. This is a comma separated numeric value.
+        The CWR standard specification used to code the file. This is a comma
+        separated numeric value.
 
         :return: the CWR standard specification version used
         """

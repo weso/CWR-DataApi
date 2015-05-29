@@ -21,29 +21,29 @@ class TestAgreementRecordDictionaryEncoding(unittest.TestCase):
         self._decoder = AgreementDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'ACK'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['submitter_agreement_n'] = 'AB12'
-        dict['agreement_type'] = 'OS'
-        dict['agreement_start_date'] = datetime.datetime.strptime('20030215', '%Y%m%d').date()
-        dict['number_of_works'] = 12
-        dict['prior_royalty_status'] = 'D'
-        dict['post_term_collection_status'] = 'D'
-        dict['international_standard_code'] = 'DFG135'
-        dict['society_assigned_agreement_n'] = 'DF35'
-        dict['sales_manufacture_clause'] = 'M'
-        dict['agreement_end_date'] = datetime.datetime.strptime('20030216', '%Y%m%d').date()
-        dict['date_of_signature'] = datetime.datetime.strptime('20030217', '%Y%m%d').date()
-        dict['retention_end_date'] = datetime.datetime.strptime('20030218', '%Y%m%d').date()
-        dict['prior_royalty_start_date'] = datetime.datetime.strptime('20030219', '%Y%m%d').date()
-        dict['post_term_collection_end_date'] = datetime.datetime.strptime('20030220', '%Y%m%d').date()
-        dict['shares_change'] = True
-        dict['advance_given'] = True
+        data['record_type'] = 'ACK'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['submitter_agreement_n'] = 'AB12'
+        data['agreement_type'] = 'OS'
+        data['agreement_start_date'] = datetime.datetime.strptime('20030215', '%Y%m%d').date()
+        data['number_of_works'] = 12
+        data['prior_royalty_status'] = 'D'
+        data['post_term_collection_status'] = 'D'
+        data['international_standard_code'] = 'DFG135'
+        data['society_assigned_agreement_n'] = 'DF35'
+        data['sales_manufacture_clause'] = 'M'
+        data['agreement_end_date'] = datetime.datetime.strptime('20030216', '%Y%m%d').date()
+        data['date_of_signature'] = datetime.datetime.strptime('20030217', '%Y%m%d').date()
+        data['retention_end_date'] = datetime.datetime.strptime('20030218', '%Y%m%d').date()
+        data['prior_royalty_start_date'] = datetime.datetime.strptime('20030219', '%Y%m%d').date()
+        data['post_term_collection_end_date'] = datetime.datetime.strptime('20030220', '%Y%m%d').date()
+        data['shares_change'] = True
+        data['advance_given'] = True
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('ACK', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

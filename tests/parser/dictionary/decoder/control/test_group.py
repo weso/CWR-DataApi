@@ -55,9 +55,9 @@ class TestGroupDictionaryEncoding(unittest.TestCase):
                           'agreement_start_date': datetime.date(2003, 2, 15), 'transaction_sequence_n': 3,
                           'post_term_collection_end_date': datetime.date(2003, 2, 20), 'number_of_works': 12}]]
 
-        dict = {'group_trailer': trailer, 'transactions': transactions, 'group_header': header}
+        data = {'group_trailer': trailer, 'transactions': transactions, 'group_header': header}
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('GRH', record.group_header.record_type)
         self.assertEqual('GRT', record.group_trailer.record_type)

@@ -7,8 +7,9 @@ CWR file transmission model.
 
 This consists on the Transmission Header (HDR) and Transmission Trailer (TRL).
 
-These classes represent a transmission, which is all the contents on a CWR file. Additionally, the transmission also
-contains information to check the integrity of the data.
+These classes represent a transmission, which is all the contents on a CWR file.
+Additionally, the transmission also contains information to check the integrity
+of the data.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -20,13 +21,21 @@ class TransmissionHeader(Record):
     """
     Represents a CWR file Transmission Header (HDR).
 
-    This stores the general information about a transmission (which means, the CWR file contents) submitted by a
-    participant, containing the file control information as well as the name of the sender.
+    This stores the general information about a transmission (which means, the
+    CWR file contents) submitted by a participant, containing the file control
+    information as well as the name of the sender.
     """
 
-    def __init__(self, record_type, sender_id, sender_name, sender_type, creation_date_time, transmission_date,
+    def __init__(self,
+                 record_type,
+                 sender_id,
+                 sender_name,
+                 sender_type,
+                 creation_date_time,
+                 transmission_date,
                  edi_standard='01.10',
-                 character_set=None):
+                 character_set=None
+                 ):
         """
         Constructs a TransmissionHeader.
 
@@ -59,22 +68,28 @@ class TransmissionHeader(Record):
 
     def __str__(self):
         return '%s (%s, %s) on %s' % (
-            self._sender_name, self._sender_id, self._sender_type, self._transmission_date)
+            self._sender_name, self._sender_id, self._sender_type,
+            self._transmission_date)
 
     def __repr__(self):
-        return '<class %s>(sender_id=%r, sender_name=%r, sender_type=%r, creation_date=%r, transmission_date=%r)' % (
-            'TransmissionHeader', self._sender_id,
-            self._sender_name, self._sender_type, self._creation_date_time, self._transmission_date)
+        return '<class %s>(sender_id=%r, sender_name=%r, sender_type=%r, ' \
+               'creation_date=%r, transmission_date=%r)' % (
+                   'TransmissionHeader', self._sender_id,
+                   self._sender_name, self._sender_type,
+                   self._creation_date_time,
+                   self._transmission_date)
 
     @property
     def character_set(self):
         """
         Character Set field. Table lookup (not yet existing).
 
-        By default this is ASCII, and files using any other set are only intended to be sent to societies that accept
-        and use such character sets (e.g, CASH).
+        By default this is ASCII, and files using any other set are only
+        intended to be sent to societies that accept and use such character
+        sets (e.g, CASH).
 
-        The table containing the accepted values does not exist at the time of this implementation.
+        The table containing the accepted values does not exist at the time of
+        this implementation.
 
         :return: the character set used on the file
         """
@@ -96,7 +111,8 @@ class TransmissionHeader(Record):
         """
         EDI Standard Version Number field. Alphanumeric.
 
-        Indicates which version of the header and trailer records was used to create the data in this file.
+        Indicates which version of the header and trailer records was used to
+        create the data in this file.
 
         By default this is '01.10', which is required by the CWR v2.1 standard.
 
@@ -120,12 +136,15 @@ class TransmissionHeader(Record):
         """
         Sender ID field. Numeric.
 
-        If Sender Type is equal to 'PB' (Publisher), 'AA' (Administrative Agency), or 'WR' (Writer), the sender  must
-        enter their assigned CWR CAE number in this field.
+        If Sender Type is equal to 'PB' (Publisher), 'AA' (Administrative
+        Agency), or 'WR' (Writer), the sender  must enter their assigned CWR
+        CAE number in this field.
 
-        If Sender Type is equal to 'SO' (Society), the sending society must enter their Society Code.
+        If Sender Type is equal to 'SO' (Society), the sending society must
+        enter their Society Code.
 
-        The Society codes reside in the Society Code Table. The others on the CWR Sender ID and Codes Table.
+        The Society codes reside in the Society Code Table. The others on the
+        CWR Sender ID and Codes Table.
 
         :return: the sender ID
         """
@@ -177,11 +196,15 @@ class TransmissionTrailer(Record):
 
     The Transmission Trailer record indicates the end of the transmission file.
 
-    Control totals representing the number of groups, transactions, and records within the file are included on this
-    record.
+    Control totals representing the number of groups, transactions, and records
+    within the file are included on this record.
     """
 
-    def __init__(self, record_type, group_count, transaction_count, record_count):
+    def __init__(self,
+                 record_type,
+                 group_count,
+                 transaction_count,
+                 record_count):
         """
         Constructs a TransmissionTrailer.
 
@@ -189,7 +212,9 @@ class TransmissionTrailer(Record):
         :param transaction_count: the total number of transactions on the file
         :param record_count: the total number of records on the file
         """
-        super(TransmissionTrailer, self).__init__(record_type)
+        super(TransmissionTrailer, self).__init__(
+            record_type
+        )
 
         self._group_count = group_count
         self._transaction_count = transaction_count
@@ -200,9 +225,10 @@ class TransmissionTrailer(Record):
             self._group_count, self._transaction_count, self._record_count)
 
     def __repr__(self):
-        return '<class %s>(group_count=%r, transaction_count=%r, record_count=%r)' % (
-            'TransmissionTrailer', self._group_count,
-            self._transaction_count, self._record_count)
+        return '<class %s>(group_count=%r, transaction_count=%r, ' \
+               'record_count=%r)' % (
+                   'TransmissionTrailer', self._group_count,
+                   self._transaction_count, self._record_count)
 
     @property
     def group_count(self):
@@ -220,7 +246,8 @@ class TransmissionTrailer(Record):
         """
         Record Count field. Numeric.
 
-        The number of physical records included in this file including HDR and TRL records.
+        The number of physical records included in this file including HDR and
+        TRL records.
 
         :return: the total record count
         """
@@ -242,18 +269,25 @@ class Transmission(object):
     """
     Represents a CWR file Transmission.
 
-    As a Transmission wraps all the file's data, this in practise equals to the file content.
+    As a Transmission wraps all the file's data, this in practise equals to the
+    file content.
 
-    It is composed by a Transmission Header and a Transmission Trailer, and in-between a collection of groups,
-    following the structure [HDR, [GRH,GRT]*, TRL].
+    It is composed by a Transmission Header and a Transmission Trailer, and
+    in-between a collection of groups, following the structure [HDR, [GRH,GRT]*,
+    TRL].
     """
 
-    def __init__(self, header, trailer, groups):
+    def __init__(self,
+                 header,
+                 trailer,
+                 groups
+                 ):
         """
         Constructs a Transmission.
 
-        The transaction groups should be a collection of TransactionGroup instances. While the header should be a
-        TransmissionHeader and the trailer a TransmissionTrailer.
+        The transaction groups should be a collection of TransactionGroup
+        instances. While the header should be a TransmissionHeader and the
+        trailer a TransmissionTrailer.
 
         :param header: the transmission header
         :param trailer: the transmission trailer

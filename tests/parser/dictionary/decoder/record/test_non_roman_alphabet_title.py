@@ -20,16 +20,16 @@ class TestNonRomanAlphabetTitleDictionaryDecoder(unittest.TestCase):
         self._decoder = NonRomanAlphabetTitleDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'NAT'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['title'] = 'TITLE'
-        dict['title_type'] = 'OL'
-        dict['language_code'] = 'ES'
+        data['record_type'] = 'NAT'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['title'] = 'TITLE'
+        data['title_type'] = 'OL'
+        data['language_code'] = 'ES'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('NAT', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

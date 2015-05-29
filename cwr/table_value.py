@@ -16,7 +16,13 @@ class MediaTypeValue(object):
     Represents a BIEM/CISAC Media Type table value.
     """
 
-    def __init__(self, code, name, media_type, duration_max, works_max, fragments_max):
+    def __init__(self,
+                 code,
+                 name,
+                 media_type,
+                 duration_max,
+                 works_max,
+                 fragments_max):
         self._code = code
         self._name = name
         self._media_type = media_type
@@ -56,7 +62,8 @@ class MediaTypeValue(object):
         """
         Type of media.
 
-        This is the group under which this media is. For example Vynil, Compact Disc or DVD.
+        This is the group under which this media is. For example Vynil, Compact
+        Disc or DVD.
 
         :return: the type of the media
         """
@@ -87,13 +94,16 @@ class TableValue(object):
 
     Most of the values of the Table Lookup type use this object.
 
-    This is a representation of general values such as musical genres, or the roles a party can take in an agreement.
+    This is a representation of general values such as musical genres, or the
+    roles a party can take in an agreement.
 
     Some examples are:
 
     Agreement roles:
-    Assignor (AS): The entitled party who is assigning the rights to a musical work within an agreement
-    Acquirer (AC): The entitled party who is acquiring the rights to a musical work within an agreement
+    Assignor (AS): The entitled party who is assigning the rights to a musical
+    work within an agreement
+    Acquirer (AC): The entitled party who is acquiring the rights to a musical
+    work within an agreement
 
     Music arrangement:
     New (NEW): New music added to existing music
@@ -106,7 +116,11 @@ class TableValue(object):
     Text (TXT): Self explanatory
     """
 
-    def __init__(self, code, name, description=''):
+    def __init__(self,
+                 code,
+                 name,
+                 description=''
+                 ):
         self._code = code
         self._name = name
         self._description = description
@@ -144,8 +158,17 @@ class InstrumentValue(TableValue):
     Represents a Instrument table value.
     """
 
-    def __init__(self, code, name, family, description=''):
-        super(InstrumentValue, self).__init__(code, name, description)
+    def __init__(self,
+                 code,
+                 name,
+                 family,
+                 description=''
+                 ):
+        super(InstrumentValue, self).__init__(
+            code,
+            name,
+            description
+        )
         self._family = family
 
     @property

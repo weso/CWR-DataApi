@@ -9,14 +9,17 @@ from cwr.grammar.field import basic, special, table, filename
 """
 CWR fields grammar adapters.
 
-These classes allow the factories to create rules in an homogeneous way, by setting a basic interface which will wrap
-around field rules, giving a basic common method through which rules can be created.
+These classes allow the factories to create rules in an homogeneous way,
+by setting a basic interface which will wrap around field rules, giving
+a basic common method through which rules can be created.
 
-This interface is the FieldAdapter, having only the get_field method, which will receive a series of parameters, all
-of them optional, and generate a field rule from them. The concrete rule will depend on the implementation.
+This interface is the FieldAdapter, having only the get_field method, which
+will receive a series of parameters, all of them optional, and generate a
+field rule from them. The concrete rule will depend on the implementation.
 
-Additionally, it offers the wrap_as_optional method, which allows setting a field as optional. It is meant to be used
-with a field created by the adapter, so it can be overriden for specific fields.
+Additionally, it offers the wrap_as_optional method, which allows setting a
+field as optional. It is meant to be used with a field created by the adapter,
+so it can be overriden for specific fields.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
@@ -26,9 +29,11 @@ __status__ = 'Development'
 
 class FieldAdapter(object):
     """
-    Interface for adapting field rules creation to the parser factory requirements.
+    Interface for adapting field rules creation to the parser factory
+    requirements.
 
-    This is meant to receive always the same, or similar, groups of values, and then generate a specific field rule
+    This is meant to receive always the same, or similar, groups of values,
+    and then generate a specific field rule
     from them.
     """
     __metaclass__ = ABCMeta
@@ -52,7 +57,8 @@ class FieldAdapter(object):
         """
         Adds a wrapper rule to the field to accept empty strings.
 
-        This empty string should be of the same size as the columns parameter. One smaller or bigger will be rejected.
+        This empty string should be of the same size as the columns parameter.
+        One smaller or bigger will be rejected.
 
         This wrapper will return None if the field is empty.
 
@@ -85,12 +91,15 @@ class FieldAdapter(object):
 
 class AlphanumAdapter(FieldAdapter):
     """
-    Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
+    Creates the grammar for an Alphanumeric (A) field, accepting only the
+    specified number of characters.
 
-    By default Alphanumeric fields accept only ASCII characters, excluding lowercases. If the extended flag is set to
-    True, then non-ASCII characters are allowed, but the no ASCII lowercase constraint is kept.
+    By default Alphanumeric fields accept only ASCII characters, excluding
+    lowercases. If the extended flag is set to True, then non-ASCII characters
+    are allowed, but the no ASCII lowercase constraint is kept.
 
-    This can be a compulsory field, in which case the empty string is disallowed.
+    This can be a compulsory field, in which case the empty string is
+    disallowed.
 
     The text will be stripped of heading and trailing whitespaces.
     """
@@ -104,12 +113,15 @@ class AlphanumAdapter(FieldAdapter):
 
 class ExtendedAlphanumAdapter(FieldAdapter):
     """
-    Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
+    Creates the grammar for an Alphanumeric (A) field, accepting only the
+    specified number of characters.
 
-    By default Alphanumeric fields accept only ASCII characters, excluding lowercases. If the extended flag is set to
-    True, then non-ASCII characters are allowed, but the no ASCII lowercase constraint is kept.
+    By default Alphanumeric fields accept only ASCII characters, excluding
+    lowercases. If the extended flag is set to True, then non-ASCII characters
+    are allowed, but the no ASCII lowercase constraint is kept.
 
-    This can be a compulsory field, in which case the empty string is disallowed.
+    This can be a compulsory field, in which case the empty string is
+    disallowed.
 
     The text will be stripped of heading and trailing whitespaces.
     """
@@ -123,7 +135,8 @@ class ExtendedAlphanumAdapter(FieldAdapter):
 
 class NumericAdapter(FieldAdapter):
     """
-    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
+    Creates the grammar for a Numeric (N) field, accepting only the specified
+    number of characters.
 
     This version only allows integers.
     """
@@ -161,7 +174,8 @@ class FlagAdapter(FieldAdapter):
 
 class DateAdapter(FieldAdapter):
     """
-    Creates the grammar for a Date (D) field, accepting only numbers in a certain pattern.
+    Creates the grammar for a Date (D) field, accepting only numbers in a
+    certain pattern.
     """
 
     def __init__(self):
@@ -174,7 +188,8 @@ class DateAdapter(FieldAdapter):
         """
         Adds a wrapper rule to the field to accept empty strings.
 
-        This empty string should be of the same size as the columns parameter. One smaller or bigger will be rejected.
+        This empty string should be of the same size as the columns parameter.
+        One smaller or bigger will be rejected.
 
         This wrapper will return None if the field is empty.
 
@@ -207,7 +222,8 @@ class DateAdapter(FieldAdapter):
 
 class TimeAdapter(FieldAdapter):
     """
-    Creates the grammar for a Time (D) field, accepting only numbers in a certain pattern.
+    Creates the grammar for a Time (D) field, accepting only numbers in a
+    certain pattern.
     """
 
     def __init__(self):
@@ -219,7 +235,8 @@ class TimeAdapter(FieldAdapter):
 
 class DateTimeAdapter(FieldAdapter):
     """
-    Creates the grammar for a date and time field, which is a combination of the Date (D) and Time or Duration field (T)
+    Creates the grammar for a date and time field, which is a combination of
+    the Date (D) and Time or Duration field (T)
     .
     """
 
@@ -234,7 +251,8 @@ class BlankAdapter(FieldAdapter):
     """
     Creates the grammar for a blank field.
 
-    These are for constant empty strings which should be ignored, as they are used just as fillers.
+    These are for constant empty strings which should be ignored, as they are
+    used just as fillers.
     """
 
     def __init__(self):
@@ -246,7 +264,8 @@ class BlankAdapter(FieldAdapter):
 
 class LookupAdapter(FieldAdapter):
     """
-    Creates the grammar for a Lookup (L) field, accepting only values from a list.
+    Creates the grammar for a Lookup (L) field, accepting only values from a
+    list.
     """
 
     def __init__(self):
@@ -294,7 +313,8 @@ class IPINameNumberAdapter(FieldAdapter):
 
 class PercentageAdapter(FieldAdapter):
     """
-    Creates the grammar for a Numeric (N) field storing a percentage and accepting only the specified number of
+    Creates the grammar for a Numeric (N) field storing a percentage and
+    accepting only the specified number of
     characters.
     """
 
@@ -372,7 +392,8 @@ class CharSetAdapter(FieldAdapter):
 
 class VariableAlphanumAdapter(FieldAdapter):
     """
-    Creates the grammar for an alphanumeric code where the size ranges between two values.
+    Creates the grammar for an alphanumeric code where the size ranges between
+    two values.
     """
 
     def __init__(self):
@@ -380,16 +401,18 @@ class VariableAlphanumAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         if values is not None and len(values) > 0:
-            min = int(values[0])
+            min_size = int(values[0])
         else:
-            min = columns
+            min_size = columns
 
-        return filename.alphanum_variable(min=min, max=columns, name=name)
+        return filename.alphanum_variable(min_size=min_size, max_size=columns,
+                                          name=name)
 
 
 class NumericFloatAdapter(FieldAdapter):
     """
-    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
+    Creates the grammar for a Numeric (N) field, accepting only the specified
+    number of characters.
     """
 
     def __init__(self):
@@ -401,12 +424,14 @@ class NumericFloatAdapter(FieldAdapter):
         else:
             nums_int = columns
 
-        return basic.numeric_float(columns=columns, nums_int=nums_int, name=name)
+        return basic.numeric_float(columns=columns, nums_int=nums_int,
+                                   name=name)
 
 
 class YearAdapter(FieldAdapter):
     """
-    Creates the grammar for a year field, accepting only the specified number of integers.
+    Creates the grammar for a year field, accepting only the specified number
+    of integers.
     """
 
     def __init__(self):
@@ -418,7 +443,8 @@ class YearAdapter(FieldAdapter):
 
 class FilenameVersionAdapter(FieldAdapter):
     """
-    Creates the grammar for a filename version field, accepting only specific delimiters.
+    Creates the grammar for a filename version field, accepting only specific
+    delimiters.
     """
 
     def __init__(self):
@@ -430,8 +456,8 @@ class FilenameVersionAdapter(FieldAdapter):
 
 class LookupIntAdapter(FieldAdapter):
     """
-    Creates the grammar for an integer lookup field, accepting only specific values, and transforming them to an
-    integer.
+    Creates the grammar for an integer lookup field, accepting only specific
+    values, and transforming them to an integer.
     """
 
     def __init__(self):
