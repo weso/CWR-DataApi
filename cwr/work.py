@@ -862,12 +862,12 @@ class AuthoredWorkRecord(BaseWorkRecord):
         :param iswc: ISWC for the work
         """
         super(AuthoredWorkRecord, self).__init__(
-            record_type='',
-            transaction_sequence_n=0,
-            record_sequence_n=0,
-            title='',
-            language_code=None,
-            iswc=None
+            record_type=record_type,
+            transaction_sequence_n=transaction_sequence_n,
+            record_sequence_n=record_sequence_n,
+            title=title,
+            language_code=language_code,
+            iswc=iswc
         )
 
         # Work's info
