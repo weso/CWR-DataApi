@@ -77,12 +77,10 @@ message_type:
   source: message_type
 
 mr_society:
-  type: lookup
+  type: lookup_int
   size: 3
   name: Mechanical Rights Affiliation Society
   source: society_code
-  actions:
-    - to_int
 
 music_arrangement:
   type: lookup
@@ -115,12 +113,10 @@ post_term_collection_status:
   source: post_term_collection_status
 
 pr_society:
-  type: lookup
+  type: lookup_int
   size: 3
   name: Performing Rights Affiliation Society
   source: society_code
-  actions:
-    - to_int
 
 publisher_type:
   type: lookup
@@ -165,12 +161,10 @@ sender_type:
   source: sender_type
 
 society_n:
-  type: lookup
+  type: lookup_int
   size: 3
   name: Society ID Field
   source: society_code
-  actions:
-    - to_int
 
 special_agreements:
   type: lookup
@@ -179,12 +173,10 @@ special_agreements:
   source: special_agreement_indicator
 
 sr_society:
-  type: lookup
+  type: lookup_int
   size: 3
   name: Synchronization Rights Affiliation Society
   source: society_code
-  actions:
-    - to_int
 
 standard_instrumentation_type:
   type: lookup
@@ -205,12 +197,10 @@ text_music_relationship:
   source: text_music_relationship
 
 tis_numeric_code:
-  type: lookup
+  type: lookup_int
   size: 4
   name: TIS Numeric Code
   source: tis_code
-  actions:
-    - to_int
 
 title_type:
   type: lookup

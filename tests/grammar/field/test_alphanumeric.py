@@ -5,7 +5,6 @@ from pyparsing import ParseException
 
 from cwr.grammar.field import basic
 
-
 """
 Tests for Alphanumeric (A) fields.
 
@@ -44,7 +43,6 @@ The following cases are tested (all tests are done for default and compulsory fi
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -86,7 +84,7 @@ class TestAlphanumName(unittest.TestCase):
         self.assertEqual('field2', field2.name)
 
 
-class _BaseAlphanumValid():
+class _BaseAlphanumValid:
     """
     Base test for valid Alphanumeric fields.
 
@@ -270,7 +268,7 @@ class TestAlphanumConstructorException(unittest.TestCase):
         self.assertRaises(BaseException, basic.alphanum, -1)
 
 
-class _BaseAlphanumException():
+class _BaseAlphanumException:
     """
     Base test for Alphanumeric fields exceptions.
 

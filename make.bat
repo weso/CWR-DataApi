@@ -24,7 +24,7 @@ if "%DISTDIR%" == "" (
 REM Sets the .egg file path.
 REM The file will be located at the project's root.
 if "%EGGDIR%" == "" (
-	set EGGDIR=CWR_API.egg-info
+	set EGGDIR=*.egg-info
 )
 
 REM Sets the tox folder path.
@@ -41,9 +41,11 @@ REM Shows the allowed commands to be received as parameters
 if "%1" == "help" (
 	:help
 	echo.Please use `make ^<target^>` where ^<target^> is one of
+	echo.  clean          to remove the distribution folders
 	echo.  dist_source    to make the source distribution
 	echo.  dist_binary    to make the binary distribution
 	echo.  install        to install the project
+	echo.  requirements   to install the project requirements
 	echo.  pypi_reg       to register on pypi
 	echo.  pypitest_reg   to register on pypi-test
 	echo.  pypi           to upload to pypi
@@ -114,6 +116,11 @@ if "%1" == "install" (
 	echo.
 	echo.Installed the project into the local repository.
 	goto end
+)
+
+REM Install the project requirements
+if "%1" == "requirements" (
+	pip install --upgrade -r requirements.txt
 )
 
 REM Pypi registration.

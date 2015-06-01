@@ -18,17 +18,23 @@ class _ThreePartsCode(object):
 
     _code_size = 9
 
-    def __init__(self, header, id_code, check_digit):
+    def __init__(self,
+                 header,
+                 id_code,
+                 check_digit
+                 ):
         self._header = header
         self._id_code = id_code
         self._check_digit = check_digit
 
     def __str__(self):
-        return '%s-%s-%s' % (self._header, self._printable_id_code(), self._check_digit)
+        return '%s-%s-%s' % (self._header, self._printable_id_code(),
+                             self._check_digit)
 
     def __repr__(self):
-        return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % ('ThreePartsCode', self._header,
-                                                                      self._id_code, self._check_digit)
+        return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % \
+               ('ThreePartsCode', self._header, self._id_code,
+                self._check_digit)
 
     def _printable_id_code(self):
         """
@@ -53,6 +59,10 @@ class _ThreePartsCode(object):
         """
         return self._header
 
+    @header.setter
+    def header(self, value):
+        self._header = value
+
     @property
     def id_code(self):
         """
@@ -63,6 +73,10 @@ class _ThreePartsCode(object):
         :return: the ISWC unique code
         """
         return self._id_code
+
+    @id_code.setter
+    def id_code(self, value):
+        self._id_code = value
 
     @property
     def check_digit(self):
@@ -75,30 +89,46 @@ class _ThreePartsCode(object):
         """
         return self._check_digit
 
+    @check_digit.setter
+    def check_digit(self, value):
+        self._check_digit = value
+
 
 class ISWCCode(_ThreePartsCode):
     """
     Represents a ISWC Code.
 
-    This stands for International Standard Musical Work Code, and are codes identifying a single musical work.
+    This stands for International Standard Musical Work Code, and are codes
+    identifying a single musical work.
 
-    It is composed of a prefix, nine digits identifying the work and a check digit.
+    It is composed of a prefix, nine digits identifying the work and a check
+    digit.
 
     Currently the only prefix allowed is T, used to refer to musical works.
     """
 
-    def __init__(self, id_code, check_digit):
-        super(ISWCCode, self).__init__('T', id_code, check_digit)
+    def __init__(self,
+                 id_code,
+                 check_digit
+                 ):
+        super(ISWCCode, self).__init__(
+            'T',
+            id_code,
+            check_digit
+        )
 
     def __str__(self):
         return 'ISWC T-%s-%s' % (self._printable_id_code(), self._check_digit)
 
     def __repr__(self):
-        return '<class %s>(id_code=%r, check_digit=%r)' % ('ISWCCode', self._id_code, self._check_digit)
+        return '<class %s>(id_code=%r, check_digit=%r)' % ('ISWCCode',
+                                                           self._id_code,
+                                                           self._check_digit)
 
     def _printable_id_code(self):
         """
-        Returns the code in a printable form, separating it into groups of three characters using a point between them.
+        Returns the code in a printable form, separating it into groups of
+        three characters using a point between them.
 
         :return: the ID code in a printable form
         """
@@ -119,28 +149,44 @@ class IPIBaseNumber(_ThreePartsCode):
 
     These are codes identifying a party on a musical work transaction.
 
-    It is composed of a prefix, nine digits identifying the party and a check digit.
+    It is composed of a prefix, nine digits identifying the party and a check
+    digit.
     """
 
-    def __init__(self, header, id_code, check_digit):
-        super(IPIBaseNumber, self).__init__(header, id_code, check_digit)
+    def __init__(self,
+                 header,
+                 id_code,
+                 check_digit
+                 ):
+        super(IPIBaseNumber, self).__init__(
+            header,
+            id_code,
+            check_digit
+        )
 
     def __str__(self):
-        return '%s-%s-%s' % (self.header, self._printable_id_code(), self.check_digit)
+        return '%s-%s-%s' % (
+            self.header, self._printable_id_code(), self.check_digit)
 
     def __repr__(self):
-        return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % ('IPIBaseNumber', self._header,
-                                                                      self._id_code, self._check_digit)
+        return '<class %s>(header=%r, id_code=%r, check_digit=%r)' % (
+            'IPIBaseNumber', self._header, self._id_code, self._check_digit)
 
 
 class VISAN(object):
     """
     Represents a V-ISAN code.
 
-    This is a variation on the ISAN (International Standard Audiovisual Number)
+    This is a variation on the ISAN (International Standard Audiovisual
+    Number)
     """
 
-    def __init__(self, version, isan, episode, check_digit):
+    def __init__(self,
+                 version,
+                 isan,
+                 episode,
+                 check_digit
+                 ):
         self._version = version
         self._isan = isan
         self._episode = episode
@@ -155,6 +201,10 @@ class VISAN(object):
         """
         return self._check_digit
 
+    @check_digit.setter
+    def check_digit(self, value):
+        self._check_digit = value
+
     @property
     def episode(self):
         """
@@ -162,6 +212,10 @@ class VISAN(object):
         :return: the episode number
         """
         return self._episode
+
+    @episode.setter
+    def episode(self, value):
+        self._episode = value
 
     @property
     def isan(self):
@@ -171,6 +225,10 @@ class VISAN(object):
         """
         return self._isan
 
+    @isan.setter
+    def isan(self, value):
+        self._isan = value
+
     @property
     def version(self):
         """
@@ -179,8 +237,13 @@ class VISAN(object):
         """
         return self._version
 
+    @version.setter
+    def version(self, value):
+        self._version = value
+
     def __str__(self):
-        return '%s %s %s %s' % (self._version, self._isan, self._episode, self._check_digit)
+        return '%s %s %s %s' % (self._version, self._isan, self._episode,
+                                self._check_digit)
 
 
 class AVIKey(object):
@@ -188,7 +251,10 @@ class AVIKey(object):
     Represents an AVI key.
     """
 
-    def __init__(self, society_code, av_number):
+    def __init__(self,
+                 society_code,
+                 av_number
+                 ):
         self._society_code = society_code
         self._av_number = av_number
 
@@ -200,6 +266,10 @@ class AVIKey(object):
         """
         return self._av_number
 
+    @av_number.setter
+    def av_number(self, value):
+        self._av_number = value
+
     @property
     def society_code(self):
         """
@@ -207,6 +277,10 @@ class AVIKey(object):
         :return: the society code
         """
         return self._society_code
+
+    @society_code.setter
+    def society_code(self, value):
+        self._society_code = value
 
     def __str__(self):
         return '%s %s' % (self._av_number, self._society_code)

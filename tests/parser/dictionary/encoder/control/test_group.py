@@ -8,7 +8,6 @@ from cwr.group import GroupHeader, GroupTrailer, Group
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.agreement import AgreementRecord
 
-
 """
 Group Header to dictionary encoding tests.
 
@@ -17,7 +16,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -57,7 +55,6 @@ class TestGroupDictionaryEncoding(unittest.TestCase):
 
         return [acknowledgement, message1, message2, agreement]
 
-
     def _get_ack(self):
         return AcknowledgementRecord(record_type='ACK',
                                      transaction_sequence_n=3,
@@ -66,8 +63,10 @@ class TestGroupDictionaryEncoding(unittest.TestCase):
                                      original_transaction_sequence_n=5,
                                      original_transaction_type='AGR',
                                      transaction_status='AS',
-                                     creation_date_time=datetime.datetime.strptime('20030215', '%Y%m%d').date(),
-                                     processing_date=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
+                                     creation_date_time=datetime.datetime.strptime(
+                                         '20030215', '%Y%m%d').date(),
+                                     processing_date=datetime.datetime.strptime(
+                                         '20030216', '%Y%m%d').date(),
                                      creation_title='TITLE',
                                      submitter_creation_n='A123',
                                      recipient_creation_n='B124')
@@ -89,17 +88,23 @@ class TestGroupDictionaryEncoding(unittest.TestCase):
                                record_sequence_n=15,
                                submitter_agreement_n='AB12',
                                agreement_type='OS',
-                               agreement_start_date=datetime.datetime.strptime('20030215', '%Y%m%d').date(),
+                               agreement_start_date=datetime.datetime.strptime(
+                                   '20030215', '%Y%m%d').date(),
                                number_of_works=12,
                                prior_royalty_status='D',
                                post_term_collection_status='D',
                                international_standard_code='DFG135',
                                society_assigned_agreement_n='DF35',
                                sales_manufacture_clause='M',
-                               agreement_end_date=datetime.datetime.strptime('20030216', '%Y%m%d').date(),
-                               date_of_signature=datetime.datetime.strptime('20030217', '%Y%m%d').date(),
-                               retention_end_date=datetime.datetime.strptime('20030218', '%Y%m%d').date(),
-                               prior_royalty_start_date=datetime.datetime.strptime('20030219', '%Y%m%d').date(),
-                               post_term_collection_end_date=datetime.datetime.strptime('20030220', '%Y%m%d').date(),
+                               agreement_end_date=datetime.datetime.strptime(
+                                   '20030216', '%Y%m%d').date(),
+                               date_of_signature=datetime.datetime.strptime(
+                                   '20030217', '%Y%m%d').date(),
+                               retention_end_date=datetime.datetime.strptime(
+                                   '20030218', '%Y%m%d').date(),
+                               prior_royalty_start_date=datetime.datetime.strptime(
+                                   '20030219', '%Y%m%d').date(),
+                               post_term_collection_end_date=datetime.datetime.strptime(
+                                   '20030220', '%Y%m%d').date(),
                                shares_change=True,
                                advance_given=True)

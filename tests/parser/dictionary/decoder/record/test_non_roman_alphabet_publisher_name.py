@@ -2,8 +2,8 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import NonRomanAlphabetPublisherNameDictionaryDecoder
-
+from cwr.parser.decoder.dictionary import \
+    NonRomanAlphabetPublisherNameDictionaryDecoder
 
 """
 Dictionary to Message decoding tests.
@@ -13,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,17 +21,17 @@ class TestNonRomanAlphabetPublisherNameDictionaryDecoder(unittest.TestCase):
         self._decoder = NonRomanAlphabetPublisherNameDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'NPN'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['publisher_sequence_n'] = 5
-        dict['ip_n'] = 'IP123'
-        dict['publisher_name'] = 'NAME'
-        dict['language_code'] = 'ES'
+        data['record_type'] = 'NPN'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['publisher_sequence_n'] = 5
+        data['ip_n'] = 'IP123'
+        data['publisher_name'] = 'NAME'
+        data['language_code'] = 'ES'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('NPN', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

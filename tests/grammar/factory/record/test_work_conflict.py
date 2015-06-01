@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Work conflict grammar tests.
@@ -10,7 +11,6 @@ CWR Work conflict grammar tests.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -113,3 +113,21 @@ class TestWorkValid(unittest.TestCase):
         self.assertEqual('28#3', result.opus_number)
         self.assertEqual('KV 297#1', result.catalogue_number)
         self.assertEqual('Y', result.priority_flag)
+
+
+class TestIPAGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('work_conflict')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

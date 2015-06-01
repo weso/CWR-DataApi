@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Work grammar tests.
@@ -10,7 +11,6 @@ CWR Work grammar tests.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -190,50 +190,19 @@ class TestWorkValid(unittest.TestCase):
         self.assertEqual('Y', result.priority_flag)
 
 
-class TestWorkException(unittest.TestCase):
-    """
-    Tests that the Work grammar throws exceptions with incorrectly formatted strings
-    """
-
+class TestIPAGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('work')
 
-    def test_ser_no_duration(self):
+    def test_empty(self):
         """
-        Tests that the Work grammar throws exceptions when the distribution is SER and no duration is set.
+        Tests that a exception is thrown when the the works number is zero.
         """
-        record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789SER000000YMUSPOTORIMOVORIORITHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
+        record = ''
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
-    def test_mod_no_music_arrangement(self):
-        """
-        Tests that the Work grammar throws exceptions when the version type is MOD and no musical arrangement is set.
-        """
-        record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789SER000000YMUSPOTMODMOV   ORITHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
+    def test_invalid(self):
+        record = 'This is an invalid string'
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_mod_no_lyric_adaptation(self):
-        """
-        Tests that the Work grammar throws exceptions when the version type is MOD and no lyrical adaptation is set.
-        """
-        record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789SER000000YMUSPOTMODMOVORI   THE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_composite_no_count(self):
-        """
-        Tests that the Work grammar throws exceptions when the composite type is set and no count is given.
-        """
-        record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789POP030201YMUSPOTMODMOVORIORITHE CONTACT                   A123456789ARY00020140302Y28#3                     KV 297#1                 Y'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_count_no_composite(self):
-        """
-        Tests that the Work grammar throws exceptions when the composite count is set and no composite type is set.
-        """
-        record = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789POP030201YMUS   MODMOVORIORITHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)

@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.decoder.dictionary import PerformingArtistDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -23,17 +21,17 @@ class TestPerformingArtistDictionaryDecoder(unittest.TestCase):
         self._decoder = PerformingArtistDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'PER'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['performing_artist_last_name'] = 'LAST NAME'
-        dict['performing_artist_first_name'] = 'FIRST NAME'
-        dict['performing_artist_ipi_name_n'] = 250165006
-        dict['performing_artist_ipi_base_n'] = IPIBaseNumber('I', 229, 7)
+        data['record_type'] = 'PER'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['performing_artist_last_name'] = 'LAST NAME'
+        data['performing_artist_first_name'] = 'FIRST NAME'
+        data['performing_artist_ipi_name_n'] = 250165006
+        data['performing_artist_ipi_base_n'] = IPIBaseNumber('I', 229, 7)
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('PER', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

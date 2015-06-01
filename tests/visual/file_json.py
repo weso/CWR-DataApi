@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import codecs
+import os
 
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.parser.encoder.cwrjson import JSONEncoder
-
 
 """
 Visual test for transforming file into a JSON.
@@ -15,21 +15,26 @@ The full JSON will be stored into a file.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 if __name__ == '__main__':
     print('File to JSON test')
-    path = raw_input('Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
-    output = raw_input('Please enter the full path to the file where the results will be stored: ')
+    path = raw_input(
+        'Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
+    output = raw_input(
+        'Please enter the full path to the file where the results will be stored: ')
     print('\n')
-    print('Reading file %s' % (path))
-    print('Storing output on %s' % (output))
+    print('Reading file %s' % path)
+    print('Storing output on %s' % output)
     print('\n')
 
     decoder = default_file_decoder()
 
-    data = decoder.decode(path)
+    data = {}
+    data['filename'] = os.path.basename(path)
+    data['contents'] = codecs.open(path, 'r', 'latin-1').read()
+
+    data = decoder.decode(data)
 
     encoder = JSONEncoder()
     result = encoder.encode(data)

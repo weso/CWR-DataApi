@@ -13,14 +13,12 @@ delimiter_version:
     - .V
 
 delimiter_zip:
-  type: lookup
+  type: filename_version
   size: 4
   name: ZIP extension
   results_name: version
   values:
     - .zip
-  actions:
-    - to_default_filename_version
 
 header:
   type: lookup
@@ -63,8 +61,6 @@ version:
     - 1
 
 year:
-  type: numeric
+  type: year
   size: 2
   name: Year
-  actions:
-    - to_year

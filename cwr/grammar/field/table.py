@@ -5,17 +5,20 @@ import pyparsing as pp
 from config_cwr.accessor import CWRConfiguration
 from data_cwr.accessor import CWRTables
 
-
 """
 Grammar rules for concrete CWR Table/List Lookup fields.
 
-These fields all apply the same kind of constraint: all the values not contained in a defined collection are rejected.
+These fields all apply the same kind of constraint: all the values not
+contained in a defined collection are rejected.
 
-The only exception is when the field is set as optional. Then an empty string composed of whitespaces is allowed.
+The only exception is when the field is set as optional. Then an empty string
+composed of whitespaces is allowed.
 
-Additionally, the usual constraints of the Alphanumeric field (non lowercase ASCII) apply.
+Additionally, the usual constraints of the Alphanumeric field (non lowercase
+ASCII) apply.
 
-All the values are read from the lists contained in the library, through the CWRTables class.
+All the values are read from the lists contained in the library, through the
+CWRTables class.
 """
 
 __author__ = 'Bernardo Martínez Garrido'

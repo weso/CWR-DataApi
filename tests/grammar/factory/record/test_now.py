@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Non-Roman Alphabet Other Writer Name grammar tests.
@@ -12,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -59,3 +59,21 @@ class TestNOWGrammar(unittest.TestCase):
         self.assertEqual('FIRST NAME \xc6\x8f', result.writer_first_name)
         self.assertEqual('ES', result.language_code)
         self.assertEqual(1, result.position)
+
+
+class TestNOWGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('nra_other_writer')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

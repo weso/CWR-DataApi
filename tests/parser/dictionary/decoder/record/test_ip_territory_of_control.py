@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import IPTerritoryOfControlDictionaryDecoder
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -13,7 +12,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,21 +20,21 @@ class TestIPTerritoryOfControlDecoder(unittest.TestCase):
         self._decoder = IPTerritoryOfControlDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'SPT'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['ip_n'] = 'IP123'
-        dict['inclusion_exclusion_indicator'] = 'I'
-        dict['tis_numeric_code'] = 12
-        dict['sequence_n'] = 13
-        dict['pr_collection_share'] = 50.1
-        dict['mr_collection_share'] = 50.2
-        dict['sr_collection_share'] = 50.3
-        dict['shares_change'] = 'Y'
+        data['record_type'] = 'SPT'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['ip_n'] = 'IP123'
+        data['inclusion_exclusion_indicator'] = 'I'
+        data['tis_numeric_code'] = 12
+        data['sequence_n'] = 13
+        data['pr_collection_share'] = 50.1
+        data['mr_collection_share'] = 50.2
+        data['sr_collection_share'] = 50.3
+        data['shares_change'] = 'Y'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('SPT', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import GroupTrailerDictionaryDecoder
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -13,7 +12,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,15 +20,15 @@ class TestGroupTrailerDictionaryEncoding(unittest.TestCase):
         self._decoder = GroupTrailerDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'GRH'
-        dict['group_id'] = 5
-        dict['transaction_type'] = 'AGR'
-        dict['transaction_count'] = 111
-        dict['record_count'] = 222
+        data['record_type'] = 'GRH'
+        data['group_id'] = 5
+        data['transaction_type'] = 'AGR'
+        data['transaction_count'] = 111
+        data['record_count'] = 222
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('GRH', record.record_type)
         self.assertEqual(5, record.group_id)

@@ -4,6 +4,7 @@ from abc import ABCMeta, abstractmethod
 
 import pyparsing as pp
 
+from cwr.grammar.factory.config import rule_at_least
 
 """
 Rules factories.
@@ -14,128 +15,207 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class TerminalRuleFactory(object):
+class RuleFactory(object):
     __metaclass__ = ABCMeta
 
     def __init__(self):
         pass
 
     @abstractmethod
-    def get_rule(self, id, modifiers):
+    def get_rule(self, rule_id):
         raise NotImplementedError("The get_rule method is not implemented")
 
-    @abstractmethod
-    def is_terminal(self, type):
-        raise NotImplementedError("The is_terminal method is not implemented")
 
+class FieldRuleFactory(RuleFactory):
+    """
+    Factory for acquiring field rules.
+    """
 
-class RuleFactory(object):
-    __metaclass__ = ABCMeta
+    def __init__(self, field_configs, adapters):
+        super(FieldRuleFactory, self).__init__()
+        # Fields already created
+        self._fields = {}
+        # Field adapters being used
+        self._adapters = adapters
+        # Configuration for creating the fields
+        self._field_configs = field_configs
 
-    def __init__(self, logger=None):
-        # Logger
-        self._logger = logger
+    def get_rule(self, field_id):
+        """
+        Returns the rule for the field identified by the id.
 
-    @abstractmethod
-    def get_rule(self, groups):
-        raise NotImplementedError("The get_rule method is not implemented")
+        If it is set as not being compulsory, the rule will be adapted to
+        accept string composed only of white characters.
+
+        :param field_id: unique id in the system for the field
+        :return: the rule of a field
+        """
+
+        if field_id in self._fields:
+            # Field already exists
+            field = self._fields[field_id]
+        else:
+            # Field configuration info
+            config = self._field_configs[field_id]
+
+            # Field does not exist
+            # It is created
+            field = self.create_field(field_id, config)
+
+            # Field is saved
+            self._fields[field_id] = field
+
+        return field
+
+    def create_field(self, field_id, config):
+        """
+        Creates the field with the specified parameters.
+
+        :param field_id: identifier for the field
+        :param config: configuration info for the field
+        :return: the basic rule for the field
+        """
+
+        adapter = self._adapters[config['type']]
+
+        if 'name' in config:
+            name = config['name']
+        else:
+            name = None
+
+        if 'size' in config:
+            columns = config['size']
+        else:
+            columns = None
+
+        if 'values' in config:
+            values = config['values']
+        else:
+            values = None
+
+        field = adapter.get_field(name, columns, values)
+
+        if 'results_name' in config:
+            field = field.setResultsName(config['results_name'])
+        else:
+            field = field.setResultsName(field_id)
+
+        return field
 
 
 class DefaultRuleFactory(RuleFactory):
-    def __init__(self, record_configs, terminal_rule_factory, decorators=None):
+    def __init__(self, record_configs, field_rule_factory,
+                 optional_terminal_rule_decorator, decorators=None):
         super(DefaultRuleFactory, self).__init__()
+        self._debug = False
+
         # Configuration for creating the record
         self._record_configs = record_configs
-        self._terminal_rule_factory = terminal_rule_factory
+        self._field_rule_factory = field_rule_factory
+        self._optional_field_rule_decorator = optional_terminal_rule_decorator
 
         if decorators:
             self._decorators = decorators
         else:
             self._decorators = {}
 
-    def get_rule(self, id):
-        if self._logger:
-            self._logger.info('Acquiring rule %s' % id)
+    def get_rule(self, rule_id):
+        rule_config = self._record_configs[rule_id]
 
-        record_config = self._record_configs[id]
+        rule_type = rule_config.rule_type
+
+        if rule_config.rules:
+            rule = self._process_rules(rule_config.rules, pp.And)
+        else:
+            rule = self._build_terminal_rule(rule_config)
+
+        if rule_type in self._decorators:
+            rule = self._decorators[rule_type].decorate(rule, rule_config)
+
+        if 'results_name' in rule_config:
+            rule = rule.setResultsName(rule_config['results_name'])
+        else:
+            rule = rule.setResultsName(rule_id)
+
+        rule.setName(rule_id)
+
+        if self._debug:
+            rule.setDebug()
+
+        return rule
+
+    def _process_rules(self, rules_data, strategy):
         sequence = []
 
-        for rules in record_config['rules']:
-            sequence.append(self._get_group(rules))
-
-        record = pp.And(sequence)
-
-        if 'rule_type' in record_config:
-            rule_type = record_config['rule_type']
-            if rule_type in self._decorators:
-                record = self._decorators[rule_type].decorate(record, record_config)
-
-        if 'results_name' in record_config:
-            record = record.setResultsName(record_config['results_name'])
-        else:
-            record = record.setResultsName(id)
-
-        return record
-
-    def _get_group(self, rules):
-        group = None
-
-        if rules['group_type'] == 'sequence':
-            group = self._build_group(rules, pp.And)
-        elif rules['group_type'] == 'option':
-            group = self._build_group(rules, pp.MatchFirst)
-        elif rules['group_type'] == 'optional':
-            group = pp.Optional(self._build_group(rules, pp.And))
-
-        if 'modifiers' in rules:
-            modifiers = rules['modifiers']
-        else:
-            modifiers = []
-
-        group = self._apply_modifiers(group, modifiers)
-
-        return group
-
-    def _build_group(self, group, strategy):
-        sequence = []
-
-        for rule_data in group['rules']:
-            if 'modifiers' in rule_data:
-                modifiers = rule_data['modifiers']
+        for rule in rules_data:
+            if rule.rules:
+                rule = self._process_rules_group(rule)
             else:
-                modifiers = []
-
-            rule = self._build_rule(rule_data, modifiers)
-
-            rule = self._apply_modifiers(rule, modifiers)
+                rule = self._build_terminal_rule(rule)
 
             sequence.append(rule)
 
         return strategy(sequence)
 
-    def _build_rule(self, rule_data, modifiers):
-        if 'rule_type' in rule_data:
-            rule_type = rule_data['rule_type']
+    def _process_rules_group(self, rules):
+        group = None
 
-            if self._terminal_rule_factory.is_terminal(rule_type):
-                rule = self._terminal_rule_factory.get_rule(rule_data['id'], modifiers)
-            else:
-                rule = self.get_rule(rule_data['id'])
+        group_type = rules.list_type
+        data = rules.rules
+
+        if group_type == 'sequence':
+            group = self._process_rules(data, pp.And)
+        elif group_type == 'option':
+            group = self._process_rules(data, pp.MatchFirst)
+        elif group_type == 'optional':
+            group = pp.Optional(self._process_rules(data, pp.And))
+
+        return group
+
+    def _build_terminal_rule(self, rule):
+        rule_id = rule.rule_name
+        modifiers = rule.rule_options
+        rule_type = rule.rule_type
+
+        if rule_type == 'field':
+            rule = self._field_rule_factory.get_rule(rule_id)
+
+            if self._debug:
+                rule.setDebug()
+
+            compulsory = False
+            i = 0
+            while not compulsory and i < len(modifiers):
+                compulsory = modifiers[i] == 'compulsory'
+
+            if not compulsory:
+                rule = self._optional_field_rule_decorator.decorate(rule,
+                                                                    rule_id)
+
+            rule.setName(rule_id)
         else:
-            rule = self._get_group(rule_data)
+            rule = self.get_rule(rule_id)
+
+        if modifiers and len(modifiers) > 0:
+            rule = self._apply_modifiers(rule, modifiers)
 
         return rule
 
     def _apply_modifiers(self, rule, modifiers):
-        if 'grouped' in modifiers:
-            rule = pp.Group(rule)
+        for modifier in modifiers:
+            if modifier == 'grouped':
+                rule = pp.Group(rule)
 
-        if 'at_least_one' in modifiers:
-            rule = pp.OneOrMore(rule)
-        elif 'at_least_two' in modifiers:
-            rule = pp.And([(rule * 2), pp.ZeroOrMore(rule)])
-
-        if 'optional' in modifiers:
-            rule = pp.Optional(rule)
+            if modifier.startswith('at_least'):
+                times = rule_at_least.parseString(modifier)[0]
+                if times > 0:
+                    rule_multiple = rule
+                    for x in range(1, times):
+                        rule_multiple = rule_multiple + rule
+                    rule = rule_multiple + pp.ZeroOrMore(rule)
+                else:
+                    rule = pp.Optional(pp.ZeroOrMore(rule))
+            elif modifier == 'optional':
+                rule = pp.Optional(rule)
 
         return rule

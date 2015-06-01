@@ -3,7 +3,6 @@ from abc import ABCMeta
 
 from cwr.record import TransactionRecord
 
-
 """
 Interested party model classes.
 """
@@ -19,7 +18,12 @@ class InterestedParty(object):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, ip_n, ipi_base_n, tax_id, ipi_name):
+    def __init__(self,
+                 ip_n='',
+                 ipi_base_n=None,
+                 tax_id='',
+                 ipi_name=''
+                 ):
         # IP info
         self._ip_n = ip_n
 
@@ -41,6 +45,10 @@ class InterestedParty(object):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def ipi_base_n(self):
         """
@@ -48,27 +56,38 @@ class InterestedParty(object):
 
         This number is the unique identifier associated with this IP.
 
-        The IP Base Number is a unique identifier allocated automatically by the IPI System to each interested party
-        (IP), being either a natural person or legal entity.
+        The IP Base Number is a unique identifier allocated automatically by
+        the IPI System to each interested party (IP), being either a natural
+        person or legal entity.
 
-        The number consists of 13 characters: letter i (I), hyphen (-), nine digits, hyphen (-), one check-digit.
-        I-999999999-9. (weighted modulus 10, I weight = 2, adapted from ISO 7064). You can find more information in
-        the CISAC web site.
+        The number consists of 13 characters: letter i (I), hyphen (-), nine
+        digits, hyphen (-), one check-digit. I-999999999-9. (weighted modulus
+        10, I weight = 2, adapted from ISO 7064). You can find more
+        information in the CISAC web site.
 
         :return: the Publisher IPI base number
         """
         return self._ipi_base_n
+
+    @ipi_base_n.setter
+    def ipi_base_n(self, value):
+        self._ipi_base_n = value
 
     @property
     def ipi_name_n(self):
         """
         Interested Party IPI Name # field. Table Lookup (IPI).
 
-        The IPI number assigned to this publisher with 2 leading zero’s or the IPI Name #.
+        The IPI number assigned to this publisher with 2 leading zero’s or the
+        IPI Name #.
 
         :return: the Interested Party IPI name number
         """
         return self._ipi_name
+
+    @ipi_name_n.setter
+    def ipi_name_n(self, value):
+        self._ipi_name = value
 
     @property
     def tax_id(self):
@@ -81,6 +100,10 @@ class InterestedParty(object):
         """
         return self._tax_id
 
+    @tax_id.setter
+    def tax_id(self, value):
+        self._tax_id = value
+
 
 class InterestedPartyRecord(TransactionRecord):
     """
@@ -90,15 +113,27 @@ class InterestedPartyRecord(TransactionRecord):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
-                 first_recording_refusal='U', usa_license='',
-                 pr_society=None, pr_ownership_share=0,
-                 mr_society=None, mr_ownership_share=0,
-                 sr_society=None, sr_ownership_share=0):
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 first_recording_refusal='U',
+                 usa_license='',
+                 pr_society=None,
+                 pr_ownership_share=0,
+                 mr_society=None,
+                 mr_ownership_share=0,
+                 sr_society=None,
+                 sr_ownership_share=0
+                 ):
         """
         Constructs an InterestedPartyRecord.
         """
-        super(InterestedPartyRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+        super(InterestedPartyRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n
+        )
         # Flags
         self._first_recording_refusal = first_recording_refusal
         self._usa_license = usa_license
@@ -118,20 +153,28 @@ class InterestedPartyRecord(TransactionRecord):
         """
         First Recording Refusal Indicator field. Flag (Yes/No/Unknown).
 
-        Indicates whether the submitter has refused to give authority for the first recording.
+        Indicates whether the submitter has refused to give authority for the
+        first recording.
 
-        Note that this field is mandatory for registrations with the UK societies.
+        Note that this field is mandatory for registrations with the UK
+        societies.
 
-        :return: 'T' if the submitter needs to authorize first recording, 'F' if not, 'U' if unknown
+        :return: 'T' if the submitter needs to authorize first recording, 'F'
+        if not, 'U' if unknown
         """
         return self._first_recording_refusal
+
+    @first_recording_refusal.setter
+    def first_recording_refusal(self, value):
+        self._first_recording_refusal = value
 
     @property
     def mr_ownership_share(self):
         """
         MR Ownership Share field. Numeric Decimal.
 
-        Defines the percentage of the writer’s ownership of the mechanical rights to the work.
+        Defines the percentage of the writer’s ownership of the mechanical
+        rights to the work.
 
         This value can range from 0 (0%) to 1 (100%).
 
@@ -139,23 +182,34 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._mr_ownership_share
 
+    @mr_ownership_share.setter
+    def mr_ownership_share(self, value):
+        self._mr_ownership_share = value
+
     @property
     def mr_society(self):
         """
-        Mechanical Rights Affiliation Society field. Table Lookup (Society Code Table).
+        Mechanical Rights Affiliation Society field. Table Lookup (Society
+        Code Table).
 
-        Number assigned to the Mechanical Rights Society with which the Interested Party is affiliated.
+        Number assigned to the Mechanical Rights Society with which the
+        Interested Party is affiliated.
 
         :return: the Interested Party mechanical rights society
         """
         return self._mr_society
+
+    @mr_society.setter
+    def mr_society(self, value):
+        self._mr_society = value
 
     @property
     def pr_ownership_share(self):
         """
         PR Ownership Share field. Numeric Decimal.
 
-        Defines the percentage of the writer’s ownership of the performance rights to the work.
+        Defines the percentage of the writer’s ownership of the performance
+        rights to the work.
 
         This value can range from 0 (0%) to 1 (100%).
 
@@ -165,23 +219,34 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._pr_ownership_share
 
+    @pr_ownership_share.setter
+    def pr_ownership_share(self, value):
+        self._pr_ownership_share = value
+
     @property
     def pr_society(self):
         """
-        Performing Rights Affiliation Society field. Table Lookup (Society Code Table).
+        Performing Rights Affiliation Society field. Table Lookup (Society
+        Code Table).
 
-        Number assigned to the Performing Rights Society with which the Interested Party is affiliated.
+        Number assigned to the Performing Rights Society with which the
+        Interested Party is affiliated.
 
         :return: the Interested Party performing rights society
         """
         return self._pr_society
+
+    @pr_society.setter
+    def pr_society(self, value):
+        self._pr_society = value
 
     @property
     def sr_ownership_share(self):
         """
         SR Ownership Share field. Numeric Decimal.
 
-        Defines the percentage of the writer’s ownership of the synchronization rights to the work.
+        Defines the percentage of the writer’s ownership of the
+        synchronization rights to the work.
 
         This value can range from 0 (0%) to 1 (100%).
 
@@ -189,49 +254,79 @@ class InterestedPartyRecord(TransactionRecord):
         """
         return self._sr_ownership_share
 
+    @sr_ownership_share.setter
+    def sr_ownership_share(self, value):
+        self._sr_ownership_share = value
+
     @property
     def sr_society(self):
         """
-        Synchronization Rights Affiliation Society field. Table Lookup (Society Code Table).
+        Synchronization Rights Affiliation Society field. Table Lookup
+        (Society Code Table).
 
-        Number assigned to the Society with which the publisher is affiliated for administration of synchronization
-        rights.
+        Number assigned to the Society with which the publisher is affiliated
+        for administration of synchronization rights.
 
         :return: the Publisher's synchronization rights society
         """
         return self._sr_society
+
+    @sr_society.setter
+    def sr_society(self, value):
+        self._sr_society = value
 
     @property
     def usa_license(self):
         """
         USA License Indicator field. Table Lookup ('A','B','S').
 
-        This field indicates whether rights for this Interested Party flow through ASCAP, BMI, or SESAC for the U.S.
+        This field indicates whether rights for this Interested Party flow
+        through ASCAP, BMI, or SESAC for the U.S.
 
         :return: the first letter of the society with the USA rights
         """
         return self._usa_license
+
+    @usa_license.setter
+    def usa_license(self, value):
+        self._usa_license = value
 
 
 class IPTerritoryOfControlRecord(TransactionRecord):
     """
     Represents a CWR Publisher or Writer Territory of Control (SPT/SWT).
 
-    This indicates if a Publisher or Writer has control or not over a Territory, and the shares it has on it.
+    This indicates if a Publisher or Writer has control or not over a
+    Territory, and the shares it has on it.
 
     The control is indicated with the exclusion marker.
 
-    For example, if the Agreement covers all the world except for Europe, two AgreementTerritory entities would be used,
-    one indicating that the world is included, and another indicating that Europe is excluded.
+    For example, if the Agreement covers all the world except for Europe, two
+    AgreementTerritory entities would be used, one indicating that the world
+    is included, and another indicating that Europe is excluded.
 
-    It should be noted that a Territory can only be excluded if it is part of another Territory which is already
-    included in the Agreement.
+    It should be noted that a Territory can only be excluded if it is part of
+    another Territory which is already included in the Agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, ip_n, inclusion_exclusion_indicator,
-                 tis_numeric_code,
-                 sequence_n, pr_collection_share=0, mr_collection_share=0, sr_collection_share=0, shares_change=False):
-        super(IPTerritoryOfControlRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 ip_n='',
+                 inclusion_exclusion_indicator=None,
+                 tis_numeric_code=None,
+                 sequence_n=0,
+                 pr_collection_share=0,
+                 mr_collection_share=0,
+                 sr_collection_share=0,
+                 shares_change=False
+                 ):
+        super(IPTerritoryOfControlRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n
+        )
         # Territory information
         self._tis_numeric_code = tis_numeric_code
 
@@ -261,6 +356,10 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._inclusion_exclusion_indicator
 
+    @inclusion_exclusion_indicator.setter
+    def inclusion_exclusion_indicator(self, value):
+        self._inclusion_exclusion_indicator = value
+
     @property
     def ip_n(self):
         """
@@ -272,13 +371,18 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._ip_n
 
+    @ip_n.setter
+    def ip_n(self, value):
+        self._ip_n = value
+
     @property
     def mr_collection_share(self):
         """
         Mechanical Rights Collection Share field. Numeric decimal.
 
-        Defines the percentage of the total royalty distributed for sales of CDs, Cassette Tapes, etc. in which the work
-        is included which will be collected by (paid to) the publisher.
+        Defines the percentage of the total royalty distributed for sales of
+        CDs, Cassette Tapes, etc. in which the work is included which will be
+        collected by (paid to) the publisher.
 
         This is a value from 0 (0%) to 1 (100%).
 
@@ -286,13 +390,18 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._mr_collection_share
 
+    @mr_collection_share.setter
+    def mr_collection_share(self, value):
+        self._mr_collection_share = value
+
     @property
     def pr_collection_share(self):
         """
         Performing Rights Collection Share field. Numeric decimal.
 
-        Defines the percentage of the total royalty distributed for performance of the work which will be collected by
-        (paid to) the publisher within the above Territory.
+        Defines the percentage of the total royalty distributed for
+        performance of the work which will be collected by (paid to) the
+        publisher within the above Territory.
 
         This is a value from 0 (0%) to 0.5 (50%).
 
@@ -300,42 +409,61 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._pr_collection_share
 
+    @pr_collection_share.setter
+    def pr_collection_share(self, value):
+        self._pr_collection_share = value
+
     @property
     def sequence_n(self):
         """
         Sequence Number field.
 
-        A sequential number assigned to each territory following a Publisher Record.
+        A sequential number assigned to each territory following a Publisher
+        Record.
 
         :return: the territory sequence number
         """
         return self._sequence_n
+
+    @sequence_n.setter
+    def sequence_n(self, value):
+        self._sequence_n = value
 
     @property
     def shares_change(self):
         """
         Shares Change field. Boolean.
 
-        If the shares for the writer interest change as a result of subpublication in this territory or for a similar
-        reason, set this field to "Y"
+        If the shares for the writer interest change as a result of
+        subpublication in this territory or for a similar reason, set this
+        field to "Y"
 
         :return: True if the shares change, False otherwise
         """
         return self._shares_change
+
+    @shares_change.setter
+    def shares_change(self, value):
+        self._shares_change = value
 
     @property
     def sr_collection_share(self):
         """
         Synchronization Rights Collection Share field. Numeric decimal.
 
-        Defines the percentage of the total royalty distributed for Synchronization rights to the work which will be
-        collected by (paid to) the publisher.
+        Defines the percentage of the total royalty distributed for
+        Synchronization rights to the work which will be collected by (paid
+        to) the publisher.
 
         This is a value from 0 (0%) to 1 (100%).
 
         :return: return Synchronization Rights collection share
         """
         return self._sr_collection_share
+
+    @sr_collection_share.setter
+    def sr_collection_share(self, value):
+        self._sr_collection_share = value
 
     @property
     def tis_numeric_code(self):
@@ -348,17 +476,32 @@ class IPTerritoryOfControlRecord(TransactionRecord):
         """
         return self._tis_numeric_code
 
+    @tis_numeric_code.setter
+    def tis_numeric_code(self, value):
+        self._tis_numeric_code = value
+
 
 class Publisher(InterestedParty):
     """
     Represents a CWR Publisher.
 
-    This encompasses several types of interested parties, such as sub-publisher, original publisher, acquirer or
-    administrator.
+    This encompasses several types of interested parties, such as
+    sub-publisher, original publisher, acquirer or administrator.
     """
 
-    def __init__(self, ip_n, publisher_name, ipi_base_n=None, tax_id=None, ipi_name_n=None):
-        super(Publisher, self).__init__(ip_n, ipi_base_n, tax_id, ipi_name_n)
+    def __init__(self,
+                 ip_n='',
+                 publisher_name='',
+                 ipi_base_n=None,
+                 tax_id=None,
+                 ipi_name_n=None
+                 ):
+        super(Publisher, self).__init__(
+            ip_n,
+            ipi_base_n,
+            tax_id,
+            ipi_name_n
+        )
         self._publisher_name = publisher_name
 
     @property
@@ -372,6 +515,10 @@ class Publisher(InterestedParty):
         """
         return self._publisher_name
 
+    @publisher_name.setter
+    def publisher_name(self, value):
+        self._publisher_name = value
+
 
 class PublisherRecord(InterestedPartyRecord):
     """
@@ -381,17 +528,34 @@ class PublisherRecord(InterestedPartyRecord):
     - Publisher Controlled By Submitter (SPU)
     - Other Publisher (OPU)
 
-    This contains information about original publishers, income participants, sub-publishers, and/or  administrators
-    who are involved in the ownership and collection of a work. May they be under control of the submitter or not.
+    This contains information about original publishers, income participants,
+    sub-publishers, and/or  administrators who are involved in the ownership
+    and collection of a work. May they be under control of the submitter or
+    not.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n,
-                 publisher, publisher_sequence_n,
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 publisher=None,
+                 publisher_sequence_n=0,
                  submitter_agreement_n='',
-                 publisher_type=None, publisher_unknown='N', agreement_type=None, international_standard_code='',
+                 publisher_type=None,
+                 publisher_unknown='N',
+                 agreement_type=None,
+                 international_standard_code='',
                  society_assigned_agreement_n='',
-                 pr_society=None, pr_ownership_share=0, mr_society=None, mr_ownership_share=0, sr_society=None,
-                 sr_ownership_share=0, special_agreements=None, first_recording_refusal='U', usa_license=''):
+                 pr_society=None,
+                 pr_ownership_share=0,
+                 mr_society=None,
+                 mr_ownership_share=0,
+                 sr_society=None,
+                 sr_ownership_share=0,
+                 special_agreements=None,
+                 first_recording_refusal='U',
+                 usa_license=''
+                 ):
         """
         Constructs a PublisherRecord.
 
@@ -410,11 +574,19 @@ class PublisherRecord(InterestedPartyRecord):
         :param sr_society: Synchronization Rights society
         :param sr_ownership_share: Synchronization Rights share
         """
-        super(PublisherRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
-                                              first_recording_refusal, usa_license,
-                                              pr_society, pr_ownership_share,
-                                              mr_society, mr_ownership_share,
-                                              sr_society, sr_ownership_share)
+        super(PublisherRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            first_recording_refusal,
+            usa_license,
+            pr_society,
+            pr_ownership_share,
+            mr_society,
+            mr_ownership_share,
+            sr_society,
+            sr_ownership_share
+        )
 
         # Publisher info
         self._publisher = publisher
@@ -442,16 +614,25 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._agreement_type
 
+    @agreement_type.setter
+    def agreement_type(self, value):
+        self._agreement_type = value
+
     @property
     def international_standard_code(self):
         """
         International Standard Agreement Code field.
 
-        A unique number assigned to this agreement under which this publisher share is to be administered.
+        A unique number assigned to this agreement under which this publisher
+        share is to be administered.
 
         :return: the agreement ISAC
         """
         return self._international_standard_code
+
+    @international_standard_code.setter
+    def international_standard_code(self, value):
+        self._international_standard_code = value
 
     @property
     def publisher(self):
@@ -464,6 +645,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._publisher
 
+    @publisher.setter
+    def publisher(self, value):
+        self._publisher = value
+
     @property
     def publisher_sequence_n(self):
         """
@@ -474,6 +659,10 @@ class PublisherRecord(InterestedPartyRecord):
         :return: the Publisher sequence number in the chain
         """
         return self._publisher_sequence_n
+
+    @publisher_sequence_n.setter
+    def publisher_sequence_n(self, value):
+        self._publisher_sequence_n = value
 
     @property
     def publisher_type(self):
@@ -486,6 +675,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._publisher_type
 
+    @publisher_type.setter
+    def publisher_type(self, value):
+        self._publisher_type = value
+
     @property
     def publisher_unknown(self):
         """
@@ -495,36 +688,53 @@ class PublisherRecord(InterestedPartyRecord):
 
         Note that this attribute must be Unknown for SPU records.
 
-        For OPU records, this field must be set to True if the Publisher Name is blank.
+        For OPU records, this field must be set to True if the Publisher Name
+        is blank.
 
-        :return: True if the Publisher is unknown, False otherwise, Unknown in special cases
+        :return: True if the Publisher is unknown, False otherwise, Unknown in
+        special cases
         """
         return self._publisher_unknown
+
+    @publisher_unknown.setter
+    def publisher_unknown(self, value):
+        self._publisher_unknown = value
 
     @property
     def special_agreements(self):
         """
-        Special Agreements Indicator. Table Lookup (Special Agreement Indicator Table).
+        Special Agreements Indicator. Table Lookup (Special Agreement
+        Indicator Table).
 
         Indicates publisher claiming reversionary rights.
 
-        Note that this flag only applies to societies that recognize reversionary rights (for example, SOCAN).
+        Note that this flag only applies to societies that recognize
+        reversionary rights (for example, SOCAN).
 
         :return: the Special Agreements indicator
         """
         return self._special_agreements
+
+    @special_agreements.setter
+    def special_agreements(self, value):
+        self._special_agreements = value
 
     @property
     def submitter_agreement_n(self):
         """
         Submitter Agreement Number field.
 
-        This points to an agreement between this publisher and another publisher acting as a domestic or foreign
-        administrator and it is your internal number.
+        This points to an agreement between this publisher and another
+        publisher acting as a domestic or foreign administrator and it is your
+        internal number.
 
         :return: the Submitter Agreement number
         """
         return self._submitter_agreement_n
+
+    @submitter_agreement_n.setter
+    def submitter_agreement_n(self, value):
+        self._submitter_agreement_n = value
 
     @property
     def society_assigned_agreement_n(self):
@@ -537,6 +747,10 @@ class PublisherRecord(InterestedPartyRecord):
         """
         return self._society_assigned_agreement_n
 
+    @society_assigned_agreement_n.setter
+    def society_assigned_agreement_n(self, value):
+        self._society_assigned_agreement_n = value
+
 
 class PublisherChain(object):
     """
@@ -544,49 +758,66 @@ class PublisherChain(object):
 
     This stores the Publishers of a work, along their territories.
 
-    While this is called a chain, due to it being stored in file as a list of linked publishers, it is actually
+    While this is called a chain, due to it being stored in file as a list of
+    linked publishers, it is actually
     a tree.
 
     As a list it can be defined as:
     [SPU, SPT*, [SPU, SPT*]?, [SPU, SPT*, [SPU, SPT*]?]*]
 
-    It should be noted this is recursive, using as base 'SPU, SPT*, [SPU, SPT*]?', we have:
-    [BASE, BASE*]
+    It should be noted this is recursive, using as base 'SPU, SPT*,
+    [SPU, SPT*]?', we have: [BASE, BASE*]
 
-    The first SPU in the chain is original publisher or income participant, followed by his territories of shares
+    The first SPU in the chain is original publisher or income participant,
+    followed by his territories of shares
     collection.
 
-    Following it there can exist another SPU, and his territories, representing the local administrator.
+    Following it there can exist another SPU, and his territories,
+    representing the local administrator.
 
     After this the sub-publishers appear, repeating the same pattern.
 
     The role of each Publisher is indicated by the Publisher type field.
     """
 
-    def __init__(self, original_publisher):
+    def __init__(self,
+                 original_publisher
+                 ):
         self._original_publisher = original_publisher
 
+    @property
     def original_publisher(self):
         """
         Original publisher.
 
         This is the original publisher of the work under the agreement.
 
-        In the chain this is the first Publisher, and also the root Publisher in the tree.
+        In the chain this is the first Publisher, and also the root Publisher
+        in the tree.
 
         :return: the original Publisher
         """
         return self._original_publisher
+
+    @original_publisher.setter
+    def original_publisher(self, value):
+        self._original_publisher = value
 
 
 class PublisherChainNode(object):
     """
     Represents a node in the Publisher Chain.
 
-    A Publisher in the chain contains data about itself and the territories where it collects shares.
+    A Publisher in the chain contains data about itself and the territories
+    where it collects shares.
     """
 
-    def __init__(self, publisher, administrator=None, subpublishers=None, territories=None):
+    def __init__(self,
+                 publisher,
+                 administrator=None,
+                 subpublishers=None,
+                 territories=None
+                 ):
         self._publisher = publisher
         self._administrator = administrator
 
@@ -600,6 +831,7 @@ class PublisherChainNode(object):
         else:
             self._territories = territories
 
+    @property
     def administrator(self):
         """
         Regional administrator.
@@ -610,6 +842,11 @@ class PublisherChainNode(object):
         """
         return self._administrator
 
+    @administrator.setter
+    def administrator(self, value):
+        self._administrator = value
+
+    @property
     def publisher(self):
         """
         Publisher Record.
@@ -620,6 +857,11 @@ class PublisherChainNode(object):
         """
         return self._publisher
 
+    @publisher.setter
+    def publisher(self, value):
+        self._publisher = value
+
+    @property
     def subpublishers(self):
         """
         Sub-publishers list.
@@ -630,6 +872,11 @@ class PublisherChainNode(object):
         """
         return self._subpublishers
 
+    @subpublishers.setter
+    def subpublishers(self, value):
+        self._subpublishers = value
+
+    @property
     def territories(self):
         """
         Publisher territories.
@@ -640,6 +887,10 @@ class PublisherChainNode(object):
         """
         return self._territories
 
+    @territories.setter
+    def territories(self, value):
+        self._territories = value
+
 
 class Writer(InterestedParty):
     """
@@ -648,9 +899,21 @@ class Writer(InterestedParty):
     This can be a Writer Controlled by Submitter (SWR) or Other Writer (OWR).
     """
 
-    def __init__(self, ip_n, personal_number, ipi_base_n=None, writer_first_name='', writer_last_name='',
-                 tax_id=None, ipi_name_n=None):
-        super(Writer, self).__init__(ip_n, ipi_base_n, tax_id, ipi_name_n)
+    def __init__(self,
+                 ip_n='',
+                 personal_number=0,
+                 ipi_base_n=None,
+                 writer_first_name='',
+                 writer_last_name='',
+                 tax_id=None,
+                 ipi_name_n=None
+                 ):
+        super(Writer, self).__init__(
+            ip_n,
+            ipi_base_n,
+            tax_id,
+            ipi_name_n
+        )
 
         # Writer information
         self._writer_first_name = writer_first_name
@@ -662,12 +925,16 @@ class Writer(InterestedParty):
         """
         Personal Number field. Numeric.
 
-        This field contains the personal number assigned to this individual in the country of residence. For Sweden, it
-        has the format YYMMDD9999.
+        This field contains the personal number assigned to this individual in
+        the country of residence. For Sweden, it has the format YYMMDD9999.
 
         :return: the Writer country-based personal number
         """
         return self._personal_number
+
+    @personal_number.setter
+    def personal_number(self, value):
+        self._personal_number = value
 
     @property
     def writer_first_name(self):
@@ -680,39 +947,61 @@ class Writer(InterestedParty):
         """
         return self._writer_first_name
 
+    @writer_first_name.setter
+    def writer_first_name(self, value):
+        self._writer_first_name = value
+
     @property
     def writer_last_name(self):
         """
         Writer Last Name field. Alphanumeric.
 
-        The last name of the writer. If you do not have the ability to separate the last name from the first name, then
-        you may include both the last and first name in this field—pr separated by a comma.
+        The last name of the writer. If you do not have the ability to
+        separate the last name from the first name, then you may include both
+        the last and first name in this field—pr separated by a comma.
 
         :return: the Writer last name
         """
         return self._writer_last_name
+
+    @writer_last_name.setter
+    def writer_last_name(self, value):
+        self._writer_last_name = value
 
 
 class PublisherForWriterRecord(TransactionRecord):
     """
     Represents a CWR Publisher For Writer (PWR) record.
 
-    This record is used to indicate the publisher that represents the writer designated on the previous SWR record for
-    writers that are published (total writer ownership shares for each right are less than 100%).
+    This record is used to indicate the publisher that represents the writer
+    designated on the previous SWR record for writers that are published
+    (total writer ownership shares for each right are less than 100%).
 
     Only Writers under control of the Publisher use these records.
 
-    The record serves in case that two or more writers for a work have an agreement with the same original publisher,
-    so it is possible to record each Society-Assigned Agreement Number / Submitter Agreement Number in the PWR record
-    that links that writer to the original publisher.
+    The record serves in case that two or more writers for a work have an
+    agreement with the same original publisher, so it is possible to record
+    each Society-Assigned Agreement Number / Submitter Agreement Number in the
+    PWR record that links that writer to the original publisher.
 
-    It is the society of the original publisher that assigns the society-assigned agreement number to the writer to
-    publisher agreement.
+    It is the society of the original publisher that assigns the
+    society-assigned agreement number to the writer to publisher agreement.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, publisher_ip_n, writer_ip_n,
-                 submitter_agreement_n=None, society_assigned_agreement_n=None):
-        super(PublisherForWriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 publisher_ip_n='',
+                 writer_ip_n='',
+                 submitter_agreement_n=None,
+                 society_assigned_agreement_n=None
+                 ):
+        super(PublisherForWriterRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n
+        )
         # Parties IDs
         self._publisher_ip_n = publisher_ip_n
         self._writer_ip_n = writer_ip_n
@@ -726,12 +1015,17 @@ class PublisherForWriterRecord(TransactionRecord):
         """
         Publisher IP Number field. Alphanumeric.
 
-        The publisher interested party number pointing back to the SPU record for the original publisher/income
-        participant representing this writer.
+        The publisher interested party number pointing back to the SPU record
+        for the original publisher/income participant representing this
+        writer.
 
         :return: the Publisher id
         """
         return self._publisher_ip_n
+
+    @publisher_ip_n.setter
+    def publisher_ip_n(self, value):
+        self._publisher_ip_n = value
 
     @property
     def society_assigned_agreement_n(self):
@@ -744,6 +1038,10 @@ class PublisherForWriterRecord(TransactionRecord):
         """
         return self._society_assigned_agreement_n
 
+    @society_assigned_agreement_n.setter
+    def society_assigned_agreement_n(self, value):
+        self._society_assigned_agreement_n = value
+
     @property
     def submitter_agreement_n(self):
         """
@@ -755,37 +1053,67 @@ class PublisherForWriterRecord(TransactionRecord):
         """
         return self._submitter_agreement_n
 
+    @submitter_agreement_n.setter
+    def submitter_agreement_n(self, value):
+        self._submitter_agreement_n = value
+
     @property
     def writer_ip_n(self):
         """
         Writer IP Number field. Alphanumeric.
 
-        The writer interested party number pointing back to the SWR record in an explicit link.
+        The writer interested party number pointing back to the SWR record in
+        an explicit link.
 
         :return: the writer ID
         """
         return self._writer_ip_n
+
+    @writer_ip_n.setter
+    def writer_ip_n(self, value):
+        self._writer_ip_n = value
 
 
 class WriterRecord(InterestedPartyRecord):
     """
     Represents a CWR Writer Record (SWR/OWR)
 
-    This is for Writer Controlled By Submitter (SWR) and Other Writer (OWR) records.
+    This is for Writer Controlled By Submitter (SWR) and Other Writer (OWR)
+    records.
 
     These contain all the information available to the submitter for a Writer.
     """
 
-    def __init__(self, record_type, transaction_sequence_n, record_sequence_n, writer, writer_designation=None,
-                 work_for_hire=False, writer_unknown='F', reversionary='U', first_recording_refusal='U', usa_license='',
-                 pr_society=None, pr_ownership_share=0,
-                 mr_society=None, mr_ownership_share=0,
-                 sr_society=None, sr_ownership_share=0):
-        super(WriterRecord, self).__init__(record_type, transaction_sequence_n, record_sequence_n,
-                                           first_recording_refusal, usa_license,
-                                           pr_society, pr_ownership_share,
-                                           mr_society, mr_ownership_share,
-                                           sr_society, sr_ownership_share)
+    def __init__(self,
+                 record_type='',
+                 transaction_sequence_n=0,
+                 record_sequence_n=0,
+                 writer=None,
+                 writer_designation=None,
+                 work_for_hire=False,
+                 writer_unknown='F',
+                 reversionary='U',
+                 first_recording_refusal='U',
+                 usa_license='',
+                 pr_society=None,
+                 pr_ownership_share=0,
+                 mr_society=None,
+                 mr_ownership_share=0,
+                 sr_society=None,
+                 sr_ownership_share=0):
+        super(WriterRecord, self).__init__(
+            record_type,
+            transaction_sequence_n,
+            record_sequence_n,
+            first_recording_refusal,
+            usa_license,
+            pr_society,
+            pr_ownership_share,
+            mr_society,
+            mr_ownership_share,
+            sr_society,
+            sr_ownership_share
+        )
         # Writer info
         self._writer = writer
 
@@ -804,11 +1132,17 @@ class WriterRecord(InterestedPartyRecord):
 
         Indicates publisher claiming reversionary rights.
 
-        Note that only some societies, such as SOCAN, recognize reversionary rights.
+        Note that only some societies, such as SOCAN, recognize reversionary
+        rights.
 
-        :return: 'T' if the work is under reversionary provisions, 'F' if not, 'U' if unknown
+        :return: 'T' if the work is under reversionary provisions, 'F' if not,
+        'U' if unknown
         """
         return self._reversionary
+
+    @reversionary.setter
+    def reversionary(self, value):
+        self._reversionary = value
 
     @property
     def work_for_hire(self):
@@ -821,6 +1155,10 @@ class WriterRecord(InterestedPartyRecord):
         """
         return self._work_for_hire
 
+    @work_for_hire.setter
+    def work_for_hire(self, value):
+        self._work_for_hire = value
+
     @property
     def writer(self):
         """
@@ -832,30 +1170,46 @@ class WriterRecord(InterestedPartyRecord):
         """
         return self._writer
 
+    @writer.setter
+    def writer(self, value):
+        self._writer = value
+
     @property
     def writer_designation(self):
         """
-        Writer Designation Code field. Table Lookup (Writer Designation Table).
+        Writer Designation Code field. Table Lookup (Writer Designation
+        Table).
 
-        Code defining the role the writer played in the composition of the work.
+        Code defining the role the writer played in the composition of the
+        work.
 
-        This attribute is required for record type SWR and optional for record type OWR.
+        This attribute is required for record type SWR and optional for record
+        type OWR.
 
         :return: the Writer designation code
         """
         return self._writer_designation
+
+    @writer_designation.setter
+    def writer_designation(self, value):
+        self._writer_designation = value
 
     @property
     def writer_unknown(self):
         """
         Writer Unknown Indicator field. Flag (Yes/No/Unknown).
 
-        Indicates if the name of this writer is unknown. Note that this field must be left blank for SWR records.
+        Indicates if the name of this writer is unknown. Note that this field
+        must be left blank for SWR records.
 
-        For OWR records, this field must be set to 'Y' if the Writer Last Name is blank.
+        For OWR records, this field must be set to 'Y' if the Writer Last Name
+        is blank.
 
-        :return: 'Y' if the Writer is unknown, 'F' otherwise, 'U' in special cases
+        :return: 'Y' if the Writer is unknown, 'F' otherwise, 'U' in special
+        cases
         """
         return self._writer_unknown
 
-
+    @writer_unknown.setter
+    def writer_unknown(self, value):
+        self._writer_unknown = value

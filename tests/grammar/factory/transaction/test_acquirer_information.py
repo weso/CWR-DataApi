@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -11,11 +13,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestAcquirerInformationValid(unittest.TestCase):
+class TestAcquirerInformationGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('ipa_information')
 
@@ -44,7 +45,7 @@ class TestAcquirerInformationValid(unittest.TestCase):
         self.assertEqual('IPA', result[0].record_type)
 
 
-class TestAcquirerInformationInvalid(unittest.TestCase):
+class TestAcquirerInformationGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('ipa_information')
 
@@ -56,3 +57,16 @@ class TestAcquirerInformationInvalid(unittest.TestCase):
         result = self.grammar.parseString(record)
 
         self.assertEqual(1, len(result))
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

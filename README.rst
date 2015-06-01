@@ -2,7 +2,8 @@ CWR Data Model API
 ==================
 
 This projects offers a domain model for the CISAC CWR standard v2.1 to be
-used on Python applications.
+used on Python applications, along a series of parsing which allow
+transformations between the model and various data structures.
 
 CWR stands for Common Works Registration, and it is a common or standard
 format for the registration and revision of musical works, used by
@@ -12,29 +13,26 @@ works data.
 While the CWR standard has been created by `CISAC`_ this library has been
 developed by `WESO`_ independently, with help from `BMAT`_.
 
-The library includes a data model for representing the contents of a CWR
-file, and parsers to create that model from a file, and to decode and
-encode JSON messages with the data model.
+Features
+--------
+
+- Model for CWR files
+- Configurable parser from transforming a CWR file into the model classes (including Pyparsing grammar)
+- Parsers for for model-JSON transformations
 
 Documentation
 -------------
 
-The current version is under development. No public documentation is still offered.
+Check the `latest docs`_ for the most current version of the documentation.
 
-Status
-------
-
-The project is still in the development phase.
-
-Issues management
-~~~~~~~~~~~~~~~~~
-
-Issues are managed at the GitHub `project issues page`_.
+They are generated with the help of `Sphinx`_. The source files for this are
+stored in the docs folder.
 
 Building the code
 -----------------
 
-The application has been coded in Python, without using any particular framework.
+The application has been coded in Python, without using any particular
+framework.
 
 Prerequisites
 ~~~~~~~~~~~~~
@@ -49,14 +47,50 @@ The project has been tested in the following versions of the interpreter:
 - Pypy
 - Pypy 3
 
-Al other dependencies are indicated on requirements.txt, which can be installed with the command:
+All other dependencies are indicated on the requirements.txt file.
+The included makefile can install them with the command:
 
-``pip install -r requirements.txt``
+``make requirements``
+
+Among them, the most important is the `Pyparsing`_ library, which is used
+to create the CWR file parser.
+
+Installing
+~~~~~~~~~~
+
+The project includes a setup.py file and a makefile allowing direct
+installation of the library.
+
+This can be done with the following command:
+
+``make install``
+
+Additionally, the project is offered as a `Pypi package`_, and can be installed through pip:
+
+``pip install cwr-api``
+
+Collaborate
+-----------
+
+The project is still under ongoing development, and any help will be well
+received.
+
+There are two ways to help: reporting errors and asking for extensions through
+the issues management, or forking the repository and extending the project.
+
+Issues management
+~~~~~~~~~~~~~~~~~
+
+Issues are managed at the GitHub `project issues page`_.
+
+Everybody is allowed to report bugs or ask for features.
 
 Getting the code
 ~~~~~~~~~~~~~~~~
 
 The code can be found at the `GitHub project page`_.
+
+Feel free to fork it, and share the changes.
 
 License
 -------
@@ -67,5 +101,9 @@ The project has been released under the `MIT License`_.
 .. _BMAT: http://www.bmat.com/
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://github.com/weso/CWR-DataApi/issues
+.. _Pyparsing: https://pyparsing.wikispaces.com/
+.. _Pypi package: https://pypi.python.org/pypi/CWR-API
+.. _Sphinx: http://sphinx-doc.org/
+.. _latest docs: http://cwr-dataapi.readthedocs.org
 .. _GitHub project page: https://github.com/weso/CWR-DataApi
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Non-Roman Alphabet Publisher Name grammar tests.
@@ -12,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -57,7 +57,8 @@ class TestNPRGrammar(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('NAME \xc6\x8f', result.performing_artist_name)
-        self.assertEqual('FIRST NAME \xc6\x8f', result.performing_artist_first_name)
+        self.assertEqual('FIRST NAME \xc6\x8f',
+                         result.performing_artist_first_name)
         self.assertEqual(14107338, result.performing_artist_ipi_name_n)
         self.assertEqual('I', result.performing_artist_ipi_base_n.header)
         self.assertEqual(229, result.performing_artist_ipi_base_n.id_code)
@@ -65,3 +66,21 @@ class TestNPRGrammar(unittest.TestCase):
         self.assertEqual('ES', result.language_code)
         self.assertEqual('EN', result.performance_language)
         self.assertEqual('CAN', result.performance_dialect)
+
+
+class TestNPRGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('nra_performance_data')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

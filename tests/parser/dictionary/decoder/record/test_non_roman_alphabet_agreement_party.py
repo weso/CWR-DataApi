@@ -2,8 +2,8 @@
 
 import unittest
 
-from cwr.parser.decoder.dictionary import NonRomanAlphabetAgreementPartyDictionaryDecoder
-
+from cwr.parser.decoder.dictionary import \
+    NonRomanAlphabetAgreementPartyDictionaryDecoder
 
 """
 Dictionary to Message decoding tests.
@@ -13,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,17 +21,17 @@ class TestAgreementTerritoryRecordDictionaryEncoding(unittest.TestCase):
         self._decoder = NonRomanAlphabetAgreementPartyDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'NPA'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['ip_name'] = 'NAME'
-        dict['ip_writer_name'] = 'WRITER'
-        dict['ip_n'] = 'IP123'
-        dict['language_code'] = 'ES'
+        data['record_type'] = 'NPA'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['ip_name'] = 'NAME'
+        data['ip_writer_name'] = 'WRITER'
+        data['ip_n'] = 'IP123'
+        data['language_code'] = 'ES'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('NPA', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 
@@ -12,11 +14,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestFileValid(unittest.TestCase):
+class TestTransmissionGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transmission')
 
@@ -432,6 +433,21 @@ class TestFileValid(unittest.TestCase):
 
         self.assertEqual('IPA', transaction[19].record_type)
         self.assertEqual('NPA', transaction[20].record_type)
+
+
+class TestTransmissionGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('transactions')
+
+    def test_empty(self):
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
 
 def _common():

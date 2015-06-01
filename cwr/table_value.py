@@ -16,7 +16,14 @@ class MediaTypeValue(object):
     Represents a BIEM/CISAC Media Type table value.
     """
 
-    def __init__(self, code, name, media_type, duration_max, works_max, fragments_max):
+    def __init__(self,
+                 code='',
+                 name='',
+                 media_type=None,
+                 duration_max=0,
+                 works_max=0,
+                 fragments_max=0
+                 ):
         self._code = code
         self._name = name
         self._media_type = media_type
@@ -33,6 +40,10 @@ class MediaTypeValue(object):
         """
         return self._code
 
+    @code.setter
+    def code(self, value):
+        self._code = value
+
     @property
     def duration_max(self):
         """
@@ -41,6 +52,10 @@ class MediaTypeValue(object):
         :return: the maximum duration of the media
         """
         return self._duration_max
+
+    @duration_max.setter
+    def duration_max(self, value):
+        self._duration_max = value
 
     @property
     def fragments_max(self):
@@ -51,16 +66,25 @@ class MediaTypeValue(object):
         """
         return self._fragments_max
 
+    @fragments_max.setter
+    def fragments_max(self, value):
+        self._fragments_max = value
+
     @property
     def media_type(self):
         """
         Type of media.
 
-        This is the group under which this media is. For example Vynil, Compact Disc or DVD.
+        This is the group under which this media is. For example Vynil, Compact
+        Disc or DVD.
 
         :return: the type of the media
         """
         return self._media_type
+
+    @media_type.setter
+    def media_type(self, value):
+        self._media_type = value
 
     @property
     def name(self):
@@ -71,6 +95,10 @@ class MediaTypeValue(object):
         """
         return self._name
 
+    @name.setter
+    def name(self, value):
+        self._name = value
+
     @property
     def works_max(self):
         """
@@ -80,6 +108,10 @@ class MediaTypeValue(object):
         """
         return self._works_max
 
+    @works_max.setter
+    def works_max(self, value):
+        self._works_max = value
+
 
 class TableValue(object):
     """
@@ -87,13 +119,16 @@ class TableValue(object):
 
     Most of the values of the Table Lookup type use this object.
 
-    This is a representation of general values such as musical genres, or the roles a party can take in an agreement.
+    This is a representation of general values such as musical genres, or the
+    roles a party can take in an agreement.
 
     Some examples are:
 
     Agreement roles:
-    Assignor (AS): The entitled party who is assigning the rights to a musical work within an agreement
-    Acquirer (AC): The entitled party who is acquiring the rights to a musical work within an agreement
+    Assignor (AS): The entitled party who is assigning the rights to a musical
+    work within an agreement
+    Acquirer (AC): The entitled party who is acquiring the rights to a musical
+    work within an agreement
 
     Music arrangement:
     New (NEW): New music added to existing music
@@ -106,7 +141,11 @@ class TableValue(object):
     Text (TXT): Self explanatory
     """
 
-    def __init__(self, code, name, description=''):
+    def __init__(self,
+                 code='',
+                 name='',
+                 description=''
+                 ):
         self._code = code
         self._name = name
         self._description = description
@@ -120,6 +159,10 @@ class TableValue(object):
         """
         return self._code
 
+    @code.setter
+    def code(self, value):
+        self._code = value
+
     @property
     def description(self):
         """
@@ -128,6 +171,10 @@ class TableValue(object):
         :return: the value description
         """
         return self._description
+
+    @description.setter
+    def description(self, value):
+        self._description = value
 
     @property
     def name(self):
@@ -138,14 +185,27 @@ class TableValue(object):
         """
         return self._name
 
+    @name.setter
+    def name(self, value):
+        self._name = value
+
 
 class InstrumentValue(TableValue):
     """
     Represents a Instrument table value.
     """
 
-    def __init__(self, code, name, family, description=''):
-        super(InstrumentValue, self).__init__(code, name, description)
+    def __init__(self,
+                 code='',
+                 name='',
+                 family=None,
+                 description=''
+                 ):
+        super(InstrumentValue, self).__init__(
+            code,
+            name,
+            description
+        )
         self._family = family
 
     @property
@@ -156,3 +216,7 @@ class InstrumentValue(TableValue):
         :return: the family of the instrument
         """
         return self._family
+
+    @family.setter
+    def family(self, value):
+        self._family = value

@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import TableValueDictionaryEncoder
 from cwr.table_value import TableValue
 
-
 """
 Acknowledgement to dictionary encoding tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -30,5 +28,6 @@ class TestTableValueEncoding(unittest.TestCase):
 
         self.assertEqual('AS', encoded['code'])
         self.assertEqual('Assignor', encoded['name'])
-        self.assertEqual('The entitled party who is assigning the rights to a musical work within an agreement',
-                         encoded['description'])
+        self.assertEqual(
+            'The entitled party who is assigning the rights to a musical work within an agreement',
+            encoded['description'])

@@ -2,9 +2,10 @@
 
 import unittest
 
+from pyparsing import ParseException
+
 from cwr.transmission import TransmissionHeader, TransmissionTrailer
 from cwr.parser.decoder.file import default_file_decoder
-
 
 """
 CWR file encoder tests.
@@ -14,7 +15,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -69,6 +69,27 @@ class TestFileCWRDecodeValid(unittest.TestCase):
         self.assertEqual('TER', transaction[1].record_type)
         self.assertEqual('IPA', transaction[2].record_type)
         self.assertEqual('IPA', transaction[3].record_type)
+
+
+class TestFileCWRDecodeInvalid(unittest.TestCase):
+    def setUp(self):
+        self._parser = default_file_decoder()
+
+    def test_empty_contents(self):
+        data = {}
+
+        data['filename'] = 'CW12012311_22.V21'
+        data['contents'] = ''
+
+        self.assertRaises(ParseException, self._parser.decode, data)
+
+    def test_bad_contents(self):
+        data = {}
+
+        data['filename'] = 'CW12012311_22.V21'
+        data['contents'] = 'Contents of the file'
+
+        self.assertRaises(ParseException, self._parser.decode, data)
 
 
 def _two_groups():

@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import PerformingArtistDictionaryEncoder
 from cwr.work import PerformingArtistRecord
 
-
 """
 PerformingArtistRecord to dictionary encoding tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -39,4 +37,5 @@ class TestPerformingArtistRecordRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('LAST NAME', encoded['performing_artist_last_name'])
         self.assertEqual('FIRST NAME', encoded['performing_artist_first_name'])
         self.assertEqual(14107338, encoded['performing_artist_ipi_name_n'])
-        self.assertEqual('I-000000339-7', encoded['performing_artist_ipi_base_n'])
+        self.assertEqual('I-000000339-7',
+                         encoded['performing_artist_ipi_base_n'])

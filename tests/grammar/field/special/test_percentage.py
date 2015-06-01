@@ -5,14 +5,12 @@ from pyparsing import ParseException
 
 from cwr.grammar.field import special
 
-
 """
 Tests for Percentage fields.
 """
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

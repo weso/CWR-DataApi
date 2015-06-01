@@ -2,9 +2,9 @@
 
 import unittest
 
-from cwr.parser.encoder.file import default_filename_encoder, old_filename_encoder
+from cwr.parser.encoder.file import default_filename_encoder, \
+    old_filename_encoder
 from cwr.file import FileTag
-
 
 """
 CWR file name encoder tests.
@@ -14,7 +14,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -94,4 +93,3 @@ class TestFileNameCWREncodeValidOld(unittest.TestCase):
         data = self._parser.encode(FileTag(2000, 12, 'AB2', '234', 0.2))
 
         self.assertEqual("CW0012AB2_234.V02", data)
-

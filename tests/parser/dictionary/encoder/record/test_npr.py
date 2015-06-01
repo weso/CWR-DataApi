@@ -2,9 +2,9 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import NonRomanAlphabetPerformanceDataDictionaryEncoder
+from cwr.parser.encoder.dictionary import \
+    NonRomanAlphabetPerformanceDataDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetPerformanceDataRecord
-
 
 """
 NPRRecord to dictionary encoding tests.
@@ -14,7 +14,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -42,7 +41,8 @@ class TestNPRRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('FIRST NAME', encoded['performing_artist_first_name'])
         self.assertEqual('NAME', encoded['performing_artist_name'])
         self.assertEqual(14107338, encoded['performing_artist_ipi_name_n'])
-        self.assertEqual('I-000000229-7', encoded['performing_artist_ipi_base_n'])
+        self.assertEqual('I-000000229-7',
+                         encoded['performing_artist_ipi_base_n'])
         self.assertEqual('ES', encoded['language_code'])
         self.assertEqual('EN', encoded['performance_language'])
         self.assertEqual('SC', encoded['performance_dialect'])

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Work Detail grammar tests.
@@ -12,11 +13,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestWorkDetailGrammar(unittest.TestCase):
+class TestRecordingDetailGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('recording_detail')
 
@@ -24,6 +24,24 @@ class TestWorkDetailGrammar(unittest.TestCase):
         record = 'REC000005310000516420080304                                                            000300     A NAME _ AND 1999                                           THIS IS THE LABEL                                           G0100007401741                 GBBBN0009590 U   '
 
         result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('REC', result.record_type)
+        self.assertEqual(531, result.transaction_sequence_n)
+        self.assertEqual(5164, result.record_sequence_n)
+        self.assertEqual(2008, result.first_release_date.year)
+        self.assertEqual(3, result.first_release_date.month)
+        self.assertEqual(4, result.first_release_date.day)
+        self.assertEqual(0, result.first_release_duration.hour)
+        self.assertEqual(3, result.first_release_duration.minute)
+        self.assertEqual(0, result.first_release_duration.second)
+        self.assertEqual('A NAME _ AND 1999', result.first_album_title)
+        self.assertEqual('THIS IS THE LABEL', result.first_album_label)
+        self.assertEqual('G0100007401741', result.first_release_catalog_n)
+        self.assertEqual(None, result.ean)
+        self.assertEqual('GBBBN0009590', result.isrc)
+        self.assertEqual(None, result.recording_format)
+        self.assertEqual('U', result.recording_technique)
+        self.assertEqual(None, result.media_type)
 
     def test_common_2(self):
         record = 'REC000004230000318620080715                                                            000248     A NAME _ AND 1999                                           THIS IS THE LABEL                                           60251768039                    BR-UM7-08-00 U   '
@@ -93,3 +111,21 @@ class TestWorkDetailGrammar(unittest.TestCase):
         self.assertEqual('A', result.recording_format)
         self.assertEqual('D', result.recording_technique)
         self.assertEqual('CD', result.media_type)
+
+
+class TestRecordingDetailGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('recording_detail')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

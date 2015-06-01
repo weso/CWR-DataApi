@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.decoder.dictionary import PublisherRecordDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -23,35 +21,35 @@ class TestPublisherRecordDictionaryDecoder(unittest.TestCase):
         self._decoder = PublisherRecordDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['ip_n'] = 'IP123'
-        dict['publisher_name'] = 'NAME'
-        dict['ipi_name_n'] = 250165006
-        dict['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
-        dict['tax_id'] = 923703412
+        data['ip_n'] = 'IP123'
+        data['publisher_name'] = 'NAME'
+        data['ipi_name_n'] = 250165006
+        data['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
+        data['tax_id'] = 923703412
 
-        dict['record_type'] = 'SPU'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['publisher_sequence_n'] = 5
-        dict['submitter_agreement_n'] = 'AGR123'
-        dict['publisher_type'] = 'PA'
-        dict['publisher_unknown'] = 'N'
-        dict['agreement_type'] = 'PG'
-        dict['international_standard_code'] = 'A0123456789124'
-        dict['society_assigned_agreement_n'] = 'SAGR123'
-        dict['pr_society'] = 1
-        dict['pr_ownership_share'] = 50.1
-        dict['mr_society'] = 2
-        dict['mr_ownership_share'] = 50.2
-        dict['sr_society'] = 3
-        dict['sr_ownership_share'] = 50.3
-        dict['special_agreements'] = 'N'
-        dict['first_recording_refusal'] = 'N'
-        dict['usa_license'] = 'B'
+        data['record_type'] = 'SPU'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['publisher_sequence_n'] = 5
+        data['submitter_agreement_n'] = 'AGR123'
+        data['publisher_type'] = 'PA'
+        data['publisher_unknown'] = 'N'
+        data['agreement_type'] = 'PG'
+        data['international_standard_code'] = 'A0123456789124'
+        data['society_assigned_agreement_n'] = 'SAGR123'
+        data['pr_society'] = 1
+        data['pr_ownership_share'] = 50.1
+        data['mr_society'] = 2
+        data['mr_ownership_share'] = 50.2
+        data['sr_society'] = 3
+        data['sr_ownership_share'] = 50.3
+        data['special_agreements'] = 'N'
+        data['first_recording_refusal'] = 'N'
+        data['usa_license'] = 'B'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('IP123', record.publisher.ip_n)
         self.assertEqual('NAME', record.publisher.publisher_name)

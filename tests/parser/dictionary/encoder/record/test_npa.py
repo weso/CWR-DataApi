@@ -2,9 +2,9 @@
 
 import unittest
 
-from cwr.parser.encoder.dictionary import NonRomanAlphabetAgreementPartyDictionaryEncoder
+from cwr.parser.encoder.dictionary import \
+    NonRomanAlphabetAgreementPartyDictionaryEncoder
 from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord
-
 
 """
 NOWRecord to dictionary encoding tests.
@@ -14,7 +14,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 

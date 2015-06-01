@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -11,11 +13,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestAcknowledgementTransactionValid(unittest.TestCase):
+class TestAcknowledgementTransactionGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('acknowledgement_transaction')
 
@@ -59,3 +60,21 @@ class TestAcknowledgementTransactionValid(unittest.TestCase):
         self.assertEqual('MSG', result[2].record_type)
         self.assertEqual('NWR', result[3].record_type)
         self.assertEqual('EXC', result[4].record_type)
+
+
+class TestAcknowledgementTransactionGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('acknowledgement_transaction')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -11,11 +13,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestWorkTransactionValid(unittest.TestCase):
+class TestWorkTransactionGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('work_transaction')
 
@@ -66,6 +67,25 @@ class TestWorkTransactionValid(unittest.TestCase):
         self.assertEqual('PER', result[8].record_type)
 
         self.assertEqual('REC', result[9].record_type)
+
+    def test_common_b(self):
+        record = 'NWR0000038200000000MUSIC NAME                                                  AB1234567       T011223304500000000            UNC000300YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
+                 'SPU0000038200002736011223344  PUBLISHER                                     E          001102233000001111111110011 0111111 0222222 03333   0000000000000                            OS ' + '\n' + \
+                 'SPU00000382000027370123       PUBLISHER B                                   AM         001102233000001111111010011 0000000 0000000 00000   0000000000000                            PS ' + '\n' + \
+                 'SPU00000382000027380123       PUBLISHER C                                   SE         001111111111111111001110011 00000   00000   00000   0000000000000                            PG ' + '\n' + \
+                 'SPT000003820000273900             050000500005000I0484Y001' + '\n' + \
+                 'SWR00000382000027401122334  WRITER SURNAME                               WRITER NAME                    CA         0026058307861 0166761 0000061 00000    0000260582865             ' + '\n' + \
+                 'SWT00000382000027411122334  050000500005000I0484Y001' + '\n' + \
+                 'PWR00000382000027421122334  PUBLISHER                                    01011111111100              1111111  ' + '\n' + \
+                 'OWR00000382000027431122334  WRITER SURNAME B                             WRITER NAME B                  CA         0000000000011 0111111 0111111 01111    0000000000000             ' + '\n' + \
+                 'OWR00000382000027441122334  WRITER SURNAME C                             WRITER NAME C                  CA         0000000000011 0111111 0111111 01111    0000000000000             ' + '\n' + \
+                 'PER0000038200002745PERFORMER                                                                  000000000000000000000000' + '\n' + \
+                 'PER0000038200002746PERFORMER B                                                                000000000000000000000000' + '\n' + \
+                 'REC000003820000274700000000                                                            000300     A TITLE                                                     A PUBLISHER                                                 1110111                                     U   '
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(13, len(result))
 
     def test_work_full(self):
         record = 'NWR0000017900000000STREET NAME                                                   1430374       T037306869919980730            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y' + '\n' + \
@@ -142,3 +162,21 @@ class TestWorkTransactionValid(unittest.TestCase):
         self.assertEqual(1, len(result))
 
         self.assertEqual('NWR', result[0].record_type)
+
+
+class TestWorkTransactionGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('work_transaction')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

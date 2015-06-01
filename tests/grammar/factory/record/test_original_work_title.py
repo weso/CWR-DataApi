@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Original Work Title for Versions grammar tests.
@@ -12,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -46,3 +46,21 @@ class TestOriginalWorkTitleGrammar(unittest.TestCase):
         self.assertEqual(230, result.writer_2_ipi_base_n.id_code)
         self.assertEqual(7, result.writer_2_ipi_base_n.check_digit)
         self.assertEqual('ABCD0123456789', result.submitter_work_n)
+
+
+class TestOriginalWorkTitleGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('original_work_title')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

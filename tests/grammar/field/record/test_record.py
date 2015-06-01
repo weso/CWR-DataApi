@@ -3,10 +3,10 @@ import unittest
 
 from pyparsing import ParseException
 
+from cwr.grammar.factory.rule import FieldRuleFactory
 from config_cwr.accessor import CWRConfiguration
 from cwr.grammar.field.record import record_prefix
-from cwr.grammar.factory.field import DefaultFieldTerminalRuleFactory
-from tests.utils.grammar import adapters
+from cwr.parser.decoder.file import default_adapters
 
 """
 CWR file Record parsing tests.
@@ -14,12 +14,12 @@ CWR file Record parsing tests.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 # Acquires data sources
 _config = CWRConfiguration()
-_common_factory = DefaultFieldTerminalRuleFactory(_config.load_field_config('common'), adapters)
+_common_factory = FieldRuleFactory(_config.load_field_config('common'),
+                                   default_adapters())
 
 
 class TestParseTransactionRecordPrefixValid(unittest.TestCase):

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -11,11 +13,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestTransactionInformationValid(unittest.TestCase):
+class TestTransactionInformationGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transactions')
 
@@ -63,6 +64,49 @@ class TestTransactionInformationValid(unittest.TestCase):
         self.assertEqual('NPA', result[20].record_type)
 
         result = group[1]
+
+        self.assertEqual(21, len(result))
+
+        self.assertEqual('AGR', result[0].record_type)
+
+        self.assertEqual('TER', result[1].record_type)
+        self.assertEqual('TER', result[2].record_type)
+
+        self.assertEqual('IPA', result[3].record_type)
+        self.assertEqual('NPA', result[4].record_type)
+
+        self.assertEqual('IPA', result[5].record_type)
+        self.assertEqual('NPA', result[6].record_type)
+
+        self.assertEqual('IPA', result[7].record_type)
+        self.assertEqual('NPA', result[8].record_type)
+
+        self.assertEqual('IPA', result[9].record_type)
+        self.assertEqual('NPA', result[10].record_type)
+
+        self.assertEqual('TER', result[11].record_type)
+        self.assertEqual('TER', result[12].record_type)
+
+        self.assertEqual('IPA', result[13].record_type)
+        self.assertEqual('NPA', result[14].record_type)
+
+        self.assertEqual('IPA', result[15].record_type)
+        self.assertEqual('NPA', result[16].record_type)
+
+        self.assertEqual('IPA', result[17].record_type)
+        self.assertEqual('NPA', result[18].record_type)
+
+        self.assertEqual('IPA', result[19].record_type)
+        self.assertEqual('NPA', result[20].record_type)
+
+    def test_agreement_one(self):
+        record = _agreement_full()
+
+        group = self.grammar.parseString(record)
+
+        self.assertEqual(1, len(group))
+
+        result = group[0]
 
         self.assertEqual(21, len(result))
 
@@ -236,15 +280,19 @@ class TestTransactionInformationValid(unittest.TestCase):
         self.assertEqual('EXC', result[4].record_type)
 
 
-class TestTransactionInformationInvalid(unittest.TestCase):
+class TestTransactionInformationGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transactions')
 
+    def test_empty(self):
+        record = ''
 
-    def test_agreement_and_work(self):
-        record = _agreement_full() + '\n' + _work_big()
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
 
 def _agr_territory():

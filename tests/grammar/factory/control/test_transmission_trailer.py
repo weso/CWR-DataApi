@@ -5,7 +5,6 @@ from pyparsing import ParseException
 
 from tests.utils.grammar import get_record_grammar
 
-
 """
 CWR Transaction Header grammar tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -41,10 +39,12 @@ class TestParseTransmissionTrailerException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transmission_header')
 
-    def test_invalid_wrong_length_too_short(self):
-        """
-        Tests that TransmissionTrailerDecoder throws an exception when the line is too short.
-        """
-        record = 'TRL01234012345670123456'
+    def test_empty(self):
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
 
         self.assertRaises(ParseException, self.grammar.parseString, record)

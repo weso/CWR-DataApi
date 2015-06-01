@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -11,11 +13,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestControlledWriterInformationValid(unittest.TestCase):
+class TestControlledWriterInformationGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('controlled_writer_information')
 
@@ -104,3 +105,21 @@ class TestControlledWriterInformationValid(unittest.TestCase):
 
         self.assertEqual('SWR', result[0].record_type)
         self.assertEqual('PWR', result[1].record_type)
+
+
+class TestControlledWriterInformationGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('controlled_writer_information')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

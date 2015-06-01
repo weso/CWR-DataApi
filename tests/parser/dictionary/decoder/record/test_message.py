@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import MessageDictionaryDecoder
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -13,7 +12,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,19 +20,19 @@ class TestMessageRecordDictionaryEncoding(unittest.TestCase):
         self._decoder = MessageDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'MSG'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['message_level'] = 'F'
-        dict['validation_n'] = 'AB3'
-        dict['message_type'] = 'G'
-        dict['message_text'] = 'THE MESSAGE'
-        dict['original_record_sequence_n'] = 124
-        dict['message_record_type'] = 'AGR'
+        data['record_type'] = 'MSG'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['message_level'] = 'F'
+        data['validation_n'] = 'AB3'
+        data['message_type'] = 'G'
+        data['message_text'] = 'THE MESSAGE'
+        data['original_record_sequence_n'] = 124
+        data['message_record_type'] = 'AGR'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('MSG', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

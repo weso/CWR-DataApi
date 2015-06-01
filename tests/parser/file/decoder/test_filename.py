@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.file import default_filename_decoder
 
-
 """
 CWR file name encoder tests.
 
@@ -13,7 +12,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -52,4 +50,3 @@ class TestFileNameCWRDecodeInvalid(unittest.TestCase):
         self.assertEqual('', result.sender)
         self.assertEqual('', result.receiver)
         self.assertEqual('', result.version)
-

@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import IPIBaseDictionaryDecoder
 
-
 """
 Acknowledgement to dictionary encoding tests.
 
@@ -13,7 +12,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,13 +20,13 @@ class TestIPIBaseDecoder(unittest.TestCase):
         self._decoder = IPIBaseDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['header'] = 'T'
-        dict['id_code'] = 123456789
-        dict['check_digit'] = 1
+        data['header'] = 'T'
+        data['id_code'] = 123456789
+        data['check_digit'] = 1
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('T', record.header)
         self.assertEqual(123456789, record.id_code)

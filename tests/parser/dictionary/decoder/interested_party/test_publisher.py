@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.decoder.dictionary import PublisherDictionaryDecoder
 from cwr.other import IPIBaseNumber
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -14,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -23,15 +21,15 @@ class TestPublisherDictionaryEncoding(unittest.TestCase):
         self._decoder = PublisherDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['ip_n'] = 'IP123'
-        dict['publisher_name'] = 'NAME'
-        dict['ipi_name_n'] = 250165006
-        dict['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
-        dict['tax_id'] = 923703412
+        data['ip_n'] = 'IP123'
+        data['publisher_name'] = 'NAME'
+        data['ipi_name_n'] = 250165006
+        data['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
+        data['tax_id'] = 923703412
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('IP123', record.ip_n)
         self.assertEqual('NAME', record.publisher_name)

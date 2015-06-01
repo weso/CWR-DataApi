@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import AlternateTitleDictionaryDecoder
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -13,7 +12,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,16 +20,16 @@ class TestAlternateTitleDictionaryDecoder(unittest.TestCase):
         self._decoder = AlternateTitleDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['record_type'] = 'ALT'
-        dict['transaction_sequence_n'] = 3
-        dict['record_sequence_n'] = 15
-        dict['alternate_title'] = 'ALTERNATE TITLE'
-        dict['title_type'] = 'FT'
-        dict['language_code'] = 'ES'
+        data['record_type'] = 'ALT'
+        data['transaction_sequence_n'] = 3
+        data['record_sequence_n'] = 15
+        data['alternate_title'] = 'ALTERNATE TITLE'
+        data['title_type'] = 'FT'
+        data['language_code'] = 'ES'
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('ALT', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

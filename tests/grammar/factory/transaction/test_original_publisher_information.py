@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -11,11 +13,10 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestOriginalPublisherValid(unittest.TestCase):
+class TestOriginalPublisherGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('original_publisher_information')
 
@@ -76,7 +77,6 @@ class TestOriginalPublisherValid(unittest.TestCase):
         self.assertEqual('SPU', result[0].record_type)
         self.assertEqual('NPN', result[1].record_type)
 
-
     def test_valid_min(self):
         publisher = 'SPU000012340000002319A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'
 
@@ -87,3 +87,21 @@ class TestOriginalPublisherValid(unittest.TestCase):
         self.assertEqual(1, len(result))
 
         self.assertEqual('SPU', result[0].record_type)
+
+
+class TestOriginalPublisherGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('original_publisher_information')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

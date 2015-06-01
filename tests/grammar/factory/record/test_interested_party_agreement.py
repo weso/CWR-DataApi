@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Interested Party in Agreement grammar tests.
@@ -12,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -137,42 +137,15 @@ class TestIPAGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('interested_party_agreement')
 
-    def test_acquiror_missing_shares(self):
+    def test_empty(self):
         """
-        Tests that a exception is thrown when the IPA is an acquiror but no shares have been set.
+        Tests that a exception is thrown when the the works number is zero.
         """
-        record = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    009000000100000001100000'
+        record = ''
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
-    def test_acquiror_missing_societies(self):
-        """
-        Tests that a exception is thrown when the IPA is an acquiror but no rights society have been set.
-        """
-        record = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                       00205   03000   02312'
+    def test_invalid(self):
+        record = 'This is an invalid string'
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_pr_shares_missing_society(self):
-        """
-        Tests that a exception is thrown when PR shares have been set but no PR society is set.
-        """
-        record = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                       020500010300000102312'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_mr_shares_missing_society(self):
-        """
-        Tests that a exception is thrown when MR shares have been set but no MR society is set.
-        """
-        record = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    00102050   0300000102312'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_sr_shares_missing_society(self):
-        """
-        Tests that a exception is thrown when SR shares have been set but no SR society is set.
-        """
-        record = 'IPA0000123400000023AC01234567890I-000000229-7A12345678LAST NAME                                    FIRST NAME                    0010205000103000   02312'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)

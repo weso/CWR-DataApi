@@ -3,7 +3,7 @@
 import datetime
 
 import pyparsing as pp
-
+from pyparsing import ParseResults
 
 """
 CWR fields grammar.
@@ -12,7 +12,8 @@ This stores grammar for parsing the CWR fields.
 
 These fields are:
 - Alphanumeric (A). Only allows non lowercase ASCII characters.
-- Numeric field (N). Accepts integer or float values (these are handled as two different fields).
+- Numeric field (N). Accepts integer or float values (these are handled as two
+different fields).
 - Boolean (B). Accepts 'Y' or 'N'.
 - Flag (F). Accepts 'Y', 'N' or 'U'.
 - Date (D). Accepts numbers in the pattern YYYYMMDD.
@@ -26,7 +27,8 @@ Each of these fields is parsed into a value as follows:
 - Date (D). datetime.date.
 - Time (T). datetime.time.
 
-Additionally, other fields used on the CWR files, but not defined as basic fields, are included:
+Additionally, other fields used on the CWR files, but not defined as basic
+fields, are included:
 - Blank. A line composed only of whitespaces.
 """
 
@@ -41,24 +43,29 @@ Alphanumeric (A) field.
 
 Only non lowercase ASCII values are allowed.
 
-The string contained in this field is parsed into a string with no heading or trailing white spaces.
+The string contained in this field is parsed into a string with no heading or
+trailing white spaces.
 """
 
 
 def alphanum(columns, name=None, extended=False):
     """
-    Creates the grammar for an Alphanumeric (A) field, accepting only the specified number of characters.
+    Creates the grammar for an Alphanumeric (A) field, accepting only the
+    specified number of characters.
 
-    By default Alphanumeric fields accept only ASCII characters, excluding lowercases. If the extended flag is set to
-    True, then non-ASCII characters are allowed, but the no ASCII lowercase constraint is kept.
+    By default Alphanumeric fields accept only ASCII characters, excluding
+    lowercases. If the extended flag is set to True, then non-ASCII characters
+    are allowed, but the no ASCII lowercase constraint is kept.
 
-    This can be a compulsory field, in which case the empty string is disallowed.
+    This can be a compulsory field, in which case the empty string is
+    disallowed.
 
     The text will be stripped of heading and trailing whitespaces.
 
     :param columns: number of columns for this field
     :param name: name for the field
-    :param extended: indicates if this is the exceptional case where non-ASCII are allowed
+    :param extended: indicates if this is the exceptional case where non-ASCII
+    are allowed
     :return: grammar for this Alphanumeric field
     """
 
@@ -74,8 +81,10 @@ def alphanum(columns, name=None, extended=False):
         # The regular expression just forbids lowercase characters
         field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]){' + str(columns) + '}')
     else:
-        # The regular expression forbids lowercase characters but allows non-ASCII characters
-        field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]|[^\x00-\x7F]){' + str(columns) + '}')
+        # The regular expression forbids lowercase characters but allows
+        # non-ASCII characters
+        field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]|[^\x00-\x7F]){' +
+                         str(columns) + '}')
 
     # Parse action
     field.setParseAction(lambda s: s[0].strip())
@@ -113,7 +122,8 @@ def _check_not_empty(string):
 """
 Numeric (N) field, integer type.
 
-Only integers are allowed, and the string from the field will be parsed into an integer.
+Only integers are allowed, and the string from the field will be parsed into
+an integer.
 
 For the Numeric field allowing float values check the numeric_float method.
 """
@@ -121,7 +131,8 @@ For the Numeric field allowing float values check the numeric_float method.
 
 def numeric(columns, name=None):
     """
-    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
+    Creates the grammar for a Numeric (N) field, accepting only the specified
+    number of characters.
 
     This version only allows integers.
 
@@ -166,7 +177,8 @@ def _to_int(parsed):
 """
 Numeric (N) field, float type.
 
-Only float values are allowed, and the string from the field will be parsed into a float.
+Only float values are allowed, and the string from the field will be parsed
+into a float.
 
 For the Numeric field allowing integer values check the numeric method.
 """
@@ -174,15 +186,18 @@ For the Numeric field allowing integer values check the numeric method.
 
 def numeric_float(columns, nums_int, name=None):
     """
-    Creates the grammar for a Numeric (N) field, accepting only the specified number of characters.
+    Creates the grammar for a Numeric (N) field, accepting only the specified
+    number of characters.
 
     This version only allows floats.
 
-    As nothing in the string itself indicates how many of the characters are for the integer and the decimal sections,
-    this should be specified with the nums_int parameter.
+    As nothing in the string itself indicates how many of the characters are
+    for the integer and the decimal sections, this should be specified with
+    the nums_int parameter.
 
-    This will indicate the number of characters, starting from the left, to be used for the integer value. All the
-    remaining ones will be used for the decimal value.
+    This will indicate the number of characters, starting from the left, to be
+    used for the integer value. All the remaining ones will be used for the
+    decimal value.
 
     :param columns: number of columns for this field
     :param name: name for the field
@@ -199,12 +214,14 @@ def numeric_float(columns, nums_int, name=None):
 
     if nums_int < 0:
         # Integer columns can't have negative size
-        raise BaseException('Number of integer values should be positive or zero')
+        raise BaseException('Number of integer values should be positive or '
+                            'zero')
 
     if columns < nums_int:
         # There are more integer numbers than columns
-        message = 'The number of columns is %s and should be higher or equal than the integers: %s' % (
-            columns, nums_int)
+        message = 'The number of columns is %s and should be higher or ' \
+                  'equal than the integers: %s' % (
+                      columns, nums_int)
         raise BaseException(message)
 
     # Basic field
@@ -226,8 +243,9 @@ def _to_numeric_float(number, nums_int):
     """
     Transforms a string into a float.
 
-    The nums_int parameter indicates the number of characters, starting from the left, to be used for the integer value. All the
-    remaining ones will be used for the decimal value.
+    The nums_int parameter indicates the number of characters, starting from
+    the left, to be used for the integer value. All the remaining ones will be
+    used for the decimal value.
 
     :param number: string with the number
     :param nums_int: characters, counting from the left, for the integer value
@@ -291,7 +309,7 @@ def _to_boolean(string):
     """
     Transforms a string into a boolean value.
 
-    If a value which is not 'Y' or 'N' is received, a ParseException is thrown
+    If a value which is not 'Y' or 'N' is received, a ParseException is thrown.
 
     :param: string: the string to transform
     :return: True if the string is 'Y', False if it is 'N'
@@ -345,10 +363,11 @@ def _to_flag(string):
     """
     Transforms a string into a flag value.
 
-    If a value which is not 'Y', 'N' or 'U' is received, a ParseException is thrown.
+    If a value which is not 'Y', 'N' or 'U' is received, a ParseException is
+    thrown.
 
-    The received string is untouched, so if no exception is thrown the same value that is received will be
-    the one returned.
+    The received string is untouched, so if no exception is thrown the same
+    value that is received will be the one returned.
 
     :param: string: the string to transform
     :return: the received string
@@ -374,7 +393,8 @@ This string will be parsed into a datetime.date.
 
 def date(name=None):
     """
-    Creates the grammar for a Date (D) field, accepting only numbers in a certain pattern.
+    Creates the grammar for a Date (D) field, accepting only numbers in a
+    certain pattern.
 
     :param name: name for the field
     :return: grammar for the date field
@@ -385,10 +405,12 @@ def date(name=None):
 
     # Basic field
     # This regex allows values from 00000101 to 99991231
-    field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])')
+    field = pp.Regex('[0-9][0-9][0-9][0-9](0[1-9]|1[0-2])'
+                     '(0[1-9]|[1-2][0-9]|3[0-1])')
 
     # Parse action
-    field.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d').date())
+    field.setParseAction(lambda d: datetime.datetime.strptime(d[0], '%Y%m%d')
+                         .date())
 
     # Name
     field.setName(name)
@@ -413,7 +435,8 @@ This string will be parsed into a datetime.time.
 
 def time(name=None):
     """
-    Creates the grammar for a Time or Duration (T) field, accepting only numbers in a certain pattern.
+    Creates the grammar for a Time or Duration (T) field, accepting only
+    numbers in a certain pattern.
 
     :param name: name for the field
     :return: grammar for the date field
@@ -427,7 +450,8 @@ def time(name=None):
     field = pp.Regex('(0[0-9]|1[0-9]|2[0-3])[0-5][0-9][0-5][0-9]')
 
     # Parse action
-    field.setParseAction(lambda t: datetime.datetime.strptime(t[0], '%H%M%S').time())
+    field.setParseAction(lambda t: datetime.datetime.strptime(t[0], '%H%M%S')
+                         .time())
 
     # White spaces are not removed
     field.leaveWhitespace()
@@ -447,10 +471,13 @@ This accepts only values from a table or list.
 
 def lookup(values, name=None):
     """
-    Creates the grammar for a Lookup (L) field, accepting only values from a list.
+    Creates the grammar for a Lookup (L) field, accepting only values from a
+    list.
 
-    Like in the Alphanumeric field, the result will be stripped of all heading and trailing whitespaces.
+    Like in the Alphanumeric field, the result will be stripped of all heading
+    and trailing whitespaces.
 
+    :param values: values allowed
     :param name: name for the field
     :return: grammar for the lookup field
     """
@@ -459,6 +486,10 @@ def lookup(values, name=None):
 
     if values is None:
         raise ValueError('The values can no be None')
+
+    # TODO: This should not be needed, it is just a patch. Fix this.
+    if isinstance(values, ParseResults):
+        values = values.asList()
 
     # Only the specified values are allowed
     lookup_field = pp.oneOf(values)
@@ -483,9 +514,11 @@ def blank(columns=1, name=None):
     """
     Creates the grammar for a blank field.
 
-    These are for constant empty strings which should be ignored, as they are used just as fillers.
+    These are for constant empty strings which should be ignored, as they are
+    used just as fillers.
 
-    :param columns: number of columns, which is the required number of whitespaces
+    :param columns: number of columns, which is the required number of
+    whitespaces
     :param name: name for the field
     :return: grammar for the blank field
     """

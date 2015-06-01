@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from pyparsing import ParseException
+
 from tests.utils.grammar import get_record_grammar
 
 """
@@ -9,11 +11,10 @@ CWR file Publisher parsing tests.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
-class TestPublisherRecordValid(unittest.TestCase):
+class TestPublisherRecordGrammar(unittest.TestCase):
     """
     Tests that the Publisher Record grammar decodes correctly formatted strings
     """
@@ -124,71 +125,19 @@ class TestPublisherRecordValid(unittest.TestCase):
         self.assertEqual(None, result.usa_license)
 
 
-class TestPublisherRecordException(unittest.TestCase):
+class TestPublisherRecordGrammarException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('publisher')
 
-    def test_no_acquiror_performing_shares(self):
-        record = 'SPU000012340000002319A12345678PUBLISHER NAME                                PA92370341200014107338A0123456789123009020500100000001100000BY I-000000229-7A0123456789124A0123456789125OSB'
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
 
-    def test_no_acquiror_mechanization_shares(self):
-        record = 'SPU000012340000002319A12345678PUBLISHER NAME                                PA92370341200014107338A0123456789123009000000100100001100000BY I-000000229-7A0123456789124A0123456789125OSB'
+    def test_invalid(self):
+        record = 'This is an invalid string'
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_no_acquiror_synchronization_shares(self):
-        record = 'SPU000012340000002319A12345678PUBLISHER NAME                                PA92370341200014107338A0123456789123009000000100000001100100BY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_sequence_number_0(self):
-        record = 'SPU000012340000002300A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_acquiror_missing_shares(self):
-        record = 'SPU000012340000002319A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009000000100000001100000BY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_controlled_has_no_name(self):
-        record = 'SPU000012340000002319A12345678                                              AQ92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_known_has_no_name(self):
-        record = 'OPU000012340000002319A12345678                                             NAQ92370341200014107338A0123456789123009020500100300001102312LY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_controlled_has_no_type(self):
-        record = 'SPU000012340000002319A12345678PUBLISHER NAME                               N  92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_controlled_unknown(self):
-        record = 'SPU000012340000002319A12345678PUBLISHER NAME                               NAQ92370341200014107338A0123456789123009020500100300001102312LY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_not_controlled_unknown_blank(self):
-        record = 'OPU000012340000002319A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009020500100300001102312LY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_not_controlled_unknown_has_name(self):
-        record = 'OPU000012340000002319A12345678PUBLISHER NAME                               YAQ92370341200014107338A0123456789123009020500100300001102312LY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_pr_share_above_50(self):
-        record = 'SPU000012340000002319A12345678PUBLISHER NAME                                AQ92370341200014107338A0123456789123009051000100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
-
-    def test_opu_bad_special_indicator(self):
-        record = 'OPU000012340000002319A12345678PUBLISHER NAME                               NAQ92370341200014107338A0123456789123009020500100300001102312BY I-000000229-7A0123456789124A0123456789125OSB'
-
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)

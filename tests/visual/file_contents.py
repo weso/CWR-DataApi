@@ -7,7 +7,6 @@ import os
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.utils.printer import CWRPrinter
 
-
 """
 Visual test for checking a file contents.
 
@@ -18,18 +17,20 @@ All the file contents will be printed on the console.
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 if __name__ == '__main__':
     print('File contents parsing test')
-    path = raw_input('Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
-    output = raw_input('Please enter the full path to the file where the results will be stored: ')
-    log = raw_input('Please enter the full path to the file where parsing log will be saved: ')
+    path = raw_input(
+        'Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
+    output = raw_input(
+        'Please enter the full path to the file where the results will be stored: ')
+    log = raw_input(
+        'Please enter the full path to the file where parsing log will be saved: ')
     print('\n')
-    print('Reading file %s' % (path))
-    print('Storing output on %s' % (output))
-    print('Saving log on %s' % (log))
+    print('Reading file %s' % path)
+    print('Storing output on %s' % output)
+    print('Saving log on %s' % log)
     print('\n')
 
     logging.basicConfig(filename=log,
@@ -48,7 +49,7 @@ if __name__ == '__main__':
     end = time.clock()
     time_parse = (end - start)
 
-    print('Parsed the file in %s seconds' % (time_parse))
+    print('Parsed the file in %s seconds' % time_parse)
     print('\n')
 
     logger.info('Finished parsing n %s seconds' % time_parse)

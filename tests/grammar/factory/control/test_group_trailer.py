@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Group Header grammar tests.
@@ -12,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -61,7 +61,7 @@ class TestGroupTrailerGrammar(unittest.TestCase):
         self.assertEqual(1234567, result.record_count)
 
 
-class TestGrammarGroupTrailerException(unittest.TestCase):
+class TestGrammarGroupTrailerGrammarException(unittest.TestCase):
     """
     Tests that GroupTrailerDecoder throws exceptions with incorrectly formatted strings.
     """
@@ -69,10 +69,12 @@ class TestGrammarGroupTrailerException(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('group_trailer')
 
-    def test_invalid_wrong_group_id(self):
-        """
-        Tests that GroupTrailerDecoder throws an exception when the group ID is 0.
-        """
-        record = 'GRHACK0000002.100123456789  '
+    def test_empty(self):
+        record = ''
 
-        # self.assertRaises(ParseException, self.grammar.parseString, record)
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

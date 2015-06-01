@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from tests.utils.grammar import get_record_grammar
+from pyparsing import ParseException
 
+from tests.utils.grammar import get_record_grammar
 
 """
 CWR Publisher For Writer grammar tests.
@@ -12,7 +13,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -42,3 +42,21 @@ class TestWriterPublisherGrammar(unittest.TestCase):
         self.assertEqual('C1234567890123', result.submitter_agreement_n)
         self.assertEqual('D1234567890123', result.society_assigned_agreement_n)
         self.assertEqual('A12345678', result.writer_ip_n)
+
+
+class TestWriterPublisherGrammarException(unittest.TestCase):
+    def setUp(self):
+        self.grammar = get_record_grammar('writer_publisher')
+
+    def test_empty(self):
+        """
+        Tests that a exception is thrown when the the works number is zero.
+        """
+        record = ''
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)
+
+    def test_invalid(self):
+        record = 'This is an invalid string'
+
+        self.assertRaises(ParseException, self.grammar.parseString, record)

@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.decoder.dictionary import MediaTypeValueDictionaryDecoder
 
-
 """
 Dictionary to Message decoding tests.
 
@@ -13,7 +12,6 @@ The following cases are tested:
 
 __author__ = 'Bernardo Martínez Garrido'
 __license__ = 'MIT'
-__version__ = '0.0.0'
 __status__ = 'Development'
 
 
@@ -22,16 +20,16 @@ class TestMediaTypeValueDecoder(unittest.TestCase):
         self._decoder = MediaTypeValueDictionaryDecoder()
 
     def test_encoded(self):
-        dict = {}
+        data = {}
 
-        dict['code'] = 'EP'
-        dict['name'] = '45 rpm 17 cm EP'
-        dict['media_type'] = 'VINYL'
-        dict['duration_max'] = 16
-        dict['works_max'] = 4
-        dict['fragments_max'] = 12
+        data['code'] = 'EP'
+        data['name'] = '45 rpm 17 cm EP'
+        data['media_type'] = 'VINYL'
+        data['duration_max'] = 16
+        data['works_max'] = 4
+        data['fragments_max'] = 12
 
-        record = self._decoder.decode(dict)
+        record = self._decoder.decode(data)
 
         self.assertEqual('EP', record.code)
         self.assertEqual('45 rpm 17 cm EP', record.name)
