@@ -3,7 +3,7 @@ source = cwr
 
 [run]
 branch = True
-source = src
+source = cwr
 parallel = true
 
 [report]
