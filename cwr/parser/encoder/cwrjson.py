@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import sys
 
 from cwr.parser.encoder.dictionary import FileDictionaryDictionaryEncoder
 from cwr.parser.encoder.common import Encoder
@@ -42,11 +43,10 @@ class JSONEncoder(Encoder):
         """
         encoded = self._dict_encoder.encode(entity)
 
-        try:
+        if sys.version_info[0] == 2:
             result = json.dumps(encoded, ensure_ascii=False,
                                 default=_iso_handler, encoding='latin1')
-        except TypeError:
-            # TODO: Is this really the best way to handle this?
+        else:
             # For Python 3
             result = json.dumps(encoded, ensure_ascii=False,
                                 default=_iso_handler)
