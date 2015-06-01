@@ -1,11 +1,5 @@
-[paths]
-source = cwr
-
-[run]
-branch = True
-source = cwr
-parallel = true
-
 [report]
-show_missing = true
-precision = 2
+omit =  
+    */python?.?/*
+    */site-packages/nose/*
+    *__init__*
