@@ -24,13 +24,19 @@ if "%DISTDIR%" == "" (
 REM Sets the .egg file path.
 REM The file will be located at the project's root.
 if "%EGGDIR%" == "" (
-	set EGGDIR=*.egg-info
+	set EGGDIR=CWR_API.egg-info
 )
 
 REM Sets the tox folder path.
 REM It will be the '.tox' folder.
 if "%TOXDIR%" == "" (
 	set TOXDIR=.tox
+)
+
+REM Sets the docs output folder path.
+REM It will be in the 'docs' folder.
+if "%DOCBUILDDIR%" == "" (
+	set DOCBUILDDIR="docs/build"
 )
 
 REM If no parameters are received, the help is shown
@@ -42,14 +48,13 @@ if "%1" == "help" (
 	:help
 	echo.Please use `make ^<target^>` where ^<target^> is one of
 	echo.  clean          to remove the distribution folders
-	echo.  dist_source    to make the source distribution
-	echo.  dist_binary    to make the binary distribution
+	echo.  dist           to make the standard distribution
 	echo.  install        to install the project
 	echo.  requirements   to install the project requirements
-	echo.  pypi_reg       to register on pypi
-	echo.  pypitest_reg   to register on pypi-test
-	echo.  pypi           to upload to pypi
-	echo.  pypitest       to upload to pypi-test
+	echo.  register       to register on pypi
+	echo.  register-test  to register on pypi-test
+	echo.  deploy         to deploy to pypi
+	echo.  deploy-test    to upload to pypi-test
 	echo.  test           to run tests
 	goto end
 )
@@ -65,6 +70,9 @@ if "%1" == "clean" (
 	)
 	if exist %TOXDIR% (
 		rd /S /Q %TOXDIR%
+	)
+	if exist %DOCBUILDDIR% (
+		rd /S /Q %DOCBUILDDIR%
 	)
 	goto end
 )
@@ -89,22 +97,12 @@ exit /b 1
 :interpreter_ok
 
 
-REM Source distribution.
-if "%1" == "dist_source" (
+REM Distribution.
+if "%1" == "dist" (
 	%PYTHON% setup.py sdist
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Generated source distribution. It can be found in the
-	echo.%DISTDIR% folder.
-	goto end
-)
-
-REM Binary distribution.
-if "%1" == "dist_binary" (
-	%PYTHON% setup.py bdist
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Generated binary distribution. It can be found in the
 	echo.%DISTDIR% folder.
 	goto end
 )
@@ -124,7 +122,7 @@ if "%1" == "requirements" (
 )
 
 REM Pypi registration.
-if "%1" == "pypi_reg" (
+if "%1" == "register" (
 	%PYTHON% setup.py register -r pypi
 	if errorlevel 1 exit /b 1
 	echo.
@@ -133,7 +131,7 @@ if "%1" == "pypi_reg" (
 )
 
 REM Pypitest registration.
-if "%1" == "pypitest_reg" (
+if "%1" == "register-test" (
 	%PYTHON% setup.py register -r pypitest
 	if errorlevel 1 exit /b 1
 	echo.
@@ -142,7 +140,7 @@ if "%1" == "pypitest_reg" (
 )
 
 REM Pypi deployment.
-if "%1" == "pypi" (
+if "%1" == "deploy" (
 	%PYTHON% setup.py sdist upload -r pypi
 	if errorlevel 1 exit /b 1
 	echo.
@@ -151,7 +149,7 @@ if "%1" == "pypi" (
 )
 
 REM Pypitest deployment.
-if "%1" == "pypitest" (
+if "%1" == "deploy-test" (
 	%PYTHON% setup.py sdist upload -r pypitest
 	if errorlevel 1 exit /b 1
 	echo.
