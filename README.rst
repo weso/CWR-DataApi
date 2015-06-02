@@ -69,6 +69,10 @@ Additionally, the project is offered as a `Pypi package`_, and can be installed 
 
 ``pip install cwr-api``
 
+.. image:: https://badge.fury.io/py/cwr-api.svg
+    :target: https://pypi.python.org/pypi/cwr-api
+    :alt: CWR-API Pypi package page
+
 Collaborate
 -----------
 

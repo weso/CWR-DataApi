@@ -9,3 +9,4 @@ include data_cwr/*.csv
 include data_cwr/*.yml
 # Configuration files are added
 include config_cwr/*.yml
+include config_cwr/*.cml
