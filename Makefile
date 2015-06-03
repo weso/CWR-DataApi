@@ -38,7 +38,7 @@ endif
 help:
 	@echo "Please use 'make <target>' where <target> is one of"
 	@echo "  clean          to remove the distribution folders"
-	@echo "  dist           to make the standard distribution"
+	@echo "  build          to build the distribution"
 	@echo "  install        to install the project"
 	@echo "  requirements   to install the project requirements"
 	@echo "  register       to register on pypi"
@@ -56,7 +56,7 @@ clean:
 	rm -r -f $(DOCBUILDDIR)
 
 # Distribution.
-dist:
+build:
 	$(PYTHON) setup.py sdist
 
 # Install in local libraries repository
@@ -77,7 +77,8 @@ register-test:
  
 # Pypi deployment.
 deploy:
-	$(PYTHON) setup.py sdist upload -r pypi
+	$(PYTHON) setup.py release
+	twine upload dist/*
  
 # Pypitest deployment.
 deploy-test:
