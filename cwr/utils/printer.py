@@ -27,7 +27,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class CWRPrinter:
+class CWRPrinter():
     """
     Prints the contents of a CWR file on the console.
     """

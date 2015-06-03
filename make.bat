@@ -36,7 +36,8 @@ if "%TOXDIR%" == "" (
 REM Sets the docs output folder path.
 REM It will be in the 'docs' folder.
 if "%DOCBUILDDIR%" == "" (
-	set DOCBUILDDIR="docs/build"
+	set DOCDIR="docs"
+	set DOCBUILDDIR="build"
 )
 
 REM If no parameters are received, the help is shown
@@ -71,8 +72,10 @@ if "%1" == "clean" (
 	if exist %TOXDIR% (
 		rd /S /Q %TOXDIR%
 	)
-	if exist %DOCBUILDDIR% (
+	if exist "%DOCDIR%/%DOCBUILDDIR%" (
+		cd %DOCDIR%
 		rd /S /Q %DOCBUILDDIR%
+		cd ..
 	)
 	goto end
 )

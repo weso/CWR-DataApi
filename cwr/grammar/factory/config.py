@@ -12,20 +12,10 @@ __status__ = 'Development'
 
 rule_at_least = pp.Literal('at_least_').suppress() + \
                 pp.Word(pp.nums).setResultsName('count')
-rule_at_least.setParseAction(lambda c: _process_count(c))
-
-
-def _process_count(parsed):
-    return int(parsed[0])
-
+rule_at_least.setParseAction(lambda v: int(v[0]))
 
 _rule_config_string = pp.Regex('[^()\[\]\\n,:]*')
-_rule_config_string.setParseAction(lambda s: _clear_str(s))
-
-
-def _clear_str(parsed):
-    return parsed[0].strip()
-
+_rule_config_string.setParseAction(lambda v: v[0].strip())
 
 _rule_identifier = _rule_config_string + pp.Literal(':').suppress()
 _rule_identifier.setParseAction(lambda rule: rule[0])

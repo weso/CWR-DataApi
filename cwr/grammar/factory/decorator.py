@@ -46,7 +46,7 @@ class GroupRuleDecorator(RuleDecorator):
 
         if rule_id in self._decoders:
             decoder = self._decoders[rule_id]
-            record.setParseAction(lambda p: decoder.decode(p))
+            record.setParseAction(decoder.decode)
 
         return record.setResultsName(rule_id)
 
@@ -71,7 +71,7 @@ class RecordRuleDecorator(RuleDecorator):
 
         if rule_id in self._decoders:
             decoder = self._decoders[rule_id]
-            record.setParseAction(lambda p: decoder.decode(p))
+            record.setParseAction(decoder.decode)
 
         return record.setResultsName(rule_id)
 
