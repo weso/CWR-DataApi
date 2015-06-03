@@ -24,6 +24,7 @@ _version_re = re.compile(r'__version__\s+=\s+(.*)')
 # Test requirements
 _tests_require = ['tox']
 
+
 # Gets the long description from the readme
 def read(*names, **kwargs):
     return io.open(
