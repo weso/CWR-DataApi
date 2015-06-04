@@ -6,8 +6,8 @@ if [ "$JYTHON" == "true" ]; then
    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
    export PYENV_ROOT="$HOME/.pyenv"
    export PATH="$PYENV_ROOT/bin:$PATH"
-   pyenv install pypy-2.5.0
-   pyenv global pypy-2.5.0
+   pyenv install jython-2.7.0
+   pyenv global jython-2.7.0
 
    eval "$(pyenv init -)"
 
@@ -15,6 +15,6 @@ if [ "$JYTHON" == "true" ]; then
 
    pip install tox
 
-   tox -e jython
+   tox -e py27
 
 fi
