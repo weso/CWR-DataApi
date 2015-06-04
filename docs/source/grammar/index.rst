@@ -8,4 +8,5 @@ created.
 .. toctree::
    :maxdepth: 1
 
+   rules
    config_dsl

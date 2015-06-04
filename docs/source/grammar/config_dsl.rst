@@ -7,9 +7,7 @@ A small DSL is bein used to set up the grammar.
 Files using this DSL are read and processed, and the data is then sent to the
 grammar factory to build the grammar.
 
-An example of this DSL, defining the Agreement Record:
-
-.. code-block::
+An example of this DSL, defining the Agreement Record::
 
     transaction_record:
         id: agreement
@@ -68,9 +66,7 @@ The DSL consists on a series of blocks, each of them representing a grammar rule
 These rules represent a logical section of the file, and may be for a line, or
 for a series of them.
 
-They have the following structure, which only shows compulsory fields:
-
-.. code-block::
+They have the following structure, which only shows compulsory fields::
 
     rule_group_1:
         id: rule_id_1
