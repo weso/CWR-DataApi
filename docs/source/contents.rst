@@ -8,10 +8,15 @@ Contents:
    :maxdepth: 2
 
    Home <index>
-   cwr_standard/index
-   other/index
-   cwr_structure/index
-   validation/index
+   contents_standard
+
+CWR Data API
+============
+
+.. toctree::
+   :maxdepth: 2
+
+   grammar/index
 
 
 Indices and tables

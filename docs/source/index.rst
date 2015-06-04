@@ -1,6 +1,6 @@
-===============
+###############
 CWR API library
-===============
+###############
 
 The CWR API library offers a model to represent the content of files following
 the CISAC CWR standard.
@@ -12,9 +12,9 @@ with the data they contain.
 This library has been developed based on CWR specification version 2.1 revision
 3, from December 10th 2004.
 
--------------------
+*******************
 Getting the library
--------------------
+*******************
 
 .. raw:: html
 
@@ -32,6 +32,13 @@ Getting the library
 
 The latest version of the library can always be found at Pypi. Additionally, the
 code is on Github.
+
+**************
+Infrastructure
+**************
+
+Repositories
+============
 
 Github
 ------
@@ -57,15 +64,30 @@ Github
 
 The code is being stored at GitHub.
 
+ReadTheDocs
+-----------
+
+.. raw:: html
+
+   <p style="height:22px">
+     <a href="https://readthedocs.org/projects/cwr-dataapi/?badge=latest"
+     alt="Documentation status">
+       <img src="https://readthedocs.org/projects/cwr-dataapi/badge/?version=latest"/>
+     </a>
+   </p>
+
+The documentation is stored at ReadTheDocs
+
 
 Continuous integration and tests
---------------------------------
+================================
 
 A small infrastructure is being used to check all the code being published
 into the code repository.
 
 Travis (CI)
 -----------
+
 .. raw:: html
 
    <p style="height:22px">
@@ -103,4 +125,4 @@ Landscape (Code health)
      </a>
    </p>
 
-Landscape checks commits to make
+Landscape checks commits to make code health reports.
