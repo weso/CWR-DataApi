@@ -7,9 +7,6 @@ python:
   - "3.4"
   - "pypy"
   - "pypy3"
-env:
-  - REQUIREMENTS=lowest
-  - REQUIREMENTS=release
 matrix:
   include:
     - python: "2.7"
@@ -18,22 +15,13 @@ matrix:
       env: COVERAGE=true
     - python: "2.7"
       env: JYTHON=true
-  exclude:
-    - python: "3.2"
-      env: REQUIREMENTS=lowest
-    - python: "3.3"
-      env: REQUIREMENTS=lowest
-    - python: "3.4"
-      env: REQUIREMENTS=lowest
-    - python: "pypy3"
-      env: REQUIREMENTS=lowest
 
 before_install:
   - chmod +x ./.scripts/test_jython.sh
 install:
   - pip install tox
 script:
-  - if [ -z "$DOCS" ] && [ -z "$COVERAGE" ] && [ -z "$JYTHON" ]; then tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS; fi
+  - if [ -z "$DOCS" ] && [ -z "$COVERAGE" ] && [ -z "$JYTHON" ]; then tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/'); fi
   - if [ ! -z "$DOCS" ]; then tox -e docs; fi
   - if [ ! -z "$COVERAGE" ]; then tox -e coverage; fi
   - if [ ! -z "$JYTHON" ]; then ./.scripts/test_jython.sh; fi
