@@ -16,6 +16,8 @@ matrix:
       env: DOCS=true
     - python: "2.7"
       env: COVERAGE=true
+    - python: "2.7"
+      env: JYTHON=true
   exclude:
     - python: "3.2"
       env: REQUIREMENTS=lowest
@@ -29,6 +31,7 @@ matrix:
 install:
   - pip install tox
 script:
-  - if [ -z "$DOCS" ] && [ -z "$COVERAGE" ]; then tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS; fi
+  - if [ -z "$DOCS" ] && [ -z "$COVERAGE" ] && [ -z "$JYTHON" ]; then tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/')-$REQUIREMENTS; fi
   - if [ ! -z "$DOCS" ]; then tox -e docs; fi
   - if [ ! -z "$COVERAGE" ]; then tox -e coverage; fi
+  - if [ ! -z "$JYTHON" ]; then tox -e coverage; fi
