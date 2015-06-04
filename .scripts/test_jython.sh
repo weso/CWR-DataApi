@@ -16,9 +16,11 @@ if [ "$JYTHON" == "true" ]; then
    echo "Interpreter version:"
    python --version
 
-   echo "Running tests"
    python -m pip install tox
 
-   python -m tox -e jython
+   export PYTHONPATH="$HOME/python.bin"
+
+   echo "Running tests"
+   tox -e jython
 
 fi
