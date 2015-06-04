@@ -17,9 +17,7 @@ if [ "$JYTHON" == "true" ]; then
    python --version
 
    echo "Running tests"
-   pip install tox
-
-   pip --upgrade virtualenv
+   python -m pip install tox
 
    tox -e jython
 
