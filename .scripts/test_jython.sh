@@ -7,11 +7,13 @@ if [ "$JYTHON" == "true" ]; then
    export PYENV_ROOT="$HOME/.pyenv"
    export PATH="$PYENV_ROOT/bin:$PATH"
    pyenv install jython-2.7.0
-   pyenv global jython-2.7.0
+   mkdir ~/jython_test
+   cd ~/jython_test
+   pyenv local jython-2.7.0
 
    python --version
 
-   python install tox
+   pip install tox
 
    tox -e jython
 
