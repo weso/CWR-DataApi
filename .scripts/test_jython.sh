@@ -7,8 +7,6 @@ if [ "$JYTHON" == "true" ]; then
    export PYENV_ROOT="$HOME/.pyenv"
    export PATH="$PYENV_ROOT/bin:$PATH"
    pyenv install pypy-2.5.0
-   mkdir ~/jython_test
-   cd ~/jython_test
    pyenv global pypy-2.5.0
 
    eval "$(pyenv init -)"
