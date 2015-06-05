@@ -9,7 +9,7 @@ if [ "$JYTHON" == "true" ]; then
 
    echo "Installing Jython"
    pyenv install jython-2.7.0
-   pyenv global jython-2.7.0
+   pyenv local jython-2.7.0
 
    eval "$(pyenv init -)"
 
@@ -33,7 +33,7 @@ if [ "$JYTHON" == "true" ]; then
    jython -m easy_install pip
    jython -m pip install -rrequirements.txt
 
-   jython -m easy_install nose
-   jython -m nosetests
+   jython -m easy_install -U pytest
+   jython py.test
 
 fi
