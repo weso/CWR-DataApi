@@ -16,17 +16,18 @@ if [ "$JYTHON" == "true" ]; then
    echo "Interpreter version:"
    python --version
 
-   echo "pip version:"
+   wget http://peak.telecommunity.com/dist/ez_setup.py
+   jython ez_setup.py
 
-   jython -m --version
-
-   jython -m install tox
+   jython easy_install.py tox
+   jython easy_install.py pip
+   jython easy_install.py nose
 
    echo "Running tests"
    #tox -e jython
 
    jython -m pip install -rrequirements.txt
    jython -m pip install nose
-   jython nosetests
+   jython -m nosetests
 
 fi
