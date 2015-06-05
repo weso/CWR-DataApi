@@ -21,7 +21,7 @@ if [ "$JYTHON" == "true" ]; then
 
    jython ez_install.py yolk
 
-   yolk -l
+   jython -m yolk -l
 
    #jython easy_install.py tox
    #jython easy_install.py pip
@@ -30,10 +30,10 @@ if [ "$JYTHON" == "true" ]; then
    echo "Running tests"
    #tox -e jython
 
-   jython easy_install pip
-   jython pip install -rrequirements.txt
+   jython -m easy_install pip
+   jython -m pip install -rrequirements.txt
 
-   jython easy_install nose
-   jython nosetests
+   jython -m easy_install nose
+   jython -m nosetests
 
 fi
