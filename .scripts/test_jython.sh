@@ -27,6 +27,6 @@ if [ "$JYTHON" == "true" ]; then
 
    jython -m pip install -rrequirements.txt
    jython -m pip install nose
-   jython -m nosetests
+   nosetests
 
 fi
