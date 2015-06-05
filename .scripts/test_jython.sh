@@ -19,6 +19,6 @@ if [ "$JYTHON" == "true" ]; then
    echo "Running tests"
    jython -m pip install tox
 
-   jython -m tox
+   jython -m tox -e jython
 
 fi
