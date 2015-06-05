@@ -34,6 +34,6 @@ if [ "$JYTHON" == "true" ]; then
    jython -m pip install -rrequirements.txt
 
    jython -m easy_install -U pytest
-   jython py.test
+   jython -m py.test
 
 fi
