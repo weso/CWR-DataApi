@@ -88,7 +88,6 @@ setup(
     ],
     long_description=read('README.rst'),
     install_requires=[
-        'chardet',
         'pyparsing',
         'pyyaml',
         'setuptools',
