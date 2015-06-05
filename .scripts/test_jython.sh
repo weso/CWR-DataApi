@@ -16,13 +16,17 @@ if [ "$JYTHON" == "true" ]; then
    echo "Interpreter version:"
    python --version
 
-   pip install tox
+   echo "pip version:"
+
+   jython -m --version
+
+   jython -m install tox
 
    echo "Running tests"
    #tox -e jython
 
-    jython pip install -rrequirements.txt
-    jython pip install nose
-    jython nosetests
+   jython -m pip install -rrequirements.txt
+   jython -m pip install nose
+   jython -m nosetests
 
 fi
