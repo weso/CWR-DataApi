@@ -17,9 +17,8 @@ if [ "$JYTHON" == "true" ]; then
    python --version
 
    echo "Running tests"
-   jython pip install -rrequirements.txt
-   jython pip install pytest
+   jython -m pip install tox
 
-   jython py.test
+   jython -m tox
 
 fi
