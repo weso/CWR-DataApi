@@ -1,6 +1,10 @@
 CWR Data Model API
 ==================
 
+.. image:: https://badge.fury.io/py/cwr-api.svg
+    :target: https://pypi.python.org/pypi/cwr-api
+    :alt: CWR-API Pypi package page
+
 This projects offers a domain model for the CISAC CWR standard v2.1 to be
 used on Python applications, along a series of parsing which allow
 transformations between the model and various data structures.
@@ -68,10 +72,6 @@ This can be done with the following command:
 Additionally, the project is offered as a `Pypi package`_, and can be installed through pip:
 
 ``pip install cwr-api``
-
-.. image:: https://badge.fury.io/py/cwr-api.svg
-    :target: https://pypi.python.org/pypi/cwr-api
-    :alt: CWR-API Pypi package page
 
 Collaborate
 -----------
