@@ -126,3 +126,32 @@ Landscape (Code health)
    </p>
 
 Landscape checks commits to make code health reports.
+
+********
+Contents
+********
+
+Documentation for CWR-DataApi
+=============================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   contents_standard
+
+CWR Data API
+============
+
+.. toctree::
+   :maxdepth: 2
+
+   grammar/index
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`

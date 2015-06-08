@@ -42,11 +42,14 @@ extensions = [
     'sphinx.ext.viewcode',
 ]
 
+# Templates.
+templates_path = ['_templates']
+
 # Only reStructuredText is accepted
 source_suffix = '.rst'
 
 # The master toctree document.
-master_doc = 'contents'
+master_doc = 'index'
 
 # Sort members by type
 autodoc_member_order = 'groupwise'
@@ -79,8 +82,25 @@ todo_include_todos = False
 
 # -- Options for HTML output ----------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.
-html_theme = 'sphinx_rtd_theme'
+try:
+    import sphinx_bootstrap_theme
+except:
+    from warnings import warn
+
+    warn("I would like to use the sphinx bootstrap theme, but can't find it.\n"
+         "'pip install sphinx_bootstrap_theme' to fix.")
+else:
+    # Activate the theme.
+    html_theme = 'bootstrap'
+    html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+
+    # Theme options.
+    html_theme_options = {
+        "navbar_fixed_top": "true",
+        "navbar_site_name": "Contents",
+        'bootstrap_version': '3',
+        'source_link_position': 'footer',
+    }
 
 # Custom static files folder.
 html_static_path = ['_static']
@@ -122,4 +142,6 @@ texinfo_documents = [
 # -- Intersphinx links ----------------------------------------------------
 
 # Intersphinx mapping.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {
+    'https://docs.python.org/': None,
+}
