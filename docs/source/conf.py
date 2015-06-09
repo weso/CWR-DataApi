@@ -105,6 +105,9 @@ else:
 # Custom static files folder.
 html_static_path = ['_static']
 
+# Custom sidebars
+html_sidebars = {'index': ['status.html']}
+
 # Output file base name for HTML help builder.
 htmlhelp_basename = '%s doc' % project
 
