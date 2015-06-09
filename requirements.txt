@@ -1,5 +1,9 @@
+# Parsing
 pyparsing==2.0.3
 pyyaml==3.11
 
 # Deployment
 twine>=1.5.0
+
+# Documentation
+sphinx_bootstrap_theme>=0.4.6
