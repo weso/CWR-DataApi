@@ -135,5 +135,7 @@ class BaseCWRFileNameEncoder(Encoder):
         sender = tag.sender[:3]
         receiver = tag.receiver[:3]
 
-        return self._header + year + sequence + sender + self._ip_delimiter + \
-               receiver + ".V" + version
+        rule = self._header + year + sequence + sender
+        rule = rule + self._ip_delimiter + receiver + ".V" + version
+
+        return rule

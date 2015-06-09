@@ -241,7 +241,8 @@ class WorkRecord(BaseWorkRecord):
         )
         # Work identifying info
         self._submitter_work_n = submitter_work_n
-        self._date_publication_printed_edition = date_publication_printed_edition
+        self._date_publication_printed_edition = \
+            date_publication_printed_edition
 
         # Copyright
         self._copyright_date = copyright_date
@@ -259,7 +260,8 @@ class WorkRecord(BaseWorkRecord):
         self._opus_number = opus_number
 
         # Distribution and publication info
-        self._musical_work_distribution_category = musical_work_distribution_category
+        self._musical_work_distribution_category = \
+            musical_work_distribution_category
         self._grand_rights_indicator = grand_rights_indicator
         self._recorded_indicator = recorded_indicator
         self._exceptional_clause = exceptional_clause

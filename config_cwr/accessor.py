@@ -3,7 +3,6 @@
 import os
 
 import yaml
-
 from cwr.grammar.factory.config import rule_config_file
 
 """

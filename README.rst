@@ -1,6 +1,14 @@
 CWR Data Model API
 ==================
 
+.. image:: https://badge.fury.io/py/cwr-api.svg
+    :target: https://pypi.python.org/pypi/cwr-api
+    :alt: CWR-API Pypi package page
+
+.. image:: https://readthedocs.org/projects/cwr-dataapi/badge/?version=latest
+    :target: https://readthedocs.org/projects/cwr-dataapi/?badge=latest
+    :alt: Documentation Status
+
 This projects offers a domain model for the CISAC CWR standard v2.1 to be
 used on Python applications, along a series of parsing which allow
 transformations between the model and various data structures.
@@ -50,7 +58,7 @@ The project has been tested in the following versions of the interpreter:
 All other dependencies are indicated on the requirements.txt file.
 The included makefile can install them with the command:
 
-``make requirements``
+``$ make requirements``
 
 Among them, the most important is the `Pyparsing`_ library, which is used
 to create the CWR file parser.
@@ -63,15 +71,11 @@ installation of the library.
 
 This can be done with the following command:
 
-``make install``
+``$ make install``
 
 Additionally, the project is offered as a `Pypi package`_, and can be installed through pip:
 
-``pip install cwr-api``
-
-.. image:: https://badge.fury.io/py/cwr-api.svg
-    :target: https://pypi.python.org/pypi/cwr-api
-    :alt: CWR-API Pypi package page
+``$ pip install cwr-api``
 
 Collaborate
 -----------

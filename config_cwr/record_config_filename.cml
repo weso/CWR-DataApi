@@ -2,15 +2,12 @@ filename:
     id: filename_old
     rules:
       [
-      sequence
-        [
         field: header (compulsory)
         field: year (compulsory)
         field: sequence_n_old (compulsory)
         field: sender (compulsory)
         field: delimiter_ip (compulsory)
         field: receiver (compulsory)
-        ]
       option
         [
         sequence
@@ -29,15 +26,12 @@ filename:
     id: filename_new
     rules:
       [
-      sequence
-        [
         field: header (compulsory)
         field: year (compulsory)
         field: sequence_n_new (compulsory)
         field: sender (compulsory)
         field: delimiter_ip (compulsory)
         field: receiver (compulsory)
-        ]
       option
         [
         sequence

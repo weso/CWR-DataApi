@@ -1,12 +1,27 @@
 # Miscellany files
 include LICENSE
 include README.rst
-# The tests folder is removed
-prune tests
-# Data files are added
+include Makefile
+include make.bat
+include tox.ini
+include requirements.txt
+include .coveragerc
+
+# Tests
+recursive-exclude tests *.pyc
+recursive-exclude tests *.pyo
+
+# Data files
 include data_cwr/*.py
 include data_cwr/*.csv
 include data_cwr/*.yml
-# Configuration files are added
+
+# Configuration files
 include config_cwr/*.yml
 include config_cwr/*.cml
+
+# Documentation
+recursive-include docs *
+recursive-exclude docs *.pyc
+recursive-exclude docs *.pyo
+prune docs/_build

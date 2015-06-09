@@ -6,9 +6,45 @@ from config_cwr.accessor import CWRConfiguration
 from cwr.grammar.factory.rule import FieldRuleFactory
 from data_cwr.accessor import CWRTables
 from cwr.grammar.factory.rule import DefaultRuleFactory
-from cwr.grammar.factory.decorator import *
-from cwr.parser.decoder.dictionary import *
-from cwr.grammar.factory.adapter import *
+from cwr.file import CWRFile, FileTag
+from cwr.grammar.factory.decorator import GroupRuleDecorator, \
+    OptionalFieldRuleDecorator, RecordRuleDecorator, \
+    TransactionRecordRuleDecorator
+from cwr.parser.decoder.dictionary import Decoder, \
+    AcknowledgementDictionaryDecoder, \
+    AdditionalRelatedInformationDictionaryDecoder, AgreementDictionaryDecoder, \
+    AgreementTerritoryDictionaryDecoder, AlternateTitleDictionaryDecoder, \
+    AuthoredWorkDictionaryDecoder, \
+    ComponentDictionaryDecoder, FileTagDictionaryDecoder, \
+    GroupDictionaryDecoder, GroupTrailerDictionaryDecoder, \
+    InstrumentationDetailDictionaryDecoder, \
+    InstrumentationSummaryDictionaryDecoder, \
+    InterestedPartyForAgreementDictionaryDecoder, \
+    IPTerritoryOfControlDictionaryDecoder, \
+    MessageDictionaryDecoder, \
+    NonRomanAlphabetAgreementPartyDictionaryDecoder, \
+    NonRomanAlphabetOtherWriterDictionaryDecoder, \
+    NonRomanAlphabetPerformanceDataDictionaryDecoder, \
+    NonRomanAlphabetPublisherNameDictionaryDecoder, \
+    NonRomanAlphabetTitleDictionaryDecoder, \
+    NonRomanAlphabetWorkDictionaryDecoder, \
+    NonRomanAlphabetWriterNameDictionaryDecoder, \
+    PerformingArtistDictionaryDecoder, \
+    PublisherForWriterDictionaryDecoder, PublisherRecordDictionaryDecoder, \
+    RecordingDetailDictionaryDecoder, \
+    TransmissionDictionaryDecoder, \
+    TransmissionTrailerDictionaryDecoder, \
+    WorkDictionaryDecoder, WorkOriginDictionaryDecoder, \
+    WriterRecordDictionaryDecoder, \
+    GroupHeaderDictionaryDecoder, \
+    TransmissionHeaderDictionaryDecoder
+from cwr.grammar.factory.adapter import AlphanumAdapter, BlankAdapter, \
+    BooleanAdapter, CharSetAdapter, DateAdapter, DateTimeAdapter, \
+    ExtendedAlphanumAdapter, FilenameVersionAdapter, FlagAdapter, \
+    IPIBaseNumberAdapter, IPINameNumberAdapter, ISRCAdapter, ISWCAdapter, \
+    LookupAdapter, LookupIntAdapter, NumericAdapter, NumericFloatAdapter, \
+    PercentageAdapter, TimeAdapter, VariableAlphanumAdapter, VISANAdapter, \
+    YearAdapter, EAN13Adapter, AudioVisualKeydapter
 
 """
 Classes for processing CWR files, creating a graph of CWR model instances from

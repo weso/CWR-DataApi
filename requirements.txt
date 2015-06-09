@@ -1,2 +1,5 @@
 pyparsing==2.0.3
 pyyaml==3.11
+
+# Deployment
+twine>=1.5.0

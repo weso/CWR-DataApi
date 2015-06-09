@@ -3,9 +3,11 @@ import ast
 import re
 import sys
 from codecs import open
-from os import path
+import io
+from os.path import dirname
+from os.path import join
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 from setuptools.command.test import test as test_command
 
 """
@@ -22,12 +24,13 @@ _version_re = re.compile(r'__version__\s+=\s+(.*)')
 # Test requirements
 _tests_require = ['tox']
 
-# Path to the project's root
-here = path.abspath(path.dirname(__file__))
 
 # Gets the long description from the readme
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = f.read()
+def read(*names, **kwargs):
+    return io.open(
+        join(dirname(__file__), *names),
+        encoding=kwargs.get('encoding', 'utf8')
+    ).read()
 
 # Gets the version for the source folder __init__.py file
 with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
@@ -82,10 +85,9 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries :: Python Modules'
-        ],
-    long_description=long_description,
+    ],
+    long_description=read('README.rst'),
     install_requires=[
-        'chardet',
         'pyparsing',
         'pyyaml',
         'setuptools',

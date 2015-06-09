@@ -152,7 +152,7 @@ def numeric(columns, name=None):
     field = pp.Regex('[0-9]{' + str(columns) + '}')
 
     # Parse action
-    field.setParseAction(lambda n: _to_int(n))
+    field.setParseAction(_to_int)
     field.leaveWhitespace()
 
     # Name
