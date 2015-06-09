@@ -30,9 +30,9 @@ Getting the library
      </a>
    </p>
 
-The latest version of the library can always be found at Pypi. Additionally, the
-code is on Github.
+The library can be found at Pypi, making installing it very easy::
 
+    $ pip install cwr-api
 
 ********
 Contents

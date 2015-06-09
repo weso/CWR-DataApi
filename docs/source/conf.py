@@ -96,14 +96,17 @@ else:
 
     # Theme options.
     html_theme_options = {
-        "navbar_fixed_top": "true",
-        "navbar_site_name": "Contents",
+        'navbar_fixed_top': 'true',
+        'navbar_site_name': 'Contents',
         'bootstrap_version': '3',
         'source_link_position': 'footer',
     }
 
 # Custom static files folder.
 html_static_path = ['_static']
+
+# Favicon
+html_favicon = '_static/favicon.ico'
 
 # Custom sidebars
 html_sidebars = {'index': ['status.html']}
