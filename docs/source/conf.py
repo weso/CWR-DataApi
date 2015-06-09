@@ -3,24 +3,10 @@
 #
 # CWR-API documentation build configuration file.
 
-import ast
-import re
 import sys
 import os
 import datetime
-from codecs import open
-
-
-# -- Version number acquisition -------------------------------------------
-
-# Regular expression for the version
-_version_re = re.compile(r'__version__\s+=\s+(.*)')
-
-# Gets the version for the source folder __init__.py file
-with open('../../cwr/__init__.py', 'rb', encoding='utf-8') as f:
-    version_project = f.read()
-    version_project = _version_re.search(version_project).group(1)
-    version_project = str(ast.literal_eval(version_project.rstrip()))
+import cwr
 
 
 # -- Code location --------------------------------------------------------
@@ -62,7 +48,7 @@ authors = ['Bernardo Martinez Garrido']
 # The version info for the project.
 #
 # Semantic version value.
-version = version_project
+version = cwr.__version__
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -99,7 +85,8 @@ else:
         'navbar_fixed_top': 'true',
         'navbar_site_name': 'Contents',
         'bootstrap_version': '3',
-        'source_link_position': 'footer',
+        'source_link_position': 'nav',
+        'bootswatch_theme': "sandstone",
     }
 
 # Custom static files folder.
