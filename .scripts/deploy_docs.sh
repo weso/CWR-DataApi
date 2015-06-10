@@ -5,6 +5,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$DEPLOY_DOCS" == "true" ] && [[ "
 
    echo "Deploying docs"
    curl -X POST http://readthedocs.org/build/cwr-dataapi
+   curl -X POST http://readthedocs.org/build/cwr-dataapi?version=develop
 
 else
 
