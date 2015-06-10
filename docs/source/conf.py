@@ -101,8 +101,11 @@ else:
         'navbar_fixed_top': 'true',
         'navbar_site_name': 'Contents',
         'bootstrap_version': '3',
-        'source_link_position': 'nav',
-        'bootswatch_theme': "sandstone",
+        'source_link_position': 'footer',
+        'bootswatch_theme': 'yeti',
+        'navbar_links': [
+            ('Github', 'https://github.com/weso/CWR-DataApi', True),
+        ],
     }
 
 # Custom static files folder.
