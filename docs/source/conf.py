@@ -3,10 +3,26 @@
 #
 # CWR-API documentation build configuration file.
 
+import ast
+import re
 import sys
 import os
-import datetime
-import cwr
+from codecs import open
+from os import path
+
+# -- Version --------------------------------------------------------------
+
+# Regular expression for the version
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+
+# Path to the project's root
+here = path.abspath(path.dirname(__file__))
+
+# Gets the version for the source folder __init__.py file
+with open('../../cwr/__init__.py', 'rb', encoding='utf-8') as f:
+    version_lib = f.read()
+    version_lib = _version_re.search(version_lib).group(1)
+    version_lib = str(ast.literal_eval(version_lib.rstrip()))
 
 
 # -- Code location --------------------------------------------------------
@@ -42,13 +58,13 @@ autodoc_member_order = 'groupwise'
 
 # General information about the project.
 project = 'CWR-API'
-copyright = '%s, WESO' % datetime.datetime.now().year
+copyright = '2015, WESO'
 authors = ['Bernardo Martinez Garrido']
 
 # The version info for the project.
 #
 # Semantic version value.
-version = cwr.__version__
+version = version_lib
 # The full version, including alpha/beta/rc tags.
 release = version
 
