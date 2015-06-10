@@ -2,10 +2,10 @@
 import ast
 import re
 import sys
-from codecs import open
 import io
 from os.path import dirname
 from os.path import join
+from codecs import open
 
 from setuptools import find_packages, setup
 from setuptools.command.test import test as test_command
@@ -21,6 +21,7 @@ __license__ = 'MIT'
 # Regular expression for the version
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 
+
 # Test requirements
 _tests_require = ['tox']
 
@@ -34,9 +35,9 @@ def read(*names, **kwargs):
 
 # Gets the version for the source folder __init__.py file
 with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
-    version = f.read()
-    version = _version_re.search(version).group(1)
-    version = str(ast.literal_eval(version.rstrip()))
+    version_lib = f.read()
+    version_lib = _version_re.search(version_lib).group(1)
+    version_lib = str(ast.literal_eval(version_lib.rstrip()))
 
 
 class _ToxTester(test_command):
@@ -61,7 +62,7 @@ setup(
         'data_cwr': ['data_cwr/*.csv', 'data_cwr/*.yml'],
         'config_cwr': ['config_cwr/*.yml'],
     },
-    version=version,
+    version=version_lib,
     description='API library for the CWR standard format',
     author='WESO',
     author_email='weso@weso.es',
@@ -91,6 +92,7 @@ setup(
         'pyparsing',
         'pyyaml',
         'setuptools',
+        'twine',
     ],
     tests_require=_tests_require,
     extras_require={'test': _tests_require},

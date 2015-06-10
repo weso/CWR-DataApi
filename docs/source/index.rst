@@ -30,7 +30,7 @@ Getting the library
      </a>
    </p>
 
-The library can be found at Pypi, making installing it very easy::
+The library can be found at Pypi, making its installation it very easy::
 
     $ pip install cwr-api
 
