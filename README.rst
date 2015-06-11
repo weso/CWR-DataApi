@@ -1,6 +1,10 @@
 CWR Data Model API
 ==================
 
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+   :alt: Join the chat at https://gitter.im/weso/CWR-DataApi
+   :target: https://gitter.im/weso/CWR-DataApi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
 This projects offers a domain model for the CISAC CWR standard v2.1 to be
 used on Python applications, along a series of parsing which allow
 transformations between the model and various data structures.
