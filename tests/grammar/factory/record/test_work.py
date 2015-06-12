@@ -22,6 +22,12 @@ class TestWorkValid(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('work')
 
+    def test_extended(self):
+        record = 'NWR0000019900000000WORK NAME \xc6\x8f                                                  1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y'
+
+        # TODO: Check if this is actually valid
+        result = self.grammar.parseString(record)[0]
+
     def test_valid_common(self):
         record = 'NWR0000019900000000WORK NAME                                                     1450455                  00000000            UNC000000YMTX   ORI   ORIORI                                          N00000000000U                                                  Y'
 

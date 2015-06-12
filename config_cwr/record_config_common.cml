@@ -334,16 +334,35 @@ transaction_record:
       [
         field: ip_n
         field: constant
-        field: pr_collection_share (compulsory)
-        field: mr_collection_share (compulsory)
-        field: sr_collection_share (compulsory)
-        field: inclusion_exclusion_indicator
-        field: tis_numeric_code
-        field: shares_change
         option
           [
-            field: sequence_n
-            field: sequence_n_2
+          sequence
+            [
+            field: pr_collection_share
+            field: mr_collection_share
+            field: sr_collection_share
+            field: inclusion_exclusion_indicator
+            field: tis_numeric_code
+            field: shares_change
+            option
+              [
+                field: sequence_n
+                field: sequence_n_2
+              ]
+            ]
+          sequence
+            [
+            field: pr_collection_share
+            field: mr_collection_share
+            field: inclusion_exclusion_indicator
+            field: tis_numeric_code
+            field: shares_change
+            option
+              [
+                field: sequence_n
+                field: sequence_n_2
+              ]
+            ]
           ]
       ]
 
@@ -387,7 +406,10 @@ record:
         field: edi_standard
         field: creation_date_time
         field: transmission_date
-        field: character_set
+        optional
+        [
+          field: character_set
+        ]
       ]
 
 record:
@@ -539,15 +561,32 @@ transaction_record:
     rules:
       [
         field: ip_n
-        field: pr_collection_share (compulsory)
-        field: mr_collection_share (compulsory)
-        field: sr_collection_share (compulsory)
-        field: inclusion_exclusion_indicator
-        field: tis_numeric_code
-        field: shares_change
+        field: pr_collection_share
+        field: mr_collection_share
         option
           [
-            field: sequence_n
-            field: sequence_n_2
+          sequence
+            [
+            field: sr_collection_share
+            field: inclusion_exclusion_indicator
+            field: tis_numeric_code
+            field: shares_change
+            option
+              [
+                field: sequence_n
+                field: sequence_n_2
+              ]
+            ]
+          sequence
+            [
+            field: inclusion_exclusion_indicator
+            field: tis_numeric_code
+            field: shares_change
+            option
+              [
+                field: sequence_n
+                field: sequence_n_2
+              ]
+            ]
           ]
       ]

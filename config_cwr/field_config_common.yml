@@ -662,7 +662,7 @@ work_for_hire:
   name: Work For Hire Indicator
 
 work_title:
-  type: alphanum
+  type: alphanum_ext
   size: 60
   name: Work Title
   results_name: title
