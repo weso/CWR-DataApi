@@ -16,11 +16,15 @@ DISTDIR   = dist
  
 # Sets the .egg file path.
 # The file will be located at the project's root.
-EGGDIR    = *.egg-info
+EGGDIR    = CWR_API.egg-info
 
 # Sets the tox folder path.
 # It will be the '.tox' folder.
 TOXDIR    = .tox
+
+# Sets the docs output folder path.
+# It will be in the 'docs' folder.
+DOCBUILDDIR = docs\\build
  
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(PYTHON) >/dev/null 2>&1; echo $$?), 1)
@@ -34,14 +38,13 @@ endif
 help:
 	@echo "Please use 'make <target>' where <target> is one of"
 	@echo "  clean          to remove the distribution folders"
-	@echo "  dist_source    to make the standard distribution"
-	@echo "  dist_binary    to make the binary distribution"
+	@echo "  build          to build the distribution"
 	@echo "  install        to install the project"
 	@echo "  requirements   to install the project requirements"
-	@echo "  pypi_reg       to register on pypi"
-	@echo "  pypitest_reg   to register on testpypi"
-	@echo "  pypi           to upload to pypi"
-	@echo "  pypitest       to upload to testpypi"
+	@echo "  register       to register on pypi"
+	@echo "  register-test  to register on testpypi"
+	@echo "  deploy         to upload to pypi"
+	@echo "  deploy-test    to upload to testpypi"
 	@echo "  test           to run tests"
 
 # Clean option
@@ -50,14 +53,11 @@ clean:
 	rm -r -f $(DISTDIR)
 	rm -r -f $(EGGDIR)
 	rm -r -f $(TOXDIR)
+	rm -r -f $(DOCBUILDDIR)
 
-# Source distribution.
-dist_source:
+# Distribution.
+build:
 	$(PYTHON) setup.py sdist
-
-# Binary distribution.
-dist_binary:
-	$(PYTHON) setup.py bdist
 
 # Install in local libraries repository
 install:
@@ -68,19 +68,20 @@ requirements:
 	pip install --upgrade -r requirements.txt
  
 # Pypi registration.
-pypi_reg:
+register:
 	$(PYTHON) setup.py register -r pypi
  
 # Pypitest registration.
-pypitest_reg:
+register-test:
 	$(PYTHON) setup.py register -r testpypi
  
 # Pypi deployment.
-pypi:
-	$(PYTHON) setup.py sdist upload -r pypi
+deploy:
+	$(PYTHON) setup.py release
+	twine upload dist/*
  
 # Pypitest deployment.
-pypitest:
+deploy-test:
 	$(PYTHON) setup.py sdist upload -r testpypi
 
 # Tests suite.

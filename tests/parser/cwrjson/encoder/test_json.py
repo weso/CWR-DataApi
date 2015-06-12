@@ -193,6 +193,7 @@ class TestFileJSONEncoding(unittest.TestCase):
                           exceptional_clause='Y',
                           grand_rights_indicator=True)
 
+
 class TestFileJSONEncodingInvalid(unittest.TestCase):
     def setUp(self):
         self._encoder = JSONEncoder()
@@ -202,4 +203,3 @@ class TestFileJSONEncodingInvalid(unittest.TestCase):
 
     def test_string(self):
         self.assertRaises(AttributeError, self._encoder.encode, 'abc')
-

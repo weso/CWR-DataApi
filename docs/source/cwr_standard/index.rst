@@ -1,6 +1,6 @@
-============
-CWR standard
-============
+================
+The CWR standard
+================
 
 The CWR file standard has been created by `CISAC`_ as a way
 for publishers and societies to share discographic information.

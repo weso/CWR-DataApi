@@ -2,10 +2,12 @@
 import ast
 import re
 import sys
+import io
+from os.path import dirname
+from os.path import join
 from codecs import open
-from os import path
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 from setuptools.command.test import test as test_command
 
 """
@@ -19,21 +21,23 @@ __license__ = 'MIT'
 # Regular expression for the version
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 
+
 # Test requirements
 _tests_require = ['tox']
 
-# Path to the project's root
-here = path.abspath(path.dirname(__file__))
 
 # Gets the long description from the readme
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = f.read()
+def read(*names, **kwargs):
+    return io.open(
+        join(dirname(__file__), *names),
+        encoding=kwargs.get('encoding', 'utf8')
+    ).read()
 
 # Gets the version for the source folder __init__.py file
 with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
-    version = f.read()
-    version = _version_re.search(version).group(1)
-    version = str(ast.literal_eval(version.rstrip()))
+    version_lib = f.read()
+    version_lib = _version_re.search(version_lib).group(1)
+    version_lib = str(ast.literal_eval(version_lib.rstrip()))
 
 
 class _ToxTester(test_command):
@@ -58,7 +62,7 @@ setup(
         'data_cwr': ['data_cwr/*.csv', 'data_cwr/*.yml'],
         'config_cwr': ['config_cwr/*.yml'],
     },
-    version=version,
+    version=version_lib,
     description='API library for the CWR standard format',
     author='WESO',
     author_email='weso@weso.es',
@@ -82,13 +86,13 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries :: Python Modules'
-        ],
-    long_description=long_description,
+    ],
+    long_description=read('README.rst'),
     install_requires=[
-        'chardet',
         'pyparsing',
         'pyyaml',
         'setuptools',
+        'twine',
     ],
     tests_require=_tests_require,
     extras_require={'test': _tests_require},

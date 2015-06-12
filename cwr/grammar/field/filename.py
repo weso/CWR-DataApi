@@ -65,7 +65,7 @@ def year(columns, name=None):
     field = numeric(columns, name)
 
     # Parse action
-    field.addParseAction(lambda n: _to_year(n))
+    field.addParseAction(_to_year)
 
     return field
 

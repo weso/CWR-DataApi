@@ -20,6 +20,25 @@ class TestWorkTransactionGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('work_transaction')
 
+    def test_d(self):
+        record = 'NWR0000000000000000WORK NAME                                                   ES000000123     T011112211111221011            POP000320U      ORI                                                    00000000000                                                    ' + '\n' + \
+                 'SPU000123450000000101122334403AN EDITOR                                     E          00123456703              0590500009910000   00000   I-001234567-8                               ' + '\n' + \
+                 'SPT0001234500000002112233403      050001000000000I0484N01' + '\n' + \
+                 'SWR0001234500000003011223340SURNAMES                                     NAME                           CA         000112233400120100001200000   00000    I-001122334-5             ' + '\n' + \
+                 'SWT00012345000000040112233400500000000I0484N01'
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(5, len(result))
+
+        self.assertEqual('NWR', result[0].record_type)
+
+        self.assertEqual('SPU', result[1].record_type)
+        self.assertEqual('SPT', result[2].record_type)
+
+        self.assertEqual('SWR', result[3].record_type)
+        self.assertEqual('SWT', result[4].record_type)
+
     def test_writer(self):
         record = 'NWR0000000000000000WORK NAME                                                   ES000000123     T011112211111221011            POP000320U      ORI                                                    00000000000                                                    ' + '\n' + \
                  'SWR0000000000000001030106939WRITER SURNAME                               WRITER                         CA         000111011110111000001110000   00000    I-001234567-1             ' + '\n' + \

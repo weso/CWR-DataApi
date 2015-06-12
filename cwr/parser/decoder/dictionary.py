@@ -1,17 +1,26 @@
 # -*- coding: utf-8 -*-
 
-from cwr.acknowledgement import *
-from cwr.agreement import *
-from cwr.group import *
-from cwr.info import *
+from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
+from cwr.agreement import AgreementRecord, AgreementTerritoryRecord, \
+    InterestedPartyForAgreementRecord
+from cwr.group import Group, GroupHeader, GroupTrailer
+from cwr.info import AdditionalRelatedInfoRecord
 from cwr.parser.decoder.common import Decoder
-from cwr.interested_party import *
-from cwr.non_roman_alphabet import *
-from cwr.transmission import *
-from cwr.work import *
-from cwr.file import *
-from cwr.other import *
-from cwr.table_value import *
+from cwr.interested_party import IPTerritoryOfControlRecord, Publisher, \
+    PublisherRecord, Writer, PublisherForWriterRecord, WriterRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord, \
+    NonRomanAlphabetOtherWriterRecord, NonRomanAlphabetPerformanceDataRecord, \
+    NonRomanAlphabetPublisherNameRecord, NonRomanAlphabetTitleRecord, \
+    NonRomanAlphabetWorkRecord, NonRomanAlphabetWriterNameRecord
+from cwr.transmission import Transmission, TransmissionTrailer, \
+    TransmissionHeader
+from cwr.work import RecordingDetailRecord, ComponentRecord, \
+    AlternateTitleRecord, AuthoredWorkRecord, InstrumentationDetailRecord, \
+    InstrumentationSummaryRecord, PerformingArtistRecord, WorkOriginRecord, \
+    WorkRecord
+from cwr.file import CWRFile, FileTag
+from cwr.other import ISWCCode, IPIBaseNumber, AVIKey, VISAN
+from cwr.table_value import MediaTypeValue, TableValue, InstrumentValue
 
 """
 Classes for transforming dictionaries into instances of the CWR model.
@@ -291,7 +300,7 @@ class IPTerritoryOfControlDictionaryDecoder(Decoder):
         super(IPTerritoryOfControlDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return IPTerritoryOfControlRecord(record_type=data['record_type'],
+        record= IPTerritoryOfControlRecord(record_type=data['record_type'],
                                           transaction_sequence_n=data[
                                               'transaction_sequence_n'],
                                           record_sequence_n=data[
@@ -306,9 +315,12 @@ class IPTerritoryOfControlDictionaryDecoder(Decoder):
                                               'pr_collection_share'],
                                           mr_collection_share=data[
                                               'mr_collection_share'],
-                                          sr_collection_share=data[
-                                              'sr_collection_share'],
                                           shares_change=data['shares_change'])
+
+        if 'sr_collection_share' in data:
+            record.sr_collection_share = data['sr_collection_share']
+
+        return record
 
 
 class InstrumentationDetailDictionaryDecoder(Decoder):
@@ -332,16 +344,13 @@ class InstrumentationSummaryDictionaryDecoder(Decoder):
         super(InstrumentationSummaryDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return InstrumentationSummaryRecord(record_type=data['record_type'],
-                                            transaction_sequence_n=data[
-                                                'transaction_sequence_n'],
-                                            record_sequence_n=data[
-                                                'record_sequence_n'],
-                                            number_voices=data['number_voices'],
-                                            standard_instrumentation_type=data[
-                                                'standard_instrumentation_type'],
-                                            instrumentation_description=data[
-                                                'instrumentation_description'])
+        return InstrumentationSummaryRecord(
+            record_type=data['record_type'],
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            number_voices=data['number_voices'],
+            standard_instrumentation_type=data['standard_instrumentation_type'],
+            instrumentation_description=data['instrumentation_description'])
 
 
 class MessageDictionaryDecoder(Decoder):
@@ -512,14 +521,17 @@ class TransmissionHeaderDictionaryDecoder(Decoder):
         super(TransmissionHeaderDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return TransmissionHeader(record_type=data['record_type'],
+        header = TransmissionHeader(record_type=data['record_type'],
                                   sender_id=data['sender_id'],
                                   sender_name=data['sender_name'],
                                   sender_type=data['sender_type'],
                                   creation_date_time=data['creation_date_time'],
                                   transmission_date=data['transmission_date'],
-                                  edi_standard=data['edi_standard'],
-                                  character_set=data['character_set'])
+                                  edi_standard=data['edi_standard'])
+        if 'character_set' in data:
+            header.character_set = data['character_set']
+
+        return header
 
 
 class TransmissionTrailerDictionaryDecoder(Decoder):
@@ -768,31 +780,27 @@ class PublisherRecordDictionaryDecoder(Decoder):
     def decode(self, data):
         publisher = self._publisher_decoder.decode(data)
 
-        return PublisherRecord(record_type=data['record_type'],
-                               transaction_sequence_n=data[
-                                   'transaction_sequence_n'],
-                               record_sequence_n=data['record_sequence_n'],
-                               publisher=publisher, publisher_sequence_n=data[
-                'publisher_sequence_n'],
-                               submitter_agreement_n=data[
-                                   'submitter_agreement_n'],
-                               publisher_type=data['publisher_type'],
-                               publisher_unknown=data['publisher_unknown'],
-                               agreement_type=data['agreement_type'],
-                               international_standard_code=data[
-                                   'international_standard_code'],
-                               society_assigned_agreement_n=data[
-                                   'society_assigned_agreement_n'],
-                               pr_society=data['pr_society'],
-                               pr_ownership_share=data['pr_ownership_share'],
-                               mr_society=data['mr_society'],
-                               mr_ownership_share=data['mr_ownership_share'],
-                               sr_society=data['sr_society'],
-                               sr_ownership_share=data['sr_ownership_share'],
-                               special_agreements=data['special_agreements'],
-                               first_recording_refusal=data[
-                                   'first_recording_refusal'],
-                               usa_license=data['usa_license'])
+        return PublisherRecord(
+            record_type=data['record_type'],
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            publisher=publisher,
+            publisher_sequence_n=data['publisher_sequence_n'],
+            submitter_agreement_n=data['submitter_agreement_n'],
+            publisher_type=data['publisher_type'],
+            publisher_unknown=data['publisher_unknown'],
+            agreement_type=data['agreement_type'],
+            international_standard_code=data['international_standard_code'],
+            society_assigned_agreement_n=data['society_assigned_agreement_n'],
+            pr_society=data['pr_society'],
+            pr_ownership_share=data['pr_ownership_share'],
+            mr_society=data['mr_society'],
+            mr_ownership_share=data['mr_ownership_share'],
+            sr_society=data['sr_society'],
+            sr_ownership_share=data['sr_ownership_share'],
+            special_agreements=data['special_agreements'],
+            first_recording_refusal=data['first_recording_refusal'],
+            usa_license=data['usa_license'])
 
 
 class TableValueDictionaryDecoder(Decoder):
