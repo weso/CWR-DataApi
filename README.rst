@@ -5,14 +5,13 @@ CWR Data Model API
     :target: https://pypi.python.org/pypi/cwr-api
     :alt: CWR-API Pypi package page
 
-
 .. image:: https://readthedocs.org/projects/cwr-dataapi/badge/?version=latest
     :target: http://cwr-dataapi.readthedocs.org/en/latest/
     :alt: CWR-API latest documentation Status
 
-.. image:: https://readthedocs.org/projects/cwr-dataapi/badge/?version=develop
-    :target: http://cwr-dataapi.readthedocs.org/en/develop/
-    :alt: CWR-API development documentation Status
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+    :target: https://gitter.im/weso/CWR-DataApi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+    :alt: Join the chat at https://gitter.im/weso/CWR-DataApi
 
 This projects offers a domain model for the CISAC CWR standard v2.1 to be
 used on Python applications, along a series of parsing which allow

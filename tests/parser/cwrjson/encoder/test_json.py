@@ -203,4 +203,3 @@ class TestFileJSONEncodingInvalid(unittest.TestCase):
 
     def test_string(self):
         self.assertRaises(AttributeError, self._encoder.encode, 'abc')
-

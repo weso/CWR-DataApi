@@ -300,7 +300,7 @@ class IPTerritoryOfControlDictionaryDecoder(Decoder):
         super(IPTerritoryOfControlDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return IPTerritoryOfControlRecord(record_type=data['record_type'],
+        record= IPTerritoryOfControlRecord(record_type=data['record_type'],
                                           transaction_sequence_n=data[
                                               'transaction_sequence_n'],
                                           record_sequence_n=data[
@@ -315,9 +315,12 @@ class IPTerritoryOfControlDictionaryDecoder(Decoder):
                                               'pr_collection_share'],
                                           mr_collection_share=data[
                                               'mr_collection_share'],
-                                          sr_collection_share=data[
-                                              'sr_collection_share'],
                                           shares_change=data['shares_change'])
+
+        if 'sr_collection_share' in data:
+            record.sr_collection_share = data['sr_collection_share']
+
+        return record
 
 
 class InstrumentationDetailDictionaryDecoder(Decoder):
@@ -518,14 +521,17 @@ class TransmissionHeaderDictionaryDecoder(Decoder):
         super(TransmissionHeaderDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return TransmissionHeader(record_type=data['record_type'],
+        header = TransmissionHeader(record_type=data['record_type'],
                                   sender_id=data['sender_id'],
                                   sender_name=data['sender_name'],
                                   sender_type=data['sender_type'],
                                   creation_date_time=data['creation_date_time'],
                                   transmission_date=data['transmission_date'],
-                                  edi_standard=data['edi_standard'],
-                                  character_set=data['character_set'])
+                                  edi_standard=data['edi_standard'])
+        if 'character_set' in data:
+            header.character_set = data['character_set']
+
+        return header
 
 
 class TransmissionTrailerDictionaryDecoder(Decoder):

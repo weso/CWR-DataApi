@@ -69,7 +69,7 @@ class TestPercentage50Valid(unittest.TestCase):
         self.assertEqual(0, result[0])
 
 
-class TestPercentageCompulsoryValid(unittest.TestCase):
+class TestPercentageValid(unittest.TestCase):
     """
     Tests that the percentage field accepts and parse valid values.
     """

@@ -20,6 +20,26 @@ class TestTransmissionHeaderGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('transmission_header')
 
+    def test_valid_small(self):
+        record = 'HDRSO000000020ABCD                                         01.102013011111110120130111     '
+
+        result = self.grammar.parseString(record)[0]
+
+        self.assertEqual('HDR', result.record_type)
+        self.assertEqual('SO', result.sender_type)
+        self.assertEqual(20, result.sender_id)
+        self.assertEqual('ABCD', result.sender_name)
+        self.assertEqual('01.10', result.edi_standard)
+        self.assertEqual(2013, result.creation_date_time.year)
+        self.assertEqual(1, result.creation_date_time.month)
+        self.assertEqual(11, result.creation_date_time.day)
+        self.assertEqual(11, result.creation_date_time.hour)
+        self.assertEqual(11, result.creation_date_time.minute)
+        self.assertEqual(1, result.creation_date_time.second)
+        self.assertEqual(2013, result.transmission_date.year)
+        self.assertEqual(1, result.transmission_date.month)
+        self.assertEqual(11, result.transmission_date.day)
+
     def test_valid_common(self):
         record = 'HDRPB226144593AGENCIA GRUPO MUSICAL                        01.102013080902591120130809               '
 
