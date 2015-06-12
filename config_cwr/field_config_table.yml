@@ -41,7 +41,7 @@ intended_purpose:
   source: intended_purpose
 
 language_code:
-  type: lookup
+  type: alphanum
   size: 2
   name: Language Code
   source: language_code

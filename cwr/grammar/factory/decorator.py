@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from abc import abstractmethod
+from abc import abstractmethod, ABCMeta
 
 import pyparsing as pp
 
 from cwr.grammar.field import record as field_record
-from cwr.parser.decoder.dictionary import *
 
 """
 Decorators for the grammar rules.
@@ -46,7 +45,7 @@ class GroupRuleDecorator(RuleDecorator):
 
         if rule_id in self._decoders:
             decoder = self._decoders[rule_id]
-            record.setParseAction(lambda p: decoder.decode(p))
+            record.setParseAction(decoder.decode)
 
         return record.setResultsName(rule_id)
 
@@ -71,7 +70,7 @@ class RecordRuleDecorator(RuleDecorator):
 
         if rule_id in self._decoders:
             decoder = self._decoders[rule_id]
-            record.setParseAction(lambda p: decoder.decode(p))
+            record.setParseAction(decoder.decode)
 
         return record.setResultsName(rule_id)
 

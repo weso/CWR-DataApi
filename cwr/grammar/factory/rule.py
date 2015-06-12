@@ -210,7 +210,7 @@ class DefaultRuleFactory(RuleFactory):
                 times = rule_at_least.parseString(modifier)[0]
                 if times > 0:
                     rule_multiple = rule
-                    for x in range(1, times):
+                    for _ in range(1, times):
                         rule_multiple = rule_multiple + rule
                     rule = rule_multiple + pp.ZeroOrMore(rule)
                 else:

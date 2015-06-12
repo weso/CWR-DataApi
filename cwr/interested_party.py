@@ -566,7 +566,8 @@ class PublisherRecord(InterestedPartyRecord):
         :param publisher_unknown: publisher unknown flag
         :param agreement_type: the type of agreement
         :param international_standard_code: ISAC for the publisher's agreement
-        :param society_assigned_agreement_n: ID for the Agreement given by a society
+        :param society_assigned_agreement_n: ID for the Agreement given by a
+        society
         :param pr_society: Performing Rights society
         :param pr_ownership_share: Performing Rights share
         :param mr_society: Mechanical Rights society

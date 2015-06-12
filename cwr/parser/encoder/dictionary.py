@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from cwr.acknowledgement import *
-from cwr.agreement import *
-from cwr.info import *
+from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
+from cwr.agreement import AgreementRecord, AgreementTerritoryRecord, \
+    InterestedPartyForAgreementRecord
+from cwr.info import AdditionalRelatedInfoRecord
 from cwr.parser.encoder.common import Encoder
-from cwr.interested_party import *
-from cwr.non_roman_alphabet import *
-from cwr.work import *
+from cwr.interested_party import Publisher, IPTerritoryOfControlRecord, \
+    PublisherForWriterRecord, PublisherRecord, Writer, \
+    WriterRecord
+from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord, \
+    NonRomanAlphabetOtherWriterRecord, NonRomanAlphabetPerformanceDataRecord, \
+    NonRomanAlphabetPublisherNameRecord, NonRomanAlphabetTitleRecord, \
+    NonRomanAlphabetWorkRecord, \
+    NonRomanAlphabetWriterNameRecord
+from cwr.work import RecordingDetailRecord, ComponentRecord, \
+    AlternateTitleRecord, AuthoredWorkRecord, InstrumentationDetailRecord, \
+    InstrumentationSummaryRecord, \
+    PerformingArtistRecord, WorkOriginRecord, WorkRecord
 
 """
 Classes for transforming instances of the CWR model into dictionaries.
@@ -327,7 +337,8 @@ class AgreementDictionaryEncoder(TransactionHeaderDictionaryEncoder):
             'international_standard_code'] = record.international_standard_code
         encoded['number_of_works'] = record.number_of_works
         encoded[
-            'post_term_collection_end_date'] = record.post_term_collection_end_date
+            'post_term_collection_end_date'] = \
+            record.post_term_collection_end_date
         encoded[
             'post_term_collection_status'] = record.post_term_collection_status
         encoded['prior_royalty_start_date'] = record.prior_royalty_start_date
@@ -436,8 +447,8 @@ class ComponentDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         return encoded
 
 
-class InstrumentationDetailDictionaryEncoder(
-    TransactionHeaderDictionaryEncoder):
+class InstrumentationDetailDictionaryEncoder \
+            (TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InstrumentationDetailDictionaryEncoder, self).__init__()
 
@@ -451,8 +462,8 @@ class InstrumentationDetailDictionaryEncoder(
         return encoded
 
 
-class InstrumentationSummaryDictionaryEncoder(
-    TransactionHeaderDictionaryEncoder):
+class InstrumentationSummaryDictionaryEncoder \
+            (TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InstrumentationSummaryDictionaryEncoder, self).__init__()
 
@@ -611,8 +622,8 @@ class PublisherForWriterDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         return encoded
 
 
-class InterestedPartyRecordDictionaryEncoder(
-    TransactionHeaderDictionaryEncoder):
+class InterestedPartyRecordDictionaryEncoder \
+            (TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InterestedPartyRecordDictionaryEncoder, self).__init__()
 
@@ -851,8 +862,8 @@ class MessageDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         return encoded
 
 
-class InterestedPartyForAgreementDictionaryEncoder(
-    TransactionHeaderDictionaryEncoder):
+class InterestedPartyForAgreementDictionaryEncoder \
+            (TransactionHeaderDictionaryEncoder):
     def __init__(self):
         super(InterestedPartyForAgreementDictionaryEncoder, self).__init__()
 

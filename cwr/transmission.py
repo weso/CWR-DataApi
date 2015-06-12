@@ -133,21 +133,6 @@ class TransmissionHeader(Record):
         self._edi_standard = value
 
     @property
-    def record_type(self):
-        """
-        Record Type field
-
-        This is expected to be 'HDR'.
-
-        :return: the record Type
-        """
-        return self._record_type
-
-    @record_type.setter
-    def record_type(self, value):
-        self._record_type = value
-
-    @property
     def sender_id(self):
         """
         Sender ID field. Numeric.
