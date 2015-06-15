@@ -47,7 +47,7 @@ class Record(object):
             self._record_type)
 
     def __repr__(self):
-        return '<class %s>(record_type=%rr)' % (
+        return '<class %s>(record_type=%r)' % (
             'Record', self._record_type)
 
     @property

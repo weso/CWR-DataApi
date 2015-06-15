@@ -21,13 +21,17 @@ class TestPublisherRecordDictionaryDecoder(unittest.TestCase):
         self._decoder = PublisherRecordDictionaryDecoder()
 
     def test_encoded(self):
+        publisher = {}
+
+        publisher['ip_n'] = 'IP123'
+        publisher['publisher_name'] = 'NAME'
+        publisher['ipi_name_n'] = 250165006
+        publisher['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
+        publisher['tax_id'] = 923703412
+
         data = {}
 
-        data['ip_n'] = 'IP123'
-        data['publisher_name'] = 'NAME'
-        data['ipi_name_n'] = 250165006
-        data['ipi_base_n'] = IPIBaseNumber('I', 229, 7)
-        data['tax_id'] = 923703412
+        data['publisher'] = publisher
 
         data['record_type'] = 'SPU'
         data['transaction_sequence_n'] = 3

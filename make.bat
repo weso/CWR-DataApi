@@ -144,7 +144,7 @@ if "%1" == "register-test" (
 
 REM Pypi deployment.
 if "%1" == "deploy" (
-	%PYTHON% setup.py release
+	%PYTHON% setup.py sdist
 	twine upload dist/*
 	if errorlevel 1 exit /b 1
 	echo.
