@@ -20,15 +20,19 @@ class TestWriterRecordDictionaryDecoder(unittest.TestCase):
         self._decoder = WriterRecordDictionaryDecoder()
 
     def test_encoded(self):
+        writer = {}
+
+        writer['ip_n'] = 'ABC15'
+        writer['personal_number'] = 'ABC1234'
+        writer['ipi_name_n'] = 14107338
+        writer['ipi_base_n'] = 'I-000000229-7'
+        writer['writer_first_name'] = 'NAME'
+        writer['writer_last_name'] = 'LAST NAME'
+        writer['tax_id'] = 923703412
+
         data = {}
 
-        data['ip_n'] = 'ABC15'
-        data['personal_number'] = 'ABC1234'
-        data['ipi_name_n'] = 14107338
-        data['ipi_base_n'] = 'I-000000229-7'
-        data['writer_first_name'] = 'NAME'
-        data['writer_last_name'] = 'LAST NAME'
-        data['tax_id'] = 923703412
+        data['writer'] = writer
 
         data['record_type'] = 'SWR'
         data['transaction_sequence_n'] = 3

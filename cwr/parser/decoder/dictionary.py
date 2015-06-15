@@ -300,22 +300,22 @@ class IPTerritoryOfControlDictionaryDecoder(Decoder):
         super(IPTerritoryOfControlDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        record= IPTerritoryOfControlRecord(record_type=data['record_type'],
-                                          transaction_sequence_n=data[
-                                              'transaction_sequence_n'],
-                                          record_sequence_n=data[
-                                              'record_sequence_n'],
-                                          ip_n=data['ip_n'],
-                                          inclusion_exclusion_indicator=data[
-                                              'inclusion_exclusion_indicator'],
-                                          tis_numeric_code=data[
-                                              'tis_numeric_code'],
-                                          sequence_n=data['sequence_n'],
-                                          pr_collection_share=data[
-                                              'pr_collection_share'],
-                                          mr_collection_share=data[
-                                              'mr_collection_share'],
-                                          shares_change=data['shares_change'])
+        record = IPTerritoryOfControlRecord(record_type=data['record_type'],
+                                            transaction_sequence_n=data[
+                                                'transaction_sequence_n'],
+                                            record_sequence_n=data[
+                                                'record_sequence_n'],
+                                            ip_n=data['ip_n'],
+                                            inclusion_exclusion_indicator=data[
+                                                'inclusion_exclusion_indicator'],
+                                            tis_numeric_code=data[
+                                                'tis_numeric_code'],
+                                            sequence_n=data['sequence_n'],
+                                            pr_collection_share=data[
+                                                'pr_collection_share'],
+                                            mr_collection_share=data[
+                                                'mr_collection_share'],
+                                            shares_change=data['shares_change'])
 
         if 'sr_collection_share' in data:
             record.sr_collection_share = data['sr_collection_share']
@@ -522,12 +522,13 @@ class TransmissionHeaderDictionaryDecoder(Decoder):
 
     def decode(self, data):
         header = TransmissionHeader(record_type=data['record_type'],
-                                  sender_id=data['sender_id'],
-                                  sender_name=data['sender_name'],
-                                  sender_type=data['sender_type'],
-                                  creation_date_time=data['creation_date_time'],
-                                  transmission_date=data['transmission_date'],
-                                  edi_standard=data['edi_standard'])
+                                    sender_id=data['sender_id'],
+                                    sender_name=data['sender_name'],
+                                    sender_type=data['sender_type'],
+                                    creation_date_time=data[
+                                        'creation_date_time'],
+                                    transmission_date=data['transmission_date'],
+                                    edi_standard=data['edi_standard'])
         if 'character_set' in data:
             header.character_set = data['character_set']
 
@@ -627,7 +628,7 @@ class WriterRecordDictionaryDecoder(Decoder):
         self._writer_decoder = WriterDictionaryDecoder()
 
     def decode(self, data):
-        writer = self._writer_decoder.decode(data)
+        writer = self._writer_decoder.decode(data['writer'])
 
         return WriterRecord(record_type=data['record_type'],
                             transaction_sequence_n=data[
@@ -778,7 +779,7 @@ class PublisherRecordDictionaryDecoder(Decoder):
         self._publisher_decoder = PublisherDictionaryDecoder()
 
     def decode(self, data):
-        publisher = self._publisher_decoder.decode(data)
+        publisher = self._publisher_decoder.decode(data['publisher'])
 
         return PublisherRecord(
             record_type=data['record_type'],
