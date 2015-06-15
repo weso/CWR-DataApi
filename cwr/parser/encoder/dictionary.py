@@ -833,7 +833,7 @@ class IPTerritoryOfControlDictionaryEncoder(TransactionHeaderDictionaryEncoder):
             record)
 
         encoded['ip_n'] = record.ip_n
-        encoded['ie_indicator'] = record.inclusion_exclusion_indicator
+        encoded['inclusion_exclusion_indicator'] = record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
         encoded['sequence_n'] = record.sequence_n
         encoded['pr_collection_share'] = record.pr_collection_share

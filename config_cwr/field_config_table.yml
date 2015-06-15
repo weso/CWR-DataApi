@@ -26,7 +26,7 @@ inclusion_exclusion_indicator:
   type: lookup
   size: 1
   name: Inclusion/Exclusion Indicator
-  source: ie_indicator
+  source: inclusion_exclusion_indicator
 
 instrument_code:
   type: lookup
