@@ -77,7 +77,7 @@ register-test:
  
 # Pypi deployment.
 deploy:
-	$(PYTHON) setup.py release
+	$(PYTHON) setup.py sdist
 	twine upload dist/*
  
 # Pypitest deployment.
