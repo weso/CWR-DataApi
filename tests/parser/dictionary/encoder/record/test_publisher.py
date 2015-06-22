@@ -4,6 +4,7 @@ import unittest
 
 from cwr.parser.encoder.dictionary import PublisherRecordDictionaryEncoder
 from cwr.interested_party import PublisherRecord, Publisher
+from cwr.other import IPIBaseNumber
 
 """
 Publisher to dictionary encoding tests.
@@ -21,10 +22,12 @@ class TestPublisherDictionaryEncoding(unittest.TestCase):
         self._encoder = PublisherRecordDictionaryEncoder()
 
     def test_encoded(self):
+        ipi_base = IPIBaseNumber('I', 229, 7)
+
         publisher = Publisher(ip_n='ABC15',
                               publisher_name='NAME',
                               ipi_name_n=14107338,
-                              ipi_base_n='I-000000229-7',
+                              ipi_base_n=ipi_base,
                               tax_id=923703412)
 
         data = PublisherRecord(record_type='SPU',
@@ -53,8 +56,11 @@ class TestPublisherDictionaryEncoding(unittest.TestCase):
         self.assertEqual('ABC15', publisher['ip_n'])
         self.assertEqual('NAME', publisher['publisher_name'])
         self.assertEqual(14107338, publisher['ipi_name_n'])
-        self.assertEqual('I-000000229-7', publisher['ipi_base_n'])
         self.assertEqual(923703412, publisher['tax_id'])
+
+        self.assertEqual('I', publisher['ipi_base_n']['header'])
+        self.assertEqual(229, publisher['ipi_base_n']['id_code'])
+        self.assertEqual(7, publisher['ipi_base_n']['check_digit'])
 
         self.assertEqual('SPU', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])
