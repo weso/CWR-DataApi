@@ -39,7 +39,7 @@ class TestIPTerritoryOfControlRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
         self.assertEqual('FG14', encoded['ip_n'])
-        self.assertEqual('I', encoded['ie_indicator'])
+        self.assertEqual('I', encoded['inclusion_exclusion_indicator'])
         self.assertEqual(76, encoded['tis_numeric_code'])
         self.assertEqual(135, encoded['sequence_n'])
         self.assertEqual(50.5, encoded['pr_collection_share'])

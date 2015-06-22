@@ -201,10 +201,20 @@ class AlternateTitleDictionaryDecoder(Decoder):
 
 
 class AuthoredWorkDictionaryDecoder(Decoder):
-    def __init__(self):
+    def __init__(self, ipi_base_decoder=None):
         super(AuthoredWorkDictionaryDecoder, self).__init__()
 
+        if ipi_base_decoder:
+            self._ipi_base_decoder = ipi_base_decoder
+        else:
+            self._ipi_base_decoder = IPIBaseDictionaryDecoder()
+
     def decode(self, data):
+        ipi_base_1 = self._ipi_base_decoder.decode(data[
+                                                       'writer_1_ipi_base_n'])
+        ipi_base_2 = self._ipi_base_decoder.decode(data[
+                                                       'writer_2_ipi_base_n'])
+
         return AuthoredWorkRecord(record_type=data['record_type'],
                                   transaction_sequence_n=data[
                                       'transaction_sequence_n'],
@@ -217,12 +227,10 @@ class AuthoredWorkDictionaryDecoder(Decoder):
                                   writer_2_first_name=data[
                                       'writer_2_first_name'],
                                   writer_2_last_name=data['writer_2_last_name'],
-                                  writer_1_ipi_base_n=data[
-                                      'writer_1_ipi_base_n'],
+                                  writer_1_ipi_base_n=ipi_base_1,
                                   writer_1_ipi_name_n=data[
                                       'writer_1_ipi_name_n'],
-                                  writer_2_ipi_base_n=data[
-                                      'writer_2_ipi_base_n'],
+                                  writer_2_ipi_base_n=ipi_base_2,
                                   writer_2_ipi_name_n=data[
                                       'writer_2_ipi_name_n'],
                                   source=data['source'],
@@ -231,10 +239,18 @@ class AuthoredWorkDictionaryDecoder(Decoder):
 
 
 class ComponentDictionaryDecoder(Decoder):
-    def __init__(self):
+    def __init__(self, ipi_base_decoder=None):
         super(ComponentDictionaryDecoder, self).__init__()
 
+        if ipi_base_decoder:
+            self._ipi_base_decoder = ipi_base_decoder
+        else:
+            self._ipi_base_decoder = IPIBaseDictionaryDecoder()
+
     def decode(self, data):
+        ipi_base_1 = self._ipi_base_decoder.decode(data['writer_1_ipi_base_n'])
+        ipi_base_2 = self._ipi_base_decoder.decode(data['writer_2_ipi_base_n'])
+
         return ComponentRecord(record_type=data['record_type'],
                                transaction_sequence_n=data[
                                    'transaction_sequence_n'],
@@ -245,9 +261,9 @@ class ComponentDictionaryDecoder(Decoder):
                                writer_1_first_name=data['writer_1_first_name'],
                                writer_2_last_name=data['writer_2_last_name'],
                                writer_2_first_name=data['writer_2_first_name'],
-                               writer_1_ipi_base_n=data['writer_1_ipi_base_n'],
+                               writer_1_ipi_base_n=ipi_base_1,
                                writer_1_ipi_name_n=data['writer_1_ipi_name_n'],
-                               writer_2_ipi_base_n=data['writer_2_ipi_base_n'],
+                               writer_2_ipi_base_n=ipi_base_2,
                                writer_2_ipi_name_n=data['writer_2_ipi_name_n'],
                                iswc=data['iswc'],
                                duration=data['duration'])
@@ -277,10 +293,17 @@ class GroupTrailerDictionaryDecoder(Decoder):
 
 
 class InterestedPartyForAgreementDictionaryDecoder(Decoder):
-    def __init__(self):
+    def __init__(self, ipi_base_decoder=None):
         super(InterestedPartyForAgreementDictionaryDecoder, self).__init__()
 
+        if ipi_base_decoder:
+            self._ipi_base_decoder = ipi_base_decoder
+        else:
+            self._ipi_base_decoder = IPIBaseDictionaryDecoder()
+
     def decode(self, data):
+        ipi_base = self._ipi_base_decoder.decode(data['ipi_base_n'])
+
         return InterestedPartyForAgreementRecord(
             record_type=data['record_type'],
             transaction_sequence_n=data['transaction_sequence_n'],
@@ -289,7 +312,7 @@ class InterestedPartyForAgreementDictionaryDecoder(Decoder):
             ip_last_name=data['ip_last_name'],
             agreement_role_code=data['agreement_role_code'],
             ip_writer_first_name=data['ip_writer_first_name'],
-            ipi_name_n=data['ipi_name_n'], ipi_base_n=data['ipi_base_n'],
+            ipi_name_n=data['ipi_name_n'], ipi_base_n=ipi_base,
             pr_society=data['pr_society'], pr_share=data['pr_share'],
             mr_society=data['mr_society'], mr_share=data['mr_share'],
             sr_society=data['sr_society'], sr_share=data['sr_share'])
@@ -372,10 +395,18 @@ class MessageDictionaryDecoder(Decoder):
 
 
 class PerformingArtistDictionaryDecoder(Decoder):
-    def __init__(self):
+    def __init__(self, ipi_base_decoder=None):
         super(PerformingArtistDictionaryDecoder, self).__init__()
 
+        if ipi_base_decoder:
+            self._ipi_base_decoder = ipi_base_decoder
+        else:
+            self._ipi_base_decoder = IPIBaseDictionaryDecoder()
+
     def decode(self, data):
+        ipi_base = self._ipi_base_decoder.decode(data[
+                                                     'performing_artist_ipi_base_n'])
+
         return PerformingArtistRecord(record_type=data['record_type'],
                                       transaction_sequence_n=data[
                                           'transaction_sequence_n'],
@@ -387,8 +418,7 @@ class PerformingArtistDictionaryDecoder(Decoder):
                                           'performing_artist_first_name'],
                                       performing_artist_ipi_name_n=data[
                                           'performing_artist_ipi_name_n'],
-                                      performing_artist_ipi_base_n=data[
-                                          'performing_artist_ipi_base_n'])
+                                      performing_artist_ipi_base_n=ipi_base)
 
 
 class PublisherForWriterDictionaryDecoder(Decoder):
@@ -609,13 +639,20 @@ class WorkOriginDictionaryDecoder(Decoder):
 
 
 class WriterDictionaryDecoder(Decoder):
-    def __init__(self):
+    def __init__(self, ipi_base_decoder=None):
         super(WriterDictionaryDecoder, self).__init__()
 
+        if ipi_base_decoder:
+            self._ipi_base_decoder = ipi_base_decoder
+        else:
+            self._ipi_base_decoder = IPIBaseDictionaryDecoder()
+
     def decode(self, data):
+        ipi_base_n = self._ipi_base_decoder.decode(data['ipi_base_n'])
+
         return Writer(ip_n=data['ip_n'],
                       personal_number=data['personal_number'],
-                      ipi_base_n=data['ipi_base_n'],
+                      ipi_base_n=ipi_base_n,
                       writer_first_name=data['writer_first_name'],
                       writer_last_name=data['writer_last_name'],
                       tax_id=data['tax_id'],
@@ -681,10 +718,18 @@ class NonRomanAlphabetOtherWriterDictionaryDecoder(Decoder):
 
 
 class NonRomanAlphabetPerformanceDataDictionaryDecoder(Decoder):
-    def __init__(self):
+    def __init__(self, ipi_base_decoder=None):
         super(NonRomanAlphabetPerformanceDataDictionaryDecoder, self).__init__()
 
+        if ipi_base_decoder:
+            self._ipi_base_decoder = ipi_base_decoder
+        else:
+            self._ipi_base_decoder = IPIBaseDictionaryDecoder()
+
     def decode(self, data):
+        ipi_base = self._ipi_base_decoder.decode(
+            data['performing_artist_ipi_base_n'])
+
         return NonRomanAlphabetPerformanceDataRecord(
             record_type=data['record_type'],
             transaction_sequence_n=data['transaction_sequence_n'],
@@ -692,7 +737,7 @@ class NonRomanAlphabetPerformanceDataDictionaryDecoder(Decoder):
             performing_artist_first_name=data['performing_artist_first_name'],
             performing_artist_name=data['performing_artist_name'],
             performing_artist_ipi_name_n=data['performing_artist_ipi_name_n'],
-            performing_artist_ipi_base_n=data['performing_artist_ipi_base_n'],
+            performing_artist_ipi_base_n=ipi_base,
             language_code=data['language_code'],
             performance_language=data['performance_language'],
             performance_dialect=data['performance_dialect'])
@@ -762,14 +807,21 @@ class NonRomanAlphabetWriterNameDictionaryDecoder(Decoder):
 
 
 class PublisherDictionaryDecoder(Decoder):
-    def __init__(self):
+    def __init__(self, ipi_base_decoder=None):
         super(PublisherDictionaryDecoder, self).__init__()
 
+        if ipi_base_decoder:
+            self._ipi_base_decoder = ipi_base_decoder
+        else:
+            self._ipi_base_decoder = IPIBaseDictionaryDecoder()
+
     def decode(self, data):
+        ipi_base = self._ipi_base_decoder.decode(data['ipi_base_n'])
+
         return Publisher(ip_n=data['ip_n'],
                          publisher_name=data['publisher_name'],
                          ipi_name_n=data['ipi_name_n'],
-                         ipi_base_n=data['ipi_base_n'],
+                         ipi_base_n=ipi_base,
                          tax_id=data['tax_id'])
 
 
@@ -864,9 +916,21 @@ class IPIBaseDictionaryDecoder(Decoder):
         super(IPIBaseDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return IPIBaseNumber(data['header'],
-                             data['id_code'],
-                             data['check_digit'])
+        if data:
+            if isinstance(data, IPIBaseNumber):
+                result = data
+            elif isinstance(data, int) or data.__class__.__name__ == 'long':
+                result = IPIBaseNumber(None,
+                                       data,
+                                       None)
+            else:
+                result = IPIBaseNumber(data['header'],
+                                       data['id_code'],
+                                       data['check_digit'])
+        else:
+            result = None
+
+        return result
 
 
 class ISWCDictionaryDecoder(Decoder):
@@ -874,8 +938,16 @@ class ISWCDictionaryDecoder(Decoder):
         super(ISWCDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return ISWCCode(data['id_code'],
-                        data['check_digit'])
+        if data:
+            if isinstance(data, ISWCCode):
+                result = data
+            else:
+                result = ISWCCode(data['id_code'],
+                                  data['check_digit'])
+        else:
+            result = None
+
+        return result
 
 
 class VISANDictionaryDecoder(Decoder):
