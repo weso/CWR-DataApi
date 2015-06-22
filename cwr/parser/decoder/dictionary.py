@@ -919,7 +919,7 @@ class IPIBaseDictionaryDecoder(Decoder):
         if data:
             if isinstance(data, IPIBaseNumber):
                 result = data
-            elif isinstance(data, int) or isinstance(data, long):
+            elif isinstance(data, int) or data.__class__.__name__ == 'long':
                 result = IPIBaseNumber(None,
                                        data,
                                        None)
