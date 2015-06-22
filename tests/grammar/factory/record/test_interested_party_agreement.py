@@ -38,7 +38,7 @@ class TestIPAGrammar(unittest.TestCase):
         self.assertEqual(0, result.transaction_sequence_n)
         self.assertEqual(2, result.record_sequence_n)
         self.assertEqual('AC', result.agreement_role_code)
-        self.assertEqual(0, result.ipi_base_n)
+        self.assertEqual(None, result.ipi_base_n)
         self.assertEqual(250165006, result.ipi_name_n)
         self.assertEqual('66', result.ip_n)
         self.assertEqual('SOCIETY MUSIC', result.ip_last_name)
