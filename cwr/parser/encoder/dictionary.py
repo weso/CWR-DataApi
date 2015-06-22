@@ -217,10 +217,14 @@ class ISWCDictionaryEncoder(Encoder):
         super(ISWCDictionaryEncoder, self).__init__()
 
     def encode(self, iswc):
-        encoded = {}
 
-        encoded['id_code'] = iswc.id_code
-        encoded['check_digit'] = iswc.check_digit
+        if iswc:
+            encoded = {}
+
+            encoded['id_code'] = iswc.id_code
+            encoded['check_digit'] = iswc.check_digit
+        else:
+            encoded = None
 
         return encoded
 
@@ -230,11 +234,14 @@ class IPIBaseDictionaryEncoder(Encoder):
         super(IPIBaseDictionaryEncoder, self).__init__()
 
     def encode(self, ipi):
-        encoded = {}
+        if ipi:
+            encoded = {}
 
-        encoded['header'] = ipi.header
-        encoded['id_code'] = ipi.id_code
-        encoded['check_digit'] = ipi.check_digit
+            encoded['header'] = ipi.header
+            encoded['id_code'] = ipi.id_code
+            encoded['check_digit'] = ipi.check_digit
+        else:
+            encoded = None
 
         return encoded
 
@@ -385,7 +392,7 @@ class AlternateTitleDictionaryEncoder(TransactionHeaderDictionaryEncoder):
 
 
 class AuthoredWorkDictionaryEncoder(TransactionHeaderDictionaryEncoder):
-    def __init__(self, iswc_encoder=None):
+    def __init__(self, iswc_encoder=None, ipi_base_encoder=None):
         super(AuthoredWorkDictionaryEncoder, self).__init__()
 
         if iswc_encoder:
@@ -393,21 +400,25 @@ class AuthoredWorkDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         else:
             self._iswc_encoder = ISWCDictionaryEncoder()
 
+        if ipi_base_encoder:
+            self._ipi_base_encoder = ipi_base_encoder
+        else:
+            self._ipi_base_encoder = IPIBaseDictionaryEncoder()
+
     def encode(self, record):
         encoded = super(AuthoredWorkDictionaryEncoder, self).encode(record)
 
-        if record.iswc:
-            encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
-        else:
-            encoded['iswc'] = None
+        encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
         encoded['language_code'] = record.language_code
         encoded['source'] = record.source
         encoded['submitter_work_n'] = record.submitter_work_n
         encoded['title'] = record.title
         encoded['writer_1_first_name'] = record.writer_1_first_name
         encoded['writer_2_first_name'] = record.writer_2_first_name
-        encoded['writer_1_ipi_base_n'] = record.writer_1_ipi_base_n
-        encoded['writer_2_ipi_base_n'] = record.writer_2_ipi_base_n
+        encoded['writer_1_ipi_base_n'] = self._ipi_base_encoder.encode(
+            record.writer_1_ipi_base_n)
+        encoded['writer_2_ipi_base_n'] = self._ipi_base_encoder.encode(
+            record.writer_2_ipi_base_n)
         encoded['writer_1_ipi_name_n'] = record.writer_1_ipi_name_n
         encoded['writer_2_ipi_name_n'] = record.writer_2_ipi_name_n
         encoded['writer_1_last_name'] = record.writer_1_last_name
@@ -417,7 +428,7 @@ class AuthoredWorkDictionaryEncoder(TransactionHeaderDictionaryEncoder):
 
 
 class ComponentDictionaryEncoder(TransactionHeaderDictionaryEncoder):
-    def __init__(self, iswc_encoder=None):
+    def __init__(self, iswc_encoder=None, ipi_base_encoder=None):
         super(ComponentDictionaryEncoder, self).__init__()
 
         if iswc_encoder:
@@ -425,21 +436,25 @@ class ComponentDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         else:
             self._iswc_encoder = ISWCDictionaryEncoder()
 
+        if ipi_base_encoder:
+            self._ipi_base_encoder = ipi_base_encoder
+        else:
+            self._ipi_base_encoder = IPIBaseDictionaryEncoder()
+
     def encode(self, record):
         encoded = super(ComponentDictionaryEncoder, self).encode(record)
 
         encoded['duration'] = record.duration
-        if record.iswc:
-            encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
-        else:
-            encoded['iswc'] = None
+        encoded['iswc'] = self._iswc_encoder.encode(record.iswc)
         encoded['submitter_work_n'] = record.submitter_work_n
         encoded['title'] = record.title
         encoded['writer_1_first_name'] = record.writer_1_first_name
         encoded['writer_2_first_name'] = record.writer_2_first_name
-        encoded['writer_2_ipi_base_n'] = record.writer_2_ipi_base_n
+        encoded['writer_2_ipi_base_n'] = self._ipi_base_encoder.encode(
+            record.writer_2_ipi_base_n)
         encoded['writer_2_ipi_name_n'] = record.writer_2_ipi_name_n
-        encoded['writer_1_ipi_base_n'] = record.writer_1_ipi_base_n
+        encoded['writer_1_ipi_base_n'] = self._ipi_base_encoder.encode(
+            record.writer_1_ipi_base_n)
         encoded['writer_1_ipi_name_n'] = record.writer_1_ipi_name_n
         encoded['writer_1_last_name'] = record.writer_1_last_name
         encoded['writer_2_last_name'] = record.writer_2_last_name
@@ -482,8 +497,13 @@ class InstrumentationSummaryDictionaryEncoder \
 
 
 class PerformingArtistDictionaryEncoder(TransactionHeaderDictionaryEncoder):
-    def __init__(self):
+    def __init__(self, ipi_base_encoder=None):
         super(PerformingArtistDictionaryEncoder, self).__init__()
+
+        if ipi_base_encoder:
+            self._ipi_base_encoder = ipi_base_encoder
+        else:
+            self._ipi_base_encoder = IPIBaseDictionaryEncoder()
 
     def encode(self, record):
         encoded = super(PerformingArtistDictionaryEncoder, self).encode(record)
@@ -493,7 +513,7 @@ class PerformingArtistDictionaryEncoder(TransactionHeaderDictionaryEncoder):
             record.performing_artist_first_name
         encoded[
             'performing_artist_ipi_base_n'] = \
-            record.performing_artist_ipi_base_n
+            self._ipi_base_encoder.encode(record.performing_artist_ipi_base_n)
         encoded[
             'performing_artist_ipi_name_n'] = \
             record.performing_artist_ipi_name_n
@@ -801,8 +821,13 @@ class NonRomanAlphabetWriterNameDictionaryEncoder(NRADictionaryEncoder):
 
 
 class NonRomanAlphabetPerformanceDataDictionaryEncoder(NRADictionaryEncoder):
-    def __init__(self):
+    def __init__(self, ipi_base_encoder=None):
         super(NonRomanAlphabetPerformanceDataDictionaryEncoder, self).__init__()
+
+        if ipi_base_encoder:
+            self._ipi_base_encoder = ipi_base_encoder
+        else:
+            self._ipi_base_encoder = IPIBaseDictionaryEncoder()
 
     def encode(self, record):
         encoded = super(NonRomanAlphabetPerformanceDataDictionaryEncoder,
@@ -815,7 +840,7 @@ class NonRomanAlphabetPerformanceDataDictionaryEncoder(NRADictionaryEncoder):
             record.performing_artist_first_name
         encoded[
             'performing_artist_ipi_base_n'] = \
-            record.performing_artist_ipi_base_n
+            self._ipi_base_encoder.encode(record.performing_artist_ipi_base_n)
         encoded[
             'performing_artist_ipi_name_n'] = \
             record.performing_artist_ipi_name_n
@@ -833,7 +858,8 @@ class IPTerritoryOfControlDictionaryEncoder(TransactionHeaderDictionaryEncoder):
             record)
 
         encoded['ip_n'] = record.ip_n
-        encoded['ie_indicator'] = record.inclusion_exclusion_indicator
+        encoded[
+            'inclusion_exclusion_indicator'] = record.inclusion_exclusion_indicator
         encoded['tis_numeric_code'] = record.tis_numeric_code
         encoded['sequence_n'] = record.sequence_n
         encoded['pr_collection_share'] = record.pr_collection_share
@@ -864,8 +890,13 @@ class MessageDictionaryEncoder(TransactionHeaderDictionaryEncoder):
 
 class InterestedPartyForAgreementDictionaryEncoder \
             (TransactionHeaderDictionaryEncoder):
-    def __init__(self):
+    def __init__(self, ipi_base_encoder=None):
         super(InterestedPartyForAgreementDictionaryEncoder, self).__init__()
+
+        if ipi_base_encoder:
+            self._ipi_base_encoder = ipi_base_encoder
+        else:
+            self._ipi_base_encoder = IPIBaseDictionaryEncoder()
 
     def encode(self, record):
         encoded = super(InterestedPartyForAgreementDictionaryEncoder,
@@ -876,7 +907,7 @@ class InterestedPartyForAgreementDictionaryEncoder \
         encoded['ip_n'] = record.ip_n
         encoded['ip_writer_first_name'] = record.ip_writer_first_name
         encoded['ipi_name_n'] = record.ipi_name_n
-        encoded['ipi_base_n'] = record.ipi_base_n
+        encoded['ipi_base_n'] = self._ipi_base_encoder.encode(record.ipi_base_n)
         encoded['mr_society'] = record.mr_society
         encoded['mr_share'] = record.mr_share
         encoded['pr_society'] = record.pr_society
@@ -980,14 +1011,19 @@ class GroupTrailerDictionaryEncoder(Encoder):
 
 
 class InterestedPartyDictionaryEncoder(Encoder):
-    def __init__(self):
+    def __init__(self, ipi_base_encoder=None):
         super(InterestedPartyDictionaryEncoder, self).__init__()
+
+        if ipi_base_encoder:
+            self._ipi_base_encoder = ipi_base_encoder
+        else:
+            self._ipi_base_encoder = IPIBaseDictionaryEncoder()
 
     def encode(self, record):
         encoded = {}
 
         encoded['ip_n'] = record.ip_n
-        encoded['ipi_base_n'] = record.ipi_base_n
+        encoded['ipi_base_n'] = self._ipi_base_encoder.encode(record.ipi_base_n)
         encoded['ipi_name_n'] = record.ipi_name_n
         encoded['tax_id'] = record.tax_id
 
@@ -1105,9 +1141,9 @@ class FileTagDictionaryEncoder(Encoder):
         return encoded
 
 
-class FileDictionaryDictionaryEncoder(Encoder):
+class FileDictionaryEncoder(Encoder):
     def __init__(self, encoder_tag=None, encoder_trans=None):
-        super(FileDictionaryDictionaryEncoder, self).__init__()
+        super(FileDictionaryEncoder, self).__init__()
 
         if encoder_tag:
             self._encoder_tag = encoder_tag

@@ -50,9 +50,6 @@ class TransmissionHeader(Record):
         """
         super(TransmissionHeader, self).__init__(record_type)
 
-        # Record info
-        self._record_type = record_type
-
         # Sender info
         self._sender_id = sender_id
         self._sender_name = sender_name

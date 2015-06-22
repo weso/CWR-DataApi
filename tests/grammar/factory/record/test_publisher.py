@@ -46,7 +46,7 @@ class TestPublisherRecordGrammar(unittest.TestCase):
         self.assertEqual(5, result.sr_ownership_share)
         self.assertEqual(None, result.special_agreements)
         self.assertEqual(None, result.first_recording_refusal)
-        self.assertEqual(0, result.publisher.ipi_base_n)
+        self.assertEqual(None, result.publisher.ipi_base_n)
         self.assertEqual(None, result.international_standard_code)
         self.assertEqual(None, result.society_assigned_agreement_n)
         self.assertEqual('OS', result.agreement_type)
