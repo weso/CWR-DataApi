@@ -5,6 +5,7 @@ import unittest
 from cwr.parser.encoder.dictionary import \
     InterestedPartyForAgreementDictionaryEncoder
 from cwr.agreement import InterestedPartyForAgreementRecord
+from cwr.other import IPIBaseNumber
 
 """
 InterestedPartyForAgreementRecord to dictionary encoding tests.
@@ -22,6 +23,8 @@ class TestAgreementInterestedPartyRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = InterestedPartyForAgreementDictionaryEncoder()
 
     def test_encoded(self):
+        ipi_base = IPIBaseNumber('I', 229, 7)
+
         data = InterestedPartyForAgreementRecord(record_type='ACK',
                                                  transaction_sequence_n=3,
                                                  record_sequence_n=15,
@@ -30,7 +33,7 @@ class TestAgreementInterestedPartyRecordDictionaryEncoding(unittest.TestCase):
                                                  agreement_role_code='AS',
                                                  ip_writer_first_name='FIRST NAME',
                                                  ipi_name_n='00014107338',
-                                                 ipi_base_n='I-000000229-7',
+                                                 ipi_base_n=ipi_base,
                                                  pr_society=12,
                                                  pr_share=50.5,
                                                  mr_society=13,
@@ -48,10 +51,13 @@ class TestAgreementInterestedPartyRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('AS', encoded['agreement_role_code'])
         self.assertEqual('FIRST NAME', encoded['ip_writer_first_name'])
         self.assertEqual('00014107338', encoded['ipi_name_n'])
-        self.assertEqual('I-000000229-7', encoded['ipi_base_n'])
         self.assertEqual(12, encoded['pr_society'])
         self.assertEqual(50.5, encoded['pr_share'])
         self.assertEqual(13, encoded['mr_society'])
         self.assertEqual(60.5, encoded['mr_share'])
         self.assertEqual(14, encoded['sr_society'])
         self.assertEqual(70.5, encoded['sr_share'])
+
+        self.assertEqual('I', encoded['ipi_base_n']['header'])
+        self.assertEqual(229, encoded['ipi_base_n']['id_code'])
+        self.assertEqual(7, encoded['ipi_base_n']['check_digit'])

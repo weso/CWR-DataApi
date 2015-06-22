@@ -3,7 +3,7 @@
 import json
 import sys
 
-from cwr.parser.encoder.dictionary import FileDictionaryDictionaryEncoder
+from cwr.parser.encoder.dictionary import FileDictionaryEncoder
 from cwr.parser.encoder.common import Encoder
 
 """
@@ -31,7 +31,7 @@ class JSONEncoder(Encoder):
 
     def __init__(self):
         super(JSONEncoder, self).__init__()
-        self._dict_encoder = FileDictionaryDictionaryEncoder()
+        self._dict_encoder = FileDictionaryEncoder()
 
     def encode(self, entity):
         """
