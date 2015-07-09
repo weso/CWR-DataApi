@@ -14,7 +14,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class TestLookupFieldFactory(unittest.TestCase):
+class TestDefaultRuleFactory(unittest.TestCase):
     def setUp(self):
         self._factory = default_grammar_factory()
 

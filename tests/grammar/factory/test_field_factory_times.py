@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
 import time
-
 import sys
 
 from cwr.grammar.factory.rule import FieldRuleFactory
