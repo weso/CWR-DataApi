@@ -111,8 +111,75 @@ class OptionalFieldRuleDecorator(object):
         config = self._field_configs[field_id]
 
         # It is not compulsory, the wrapped is added
+        field = self._wrap_as_optional(field_base, config['name'],
+                                       config['size'])
+
         adapter = self._adapters[config['type']]
-        field = adapter.wrap_as_optional(field_base, config['name'],
-                                         config['size'])
+        if (adapter.is_numeric()):
+            field = self._wrap_as_optional_numeric(field, config['name'],
+                                                   config['size'])
+
+        return field
+
+    def _wrap_as_optional_numeric(self, field, name, columns):
+        # Regular expression accepting as many whitespaces as columns
+        field_empty = pp.Regex('[0]{' + str(columns) + '}')
+
+        resultsName = field.resultsName
+
+        field_empty.setName(name)
+
+        # Whitespaces are not removed
+        field_empty.leaveWhitespace()
+
+        # None is returned by this rule
+        field_empty.setParseAction(pp.replaceWith(None))
+
+        field_empty = field_empty.setResultsName(field.resultsName)
+
+        field = field | field_empty
+
+        field.setName(name)
+        field = field.setResultsName(resultsName)
+
+        field.leaveWhitespace()
+
+        return field
+
+    def _wrap_as_optional(self, field, name, columns):
+        """
+        Adds a wrapper rule to the field to accept empty strings.
+
+        This empty string should be of the same size as the columns parameter.
+        One smaller or bigger will be rejected.
+
+        This wrapper will return None if the field is empty.
+
+        :param field: the field to wrap
+        :param name: name of the field
+        :param columns: number of columns it takes
+        :return: the field with an additional rule to allow empty strings
+        """
+        # Regular expression accepting as many whitespaces as columns
+        field_empty = pp.Regex('[ ]{' + str(columns) + '}')
+
+        resultsName = field.resultsName
+
+        field_empty.setName(name)
+
+        # Whitespaces are not removed
+        field_empty.leaveWhitespace()
+
+        # None is returned by this rule
+        field_empty.setParseAction(pp.replaceWith(None))
+
+        field_empty = field_empty.setResultsName(resultsName)
+
+        field = field | field_empty
+
+        field.setName(name)
+        field = field.setResultsName(resultsName)
+
+        field.leaveWhitespace()
 
         return field
