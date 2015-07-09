@@ -2,8 +2,6 @@
 
 from abc import ABCMeta, abstractmethod
 
-import pyparsing as pp
-
 from cwr.grammar.field import basic, special, table, filename
 
 """
@@ -53,40 +51,8 @@ class FieldAdapter(object):
         """
         raise NotImplementedError("The get_field method is not implemented")
 
-    def wrap_as_optional(self, field, name, columns):
-        """
-        Adds a wrapper rule to the field to accept empty strings.
-
-        This empty string should be of the same size as the columns parameter.
-        One smaller or bigger will be rejected.
-
-        This wrapper will return None if the field is empty.
-
-        :param field: the field to wrap
-        :param name: name of the field
-        :param columns: number of columns it takes
-        :return: the field with an additional rule to allow empty strings
-        """
-        # Regular expression accepting as many whitespaces as columns
-        field_empty = pp.Regex('[ ]{' + str(columns) + '}')
-
-        field_empty.setName(name)
-
-        # Whitespaces are not removed
-        field_empty.leaveWhitespace()
-
-        # None is returned by this rule
-        field_empty.setParseAction(pp.replaceWith(None))
-
-        field_empty = field_empty.setResultsName(field.resultsName)
-
-        field = field | field_empty
-
-        field.setName(name)
-
-        field.leaveWhitespace()
-
-        return field
+    def is_numeric(self):
+        return False
 
 
 class AlphanumAdapter(FieldAdapter):
@@ -184,40 +150,8 @@ class DateAdapter(FieldAdapter):
     def get_field(self, name=None, columns=None, values=None):
         return basic.date(name)
 
-    def wrap_as_optional(self, field, name, columns):
-        """
-        Adds a wrapper rule to the field to accept empty strings.
-
-        This empty string should be of the same size as the columns parameter.
-        One smaller or bigger will be rejected.
-
-        This wrapper will return None if the field is empty.
-
-        :param field: the field to wrap
-        :param name: name of the field
-        :param columns: number of columns it takes
-        :return: the field with an additional rule to allow empty strings
-        """
-        # Regular expression accepting as many whitespaces as columns
-        field_empty = pp.Regex('[0]{8}|[ ]{' + str(columns) + '}')
-
-        field_empty.setName(name)
-
-        # Whitespaces are not removed
-        field_empty.leaveWhitespace()
-
-        # None is returned by this rule
-        field_empty.setParseAction(pp.replaceWith(None))
-
-        field_empty = field_empty.setResultsName(field.resultsName)
-
-        field = field | field_empty
-
-        field.setName(name)
-
-        field.leaveWhitespace()
-
-        return field
+    def is_numeric(self):
+        return True
 
 
 class TimeAdapter(FieldAdapter):
