@@ -30,4 +30,4 @@ class TestDefaultRuleFactory(unittest.TestCase):
 
         time_parse = (end - start)
 
-        self.assertTrue(time_parse < 1.1)
+        self.assertTrue(time_parse < 2)
