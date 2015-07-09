@@ -24,8 +24,8 @@ _rule_identifier.setParseAction(lambda rule: rule[0])
 _rule_options_list = pp.Group(pp.delimitedList(_rule_config_string))
 _rule_options_list.setParseAction(lambda rule: rule[0].asList())
 
-rule_options = pp.Literal('(').suppress() + pp.Optional(_rule_options_list). \
-    setResultsName('values') + pp.Literal(')').suppress()
+rule_options = pp.Literal('(').suppress() + pp.Optional(_rule_options_list) + \
+               pp.Literal(')').suppress()
 
 rule_id = pp.Literal('id:').suppress() + _rule_config_string.setResultsName(
     'value')
@@ -47,7 +47,6 @@ rule_terminal = \
     _rule_identifier.setResultsName('rule_type') + \
     _rule_config_string.setResultsName('rule_name') + \
     pp.Optional(rule_options).setResultsName('rule_options')
-rule_terminal = rule_terminal
 
 _rule_rules_tree_terminal = pp.OneOrMore(pp.Group(rule_terminal))
 _rule_rules_tree_recursive = pp.Forward()
