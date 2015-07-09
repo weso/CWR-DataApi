@@ -30,4 +30,4 @@ class TestLookupFieldFactory(unittest.TestCase):
 
         time_parse = (end - start)
 
-        self.assertLess(time_parse, 1.1)
+        self.assertTrue(time_parse < 1.1)
