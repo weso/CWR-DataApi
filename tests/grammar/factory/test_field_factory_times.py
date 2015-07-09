@@ -2,6 +2,8 @@
 import unittest
 import time
 
+import sys
+
 from cwr.grammar.factory.rule import FieldRuleFactory
 from cwr.grammar.factory.adapter import NumericAdapter
 
@@ -30,8 +32,12 @@ class TestFieldRuleFactory(unittest.TestCase):
 
     def test_10000(self):
         start = time.clock()
-        for x in xrange(10000):
-            self._factory.get_rule('test_field')
+        if sys.version_info[0] == 2:
+            for x in xrange(10000):
+                self._factory.get_rule('test_field')
+        else:
+            for x in range(10000):
+                self._factory.get_rule('test_field')
         end = time.clock()
 
         time_parse = (end - start)

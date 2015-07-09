@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 import time
+import sys
 
 from cwr.parser.decoder.file import default_grammar_factory
 
@@ -19,8 +20,12 @@ class TestLookupFieldFactory(unittest.TestCase):
 
     def test_10000(self):
         start = time.clock()
-        for x in xrange(10000):
-            self._factory.get_rule('transmission')
+        if sys.version_info[0] == 2:
+            for x in xrange(10000):
+                self._factory.get_rule('transmission')
+        else:
+            for x in range(10000):
+                self._factory.get_rule('transmission')
         end = time.clock()
 
         time_parse = (end - start)
