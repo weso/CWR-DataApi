@@ -60,14 +60,14 @@ class FieldRuleFactory(RuleFactory):
 
             # Field does not exist
             # It is created
-            field = self.create_field(field_id, config)
+            field = self._create_field(field_id, config)
 
             # Field is saved
             self._fields[field_id] = field
 
         return field
 
-    def create_field(self, field_id, config):
+    def _create_field(self, field_id, config):
         """
         Creates the field with the specified parameters.
 
@@ -109,6 +109,9 @@ class DefaultRuleFactory(RuleFactory):
         super(DefaultRuleFactory, self).__init__()
         self._debug = False
 
+        # Rules already created
+        self._rules = {}
+
         # Configuration for creating the record
         self._record_configs = record_configs
         self._field_rule_factory = field_rule_factory
@@ -120,27 +123,32 @@ class DefaultRuleFactory(RuleFactory):
             self._decorators = {}
 
     def get_rule(self, rule_id):
-        rule_config = self._record_configs[rule_id]
-
-        rule_type = rule_config.rule_type
-
-        if rule_config.rules:
-            rule = self._process_rules(rule_config.rules, pp.And)
+        if rule_id in self._rules:
+            rule = self._rules[rule_id]
         else:
-            rule = self._build_terminal_rule(rule_config)
+            rule_config = self._record_configs[rule_id]
 
-        if rule_type in self._decorators:
-            rule = self._decorators[rule_type].decorate(rule, rule_config)
+            rule_type = rule_config.rule_type
 
-        if 'results_name' in rule_config:
-            rule = rule.setResultsName(rule_config['results_name'])
-        else:
-            rule = rule.setResultsName(rule_id)
+            if rule_config.rules:
+                rule = self._process_rules(rule_config.rules, pp.And)
+            else:
+                rule = self._build_terminal_rule(rule_config)
 
-        rule.setName(rule_id)
+            if rule_type in self._decorators:
+                rule = self._decorators[rule_type].decorate(rule, rule_config)
 
-        if self._debug:
-            rule.setDebug()
+            if 'results_name' in rule_config:
+                rule = rule.setResultsName(rule_config['results_name'])
+            else:
+                rule = rule.setResultsName(rule_id)
+
+            rule.setName(rule_id)
+
+            if self._debug:
+                rule.setDebug()
+
+            self._rules[rule_id] = rule
 
         return rule
 
