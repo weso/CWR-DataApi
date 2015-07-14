@@ -55,26 +55,24 @@ class FieldRuleFactory(RuleFactory):
             # Field already exists
             field = self._fields[field_id]
         else:
-            # Field configuration info
-            config = self._field_configs[field_id]
-
             # Field does not exist
             # It is created
-            field = self._create_field(field_id, config)
+            field = self._create_field(field_id)
 
             # Field is saved
             self._fields[field_id] = field
 
         return field
 
-    def _create_field(self, field_id, config):
+    def _create_field(self, field_id):
         """
         Creates the field with the specified parameters.
 
         :param field_id: identifier for the field
-        :param config: configuration info for the field
         :return: the basic rule for the field
         """
+        # Field configuration info
+        config = self._field_configs[field_id]
 
         adapter = self._adapters[config['type']]
 
