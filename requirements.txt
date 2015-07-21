@@ -3,6 +3,7 @@ pyparsing==2.0.3
 pyyaml==3.11
 
 # Deployment
+setuptools>=17.0
 twine>=1.5.0
 
 # Documentation

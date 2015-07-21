@@ -55,26 +55,24 @@ class FieldRuleFactory(RuleFactory):
             # Field already exists
             field = self._fields[field_id]
         else:
-            # Field configuration info
-            config = self._field_configs[field_id]
-
             # Field does not exist
             # It is created
-            field = self.create_field(field_id, config)
+            field = self._create_field(field_id)
 
             # Field is saved
             self._fields[field_id] = field
 
         return field
 
-    def create_field(self, field_id, config):
+    def _create_field(self, field_id):
         """
         Creates the field with the specified parameters.
 
         :param field_id: identifier for the field
-        :param config: configuration info for the field
         :return: the basic rule for the field
         """
+        # Field configuration info
+        config = self._field_configs[field_id]
 
         adapter = self._adapters[config['type']]
 
@@ -109,6 +107,9 @@ class DefaultRuleFactory(RuleFactory):
         super(DefaultRuleFactory, self).__init__()
         self._debug = False
 
+        # Rules already created
+        self._rules = {}
+
         # Configuration for creating the record
         self._record_configs = record_configs
         self._field_rule_factory = field_rule_factory
@@ -120,6 +121,15 @@ class DefaultRuleFactory(RuleFactory):
             self._decorators = {}
 
     def get_rule(self, rule_id):
+        if rule_id in self._rules:
+            rule = self._rules[rule_id]
+        else:
+            rule = self._build_rule(rule_id)
+            self._rules[rule_id] = rule
+
+        return rule
+
+    def _build_rule(self, rule_id):
         rule_config = self._record_configs[rule_id]
 
         rule_type = rule_config.rule_type
@@ -153,6 +163,9 @@ class DefaultRuleFactory(RuleFactory):
             else:
                 rule = self._build_terminal_rule(rule)
 
+                if self._debug:
+                    rule.setDebug()
+
             sequence.append(rule)
 
         return strategy(sequence)
@@ -177,18 +190,16 @@ class DefaultRuleFactory(RuleFactory):
         modifiers = rule.rule_options
         rule_type = rule.rule_type
 
+        # TODO: This is a patch for an error which should not be happening
+        if isinstance(modifiers, pp.ParseResults):
+            modifiers = modifiers.asList()
+        elif isinstance(modifiers, str):
+            modifiers = []
+
         if rule_type == 'field':
             rule = self._field_rule_factory.get_rule(rule_id)
 
-            if self._debug:
-                rule.setDebug()
-
-            compulsory = False
-            i = 0
-            while not compulsory and i < len(modifiers):
-                compulsory = modifiers[i] == 'compulsory'
-
-            if not compulsory:
+            if 'compulsory' not in modifiers:
                 rule = self._optional_field_rule_decorator.decorate(rule,
                                                                     rule_id)
 
@@ -196,26 +207,27 @@ class DefaultRuleFactory(RuleFactory):
         else:
             rule = self.get_rule(rule_id)
 
-        if modifiers and len(modifiers) > 0:
+        if len(modifiers) > 0:
             rule = self._apply_modifiers(rule, modifiers)
 
         return rule
 
     def _apply_modifiers(self, rule, modifiers):
-        for modifier in modifiers:
-            if modifier == 'grouped':
-                rule = pp.Group(rule)
+        if 'grouped' in modifiers:
+            rule = pp.Group(rule)
 
-            if modifier.startswith('at_least'):
-                times = rule_at_least.parseString(modifier)[0]
-                if times > 0:
-                    rule_multiple = rule
-                    for _ in range(1, times):
-                        rule_multiple = rule_multiple + rule
-                    rule = rule_multiple + pp.ZeroOrMore(rule)
-                else:
-                    rule = pp.Optional(pp.ZeroOrMore(rule))
-            elif modifier == 'optional':
-                rule = pp.Optional(rule)
+        if 'optional' in modifiers:
+            rule = pp.Optional(rule)
+        else:
+            for modifier in modifiers:
+                if modifier.startswith('at_least'):
+                    times = rule_at_least.parseString(modifier)[0]
+                    if times > 0:
+                        rule_multiple = rule
+                        for _ in range(1, times):
+                            rule_multiple = rule_multiple + rule
+                        rule = rule_multiple + pp.ZeroOrMore(rule)
+                    else:
+                        rule = pp.Optional(pp.ZeroOrMore(rule))
 
         return rule
