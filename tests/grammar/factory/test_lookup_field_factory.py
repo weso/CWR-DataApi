@@ -27,19 +27,19 @@ def _factory():
 
 class TestLookupFieldFactoryValid(unittest.TestCase):
     def setUp(self):
-        self.factory = _factory()
+        self._factory = _factory()
 
     def test_creation(self):
         field_id = 'test_lookup'
 
-        result = self.factory.get_rule(field_id)
+        result = self._factory.get_rule(field_id)
 
         self.assertNotEqual(None, result)
 
     def test_optional_trailing_whitespace(self):
         field_id = 'test_lookup'
 
-        result = self.factory.get_rule(field_id)
+        result = self._factory.get_rule(field_id)
         result = result.parseString('CD2  ')[0]
 
         self.assertEqual('CD2', result)
@@ -47,7 +47,7 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
     def test_compulsory_trailing_whitespace(self):
         field_id = 'test_lookup'
 
-        result = self.factory.get_rule(field_id)
+        result = self._factory.get_rule(field_id)
         result = result.parseString('CD2  ')[0]
 
         self.assertEqual('CD2', result)
@@ -55,20 +55,20 @@ class TestLookupFieldFactoryValid(unittest.TestCase):
     def test_returns_same(self):
         field_id = 'test_lookup'
 
-        result1 = self.factory.get_rule(field_id)
-        result2 = self.factory.get_rule(field_id)
+        result1 = self._factory.get_rule(field_id)
+        result2 = self._factory.get_rule(field_id)
 
         self.assertEqual(result1, result2)
 
 
 class TestLookupFieldFactoryException(unittest.TestCase):
     def setUp(self):
-        self.factory = _factory()
+        self._factory = _factory()
 
     def test_compulsory_heading_whitespace(self):
         field_id = 'test_lookup'
 
-        field = self.factory.get_rule(field_id)
+        field = self._factory.get_rule(field_id)
 
         self.assertRaises(ParseException, field.parseString, '   CD2')
 
@@ -78,7 +78,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         field_id = 'test_lookup'
 
-        field = self.factory.get_rule(field_id)
+        field = self._factory.get_rule(field_id)
 
         self.assertRaises(ParseException, field.parseString, '   ')
 
@@ -88,7 +88,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         field_id = 'test_lookup'
 
-        field = self.factory.get_rule(field_id)
+        field = self._factory.get_rule(field_id)
 
         self.assertRaises(ParseException, field.parseString, '')
 
@@ -98,7 +98,7 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         field_id = 'test_lookup'
 
-        field = self.factory.get_rule(field_id)
+        field = self._factory.get_rule(field_id)
 
         self.assertRaises(ParseException, field.parseString, '123')
 
@@ -108,6 +108,6 @@ class TestLookupFieldFactoryException(unittest.TestCase):
         """
         field_id = 'test_lookup'
 
-        field = self.factory.get_rule(field_id)
+        field = self._factory.get_rule(field_id)
 
         self.assertRaises(ParseException, field.parseString, '12 ')

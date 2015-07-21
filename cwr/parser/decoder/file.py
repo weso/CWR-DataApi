@@ -203,9 +203,7 @@ def default_grammar_factory():
 def default_filename_grammar_factory():
     config = CWRConfiguration()
 
-    data = config.load_field_config('table')
-    data.update(config.load_field_config('common'))
-    data.update(config.load_field_config('filename'))
+    data = config.load_field_config('filename')
     field_values = CWRTables()
 
     for entry in data.values():
@@ -240,8 +238,11 @@ def default_file_decoder():
 
     :return: a CWR file decoder for the default standard
     """
+    transmission_rule = default_grammar_factory().get_rule('transmission')
+    transmission_rule.enablePackrat()
+
     return FileDecoder(
-        default_grammar_factory().get_rule('transmission'),
+        transmission_rule,
         default_filename_decoder()
     )
 
