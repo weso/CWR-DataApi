@@ -31,6 +31,7 @@ lineStart.setName("Start of line")
 lineEnd = pp.lineEnd.suppress()
 lineEnd.setName("End of line")
 
+
 # CONCRETE CASES FIELDS
 
 
@@ -307,19 +308,25 @@ def _isrc_short(name=None):
     if name is None:
         name = 'ISRC Field'
 
-    separator = pp.Literal('-')
-    country = basic.lookup(config.get_data('isrc_country_code'))
-    registrant = basic.alphanum(3)
-    year = pp.Regex('[0-9]{2}')
-    work_id = pp.Regex('[0-9]{2}')
+    # separator = pp.Literal('-')
+    country = config.get_data('isrc_country_code')
+    # registrant = basic.alphanum(3)
+    # year = pp.Regex('[0-9]{2}')
+    # work_id = pp.Regex('[0-9]{2}')
 
-    field = pp.Combine(country + separator + registrant + separator + year +
-                       separator + work_id)
+    country_regex = ''
+    for c in country:
+        if len(country_regex) > 0:
+            country_regex += '|'
+        country_regex += c
+    country_regex = '(' + country_regex + ')'
 
-    country.setName('ISO-2 Country Code')
-    registrant.setName('Registrant')
-    year.setName('Year')
-    work_id.setName('Work ID')
+    field = pp.Regex(country_regex + '-.{3}-[0-9]{2}-[0-9]{2}')
+
+    # country.setName('ISO-2 Country Code')
+    # registrant.setName('Registrant')
+    # year.setName('Year')
+    # work_id.setName('Work ID')
 
     field.setName(name)
 
@@ -352,17 +359,24 @@ def _isrc_long(name=None):
     if name is None:
         name = 'ISRC Field'
 
-    country = basic.lookup(config.get_data('isrc_country_code'))
-    registrant = basic.alphanum(3)
-    year = pp.Regex('[0-9]{2}')
-    work_id = pp.Regex('[0-9]{5}')
+    country = config.get_data('isrc_country_code')
+    # registrant = basic.alphanum(3)
+    # year = pp.Regex('[0-9]{2}')
+    # work_id = pp.Regex('[0-9]{5}')
 
-    field = pp.Combine(country + registrant + year + work_id)
+    country_regex = ''
+    for c in country:
+        if len(country_regex) > 0:
+            country_regex += '|'
+        country_regex += c
+    country_regex = '(' + country_regex + ')'
 
-    country.setName('ISO-2 Country Code')
-    registrant.setName('Registrant')
-    year.setName('Year')
-    work_id.setName('Work ID')
+    field = pp.Regex(country_regex + '.{3}[0-9]{2}[0-9]{5}')
+
+    # country.setName('ISO-2 Country Code')
+    # registrant.setName('Registrant')
+    # year.setName('Year')
+    # work_id.setName('Work ID')
 
     field.setName(name)
 

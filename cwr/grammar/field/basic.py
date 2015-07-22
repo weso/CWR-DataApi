@@ -294,7 +294,7 @@ def boolean(name=None):
         name = 'Boolean Field'
 
     # Basic field
-    field = pp.Combine(pp.Literal('Y') | pp.Literal('N'))
+    field = pp.Regex('[YN]')
 
     # Parse action
     field.setParseAction(lambda b: _to_boolean(b[0]))
@@ -346,7 +346,7 @@ def flag(name=None):
         name = 'Flag Field'
 
     # Basic field
-    field = pp.Combine(pp.Word('YNU', exact=1))
+    field = pp.Regex('[YNU]')
 
     # Parse action
     field.setParseAction(lambda f: _to_flag(f[0]))
