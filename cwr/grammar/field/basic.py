@@ -294,7 +294,7 @@ def boolean(name=None):
         name = 'Boolean Field'
 
     # Basic field
-    field = pp.Combine(pp.Literal('Y') | pp.Literal('N'))
+    field = pp.Regex('[YN]')
 
     # Parse action
     field.setParseAction(lambda b: _to_boolean(b[0]))
@@ -346,10 +346,7 @@ def flag(name=None):
         name = 'Flag Field'
 
     # Basic field
-    field = pp.Combine(pp.Word('YNU', exact=1))
-
-    # Parse action
-    field.setParseAction(lambda f: _to_flag(f[0]))
+    field = pp.Regex('[YNU]')
 
     # Name
     field.setName(name)
@@ -357,26 +354,6 @@ def flag(name=None):
     field.leaveWhitespace()
 
     return field
-
-
-def _to_flag(string):
-    """
-    Transforms a string into a flag value.
-
-    If a value which is not 'Y', 'N' or 'U' is received, a ParseException is
-    thrown.
-
-    The received string is untouched, so if no exception is thrown the same
-    value that is received will be the one returned.
-
-    :param: string: the string to transform
-    :return: the received string
-    """
-
-    if string not in ('Y', 'N', 'U'):
-        raise pp.ParseException(string, msg='Is not a valid flag value')
-
-    return string
 
 
 """

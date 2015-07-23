@@ -21,12 +21,6 @@ class TestInterestedPartyForAgreementDictionaryEncoding(unittest.TestCase):
         self._decoder = InterestedPartyForAgreementDictionaryDecoder()
 
     def test_encoded(self):
-        ipi_base = {}
-
-        ipi_base['header'] = 'I'
-        ipi_base['id_code'] = 229
-        ipi_base['check_digit'] = 7
-
         data = {}
 
         data['record_type'] = 'IPA'
@@ -37,7 +31,7 @@ class TestInterestedPartyForAgreementDictionaryEncoding(unittest.TestCase):
         data['agreement_role_code'] = 'AS'
         data['ip_writer_first_name'] = 'FIRST NAME'
         data['ipi_name_n'] = 250165006
-        data['ipi_base_n'] = ipi_base
+        data['ipi_base_n'] = 'I-000000229-7'
         data['pr_society'] = 1
         data['pr_share'] = 50.1
         data['mr_society'] = 2
@@ -62,6 +56,4 @@ class TestInterestedPartyForAgreementDictionaryEncoding(unittest.TestCase):
         self.assertEqual(3, record.sr_society)
         self.assertEqual(50.3, record.sr_share)
 
-        self.assertEqual('I', record.ipi_base_n.header)
-        self.assertEqual(229, record.ipi_base_n.id_code)
-        self.assertEqual(7, record.ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', record.ipi_base_n)

@@ -4,7 +4,7 @@ import datetime
 
 import pyparsing as pp
 
-from cwr.other import ISWCCode, IPIBaseNumber, VISAN, AVIKey
+from cwr.other import VISAN, AVIKey
 from cwr.grammar.field import basic
 from config_cwr.accessor import CWRConfiguration
 from data_cwr.accessor import CWRTables
@@ -31,6 +31,7 @@ lineStart.setName("Start of line")
 lineEnd = pp.lineEnd.suppress()
 lineEnd.setName("End of line")
 
+
 # CONCRETE CASES FIELDS
 
 
@@ -53,31 +54,7 @@ def ipi_base_number(name=None):
     if name is None:
         name = 'IPI Base Number Field'
 
-    # Separators are '-'
-    separator = pp.Literal('-').suppress()
-    separator = separator.setName('IPI Base Number Separator') \
-        .setResultsName('separator')
-
-    # Header is a digit in uppercase
-    header = pp.Literal('I')
-    header = header.setName('IPI Base Number Header').setResultsName('header')
-
-    # ID code is composed of 9 numbers
-    id_code = basic.numeric(9)
-    id_code = id_code.setName('ID Code').setResultsName('id_code')
-    id_code = id_code.setParseAction(lambda c: int(c[0]))
-
-    # Check digit is a single number
-    check_digit = pp.Regex('[0-9]')
-    check_digit = check_digit.setName('Check Digit') \
-        .setResultsName('check_digit')
-    check_digit = check_digit.setParseAction(lambda c: int(c[0]))
-
-    # Digit followed separator, 9 numbers, separator and 1 number
-    field = pp.Group(header + separator + id_code + separator + check_digit)
-
-    # Parse action
-    field.setParseAction(lambda c: _to_ipibasecode(c[0]))
+    field = pp.Regex('I-[0-9]{9}-[0-9]')
 
     # Name
     field.setName(name)
@@ -91,21 +68,6 @@ def ipi_base_number(name=None):
     field.leaveWhitespace()
 
     return field.setResultsName('ipi_base_n')
-
-
-def _to_ipibasecode(code):
-    """
-    Transforms the result of parsing an IPI Base Number code string into a
-    IPIBaseNumber instance.
-
-    :param code: the parsed code
-    :return: a IPIBaseNumber instance
-    """
-
-    if code:
-        return IPIBaseNumber(code.header, code.id_code, code.check_digit)
-    else:
-        return code
 
 
 def ipi_name_number(name=None):
@@ -149,24 +111,8 @@ def iswc(name=None):
     if name is None:
         name = 'ISWC Field'
 
-    # Header is always T
-    header = pp.Literal('T').suppress()
-    header = header.setName('ISWC Header').setResultsName('header')
-
-    # ID code is composed of 9 numbers
-    id_code = basic.numeric(9)
-    id_code = id_code.setName('ID Code').setResultsName('id_code')
-
-    # Check digit is a single number
-    check_digit = basic.numeric(1)
-    check_digit = check_digit.setName('Check Digit') \
-        .setResultsName('check_digit')
-
     # T followed by 10 numbers
-    field = pp.Group(header + id_code + check_digit)
-
-    # Parse action
-    field.setParseAction(lambda c: _to_iswccode(c[0]))
+    field = pp.Regex('T[0-9]{10}')
 
     # Name
     field.setName(name)
@@ -175,20 +121,6 @@ def iswc(name=None):
     field.leaveWhitespace()
 
     return field.setResultsName('iswc')
-
-
-def _to_iswccode(code):
-    """
-    Transforms the result of parsing a ISWC code string into a ISWCCode
-    instance.
-
-    :param code: the parsed code
-    :return: a ISWCCode instance
-    """
-    if code:
-        return ISWCCode(code.id_code, code.check_digit)
-    else:
-        return code
 
 
 def percentage(columns, maximum=100, name=None):
@@ -307,19 +239,25 @@ def _isrc_short(name=None):
     if name is None:
         name = 'ISRC Field'
 
-    separator = pp.Literal('-')
-    country = basic.lookup(config.get_data('isrc_country_code'))
-    registrant = basic.alphanum(3)
-    year = pp.Regex('[0-9]{2}')
-    work_id = pp.Regex('[0-9]{2}')
+    # separator = pp.Literal('-')
+    country = config.get_data('isrc_country_code')
+    # registrant = basic.alphanum(3)
+    # year = pp.Regex('[0-9]{2}')
+    # work_id = pp.Regex('[0-9]{2}')
 
-    field = pp.Combine(country + separator + registrant + separator + year +
-                       separator + work_id)
+    country_regex = ''
+    for c in country:
+        if len(country_regex) > 0:
+            country_regex += '|'
+        country_regex += c
+    country_regex = '(' + country_regex + ')'
 
-    country.setName('ISO-2 Country Code')
-    registrant.setName('Registrant')
-    year.setName('Year')
-    work_id.setName('Work ID')
+    field = pp.Regex(country_regex + '-.{3}-[0-9]{2}-[0-9]{2}')
+
+    # country.setName('ISO-2 Country Code')
+    # registrant.setName('Registrant')
+    # year.setName('Year')
+    # work_id.setName('Work ID')
 
     field.setName(name)
 
@@ -352,17 +290,24 @@ def _isrc_long(name=None):
     if name is None:
         name = 'ISRC Field'
 
-    country = basic.lookup(config.get_data('isrc_country_code'))
-    registrant = basic.alphanum(3)
-    year = pp.Regex('[0-9]{2}')
-    work_id = pp.Regex('[0-9]{5}')
+    country = config.get_data('isrc_country_code')
+    # registrant = basic.alphanum(3)
+    # year = pp.Regex('[0-9]{2}')
+    # work_id = pp.Regex('[0-9]{5}')
 
-    field = pp.Combine(country + registrant + year + work_id)
+    country_regex = ''
+    for c in country:
+        if len(country_regex) > 0:
+            country_regex += '|'
+        country_regex += c
+    country_regex = '(' + country_regex + ')'
 
-    country.setName('ISO-2 Country Code')
-    registrant.setName('Registrant')
-    year.setName('Year')
-    work_id.setName('Work ID')
+    field = pp.Regex(country_regex + '.{3}[0-9]{2}[0-9]{5}')
+
+    # country.setName('ISO-2 Country Code')
+    # registrant.setName('Registrant')
+    # year.setName('Year')
+    # work_id.setName('Work ID')
 
     field.setName(name)
 
@@ -382,37 +327,11 @@ def visan(name=None):
     if name is None:
         name = 'V-ISAN Field'
 
-    version = basic.numeric(8)
-    version = version.setName('Version').setResultsName('version')
-
-    isan = basic.numeric(12)
-    isan = isan.setName('ISAN').setResultsName('isan')
-
-    episode = basic.numeric(4)
-    episode = episode.setName('Episode').setResultsName('episode')
-
-    check_digit = basic.numeric(1)
-    check_digit = check_digit.setName('Check Digit') \
-        .setResultsName('check_digit')
-
-    field = pp.Group(version + isan + episode + check_digit)
-
-    field.setParseAction(lambda v: _to_visan(v[0]))
+    field = pp.Regex('[0-9]{25}')
 
     field.setName(name)
 
     return field.setResultsName('visan')
-
-
-def _to_visan(parsed):
-    """
-    Transforms the data from a V-ISAN field into a VISAN instance.
-
-    :param parsed: the data parsed from a V-ISAN field
-    :return: a VISAN instance created from the data
-    """
-    return VISAN(parsed.version, parsed.isan, parsed.episode,
-                 parsed.check_digit)
 
 
 def audio_visual_key(name=None):

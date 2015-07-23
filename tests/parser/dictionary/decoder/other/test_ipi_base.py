@@ -20,14 +20,6 @@ class TestIPIBaseDecoder(unittest.TestCase):
         self._decoder = IPIBaseDictionaryDecoder()
 
     def test_encoded(self):
-        data = {}
+        record = self._decoder.decode('I-000000229-7')
 
-        data['header'] = 'T'
-        data['id_code'] = 123456789
-        data['check_digit'] = 1
-
-        record = self._decoder.decode(data)
-
-        self.assertEqual('T', record.header)
-        self.assertEqual(123456789, record.id_code)
-        self.assertEqual(1, record.check_digit)
+        self.assertEqual('I-000000229-7', record)

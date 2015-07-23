@@ -119,9 +119,7 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual('Y', result.reversionary)
         self.assertEqual('Y', result.first_recording_refusal)
         self.assertEqual('Y', result.work_for_hire)
-        self.assertEqual('I', result.writer.ipi_base_n.header)
-        self.assertEqual(229, result.writer.ipi_base_n.id_code)
-        self.assertEqual(7, result.writer.ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', result.writer.ipi_base_n)
         self.assertEqual(12345678901, result.writer.personal_number)
         self.assertEqual('B', result.usa_license)
 
@@ -149,9 +147,7 @@ class TestWriterGrammar(unittest.TestCase):
         self.assertEqual('Y', result.reversionary)
         self.assertEqual('Y', result.first_recording_refusal)
         self.assertEqual('Y', result.work_for_hire)
-        self.assertEqual(None, result.writer.ipi_base_n.header)
-        self.assertEqual(1234567890123, result.writer.ipi_base_n.id_code)
-        self.assertEqual(None, result.writer.ipi_base_n.check_digit)
+        self.assertEqual(1234567890123, result.writer.ipi_base_n)
         self.assertEqual(12345678901, result.writer.personal_number)
         self.assertEqual('B', result.usa_license)
 

@@ -27,9 +27,7 @@ class TestIPIBaseNumberResultName(unittest.TestCase):
 
         result = self.ipi.parseString(code)
 
-        self.assertEqual('I', result.ipi_base_n.header)
-        self.assertEqual(229, result.ipi_base_n.id_code)
-        self.assertEqual(7, result.ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', result.ipi_base_n)
 
 
 class TestIPIBaseNumberValid(unittest.TestCase):
@@ -48,9 +46,7 @@ class TestIPIBaseNumberValid(unittest.TestCase):
 
         result = self.ipi.parseString(code)[0]
 
-        self.assertEqual('I', result.header)
-        self.assertEqual(229, result.id_code)
-        self.assertEqual(7, result.check_digit)
+        self.assertEqual('I-000000229-7', result)
 
     def test_max(self):
         """
@@ -60,9 +56,7 @@ class TestIPIBaseNumberValid(unittest.TestCase):
 
         result = self.ipi.parseString(code)[0]
 
-        self.assertEqual('I', result.header)
-        self.assertEqual(999999999, result.id_code)
-        self.assertEqual(9, result.check_digit)
+        self.assertEqual('I-999999999-9', result)
 
     def test_min(self):
         """
@@ -72,9 +66,7 @@ class TestIPIBaseNumberValid(unittest.TestCase):
 
         result = self.ipi.parseString(code)[0]
 
-        self.assertEqual('I', result.header)
-        self.assertEqual(0, result.id_code)
-        self.assertEqual(0, result.check_digit)
+        self.assertEqual('I-000000000-0', result)
 
 
 class TestIPIBaseNumberException(unittest.TestCase):

@@ -5,7 +5,6 @@ import unittest
 from cwr.parser.encoder.dictionary import \
     InterestedPartyForAgreementDictionaryEncoder
 from cwr.agreement import InterestedPartyForAgreementRecord
-from cwr.other import IPIBaseNumber
 
 """
 InterestedPartyForAgreementRecord to dictionary encoding tests.
@@ -23,8 +22,6 @@ class TestAgreementInterestedPartyRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = InterestedPartyForAgreementDictionaryEncoder()
 
     def test_encoded(self):
-        ipi_base = IPIBaseNumber('I', 229, 7)
-
         data = InterestedPartyForAgreementRecord(record_type='ACK',
                                                  transaction_sequence_n=3,
                                                  record_sequence_n=15,
@@ -33,7 +30,7 @@ class TestAgreementInterestedPartyRecordDictionaryEncoding(unittest.TestCase):
                                                  agreement_role_code='AS',
                                                  ip_writer_first_name='FIRST NAME',
                                                  ipi_name_n='00014107338',
-                                                 ipi_base_n=ipi_base,
+                                                 ipi_base_n='I-000000229-7',
                                                  pr_society=12,
                                                  pr_share=50.5,
                                                  mr_society=13,
@@ -58,6 +55,4 @@ class TestAgreementInterestedPartyRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(14, encoded['sr_society'])
         self.assertEqual(70.5, encoded['sr_share'])
 
-        self.assertEqual('I', encoded['ipi_base_n']['header'])
-        self.assertEqual(229, encoded['ipi_base_n']['id_code'])
-        self.assertEqual(7, encoded['ipi_base_n']['check_digit'])
+        self.assertEqual('I-000000229-7', encoded['ipi_base_n'])

@@ -38,8 +38,7 @@ class TestComponentGrammar(unittest.TestCase):
         self.assertEqual(1234, result.transaction_sequence_n)
         self.assertEqual(23, result.record_sequence_n)
         self.assertEqual('THE TITLE', result.title)
-        self.assertEqual(12345678, result.iswc.id_code)
-        self.assertEqual(9, result.iswc.check_digit)
+        self.assertEqual('T0123456789', result.iswc)
         self.assertEqual('ABCD0123456789', result.submitter_work_n)
         self.assertEqual(3, result.duration.hour)
         self.assertEqual(2, result.duration.minute)
@@ -50,12 +49,8 @@ class TestComponentGrammar(unittest.TestCase):
         self.assertEqual('LAST NAME 2', result.writer_2_last_name)
         self.assertEqual('FIRST NAME 2', result.writer_2_first_name)
         self.assertEqual(14107339, result.writer_2_ipi_name_n)
-        self.assertEqual('I', result.writer_1_ipi_base_n.header)
-        self.assertEqual(229, result.writer_1_ipi_base_n.id_code)
-        self.assertEqual(7, result.writer_1_ipi_base_n.check_digit)
-        self.assertEqual('I', result.writer_2_ipi_base_n.header)
-        self.assertEqual(230, result.writer_2_ipi_base_n.id_code)
-        self.assertEqual(7, result.writer_2_ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', result.writer_1_ipi_base_n)
+        self.assertEqual('I-000000230-7', result.writer_2_ipi_base_n)
 
 
 class TestComponentGrammarException(unittest.TestCase):
