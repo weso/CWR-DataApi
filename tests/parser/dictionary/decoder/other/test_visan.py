@@ -27,9 +27,6 @@ class TestVISANDecoder(unittest.TestCase):
         data['episode'] = 3
         data['check_digit'] = 4
 
-        record = self._decoder.decode(data)
+        record = self._decoder.decode(1234)
 
-        self.assertEqual(1, record.version)
-        self.assertEqual(2, record.isan)
-        self.assertEqual(3, record.episode)
-        self.assertEqual(4, record.check_digit)
+        self.assertEqual(1234, record)

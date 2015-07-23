@@ -942,7 +942,4 @@ class VISANDictionaryDecoder(Decoder):
         super(VISANDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        return VISAN(data['version'],
-                     data['isan'],
-                     data['episode'],
-                     data['check_digit'])
+        return data
