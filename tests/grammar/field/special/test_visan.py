@@ -24,10 +24,7 @@ class TestVISANValid(unittest.TestCase):
 
         result = self.ean.parseString(code)[0]
 
-        self.assertEqual(1234567, result.version)
-        self.assertEqual(12345678912, result.isan)
-        self.assertEqual(123, result.episode)
-        self.assertEqual(1, result.check_digit)
+        self.assertEqual('0123456701234567891201231', result)
 
 
 class TestVISANResultName(unittest.TestCase):
@@ -43,7 +40,4 @@ class TestVISANResultName(unittest.TestCase):
 
         result = self.ean.parseString(code)
 
-        self.assertEqual(1234567, result.visan.version)
-        self.assertEqual(12345678912, result.visan.isan)
-        self.assertEqual(123, result.visan.episode)
-        self.assertEqual(1, result.visan.check_digit)
+        self.assertEqual('0123456701234567891201231', result.visan)

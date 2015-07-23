@@ -327,37 +327,11 @@ def visan(name=None):
     if name is None:
         name = 'V-ISAN Field'
 
-    version = basic.numeric(8)
-    version = version.setName('Version').setResultsName('version')
-
-    isan = basic.numeric(12)
-    isan = isan.setName('ISAN').setResultsName('isan')
-
-    episode = basic.numeric(4)
-    episode = episode.setName('Episode').setResultsName('episode')
-
-    check_digit = basic.numeric(1)
-    check_digit = check_digit.setName('Check Digit') \
-        .setResultsName('check_digit')
-
-    field = pp.Group(version + isan + episode + check_digit)
-
-    field.setParseAction(lambda v: _to_visan(v[0]))
+    field = pp.Regex('[0-9]{25}')
 
     field.setName(name)
 
     return field.setResultsName('visan')
-
-
-def _to_visan(parsed):
-    """
-    Transforms the data from a V-ISAN field into a VISAN instance.
-
-    :param parsed: the data parsed from a V-ISAN field
-    :return: a VISAN instance created from the data
-    """
-    return VISAN(parsed.version, parsed.isan, parsed.episode,
-                 parsed.check_digit)
 
 
 def audio_visual_key(name=None):
