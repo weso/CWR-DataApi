@@ -3,7 +3,6 @@
 import unittest
 
 from cwr.parser.encoder.dictionary import IPIBaseDictionaryEncoder
-from cwr.other import IPIBaseNumber
 
 """
 Acknowledgement to dictionary encoding tests.
@@ -21,11 +20,6 @@ class TestIPIBaseEncoding(unittest.TestCase):
         self._encoder = IPIBaseDictionaryEncoder()
 
     def test_encoded(self):
-        data = IPIBaseNumber('T', 123456789,
-                             1)
+        encoded = self._encoder.encode('T-123456789-1')
 
-        encoded = self._encoder.encode(data)
-
-        self.assertEqual('T', encoded['header'])
-        self.assertEqual(123456789, encoded['id_code'])
-        self.assertEqual(1, encoded['check_digit'])
+        self.assertEqual('T-123456789-1', encoded)

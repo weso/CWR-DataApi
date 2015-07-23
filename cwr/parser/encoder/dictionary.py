@@ -235,11 +235,7 @@ class IPIBaseDictionaryEncoder(Encoder):
 
     def encode(self, ipi):
         if ipi:
-            encoded = {}
-
-            encoded['header'] = ipi.header
-            encoded['id_code'] = ipi.id_code
-            encoded['check_digit'] = ipi.check_digit
+            encoded = ipi
         else:
             encoded = None
 

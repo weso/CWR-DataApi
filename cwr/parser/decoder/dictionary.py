@@ -19,7 +19,7 @@ from cwr.work import RecordingDetailRecord, ComponentRecord, \
     InstrumentationSummaryRecord, PerformingArtistRecord, WorkOriginRecord, \
     WorkRecord
 from cwr.file import CWRFile, FileTag
-from cwr.other import ISWCCode, IPIBaseNumber, AVIKey, VISAN
+from cwr.other import ISWCCode, AVIKey, VISAN
 from cwr.table_value import MediaTypeValue, TableValue, InstrumentValue
 
 """
@@ -917,16 +917,7 @@ class IPIBaseDictionaryDecoder(Decoder):
 
     def decode(self, data):
         if data:
-            if isinstance(data, IPIBaseNumber):
-                result = data
-            elif isinstance(data, int) or data.__class__.__name__ == 'long':
-                result = IPIBaseNumber(None,
-                                       data,
-                                       None)
-            else:
-                result = IPIBaseNumber(data['header'],
-                                       data['id_code'],
-                                       data['check_digit'])
+            result = data
         else:
             result = None
 

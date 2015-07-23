@@ -348,35 +348,12 @@ def flag(name=None):
     # Basic field
     field = pp.Regex('[YNU]')
 
-    # Parse action
-    field.setParseAction(lambda f: _to_flag(f[0]))
-
     # Name
     field.setName(name)
 
     field.leaveWhitespace()
 
     return field
-
-
-def _to_flag(string):
-    """
-    Transforms a string into a flag value.
-
-    If a value which is not 'Y', 'N' or 'U' is received, a ParseException is
-    thrown.
-
-    The received string is untouched, so if no exception is thrown the same
-    value that is received will be the one returned.
-
-    :param: string: the string to transform
-    :return: the received string
-    """
-
-    if string not in ('Y', 'N', 'U'):
-        raise pp.ParseException(string, msg='Is not a valid flag value')
-
-    return string
 
 
 """

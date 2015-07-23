@@ -50,12 +50,8 @@ class TestComponentGrammar(unittest.TestCase):
         self.assertEqual('LAST NAME 2', result.writer_2_last_name)
         self.assertEqual('FIRST NAME 2', result.writer_2_first_name)
         self.assertEqual(14107339, result.writer_2_ipi_name_n)
-        self.assertEqual('I', result.writer_1_ipi_base_n.header)
-        self.assertEqual(229, result.writer_1_ipi_base_n.id_code)
-        self.assertEqual(7, result.writer_1_ipi_base_n.check_digit)
-        self.assertEqual('I', result.writer_2_ipi_base_n.header)
-        self.assertEqual(230, result.writer_2_ipi_base_n.id_code)
-        self.assertEqual(7, result.writer_2_ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', result.writer_1_ipi_base_n)
+        self.assertEqual('I-000000230-7', result.writer_2_ipi_base_n)
 
 
 class TestComponentGrammarException(unittest.TestCase):

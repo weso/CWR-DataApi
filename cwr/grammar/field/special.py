@@ -4,7 +4,7 @@ import datetime
 
 import pyparsing as pp
 
-from cwr.other import ISWCCode, IPIBaseNumber, VISAN, AVIKey
+from cwr.other import ISWCCode, VISAN, AVIKey
 from cwr.grammar.field import basic
 from config_cwr.accessor import CWRConfiguration
 from data_cwr.accessor import CWRTables
@@ -54,31 +54,7 @@ def ipi_base_number(name=None):
     if name is None:
         name = 'IPI Base Number Field'
 
-    # Separators are '-'
-    separator = pp.Literal('-').suppress()
-    separator = separator.setName('IPI Base Number Separator') \
-        .setResultsName('separator')
-
-    # Header is a digit in uppercase
-    header = pp.Literal('I')
-    header = header.setName('IPI Base Number Header').setResultsName('header')
-
-    # ID code is composed of 9 numbers
-    id_code = basic.numeric(9)
-    id_code = id_code.setName('ID Code').setResultsName('id_code')
-    id_code = id_code.setParseAction(lambda c: int(c[0]))
-
-    # Check digit is a single number
-    check_digit = pp.Regex('[0-9]')
-    check_digit = check_digit.setName('Check Digit') \
-        .setResultsName('check_digit')
-    check_digit = check_digit.setParseAction(lambda c: int(c[0]))
-
-    # Digit followed separator, 9 numbers, separator and 1 number
-    field = pp.Group(header + separator + id_code + separator + check_digit)
-
-    # Parse action
-    field.setParseAction(lambda c: _to_ipibasecode(c[0]))
+    field = pp.Regex('I-[0-9]{9}-[0-9]')
 
     # Name
     field.setName(name)
@@ -92,21 +68,6 @@ def ipi_base_number(name=None):
     field.leaveWhitespace()
 
     return field.setResultsName('ipi_base_n')
-
-
-def _to_ipibasecode(code):
-    """
-    Transforms the result of parsing an IPI Base Number code string into a
-    IPIBaseNumber instance.
-
-    :param code: the parsed code
-    :return: a IPIBaseNumber instance
-    """
-
-    if code:
-        return IPIBaseNumber(code.header, code.id_code, code.check_digit)
-    else:
-        return code
 
 
 def ipi_name_number(name=None):

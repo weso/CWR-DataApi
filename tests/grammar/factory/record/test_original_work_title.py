@@ -36,15 +36,11 @@ class TestOriginalWorkTitleGrammar(unittest.TestCase):
         self.assertEqual('FIRST NAME 1', result.writer_1_first_name)
         self.assertEqual('THE SOURCE', result.source)
         self.assertEqual(14107338, result.writer_1_ipi_name_n)
-        self.assertEqual('I', result.writer_1_ipi_base_n.header)
-        self.assertEqual(229, result.writer_1_ipi_base_n.id_code)
-        self.assertEqual(7, result.writer_1_ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', result.writer_1_ipi_base_n)
         self.assertEqual('LAST NAME 2', result.writer_2_last_name)
         self.assertEqual('FIRST NAME 2', result.writer_2_first_name)
         self.assertEqual(14107339, result.writer_2_ipi_name_n)
-        self.assertEqual('I', result.writer_2_ipi_base_n.header)
-        self.assertEqual(230, result.writer_2_ipi_base_n.id_code)
-        self.assertEqual(7, result.writer_2_ipi_base_n.check_digit)
+        self.assertEqual('I-000000230-7', result.writer_2_ipi_base_n)
         self.assertEqual('ABCD0123456789', result.submitter_work_n)
 
 
