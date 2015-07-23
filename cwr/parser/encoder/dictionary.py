@@ -219,10 +219,7 @@ class ISWCDictionaryEncoder(Encoder):
     def encode(self, iswc):
 
         if iswc:
-            encoded = {}
-
-            encoded['id_code'] = iswc.id_code
-            encoded['check_digit'] = iswc.check_digit
+            encoded = iswc
         else:
             encoded = None
 

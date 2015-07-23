@@ -4,7 +4,7 @@ import datetime
 
 import pyparsing as pp
 
-from cwr.other import ISWCCode, VISAN, AVIKey
+from cwr.other import VISAN, AVIKey
 from cwr.grammar.field import basic
 from config_cwr.accessor import CWRConfiguration
 from data_cwr.accessor import CWRTables
@@ -111,24 +111,8 @@ def iswc(name=None):
     if name is None:
         name = 'ISWC Field'
 
-    # Header is always T
-    header = pp.Literal('T').suppress()
-    header = header.setName('ISWC Header').setResultsName('header')
-
-    # ID code is composed of 9 numbers
-    id_code = basic.numeric(9)
-    id_code = id_code.setName('ID Code').setResultsName('id_code')
-
-    # Check digit is a single number
-    check_digit = basic.numeric(1)
-    check_digit = check_digit.setName('Check Digit') \
-        .setResultsName('check_digit')
-
     # T followed by 10 numbers
-    field = pp.Group(header + id_code + check_digit)
-
-    # Parse action
-    field.setParseAction(lambda c: _to_iswccode(c[0]))
+    field = pp.Regex('T[0-9]{10}')
 
     # Name
     field.setName(name)
@@ -137,20 +121,6 @@ def iswc(name=None):
     field.leaveWhitespace()
 
     return field.setResultsName('iswc')
-
-
-def _to_iswccode(code):
-    """
-    Transforms the result of parsing a ISWC code string into a ISWCCode
-    instance.
-
-    :param code: the parsed code
-    :return: a ISWCCode instance
-    """
-    if code:
-        return ISWCCode(code.id_code, code.check_digit)
-    else:
-        return code
 
 
 def percentage(columns, maximum=100, name=None):

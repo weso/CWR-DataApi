@@ -5,7 +5,6 @@ import datetime
 
 from cwr.parser.encoder.dictionary import WorkDictionaryEncoder
 from cwr.work import WorkRecord
-from cwr.other import ISWCCode
 
 """
 WorkRecord to dictionary encoding tests.
@@ -23,8 +22,6 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = WorkDictionaryEncoder()
 
     def test_encoded(self):
-        iswc = ISWCCode(12345678, 9)
-
         data = WorkRecord(record_type='NWR',
                           transaction_sequence_n=3,
                           record_sequence_n=15,
@@ -44,7 +41,7 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
                           excerpt_type='MOV',
                           composite_type='MED',
                           composite_component_count=5,
-                          iswc=iswc,
+                          iswc='T0123456789',
                           work_type='BL',
                           duration=datetime.datetime.strptime('011200',
                                                               '%H%M%S').time(),
@@ -92,8 +89,7 @@ class TestWorkRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('Y', encoded['exceptional_clause'])
         self.assertEqual(True, encoded['grand_rights_indicator'])
 
-        self.assertEqual(12345678, encoded['iswc']['id_code'])
-        self.assertEqual(9, encoded['iswc']['check_digit'])
+        self.assertEqual('T0123456789', encoded['iswc'])
 
     def test_encoded_no_iswc(self):
         iswc = None

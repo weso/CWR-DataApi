@@ -20,13 +20,6 @@ class TestISWCDecoder(unittest.TestCase):
         self._decoder = ISWCDictionaryDecoder()
 
     def test_encoded(self):
-        data = {}
+        record = self._decoder.decode('T0123456789')
 
-        data['id_code'] = 123456789
-        data['check_digit'] = 1
-
-        record = self._decoder.decode(data)
-
-        self.assertEqual('T', record.header)
-        self.assertEqual(123456789, record.id_code)
-        self.assertEqual(1, record.check_digit)
+        self.assertEqual('T0123456789', record)

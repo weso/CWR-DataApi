@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.encoder.dictionary import AuthoredWorkDictionaryEncoder
 from cwr.work import AuthoredWorkRecord
-from cwr.other import ISWCCode
 
 """
 AuthoredWorkRecord to dictionary encoding tests.
@@ -22,8 +21,6 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = AuthoredWorkDictionaryEncoder()
 
     def test_encoded(self):
-        iswc = ISWCCode(12345678, 9)
-
         data = AuthoredWorkRecord(record_type='EWT',
                                   transaction_sequence_n=3,
                                   record_sequence_n=15,
@@ -39,7 +36,7 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
                                   writer_2_ipi_name_n=14107448,
                                   source='SOURCE',
                                   language_code='ES',
-                                  iswc=iswc)
+                                  iswc='T0123456789')
 
         encoded = self._encoder.encode(data)
 
@@ -61,5 +58,4 @@ class TestAuthoredWorkRecordDictionaryEncoding(unittest.TestCase):
 
         self.assertEqual('I-000000300-7', encoded['writer_2_ipi_base_n'])
 
-        self.assertEqual(12345678, encoded['iswc']['id_code'])
-        self.assertEqual(9, encoded['iswc']['check_digit'])
+        self.assertEqual('T0123456789', encoded['iswc'])

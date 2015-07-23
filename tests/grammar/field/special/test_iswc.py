@@ -27,9 +27,7 @@ class TestISWCResultName(unittest.TestCase):
 
         result = self.iswc.parseString(code)
 
-        self.assertEqual('T', result.iswc.header)
-        self.assertEqual(34524680, result.iswc.id_code)
-        self.assertEqual(1, result.iswc.check_digit)
+        self.assertEqual('T0345246801', result.iswc)
 
 
 class TestISWCValid(unittest.TestCase):
@@ -48,9 +46,7 @@ class TestISWCValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
-        self.assertEqual('T', result.header)
-        self.assertEqual(34524680, result.id_code)
-        self.assertEqual(1, result.check_digit)
+        self.assertEqual('T0345246801', result)
 
     def test_max(self):
         """
@@ -60,9 +56,7 @@ class TestISWCValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
-        self.assertEqual('T', result.header)
-        self.assertEqual(999999999, result.id_code)
-        self.assertEqual(9, result.check_digit)
+        self.assertEqual('T9999999999', result)
 
     def test_min(self):
         """
@@ -72,9 +66,7 @@ class TestISWCValid(unittest.TestCase):
 
         result = self.iswc.parseString(code)[0]
 
-        self.assertEqual('T', result.header)
-        self.assertEqual(000000000, result.id_code)
-        self.assertEqual(0, result.check_digit)
+        self.assertEqual('T0000000000', result)
 
 
 class TestISWCException(unittest.TestCase):

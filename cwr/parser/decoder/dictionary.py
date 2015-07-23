@@ -19,7 +19,7 @@ from cwr.work import RecordingDetailRecord, ComponentRecord, \
     InstrumentationSummaryRecord, PerformingArtistRecord, WorkOriginRecord, \
     WorkRecord
 from cwr.file import CWRFile, FileTag
-from cwr.other import ISWCCode, AVIKey, VISAN
+from cwr.other import AVIKey, VISAN
 from cwr.table_value import MediaTypeValue, TableValue, InstrumentValue
 
 """
@@ -930,11 +930,7 @@ class ISWCDictionaryDecoder(Decoder):
 
     def decode(self, data):
         if data:
-            if isinstance(data, ISWCCode):
-                result = data
-            else:
-                result = ISWCCode(data['id_code'],
-                                  data['check_digit'])
+            result = data
         else:
             result = None
 
