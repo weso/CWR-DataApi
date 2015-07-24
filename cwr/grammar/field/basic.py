@@ -465,8 +465,11 @@ def lookup(values, name=None):
         raise ValueError('The values can no be None')
 
     # TODO: This should not be needed, it is just a patch. Fix this.
-    if isinstance(values, ParseResults):
-        values = values.asList()
+    try:
+        v = values.asList()
+        values = v
+    except AttributeError:
+        values = values
 
     # Only the specified values are allowed
     lookup_field = pp.oneOf(values)

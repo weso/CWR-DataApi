@@ -61,9 +61,9 @@ def _unicode_handler(obj):
     :param obj: object to transform into it's UTF-8 equivalent
     :return: the UTF-8 equivalent of the string
     """
-    if isinstance(obj, str):
+    try:
         result = obj.isoformat()
-    else:
+    except AttributeError:
         raise TypeError("Unserializable object {} of type {}".format(obj,
                                                                      type(obj)))
 
