@@ -259,12 +259,7 @@ class VISANDictionaryEncoder(Encoder):
     def encode(self, visan):
         encoded = {}
 
-        encoded['version'] = visan.version
-        encoded['isan'] = visan.isan
-        encoded['episode'] = visan.episode
-        encoded['check_digit'] = visan.check_digit
-
-        return encoded
+        return visan
 
 
 class TransactionHeaderDictionaryEncoder(Encoder):

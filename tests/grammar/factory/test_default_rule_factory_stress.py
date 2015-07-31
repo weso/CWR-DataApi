@@ -18,18 +18,18 @@ class TestDefaultRuleFactory(unittest.TestCase):
     def setUp(self):
         self._factory = default_grammar_factory()
 
-    def test_10000(self):
+    def test_10(self):
         grammar = self._factory.get_rule('transactions')
 
         record = ''
         if sys.version_info[0] == 2:
-            for x in xrange(10):
+            for x in xrange(35):
                 if len(record) == 0:
                     record = _agreement_full()
                 elif len(record) > 0:
                     record = record + '\n' + _agreement_full()
         else:
-            for x in range(10):
+            for x in range(35):
                 if len(record) == 0:
                     record = _agreement_full()
                 elif len(record) > 0:
@@ -41,7 +41,7 @@ class TestDefaultRuleFactory(unittest.TestCase):
 
         time_parse = (end - start)
 
-        self.assertTrue(time_parse < 1)
+        self.assertTrue(time_parse < 1.5)
 
 
 def _agreement_full():

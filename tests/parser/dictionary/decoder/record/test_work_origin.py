@@ -32,7 +32,7 @@ class TestWorkOriginDictionaryDecoder(unittest.TestCase):
         data['cut_number'] = 5
         data['library'] = 'LIB467'
         data['bltvr'] = 'BLTVR'
-        data['visan'] = VISAN(1234567, 12345678912, 123, 1)
+        data['visan'] = 1234567123456789121231
         data['production_n'] = 'PROD145'
         data['episode_title'] = 'EPISODE'
         data['episode_n'] = 'EP145'
@@ -50,10 +50,7 @@ class TestWorkOriginDictionaryDecoder(unittest.TestCase):
         self.assertEqual(5, record.cut_number)
         self.assertEqual('LIB467', record.library)
         self.assertEqual('BLTVR', record.bltvr)
-        self.assertEqual(1, record.visan.check_digit)
-        self.assertEqual(123, record.visan.episode)
-        self.assertEqual(12345678912, record.visan.isan)
-        self.assertEqual(1234567, record.visan.version)
+        self.assertEqual(1234567123456789121231, record.visan)
         self.assertEqual('PROD145', record.production_n)
         self.assertEqual('EPISODE', record.episode_title)
         self.assertEqual('EP145', record.episode_n)
