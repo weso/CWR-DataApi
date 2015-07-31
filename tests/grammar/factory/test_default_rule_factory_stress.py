@@ -41,7 +41,7 @@ class TestDefaultRuleFactory(unittest.TestCase):
 
         time_parse = (end - start)
 
-        self.assertTrue(time_parse < 1)
+        self.assertTrue(time_parse < 1.5)
 
 
 def _agreement_full():
