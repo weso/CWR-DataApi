@@ -22,7 +22,6 @@ class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = WorkOriginDictionaryEncoder()
 
     def test_encoded(self):
-        visan = VISAN(1234567, 12345678912, 123, 1)
         avi = AVIKey(123, 'ABC')
 
         data = WorkOriginRecord(record_type='ORN',
@@ -34,7 +33,7 @@ class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
                                 cut_number=5,
                                 library='LIB467',
                                 bltvr='BLTVR',
-                                visan=visan,
+                                visan=1234567123456789121231,
                                 production_n='PROD145',
                                 episode_title='EPISODE',
                                 episode_n='EP145',
@@ -57,10 +56,7 @@ class TestWorkOriginRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('EP145', encoded['episode_n'])
         self.assertEqual(1994, encoded['year_production'])
 
-        self.assertEqual(1, encoded['visan']['check_digit'])
-        self.assertEqual(123, encoded['visan']['episode'])
-        self.assertEqual(12345678912, encoded['visan']['isan'])
-        self.assertEqual(1234567, encoded['visan']['version'])
+        self.assertEqual(1234567123456789121231, encoded['visan'])
 
         self.assertEqual(123, encoded['audio_visual_key']['society_code'])
         self.assertEqual('ABC', encoded['audio_visual_key']['av_number'])

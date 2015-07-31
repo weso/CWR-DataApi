@@ -219,10 +219,7 @@ class ISWCDictionaryEncoder(Encoder):
     def encode(self, iswc):
 
         if iswc:
-            encoded = {}
-
-            encoded['id_code'] = iswc.id_code
-            encoded['check_digit'] = iswc.check_digit
+            encoded = iswc
         else:
             encoded = None
 
@@ -235,11 +232,7 @@ class IPIBaseDictionaryEncoder(Encoder):
 
     def encode(self, ipi):
         if ipi:
-            encoded = {}
-
-            encoded['header'] = ipi.header
-            encoded['id_code'] = ipi.id_code
-            encoded['check_digit'] = ipi.check_digit
+            encoded = ipi
         else:
             encoded = None
 
@@ -266,12 +259,7 @@ class VISANDictionaryEncoder(Encoder):
     def encode(self, visan):
         encoded = {}
 
-        encoded['version'] = visan.version
-        encoded['isan'] = visan.isan
-        encoded['episode'] = visan.episode
-        encoded['check_digit'] = visan.check_digit
-
-        return encoded
+        return visan
 
 
 class TransactionHeaderDictionaryEncoder(Encoder):

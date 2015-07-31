@@ -20,18 +20,12 @@ class TestPublisherRecordDictionaryDecoder(unittest.TestCase):
         self._decoder = PublisherRecordDictionaryDecoder()
 
     def test_encoded(self):
-        ipi_base = {}
-
-        ipi_base['header'] = 'I'
-        ipi_base['id_code'] = 229
-        ipi_base['check_digit'] = 7
-
         publisher = {}
 
         publisher['ip_n'] = 'IP123'
         publisher['publisher_name'] = 'NAME'
         publisher['ipi_name_n'] = 250165006
-        publisher['ipi_base_n'] = ipi_base
+        publisher['ipi_base_n'] = 'I-000000229-7'
         publisher['tax_id'] = 923703412
 
         data = {}
@@ -65,9 +59,7 @@ class TestPublisherRecordDictionaryDecoder(unittest.TestCase):
         self.assertEqual(250165006, record.publisher.ipi_name_n)
         self.assertEqual(923703412, record.publisher.tax_id)
 
-        self.assertEqual('I', record.publisher.ipi_base_n.header)
-        self.assertEqual(229, record.publisher.ipi_base_n.id_code)
-        self.assertEqual(7, record.publisher.ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', record.publisher.ipi_base_n)
 
         self.assertEqual('SPU', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

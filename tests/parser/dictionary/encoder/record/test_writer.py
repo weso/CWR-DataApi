@@ -4,7 +4,6 @@ import unittest
 
 from cwr.parser.encoder.dictionary import WriterRecordDictionaryEncoder
 from cwr.interested_party import Writer, WriterRecord
-from cwr.other import IPIBaseNumber
 
 """
 Writer to dictionary encoding tests.
@@ -22,12 +21,10 @@ class TestWriterRecordDictionaryEncoding(unittest.TestCase):
         self._encoder = WriterRecordDictionaryEncoder()
 
     def test_encoded(self):
-        ipi_base = IPIBaseNumber('I', 229, 7)
-
         writer = Writer(ip_n='ABC15',
                         personal_number='ABC1234',
                         ipi_name_n=14107338,
-                        ipi_base_n=ipi_base,
+                        ipi_base_n='I-000000229-7',
                         writer_first_name='NAME',
                         writer_last_name='LAST NAME',
                         tax_id=923703412)
@@ -60,9 +57,7 @@ class TestWriterRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual('LAST NAME', writer['writer_last_name'])
         self.assertEqual(923703412, writer['tax_id'])
 
-        self.assertEqual('I', writer['ipi_base_n']['header'])
-        self.assertEqual(229, writer['ipi_base_n']['id_code'])
-        self.assertEqual(7, writer['ipi_base_n']['check_digit'])
+        self.assertEqual('I-000000229-7', writer['ipi_base_n'])
 
         self.assertEqual('SWR', encoded['record_type'])
         self.assertEqual(3, encoded['transaction_sequence_n'])

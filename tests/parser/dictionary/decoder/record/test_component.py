@@ -22,18 +22,6 @@ class TestComponentDictionaryDecoder(unittest.TestCase):
         self._decoder = ComponentDictionaryDecoder()
 
     def test_encoded(self):
-        ipi_base_1 = {}
-
-        ipi_base_1['header'] = 'I'
-        ipi_base_1['id_code'] = 229
-        ipi_base_1['check_digit'] = 7
-
-        ipi_base_2 = {}
-
-        ipi_base_2['header'] = 'I'
-        ipi_base_2['id_code'] = 339
-        ipi_base_2['check_digit'] = 7
-
         data = {}
 
         data['record_type'] = 'COM'
@@ -46,9 +34,9 @@ class TestComponentDictionaryDecoder(unittest.TestCase):
         data['writer_2_last_name'] = 'LAST NAME 2'
         data['writer_2_first_name'] = 'FIRST NAME 2'
         data['writer_1_ipi_name_n'] = 14107338
-        data['writer_1_ipi_base_n'] = ipi_base_1
+        data['writer_1_ipi_base_n'] = 'I-000000229-7'
         data['writer_2_ipi_name_n'] = 14107400
-        data['writer_2_ipi_base_n'] = ipi_base_2
+        data['writer_2_ipi_base_n'] = 'I-000000339-7'
         data['iswc'] = ISWCCode(12345678, 9)
         data['duration'] = datetime.datetime.strptime('011200', '%H%M%S').time()
 
@@ -71,10 +59,6 @@ class TestComponentDictionaryDecoder(unittest.TestCase):
         self.assertEqual(datetime.datetime.strptime('011200', '%H%M%S').time(),
                          record.duration)
 
-        self.assertEqual('I', record.writer_1_ipi_base_n.header)
-        self.assertEqual(229, record.writer_1_ipi_base_n.id_code)
-        self.assertEqual(7, record.writer_1_ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', record.writer_1_ipi_base_n)
 
-        self.assertEqual('I', record.writer_2_ipi_base_n.header)
-        self.assertEqual(339, record.writer_2_ipi_base_n.id_code)
-        self.assertEqual(7, record.writer_2_ipi_base_n.check_digit)
+        self.assertEqual('I-000000339-7', record.writer_2_ipi_base_n)

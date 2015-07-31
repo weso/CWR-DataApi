@@ -16,6 +16,7 @@ __status__ = 'Development'
 # Acquires data sources
 _config = CWRConfiguration()
 
+
 # RECORD FIELDS
 
 # Prefix fields

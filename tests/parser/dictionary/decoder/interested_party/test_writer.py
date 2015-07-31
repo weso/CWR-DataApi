@@ -20,18 +20,12 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self._decoder = WriterDictionaryDecoder()
 
     def test_encoded(self):
-        ipi_base = {}
-
-        ipi_base['header'] = 'I'
-        ipi_base['id_code'] = 229
-        ipi_base['check_digit'] = 7
-
         data = {}
 
         data['ip_n'] = 'ABC15'
         data['personal_number'] = 'ABC1234'
         data['ipi_name_n'] = 14107338
-        data['ipi_base_n'] = ipi_base
+        data['ipi_base_n'] = 'I-000000229-7'
         data['writer_first_name'] = 'NAME'
         data['writer_last_name'] = 'LAST NAME'
         data['tax_id'] = 923703412
@@ -45,6 +39,4 @@ class TestWorkDictionaryDecoder(unittest.TestCase):
         self.assertEqual('LAST NAME', record.writer_last_name)
         self.assertEqual(923703412, record.tax_id)
 
-        self.assertEqual('I', record.ipi_base_n.header)
-        self.assertEqual(229, record.ipi_base_n.id_code)
-        self.assertEqual(7, record.ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', record.ipi_base_n)

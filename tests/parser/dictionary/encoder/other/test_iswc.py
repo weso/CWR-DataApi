@@ -3,7 +3,6 @@
 import unittest
 
 from cwr.parser.encoder.dictionary import ISWCDictionaryEncoder
-from cwr.other import ISWCCode
 
 """
 Acknowledgement to dictionary encoding tests.
@@ -21,10 +20,6 @@ class TestISWCodeEncoding(unittest.TestCase):
         self._encoder = ISWCDictionaryEncoder()
 
     def test_encoded(self):
-        data = ISWCCode(123456789,
-                        1)
+        encoded = self._encoder.encode('T0123456789')
 
-        encoded = self._encoder.encode(data)
-
-        self.assertEqual(123456789, encoded['id_code'])
-        self.assertEqual(1, encoded['check_digit'])
+        self.assertEqual('T0123456789', encoded)

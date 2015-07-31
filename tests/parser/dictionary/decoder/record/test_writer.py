@@ -20,18 +20,12 @@ class TestWriterRecordDictionaryDecoder(unittest.TestCase):
         self._decoder = WriterRecordDictionaryDecoder()
 
     def test_encoded(self):
-        ipi_base = {}
-
-        ipi_base['header'] = 'I'
-        ipi_base['id_code'] = 229
-        ipi_base['check_digit'] = 7
-
         writer = {}
 
         writer['ip_n'] = 'ABC15'
         writer['personal_number'] = 'ABC1234'
         writer['ipi_name_n'] = 14107338
-        writer['ipi_base_n'] = ipi_base
+        writer['ipi_base_n'] = 'I-000000229-7'
         writer['writer_first_name'] = 'NAME'
         writer['writer_last_name'] = 'LAST NAME'
         writer['tax_id'] = 923703412
@@ -65,9 +59,7 @@ class TestWriterRecordDictionaryDecoder(unittest.TestCase):
         self.assertEqual('LAST NAME', record.writer.writer_last_name)
         self.assertEqual(923703412, record.writer.tax_id)
 
-        self.assertEqual('I', record.writer.ipi_base_n.header)
-        self.assertEqual(229, record.writer.ipi_base_n.id_code)
-        self.assertEqual(7, record.writer.ipi_base_n.check_digit)
+        self.assertEqual('I-000000229-7', record.writer.ipi_base_n)
 
         self.assertEqual('SWR', record.record_type)
         self.assertEqual(3, record.transaction_sequence_n)

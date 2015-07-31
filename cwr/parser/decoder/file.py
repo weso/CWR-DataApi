@@ -239,7 +239,6 @@ def default_file_decoder():
     :return: a CWR file decoder for the default standard
     """
     transmission_rule = default_grammar_factory().get_rule('transmission')
-    transmission_rule.enablePackrat()
 
     return FileDecoder(
         transmission_rule,

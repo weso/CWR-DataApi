@@ -191,9 +191,9 @@ class DefaultRuleFactory(RuleFactory):
         rule_type = rule.rule_type
 
         # TODO: This is a patch for an error which should not be happening
-        if isinstance(modifiers, pp.ParseResults):
+        try:
             modifiers = modifiers.asList()
-        elif isinstance(modifiers, str):
+        except AttributeError:
             modifiers = []
 
         if rule_type == 'field':
@@ -212,7 +212,8 @@ class DefaultRuleFactory(RuleFactory):
 
         return rule
 
-    def _apply_modifiers(self, rule, modifiers):
+    @staticmethod
+    def _apply_modifiers(rule, modifiers):
         if 'grouped' in modifiers:
             rule = pp.Group(rule)
 
