@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 import os
+import time
 
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.parser.encoder.cwrjson import JSONEncoder
@@ -34,11 +35,31 @@ if __name__ == '__main__':
     data['filename'] = os.path.basename(path)
     data['contents'] = codecs.open(path, 'r', 'latin-1').read()
 
+    print('Begins parsing CWR at %s' % time.ctime())
+    start = time.clock()
     data = decoder.decode(data)
+    end = time.clock()
+    time_parse = (end - start)
+
+    print('Parsed the file in %s seconds' % time_parse)
+    print('\n')
 
     encoder = JSONEncoder()
-    result = encoder.encode(data)
 
+    print('Begins creating JSON at %s' % time.ctime())
+    start = time.clock()
+    result = encoder.encode(data)
+    end = time.clock()
+    time_parse = (end - start)
+
+    print('Created the JSON in %s seconds' % time_parse)
+    print('\n')
+
+    start = time.clock()
     output = codecs.open(output, 'w', 'latin-1')
+    end = time.clock()
+    time_parse = (end - start)
+
+    print('Saved the JSON in %s seconds' % time_parse)
 
     output.write(result)
