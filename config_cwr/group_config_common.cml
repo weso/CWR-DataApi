@@ -13,8 +13,8 @@ group:
         group: transactions (optional)
         option
 		  [
-          record: group_trailer_base
-          record: group_trailer_short
+             record: group_trailer_base
+             record: group_trailer_short
 		  ]
 	  ]
 
@@ -24,9 +24,9 @@ group:
       [
       option
 	    [
-        group: agreement_transaction (grouped, at_least_1)
-        group: work_transaction (grouped, at_least_1)
-        group: acknowledgement_transaction (grouped, at_least_1)
+            group: agreement_transaction (grouped, at_least_1)
+            group: work_transaction (grouped, at_least_1)
+            group: acknowledgement_transaction (grouped, at_least_1)
 		]
 	  ]
 

@@ -79,3 +79,4 @@ rule_config_set = \
     pp.Group(_rule_rules_root).setResultsName('rules')
 
 rule_config_file = pp.ZeroOrMore(pp.Group(rule_config_set))
+

@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+from config_cwr.accessor import CWRConfiguration
 
 from cwr.parser.encoder.common import Encoder
+from cwr.parser.encoder.standart.record import CwrRecordEncoderFactory
+from data_cwr.accessor import CWRTables
+import difflib
 
 """
 Parsers for encoding CWR model classes, creating a text string for them which
@@ -139,3 +143,89 @@ class BaseCWRFileNameEncoder(Encoder):
         rule = rule + self._ip_delimiter + receiver + ".V" + version
 
         return rule
+
+
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+class CwrFileEncoder(Encoder):
+    """
+    Encodes a CWR class instance into a cwr binary format.
+
+    """
+    _counter = 0
+
+    content = []
+
+    def __init__(self, record_configs, fields_configs, content=[]):
+        super(CwrFileEncoder, self).__init__()
+        self.record_encoder_factory = CwrRecordEncoderFactory(record_configs, fields_configs)
+        self.content = content
+
+    def assert_encode(self, string):
+        print("Line: %d" % self._counter)
+        source = self.content[self._counter].strip()
+        string = string.strip()
+        print(bcolors.OKBLUE + source + bcolors.ENDC + '$')
+        if string == source:
+            print(bcolors.OKGREEN + string + bcolors.ENDC + '$')
+        else:
+            print(bcolors.FAIL + string + bcolors.ENDC + '$')
+            for i,s in enumerate(difflib.ndiff(source, string)):
+                print(i, s)
+            raise Exception()
+        self._counter += 1
+
+    def _record_encode(self, entity):
+        encoder = self.record_encoder_factory.get_encoder(entity)
+        result = encoder.encode(entity)
+        if self.content:
+            self.assert_encode(result)
+        return result
+
+    def encode(self, transmission):
+        """
+        Encodes the data, creating a CWR structure from an instance from the
+        domain model.
+
+        :param entity: the instance to encode
+        :return: a cwr string structure created from the received data
+        """
+        data = ''
+        data += self._record_encode(transmission.header)
+        for group in transmission.groups:
+            data += self._record_encode(group.group_header)
+            for transaction in group.transactions:
+                for record in transaction:
+                    data += self._record_encode(record)
+            data += self._record_encode(group.group_trailer)
+        data += self._record_encode(transmission.trailer)
+        return data
+
+
+def default_encoder_cwr_file(content=[]):
+    """
+    Get default encoder cwr file
+    :return:
+    """
+    config = CWRConfiguration()
+    field_configs = config.load_field_config('table')
+    field_configs.update(config.load_field_config('common'))
+
+    field_values = CWRTables()
+
+    for entry in field_configs.values():
+        if 'source' in entry:
+            values_id = entry['source']
+            entry['values'] = field_values.get_data(values_id)
+
+    record_configs = config.load_record_config('common')
+    return CwrFileEncoder(record_configs, field_configs, content=content)

@@ -34,7 +34,7 @@ class TransmissionHeader(Record):
                  creation_date_time=None,
                  transmission_date=None,
                  edi_standard='01.10',
-                 character_set=None
+                 character_set=''
                  ):
         """
         Constructs a TransmissionHeader.
