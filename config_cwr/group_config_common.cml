@@ -13,8 +13,8 @@ group:
         group: transactions (optional)
         option
 		  [
-             record: group_trailer_base
-             record: group_trailer_short
+            record: group_trailer_base
+            record: group_trailer_short
 		  ]
 	  ]
 
@@ -35,6 +35,6 @@ group:
     rules:
       [
         record: transmission_header
-        group: groups
+        group: groups ( at_least_1)
         record: transmission_trailer
 	  ]

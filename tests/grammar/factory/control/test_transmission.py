@@ -85,6 +85,7 @@ class TestTransmissionGrammar(unittest.TestCase):
                  group_2 + '\n' + \
                  'TRL000010032029801599288'
 
+        self.grammar.setDebug(True)
         result = self.grammar.parseString(record)[0]
 
         self.assertEqual('HDR', result.header.record_type)

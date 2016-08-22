@@ -332,6 +332,10 @@ transaction_record:
             field: international_standard_code
             field: society_assigned_agreement_n
         ]
+        optional [
+            field: agreement_type
+            field: usa_license
+        ]
       ]
 
 transaction_record:

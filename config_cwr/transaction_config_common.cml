@@ -12,8 +12,8 @@ group:
 		  ]
         sequence
           [
-            record: work
-            record: work_conflict (optional)
+            record: work (at_least_0)
+            record: work_conflict (at_least_0)
             record: controlled_publisher_information (at_least_0)
             record: publisher (at_least_0)
             record: controlled_writer_information (at_least_0)

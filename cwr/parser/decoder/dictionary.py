@@ -419,11 +419,11 @@ class PerformingArtistDictionaryDecoder(Decoder):
         if 'performing_artist_ipi_base_n' in data:
             ipi_base = self._ipi_base_decoder.decode(data['performing_artist_ipi_base_n'])
 
-        performing_artist_first_name = ''
+        performing_artist_first_name = None
         if 'performing_artist_first_name' in data:
             performing_artist_first_name = data['performing_artist_first_name']
 
-        performing_artist_ipi_name_n = ''
+        performing_artist_ipi_name_n = None
         if 'performing_artist_ipi_name_n' in data:
             performing_artist_ipi_name_n = data['performing_artist_ipi_name_n']
 
@@ -444,13 +444,16 @@ class PublisherForWriterDictionaryDecoder(Decoder):
         super(PublisherForWriterDictionaryDecoder, self).__init__()
 
     def decode(self, data):
+        publisher_name = None
+        if 'publisher_name' in data:
+            publisher_name = data['publisher_name']
         return PublisherForWriterRecord(record_type=data['record_type'],
                                         transaction_sequence_n=data[
                                             'transaction_sequence_n'],
                                         record_sequence_n=data[
                                             'record_sequence_n'],
                                         publisher_ip_n=data['publisher_ip_n'],
-                                        publisher_name=data['publisher_name'],
+                                        publisher_name=publisher_name,
                                         writer_ip_n=data['writer_ip_n'],
                                         submitter_agreement_n=data[
                                             'submitter_agreement_n'],
@@ -463,7 +466,7 @@ class RecordingDetailDictionaryDecoder(Decoder):
         super(RecordingDetailDictionaryDecoder, self).__init__()
 
     def decode(self, data):
-        media_type = ''
+        media_type = None
         if 'media_type' in data:
             media_type = data['media_type']
 
@@ -605,19 +608,19 @@ class WorkDictionaryDecoder(Decoder):
 
     def decode(self, data):
 
-        catalogue_number = ''
+        catalogue_number = None
         if 'catalogue_number' in data:
             catalogue_number = data['catalogue_number']
 
-        exceptional_clause = ''
+        exceptional_clause = None
         if 'exceptional_clause' in data:
             exceptional_clause = data['exceptional_clause']
 
-        opus_number = ''
+        opus_number = None
         if 'opus_number' in data:
-            opus_number = data['exceptional_clause']
+            opus_number = data['opus_number']
 
-        priority_flag = ''
+        priority_flag = None
         if 'priority_flag' in data:
             priority_flag = data['priority_flag']
 
@@ -707,7 +710,7 @@ class WriterRecordDictionaryDecoder(Decoder):
     def decode(self, data):
         writer = self._writer_decoder.decode(data['writer'])
 
-        usa_license = ''
+        usa_license = None
         if 'usa_license' in data:
             usa_license = data['usa_license']
 
@@ -880,27 +883,27 @@ class PublisherRecordDictionaryDecoder(Decoder):
     def decode(self, data):
         publisher = self._publisher_decoder.decode(data['publisher'])
 
-        special_agreements = ''
+        special_agreements = None
         if 'special_agreements' in data:
             special_agreements = data['special_agreements']
 
-        first_recording_refusal = ''
+        first_recording_refusal = None
         if 'first_recording_refusal' in data:
             first_recording_refusal = data['first_recording_refusal']
 
-        agreement_type = ''
+        agreement_type = None
         if 'agreement_type' in data:
             agreement_type = data['agreement_type']
 
-        usa_license = ''
+        usa_license = None
         if 'usa_license' in data:
             usa_license = data['usa_license']
 
-        international_standard_code = ''
+        international_standard_code = None
         if 'international_standard_code' in data:
             international_standard_code = data['international_standard_code']
 
-        society_assigned_agreement_n = ''
+        society_assigned_agreement_n = None
         if 'society_assigned_agreement_n' in data:
             society_assigned_agreement_n = data['society_assigned_agreement_n']
 

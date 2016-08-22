@@ -7,7 +7,7 @@ from config_cwr.accessor import CWRConfiguration
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.file import CWRFile, FileTag
 from cwr.group import Group, GroupHeader, GroupTrailer
-from cwr.parser.encoder.file import default_encoder_cwr_file
+from cwr.parser.encoder.file import default_file_encoder
 
 from cwr.record import TransactionRecord
 from cwr.transmission import Transmission, TransmissionTrailer, TransmissionHeader
@@ -84,7 +84,7 @@ class AcknowledgeFile(object):
         output = codecs.open(path + '.ack', 'w', 'latin-1')
         out_old = sys.stdout
         sys.stdout = output
-        file_encoder = default_encoder_cwr_file()
+        file_encoder = default_file_encoder()
         result = file_encoder.encode(self._acknowledge.transmission)
         sys.stdout = out_old
 

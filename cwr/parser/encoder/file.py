@@ -145,17 +145,6 @@ class BaseCWRFileNameEncoder(Encoder):
         return rule
 
 
-
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
 class CwrFileEncoder(Encoder):
     """
     Encodes a CWR class instance into a cwr binary format.
@@ -170,25 +159,9 @@ class CwrFileEncoder(Encoder):
         self.record_encoder_factory = CwrRecordEncoderFactory(record_configs, fields_configs)
         self.content = content
 
-    def assert_encode(self, string):
-        print("Line: %d" % self._counter)
-        source = self.content[self._counter].strip()
-        string = string.strip()
-        print(bcolors.OKBLUE + source + bcolors.ENDC + '$')
-        if string == source:
-            print(bcolors.OKGREEN + string + bcolors.ENDC + '$')
-        else:
-            print(bcolors.FAIL + string + bcolors.ENDC + '$')
-            for i,s in enumerate(difflib.ndiff(source, string)):
-                print(i, s)
-            raise Exception()
-        self._counter += 1
-
     def _record_encode(self, entity):
         encoder = self.record_encoder_factory.get_encoder(entity)
         result = encoder.encode(entity)
-        if self.content:
-            self.assert_encode(result)
         return result
 
     def encode(self, transmission):
@@ -211,7 +184,7 @@ class CwrFileEncoder(Encoder):
         return data
 
 
-def default_encoder_cwr_file(content=[]):
+def default_file_encoder():
     """
     Get default encoder cwr file
     :return:
@@ -228,4 +201,4 @@ def default_encoder_cwr_file(content=[]):
             entry['values'] = field_values.get_data(values_id)
 
     record_configs = config.load_record_config('common')
-    return CwrFileEncoder(record_configs, field_configs, content=content)
+    return CwrFileEncoder(record_configs, field_configs)
