@@ -19,7 +19,6 @@ __status__ = 'Development'
 class TestGroupsGrammar(unittest.TestCase):
     def setUp(self):
         self.grammar = get_record_grammar('groups')
-        #self.grammar.setDebug(True)
 
     def test_agreement_min(self):
         group1 = 'GRHAGR0000102.100130400001  ' + '\n' + \
@@ -48,8 +47,8 @@ class TestGroupsGrammar(unittest.TestCase):
                  _agreement_short() + '\n' + \
                  'GRT012340123456701234567             '
         group2 = 'GRHNWR0000102.100130400001  ' + '\n' + \
-                  _work_big() + '\n' + \
-                  'GRT012340123456701234567             '
+                 _work_big() + '\n' + \
+                 'GRT012340123456701234567             '
 
         record = group1 + '\n' + group2
 

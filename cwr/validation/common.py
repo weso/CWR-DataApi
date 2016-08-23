@@ -23,6 +23,19 @@ class ValidationStatus(object):
         self.message = message
 
 
+class ASValidationStatus(ValidationStatus):
+
+    def __init__(self, message = None):
+        super().__init__()
+        self.code = 'AS'
+
+class NPValidationStatus(ValidationStatus):
+
+    def __init__(self, message = None):
+        super().__init__()
+        self.code = 'NP'
+
+
 class Validation(object):
     """
     Interface for implementing validation. This is abstract class.

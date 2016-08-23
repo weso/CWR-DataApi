@@ -7,12 +7,14 @@ from config_cwr.accessor import CWRConfiguration
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
 from cwr.file import CWRFile, FileTag
 from cwr.group import Group, GroupHeader, GroupTrailer
+from cwr.interested_party import IPTerritoryOfControlRecord
 from cwr.parser.encoder.file import default_file_encoder
 
 from cwr.record import TransactionRecord
 from cwr.transmission import Transmission, TransmissionTrailer, TransmissionHeader
 from cwr.utils.printer import CWRPrinter
-from cwr.validation.common import ValidationStatus
+from cwr.validation.common import ValidationStatus, NPValidationStatus
+from cwr.validation.transaction import ValidationTransaction
 
 """
 Class generate acknowledgement file"
@@ -62,8 +64,23 @@ class AcknowledgeFile(object):
     def _version():
         return "2.1"
 
+    def validate_tis(self, transaction):
+        tis_number = self.config['tis'].values()
+        for record in transaction:
+            if isinstance(record, IPTerritoryOfControlRecord):
+                if record.tis_numeric_code in tis_number:
+                    return True
+        return False
+
+    def validate(self, transaction):
+        validation = ValidationTransaction(self.config)
+        return validation.validate(transaction)
+
     def validate_transaction(self, transaction):
-        return ValidationStatus('AS')
+        if self.validate_tis(transaction):
+            return self.validate(transaction)
+        else:
+            return NPValidationStatus()
 
     def acknowledge_cwr_file(self, cwr_file):
         assert isinstance(cwr_file, CWRFile)
@@ -86,29 +103,8 @@ class AcknowledgeFile(object):
         sys.stdout = output
         file_encoder = default_file_encoder()
         result = file_encoder.encode(self._acknowledge.transmission)
+        print(result)
         sys.stdout = out_old
-
-    #self.acknowledge_transmission(cwr_file.transmission)
-
-    # def acknowledge_transmission(self, transmission):
-    #     assert isinstance(transmission, Transmission)
-    #     for group in transmission.groups:
-    #         ack_group = self.acknowledge_group(group)
-    #         self._acknowledge.transmission.groups.append(ack_group)
-    #     self._acknowledge.transmission.trailer.group_count = transmission.trailer.group_count
-    #
-    # def acknowledge_group(self, group):
-    #     assert isinstance(group, Group)
-    #     ack_header = GroupHeader()
-    #     ack_group = Group()
-    #     for transaction in group.transactions:
-    #         self.acknowledge_transaction(transaction)
-    #
-    # def acknowledge_transaction(self, transaction):
-    #     pass
-    #
-    # def get(self):
-    #     return CWRFile
 
 
 class AcknowledgeTransmission(Transmission):

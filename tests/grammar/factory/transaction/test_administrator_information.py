@@ -70,7 +70,6 @@ class TestAdministratorInformationGrammar(unittest.TestCase):
 
         record = publisher + '\n' + npn + '\n'
 
-        self.grammar.setDebug(True)
         result = self.grammar.parseString(record)
 
         self.assertEqual(2, len(result))

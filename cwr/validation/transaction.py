@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from apt_pkg import __init__
 
-from cwr.validation.common import Validation
+from cwr.validation.common import Validation, ValidationStatus, ASValidationStatus
 
 """
 Base classes for implementing validation rules.
@@ -15,10 +15,12 @@ __status__ = 'Development'
 
 class ValidationTransaction(Validation):
 
-    def __init__(self):
-        pass
+    config = None
+
+    def __init__(self, config):
+        self.config = config
 
     def validate(self, transaction):
-        pass
+        return ASValidationStatus()
 
 

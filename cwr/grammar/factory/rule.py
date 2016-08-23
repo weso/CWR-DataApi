@@ -150,7 +150,6 @@ class DefaultRuleFactory(RuleFactory):
         rule.setName(rule_id)
 
         if self._debug:
-            #rule.setDebugActions(False, False, False)
             rule.setDebug()
         return rule
 
