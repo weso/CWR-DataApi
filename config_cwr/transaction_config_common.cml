@@ -12,8 +12,23 @@ group:
 		  ]
         sequence
           [
-          record: work
-          record: work_conflict (optional)
+            record: work (at_least_0)
+            record: work_conflict (at_least_0)
+            record: controlled_publisher_information (at_least_0)
+            record: publisher (at_least_0)
+            record: controlled_writer_information (at_least_0)
+            record: writer (at_least_0)
+            record: work_alternate_title (at_least_0)
+            record: nra_title (optional)
+            record: information_for_excerpts (optional)
+            record: information_for_versions (optional)
+            record: performing_artist (at_least_0)
+            record: nra_performance_data (at_least_0)
+            record: recording_detail (at_least_0)
+            record: work_origin (at_least_0)
+            record: instrumentation_information (at_least_0)
+            record: information_for_components (at_least_0)
+            record: additional_related_information (at_least_0)
 		  ]
 		]
 	  ]
@@ -23,7 +38,7 @@ group:
     rules:
       [
         record: publisher
-        record: nra_publisher_name (optional)
+        record: nra_publisher_name (at_least_0)
         record: publisher_territory (at_least_0)
 	  ]
 
@@ -139,8 +154,8 @@ group:
         record: information_for_versions (optional)
         record: performing_artist (at_least_0)
         record: nra_performance_data (at_least_0)
-        record: recording_detail (optional)
-        record: work_origin (optional)
+        record: recording_detail (at_least_0)
+        record: work_origin (at_least_0)
         record: instrumentation_information (at_least_0)
         record: information_for_components (at_least_0)
         record: additional_related_information (at_least_0)

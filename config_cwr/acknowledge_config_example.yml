@@ -1,0 +1,22 @@
+
+sender_name: 'UMA EXAMPLE'
+sender_id: 999
+sender_type: 'SO'
+version: 2.1
+tis:
+  world: 2136
+  uzbekistan: 860
+  ukraine: 804
+  turkmenistan: 795
+  tajikistan: 762
+  russia: 643
+  moldova: 498
+  kazakhstan: 417
+  kazahstan: 398
+  georgia: 268
+  belarus: 112
+  armenia: 51
+  azerbaijan: 32
+
+
+

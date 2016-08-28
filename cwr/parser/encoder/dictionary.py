@@ -621,6 +621,7 @@ class PublisherForWriterDictionaryEncoder(TransactionHeaderDictionaryEncoder):
             record)
 
         encoded['publisher_ip_n'] = record.publisher_ip_n
+        encoded['publisher_name'] = record.publisher_name
         encoded[
             'society_assigned_agreement_n'] = \
             record.society_assigned_agreement_n
@@ -994,6 +995,8 @@ class GroupTrailerDictionaryEncoder(Encoder):
         encoded['record_count'] = record.record_count
         encoded['record_type'] = record.record_type
         encoded['transaction_count'] = record.transaction_count
+        encoded['currency_indicator'] = record.currency_indicator
+        encoded['total_monetary_value'] = record.total_monetary_value
 
         return encoded
 

@@ -115,7 +115,7 @@ class OptionalFieldRuleDecorator(object):
                                        config['size'])
 
         adapter = self._adapters[config['type']]
-        if (adapter.is_numeric()):
+        if adapter.is_numeric():
             field = self._wrap_as_optional_numeric(field, config['name'],
                                                    config['size'])
 

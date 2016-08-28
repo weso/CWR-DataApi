@@ -44,7 +44,7 @@ from cwr.grammar.factory.adapter import AlphanumAdapter, BlankAdapter, \
     IPIBaseNumberAdapter, IPINameNumberAdapter, ISRCAdapter, ISWCAdapter, \
     LookupAdapter, LookupIntAdapter, NumericAdapter, NumericFloatAdapter, \
     PercentageAdapter, TimeAdapter, VariableAlphanumAdapter, VISANAdapter, \
-    YearAdapter, EAN13Adapter, AudioVisualKeydapter
+    YearAdapter, EAN13Adapter, AudioVisualKeydapter, EndAlphanumAdapter
 
 """
 Classes for processing CWR files, creating a graph of CWR model instances from
@@ -92,6 +92,8 @@ def _default_record_decoders():
         AdditionalRelatedInformationDictionaryDecoder()
     decoders['group_header'] = GroupHeaderDictionaryDecoder()
     decoders['group_trailer'] = GroupTrailerDictionaryDecoder()
+    decoders['group_trailer_base'] = GroupTrailerDictionaryDecoder()
+    decoders['group_trailer_short'] = GroupTrailerDictionaryDecoder()
     decoders['interested_party_agreement'] = \
         InterestedPartyForAgreementDictionaryDecoder()
     decoders['nra_agreement_party'] = \
@@ -136,6 +138,7 @@ def default_adapters():
 
     adapters['alphanum'] = AlphanumAdapter()
     adapters['alphanum_ext'] = ExtendedAlphanumAdapter()
+    adapters['alphanum_end'] = EndAlphanumAdapter()
     adapters['numeric'] = NumericAdapter()
     adapters['boolean'] = BooleanAdapter()
     adapters['flag'] = FlagAdapter()

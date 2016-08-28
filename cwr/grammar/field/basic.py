@@ -48,7 +48,7 @@ trailing white spaces.
 """
 
 
-def alphanum(columns, name=None, extended=False):
+def alphanum(columns, name=None, extended=False, isLast=False):
     """
     Creates the grammar for an Alphanumeric (A) field, accepting only the
     specified number of characters.
@@ -76,6 +76,9 @@ def alphanum(columns, name=None, extended=False):
         # Can't be empty or have negative size
         raise BaseException()
 
+    if isLast:
+        columns = str('1,' + str(columns))
+
     # Checks if non-ASCII characters are allowed
     if not extended:
         # The regular expression just forbids lowercase characters
@@ -83,14 +86,14 @@ def alphanum(columns, name=None, extended=False):
     else:
         # The regular expression forbids lowercase characters but allows
         # non-ASCII characters
-        field = pp.Regex('([\x00-\x60]|[\x7B-\x7F]|[^\x00-\x7F]){' +
+        field = pp.Regex('([\x00-\x09]|[\x0E-\x60]|[\x7B-\x7F]|[^\x00-\x7F]){' +
                          str(columns) + '}')
 
     # Parse action
     field.setParseAction(lambda s: s[0].strip())
 
     # Compulsory field validation action
-    if columns > 0:
+    if columns:
         field.addParseAction(lambda s: _check_not_empty(s[0]))
 
     # White spaces are not removed
