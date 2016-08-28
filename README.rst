@@ -84,7 +84,7 @@ Additionally, the project is offered as a `Pypi package`_, and can be installed 
 Making use of the parser
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once the project is installed it can be used in a similar way to this (using Python 2.7):
+Once the project is installed it can be used in a similar way to this (using Python 2.7)::
 
     import codecs
     import os
