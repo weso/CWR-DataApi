@@ -4,7 +4,8 @@
 # Using Python for the project
 language: python
 python:
-  - "2.6"
+  # Disabled for now
+  #- "2.6"
   # Python 2.7 is set to test and deploy the docs, and to run the coverage report, in the configuration matrix
   #- "2.7"
   # Python 3.2 is no longer supported by pip
