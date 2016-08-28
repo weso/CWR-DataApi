@@ -44,7 +44,7 @@ class TestCwrEncoding(unittest.TestCase):
         decoder = default_file_decoder()
         data = self.get_data()
 
-        original_lines = data['contents'].split("\n")
+        original_lines = data['contents'].splitlines()
         for i in range(len(original_lines)):
             print(original_lines[i])
 
