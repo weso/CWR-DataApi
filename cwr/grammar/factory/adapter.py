@@ -25,7 +25,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class FieldAdapter(object):
+class FieldAdapter(object, metaclass=ABCMeta):
     """
     Interface for adapting field rules creation to the parser factory
     requirements.
@@ -34,7 +34,6 @@ class FieldAdapter(object):
     and then generate a specific field rule
     from them.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
         pass

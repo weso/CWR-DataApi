@@ -15,9 +15,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class RuleFactory(object):
-    __metaclass__ = ABCMeta
-
+class RuleFactory(object, metaclass=ABCMeta):
     def __init__(self):
         pass
 

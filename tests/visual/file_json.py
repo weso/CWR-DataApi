@@ -20,13 +20,13 @@ __status__ = 'Development'
 
 if __name__ == '__main__':
     print('File to JSON test')
-    path = raw_input(
+    path = input(
         'Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
-    output = raw_input(
+    output = input(
         'Please enter the full path to the file where the results will be stored: ')
     print('\n')
-    print('Reading file %s' % path)
-    print('Storing output on %s' % output)
+    print(('Reading file %s' % path))
+    print(('Storing output on %s' % output))
     print('\n')
 
     decoder = default_file_decoder()
@@ -35,24 +35,24 @@ if __name__ == '__main__':
     data['filename'] = os.path.basename(path)
     data['contents'] = codecs.open(path, 'r', 'latin-1').read()
 
-    print('Begins parsing CWR at %s' % time.ctime())
+    print(('Begins parsing CWR at %s' % time.ctime()))
     start = time.clock()
     data = decoder.decode(data)
     end = time.clock()
     time_parse = (end - start)
 
-    print('Parsed the file in %s seconds' % time_parse)
+    print(('Parsed the file in %s seconds' % time_parse))
     print('\n')
 
     encoder = JSONEncoder()
 
-    print('Begins creating JSON at %s' % time.ctime())
+    print(('Begins creating JSON at %s' % time.ctime()))
     start = time.clock()
     result = encoder.encode(data)
     end = time.clock()
     time_parse = (end - start)
 
-    print('Created the JSON in %s seconds' % time_parse)
+    print(('Created the JSON in %s seconds' % time_parse))
     print('\n')
 
     start = time.clock()
@@ -60,6 +60,6 @@ if __name__ == '__main__':
     end = time.clock()
     time_parse = (end - start)
 
-    print('Saved the JSON in %s seconds' % time_parse)
+    print(('Saved the JSON in %s seconds' % time_parse))
 
     output.write(result)
