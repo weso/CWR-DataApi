@@ -11,6 +11,9 @@ include .coveragerc
 recursive-exclude tests *.pyc
 recursive-exclude tests *.pyo
 
+recursive-include tests *.V21
+recursive-include tests *.cwr
+
 # Data files
 include data_cwr/*.py
 include data_cwr/*.csv
