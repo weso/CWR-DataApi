@@ -1,5 +1,5 @@
 # Parsing
-pyparsing==2.0.3
+pyparsing==2.2.0
 pyyaml==3.11
 
 # Deployment
