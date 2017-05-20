@@ -33,7 +33,7 @@ def read(*names, **kwargs):
     ).read()
 
 # Gets the version for the source folder __init__.py file
-with open('dice_notation/__init__.py', 'rb',
+with open('cwr/__init__.py', 'rb',
           encoding='utf-8') as f:
     version_lib = f.read()
     version_lib = _version_re.search(version_lib).group(1)
