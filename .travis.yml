@@ -4,7 +4,6 @@
 # Using Python for the project
 language: python
 python:
-  - "2.7"
   - "3.4"
   - "3.5"
   # Python 3.6 is set to test and deploy the docs in the configuration matrix

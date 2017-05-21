@@ -51,13 +51,9 @@ Prerequisites
 
 The project has been tested in the following versions of the interpreter:
 
-- Python 2.6
-- Python 2.7
-- Python 3.3
 - Python 3.4
 - Python 3.5
-- Pypy
-- Pypy 3
+- Python 3.6
 
 All other dependencies are indicated on the requirements.txt file.
 The included makefile can install them with the command:
