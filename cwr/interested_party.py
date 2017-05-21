@@ -992,6 +992,7 @@ class PublisherForWriterRecord(TransactionRecord):
                  transaction_sequence_n=0,
                  record_sequence_n=0,
                  publisher_ip_n='',
+                 publisher_name='',
                  writer_ip_n='',
                  submitter_agreement_n=None,
                  society_assigned_agreement_n=None
@@ -1004,6 +1005,7 @@ class PublisherForWriterRecord(TransactionRecord):
         # Parties IDs
         self._publisher_ip_n = publisher_ip_n
         self._writer_ip_n = writer_ip_n
+        self._publisher_name = publisher_name
 
         # Agreement IDs
         self._submitter_agreement_n = submitter_agreement_n
@@ -1071,6 +1073,14 @@ class PublisherForWriterRecord(TransactionRecord):
     @writer_ip_n.setter
     def writer_ip_n(self, value):
         self._writer_ip_n = value
+
+    @property
+    def publisher_name(self):
+        return self._publisher_name
+
+    @publisher_name.setter
+    def publisher_name(self, value):
+        self._publisher_name = value
 
 
 class WriterRecord(InterestedPartyRecord):

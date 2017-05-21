@@ -73,7 +73,9 @@ class AlphanumAdapter(FieldAdapter):
         super(AlphanumAdapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return basic.alphanum(columns, name, extended=False)
+        field = basic.alphanum(columns, name, extended=False)
+        return field
+
 
 
 class ExtendedAlphanumAdapter(FieldAdapter):
@@ -96,6 +98,29 @@ class ExtendedAlphanumAdapter(FieldAdapter):
 
     def get_field(self, name=None, columns=None, values=None):
         return basic.alphanum(columns, name, extended=True)
+
+
+class EndAlphanumAdapter(FieldAdapter):
+    """
+    Creates the grammar for an Alphanumeric (A) field, accepting only the
+    specified number of characters.
+
+    By default Alphanumeric fields accept only ASCII characters, excluding
+    lowercases. If the extended flag is set to True, then non-ASCII characters
+    are allowed, but the no ASCII lowercase constraint is kept.
+
+    This can be a compulsory field, in which case the empty string is
+    disallowed.
+
+    The text will be stripped of heading and trailing whitespaces.
+    """
+
+    def __init__(self):
+        super(EndAlphanumAdapter, self).__init__()
+
+    def get_field(self, name=None, columns=None, values=None):
+        reg = basic.alphanum(columns, name, extended=True, isLast=True)
+        return reg
 
 
 class NumericAdapter(FieldAdapter):
@@ -308,7 +333,8 @@ class AudioVisualKeydapter(FieldAdapter):
         super(AudioVisualKeydapter, self).__init__()
 
     def get_field(self, name=None, columns=None, values=None):
-        return special.audio_visual_key(name=name)
+        field = special.audio_visual_key(name=name)
+        return field
 
 
 class CharSetAdapter(FieldAdapter):

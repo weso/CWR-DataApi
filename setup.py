@@ -21,7 +21,6 @@ __license__ = 'MIT'
 # Regular expression for the version
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 
-
 # Test requirements
 _tests_require = ['tox']
 
@@ -34,7 +33,8 @@ def read(*names, **kwargs):
     ).read()
 
 # Gets the version for the source folder __init__.py file
-with open('cwr/__init__.py', 'rb', encoding='utf-8') as f:
+with open('cwr/__init__.py', 'rb',
+          encoding='utf-8') as f:
     version_lib = f.read()
     version_lib = _version_re.search(version_lib).group(1)
     version_lib = str(ast.literal_eval(version_lib.rstrip()))
@@ -77,20 +77,14 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
     long_description=read('README.rst'),
     install_requires=[
-        'pyparsing',
-        'pyyaml',
         'setuptools',
         'twine',
     ],

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+from pyparsing import lineno, col
 
 """
 Base classes for implementing decoder parsers.

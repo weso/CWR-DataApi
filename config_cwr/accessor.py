@@ -77,6 +77,7 @@ class CWRConfiguration(object):
         self._group_configs = {}
         self._record_configs = {}
         self._transaction_configs = {}
+        self._acknowledge_configs = {}
 
     def _load_cwr_defaults(self):
         """
@@ -152,3 +153,14 @@ class CWRConfiguration(object):
         :return: the current version of the CWR standard
         """
         return self._load_cwr_defaults()['default_version']
+
+    def load_acknowledge_config(self, file_id):
+        """
+        Loads the CWR acknowledge config
+        :return: the values matrix
+        """
+        if self._cwr_defaults is None:
+            self._cwr_defaults = self._reader.read_yaml_file(
+                'acknowledge_config_%s.yml' % file_id)
+
+        return self._cwr_defaults

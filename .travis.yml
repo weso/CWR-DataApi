@@ -1,31 +1,43 @@
+# Travis CI Configuration file
+# @link https://travis-ci.org/
+
+# Using Python for the project
 language: python
 python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
   - "3.4"
-  - "pypy"
-  - "pypy3"
+  - "3.5"
+  # Python 3.6 is set to test and deploy the docs in the configuration matrix
+  #- "3.6"
+  # PyPy currently is not working with the required dependencies
+  #- "pypy"
+  #- "pypy3"
+env:
+  - TEST_DOCS=true
 matrix:
-  exclude:
-    - python: "2.7"
   include:
-    - python: "2.7"
-      env:
-        - COVERAGE=true
-        - DOCS=true
-        - DEPLOY_DOCS=true
-    - python: "3.4"
-      env: DOCS=true
+    # Tests and deploys docs, also runs coverage report
+    - python: "3.6"
+      env: TEST_DOCS=true DEPLOY_DOCS=true
 
 before_install:
-  - chmod +x ./.scripts/run_tests.sh
-  - chmod +x ./.scripts/deploy_docs.sh
+  # Gets scripts
+  - git clone -b v0.4.1 --single-branch https://github.com/Bernardo-MG/ci-shell-scripts.git ~/.scripts
+  # Sets scripts as executable
+  - chmod -R +x ~/.scripts/*
+  # Prepares CI environment
+  - source ~/.scripts/travis/load-travis-environment.sh
 install:
+  # tox is required for the tests
   - pip install tox
+  # sphinx is required for the docs
+  - pip install sphinx
+  # Dependencies
+  - pip install --upgrade -r requirements.txt
 script:
-  - ./.scripts/run_tests.sh
-  - if [ ! -z "$DOCS" ]; then tox -e docs; fi
-  - if [ ! -z "$DEPLOY_DOCS" ]; then ./.scripts/deploy_docs.sh; fi
-  - if [ ! -z "$COVERAGE" ]; then tox -e coverage; fi
+  # Tests are run
+  - ~/.scripts/python/run_tests.sh true $PYTHON_VERSION_TEST
+  # Documentation tests are run
+  - ~/.scripts/python/run_tests.sh $DO_TEST_DOCS docs
+after_success:
+  # Documentation deployment
+  - ~/.scripts/rtd/deploy.sh $DO_DEPLOY_DOCS cwr

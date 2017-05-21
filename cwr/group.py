@@ -148,7 +148,9 @@ class GroupTrailer(Record):
                  record_type='',
                  group_id=0,
                  transaction_count=0,
-                 record_count=0
+                 record_count=0,
+                 currency_indicator=None,
+                 total_monetary_value=None
                  ):
         """
         Constructs a GroupTrailer.
@@ -163,6 +165,8 @@ class GroupTrailer(Record):
         self._group_id = group_id
         self._transaction_count = transaction_count
         self._record_count = record_count
+        self._currency_indicator = currency_indicator
+        self._total_monetary_value = total_monetary_value
 
     def __str__(self):
         return '%s(g:%s, t:%s)' % (
@@ -224,6 +228,32 @@ class GroupTrailer(Record):
     @transaction_count.setter
     def transaction_count(self, value):
         self._transaction_count = value
+
+    @property
+    def total_monetary_value(self):
+        """
+        Total monetary value represented by the group.
+        :return: the monetary value
+        """
+        return self._total_monetary_value
+
+    @total_monetary_value.setter
+    def total_monetary_value(self, value):
+        self._total_monetary_value = value
+
+    @property
+    def currency_indicator(self):
+        """
+        ISO Code of the currency used for the total monetary value. ISO codes can be found in ISO 4217 table
+        (actually ISO 3166 country codes 2A plus the first letter of the currency of the country:
+        for example, USD for Dollar in US).
+        :return: the ISO Code
+        """
+        return self._currency_indicator
+
+    @currency_indicator.setter
+    def currency_indicator(self, value):
+        self._currency_indicator = value
 
 
 class Group(object):

@@ -60,7 +60,7 @@ media_type:
 
 message_level:
   type: lookup
-  size: 3
+  size: 1
   name: Message Level
   source: message_level
 
@@ -72,7 +72,7 @@ message_record_type:
 
 message_type:
   type: lookup
-  size: 3
+  size: 1
   name: Message Type
   source: message_type
 

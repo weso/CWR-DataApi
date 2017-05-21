@@ -185,7 +185,7 @@ first_album_label:
   name: First Album Label
 
 first_album_title:
-  type: alphanum
+  type: alphanum_ext
   size: 60
   name: First Album Title
 
@@ -297,7 +297,7 @@ library:
   name: Library
 
 message_text:
-  type: alphanum
+  type: alphanum_end
   size: 150
   name: Message Text
 
@@ -368,7 +368,7 @@ performance_dialect:
   name: Dialect
 
 performing_artist_first_name:
-  type: alphanum
+  type: alphanum_end
   size: 30
   name: Performing Artist First Name
 
@@ -395,7 +395,7 @@ performing_artist_ipi_name_n:
   name: IPI Name Number
 
 performing_artist_last_name:
-  type: alphanum
+  type: alphanum_end
   size: 45
   name: Performing Artist Last Name
 
@@ -559,7 +559,7 @@ shares_change:
   name: Shares Change
 
 society_assigned_agreement_n:
-  type: alphanum
+  type: alphanum_end
   size: 14
   name: Society Given Agreement Number
 
@@ -594,7 +594,7 @@ submitter_creation_n:
   name: Submitter Creation Number
 
 submitter_work_n:
-  type: alphanum
+  type: alphanum_end
   size: 14
   name: Submitter Work Number
 

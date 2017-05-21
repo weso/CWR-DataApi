@@ -149,7 +149,6 @@ class DefaultRuleFactory(RuleFactory):
 
         if self._debug:
             rule.setDebug()
-
         return rule
 
     def _process_rules(self, rules_data, strategy):

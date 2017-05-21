@@ -286,10 +286,21 @@ class GroupTrailerDictionaryDecoder(Decoder):
         super(GroupTrailerDictionaryDecoder, self).__init__()
 
     def decode(self, data):
+        total_monetary_value = None
+        if 'total_monetary_value' in data:
+            total_monetary_value = data['total_monetary_value']
+
+        currency_indicator = None
+        if 'currency_indicator' in data:
+            currency_indicator = data['currency_indicator']
+
         return GroupTrailer(record_type=data['record_type'],
                             group_id=data['group_id'],
                             transaction_count=data['transaction_count'],
-                            record_count=data['record_count'])
+                            record_count=data['record_count'],
+                            currency_indicator=currency_indicator,
+                            total_monetary_value=total_monetary_value,
+                            )
 
 
 class InterestedPartyForAgreementDictionaryDecoder(Decoder):
@@ -404,8 +415,17 @@ class PerformingArtistDictionaryDecoder(Decoder):
             self._ipi_base_decoder = IPIBaseDictionaryDecoder()
 
     def decode(self, data):
-        ipi_base = self._ipi_base_decoder.decode(data[
-                                                     'performing_artist_ipi_base_n'])
+        ipi_base = None
+        if 'performing_artist_ipi_base_n' in data:
+            ipi_base = self._ipi_base_decoder.decode(data['performing_artist_ipi_base_n'])
+
+        performing_artist_first_name = None
+        if 'performing_artist_first_name' in data:
+            performing_artist_first_name = data['performing_artist_first_name']
+
+        performing_artist_ipi_name_n = None
+        if 'performing_artist_ipi_name_n' in data:
+            performing_artist_ipi_name_n = data['performing_artist_ipi_name_n']
 
         return PerformingArtistRecord(record_type=data['record_type'],
                                       transaction_sequence_n=data[
@@ -414,10 +434,8 @@ class PerformingArtistDictionaryDecoder(Decoder):
                                           'record_sequence_n'],
                                       performing_artist_last_name=data[
                                           'performing_artist_last_name'],
-                                      performing_artist_first_name=data[
-                                          'performing_artist_first_name'],
-                                      performing_artist_ipi_name_n=data[
-                                          'performing_artist_ipi_name_n'],
+                                      performing_artist_first_name=performing_artist_first_name,
+                                      performing_artist_ipi_name_n=performing_artist_ipi_name_n,
                                       performing_artist_ipi_base_n=ipi_base)
 
 
@@ -426,12 +444,16 @@ class PublisherForWriterDictionaryDecoder(Decoder):
         super(PublisherForWriterDictionaryDecoder, self).__init__()
 
     def decode(self, data):
+        publisher_name = None
+        if 'publisher_name' in data:
+            publisher_name = data['publisher_name']
         return PublisherForWriterRecord(record_type=data['record_type'],
                                         transaction_sequence_n=data[
                                             'transaction_sequence_n'],
                                         record_sequence_n=data[
                                             'record_sequence_n'],
                                         publisher_ip_n=data['publisher_ip_n'],
+                                        publisher_name=publisher_name,
                                         writer_ip_n=data['writer_ip_n'],
                                         submitter_agreement_n=data[
                                             'submitter_agreement_n'],
@@ -444,6 +466,10 @@ class RecordingDetailDictionaryDecoder(Decoder):
         super(RecordingDetailDictionaryDecoder, self).__init__()
 
     def decode(self, data):
+        media_type = None
+        if 'media_type' in data:
+            media_type = data['media_type']
+
         return RecordingDetailRecord(record_type=data['record_type'],
                                      transaction_sequence_n=data[
                                          'transaction_sequence_n'],
@@ -464,7 +490,7 @@ class RecordingDetailDictionaryDecoder(Decoder):
                                      recording_format=data['recording_format'],
                                      recording_technique=data[
                                          'recording_technique'],
-                                     media_type=data['media_type'])
+                                     media_type=media_type)
 
 
 class FileDictionaryDecoder(Decoder):
@@ -581,6 +607,23 @@ class WorkDictionaryDecoder(Decoder):
         super(WorkDictionaryDecoder, self).__init__()
 
     def decode(self, data):
+
+        catalogue_number = None
+        if 'catalogue_number' in data:
+            catalogue_number = data['catalogue_number']
+
+        exceptional_clause = None
+        if 'exceptional_clause' in data:
+            exceptional_clause = data['exceptional_clause']
+
+        opus_number = None
+        if 'opus_number' in data:
+            opus_number = data['opus_number']
+
+        priority_flag = None
+        if 'priority_flag' in data:
+            priority_flag = data['priority_flag']
+
         return WorkRecord(record_type=data['record_type'],
                           transaction_sequence_n=data['transaction_sequence_n'],
                           record_sequence_n=data['record_sequence_n'],
@@ -605,13 +648,13 @@ class WorkDictionaryDecoder(Decoder):
                           iswc=data['iswc'],
                           work_type=data['work_type'],
                           duration=data['duration'],
-                          catalogue_number=data['catalogue_number'],
-                          opus_number=data['opus_number'],
+                          catalogue_number=catalogue_number,
+                          opus_number=opus_number,
                           contact_id=data['contact_id'],
                           contact_name=data['contact_name'],
                           recorded_indicator=data['recorded_indicator'],
-                          priority_flag=data['priority_flag'],
-                          exceptional_clause=data['exceptional_clause'],
+                          priority_flag=priority_flag,
+                          exceptional_clause=exceptional_clause,
                           grand_rights_indicator=data['grand_rights_indicator'])
 
 
@@ -667,6 +710,10 @@ class WriterRecordDictionaryDecoder(Decoder):
     def decode(self, data):
         writer = self._writer_decoder.decode(data['writer'])
 
+        usa_license = None
+        if 'usa_license' in data:
+            usa_license = data['usa_license']
+
         return WriterRecord(record_type=data['record_type'],
                             transaction_sequence_n=data[
                                 'transaction_sequence_n'],
@@ -678,7 +725,7 @@ class WriterRecordDictionaryDecoder(Decoder):
                             reversionary=data['reversionary'],
                             first_recording_refusal=data[
                                 'first_recording_refusal'],
-                            usa_license=data['usa_license'],
+                            usa_license=usa_license,
                             pr_society=data['pr_society'],
                             pr_ownership_share=data['pr_ownership_share'],
                             mr_society=data['mr_society'],
@@ -816,7 +863,10 @@ class PublisherDictionaryDecoder(Decoder):
             self._ipi_base_decoder = IPIBaseDictionaryDecoder()
 
     def decode(self, data):
-        ipi_base = self._ipi_base_decoder.decode(data['ipi_base_n'])
+        if 'ipi_base_n' in data:
+            ipi_base = self._ipi_base_decoder.decode(data['ipi_base_n'])
+        else:
+            ipi_base = None
 
         return Publisher(ip_n=data['ip_n'],
                          publisher_name=data['publisher_name'],
@@ -833,6 +883,30 @@ class PublisherRecordDictionaryDecoder(Decoder):
     def decode(self, data):
         publisher = self._publisher_decoder.decode(data['publisher'])
 
+        special_agreements = None
+        if 'special_agreements' in data:
+            special_agreements = data['special_agreements']
+
+        first_recording_refusal = None
+        if 'first_recording_refusal' in data:
+            first_recording_refusal = data['first_recording_refusal']
+
+        agreement_type = None
+        if 'agreement_type' in data:
+            agreement_type = data['agreement_type']
+
+        usa_license = None
+        if 'usa_license' in data:
+            usa_license = data['usa_license']
+
+        international_standard_code = None
+        if 'international_standard_code' in data:
+            international_standard_code = data['international_standard_code']
+
+        society_assigned_agreement_n = None
+        if 'society_assigned_agreement_n' in data:
+            society_assigned_agreement_n = data['society_assigned_agreement_n']
+
         return PublisherRecord(
             record_type=data['record_type'],
             transaction_sequence_n=data['transaction_sequence_n'],
@@ -842,18 +916,18 @@ class PublisherRecordDictionaryDecoder(Decoder):
             submitter_agreement_n=data['submitter_agreement_n'],
             publisher_type=data['publisher_type'],
             publisher_unknown=data['publisher_unknown'],
-            agreement_type=data['agreement_type'],
-            international_standard_code=data['international_standard_code'],
-            society_assigned_agreement_n=data['society_assigned_agreement_n'],
             pr_society=data['pr_society'],
             pr_ownership_share=data['pr_ownership_share'],
             mr_society=data['mr_society'],
             mr_ownership_share=data['mr_ownership_share'],
             sr_society=data['sr_society'],
             sr_ownership_share=data['sr_ownership_share'],
-            special_agreements=data['special_agreements'],
-            first_recording_refusal=data['first_recording_refusal'],
-            usa_license=data['usa_license'])
+            special_agreements=special_agreements,
+            first_recording_refusal=first_recording_refusal,
+            international_standard_code=international_standard_code,
+            society_assigned_agreement_n=society_assigned_agreement_n,
+            agreement_type=agreement_type,
+            usa_license=usa_license)
 
 
 class TableValueDictionaryDecoder(Decoder):

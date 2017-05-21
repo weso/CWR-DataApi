@@ -97,7 +97,6 @@ record:
         field: group_id
         field: version_number
         field: batch_request_id
-        field: sd_type
       ]
 
 record:
@@ -293,9 +292,15 @@ transaction_record:
     rules:
       [
         field: performing_artist_last_name
-        field: performing_artist_first_name
-        field: performing_artist_ipi_name_n
-        field: performing_artist_ipi_base_n
+        optional [
+            field: performing_artist_first_name
+        ]
+        optional [
+            field: performing_artist_ipi_name_n
+        ]
+        optional [
+            field: performing_artist_ipi_base_n
+        ]
       ]
 
 transaction_record:
@@ -317,14 +322,20 @@ transaction_record:
         field: mr_ownership_share (compulsory)
         field: sr_society
         field: sr_ownership_share (compulsory)
-        field: special_agreements
-        field: first_recording_refusal
-        field: blank
-        field: ipi_base_n
-        field: international_standard_code
-        field: society_assigned_agreement_n
-        field: agreement_type
-        field: usa_license
+        optional [
+            field: special_agreements
+            field: first_recording_refusal
+        ]
+        optional [
+            field: filler
+            field: ipi_base_n
+            field: international_standard_code
+            field: society_assigned_agreement_n
+        ]
+        optional [
+            field: agreement_type
+            field: usa_license
+        ]
       ]
 
 transaction_record:
@@ -382,7 +393,9 @@ transaction_record:
         field: isrc
         field: recording_format
         field: recording_technique
-        field: media_type
+        optional [
+            field: media_type
+        ]
       ]
 
 transaction_record:
@@ -449,10 +462,12 @@ transaction_record:
         field: grand_rights_indicator
         field: composite_component_count
         field: date_publication_printed_edition
-        field: exceptional_clause
-        field: opus_number
-        field: catalogue_number
-        field: priority_flag
+        optional [
+            field: exceptional_clause
+            field: opus_number
+            field: catalogue_number
+            field: priority_flag
+        ]
       ]
 
 transaction_record:
@@ -513,7 +528,9 @@ transaction_record:
         field: episode_title
         field: episode_n
         field: year_production
-        field: audio_visual_key
+        optional [
+            field: audio_visual_key
+        ]
       ]
 
 transaction_record:
@@ -540,7 +557,10 @@ transaction_record:
         field: filler
         field: ipi_base_n
         field: personal_number
-        field: usa_license
+        optional
+        [
+            field: usa_license
+        ]
       ]
 
 transaction_record:
