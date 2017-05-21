@@ -21,9 +21,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class RuleDecorator(object):
-    __metaclass__ = ABCMeta
-
+class RuleDecorator(object, metaclass=ABCMeta):
     def __init__(self):
         pass
 

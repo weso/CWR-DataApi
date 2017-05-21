@@ -21,7 +21,7 @@ class TestDefaultRuleFactory(unittest.TestCase):
     def test_10000(self):
         start = time.clock()
         if sys.version_info[0] == 2:
-            for x in xrange(10000):
+            for x in range(10000):
                 self._factory.get_rule('transmission')
         else:
             for x in range(10000):

@@ -170,7 +170,7 @@ def default_grammar_factory():
 
     field_values = CWRTables()
 
-    for entry in data.values():
+    for entry in list(data.values()):
         if 'source' in entry:
             values_id = entry['source']
             entry['values'] = field_values.get_data(values_id)
@@ -206,7 +206,7 @@ def default_filename_grammar_factory():
     data = config.load_field_config('filename')
     field_values = CWRTables()
 
-    for entry in data.values():
+    for entry in list(data.values()):
         if 'source' in entry:
             values_id = entry['source']
             entry['values'] = field_values.get_data(values_id)

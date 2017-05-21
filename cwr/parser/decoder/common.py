@@ -28,12 +28,11 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class Decoder(object):
+class Decoder(object, metaclass=ABCMeta):
     """
     Interface for implementing decoder parsers. These parser receive a data
     structure and return an instance of a class from the domain model.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
         pass

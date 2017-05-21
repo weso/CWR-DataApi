@@ -12,11 +12,10 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class InterestedParty(object):
+class InterestedParty(object, metaclass=ABCMeta):
     """
     Represents a CWR interested party.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self,
                  ip_n='',
@@ -105,13 +104,12 @@ class InterestedParty(object):
         self._tax_id = value
 
 
-class InterestedPartyRecord(TransactionRecord):
+class InterestedPartyRecord(TransactionRecord, metaclass=ABCMeta):
     """
     Represents a CWR Interested Party Record.
 
     This is meant to be used for Publisher and Writer records.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self,
                  record_type='',
