@@ -12,13 +12,12 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class NonRomanAlphabetRecord(TransactionRecord):
+class NonRomanAlphabetRecord(TransactionRecord, metaclass=ABCMeta):
     """
     Represents a CWR Non-Roman Alphabet record.
 
     These are the records to represent alternate names out of the ASCII table.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self,
                  record_type='',

@@ -51,7 +51,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class BaseWorkRecord(TransactionRecord):
+class BaseWorkRecord(TransactionRecord, metaclass=ABCMeta):
     """
     Abstract class representing a Work's basic information.
 
@@ -62,7 +62,6 @@ class BaseWorkRecord(TransactionRecord):
     This is meant to store the data which identifies a work in a generic way,
     which are the title, the language and the ISWC.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self,
                  record_type='',

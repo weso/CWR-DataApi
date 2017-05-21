@@ -66,7 +66,7 @@ class Record(object):
         self._record_type = value
 
 
-class TransactionRecord(Record):
+class TransactionRecord(Record, metaclass=ABCMeta):
     """
     Represents a CWR Transaction Record.
 
@@ -89,7 +89,6 @@ class TransactionRecord(Record):
     the one of the previous paragraph), and that it is the 3th (starting with
     1) detail on the file.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self,
                  record_type='',

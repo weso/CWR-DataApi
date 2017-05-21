@@ -20,12 +20,11 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-class Encoder(object):
+class Encoder(object, metaclass=ABCMeta):
     """
     Interface for implementing encoder parsers. These parser receive a class
     from the domain model and return a data structure.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
         pass

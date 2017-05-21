@@ -23,7 +23,7 @@ class TestDefaultRuleFactory(unittest.TestCase):
 
         record = ''
         if sys.version_info[0] == 2:
-            for x in xrange(35):
+            for x in range(35):
                 if len(record) == 0:
                     record = _agreement_full()
                 elif len(record) > 0:

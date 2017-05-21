@@ -20,9 +20,9 @@ __status__ = 'Development'
 
 if __name__ == '__main__':
     print('File to JSON test')
-    path = raw_input(
+    path = input(
         'Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
-    output = raw_input(
+    output = input(
         'Please enter the full path to the file where the results will be stored: ')
     print('\n')
     print('Reading file %s' % path)
