@@ -13,7 +13,7 @@ works data.
 While the CWR standard has been created by `CISAC`_ this library has been
 developed by `WESO`_ independently, with help from `BMAT`_.
 
-.. image:: https://badge.fury.io/py/cwr-api.svg
+.. image:: https://badge.fury.io/py/CWR-API.svg
     :target: https://pypi.python.org/pypi/cwr-api
     :alt: CWR-API Pypi package page
 
