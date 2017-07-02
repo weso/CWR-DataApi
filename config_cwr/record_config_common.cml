@@ -97,6 +97,10 @@ record:
         field: group_id
         field: version_number
         field: batch_request_id
+        optional
+          [
+            field: sd_type
+          ]
       ]
 
 record:
