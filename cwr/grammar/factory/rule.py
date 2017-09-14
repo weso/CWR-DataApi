@@ -213,7 +213,6 @@ class DefaultRuleFactory(RuleFactory):
     def _apply_modifiers(rule, modifiers):
         if 'grouped' in modifiers:
             rule = pp.Group(rule)
-
         if 'optional' in modifiers:
             rule = pp.Optional(rule)
         else:

@@ -196,8 +196,8 @@ class AlternateTitleDictionaryDecoder(Decoder):
                                         'transaction_sequence_n'],
                                     record_sequence_n=data['record_sequence_n'],
                                     alternate_title=data['alternate_title'],
-                                    title_type=data['title_type'],
-                                    language_code=data['language_code'])
+                                    title_type=data['title_type'])
+                                    # language_code=data['language_code'])
 
 
 class AuthoredWorkDictionaryDecoder(Decoder):

@@ -55,10 +55,13 @@ transaction_record:
     rules:
       [
         field: component_title
+       optional [
         field: iswc
         field: submitter_work_n
         field: component_duration
+
         field: writer_1_last_name
+
         field: writer_1_first_name
         field: writer_1_ipi_name_n
         field: writer_2_last_name
@@ -66,6 +69,8 @@ transaction_record:
         field: writer_2_ipi_name_n
         field: writer_1_ipi_base_n
         field: writer_2_ipi_base_n
+        ]
+
       ]
 
 transaction_record:
@@ -329,9 +334,9 @@ transaction_record:
         optional [
             field: special_agreements
             field: first_recording_refusal
+            field: filler
         ]
         optional [
-            field: filler
             field: ipi_base_n
             field: international_standard_code
             field: society_assigned_agreement_n
@@ -387,6 +392,7 @@ transaction_record:
     rules:
       [
         field: first_release_date
+        optional [
         field: constant_1
         field: first_release_duration
         field: constant_2
@@ -397,8 +403,8 @@ transaction_record:
         field: isrc
         field: recording_format
         field: recording_technique
-        optional [
-            field: media_type
+
+        field: media_type
         ]
       ]
 
@@ -560,9 +566,8 @@ transaction_record:
         field: work_for_hire
         field: filler
         field: ipi_base_n
-        field: personal_number
-        optional
-        [
+        optional [
+            field: personal_number
             field: usa_license
         ]
       ]
