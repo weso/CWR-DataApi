@@ -10,8 +10,8 @@ from cwr.parser.encoder.cwrjson import JSONEncoder
 
 if __name__ == '__main__':
 
-    print(sys.version)
-    print('CWR to JSON')
+    #print(sys.version)
+    #print('CWR to JSON')
 
     inputfile = ''
     outputfile = ''
@@ -30,11 +30,9 @@ if __name__ == '__main__':
           elif opt in ("-o", "--ofile"):
              outputfile = arg
 
-    #outputfile = "output/" +outputfile 
-    print('\n')
-    print('Reading file %s' % inputfile)
-    print('Storing output on %s' % outputfile)
-    print('\n')
+    #outputfile = "output/" +outputfile
+    #print('Reading file %s' % inputfile)
+    #print('Storing output on %s' % outputfile)
 
     decoder = default_file_decoder()
 
@@ -43,17 +41,9 @@ if __name__ == '__main__':
     lines  = codecs.open(inputfile, 'r', 'latin-1').readlines()
     data['contents'] = '';
 
-    counter = 0
-    counter2 = 0
-
     for line in lines :
         if line.startswith('COM') == False :
             data['contents'] += line
-            counter2 +=1
-            if counter2 == 35981 :
-                print(line)
-        else:
-            counter +=1
 
     data['contents'] = data['contents'].replace('\n','')
     #replace '\r with 300 SPACES
