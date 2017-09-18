@@ -2,48 +2,26 @@ import codecs
 import os
 import sys
 import getopt
+import io
 
 from cwr.parser.decoder.file import default_file_decoder
 from cwr.parser.encoder.cwrjson import JSONEncoder
 
-
-
+#Read a cwr file stream via stdin and return back cwr-json via stdout
 if __name__ == '__main__':
-
-    #print(sys.version)
-    #print('CWR to JSON')
-
-    inputfile = ''
-    outputfile = ''
-    argv = sys.argv[1:]
-    try:
-      opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
-    except getopt.GetoptError:
-          print ('test.py -i <inputfile> -o <outputfile>')
-          sys.exit(2)
-    for opt, arg in opts:
-          if opt == '-h':
-             print ('test.py -i <inputfile> -o <outputfile>')
-             sys.exit()
-          elif opt in ("-i", "--ifile"):
-             inputfile = arg
-          elif opt in ("-o", "--ofile"):
-             outputfile = arg
-
-    #outputfile = "output/" +outputfile
-    #print('Reading file %s' % inputfile)
-    #print('Storing output on %s' % outputfile)
 
     decoder = default_file_decoder()
 
     data = {}
-    data['filename'] = os.path.basename(inputfile)
-    lines  = codecs.open(inputfile, 'r', 'latin-1').readlines()
+    data['filename'] = ''
     data['contents'] = '';
 
-    for line in lines :
+    for line in sys.stdin.readlines():
+        #This is a workaround (still have some issues with COM record on some files)
         if line.startswith('COM') == False :
             data['contents'] += line
+            if line.startswith('TRL') == True :
+               break
 
     data['contents'] = data['contents'].replace('\n','')
     #replace '\r with 300 SPACES
@@ -53,9 +31,7 @@ if __name__ == '__main__':
       spaces +=" "
     spaces +='\n'
     data['contents'] = data['contents'].replace('\r',spaces)
-
     data = decoder.decode(data)
     encoder = JSONEncoder()
     result = encoder.encode(data)
-    output = codecs.open(outputfile, 'w', 'latin-1')
-    output.write(result)
+    sys.stdout.write(result)
