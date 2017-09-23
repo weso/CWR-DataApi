@@ -464,8 +464,8 @@ def lookup(values, name=None):
     if name is None:
         name = 'Lookup Field'
 
-    if values is None:
-        raise ValueError('The values can no be None')
+    # if values is None:
+    #     raise ValueError('The values can no be None')
 
     # TODO: This should not be needed, it is just a patch. Fix this.
     try:
@@ -508,7 +508,8 @@ def blank(columns=1, name=None):
     if name is None:
         name = 'Blank Field'
 
-    field = pp.Regex('[ ]{' + str(columns) + '}')
+    field = pp.Regex('[ 01]{' + str(columns) + '}')
+    #field = pp.Regex('[0 ]')
     field.leaveWhitespace()
     field.suppress()
 
