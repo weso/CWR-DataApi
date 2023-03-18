@@ -8,7 +8,7 @@
  
 # Sets the Python executable.
 # It will be the executable for the interpreter set up for the command line.
-PYTHON   = python
+PYTHON   = python3
  
 # Sets the distribution folder.
 # It will be the 'dist' folder.

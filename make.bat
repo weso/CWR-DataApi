@@ -12,7 +12,7 @@ REM Sets the variables
 REM Sets the Python executable.
 REM It will be the executable for the interpreter set up for the command line.
 if "%PYTHON%" == "" (
-	set PYTHON=python
+	set PYTHON=python3
 )
 
 REM Sets the distribution folder.

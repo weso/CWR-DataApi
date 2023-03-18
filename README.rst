@@ -80,7 +80,7 @@ Additionally, the project is offered as a `Pypi package`_, and can be installed 
 Making use of the parser
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once the project is installed it can be used in a similar way to this (using Python 2.7)::
+Once the project is installed it can be used in a similar way to this (using Python 3.6)::
 
     import codecs
     import os
@@ -90,9 +90,9 @@ Once the project is installed it can be used in a similar way to this (using Pyt
 
     if __name__ == '__main__':
         print('File to JSON test')
-        path = raw_input(
+        path = input(
             'Please enter the full path to a CWR file (e.g. c:/documents/file.cwr): ')
-        output = raw_input(
+        output = input(
             'Please enter the full path to the file where the results will be stored: ')
         print('\n')
         print('Reading file %s' % path)
