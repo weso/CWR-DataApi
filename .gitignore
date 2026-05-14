@@ -63,3 +63,6 @@ target/
 .idea/
 .idea_modules/
 out/
+
+**/.DS_Store
+*__pycache__
