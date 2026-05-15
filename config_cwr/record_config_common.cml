@@ -480,6 +480,17 @@ transaction_record:
       ]
 
 transaction_record:
+    id: work_id_cross_reference
+    head: XRF
+    rules:
+      [
+        field: organisation_code
+        field: xrf_identifier
+        field: identifier_type
+        field: validity
+      ]
+
+transaction_record:
     id: work_alternate_title
     head: ALT
     rules:

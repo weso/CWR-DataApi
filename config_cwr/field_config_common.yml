@@ -105,6 +105,16 @@ character_set:
   size: 15
   name: Character Set
 
+creation_date:
+  type: date
+  size: 8
+  name: Creation Date
+
+creation_time:
+  type: time
+  size: 6
+  name: Creation Time
+
 creation_date_time:
   type: date_time
   size: 16
@@ -362,6 +372,11 @@ original_transaction_sequence_n:
   type: numeric
   size: 8
   name: Original Transaction Sequence Number
+
+organisation_code:
+  type: alphanum
+  size: 3
+  name: Organisation Code
 
 original_record_sequence_n:
   type: numeric
@@ -802,3 +817,19 @@ submitter_recording_identifier:
   type: alphanum_end
   size: 14
   name: Submitter Recording Identifier
+
+identifier_type:
+  type: alphanum
+  size: 1
+  name: Identifier Type
+
+validity:
+  type: alphanum
+  size: 1
+  name: Validity
+
+xrf_identifier:
+  type: alphanum
+  size: 14
+  name: Identifier
+  results_name: identifier
