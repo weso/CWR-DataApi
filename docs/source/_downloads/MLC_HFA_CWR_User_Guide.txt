@@ -1,0 +1,211 @@
+## THE MLC’s CWR User Guide
+
+Common Works Registration (CWR) is a globally recognized standard for the registration and revision of musical works. CWR enables the efficient tracking of registration status and allows for better communication between music publishers and Mechanical Rights Societies and Performing Rights Organizations (PROs). CWR is one way you can submit your mechanical claims to The MLC. CWR is typically used for submitting large volumes of work registrations or updates (hundreds or thousands) at once and is a common tool for organizations managing large catalogs. CWR specifications and user manuals can be found on the CISAC website https://members.cisac.org/CisacPortal/documentPack20.do?method=detail&id=16 This Guide is for Members who wish to submit work registrations to The MLC using CWR formatted files. Please note that the CWR format currently only accommodates the submission of registrations that cover all mechanical usage types. If you only wish to claim certain mechanical usage types for the works you are registering (for example, if you only wish to claim digital-only mechanical usages), please advise The MLC BEFORE submitting the corresponding CWR files by contacting us here: https://portal.themlc.com/contact-us
+
+### Technical Setup – General
+
+#### • Accepted Versions
+
+o CWR version 2.1 (all revisions)
+
+o CWR version 2.2
+
+o Pending *CWR version 3.1*
+
+ Please contact The MLC https://portal.themlc.com/contact-us if you are interested in using CWR 3.1.
+
+#### • Header Record / CISAC Registration
+
+o To uniquely identify the submitter of the CWR file, the sender type, sender ID, and sender ID code must be established before file delivery.
+
+o Sender Type indicates whether the submitter is a society/CMO or a publisher.
+
+ “PB” indicates a publisher
+
+ “SO” indicates a society/CMO
+
+o Sender ID:
+
+ For publishers, the Sender ID is the name of the organization together with its IPI name number. The publisher’s name must match the IPI Name Number as listed in the IPI database.
+
+ For a society, the Sender ID is the name of the organization together with its CISAC society code.
+
+ Using the same Sender ID across all files will help build more automation channels into CWR submissions.
+
+ You must include your Sender ID in the Header record at the top of each CWR file you submit. See the following example below:
+
+--- Page 2 ---
+
+#### • File Naming
+
+o CISAC CWR naming convention is CWYYXXXXTST_000.V21:
+
+ CW = indicates CWR file
+
+ YY = indicates the year of generation
+
+ XXXX = indicates the sequence of the CWR submission. Note: the combination of sequence number and year should be unique
+
+ TST = CISAC-registered submitter code. This code is awarded by CISAC. The MLC can help you obtain a sender code if you do not already have one. Please contact https://portal.themlc.com/contact-us if required. This code must be included in the name of each CWR file submitted to The MLC.
+
+ 000 = Recipient society code
+
+• **The MLC accepts 034 (our vendor’s society code) and 000 (the code for “multiple societies”)
+
+ V21 = indicates version of CWR (We currently accept .V21 (version 2.1) or .V22 (version 2.2); once again, please contact us if you wish to use version 3.1)
+
+o Please note: each file you submit to The MLC must have a unique CWR file name. If you submit a CWR file using a previously used CWR file name, the file will be automatically rejected.
+
+#### • File Size
+
+o The maximum file size we can accept is 10,000 transactions. Please see File Delivery for further details regarding how files will be ingested based on file size.
+
+#### Technical Setup – Works
+
+• You must provide Ownership transactions for all parties on a given work, regardless of whether they are controlled or non-controlled. Please use the following codes to identify each ownership transaction you submit:
+
+o SPU (submitting/controlled publisher)
+
+o SWR (submitting/controlled writer)
+
+o OPU (other/non-controlled publisher)
+
+o OWR (other/non-controlled writer)
+
+• The total ownership shares for all writers and publishers for each right must total either 100% plus or minus 0.06% or 0%.
+
+• Total collection shares for each work submitted must be less than or equal to 100% for mechanical shares.
+
+• Note that a tolerance of plus or minus 0.06% is allowed.
+
+• If you do not know whom the non-controlled publisher (OPU) or non-controlled writer (OWR) is, you can use the “unknown writer” or “unknown publisher” indicator or one of the following terms as entities (by way of example, and not limitation): UNKNOWN PUBLISHER, UNKNOWN WRITER, INCONNU EDITEUR, INCONNU COMPOSITEUR AUTEUR, COPYRIGHT CONTROL
+
+• If you use “unknown” flags and entities for a controlled publisher (SPU) or controlled writer (SWR), such transactions will be rejected as the controlled records form the basis of your claim.
+
+--- Page 3 ---
+
+• The actual share that gets registered with The MLC is the collection/territory transaction. This is listed underneath the SPU transaction. The Mechanical Right Type share percentage listed on the SPT transaction is the claim that will translate to a share with The MLC.
+
+See example below for a 100% mechanical claim for the U.S. territory
+
+o An SPT transaction can be tied to an owner publisher SPU (role code = E) or it can be tied to a sub-publisher or administrator SPU (role code = SE or AM).
+
+o Part of the collection/territory claim is the included territory. The territory code is shown after the letter “I” in the SPT transaction code. The MLC accepts the following territory codes:
+
+ 840 – USA
+
+ 2136 – World
+
+ 2101 – America
+
+ 2102 – American Continent
+
+ 2104 – APEC
+
+ 2126 – NAFTA
+
+ 2129 – North America
+
+• The total of collection shares cannot exceed 100% for a given right for a territory. Note that a tolerance of plus or minus 0.06% is allowed.
+
+• CWR version 2.2 allows submitters to include collection splits for non-controlled collection transactions (OPT, OWT). These additional collection splits are not mandatory, and as such will not be used by The MLC to register non-controlled shares.
+
+• Submitters are welcome to include all alternate title types in their registration.
+
+• Non-Latin character transactions (NPN/NAT/NWN) are also acceptable.
+
+#### Technical Setup – Interested Parties
+
+• Interested Party Identifiers
+
+o We require unique submitter interested party identifiers across all CWR files, regardless of right type. These are identifiers assigned by the submitter to a specific writer or publisher and typically come from a submitter’s internal database.
+
+ Ex: If a submitter uses 000012345 as a party identifier for PUBLISHER X, then that identifier must be used across all works for submissions relating to PUBLISHER X.
+
+• IPI name numbers are strongly encouraged in the designated IPI field for submitted writers and publishers.
+
+#### Best Practices – NWRs (new work registrations)
+
+• It is always more efficient for The MLC to receive a work once, with the most complete information possible on the NWR (new work registration). That way, no future REVs (revisions) are needed.
+
+--- Page 4 ---
+
+• ISRCs, recording artists and other recording details can be included on NWR transactions. There is not a limit on recordings (REC transaction) or performer (PER) transactions included in a CWR transaction.
+
+#### Best Practices – REVs (revisions)
+
+• REVs (revisions) should primarily be used for revisions to the controlled shares on a work.
+
+• We will utilize the Submitter Work # field to match to your earlier registration and process the share/title updates accordingly.
+
+• If a submitter wishes to supplement existing registrations with additional recording metadata, there is a bulk recording upload template available upon request. By using this template (rather than REV transactions), the recordings will be more readily available for matching.
+
+• There is no requirement for submitters to make updates to non-controlled splits as we rely upon the other participants on a work to claim their shares accordingly with The MLC.
+
+• Updates to writer and publisher names across existing registrations, including IPI name numbers, can be made by contacting https://portal.themlc.com/contact-us
+
+#### Acknowledgements
+
+• Submitters will receive both 1st and 2nd Acknowledgment (ACK) files. Acknowledgment files will include The MLC Song Codes when the transaction has been accepted.
+
+• 1st ACK files
+
+o 1st ACKs typically denote which registrations were accepted into the processing queues and which were rejected due to technical reasons. The codes a submitter would ordinarily receive could be one of the below:
+
+ RA (registration accepted) – the submission was accepted into the processing system.
+
+ RJ (registration rejected) – the submission was not accepted into the processing system. The submission did not meet technical requirements.
+
+ NP (no participation) – no technical issue with the submission, but no acceptable territory was included on the work and thus it does not pertain to royalty collection in the USA.
+
+ AC (accepted with changes) – Occasionally, works do not require review and become instantly available for matching. Those works will receive an AC code meaning the work claims have been ingested and should be visible on The MLC’s public database. The MLC song code will be included in the ACK file alongside the transaction code AC.
+
+o 1st ACKs are typically delivered within two business days after file submission.
+
+• 2nd ACK Files
+
+o 2nd ACK files denote registrations that have been gone through the processing queues, with a work either being created, an existing work being updated, or a work being rejected as a conflict against an existing work at The MLC.
+
+o The ACK codes that correspond to these are:
+
+ AC (accepted with changes) – the registration is complete with claims ingested and as such should be visible on The MLC’s public database. The MLC song code will be included in the ACK file alongside the transaction code AC.
+
+--- Page 5 ---
+
+ CO (conflict) – registration was rejected against an existing registration at The MLC. Please contact https://portal.themlc.com/contact-us if you wish to start overclaim proceedings
+
+ RJ (registration rejected) – registration was rejected but, not necessarily as a conflict. These 2nd ACK RJs are uncommon and typically occur when a submitter requests that their own registration be rejected due to a mistake by them.
+
+o 2nd ACKs are typically sent to the submitter periodically as registrations proceed through the processing queues. They are submitted in batches to correspond to the submitter’s original CWR file.
+
+ For example, if a submitter drops off a CWR file with 100 works, the 1st ACK files should be available within 2 days noting 100 transactions with codes RA/RJ/AC.
+
+ Then, 2nd ACK files will be generated with codes AC, RJs and CO periodically until all submissions have been completed.
+
+--- Page 6 ---
+
+How To Get Started
+
+• Please contact https://portal.themlc.com/contact-us to inform us that you wish to become a CWR file submitter. We will then request a CWR test file from you to ensure that the files meet The MLC’s technical requirements for ingestion.
+
+• After the test file has been approved, FTP credentials will be delivered to the Member via email. This indicates that live files can now be submitted. File Delivery
+
+• The FTP is used to receive CWR files from submitters and deliver ACK files back to submitters.
+
+• The address for the FTP is ftp-rh.themlc.com.
+
+• Standard FTP Setup:
+
+o Please deliver CWR’s to the root folder of your FTP login, like so:
+
+• The “Ack” folder will contain Acknowledgment files, and the “Processed” folder will contain archived CWR’s that have already been loaded into the database.
+
+• CWR files are picked up from the FTP at 2pm Central Time every day. If a file is submitted after that cut-off, it will be picked up the following day.
+
+• If a file contains less than 5,000 works, it will be loaded into the processing system the night it gets picked up from the FTP.
+
+• If a file contains between 5,000 and 10,000 works, it will be loaded into the processing system over a weekend to facilitate faster ingestion.
+
+• The MLC asks for all submitters to please keep their submissions at a max of 10,000 works per file.
+
+• The MLC reserves the right to space out CWR ingestion over multiple weekends if multiple 10,000+ work files are submitted at once. Any Questions? Please contact https://portal.themlc.com/contact-us
