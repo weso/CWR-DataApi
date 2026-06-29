@@ -710,7 +710,7 @@ class WriterRecordDictionaryDecoder(Decoder):
         self._writer_decoder = WriterDictionaryDecoder()
 
     def decode(self, data):
-        writer = self._writer_decoder.decode(data['writer'])
+        writer = self._writer_decoder.decode(data)
 
         usa_license = None
         if 'usa_license' in data:
@@ -883,7 +883,7 @@ class PublisherRecordDictionaryDecoder(Decoder):
         self._publisher_decoder = PublisherDictionaryDecoder()
 
     def decode(self, data):
-        publisher = self._publisher_decoder.decode(data['publisher'])
+        publisher = self._publisher_decoder.decode(data)
 
         special_agreements = None
         if 'special_agreements' in data:
