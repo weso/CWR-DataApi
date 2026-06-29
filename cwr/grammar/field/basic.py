@@ -3,7 +3,6 @@
 import datetime
 
 import pyparsing as pp
-from pyparsing import ParseResults
 
 """
 CWR fields grammar.

@@ -79,7 +79,7 @@ class DefaultCwrFieldEncoder(CwrFieldEncoder):
         if value is None:
             return self._blank()
         tpl = "{!s:<%d}" % self._rule['size']
-        return tpl.format(str(value))
+        return tpl.format(str(value))[:self._rule['size']]
 
 
 class NumericCwrFieldEncoder(CwrFieldEncoder):
@@ -90,7 +90,7 @@ class NumericCwrFieldEncoder(CwrFieldEncoder):
         if value is None or value == '':
             value = 0
         tpl = "{:0>%d}" % self._rule['size']
-        return tpl.format(str(value))
+        return tpl.format(str(value))[:self._rule['size']]
 
 
 class NumericEmptyCwrFieldEncoder(CwrFieldEncoder):
@@ -102,7 +102,7 @@ class NumericEmptyCwrFieldEncoder(CwrFieldEncoder):
             return self._blank()
         else:
             tpl = "{:0>%d}" % self._rule['size']
-            return tpl.format(str(value))
+            return tpl.format(str(value))[:self._rule['size']]
 
 
 class BooleanCwrFieldEncoder(DefaultCwrFieldEncoder):
@@ -170,9 +170,13 @@ class LookupCwrFieldEncoder(DefaultCwrFieldEncoder):
 
 class LookupNumericCwrFieldEncoder(NumericEmptyCwrFieldEncoder, LookupCwrFieldEncoder):
     """
-    Lookup_int type encoder. Mu
+    Lookup_int type encoder for numeric table codes (e.g. society codes).
+    Treats 0 as blank since code 0 is not a valid lookup value.
     """
-    pass
+    def format(self, value):
+        if value == 0:
+            return self._blank()
+        return super(LookupNumericCwrFieldEncoder, self).format(value)
 
 class BlankCwrFieldEncoder(DefaultCwrFieldEncoder):
     """

@@ -50,7 +50,7 @@ cd_identifier:
 
 component_duration:
   type: time
-  size: 8
+  size: 6
   name: Duration
   results_name: duration
 
@@ -137,7 +137,7 @@ date_publication_printed_edition:
 
 duration:
   type: time
-  size: 8
+  size: 6
   name: Duration
 
 ean13:
@@ -206,7 +206,7 @@ first_release_date:
 
 first_release_duration:
   type: time
-  size: 8
+  size: 6
   name: First Release Duration
 
 grand_rights_indicator:
@@ -599,7 +599,7 @@ submitter_work_n:
   name: Submitter Work Number
 
 tax_id:
-  type: numeric
+  type: alphanum
   size: 9
   name: Tax ID Number
 

@@ -43,7 +43,7 @@ class _FileReader(object):
         """
         with open(os.path.join(self.__path(), os.path.basename(file_name)),
                   'rt') as yamlfile:
-            return yaml.load(yamlfile)
+            return yaml.load(yamlfile, Loader=yaml.FullLoader)
 
     def read_config_file(self, file_name):
         """

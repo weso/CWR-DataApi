@@ -201,7 +201,7 @@ class CwrRecordEncoderFactory(object):
 
     def get_encoder(self, entity):
         if entity.record_type not in self._record_configs:
-            raise NameError('The record type %s not found in config %s' % entity.record_type)
+            raise NameError('The record type %s not found in config %s' % (entity.record_type, list(self._record_configs.keys())))
         record_configs = self._record_configs[entity.record_type]
         if isinstance(entity, TransactionRecord):
             return TransactionCwrRecordEncoder(record_configs, self._field_configs)
