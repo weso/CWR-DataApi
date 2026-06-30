@@ -34,7 +34,8 @@ class TransmissionHeader(Record):
                  creation_date_time=None,
                  transmission_date=None,
                  edi_standard='01.10',
-                 character_set=''
+                 character_set='',
+                 version_type=''
                  ):
         """
         Constructs a TransmissionHeader.
@@ -47,6 +48,7 @@ class TransmissionHeader(Record):
         :param record_type: the CWR record type
         :param edi_standard: EDI standard version (01.10 by default)
         :param character_set: file encoding set (ASCII by default)
+        :param version_type: version type (2.2 by default)
         """
         super(TransmissionHeader, self).__init__(record_type)
 
@@ -62,7 +64,8 @@ class TransmissionHeader(Record):
         # Other info
         self._edi_standard = edi_standard
         self._character_set = character_set
-
+        self._version_type = version_type
+        
     def __str__(self):
         return '%s (%s, %s) on %s' % (
             self._sender_name, self._sender_id, self._sender_type,
@@ -70,11 +73,12 @@ class TransmissionHeader(Record):
 
     def __repr__(self):
         return '<class %s>(sender_id=%r, sender_name=%r, sender_type=%r, ' \
-               'creation_date=%r, transmission_date=%r)' % (
+               'creation_date=%r, transmission_date=%r, version_type=%r)' % (
                    'TransmissionHeader', self._sender_id,
                    self._sender_name, self._sender_type,
                    self._creation_date_time,
-                   self._transmission_date)
+                   self._transmission_date,
+                   self._version_type)
 
     @property
     def character_set(self):
@@ -95,6 +99,21 @@ class TransmissionHeader(Record):
     @character_set.setter
     def character_set(self, value):
         self._character_set = value
+
+    @property
+    def version_type(self):
+        """
+        Version Type field. Alphanumeric.
+
+        Indicates the CWR version used (e.g., '2.2').
+
+        :return: the version type string
+        """
+        return self._version_type
+
+    @version_type.setter
+    def version_type(self, value):
+        self._version_type = value
 
     @property
     def creation_date_time(self):

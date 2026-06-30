@@ -340,7 +340,7 @@ transaction_record:
 
 transaction_record:
     id: publisher_territory
-    head: SPT
+    head: SPT,OPT
     rules:
       [
         field: ip_n
@@ -396,6 +396,14 @@ transaction_record:
         optional [
             field: media_type
         ]
+        optional [
+            field: recording_title
+            field: version_title
+            field: display_artist
+            field: record_label
+            field: isrc_validity
+            field: submitter_recording_identifier
+        ]
       ]
 
 transaction_record:
@@ -422,6 +430,7 @@ record:
         optional
         [
           field: character_set
+          field: hdr_version_type
         ]
       ]
 
@@ -468,6 +477,17 @@ transaction_record:
             field: catalogue_number
             field: priority_flag
         ]
+      ]
+
+transaction_record:
+    id: work_id_cross_reference
+    head: XRF
+    rules:
+      [
+        field: organisation_code
+        field: xrf_identifier
+        field: identifier_type
+        field: validity
       ]
 
 transaction_record:
@@ -573,11 +593,12 @@ transaction_record:
         field: submitter_agreement_n
         field: society_assigned_agreement_n
         field: writer_ip_n
+        field: publisher_sequence_n
       ]
 
 transaction_record:
     id: writer_territory
-    head: SWT
+    head: SWT,OWT
     rules:
       [
         field: ip_n

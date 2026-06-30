@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from cwr.acknowledgement import AcknowledgementRecord, MessageRecord
+from cwr.cross_reference import XrfRecord
 from cwr.agreement import AgreementRecord, AgreementTerritoryRecord, \
     InterestedPartyForAgreementRecord
 from cwr.info import AdditionalRelatedInfoRecord
@@ -69,6 +70,8 @@ class TransactionRecordDictionaryEncoder(Encoder):
             self._encoder_avk, self._encoder_visan)
         self._encoder_wri_rec = WriterRecordDictionaryEncoder(
             self._encoder_writer)
+
+        self._encoder_xrf = XrfRecordDictionaryEncoder()
 
         self._encoder_nat = NonRomanAlphabetTitleDictionaryEncoder()
         self._encoder_now = NonRomanAlphabetOtherWriterDictionaryEncoder()
@@ -163,10 +166,28 @@ class TransactionRecordDictionaryEncoder(Encoder):
         elif isinstance(entity, WriterRecord):
             # Writer
             encoded = self._encoder_wri_rec.encode(entity)
+        elif isinstance(entity, XrfRecord):
+            # Work ID Cross Reference
+            encoded = self._encoder_xrf.encode(entity)
         else:
             encoded = None
 
         return encoded
+
+
+class XrfRecordDictionaryEncoder(Encoder):
+    """Encodes an XrfRecord into the flat dictionary expected by the field encoders."""
+
+    def __init__(self):
+        super(XrfRecordDictionaryEncoder, self).__init__()
+
+    def encode(self, entity):
+        return {
+            'organisation_code': entity.organisation_code,
+            'identifier': entity.identifier,
+            'identifier_type': entity.identifier_type,
+            'validity': entity.validity,
+        }
 
 
 class MediaTypeDictionaryEncoder(Encoder):
@@ -627,6 +648,7 @@ class PublisherForWriterDictionaryEncoder(TransactionHeaderDictionaryEncoder):
             record.society_assigned_agreement_n
         encoded['submitter_agreement_n'] = record.submitter_agreement_n
         encoded['writer_ip_n'] = record.writer_ip_n
+        encoded['publisher_sequence_n'] = record.publisher_sequence_n
 
         return encoded
 
@@ -924,6 +946,12 @@ class RecordingDetailDictionaryEncoder(TransactionHeaderDictionaryEncoder):
         encoded['media_type'] = record.media_type
         encoded['recording_format'] = record.recording_format
         encoded['recording_technique'] = record.recording_technique
+        encoded['recording_title'] = getattr(record, 'recording_title', '')
+        encoded['version_title'] = getattr(record, 'version_title', '')
+        encoded['display_artist'] = getattr(record, 'display_artist', '')
+        encoded['record_label'] = getattr(record, 'record_label', '')
+        encoded['isrc_validity'] = getattr(record, 'isrc_validity', '')
+        encoded['submitter_recording_identifier'] = getattr(record, 'submitter_recording_identifier', '')
 
         return encoded
 
@@ -1097,6 +1125,7 @@ class TransmissionHeaderDictionaryEncoder(Encoder):
         encoded['transmission_date'] = record.transmission_date
         encoded['edi_standard'] = record.edi_standard
         encoded['character_set'] = record.character_set
+        encoded['version_type'] = record.version_type
 
         return encoded
 

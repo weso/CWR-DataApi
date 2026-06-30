@@ -1,0 +1,1719 @@
+ 
+CWR19-0479  
+  
+  
+Source language: English  
+Published on: 04/04/2019  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+Common Works Registration User Manual 
+  
+Recipient Submitter Forum 
+  
+
+--- Page 2 ---
+
+Common Works Registration User Manual 
+CWR19-0479  2 of 39 
+ 
+Table of Contents  
+1. Introduction ................................ ................................ ................................ ................................ ......... 4 
+1.1 CWR Process Overview ................................................................................................................................4 
+2. File Structure ................................ ................................ ................................ ................................ ....... 7 
+2.1 File Naming Convention ..............................................................................................................................7 
+2.2 Control Records ...........................................................................................................................................8 
+2.2.1 HDR: Transmission Header ......................................................................................................................8 
+2.2.2 GRH: Group Header .................................................................................................................................8 
+2.2.3 GRT: Group Trailer ...................................................................................................................................8 
+2.2.4 TRL: Transmission Trailer ........................................................................................................................8 
+2.3 Transactions ................................................................................................................................................8 
+3. Registering Work Information ................................ ................................ ................................ .............. 9 
+3.1 Work Title and Core Information ............................................................................................................. 10 
+3.2 Interested Parties and Collection Shares ................................................................................................. 11 
+3.2.1 Publishers ............................................................................................................................................. 12 
+3.2.2 Publisher Collection Shares ................................................................................................................. 14 
+3.2.3 Writers ................................................................................................................................................. 16 
+3.2.4 Writer Collection Shares ...................................................................................................................... 18 
+3.2.5 Linking Writers to Publishers .............................................................................................................. 18 
+3.3 Alternative Titles ...................................................................................................................................... 19 
+3.4 References to Other Works ..................................................................................................................... 20 
+3.5 Live Performing Artists ............................................................................................................................ 21 
+3.6 Recording Detail ....................................................................................................................................... 21 
+3.7 Work Origin .............................................................................................................................................. 23 
+3.8 Audio-visual Productions ......................................................................................................................... 24 
+3.9 Instrumentation ....................................................................................................................................... 25 
+3.9.1 Instrumentation Summary .................................................................................................................. 25 
+3.9.2 Instrumentation Detail ........................................................................................................................ 26 
+3.10 Work ID Cross Reference ......................................................................................................................... 26 
+4. Retracting Work Registrations ................................ ................................ ................................ ............ 26 
+5. Acknowledgements ................................ ................................ ................................ ............................  27 
+5.1 Transaction Status ................................................................................................................................... 28 
+5.1.1 CO: Transaction in Conflict .................................................................................................................. 28 
+5.1.2 RA: Registration Accepted - Passed Validations ................................................................................ 29 
+5.1.3 AS: Registration Accepted – Not Ready for Payment ......................................................................... 29 
+5.1.4 AC: Registration Accepted With Changes– Not Ready for Payment ................................................. 29 
+5.1.5 SR: Registration Accepted –Ready for Payment ................................................................................. 29 
+5.1.6 CR: Registration Accepted With Changes – Ready for Payment ........................................................ 29 
+5.1.7 RJ: Registration Rejected - Failed Validations .................................................................................... 29 
+5.1.8 NP: No Participation ............................................................................................................................ 29 
+5.1.9 DR: De-registered ................................................................................................................................ 30 
+5.1.10 UN: Unknown Work in DRW ........................................................................................................... 30 
+5.1.11 LD: Unable to De-register ............................................................................................................... 30 
+5.1.12 NA: No Society Agreement Number ............................................................................................... 30 
+5.1.13 WA: Wrong Society Agreement Number ........................................................................................ 30 
+
+--- Page 3 ---
+
+Common Works Registration User Manual 
+CWR19-0479  3 of 39 
+ 
+5.2 Messages .................................................................................................................................................. 30 
+5.3 Existing Work in Conflict with Submitted Work ..................................................................................... 31 
+6. ISWC Confirmation and Allocation ................................ ................................ ................................ ...... 31 
+6.1 Request for Confirmation/Allocation of ISWC ........................................................................................ 31 
+6.2 Confirmation of ISWC .............................................................................................................................. 31 
+6.3 Writer for ISWC ........................................................................................................................................ 32 
+7. License Reporting Transaction ................................ ................................ ................................ ............ 32 
+8. Workflow Diagrams ................................ ................................ ................................ ...........................  33 
+9. Implementing CWR ................................ ................................ ................................ ............................  35 
+9.1 Testing Procedures – Submitter .............................................................................................................. 35 
+9.2 Testing Procedures – Recipients.............................................................................................................. 36 
+9.3 Production ................................................................................................................................................ 36 
+10. Examples of the file structure ................................ ................................ ................................ ......... 37 
+11. Glossary ................................ ................................ ................................ ................................ ......... 38 
+ 
+ 
+  
+
+--- Page 4 ---
+
+Common Works Registration User Manual 
+CWR19-0479  4 of 39 
+ 
+1. Introduction 
+ 
+The purpose of the Common Works Registration (CWR) format is to provide Submitters and Recipients with a 
+standard format for the communication data relating to works and specifically publisher and writer collection 
+shares in those work. Throughout this document , the Submitter can usually be taken to be a publisher and a 
+Recipient can usually be taken to be a society. 
+ 
+CWR v3.0 was adopted as a CISAC standard by the Information Services Committee (ISC) at its meeting on April 
+4th, 2019 in Nice. 
+ 
+The CWR employs data standards that have been developed for the Common Information System (CIS) project 
+of CISAC. Using existing standards for codes will eliminate confusion. 
+ 
+In this user manual you will find all the necessary tools to develop and implement the CWR format.  Please read 
+through the information carefully and contact your local representative with any inquiries.    
+  
+Welcome to CWR!  
+ 
+1.1 CWR Process Overview 
+ 
+After a Submitter acquires a work and enters it into its database, the work is formatted to meet CISAC CWR 
+standards. The Submitter may choose one two methods to circulate the file.  
+ 
+Some Submitters may have their office send the same CWR file to all Recipients at once.  
+ 
+ 
+Other Submitters may send CWR files with only Recipient relevant data to each Recipient.  
+ 
+  
+
+
+--- Page 5 ---
+
+Common Works Registration User Manual 
+CWR19-0479  5 of 39 
+ 
+Once the Recipient retrieves the file from its server and applies a first round of technical validation rules (known 
+as edits) to the data included in the file, the 1st acknowledgement is returned to the Submitter within 24 to 48 
+hours. The 1st acknowledgement will contain the status of the file, its contents, and will include any errors that 
+were encountered. When the works with in the file pass the CWR edits and Recipient validation, the 1st 
+acknowledgement will be an ‘RA’ (Registration accepted). If the works in the file do not meet the minimum file 
+requirements, they will be rejected (RJ status) and returned to the Submitter to correct and resubmit. Message 
+(MSG) records explain the reason for the rejection.  The Recipient will then process the works in ‘RA’ status.  
+ 
+ 
+  
+After the Recipient has processed the contents of the file, 2nd acknowledgements will be sent in groups as works 
+are registered and made payment-ready. When and how Recipients send 2nd acknowledgments will vary, but a 
+weekly file with the works processed in that time period is common. This is known as the “drip-feed” method. 
+Due to the volume of works in some CWR files, the “drip-feed” method is used so that Submitters begin to receive 
+2nd acknowledgements in a timely manner as works are processed. Other CWR Recipients may choose to only 
+send 2nd acknowledgements once the entire file has been processed. This is called the “one file method.”   
+  
+The 2nd acknowledgement file will include Recipient work numbers for the individual works, IPI  Number’s for 
+interested parties, names for all interested parties, and ISWC numbers (if the work meets the necessary criteria). 
+ISWCs are only issued when all interested parties on a work are identified by their IPI number. Works with 
+participants who are not affiliated with a Recipient, or works that list any “unknown” shares are not eligible for 
+ISWC numbers. In some instances, multiple ISWC numbers may be issued by 2 or more Recipients. When this 
+occurs, the ISWC number issued first is labelled as the “preferred ISWC.” Any subsequent ISWC numbers issued 
+will be labelled as “archived ISWC” and will be linked to the “preferred.”    
+  
+The 2nd acknowledgement will also include codes and error messages for works that could not be registered. 
+Some common reasons for rejection are:  
+• Writer and Submitter Recipient affiliation does not match  
+• Incomplete sample information  
+• The sample indicator flagged with no composite information included  
+• Conflicting administrator information  
+• The information submitted conflicts with a previous registration received by the Recipient.   
+ 
+Where share or IP information conflicts with what is on file at the Recipient, a record (EXC) can be sent by the 
+Recipient to the Submitter indicating the IP/share information in the Recipient database. The Submitter should 
+use the EXC record to resolve work dis crepancies before re-submitting the work in a subsequent CWR file. It is 
+essential that Submitters populate their databases with the information included in the 2nd acknowledgement.  
+
+
+--- Page 6 ---
+
+Common Works Registration User Manual 
+CWR19-0479  6 of 39 
+ 
+ 
+ 
+Equally important is the processing of CWR rejections in the 2nd acknowledgement file. These messages notify 
+the Submitter of issues with their song information that may also result in delayed royalty payments. Timely 
+processing and resolution of issues th at arise from these rejections will reduce and many times prevent these 
+delays. When information submitted by a Submitter is rejected due to conflicting information on a previous 
+registration, the EXC record returned with the 2nd acknowledgement is a vital  tool in resolving share 
+discrepancies. Processing the EXC record provided by the Recipients will allow the Submitter to review the 
+conflicting information and resolve any issues directly with the interested parties on the registration. This cuts 
+out the step of inquiry with the Recipients and creates efficiencies in the resolution process.   
+  
+By developing and utilizing CWR, both Submitters and Recipients benefit from efficiencies in the form of time 
+and cost savings. In addition, the common format result s in a more accurate flow of song data between 
+Submitters and Recipients within the country of origin and throughout the world. This shared standard reduces 
+time intensive inquiries as well as increases the accuracy of royalty payments from the Recipients to the 
+Submitters.    
+  
+
+
+--- Page 7 ---
+
+Common Works Registration User Manual 
+CWR19-0479  7 of 39 
+ 
+2. File Structure  
+ 
+Note that the File Naming Convention has been modified by the CWR Management Committee to better suit the 
+needs of CWR.  It no longer conforms to the convention specified in the CISAC Standards.  
+  
+2.1 File Naming Convention  
+ 
+The file naming convention is as follows and should be used for all regular submissions from a given Submitter 
+to a Recipient: 
+CWYYnnnnSUB_REP_VM-m-r.EXT 
+Where: 
+CW Indicates that the file is a CWR file 
+YY Is the 2 digit year 
+nnnn Is a file number.  The number must be ascending within a year, but need not be contiguous. 
+SUB Is the 2 -4 alphanumeric Transmitter ID of the file submitter 
+REP Is the 2 -4 alphanumeric Transmitter ID of the file recipient 
+VM-m Is the CWR version in use M=Major Version number m=minor version number  
+r Is the revision number.  
+EXT “SUB” – Submitted Work Registration Data File / “ACK1” – Technical Acknowledgement File / “ACK2” – 
+Claim Acknowledgment File / “ISWS” – ISWC Allocation and Resolution Services Submission File / 
+“ISWA” – ISWC Allocation and Resolution Services Acknowledgement File  
+ 
+It is recommended that all files are compressed using the standard zip format and that If the file is zipped, it will 
+be named CWYYnnnnSUB_REP_VM-m-r_EXT.zip  
+The unzipped file contained in a zipped file should be named as per the standard naming convention above. 
+Note that if the same file is being sent to several Recipients, use ‘000’ as the Transmitter ID. 
+EXAMPLE: 
+A Submitter SA sends its regular CWR file number 37 using the CWR 3.0 revision 0 to SACEM: 
+ CW170037SA_058_V3-0-0.SUB 
+ 
+SACEM would send the ACK1 for that submitted file: 
+ CW170058058_SA_V3-0-0_ACK1.zip 
+ 
+SACEM would then “drip-feed” ACK2 files containing works from the submitted file, perhaps zipped: 
+ CW170048058_SA_V3-0-0_ACK2.zip 
+ CW170053058_SA_V3-0-0_ACK2.zip 
+ CW170058058_SA_V3-0-0_ACK2.zip 
+  
+
+--- Page 8 ---
+
+Common Works Registration User Manual 
+CWR19-0479  8 of 39 
+ 
+2.2 Control Records  
+The following record layouts are used to partition and control the submission of files between participants.  
+Proper control records are required within the file to insure the integrity of transmission over telecommunication 
+lines, as well as confirming that the data within the file has not been altered as a result of intentional or 
+unintentional tampering with data. Control records defined within this version of the standard are: 
+• HDR: Transmission Header  
+• GRH: Group Header  
+• GRT: Group Trailer  
+• TRL: Transmission Trailer  
+  
+2.2.1 HDR: Transmission Header  
+The Transmission Header Record (HDR) is a required “cover sheet” for transmissions submitted by a participant. 
+It will contain the file control information as well as the name of the submitter.  
+  
+2.2.2 GRH: Group Header  
+The Group Header Record (GRH) is used to indicate the presence of a group (or batch) of transactions within the 
+file. A group can only contain one type of transaction and this is indicated in the Transaction Type field. Also, all 
+transactions of the same type should be contained in the same group  (e.g. all WRK transactions should appear 
+in one single WRK group) and each group type can only be used once per file (e.g. there can only be one WRK or 
+one ACK group per file).  
+ 
+2.2.3 GRT: Group Trailer  
+The Group Trailer Record (GRT) indicates the end of a group and provides both transaction and record counts for 
+the group. 
+  
+2.2.4 TRL: Transmission Trailer  
+The Transmission Trailer Record (TRL) indicates the end of the transmission file. Control totals representing the 
+number of groups, transactions, and records within the file are included on this record. 
+ 
+2.3 Transactions 
+A transaction is defined as “all the information required to complete a logical unit of work that is to be passed 
+between two or more participants in the electronic relationship.” This version of the format contains definitions 
+for the following transaction types: 
+• WRK: Submission of a work details for registration. 
+• DRW: Retraction of a WRK submitted in error. 
+• ISW: Request for an ISWC from the ISWC Allocation Service or the ISWC Resolution Service.  
+• ISA: Notification of ISWC assigned to a work. 
+• EXC: Existing work which is in conflict with a work as submitted. 
+• ACK: Provides acknowledgment of WRK or DRW transactions and subsequent work history. 
+• LIC: Licensing information relating to an existing work. 
+ 
+
+--- Page 9 ---
+
+Common Works Registration User Manual 
+CWR19-0479  9 of 39 
+ 
+3. Registering Work Information  
+ 
+When you are registering a new work or updating an old work, use the WRK transaction. Detail records are listed 
+subsequent to the WRK Header Record providing further information on the content and collection shares and 
+territories of the work. For revised works it is mandatory to provide all work details in the transaction (not just 
+the information which has changed). It is possible (because of Recipient editing rules) that a work may be rejected 
+by one Recipient and accepted by another.  
+ 
+As a Submitter, you may choose to send one file containing registration information for many territories to many 
+Recipients, or you may choose to send to each Recipient a file containing only information pertinent to that 
+Recipient. If, when processing a file, a Recipient determines that it has no interest in a particular work 
+registration, the Recipient will acknowledge that work with a status code of ‘no interest’ (NP). A work is generally 
+of interest to a Recipient if a shareholder belongs to that Recipient, or if the collection rights are for a territory 
+that the Recipient administers on behalf of the submitting Submitter. Otherwise the work will be of no interest. 
+Also, the work may be of no interest because of the type of rights. For example, if a performing rights Recipient 
+receives a registration for only mechanical rights for a work, the work will be returned as NP.   
+ 
+There is a temptation to store other information in the title e.g. “background”. This is not a good idea.  In the 
+past when each title registration was done manually, a person could sort the other information from the title 
+and act appropriately. Now that registrations are automated this does not happen. The title match routines will 
+not work properly and the additional information is lost. The additional information formerly stored in that title 
+should have a place of its own. If it does not, please raise it to our attention so that we can add new fi elds to 
+store this information.  
+  
+If there are other versions of this work that have a different set of interested parties, or a different percentage 
+split among the interested parties, submit separate registrations.  
+  
+The collection shares for each right being registered must total 100% for each work in all territories for which the 
+Submitter is making a claim.  
+  
+A composite musical work such as a symphony may contain several movements.  If the movements are likely to 
+be performed or recorded on their o wn, then it is advisable to register each movement as a separate musical 
+work.  Each movement can refer to the symphony as the entire work from which it is derived in the original work 
+record (OWK).   
+  
+A composite musical work such as a medley or sample c an use the original work record (OWK) to describe the 
+works that are included.  
+   
+  
+
+--- Page 10 ---
+
+Common Works Registration User Manual 
+CWR19-0479  10 of 39 
+ 
+3.1 Work Title and Core Information 
+ 
+The Submission of Work Record (WRK)  contains core information about the work itself, such as title and the 
+unique codes that have been assigned to it. Other information, like writer names, recordings, and other versions 
+will be asked for later in the transaction in separate record types.  
+ 
+Record Prefix.  This allows you to indicate a work (WRK). 
+  
+Work Title.  List the title by which the work is best known.  You will have an opportunity to list variations on this 
+title in the ALT record.  Do not store additional information in the title field e.g. “instrumental” or “background”.  
+Such information should be stored in the designated field.   
+  
+Language Code.  Indicate the language of the work title.  If the title crosses languages (e.g., Maria), list the 
+language of the lyrics. This information will assi st Recipients in identifying the work. These values reside in the 
+Language Code Table. 
+  
+Submitter Work Number. This is your unique numerical code for this work.  It is important that this number refer 
+only to the work named on the registration, since further electronic communication (ACK, ISW, EXC) that includes 
+this number will point to this work and its interested parties.  
+  
+ISWC. The International Standard Work Code assigned to this work. 
+  
+Copyright Date. This is the date that your national copyright office has registered this work.  
+  
+Copyright Number.  This is the number that your national copyright office has assigned to this work upon 
+registration.  
+  
+Musical Work Distribution Category.   Certain rights organizations have special distribution rules t hat apply to 
+certain genres of music.  All such genres for participating Recipients can be found in the Musical Work 
+Distribution Category Table in the layout document.  
+  
+Duration. Duration is required:  
+• by all Recipients if the Musical Work Distribution Category is Serious (e.g., music intended for symphonic, 
+recital and chamber settings);  
+• if there is a BMI interested party in this work and the Musical Work Distribution Category is Jazz.  
+ 
+Recorded Indicator. Indicate whether a recording of this work exists that has been made available to the public.  
+  
+Text-Music Relationship. Indicate whether this work contains text only, music only, or a combination of both. (It 
+is understood that a work with lyrics may be p erformed instrumentally, and that a work with music may be 
+performed spoken-only.)  
+  
+Composite Type. Certain works incorporate other works. If this work is such a case, choose the type of composite 
+from the values in the table.  
+  
+
+--- Page 11 ---
+
+Common Works Registration User Manual 
+CWR19-0479  11 of 39 
+ 
+Version Type. Indicate whether this work is entirely original, or based on another work.  If the work is based on 
+another work, values must be given for the Music Arrangement and Lyric Adaptation fields. If the work is a 
+modified version of a copyrighted work, it is necessary for it to be authorized.  
+  
+Excerpt Type.  If this work is part of a larger work, indicate whether this is a movement or another, unspecified 
+type of excerpt.  
+  
+Music Arrangement. If you’ve indicated that this is a modified version of another work, you must indicate here 
+what changes, if any, have occurred to the original music.  
+  
+Lyric Adaptation. If you’ve indicated that this is a modified version of another work, you must indicate here what 
+changes, if any, have occurred to the original lyric.  
+  
+Grand Rights Indicator. It can be of interest whether or not this work is originally intended for live theatrical 
+performance.    
+  
+Composite Component Count. If a work consists of one original work and one sample, then the component count 
+is two.  
+  
+Date of Publi cation of Printed E dition. The date that the printed, new edition published by the submitting 
+Submitter appeared. This information is especially relevant for the notification of sub-published works by GEMA-
+sub-Submitters.  
+  
+Exceptional Clause. This is for registrations with GEMA. By entering Y (Yes), the submitting GEMA-sub-Submitter 
+declares that the exceptional clause of the GEMA distribution rules with regard to printed editions applies 
+(GEMA-Verteilungsplan A Anhang III).  
+  
+Opus Number. The number assigned to this work, usually by the composer. Part numbers are to be added with 
+a # e.g. 28#3 (meaning Opus 28 part 3).  
+  
+Catalogue Number. The work catalogue number.  The abbreviated name of the catalogue is to be added (like 
+BWV, KV), without dots. Part numbers are to be added with a # e.g. KV 297#1 (meaning Köchel Verzeichnis Nr.297 
+part 1).  
+  
+Priority Flag.  Use this flag to indicate that the registration of this work should be expedited.  This flag should be 
+used sparingly – only when the work is high on the charts, etc.    
+ 
+3.2 Interested Parties and Collection Shares  
+ 
+CWR requires that you distinguish between those writers and Submitters under your control, i.e., on whose 
+behalf you are submitting this registration, and those whose interest will be submitted by another organization. 
+Information that you give about those writers and Submitters not under your control will be subject to les s 
+stringent editing rules than information about your writers and Submitter(s).   
+  
+ 
+ 
+
+--- Page 12 ---
+
+Common Works Registration User Manual 
+CWR19-0479  12 of 39 
+ 
+It is important to note that if you supply unique identifiers to the interested parties, particularly, IPI numbers, 
+your registration will be processed much faster. The Recipient of affiliation is also a key piece of information that 
+should be provided whenever possible – particularly if the IPI number cannot be determined.  
+  
+Even though it is not necessary to provide much detail about interested parties not under your control, you are 
+required to account for 100% of the work’s collection in all territories in which you are claiming publisher 
+collection rights.  This means the percentages allocated across all writers, arrangers and original Submitters must 
+total 100. If you have no information about writers and Submitters in your work other than your own, you may 
+so indicate via the “writer unknown” or “Publisher unknown” indicator and you must allocate to that unknown 
+entity the balance of the share entitlement.  
+ 
+Some Recipients do not accept Unknown Writer or Unknown Submitter.  Please contact your local Recipient to 
+learn about this.  
+  
+ 
+Note that there is a tolerance of plus or minus .06% while applying the edits relating to the sum of shares.  
+  
+3.2.1 Publishers  
+CWR requires that you group your original publisher with any local administrator or foreign sub-publisher(s) in a 
+publisher chain.    
+  
+The original publisher starts the chain.  It is followed by the administrators, sub-publishers, and income 
+participants.  
+  
+An income participant may start a chain, or be included in a chain begun by the original publisher which has 
+allocated rights to the income participant.    
+  
+If a publisher is both a co-publisher and an administrator, it must appear in two chains – in one, it will start the 
+chain as an original publisher; in the other it will follow the co-publisher on whose behalf it administers the rights.  
+  
+An Acquirer is a publisher that has acquired some or all of the rights of a work from the Original publisher. 
+Furthermore, the acquirer has the direct relationship to the writers of the musical work (unlike the sub-publisher 
+and the administrator that have a direct re lationship with another publisher). The difference between an 
+Acquirer and an original publisher being that the original publisher has passed its direct relationship with the 
+writer to the acquirer.  To be clear, where a publisher becomes the owner as a re sult of reversion or copyright 
+termination/renewal they are the original publisher (E) not the acquirer (AQ).  
+
+
+--- Page 13 ---
+
+Common Works Registration User Manual 
+CWR19-0479  13 of 39 
+ 
+The Acquirer would act very much like an Original publisher (role code 'E'), although the Original publisher would 
+still be shown on the work before the Acquirer.   
+  
+The only differences between an Original publisher and an Acquirer would be:  
+• You can only have one Original publisher per chain of title, but you could have more than one Acquirer.  
+• The Acquirer comes after an Original publisher, so it doesn't start the chain of title.  
+  
+An example of the structure of the work would be as follows:  
+Record Name Role  Collection 
+SPU A Original Publisher   
+SPU B Acquirer   
+SPT B Acquirer  Collection share for 
+home territory 
+SPU C Sub-Publisher   
+SPT C Sub-Publisher  Collection share for 
+other territories 
+  
+CWR enables you to indicate every territory or set of territories where your original publisher, administrators, or 
+sub-publisher have a collection interest. For those publishers under your control that have a collection interest, 
+you must indicate at leas t one territory and corresponding share entitlement in which that collection interest 
+applies. If there is an administrator with no collection shares for any territory, it is possible to list it on a publisher 
+record.  It, of course, would have no territory records.  
+  
+Record Prefix.  This allows you to distinguish whether or not this publisher is under your control (SPU) or the 
+control of another organization (OPU).  
+  
+Publisher Sequence Number. This enables a rights organization to link sub- publisher s and administrators to the 
+proper original publisher. Each original publisher will start a new chain.  An income participant may start a chain, 
+or be included in a chain begun by the original publisher which has allocated rights to the income participant.  
+ 
+Interested Party Number.  This is your unique numerical code for this publisher.  It is important that this number 
+refer only to the publisher named on the registration.  Never re -use an interested party number for a different 
+publisher since this could cause the Recipients to merge the catalogue of the first publisher with the catalogue 
+of the second publisher with the same interested party.  
+  
+Publisher Name.  The name of this publishing company as it is on file with its rights organization.  
+For a publisher not under your control, it is not required to provide a name, however it should be indicated using 
+the Publisher Unknown Indicator below.  
+  
+Publisher Unknown Indicator. For a publisher in this work not under your control and for whom you do not have 
+a name on file, this flag may be set to “Y” for yes, however otherwise it should be left blank . Do not enter a 
+publisher name if you choose this option. However, by providing the name (if kno wn), the registration can be 
+made payable more quickly.  
+  
+Publisher Role. Role played by this publisher in this work, i.e. role codes E, SE or AM. 
+ 
+Tax ID Number.  A number used to identify this publisher for tax reporting.  
+  
+
+--- Page 14 ---
+
+Common Works Registration User Manual 
+CWR19-0479  14 of 39 
+ 
+Publisher IPI Name Number. The unique identifier associated with this publisher name.  
+  
+Publisher IPI Base Number. The unique identifier associated with this publisher.  
+  
+USA License Ind. This field indicates whether rights for this publisher flow through ASCAP, BMI, AMRA, or SESAC 
+for the U.S.   
+ 
+Note, for publishers with non -Roman alphabet names, an additional Non -Roman Alphabet Publisher Name 
+Record (NPN) can be used to identify the language and the script or alphabet in which the language is written. 
+    
+3.2.2 Publisher Collection Shares  
+The collection shares for each set of territories are defined using the territory record. The original publishers, or 
+income participants, and their administrators and sub- publishers are tied together using the interested party 
+number. It is possible to show a publisher that has no collection shares.    
+  
+For example, if Warner US has an agreement with Warner International for the administration for the world 
+except for the US.  Warner International does not collect any shares, but has agreements with Warner affiliates 
+for each territory.  Warner International can be present with no SPT.  
+  
+You can use more than one territory record to describe the territories assigned.  For example, if you wish to 
+register a work  showing a sub-publisher for Europe excluding Germany, supply an SPT including territory of 
+Europe with the collection shares, and another SPT to exclude the territory of Germany with no collection shares. 
+Note that the exclude always refers to the territory in the previous include.  
+  
+The total collection shares for a territory for a rights type for a work cannot exceed 100%.  
+  
+The sequence number should run from 1 to the number of SPTs for each SPU.   
+Example: A works notification has three SPU records. Each SPU record is linked with a number of SPT records 
+that indicate the territory of control of the publisher in that SPU record.  
+ 
+• SPU for Original Publisher 
+The Original Publisher collects in the whole world. This SPU record is connected with one SPT record:   
+Sequence nr     Incl / Excl     TIS Numeric   
+1                 I                2136   
+  
+• SPU for Administrator Publisher 
+The Administrator Publisher collects in the world ex cluding Commonwealth but including Canada. This SPU 
+record is connected with three SPT records:  
+Sequence nr     Incl / Excl     TIS Numeric   
+1                 I                2136   
+2                 E              2114   
+3                 I               124   
+ 
+ 
+ 
+ 
+ 
+ 
+
+--- Page 15 ---
+
+Common Works Registration User Manual 
+CWR19-0479  15 of 39 
+ 
+• SPU for Sub-Publisher   
+The Sub-Publisher collects in Europe excluding UK and excluding Ireland. This SPU record is connected with three 
+SPT records:   
+Sequence nr     Incl / Excl     TIS Numeric   
+1               I                2120   
+2                E                826   
+3                E                372   
+ 
+Exclusions from exclusions must be entered positively, i.e. with Inclusion Indicator I. See above example with the 
+Administrator Publisher. The agreement is valid for “World excluding Commonwealth but including Canada ”. 
+This is to be entered as (for clarit y sake the full territory names and not the territory codes together with their 
+territory start dates are used here):  
++World   
+-British Commonwealth   
++Canada   
+ 
+The individual territories are to be entered in their correct (logical) order. The order is defined by the sequence 
+number of territory. The inclusions and exclusions are to be interpreted according to these sequence numbers. 
+The above example must be entered with the following sequence numbers:  
+Sequence#1      +World   
+Sequence#2      -British Commonwealth   
+Sequence#3      +Canada   
+ 
+The following order is illogical:   
+Sequence#1      -British Commonwealth   
+Sequence#2      +World   
+Sequence#3      +Canada   
+ 
+Please also note the difference between:   
+Sequence#1      +World   
+Sequence#2      -British Commonwealth   
+Sequence#3      +Canada                     (Result: Canada is included)   
+and:   
+Sequence#1      +World   
+Sequence#2      +Canada   
+Sequence#3      -British Commonwealth       (Result: Canada is not included)  
+ 
+Record Prefix. This allows you to specify the collection shares for each set of territories for publishers. It allows 
+you to distinguish whether or not this collection is under your control (SPT) or the control of another organization 
+(OPT). (  
+  
+Interested Party Number. This is your unique number that identifies the publisher that has collection rights in 
+this territory. This publisher was described in the preceding SPU/OPU record.  
+  
+PR Collection Share. This field records the percentage of performing rights royalties that are to be collected.  
+  
+MR Collection Share. This field records the percentage of mechanical rights royalties that are to be collected.  
+  
+
+--- Page 16 ---
+
+Common Works Registration User Manual 
+CWR19-0479  16 of 39 
+ 
+SR Collection Share. This field records the percentage of synchronization rights royalties that are to be collected.  
+ 
+Inclusion/Exclusion Indicator. This indicates an “I” for include or an “E” for exclude for the following territory. 
+  
+TIS Numeric Code. This is a code that describes a territory or group of territories. 
+  
+PR Affiliation Society Number. The number assigned to the Performing Rights Society with which the publisher 
+is affiliated in the territory described in this territory record. 
+ 
+MR Affiliation Society Number. The number assigned to the Mechanical Rights Society with which the publisher 
+is affiliated in the territory described in this territory record. 
+ 
+SR Affiliation Society Number.  The number assigned to the Synchronization Rights Society with which the 
+publisher is affiliated in the territory described in this territory record. 
+ 
+Special Agreements Indicator. This field indicates that the publisher claims reversionary rights  in the territory 
+described in this record. Note that this flag only applies to societies that recognize reversionary rights (for 
+example, SOCAN). 
+ 
+First Recording Refusal Ind  This field indicates that the submitter needs to be asked before the Recipient can 
+authorize a first recording. Note that this field is mandatory for registrations with the UK Recipients.  
+ 
+Submitter Agreement Number. This field contains your unique number used to identify the agreement under 
+which this publisher has acquired the rights to this work. 
+  
+Society-Assigned Agreement Number. This field contains the agreement number assigned to this agreement by 
+the society of the sub-publisher. 
+ 
+Agreement Type. This field contains the code defining the category of the agreement. 
+ 
+Recipient ID. This field contains the intended recipient of this SPT/OPT record. 
+ 
+Sequence Number. A number assigned sequentially to each territory record which applies to the immediately 
+preceding interested party.  
+ 
+3.2.3 Writers  
+Writers under your control must be linked to those publishers to whom they have assigned their publishing 
+interest. There is the requirement to specify the territory and collection share (if greater than zero) for each right 
+for writers. If the writer has no collection share for any right being registered, then it is not necessary to submit 
+a territory/collection record (SWT).  
+ 
+A writer should appear only once per role within a work. It is necessary to submit at least one composer, or 
+author for each work. If a work is in the public domain, the writer must still be specified.   
+  
+If you’ve indicated that your work is a modified version of another work, at least one of the writers must be given 
+as an arranger, sub-arranger, translator, adapter, or sub-author.  
+  
+
+--- Page 17 ---
+
+Common Works Registration User Manual 
+CWR19-0479  17 of 39 
+ 
+Record Prefix. This allows you to tell Recipients whether or not this writer is under your control (SWR) or the 
+control of another organization (OWR).  
+  
+Interested Party Number.  This is your unique numerical code for this writer. It is important tha t this number 
+refer only to the writer named on the registration. Do not reuse the interested party number as some Recipients 
+store this number as a reference.  
+  
+Writer Last Name. The last name of the writer. If you do not have the ability to separate the last name from the 
+first name, then you may include both the last and first name in this field separated by a comma. This field is 
+mandatory for writers that you control.  For writers which you do not control, you can check the Writer Unknown 
+Indicator if you do not know the name.  
+  
+Writer First Name. The first name of the writer.  
+  
+Writer Unknown Indicator.  For a writer in this work not under your control and for whom you do not have a 
+name on file, this flag may be set to “Y” for yes.  
+  
+Writer Role C ode. This code describes the role of the writer with respect to this work e.g. composer, author, 
+arranger. This field is required for all writers.  
+ 
+Tax ID Number.  A number used to identify this writer for tax reporting.  
+  
+Writer IPI Name Number. The unique identifier associated with this writer name  
+  
+Writer IPI Base Number. The unique identifier associated with this writer.  
+ 
+Personal Number. This field contains the personal number assigned to this individual in the country of residence. 
+For Sweden, it has the format YYMMDD9999.  
+ 
+Reversionary Indicator. This indicates that the writer is claiming the work under the reversionary provisions. 
+Only some Recipients recognize reversionary rights.  
+  
+First Recording Refusal Ind  This field indicates that the submitter needs to be asked before the Recipient can 
+authorize a first recording. Note that this field is mandatory for registrations with the UK Recipients.  
+  
+Work For Hire Indicator. This field indicates that this writer was hired to write this work.  
+  
+USA License Ind. This field indicates that this writer has elected to have this work represented in the U.S. by BMI, 
+ASCAP, AMRA, or SESAC.    
+  
+Note, for writers with non -Roman alphabet names, an additional Non -Roman Alphabet Writer Name Record 
+(NWN/NOW) can be used to identify the language and the script or alphabet in which the language is written. 
+ 
+  
+
+--- Page 18 ---
+
+Common Works Registration User Manual 
+CWR19-0479  18 of 39 
+ 
+3.2.4 Writer Collection Shares 
+The collection shares for writers by territory work in the same way as the collection shares for publishers. If the 
+writer’s share changes on sub-publication, then you will need an SWT /OWT to describe the shares collected in 
+the originating territory, and one or more SWT/OWT to describe the shares collected in the territories where the 
+work is sub-published.  
+ 
+Record Prefix. This allows you to specify the collection shares for each set of territories for writers. It enables 
+you to distinguish whether or not thi s writer is part of a controlled chain (SWT) or of a non -controlled chain 
+(OWT). 
+  
+Interested Party Number. This is your unique number that identifies the writer that has collection rights in this 
+territory. This writer was described in the preceding SWR/OWR record.  
+  
+PR Collection Share. This field records the percentage of performing rights royalties that are to be collected.  
+  
+MR Collection Share. This field records the percentage of mechanical rights royalties that are to be collected.  
+  
+SR Collection Share. This field records the percentage of synchronization rights royalties that are to be collected.  
+ 
+Inclusion/Exclusion Indicator. This indicates an “I” for include or an “E” for exclude for the following territory. 
+  
+TIS Numeric Code. This is a code that describes a territory or group of territories. 
+  
+PR Affiliation Society Number. The number assigned to the Performing Rights Society with which the writer is 
+affiliated in the territory described in this territory record. 
+ 
+MR Affiliation Society Number. The number assigned to the Mechanical Rights Society with which the writer is 
+affiliated in the territory described in this territory record. 
+ 
+SR Affiliation Society Number. The number assigned to the Synchronization Rights Society with which the writer 
+is affiliated in the territory described in this territory record. 
+ 
+Recipient ID. This field contains the intended recipient of this SWT/OWT record. 
+ 
+Sequence Number. A number assigned sequentially to each territory record which applies to the immediately 
+preceding interested party.  
+ 
+3.2.5 Linking Writers to Publishers  
+It is valuable for the Recipients to know the publisher associated with each writer.  This provides a complete trail 
+of the rights -- from the creator to the publisher to sub- publisher or administrators.  For each writer who is under 
+your control, complete one  Publisher for Writer Record  (PWR) for each publisher to which they have assigned 
+rights for this work.  
+  
+  
+
+--- Page 19 ---
+
+Common Works Registration User Manual 
+CWR19-0479  19 of 39 
+ 
+Some Recipients require that the Recipient-assigned agreement numbers be present in a work registration. The 
+writer-to- publisher agreement numbers are recorded in this record.  The reason is that if two or more writers 
+for a work have an agreement with the same original publisher, it is possible to record each Society-Assigned 
+Agreement Number and Submitter Agreement Number in the PWR record that links that writer to the original 
+publisher.   
+ 
+Record Prefix.  This allows you to indicate writer to publisher links (PWR).  
+  
+Publisher IP Number. This field contains the unique identifier of the publisher to whom this writer has assigned 
+rights.  
+ 
+Writer IP Number. This field contains the unique identifier of the writer. 
+ 
+ PR Affiliation Society Number. The number assigned to the Performing Rights Society with which the agreement 
+between the writer and the publisher is registered. 
+ 
+MR Affiliation Society Number.  The number assigned to the Mechanical Rights Society with which the 
+agreement between the writer and the publisher is registered. 
+ 
+SR Affiliation Society Number.  The number assigned to the Synchronization Rights Society with which the 
+agreement between the writer and the publisher is registered. 
+ 
+Submitter Agreement Number. This field contains your unique number used to identify the agreement between 
+the writer and publisher being linked.  
+  
+Society-Assigned Agreement Number. This field contains the agreement number assigned to this agreement by 
+the society of the sub-publisher. 
+ 
+Agreement Type. This field contains the code defining the category of the agreement. 
+ 
+Publisher Sequence Number. Reference to the publisher chain this writer-publisher link relates to.  
+ 
+3.3 Alternative Titles 
+ 
+If the work is known by more than one title, then all titles should be documented. The 'official' title appears in 
+the WRK record. All other titles are recorded in the alternative title record.  There are several types of titles. The 
+most common type is th e alternative title (AT). There is also the first line of text (TE). A formal title (FT) for a 
+serious work has a pre-defined format.  
+  
+Sometimes you may be aware of the title as it is translated into another language. This is particularly useful for 
+the identification of usages. Please note that if the lyrics or music has been changed, it should be considered a 
+different work. However, if only the title has been translated, then the language and the translated title (TT) can 
+be provided in the ALT record.  
+  
+Record Prefix. This allows you to indicate alternative titles (ALT) for a work. 
+  
+Alternative Title. This field is for the alternative titles. Do not store additional data with the title.  
+
+--- Page 20 ---
+
+Common Works Registration User Manual 
+CWR19-0479  20 of 39 
+ 
+Title Type. This field describes the type of title.  
+  
+Language Code. This field contains the code used to describe the language of the alternative title. These values 
+reside in the Language Code Table. 
+ 
+Note, for alternative titles using a non -Roman alphabet, an additional Non-Roman Alphabet Title Record (NAT) 
+can be used to identify the language and the script or alphabet in which the language is written. 
+ 
+3.4 References to Other Works  
+ 
+Often a work has a relationship to another work. It is useful to know this relationship.  The CWR provides a way 
+of documenting three types of relationships amongst works - excerpts, versions, and composites - by populating 
+the relevant fields in the WRK Record and by popula ting the Original Work Details Record (OWK) to document 
+the referenced (original) work. To help us to identify the original work, provide one or two of the writers of the 
+original work.  
+ 
+  
+Record Prefix. This allows you to specify details of the Original Work. 
+  
+Original Work Title. This field contains the title of the original work. 
+  
+ISWC of Original Work. If you know the ISWC of the original work, record it here.  
+ 
+Submitter Original Work Number.  The unique number that you have assigned to the original work that is unique 
+to you. 
+ 
+Opus Number.  The number assigned to the original work, usually by the composer (e.g. 28#3 meaning Opus 28 
+part 3). 
+ 
+Catalogue Number.  The catalogue number of the original work including the abberviated name wihtout dots 
+and the part numbers with a # (e.g. KV 297#1 meaning Köchel Verzeichnis Nr.297 part 1) 
+ 
+Duration.  The duration of the original work. 
+ 
+Language Code. Indicates the language of the original work title. These values reside in the Language Code Table. 
+  
+Writer 1 Last Name. If the ISWC is not known, then the last name of a writer is helpful to identify the work.  
+  
+Writer 1 First Name.  The first name of the writer.  
+  
+Writer 1 IPI Name Number. The unique identifier associated with the first writer name.  
+ 
+Writer 1 IPI Base Number. The unique identifier associated with the first writer name. 
+
+
+--- Page 21 ---
+
+Common Works Registration User Manual 
+CWR19-0479  21 of 39 
+ 
+ 
+Writer 2 Last Name.  If the ISWC is not known,  then the last name of a second writer is helpful to identify the 
+work.  
+  
+Writer 2 First Name. The first name of the second writer.  
+  
+Writer 2 IPI Name Number. The unique identifier associated with the second writer name. 
+ 
+Writer 2 IPI Base Number. The unique identifier associated with the second writer name. 
+ 
+ 
+Note, for original work titles using a non-Roman alphabet, an additional Non-Roman Alphabet Original Work Title 
+(NOT) can be used to identify the language and the script or alphabet in which the language is written. 
+ 
+ 
+3.5 Live Performing Artists  
+ 
+The name of performing artists and performing groups can be particularly valuable to Recipients trying to identify 
+usages of a work. Please include all of the performing artists or performing groups who perform this musical 
+work in public, using one record per artist or group.  
+  
+Record Prefix.  This allows you to specify the performing artists (PER).  
+  
+Performing Artist Last Name.  The last name of the performing artist. If the performing artist has only one name, 
+e.g. Cher, then record it here.  Use this field also for group names.  
+  
+Performing Artist First Name. The first name of the performing artist.  
+  
+Performing Artist IPI Name Number. The unique identifier associated with this artist name.   
+  
+ 
+International Standard Name Identifier. The ISNI number associated with this artist. 
+ 
+Note, for artists with non -Roman alphabet names, an additional Non -Roman Alphabet Live Performing Artist 
+Name Record (NPR) can be used to identify the language and the script or alphabet in which the language is 
+written. 
+ 
+3.6 Recording Detail  
+ 
+Information regarding the recording of the submitted work is entered in the Recording Detail Record (REC).  
+  
+Record Prefix. This allows you to include recording (REC) detail.  
+  
+Release Date. Date the work was or will be first released for public consumption.  This date can be a past, present, 
+or future date.  
+ 
+Recording Duration. Duration of the recording of the work.  
+
+--- Page 22 ---
+
+Common Works Registration User Manual 
+CWR19-0479  22 of 39 
+ 
+Album Title. The name of the album in which the work was included if the work was first released as part of an 
+album.  
+  
+Album Label. Name of the organization that produced and released the album in which the first release of the 
+work was included.  
+  
+Release Catalog Number. Number assigned by the organization releasing the album for internal purposes such 
+as sales and distribution tracking  
+  
+EAN. European Article Number of release (EAN-13).  
+  
+ISRC. International Standard Recording Code of the recording of the work on the release (according to ISO 3901).  
+  
+Recording Format. The code that identifies the content of the recording: “A” (audio), “V” (video). This field is 
+required for registrations to SESAC.  
+  
+Recording Technique. Identifies the recording procedure using “A” for Analogue and “D” for Digital. This field is 
+required for registrations to SESAC.  
+  
+Media Type.  BIEM/CISAC code for media type. 
+ 
+Recording Title.  Title of the sound recording. 
+ 
+Version Title.  Title given to the version of the Sound Recording (for example: “remixed by”). 
+ 
+Display Artist. The name of the artist of the recording.  
+  
+Performing Artist IPI Name Number. The unique identifier associated with this artist name.   
+  
+ 
+International Standard Name Identifier. The ISNI number associated with this artist. 
+ 
+Record Label. The name of the organization that produced the recording.   
+  
+ISRC Validity. If an ISRC is supplied, Indicates that the validity of the ISRC:“Y” is valid, “U” the link is invalid, “N” 
+the ISRC is invalid. 
+ 
+Submitter Recording Identifier. The submitter’s unique identifier for this recording. 
+ 
+Note, for recording titles using a non -Roman alphabet, an additional Non -Roman Alphabet Recording Title 
+Record (NRC) can be used to identify the language and the script or alphabet in which the language is written. 
+   
+  
+
+--- Page 23 ---
+
+Common Works Registration User Manual 
+CWR19-0479  23 of 39 
+ 
+3.7 Work Origin  
+ 
+The purpose of the Work Origin Record (ORN) is to describe the origin of the work. The origin may be a library, 
+or an audio -visual production or both.  If the work originated in an AV production, additional information 
+regarding the usage of the work within the production can be helpful. The cue sheet is always the final authority 
+for usage data.  
+  
+A ‘Recommendation for Best Practice’ adopted by CISAC and the publishing community in 2008 outlines how 
+music in AV productions should be registered and interpreted: all background cues should be ‘rolled  up’ and 
+registered under the Production title only.   
+There is no need to register individual cues, unless they subsequently appear on a soundtrack album or in another 
+form.  
+  
+Only one registration per writer/publisher/shares combination is necessary. Please also use the designated fields 
+in this record.  For more information, please look up the PUB -CUE08-2679 on CISAC’s website or contact your 
+local society.  
+  
+Record Prefix. This allows you to describe the origin (ORN) of the work.  
+  
+Intended Purpose. Indicates the type of production from which this work originated, for example, commercial, 
+film, radio, television, library, multi-media, etc.  
+  
+CD Identifier. If this is a library work, enter the identifier associated with the CD upon which the work appears.  
+  
+Cut Number. If this is a library work, enter the track number on the CD Identifier where the work appears.  This 
+field is required when CD Identifier is entered.  
+  
+Library. The library from which this work originated.  
+ 
+Production Title. Title of the production from which this work originated. 
+ 
+BLTVR. An indication of the primary use of the work within the AV production (background/logo/theme).  The 
+definitive source for cue usage is the cue sheet.  
+ 
+Production Number. The number generated by the production company to identify the work.  
+ 
+Episode Title. Title of the episode from which this work originated  
+  
+Episode Number. Number assigned to the episode by the producer.  
+ 
+Year of Production. The year in which the production of the film or episode was completed.  
+ 
+The following two fields form the unique key for the audio-visual work within the AV Index:  
+AVI Society Code. The society code of the society whose audio visual work detail entry is referenced in the AV 
+Index  
+Audio-Visual Number. Unique number used by the owning Recipient to identify the AV works as refereed in the 
+AV Index.   
+ 
+
+--- Page 24 ---
+
+Common Works Registration User Manual 
+CWR19-0479  24 of 39 
+ 
+V-ISAN. Unique identifier for audio-visual production in which this work is first used.  This number is assigned by 
+the producer. It is made up of the following: 
+ISAN. Root segment. 
+Episode. The episode or part number. 
+Check Digit 1. The check character for the root and episode segment. 
+ 
+Version. The version segment. 
+ 
+Check Digit 2. The check character for the version segment. 
+ 
+The following two fields are used for the unique identifier EIDR: 
+EIDR. The root number. 
+Check Digit. The check character for the EIDR. 
+ 
+Version Name. The title or description of the particular version to which the specific ISAN or EIDR relates. 
+ 
+3.8 Audio-visual Productions 
+ 
+The purpose of the Audio-visual Productions Record (FTV) is to describe audio-visual production into which the 
+submitted work has been licensed over and above any AV production described in the original work record (ORN). 
+Note that the cue sheet is always the final authority for usage data. The ORN would only be used for the Film or 
+TV Production in which the work originated, i.e. the production for which it was created. If a commercial work is 
+used in an AV production or an existing AV work is reused in another AV production, then the FTV record can be 
+used. 
+ 
+Record Prefix. This allows you to describe the audio-visual production (FTV) of the work.  
+  
+Intended Purpose. Indicates the type of production from which this work originated, for example, commercial, 
+film, radio, television, library, multi-media, etc.  
+  
+Production Title. Name of the production from which this work originated.  
+  
+Production Number. The number generated by the production company to identify the work.  
+ 
+Episode Title. Title of the episode from which this work originated  
+  
+Episode Number. Number assigned to the episode by the producer.  
+ 
+Year of Production. The year in which the production of the film or episode was completed.  
+ 
+The following two fields form the unique key for the audio-visual work within the AV Index:  
+AVI Society Code. The society code of the society whose audio visual work detail entry is referenced in the AV 
+Index  
+Audio-Visual Number. Unique number used by the owning Recipient to identify the AV works as refereed in the 
+AV Index.   
+ 
+
+--- Page 25 ---
+
+Common Works Registration User Manual 
+CWR19-0479  25 of 39 
+ 
+V-ISAN. Unique identifier for audio-visual production in which this work is first used.  This number is assigned by 
+the producer. It is made up of the following: 
+ISAN. Root segment. 
+Episode. The episode or part number. 
+Check Digit 1. The check character for the root and episode segment. 
+ 
+Version. The version segment. 
+ 
+Check Digit 2. The check character for the version segment. 
+ 
+The following two fields are used for the unique identifier EIDR: 
+EIDR. The root number. 
+Check Digit. The check character for the EIDR. 
+ 
+Version Name. The title or description of the particular version to which the specific ISAN or EIDR relates. 
+ 
+3.9 Instrumentation  
+ 
+If the work being registered is a serious work, then it is necessary to describe the instrumentation of the work. If 
+the work is a jazz work, then instrumentation should also be provided.  Instrumentation documentation can be 
+provided in the following three ways:  
+• standard instrumentation   
+• individual instrument records  
+• description  
+ 
+If the work is for a standard set of instruments such as a wind quintet, use the Standard Instrumentation Type 
+field.  If you know all of the individual instruments used, then complete  an instrument detail record for each 
+instrument.  If neither of these options is viable, you may complete the free form instrumentation description.    
+ 
+It is possible to use a combination of standard instrumentation and individual instrument records, for  example, 
+a wind ensemble for standard instrumentation, and a piano for an individual instrument. It is possible to have 
+more than one Instrumentation Summary Record (INS). This is to allow more than one standard instrumentation 
+e.g. string quartet and brass quartet. If any other field is present on the second or subsequent Instrumentation 
+Summary (INS), it will be ignored.  
+ 
+3.9.1 Instrumentation Summary  
+The Instrumentation Summary Record (INS) provides information on standard and non-standard instrumentation 
+for serious works. 
+ 
+Record Prefix. This allows you to provide instrumentation summary (INS) information. 
+ 
+Number of Voices. This field indicates the number of lines or individual parts in the musical work.  
+  
+Standard Instrumentation Type. This field contains a value from the table of Standard Instrumentation e.g. brass 
+band, piano quartet.  
+ 
+Instrumentation Description. This field contains a free form description of the instrumentation.  
+
+--- Page 26 ---
+
+Common Works Registration User Manual 
+CWR19-0479  26 of 39 
+ 
+3.9.2 Instrumentation Detail  
+The Instrumentation Detail Record (IND) provides information on standard instruments or voices for serious 
+works. 
+ 
+Record Prefix. This allows you to provide instrument detail (INS) information for the above summary record. 
+  
+Instrument Code. Select a code from the table of Instruments.    
+  
+Number of Players. Indicates the number of players for the above instrument.  Note that if the number of players 
+is not a significant detail, enter zero.  
+ 
+ 
+3.10 Work ID Cross Reference 
+ 
+The Work ID Cross Reference Record (XRF) contains identifiers issued by any or ganization including but not 
+limited to the intended recipient of the file. 
+ 
+Record Prefix. This allows you to specify work ids (XRF). 
+  
+Organization Code. The number assigned to the organization (e.g. Society, publisher, DSP etc...) which generated 
+the Work ID. 
+  
+Identifier. The work identifier from the organization.  
+  
+Identifier Type. The type of identifier (“W” for Work, “R” for Recording, “P” for Product, “V“ for Video). 
+  
+Validity. Indicates whether the Identifier is valid or not: “Y” is valid, “U” the link is invalid, “N” the identifier is 
+invalid. 
+4. Retracting Work Registrations 
+ 
+The Work Retraction Record (DRW) is to allow a submitter to communicate to a recipient (or multiple recipients) 
+that a recently submitted WRK transaction was invalid (i.e. filed in error)  and that the publishers indicated on 
+the WRK transaction make no cla im to the work in question. Information to aid in identifying the work will be 
+asked for later in the transaction in a separate record type. 
+ 
+Record Prefix.  This allows you to retract a work registration (DRW). 
+  
+Work Title.  List the title by which the work is best known.  
+  
+Language Code. Indicate the language of the work title. These values reside in the Language Code Table. 
+  
+Script Code. Indicate the script in which the work title is written. These values reside in the Script Code Table. 
+ 
+Submitter Work Number. This is your unique numerical code for this work.  
+  
+ISWC. The International Standard Work Code assigned to this work.  
+
+--- Page 27 ---
+
+Common Works Registration User Manual 
+CWR19-0479  27 of 39 
+ 
+Retraction Reason Code. The reason you are submitting a retraction, including the following reasons: 
+• Prior publishing agreement still in place 
+• The claimed writer is not a writer of this work 
+• The work was in dispute and the publisher relinquishes its claim 
+5. Acknowledgements  
+ 
+When y ou send a group of work registrations to a Recipient, the Recipient will send first acknowledgement 
+records (ACK) for that group back to you. The second acknowledgement record will be sent as the work is created 
+in the Recipient’s data base. It is important that the Submitters process the acknowledgements, taking note of 
+errors and additional information returned.  
+ 
+There are two types of ACK file: CWR_ACK1 and CWR_ACK2. The ACK transactions within the file type CWR_ACK1 
+should deal only with technical compliance with the CWR format and edits of the WRK transaction as submitted. 
+The ACK transaction within the file type CWR_ACK2 should deal with the actual work status, the shares claimed, 
+any conflicting claims and the “readiness f or payment” of the corresponding work record in the Recipient’s 
+systems 
+ 
+An ACK may include any error or warning messages associated with the original WRK transaction. In addition, an 
+ACK transaction within a CWR_ACK2 will include a WRK transaction represe nting the work record in the 
+Recipient’s system after processing the submitted WRK transaction.  If a work is subject to conflicting claims from 
+parties other than the submitter, then the CWR_ACK2 ACK transaction may include an EXC transaction detailing 
+the conflicting claims. 
+ 
+Some Recipients make all works payment ready as soon as possible. Others wait until the first performance of 
+the work. Still others make domestic works payable immediately and others when the work is performed. 
+Contact your local Recipient to determine what their policy is.  
+  
+You will receive at least one acknowledgement record for every work registration sent. The WRK transaction 
+included in the acknowledgement contains the equivalent of all of the records sent by the Submitter that have 
+relevance to the Recipient. This  includes your work number in the Submitter Work Number field, which allows 
+you to easily match to the work in your database. The acknowledgement records will contain additional data 
+about the work that you will want to add to your database, such as:  
+• Recipient's Creation Number which is the work number assigned by the Recipient. It is understood that the 
+number should be in the same format as when used in distribution files (suggestion from EMI, CWR meeting 
+Berlin June 2010).  
+• IPI Name Numbers for interested parties  
+• Names for all interested parties   
+• ISWC for the work (if already on file)  
+ 
+The following principles apply:  
+• It is necessary for Recipients to edit only the territories of interest  
+• It is necessary for Recipients to acknowledge only edited terr itories on first and subsequent 
+acknowledgements  
+• Registrations that do not contain a territory of interest will be acknowledged with status “NP” (no interest)  
+ 
+
+--- Page 28 ---
+
+Common Works Registration User Manual 
+CWR19-0479  28 of 39 
+ 
+Along with the status and any additional information being supplied back, the acknowledgement data contains 
+information to help you identify which work registration is being acknowledged.  
+ 
+Record Prefix. This allows you to specify an acknowledgement (ACK).  
+ 
+Creation Date. The date stamp from the file that you created for the work registrations  
+  
+Creation Time. The time stamp from the file that you created for the work registrations.  
+  
+Original Group ID. The group identification for the work registration as defined in the file you sent.  
+  
+Original Transaction Sequence Number. The transaction sequence number for the work registration as defined 
+in the file you sent.  
+  
+Original Transaction Type. The transaction type (usually WRK) of the work registration.  
+  
+Creation Title. The title of the musical work which is being acknowledged.  
+  
+Submitter Creation Number. The unique identifier which you have assigned to this work.  
+  
+Recipient Creation Number. The unique identifier assigned to this work by the Recipient.  
+ 
+Recipient Temporary Creation Number. A unique identifier assigned to this work by the Recipient temporarily 
+until the work is ready for payment. 
+  
+Processing Date. The date that the Recipient processed the work registration.  
+  
+Transaction Status. A code indicating whether the work registration was accepted or rejected.  
+ 
+5.1 Transaction Status 
+ 
+One of the most important items of information in the Acknowledgement transaction is the status of your work 
+registration. Each status is listed below:  
+ 
+5.1.1 CO: Transaction in Conflict 
+An acknowledgement with status code “CO” indicates that the Recipient has an existing work registration that 
+contains data that conflicts with the registration submitted by you.  The acknowledgement will be followed by 
+the work registration as sent by you. This may be followed by an EXC transact ion that provides you with details 
+on the existing work that contains the conflicting claim.   Note that in this event, a Recipient may contact you in 
+person rather than sending you an electronic transaction. It is your responsibility to resolve the conflict with the 
+other interested parties, and resubmit the work if appropriate. Please note that not all Recipients use this status.  
+ 
+  
+
+--- Page 29 ---
+
+Common Works Registration User Manual 
+CWR19-0479  29 of 39 
+ 
+5.1.2 RA: Registration Accepted - Passed Validations 
+An acknowledgement with status code “RA” indicates that the transaction has been received, and it has passed 
+all of the mandatory edits. There may be some warning messages to indicate that a field or record has been 
+rejected. There also may be a message indicating that this registration is a possible duplicate. At this stage the 
+Recipient has not yet determined whether the registration is ready for payment -- further processing is required.  
+This is an intermediate transaction that provides you with a quick acknowledgment if a further review of the 
+registration is necessary. If a w ork can readily be determined to be ready for payment  or not , the 
+acknowledgement will contain the status code of “AS”,”AC”,”SR”, or “CR”. 
+ 
+5.1.3 AS: Registration Accepted – Not Ready for Payment 
+An acknowledgement with status code “AS” indicates that the registration has been accepted and a work has 
+been created with the information given by the submitting Submitter, however the work is not yet ready for 
+payment. Writers may have to be identified or additional shares added to complete the work. Some Recipients 
+complete the work right away while others wait until the work becomes active.  
+  
+5.1.4 AC: Registration Accepted With Changes– Not Ready for Payment 
+An acknowledgement with status code “AC” indicates that the registration was accepted but changes were made 
+to the submitted claim data (other than the addition of IPI name Numbers or ISWC). The status code of “AC” 
+indicates to you that there is additional data that can be used to augment the data in yo ur works database. 
+Furthermore, the work is not yet ready for payment. 
+ 
+5.1.5 SR: Registration Accepted –Ready for Payment 
+An acknowledgement with status code “SR” indicates that the registration has been accepted and a work has 
+been created with the information given by the submitting Submitter. This work is ready for payment.  
+  
+5.1.6 CR: Registration Accepted With Changes – Ready for Payment 
+An acknowledgement with status code “CR” indicates that the registration was accepted but changes were made 
+to the submitted claim data (other than the addition of IPI name Numbers or ISWC). The status code of “AC” 
+indicates to you that there is additional data that can be used to augment the data in your works database. This 
+work is ready for payment. 
+ 
+5.1.7 RJ: Registration Rejected - Failed Validations 
+The edits in the CWR document will be applied to the data.  If errors are found, an acknowledgement with status 
+code of “RJ” will be sent detailing the errors in a message record that precedes the record in error. The 
+registration will be rejected.  You need to correct the errors and resubmit the registration. Note that processing 
+will not stop at the first error encountered, but will continue to the end of the data. The only exception to this is 
+if a severe error is found which makes further processing inadvisable e.g. a group header record is missing. A 
+message detailing the error will precede the record you sent that is in er ror. It is not necessary to resend the 
+entire file -- only the work registrations which were in error.  
+ 
+5.1.8 NP: No Participation 
+An acknow ledgement with status code “NP” indicates that the Recipient that has no participation in the 
+controlled shares of the wo rk. As a result, the work may not have been subjected to the full range of edits. An 
+example would be a work with all BMI interested parties sent to ASCAP.  ASCAP would send an acknowledgement 
+with status “NP”.    
+ 
+
+--- Page 30 ---
+
+Common Works Registration User Manual 
+CWR19-0479  30 of 39 
+ 
+5.1.9 DR: De-registered 
+An acknowledgement with status code “DR” indicates that the publisher’s claim has been relinquished. 
+ 
+5.1.10 UN: Unknown Work in DRW 
+An acknowledgement with status code “UN” indicates that the Recipient has no record of the Submitter’s claim 
+to the work sent in the DRW transaction. 
+ 
+5.1.11 LD: Unable to De-register 
+An acknowledgement with status code “LD” indicates that the Recipient was not able to retract the Submitter’s 
+claim to the work sent in the DRW transaction. 
+ 
+5.1.12 NA: No Society Agreement Number 
+An acknowledgement with status code “NA” indicates that the work was rejected because there was no Society 
+Agreement Number supplied where an edit required one. 
+ 
+5.1.13 WA: Wrong Society Agreement Number 
+An acknowledgement with status code “WA” indicates that the work was rejected because the Society 
+Agreement Number supplied was either invalid or does not relate to the interested parties submitted on the 
+work. 
+  
+5.2 Messages  
+ 
+The message record details the error, warning, or information condition.  It precedes the record containing the 
+error condition. All messages can be found in the CWR Lookup Table. 
+ 
+The Message Type indicates the severity of the message – whether the registration has  been rejected (T), the 
+entire file has been rejected (E), or whether this is a warning.  
+  
+You can use the Record Type, Message Level, and Validation Number to refer to the CWR Functional 
+Specifications manual for the full explanation of the error. For example WRK, T, 001 refers to the first Transaction 
+Level validation for the record WRK.  The message text is a more user friendly version of the text in the Functional 
+Specifications.  
+  
+Record Prefix. This allows the Recipient to provide back any messages (MSG) that may result from the edits or 
+validations processes unique to a Recipient. 
+  
+Message Type. Indicates whether this information is a warning, error, or for information only.  Values are “F” for 
+Field Rejected, “R” for Record Rejected, “T” for Transaction Rejected, “G” for Group Rejected and “E” for Entire 
+File Rejected.  
+  
+Original Record Sequence Number. The sequence number of the record within the work registration which 
+caused the message to be generated.  
+  
+Record Type. The record type within the original transaction that caused generation of this message.  
+  
+
+--- Page 31 ---
+
+Common Works Registration User Manual 
+CWR19-0479  31 of 39 
+ 
+Message Level. The level of editing that was responsible for the generation of this message.  Values are “F” for 
+Field, “R” for Record, “T” for Transaction, “G” for Group and “E” for Entire File. 
+  
+Validation Number. The number of the failed edit.  The combination of record type, message level, and validation 
+number uniquely identifies the error.  
+  
+Message Text. A description of the error or warning.  
+  
+5.3 Existing Work in Conflict with Submitted Work  
+ 
+The Existing Work in Conflict with Submitted WRK Record (EXC) will be sent from a Recipient to a Submitter to 
+provide information on the details of the work that is in conflict with the details of the WRK transaction sent by 
+the Submitter. 
+ 
+If a work registration conflicts with an existing work, then an acknowledgement is sent with a status of “CO”. The 
+work registration is returned using the WRK transaction.  Finally, the details of the existing work are included in 
+the EXC transaction.  The EXC transaction has the same f ormat as the WRK.  Note that if the existing work was 
+not sent using CWR, it may be missing some data that is required under CWR.  
+6. ISWC Confirmation and Allocation 
+ 
+6.1 Request for Confirmation/Allocation of ISWC 
+ 
+The Request for Confirmation/Allocation of ISWC Record (ISR) may be sent by a Submitter to a society requesting 
+that the society pass the transaction on to the ISWC Allocation Service, which will then either issue a new ISWC 
+for the work or confirm the existing Preferred ISWC for that work. Information to aid in confirming the identity 
+of the work will be asked for later in the transaction in a separate record type. 
+ 
+Record Prefix.  This allows you to specify a request for confirmation/allocation of ISWC (ISW) work or an existing 
+work in conflict (EXC). 
+ 
+Work Title.  List the title by which the work is best known.  
+  
+Language Code. Indicate the language of the work title. These values reside in the Language Code Table. 
+  
+Submitter Work Number. This is your unique numerical code for this work.  
+  
+ISWC. The International Standard Work Code assigned to this work.  
+ 
+ISWC Preferred Indicator. Indicates whether the ISWC is one of the numbers marked as preferred by the ISWC 
+Resolution Service.   
+ 
+6.2 Confirmation of ISWC 
+ 
+The Confirmation of ISWC Record (ISA wri) may be sent in response to a request from a society to the ISWC 
+Allocation Service. The record format is the same as that used for the request record (ISW). 
+
+--- Page 32 ---
+
+Common Works Registration User Manual 
+CWR19-0479  32 of 39 
+ 
+6.3 Writer for ISWC 
+ 
+The Writer for ISW/ISA Record (WRI) contains the writer details for the works submitted in a request for 
+confirmation or allocation of an ISWC. 
+ 
+Record Prefix. This allows you to indicate writers (WRI) for ISRC confirmation/allocation. 
+  
+Submitter Work Number. This is your unique numerical code for this work.  
+ 
+Writer IPI Name Number. The unique identifier associated with this writer name. 
+  
+Writer Last Name. The last name of the writer.  
+  
+Writer First Name. The first name of the writer.  
+  
+Writer Role Code.  This code describes the role of the writer with respect to this work e.g. composer, author, 
+arranger.  
+7. License Reporting Transaction 
+ 
+The License Reporting Record (LIC) allows Submitters to report to Recipients details of licensed usages of a work. 
+This includes new or existing recordings, live performers, other work identifiers and synchronizations in audio 
+visual productions. LIC transactions will only be reported in a separate CWR_LIC file. No ACK file or return 
+transaction is required for CWR_LIC files. The license reporting header identifies the work to which the licensing 
+and usage information in the LIC transaction relates. Other information, like recordings, artist, etc. will be asked 
+for later in the transaction in separate record types. 
+ 
+Record Prefix.  This allows you to indicate license reporting or usage information (LIC) for a work. 
+ 
+Work Title.  List the title by which the work is best known.  
+ 
+Submitter Work Number. This is your unique numerical code for this work.  
+ 
+ISWC. The International Standard Work Code assigned to this work.  
+  
+
+--- Page 33 ---
+
+Common Works Registration User Manual 
+CWR19-0479  33 of 39 
+ 
+8. Workflow Diagrams 
+ 
+The Submitter work flow below shows how new work registrations and revisions are delivered to the Recipient 
+and how the Submitter should respond based on the acknowledgement status codes that they are returned. 
+ 
+
+--- Page 34 ---
+
+Common Works Registration User Manual 
+CWR19-0479  34 of 39 
+ 
+The Recipient work flow below shows how a Recipient should process CWR new work registrations 
+and revisions and how they should respond back to the submitting Submitter.
+   
+
+
+--- Page 35 ---
+
+Common Works Registration User Manual 
+CWR19-0479  35 of 39 
+ 
+9. Implementing CWR   
+ 
+At this part of the user manual you already know the importance and the complexity of the CWR format. After 
+developing your system according to the technical specifications described in the other technical manual, let's 
+review the implementation process of the CWR.   
+ 
+9.1 Testing Procedures – Submitter  
+ 
+At this point your system is ready to start using the CWR and all the information is according to the latest 
+documents of the CWR web site (www.cisac.org).The next steps are follows:  
+• Contact your local Recipient to verify which version they are using. A Submitter can test with many 
+Recipients at the same time but we recommend testing with one Recipient at the time.   
+• The Submitter should create a new email that will be used for the transference of all information related 
+to CWR. The Recipient you are dealing with must do the same. The testing phase is the time when you 
+are testing something new and it may take some time, so we recommend you to establish good 
+communication with the responsible contact for the CWR at the Recipient.  
+• If the Submitter is sending a file to a Recipient in another country, you must copy all the emails to your 
+local office. It is very important to link all the participants in this process.  
+• You must inform the Recipient if the works you are going to register are international or domestic. Some 
+Submitters are not able to register domestic works or international works and we recommend you to 
+put these works in separate files. The format of the information could be different so it is a good 
+precaution.   
+• Before you send the file to the Recipient you must contact t hem asking about other information you 
+might need to put in the CWR file.  
+• After all the initial correspondence with the Recipient, you should send them the first test file. This first 
+CWR file is very important to check the integrity of your file. We recommend you to use 100 works in 
+this first file. In this first file the structure and the layout of your file will be checked by the Recipient.   
+• The result of this first test will help the Submitter to know if the layout of the file is 100% correct. If it is 
+not correct, the Submitter should consult with the Recipient regarding the problem how it can be solved.  
+As the result of the first test the Recipient must send an ACK file to the Submitter and this ACK file must 
+be tested by the Submitter in all the different aspects (integrity, layout, etc).  
+• We do recommend you to send a second, larger, CWR test file with different works (around 200 works). 
+This second test is not mandatory but is it to ensure that the problems of the 1º file were solved before 
+moving into the live phase.    
+• The Recipient will send you another ACK file for this second CWR file. If this file was correctly processed 
+in your data base, you should inform the Recipient that you are ready to move to the production phase.   
+• A Submitter can test CWR with many Recipients. You don't need to go live with all of them at the same 
+time.   
+• Because of some specific edits, it may take some time to complete the implementation of the CWR with 
+some Recipients but it is very important for the Submitters to follow these recommendations.   
+ 
+  
+
+--- Page 36 ---
+
+Common Works Registration User Manual 
+CWR19-0479  36 of 39 
+ 
+9.2 Testing Procedures – Recipients   
+ 
+At this point your system is ready to start using the CWR and all the information is according to the latest 
+documents of the CWR web site (www.cisac.org). Let's review the next steps:  
+• The Recipient must be prepared to receive the inquiry from the Submitter regarding the CWR format. If 
+the Recipient has already implemented the CWR, the answer to the Submitter must be positive informing 
+the Submitter of the version of the CWR the Recipient is using (2.0 or 2.1).   
+• The Recipient must create a new email that will be used for the transference of all information related 
+to CWR. The Submitter you are dealing with must do the same. The testing period is the time when you 
+are testing something new and it may take some time, so we rec ommend you to establish good 
+communication with the responsible contact for the CWR at the Submitter that is sending you the files.  
+• If you are receiving a file from a Submitter based in another country, you must confirm that the 
+Submitter’s local office is copied on the correspondence. It is very important that the local Submitter is 
+included in all emails.  
+• After the first contact and before the first test file, the Recipient must ask the Submitter about the first 
+file (number of works, domestic or international repertoire, etc). We do not recommend files with more 
+than 100 works in the first test file. The Recipient must inform the Submitter about any Recipient specific 
+information.  
+• The Submitter will send the first file to be uploaded into your system. Some errors might have occurred 
+during this process. These errors could be caused by different reasons, including problems in the layout 
+of the file or problems with the information in the file. The Recipient should send an ACK file back to the 
+Submitter reporting all problems detected during the upload process.   
+• At this time the Recipient must help the Submitter to solve the problems in the layout and the structure 
+of the file. The Recipient must ask for more test files to ensure the problems were solved,.   
+• We do recommend that the second CWR test file be sent to the Recipient.  This file should contain more 
+works that are different than the works included in the first test fil e. This second test is not mandatory 
+but is it good to ensure that the problems of the 1º file were solved.   
+• After the second file, the Recipient must send the ACK files to the Submitter with the information from 
+those works. The Recipient must also send other information they might consider relevant for the 
+implementation of the CWR.   
+• If the Recipient does not feel comfortable moving into the live phase, they can ask the Submitter for 
+more test files.    
+• After all of the testing has been completed the Recipient and the Submitter must agree to move on to 
+the live phase.   
+ 
+The interchange of CWR files between Submitter and Recipient can happen in different ways: email, CD, FTP, etc. 
+For safety reasons we do recommend you to use e-mail during this process.  
+ 
+9.3 Production  
+ 
+After completing the testing process, both the Recipient and Submitter are ready to move to the live phase.  
+  
+The process that will be adopted by Submitters and Recipients will be almost the same from the testing phase. 
+The Submitter will create the files and sent it to the Recipients.  
+The Recipient will extract the information and upload this information to their data base. The information will 
+be processed in the Recipient data base and after that the Recipient will create the ACK file.   
+  
+
+--- Page 37 ---
+
+Common Works Registration User Manual 
+CWR19-0479  37 of 39 
+ 
+The Recipient will send the correspondent ACK back file to the Submitter and the circle will be completed.   
+  
+The Recipients have different methods to proceed with the CWR files. Some of the Recipients send back two ACK 
+files in this process and some send only one file back to the Submitters. These methods must be considered 
+during the implementation process and the Submitter must be aware of this possibility. The final result is the 
+same and we do recommend you to stay in touch with the Submitter or the Recipient during the whole process 
+with the intention of avoiding problems during the implementation process.  
+10. Examples of the file structure   
+Examples can be found in supplemental documentation. 
+ 
+  
+
+--- Page 38 ---
+
+Common Works Registration User Manual 
+CWR19-0479  38 of 39 
+ 
+11. Glossary  
+ 
+We know that CWR involves a lot very specific terms and this glossary is to help the user to better understand 
+some important principles.   
+  
+CHAIN / CHAIN OF TITLE: The chain of title is a line where rights are passed along, for example from a writer to 
+an original publisher to a sub- publisher. In a CWR file a chain shows how rights flow to the entitled parties, every 
+song will have at least one chain.  
+   
+CO-PUBLISHING: An agreement where there may be one writer and two co -existing publishers. For CWR 
+purposes, this means that a song will have two chains.  
+ 
+DRIP FEED: This is a process where a Recipient sends a number of ACK files (ACK files defined above) back to the 
+Submitter, as the works from the original file are processed over a period of time.  
+   
+FTP SITE: An FTP (file transfer protocol) site is like a postbox where Submitters can securely send f iles to a 
+Recipient. Usually a numeric address and a password or other security is required.  
+  
+NON-PARTICIPATION: This is when a song is  not intended for a particular Recipient, when the song is i ncluded 
+in a file to be sent to many Recipients.  
+ 
+IPI NAME NUMBER: The unique identifier associated with the interested party name.  The IP Name Number is a 
+unique identifier allocated automatically by the IPI System to each name. It consists of 11 digits 99999999999. 
+The last two digits are check -digits (modulus 101). An IP may have more than one IP name. New IP names will 
+get new IP Name Numbers. A name of an IP name number may only be changed in case of spelling corrections. 
+ 
+IPI BASE NUMBER: This number is the unique identifier associated with the interested party. The IP Base Number 
+is a unique identifier allocated automatically by the IPI System to each interested party (IP), being either a natural 
+person or legal entity. The number consists of 13 characters: letter i (I), hyphen ( -), nine digits, hyphen ( -), one 
+check-digit. I-999999999-9. (weighted modulus 10, I weight = 2, adapted from ISO 7064). You can find more 
+information in the CISAC web site. 
+ 
+TERRITORY INFORMATION SYSTEM (TIS): The TIS system contains four digit numeric codes for each country of 
+the world.  It also contains codes for groupings of countries e.g. Europe, North America, as well as a code for 
+world. The TIS system is based on the ISO territory codes but it contains group names that the ISO does not, and 
+excludes some sub-territories that the ISO includes.  
+ 
+VALIDATION: To send complex data to each other, the data must comply with rules. The rules can be simple, or 
+complex as required in some cases. Validation is the automatic process where a computer checks that the data 
+meets the required rules.  
+ 
+ 
+ 
+ 
+  
+
+--- Page 39 ---
+
+Common Works Registration User Manual 
+CWR19-0479  39 of 39 
+ 
+Category of the document : User Manual 
+Status of the document : Draft 
+Distribution List : CISAC Recipients and their members 
+  
+Table of Revisions and main modifications  
+Revision # Date Main modifications 
+0 09/2017 • Updated to correspond to CWR 3.0 technical specification 
+ 
+Summary  
+This document is written for music Submitters and Recipients administering performing, mechanical and/or 
+synchronization rights. It describes how to use version 3.0 of the Common Works Registration format. CWR v3.0 
+was adopted as a CISAC standard by the Information Services Committee (ISC) at its meeting on April 4th, 2019 in 
+Nice.  
+  
+Send comments/questions regarding this manual to cwr@cisac.org or to any member of the CWR Management 
+Committee. 

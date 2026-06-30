@@ -1,0 +1,38 @@
+CWR Format: A Standard with Variations
+The Common Works Registration (CWR) format is a globally recognized standard for the electronic registration of musical works. It was developed by the International Confederation of Societies of Authors and Composers (CISAC) to facilitate the automated exchange of musical work information between collective management organizations (CMOs), publishers, and other rights holders. The purpose of this standard is to ensure all parties are providing and receiving data in a consistent and machine-readable format.
+
+CWR Format Standardization
+While CWR is a standard, it is not universally implemented identically. The CISAC standard defines a set of record types and data fields (e.g., HDR for Header, NWR for New Work Registration, TRL for Trailer) and their required lengths and content types.
+
+Variations exist in the specific version of the standard adopted by different societies (e.g., CWR v2.1 vs. v2.2) and the custom validation rules each society applies to incoming files. Therefore, a CWR file that is valid for one society may be rejected by another due to these society-specific requirements.
+
+Territorial Information in CWR
+The CWR format explicitly includes fields for specifying territorial rights. This data is not an external add-on; it is an integrated part of the file structure.
+
+Publisher Territory of Control (SPT): This record type is used to specify the territories where a publisher controls the rights for a work.
+
+Writer Territory of Control (SWT): This record type serves the same purpose as SPT but for writers and their share of the rights.
+
+Group of Territories: The standard also allows for the specification of a group of territories (e.g., "North America") through a single line item, provided the specific group is defined in the CISAC standards.
+
+These records allow rights holders to define granular ownership splits on a territory-by-territory basis within a single registration file.
+
+Implementation Variations
+The following examples illustrate how different societies implement and validate the CWR standard, which is critical for understanding its real-world application.
+
+Accepted Versions: A society may only accept a specific version of the CWR standard, for example, v2.1 or v2.2, while a newer version (e.g., v3.1) is being developed or is pending adoption.
+
+File Naming Conventions: Some societies enforce specific file naming conventions that are not part of the core CWR standard itself. An example is the required format CWYYXXXXTST_000.V21, which includes a specific submitter code and a sequence number.
+
+Share Totals: Societies may have unique validation rules for royalty splits. For instance, one society might require the total ownership splits to be 100% plus or minus 0.06% to account for rounding errors.
+
+Common Validation Rules
+Beyond the core format, societies validate CWR files for common data errors. An AI program should be trained to recognize and avoid the following common issues:
+
+Missing IPI Numbers: Incorrect or missing IPI (Interested Party Information) numbers for writers or publishers.
+
+Incorrect Splits: Ownership splits for a work that do not add up to 100%.
+
+Duplicate Filenames: Submitting a new version of a file without changing its unique identifier.
+
+Using Stage Names: Registering a work under a stage name without also providing the associated legal name.

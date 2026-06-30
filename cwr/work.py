@@ -1322,7 +1322,13 @@ class RecordingDetailRecord(TransactionRecord):
                  isrc=None,
                  recording_format=None,
                  recording_technique=None,
-                 media_type=None):
+                 media_type=None,
+                 recording_title='',
+                 version_title='',
+                 display_artist='',
+                 record_label='',
+                 isrc_validity='',
+                 submitter_recording_identifier=''):
         super(RecordingDetailRecord, self).__init__(
             record_type,
             transaction_sequence_n,
@@ -1343,6 +1349,14 @@ class RecordingDetailRecord(TransactionRecord):
         self._recording_format = recording_format
         self._recording_technique = recording_technique
         self._media_type = media_type
+        # CWR 2.2 additional fields
+        self._recording_title = recording_title
+        self._version_title = version_title
+        self._display_artist = display_artist
+        self._record_label = record_label
+        # Additional V2.2 trailing optional fields
+        self._isrc_validity = isrc_validity
+        self._submitter_recording_identifier = submitter_recording_identifier
 
     @property
     def ean(self):
@@ -1503,6 +1517,54 @@ class RecordingDetailRecord(TransactionRecord):
     def recording_technique(self, value):
         self._recording_technique = value
 
+
+    @property
+    def recording_title(self):
+        return self._recording_title
+
+    @recording_title.setter
+    def recording_title(self, value):
+        self._recording_title = value
+
+    @property
+    def version_title(self):
+        return self._version_title
+
+    @version_title.setter
+    def version_title(self, value):
+        self._version_title = value
+
+    @property
+    def display_artist(self):
+        return self._display_artist
+
+    @display_artist.setter
+    def display_artist(self, value):
+        self._display_artist = value
+
+    @property
+    def record_label(self):
+        return self._record_label
+
+    @record_label.setter
+    def record_label(self, value):
+        self._record_label = value
+
+    @property
+    def isrc_validity(self):
+        return self._isrc_validity
+
+    @isrc_validity.setter
+    def isrc_validity(self, value):
+        self._isrc_validity = value
+
+    @property
+    def submitter_recording_identifier(self):
+        return self._submitter_recording_identifier
+
+    @submitter_recording_identifier.setter
+    def submitter_recording_identifier(self, value):
+        self._submitter_recording_identifier = value
 
 class InstrumentationDetailRecord(TransactionRecord):
     """

@@ -115,7 +115,7 @@ class InterestedPartyRecord(TransactionRecord, metaclass=ABCMeta):
                  record_type='',
                  transaction_sequence_n=0,
                  record_sequence_n=0,
-                 first_recording_refusal='U',
+                 first_recording_refusal='N',
                  usa_license='',
                  pr_society=None,
                  pr_ownership_share=0,
@@ -292,7 +292,7 @@ class InterestedPartyRecord(TransactionRecord, metaclass=ABCMeta):
 
 class IPTerritoryOfControlRecord(TransactionRecord):
     """
-    Represents a CWR Publisher or Writer Territory of Control (SPT/SWT).
+    Represents a CWR Publisher or Writer Territory of Control (SPT/OPT/SWT).
 
     This indicates if a Publisher or Writer has control or not over a
     Territory, and the shares it has on it.
@@ -551,7 +551,7 @@ class PublisherRecord(InterestedPartyRecord):
                  sr_society=None,
                  sr_ownership_share=0,
                  special_agreements=None,
-                 first_recording_refusal='U',
+                 first_recording_refusal='N',
                  usa_license=''
                  ):
         """
@@ -995,7 +995,8 @@ class PublisherForWriterRecord(TransactionRecord):
                  publisher_name='',
                  writer_ip_n='',
                  submitter_agreement_n=None,
-                 society_assigned_agreement_n=None
+                 society_assigned_agreement_n=None,
+                 publisher_sequence_n=0
                  ):
         super(PublisherForWriterRecord, self).__init__(
             record_type,
@@ -1010,6 +1011,9 @@ class PublisherForWriterRecord(TransactionRecord):
         # Agreement IDs
         self._submitter_agreement_n = submitter_agreement_n
         self._society_assigned_agreement_n = society_assigned_agreement_n
+
+        # Publisher chain link
+        self._publisher_sequence_n = publisher_sequence_n
 
     @property
     def publisher_ip_n(self):
@@ -1082,6 +1086,21 @@ class PublisherForWriterRecord(TransactionRecord):
     def publisher_name(self, value):
         self._publisher_name = value
 
+    @property
+    def publisher_sequence_n(self):
+        """
+        Publisher Sequence # field. Numeric.
+
+        Must match the Publisher Sequence # of the relating SPU/OPU record.
+
+        :return: the publisher sequence number in the chain
+        """
+        return self._publisher_sequence_n
+
+    @publisher_sequence_n.setter
+    def publisher_sequence_n(self, value):
+        self._publisher_sequence_n = value
+
 
 class WriterRecord(InterestedPartyRecord):
     """
@@ -1100,9 +1119,9 @@ class WriterRecord(InterestedPartyRecord):
                  writer=None,
                  writer_designation=None,
                  work_for_hire=False,
-                 writer_unknown='F',
-                 reversionary='U',
-                 first_recording_refusal='U',
+                 writer_unknown='',
+                 reversionary='',
+                 first_recording_refusal='N',
                  usa_license='',
                  pr_society=None,
                  pr_ownership_share=0,

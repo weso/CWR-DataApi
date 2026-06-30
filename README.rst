@@ -1,7 +1,7 @@
 CWR Data Model API
 ==================
 
-This projects offers a domain model for the CISAC CWR standard v2.1 to be
+This projects offers a domain model for the CISAC CWR standard v2.2 to be
 used on Python applications, along a series of parsing which allow
 transformations between the model and various data structures.
 
@@ -12,6 +12,9 @@ works data.
 
 While the CWR standard has been created by `CISAC`_ this library has been
 developed by `WESO`_ independently, with help from `BMAT`_.
+
+This is a fork of the `official CWR-DataApi repository`_ by WESO, updated to
+support CWR standard v2.2 by `max1millions`_.
 
 .. image:: https://badge.fury.io/py/cwr-api.svg
     :target: https://pypi.python.org/pypi/cwr-api
@@ -51,9 +54,10 @@ Prerequisites
 
 The project has been tested in the following versions of the interpreter:
 
-- Python 3.4
-- Python 3.5
-- Python 3.6
+- Python 3.9
+- Python 3.10
+- Python 3.11
+- Python 3.12
 
 All other dependencies are indicated on the requirements.txt file.
 The included makefile can install them with the command:
@@ -146,9 +150,11 @@ The project has been released under the `MIT License`_.
 .. _BMAT: http://www.bmat.com/
 .. _WESO: http://www.weso.es/
 .. _project issues page: https://github.com/weso/CWR-DataApi/issues
-.. _Pyparsing: https://pyparsing.wikispaces.com/
+.. _Pyparsing: https://pyparsing-docs.readthedocs.io/
 .. _Pypi package: https://pypi.python.org/pypi/CWR-API
 .. _Sphinx: http://sphinx-doc.org/
 .. _latest docs: http://cwr-dataapi.readthedocs.org
 .. _GitHub project page: https://github.com/weso/CWR-DataApi
+.. _official CWR-DataApi repository: https://github.com/weso/CWR-DataApi
+.. _max1millions: https://github.com/max1millions
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php

@@ -1,0 +1,237 @@
+# MusicMark
+
+# CWR Registration: Getting Started
+
+--- Page 2 ---
+
+### Contents
+
+Contents ............................................................................................................................................................ 2
+
+1. Introduction.................................................................................................................................................. 3
+
+2. The Test Phase: An Overview ...................................................................................................................... 3
+
+3. File Naming Convention.............................................................................................................................. 3
+
+4. Accessing the SFTP Site .............................................................................................................................. 4
+
+5. SFTP Troubleshooting ................................................................................................................................. 4
+
+6. What to include in your test files ................................................................................................................. 5
+
+7. First Acknowledgments ............................................................................................................................... 5
+
+8. Additional Acknowledgments ..................................................................................................................... 5
+
+9. Acknowledgement Information from Societies ........................................................................................... 6
+
+10. Further Testing ........................................................................................................................................... 7
+
+11. Going Live ................................................................................................................................................. 7
+
+12. Additional Information .............................................................................................................................. 7
+
+13. Contact Information ................................................................................................................................... 7 Annex ............................................................................................................................................................... 8 CWR edits ........................................................................................................................................................ 8 New Edits ......................................................................................................................................................... 8 Edits to be removed by ASCAP, BMI and SOCAN ......................................................................................... 8 Society-Specific 2nd Acknowledgment Edits: ................................................................................................. 8
+
+--- Page 3 ---
+
+### 1. Introduction
+
+The goal of MusicMark, an initiative from ASCAP, BMI, and SOCAN, is to make the works registration process more efficient and create a unified copyright picture in North America for the works we represent. The first phase of this collaboration will enable publishers to submit/receive files to/from one SFTP site (rather than three) and to receive one common first acknowledgment (as opposed to one from each PRO). This document provides you with step-by-step instructions on how to test CWR with MusicMark.
+
+### 2. The Test Phase: An Overview
+
+All publishers wishing to register CWR files with MusicMark are required to complete the test phase. The following points provide an overview of the test phase:
+
+• Publisher contacts MusicMark at MusicMark@MusicMark.com.
+
+• Upon being provided with SFTP credentials from a representative, publisher uploads a test CWR file to the test SFTP site (no more than 100 works per file). MusicMark runs the file in the test environment and generates a 1st Acknowledgment (within 24-48
+
+• hours of file submission). Publisher receives an e-mail notifying them that their 1st Acknowledgment is ready for pickup. Publisher retrieves MusicMark 1st Acknowledgment and processes it in their system.
+
+• Each PRO generates a 2nd Acknowledgment (according to the agreed upon testing schedule).
+
+•
+
+• If a second test file is necessary, MusicMark will alert the publisher.
+
+• Following a successful test phase, MusicMark will promote the publisher to production and regular CWR submissions can commence.
+
+### 3. File Naming Convention
+
+The CWR process is automated and only recognizes an explicit file naming standard in order to pick up and process the file (Note: files that do not follow the naming convention will be rejected). The accepted file naming convention is CWyynnnnsss_707.Vxx. The following table describes the elements that comprise the file name: CW The prefix used to identify CWR
+
+Yy Identifies the year
+
+Nnnn The sequence number assigned by the publisher
+
+Sss The sender code (2 or 3 char code for publisher, or the 3-digit code for society)
+
+707 Identifies the recipient of the file (707 = MusicMark)
+
+Vxx The version of CWR being used
+
+--- Page 4 ---
+
+Note: Currently, publishers indicate either 000 or the receiving society code in each file name. Publishers who are already approved CWR submitters will need to either continue to use 000 or change the file name to 707.
+
+### 4. Accessing the SFTP Site
+
+To begin testing you will need to access the SFTP site. Your SFTP test credentials will be sent to you via email. Once you have received these you can access the SFTP site at sftp://qaftp.musicmark.com :
+
+Via Third Party SFTP Software
+
+1. Enter sftp://qaftp.musicmark.com as the site
+
+2. Enter your username and password
+
+3. Enter 22 for port number.
+
+Third Party SFTP Software are FileZilla and WinSCP
+
+For more information about connecting, refer the link https://wiki.filezilla-project.org/FileZilla_Client_Tutorial_(en)
+
+More information about connecting, refer to https://winscp.net/eng/docs/ui_login
+
+### 5. SFTP Troubleshooting
+
+If you encounter any issues when attempting to access the SFTP site, please contact your network administrator and check the firewall settings within your company’s network.
+
+--- Page 5 ---
+
+### 6. What to include in your test files
+
+For the purpose of testing a broad range of business case scenarios, we ask you to submit a variety of works that are representative of your catalog. They may include the following types of works:
+
+• ASCAP, BMI, and SOCAN works with foreign parties
+
+• Works with foreign writers collecting more than 100% of the writing share
+
+• Chain of title (i.e. links)
+
+• Co-publishing agreements
+
+• Administration agreements
+
+• Sub-publishing agreements
+
+Note: Test files should not exceed 100 works.
+
+### 7. First Acknowledgments
+
+Following the submission of your CWR file, MusicMark will validate the file. Once the file has been validated you will receive your 1stAcknowledgment. The 1st Acknowledgment will contain the following information:
+
+• The header record will indicate 707MUSICMARK instead of a specific society name and code
+
+• The file name will indicate 707.
+
+• Work ID numbers will not be included in the first acknowledgment files
+
+Note: If a file is rejected, all subsequent files will be placed on hold until the rejected file is corrected and reposted to the SFTP site with the same file name. Once the corrected file is successfully accepted, all held files will automatically be processed in the order that they were received.
+
+### 8. Additional Acknowledgments
+
+Following your 1st Acknowledgment you will receive additional acknowledgments from each participating society via MusicMark. The file name will indicate the appropriate society from which these second acknowledgements are derived. A file name containing the code 010 denotes ASCAP, 021 denotes BMI and 101 denotes SOCAN. The following table outlines those acknowledgments:
+
+--- Page 6 ---
+
+1st ACK 2nd ACK Subsequent 2nd ACK
+
+Delivered within 24-48 after the 1st ACK
+
+Delivered within 24-48 after the 1st ACK Status Status types included are: types included are: RJ - Transaction Rejected AC - Registration Accepted - with changes DU - Duplicate Registration RA - Transaction Accepted NP - Society has No Participation in Work NP - ASCAP doesn't license this work ASCAP
+
+Subsequent 2nd ACKs will also generate anytime a work record update is made. Delivered within 24-48 after the 1st ACK
+
+Generated Daily Status Status types included are: types included are: AC - Registration Accepted - with changes AS - Registration Accepted - as is RA - Registration Accepted CO - Conflict Delivered within 24-48 hours. RJ - Transaction Rejected DU - Duplicate Registration BMI DU - Duplicate Registration RC - The publisher claim to this work is rejected NP - BMI doesn't license this work This acknowledgement will return a status for every original transaction in the submitters file. Subsequent 2nd ACKs will also generate anytime a work record update is made. MusicMark Status types included are: Delivered quarterly. RA - Transaction Accepted RJ - Transaction Rejected DU - Duplicate Registration This acknowledgement will return a status of all NP - No territory of US or Canada Delivered within 24-48 after the 1st ACK. accepted transactions across all files that have become payment ready within the given quarter. This acknowledgement will return a status Status types included are: for every original transaction in the AS - Registration Accepted - as sent submitters file with the exception of RJ - AC - Registration Accepted - with changes Transaction Rejected from the corresponding MusicMark 1st ACK and will include SOCAN Work ID#s for all accepted transactions. Status types included are: RA - Transaction Accepted SOCAN RJ - Transaction Rejected DU - Duplicate Registration NP - Society has No Participation in Work AS - Registration Accepted - as sent AC - Registration Accepted - with changes
+
+### 9. Acknowledgement Information from Societies
+
+No Participation (NPs) An NP within the MusicMark 1st acknowledgement indicates that the title is not intended to be
+
+• registered for the territories of the US and/or Canada.
+
+--- Page 7 ---
+
+An NP within a PRO’s 2nd acknowledgement will still generate a Work ID# but indicates that the title
+
+• is not intended for licensing by that specific PRO. Work ID#s ASCAP and BMI will both load works and assign work IDs when the transaction record includes the territory of the US. SOCAN will load and assign work IDs when the transaction includes the transaction record territory of Canada. All three PROs will load and assign work IDs when the transaction include the territory of the US and Canada.
+
+### 10. Further Testing
+
+If any additional testing is required, you will be contacted by a representative of the relevant PRO.
+
+### 11. Going Live
+
+Once MusicMark has determined that all testing has been completed successfully, you will be notified that you have been approved to submit CWR files in the production environment. Your SFTP credentials will be emailed to you (these are different from the credentials you used for testing). Once you have received your credentials you can access the production SFTP site at sftp://ftp.musicmark.com process for uploading files, receiving email notifications and downloading acknowledgments will remain the same as the testing process (see section 6).
+
+### 12. Additional Information
+
+Please note the following information:
+
+• Your files will remain in your SFTP folder for 30 days and will then be archived at MusicMark Service Center If one of the three societies rejects a registration upon 2nd Acknowledgment, you will be required to
+
+• submit an REV (Revision) transaction.
+
+• If you use a third party vendor to build your CWR files and process the acknowledgements, please approach your representative at that company should you have any questions about the technology of these files.
+
+### 13. Contact Information
+
+Should you have any questions, please contact us at: MusicMark@MusicMark.com
+
+--- Page 8 ---
+
+### Annex
+
+### CWR edits
+
+#### New Edits
+
+The following list of edits will be run against all files submitted and serve as the collective list of ASCAP, BMI and SOCAN first acknowledgment checks. Please update your submissions accordingly.
+
+▪ SPU Record Level Validation Rule 13
+
+ SPU 13 - If the original publisher belongs to ASCAP, BMI or SESAC, then the sub-publisher or administrator in the chain for the territory of the US must belong to the same US rights organization.
+
+▪ SPT Record Level Validation Rule 6
+
+ SPU 6 - I indicator - The first SPT record immediately following an SPU must have the “Inclusion/Exclusion Indicator” set to “I.” ▪ New PWR edit
+
+ If SWR is BMI, then any related publisher with an SPT that includes the territory of the US must be BMI or a non-US PRO.
+
+ If SWR is ASCAP, then any related publisher with an SPT that includes the territory of the US must be ASCAP or a non-US PRO.
+
+#### Edits to be removed by ASCAP, BMI and SOCAN
+
+The following society-specific edits currently in place will be removed to maintain consistency across the individual systems.
+
+#### ▪ ASCAP
+
+o NWR 29 - If the total performing ownership shares for all ASCAP writers on a work exceed 50%, the work will be rejected.
+
+o NWR 44 - If the “Shares Change” flag is set to “Y” and all the writers belong to US PROs, the work will be rejected.
+
+o SPU 9 - There is no collection territory that includes the United States within that chain of title.
+
+#### ▪ BMI
+
+o NWR F 23 - Musical Work Distribution Category equal to “JAZ” was entered and BMI is represented on the work, but “Duration” was missing.
+
+#### ▪ SOCAN
+
+o No edits for removal
+
+#### Society-Specific 2nd Acknowledgment Edits:
+
+Each publisher will receive a second acknowledgment from ASCAP, BMI, and SOCAN individually. Here are some edits that will be applied to second acknowledgments:
+
+--- Page 9 ---
+
+▪ ASCAP: the below edits had been included in ASCAP’s first acknowledgment and now will instead be included in the second acknowledgment o NWR 42 –Total collection shares not 100% for the US territory.
+
+o NWR 43 - There must be both an SWT and SPT record for the performing right for a territory that includes the US.
+
+o SWT 4 - The first SWT record immediately following an SWR must have the “Inclusion/Exclusion Indicator” set to 'I.'
+
+▪ BMI and SOCAN: no changes

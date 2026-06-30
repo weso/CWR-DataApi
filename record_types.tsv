@@ -1,0 +1,13 @@
+Record Type	Record Name	Function / Description
+HDR	Transmission Header	File-level header, identifies the sender and CWR version.
+TRL	Transmission Trailer	File-level trailer, provides a total count of groups, works, and lines for validation.
+GRH	Group Header	Indicates the start of a group of transactions of a single type.
+NWR	New Work Registration	Initiates a new work registration transaction.
+REV	Revised Registration	Initiates a revised work registration transaction.
+SPU	Publisher Controlled by Submitter	Identifies a publisher controlled by the submitting party with ownership shares.
+SPT	Publisher Territory of Control	Specifies collected shares for a publisher in a given territory.
+SWR	Writer Controlled by Submitter	Identifies a writer controlled by the submitting party with ownership shares.
+SWT	Writer Territory of Control	Specifies collected shares for a writer in a given territory.
+OPU	Other Publisher	Identifies an uncontrolled publisher.
+OWR	Other Writer	Identifies an uncontrolled writer.
+PWR	Publisher for Writer	Links a controlled writer to their controlling publisher.

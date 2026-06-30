@@ -192,6 +192,13 @@ class CwrRecordEncoderFactory(object):
                     processed[rule_id].append(rule)
                 else:
                     processed[rule_id] = [rule]
+        # Add aliases for equivalent territory-of-control record types:
+        # - Treat OWT as SWT for field templates
+        # - Treat OPT as SPT for field templates
+        if 'SWT' in processed and 'OWT' not in processed:
+            processed['OWT'] = processed['SWT']
+        if 'SPT' in processed and 'OPT' not in processed:
+            processed['OPT'] = processed['SPT']
         return processed
 
     def get_format_encoders(self, record_id):
@@ -201,7 +208,7 @@ class CwrRecordEncoderFactory(object):
 
     def get_encoder(self, entity):
         if entity.record_type not in self._record_configs:
-            raise NameError('The record type %s not found in config %s' % entity.record_type)
+            raise NameError('The record type %s not found in config %s' % (entity.record_type, list(self._record_configs.keys())))
         record_configs = self._record_configs[entity.record_type]
         if isinstance(entity, TransactionRecord):
             return TransactionCwrRecordEncoder(record_configs, self._field_configs)

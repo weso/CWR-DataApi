@@ -44,7 +44,7 @@ class GroupHeader(Record):
                  record_type='',
                  group_id=0,
                  transaction_type='',
-                 version_number='02.10',
+                 version_number='02.20',
                  batch_request_id=0
                  ):
         super(GroupHeader, self).__init__(

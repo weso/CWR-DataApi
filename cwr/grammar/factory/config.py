@@ -15,7 +15,7 @@ rule_at_least = \
     pp.Word(pp.nums).setResultsName('count')
 rule_at_least.setParseAction(lambda v: int(v[0]))
 
-_rule_config_string = pp.Regex('[^()\[\]\\n,:]*')
+_rule_config_string = pp.Regex(r'[^()\[\]\n,:]*')
 _rule_config_string.setParseAction(lambda v: v[0].strip())
 
 _rule_identifier = _rule_config_string + pp.Literal(':').suppress()

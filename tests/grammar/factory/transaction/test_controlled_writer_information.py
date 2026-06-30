@@ -25,8 +25,8 @@ class TestControlledWriterInformationGrammar(unittest.TestCase):
         nwn = 'NWN0000123400000023A12345678LAST NAME                                                                                                                                                       FIRST NAME                                                                                                                                                      ES'
         territory_1 = 'SWT0000123400000023A12345678010120500002520I0008Y012'
         territory_2 = 'SWT0000123400000023A12345678010120500002520I0008Y012'
-        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
-        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
+        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
+        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
 
         record = writer + '\n' + nwn + '\n' + territory_1 + '\n' + territory_2 + '\n' + publisher_1 + '\n' + publisher_2
 
@@ -44,8 +44,8 @@ class TestControlledWriterInformationGrammar(unittest.TestCase):
     def test_territory_1(self):
         writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
         territory = 'SWT0000123400000023A12345678010120500002520I0008Y012'
-        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
-        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
+        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
+        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
 
         record = writer + '\n' + territory + '\n' + publisher_1 + '\n' + publisher_2
 
@@ -61,8 +61,8 @@ class TestControlledWriterInformationGrammar(unittest.TestCase):
     def test_territory_2(self):
         writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
         territory = 'SWT0000123400000023A12345678010120500002520I0008Y012'
-        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
-        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
+        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
+        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
 
         record = writer + '\n' + territory + '\n' + territory + '\n' + publisher_1 + '\n' + publisher_2
 
@@ -79,8 +79,8 @@ class TestControlledWriterInformationGrammar(unittest.TestCase):
     def test_nra(self):
         writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
         nwn = 'NWN0000123400000023A12345678LAST NAME                                                                                                                                                       FIRST NAME                                                                                                                                                      ES'
-        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
-        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
+        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
+        publisher_2 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
 
         record = writer + '\n' + nwn + '\n' + publisher_1 + '\n' + publisher_2
 
@@ -95,7 +95,7 @@ class TestControlledWriterInformationGrammar(unittest.TestCase):
 
     def test_min(self):
         writer = 'SWR0000123400000023A12345678LAST NAME                                    FIRST NAME                    NA 92370341200014107338009020500100300001102312YYY I-000000229-7012345678901B'
-        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
+        publisher_1 = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
 
         record = writer + '\n' + publisher_1
 
