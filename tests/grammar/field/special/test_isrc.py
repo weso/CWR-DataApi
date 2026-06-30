@@ -57,9 +57,9 @@ class TestISRCExceptionShort(unittest.TestCase):
 
     def test_invalid_country(self):
         """
-        Tests an average code.
+        Tests that a non-alpha country prefix is rejected.
         """
-        code = 'AA-A2B-12-12'
+        code = '1S-A2B-12-12'
 
         self.assertRaises(ParseException, self.isrc.parseString, code)
 
@@ -78,8 +78,8 @@ class TestISRCExceptionLong(unittest.TestCase):
 
     def test_invalid_country(self):
         """
-        Tests an average code.
+        Tests that a non-alpha country prefix is rejected.
         """
-        code = 'AAABC9100055'
+        code = '1SABC9100055'
 
         self.assertRaises(ParseException, self.isrc.parseString, code)
