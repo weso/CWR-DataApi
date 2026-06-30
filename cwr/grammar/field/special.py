@@ -7,7 +7,6 @@ import pyparsing as pp
 from cwr.other import VISAN, AVIKey
 from cwr.grammar.field import basic
 from config_cwr.accessor import CWRConfiguration
-from data_cwr.accessor import CWRTables
 
 """
 Grammar for special cases and other fields.
@@ -234,25 +233,10 @@ def _isrc_short(name=None):
     :return: grammar for an ISRC field
     """
 
-    config = CWRTables()
-
     if name is None:
         name = 'ISRC Field'
 
-    # separator = pp.Literal('-')
-    country = config.get_data('isrc_country_code')
-    # registrant = basic.alphanum(3)
-    # year = pp.Regex('[0-9]{2}')
-    # work_id = pp.Regex('[0-9]{2}')
-
-    country_regex = ''
-    for c in country:
-        if len(country_regex) > 0:
-            country_regex += '|'
-        country_regex += c
-    country_regex = '(' + country_regex + ')'
-
-    field = pp.Regex(country_regex + '-.{3}-[0-9]{2}-[0-9]{2}')
+    field = pp.Regex('[A-Z]{2}-.{3}-[0-9]{2}-[0-9]{2}')
 
     # country.setName('ISO-2 Country Code')
     # registrant.setName('Registrant')
@@ -285,24 +269,10 @@ def _isrc_long(name=None):
     :return: grammar for an ISRC field
     """
 
-    config = CWRTables()
-
     if name is None:
         name = 'ISRC Field'
 
-    country = config.get_data('isrc_country_code')
-    # registrant = basic.alphanum(3)
-    # year = pp.Regex('[0-9]{2}')
-    # work_id = pp.Regex('[0-9]{5}')
-
-    country_regex = ''
-    for c in country:
-        if len(country_regex) > 0:
-            country_regex += '|'
-        country_regex += c
-    country_regex = '(' + country_regex + ')'
-
-    field = pp.Regex(country_regex + '.{3}[0-9]{2}[0-9]{5}')
+    field = pp.Regex('[A-Z]{2}.{3}[0-9]{2}[0-9]{5}')
 
     # country.setName('ISO-2 Country Code')
     # registrant.setName('Registrant')
