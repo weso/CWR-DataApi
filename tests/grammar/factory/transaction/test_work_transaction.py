@@ -61,7 +61,7 @@ class TestWorkTransactionGrammar(unittest.TestCase):
                  'SPT000001990000070570             050000500005000I0484Y001' + '\n' + \
                  'SWR00000199000007061185684  A NAME                                       YET ANOTHER NAME               C          0026058307861 0500061 0000061 00000    0000000000000             ' + '\n' + \
                  'SWT00000199000007071185684  050000500005000I0484Y001' + '\n' + \
-                 'PWR00000199000007084271370  MUSIC SOCIETY                                01023285684100              1185684  ' + '\n' + \
+                 'PWR00000199000007084271370  MUSIC SOCIETY                                01023285684100              1185684  01' + '\n' + \
                  'PER0000019900000709A NAME                                                                     000000000000000000000000' + '\n' + \
                  'REC000001990000071019980101                                                            000300     A COMPILATION                                               P A I  _AR_                                                 33002                                       U   '
 
@@ -95,7 +95,7 @@ class TestWorkTransactionGrammar(unittest.TestCase):
                  'SPT000003820000273900             050000500005000I0484Y001' + '\n' + \
                  'SWR00000382000027401122334  WRITER SURNAME                               WRITER NAME                    CA         0026058307861 0166761 0000061 00000    0000000000000             ' + '\n' + \
                  'SWT00000382000027411122334  050000500005000I0484Y001' + '\n' + \
-                 'PWR00000382000027421122334  PUBLISHER                                    01011111111100              1111111  ' + '\n' + \
+                 'PWR00000382000027421122334  PUBLISHER                                    01011111111100              1111111  01' + '\n' + \
                  'OWR00000382000027431122334  WRITER SURNAME B                             WRITER NAME B                  CA         0000000000011 0111111 0111111 01111    0000000000000             ' + '\n' + \
                  'OWR00000382000027441122334  WRITER SURNAME C                             WRITER NAME C                  CA         0000000000011 0111111 0111111 01111    0000000000000             ' + '\n' + \
                  'PER0000038200002745PERFORMER                                                                  000000000000000000000000' + '\n' + \
@@ -120,11 +120,11 @@ class TestWorkTransactionGrammar(unittest.TestCase):
                  'SPT000001790000054770             013330133301333I0484Y001' + '\n' + \
                  'SWR00000179000005481178518  SURNAME                                      NAME                           C          0026169554761 0050061 0000061 00000    0000000000000             ' + '\n' + \
                  'SWT00000179000005491178518  005000050000500I0484Y001' + '\n' + \
-                 'PWR000001790000055066       MUSIC SOCIETY                                03993578518050              1178518  ' + '\n' + \
-                 'PWR000001790000055147       A PUBLISHER                                  03993678518050              1178518  ' + '\n' + \
+                 'PWR000001790000055066       MUSIC SOCIETY                                03993578518050              1178518  01' + '\n' + \
+                 'PWR000001790000055147       A PUBLISHER                                  03993678518050              1178518  01' + '\n' + \
                  'SWR00000179000005521178516  SURNAME                                      NAME                           C          0026169445261 0133361 0000061 00000    0000000000000             ' + '\n' + \
                  'SWT00000179000005531178516  013340133401334I0484Y001' + '\n' + \
-                 'PWR000001790000055466       MUSIC SOCIETY                                03802478516100              1178516  ' + '\n' + \
+                 'PWR000001790000055466       MUSIC SOCIETY                                03802478516100              1178516  01' + '\n' + \
                  'OWR00000179000005551176743  SURNAME                                      NAME                           C          0000000000061 0100061 0100061 01000    0000000000000             ' + '\n' + \
                  'OWR00000179000005561178515  SURNAME                                      NAME                           C          0000000000061 0266761 0266761 02667    0000000000000             ' + '\n' + \
                  'OWR00000179000005571178514  SURNAME                                      NAME                           CA         0000000000061 0266761 0266761 02667    0000000000000             ' + '\n' + \
@@ -170,6 +170,26 @@ class TestWorkTransactionGrammar(unittest.TestCase):
         self.assertEqual('OWR', result[20].record_type)
 
         self.assertEqual('PER', result[21].record_type)
+
+    def test_work_id_cross_reference_after_rec(self):
+        record = (
+            'NWR0000000600000000WORK NAME                                                     KEY001        T012345678900000000            POP000240Y      ORI                                                   Y00000000000                                                    ' + '\n'
+            'PER0000000600000032A NAME                                                                                             ' + '\n'
+            'REC000000060000003320221124                                                            000240     WORK NAME                                                                                                                                              USXXX0123456AD                                                                                                                                                                                                                                                                                     ' + '\n'
+            'XRF0000000600000034ISWT0123456789   WN'
+        )
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(4, len(result))
+        self.assertEqual('NWR', result[0].record_type)
+        self.assertEqual('PER', result[1].record_type)
+        self.assertEqual('REC', result[2].record_type)
+        self.assertEqual('XRF', result[3].record_type)
+        self.assertEqual('ISW', result[3].organisation_code)
+        self.assertEqual('T0123456789', result[3].identifier)
+        self.assertEqual('W', result[3].identifier_type)
+        self.assertEqual('N', result[3].validity)
 
     def test_work_min(self):
         work = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789POP030201YMUSPOTMODMOVORIORITHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'

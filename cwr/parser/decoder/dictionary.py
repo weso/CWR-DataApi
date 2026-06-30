@@ -14,6 +14,7 @@ from cwr.non_roman_alphabet import NonRomanAlphabetAgreementPartyRecord, \
     NonRomanAlphabetWorkRecord, NonRomanAlphabetWriterNameRecord
 from cwr.transmission import Transmission, TransmissionTrailer, \
     TransmissionHeader
+from cwr.cross_reference import XrfRecord
 from cwr.work import RecordingDetailRecord, ComponentRecord, \
     AlternateTitleRecord, AuthoredWorkRecord, InstrumentationDetailRecord, \
     InstrumentationSummaryRecord, PerformingArtistRecord, WorkOriginRecord, \
@@ -84,6 +85,7 @@ class TransactionRecordDictionaryDecoder(Decoder):
         self._decoders['NWN'] = NonRomanAlphabetWriterNameDictionaryDecoder()
         self._decoders['SPU'] = PublisherRecordDictionaryDecoder()
         self._decoders['OPU'] = PublisherRecordDictionaryDecoder()
+        self._decoders['XRF'] = XrfRecordDictionaryDecoder()
 
     def decode(self, data):
         return self._decoders[data['record_type']].decode(data)
@@ -405,6 +407,21 @@ class MessageDictionaryDecoder(Decoder):
                              validation_n=data['validation_n'])
 
 
+class XrfRecordDictionaryDecoder(Decoder):
+    def __init__(self):
+        super(XrfRecordDictionaryDecoder, self).__init__()
+
+    def decode(self, data):
+        return XrfRecord(
+            transaction_sequence_n=data['transaction_sequence_n'],
+            record_sequence_n=data['record_sequence_n'],
+            organisation_code=data['organisation_code'],
+            identifier=data['identifier'],
+            identifier_type=data['identifier_type'],
+            validity=data['validity'],
+        )
+
+
 class PerformingArtistDictionaryDecoder(Decoder):
     def __init__(self, ipi_base_decoder=None):
         super(PerformingArtistDictionaryDecoder, self).__init__()
@@ -458,7 +475,9 @@ class PublisherForWriterDictionaryDecoder(Decoder):
                                         submitter_agreement_n=data[
                                             'submitter_agreement_n'],
                                         society_assigned_agreement_n=data[
-                                            'society_assigned_agreement_n'])
+                                            'society_assigned_agreement_n'],
+                                        publisher_sequence_n=data.get(
+                                            'publisher_sequence_n', 0))
 
 
 class RecordingDetailDictionaryDecoder(Decoder):

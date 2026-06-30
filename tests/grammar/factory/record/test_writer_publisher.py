@@ -30,7 +30,7 @@ class TestWriterPublisherGrammar(unittest.TestCase):
 
         This test contains all the optional fields.
         """
-        record = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A12345678'
+        record = 'PWR0000123400000023A12345678THE PUBLISHER                                C1234567890123D1234567890123A1234567801'
 
         result = self.grammar.parseString(record)[0]
 
@@ -42,6 +42,7 @@ class TestWriterPublisherGrammar(unittest.TestCase):
         self.assertEqual('C1234567890123', result.submitter_agreement_n)
         self.assertEqual('D1234567890123', result.society_assigned_agreement_n)
         self.assertEqual('A12345678', result.writer_ip_n)
+        self.assertEqual(1, result.publisher_sequence_n)
 
 
 class TestWriterPublisherGrammarException(unittest.TestCase):

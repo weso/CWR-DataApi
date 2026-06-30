@@ -35,7 +35,7 @@ from cwr.parser.decoder.dictionary import Decoder, \
     TransmissionDictionaryDecoder, \
     TransmissionTrailerDictionaryDecoder, \
     WorkDictionaryDecoder, WorkOriginDictionaryDecoder, \
-    WriterRecordDictionaryDecoder, \
+    WriterRecordDictionaryDecoder, XrfRecordDictionaryDecoder, \
     GroupHeaderDictionaryDecoder, \
     TransmissionHeaderDictionaryDecoder
 from cwr.grammar.factory.adapter import AlphanumAdapter, BlankAdapter, \
@@ -127,6 +127,7 @@ def _default_record_decoders():
     decoders['writer'] = WriterRecordDictionaryDecoder()
     decoders['writer_publisher'] = PublisherForWriterDictionaryDecoder()
     decoders['writer_territory'] = IPTerritoryOfControlDictionaryDecoder()
+    decoders['work_id_cross_reference'] = XrfRecordDictionaryDecoder()
     decoders['filename_new'] = FileTagDictionaryDecoder()
     decoders['filename_old'] = FileTagDictionaryDecoder()
 

@@ -159,4 +159,5 @@ group:
         record: instrumentation_information (at_least_0)
         record: information_for_components (at_least_0)
         record: additional_related_information (at_least_0)
+        record: work_id_cross_reference (at_least_0)
 	  ]
