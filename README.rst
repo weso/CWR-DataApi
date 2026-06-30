@@ -11,9 +11,7 @@ publishers and performing rights societies as a way to exchange musical
 works data.
 
 While the CWR standard has been created by `CISAC`_ this library has been
-developed by `WESO`_ independently, with help from `BMAT`_.
-
-This is a fork of the `official CWR-DataApi repository`_ by WESO, updated to
+developed by `WESO`_ independently, with help from `BMAT`_ and updated to
 support CWR standard v2.2 by `max1millions`_.
 
 .. image:: https://badge.fury.io/py/cwr-api.svg
