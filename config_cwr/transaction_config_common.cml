@@ -114,6 +114,25 @@ group:
 	  ]
 
 group:
+    id: other_publisher_information
+    rules:
+      [
+        record: publisher
+        record: nra_publisher_name (optional)
+        record: publisher_territory (at_least_0)
+	  ]
+
+group:
+    id: other_writer_information
+    rules:
+      [
+        record: writer
+        record: nra_writer_name (optional)
+        record: writer_territory (at_least_0)
+        record: writer_publisher (at_least_0)
+	  ]
+
+group:
     id: original_publisher_information
     rules:
       [
@@ -145,9 +164,9 @@ group:
       [
         record: work
         record: controlled_publisher_information (at_least_0)
-        record: publisher (at_least_0)
+        transaction: other_publisher_information (at_least_0)
         record: controlled_writer_information (at_least_0)
-        record: writer (at_least_0)
+        transaction: other_writer_information (at_least_0)
         record: work_alternate_title (at_least_0)
         record: nra_title (optional)
         record: information_for_excerpts (optional)

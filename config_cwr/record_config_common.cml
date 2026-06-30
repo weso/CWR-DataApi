@@ -598,7 +598,7 @@ transaction_record:
 
 transaction_record:
     id: writer_territory
-    head: SWT
+    head: SWT,OWT
     rules:
       [
         field: ip_n

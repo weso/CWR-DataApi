@@ -191,6 +191,36 @@ class TestWorkTransactionGrammar(unittest.TestCase):
         self.assertEqual('W', result[3].identifier_type)
         self.assertEqual('N', result[3].validity)
 
+    def test_opu_opt_chain(self):
+        """OPU followed by OPT territory records (v2.2 other_publisher_information)."""
+        record = (
+            'NWR0000000100000000REAL RAP                                                      R1262                    00000000            POP000410Y      ORI                                                   Y00000000000                                                     ' + '\n'
+            'OPU000000010000000302                                                      YE                                      04100   08200   08200 N                                            A' + '\n'
+            'OPT0000000100000004               041000000000000I2136N001'
+        )
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(3, len(result))
+        self.assertEqual('NWR', result[0].record_type)
+        self.assertEqual('OPU', result[1].record_type)
+        self.assertEqual('OPT', result[2].record_type)
+
+    def test_owr_owt_chain(self):
+        """OWR followed by OWT territory records (v2.2 other_writer_information)."""
+        record = (
+            'NWR0000000100000000REAL RAP                                                      R1262                    00000000            POP000410Y      ORI                                                   Y00000000000                                                     ' + '\n'
+            'OWR0000000100000008870      ANTHONY CHAVEZ                                                             NA                        00800   00000   00000 N               000000000000 ' + '\n'
+            'OWT0000000100000009870      008000000000000I2136N001'
+        )
+
+        result = self.grammar.parseString(record)
+
+        self.assertEqual(3, len(result))
+        self.assertEqual('NWR', result[0].record_type)
+        self.assertEqual('OWR', result[1].record_type)
+        self.assertEqual('OWT', result[2].record_type)
+
     def test_work_min(self):
         work = 'NWR0000123400000023TITLE OF THE WORK                                           ENABCD0123456789T012345678920130102AB0123456789POP030201YMUSPOTMODMOVORIORITHE CONTACT                   A123456789ARY01220140302Y28#3                     KV 297#1                 Y'
 
