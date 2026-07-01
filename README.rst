@@ -26,6 +26,27 @@ support CWR standard v2.2 by `max1millions`_.
     :target: https://gitter.im/weso/CWR-DataApi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
     :alt: Join the chat at https://gitter.im/weso/CWR-DataApi
 
+Repository branches
+-------------------
+
+The `GitHub project page`_ tracks CISAC CWR v2.1 and v2.2 on separate
+branches. Use the branch that matches the CWR version you need:
+
+- ``master`` — CWR **v2.2** (default branch)
+- ``v2.1-fixes`` — CWR **v2.1 Rev 8** (parallel maintenance line)
+
+This checkout follows **``master`` (v2.2)**.
+
+Clone a specific version::
+
+    git clone -b master https://github.com/weso/CWR-DataApi.git
+    git clone -b v2.1-fixes https://github.com/weso/CWR-DataApi.git
+
+Or install directly from GitHub::
+
+    pip install git+https://github.com/weso/CWR-DataApi.git@master
+    pip install git+https://github.com/weso/CWR-DataApi.git@v2.1-fixes
+
 Features
 --------
 
@@ -135,7 +156,9 @@ Everybody is allowed to report bugs or ask for features.
 Getting the code
 ~~~~~~~~~~~~~~~~
 
-The code can be found at the `GitHub project page`_.
+The code can be found at the `GitHub project page`_. See **Repository
+branches** above for which branch to use (``master`` for v2.2,
+``v2.1-fixes`` for v2.1).
 
 Feel free to fork it, and share the changes.
 
