@@ -85,8 +85,8 @@ setup(
     ],
     long_description=read('README.rst'),
     install_requires=[
-        'setuptools',
-        'twine',
+        'pyparsing>=3.0.0,<3.1.0',
+        'pyyaml>=5.4',
     ],
     tests_require=_tests_require,
     extras_require={'test': _tests_require},
