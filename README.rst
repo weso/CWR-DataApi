@@ -11,7 +11,8 @@ publishers and performing rights societies as a way to exchange musical
 works data.
 
 While the CWR standard has been created by `CISAC`_ this library has been
-developed by `WESO`_ independently, with help from `BMAT`_.
+developed by `WESO`_ independently, with help from `BMAT`_ and updated to
+support CWR standard v2.1 by `max1millions`_.
 
 .. image:: https://badge.fury.io/py/cwr-api.svg
     :target: https://pypi.python.org/pypi/cwr-api
@@ -151,4 +152,5 @@ The project has been released under the `MIT License`_.
 .. _Sphinx: http://sphinx-doc.org/
 .. _latest docs: http://cwr-dataapi.readthedocs.org
 .. _GitHub project page: https://github.com/weso/CWR-DataApi
+.. _max1millions: https://github.com/max1millions
 .. _MIT License: http://www.opensource.org/licenses/mit-license.php
