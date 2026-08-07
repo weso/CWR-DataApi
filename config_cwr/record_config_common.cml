@@ -542,7 +542,7 @@ transaction_record:
         field: writer_last_name
         field: writer_first_name
         field: writer_unknown
-        field: writer_designation
+        field: writer_designation (compulsory)
         field: tax_id
         field: ipi_name_n
         field: pr_society
