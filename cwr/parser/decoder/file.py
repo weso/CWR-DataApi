@@ -276,6 +276,12 @@ class FileDecoder(Decoder):
     For this it will use a second decoder, which will take care of the filename.
     """
 
+    # Longest record length across CWR 2.x (663, NRA title), with headroom.
+    # Overshooting is harmless: the grammar skips trailing blanks before
+    # each line end. Undershooting is not: a field beyond the padded width
+    # would skip over the line break and misparse the next record.
+    _RECORD_PAD_LENGTH = 768
+
     def __init__(self, grammar, filename_decoder):
         super(FileDecoder, self).__init__()
 
@@ -304,9 +310,17 @@ class FileDecoder(Decoder):
         while file_data[i:i + 1] != 'H' and i < max_size:
             i += 1
         if i > 0:
-            data['contents'] = file_data[i:]
+            file_data = file_data[i:]
+            data['contents'] = file_data
 
-        transmission = self._file_decoder.decode(data['contents'])[0]
+        # Senders commonly trim trailing spaces from records, which the
+        # fixed-width grammar reads as missing fields (issue #178). Pad
+        # the lines back to full width.
+        padded = '\n'.join(
+            line.ljust(self._RECORD_PAD_LENGTH)
+            for line in file_data.splitlines())
+
+        transmission = self._file_decoder.decode(padded)[0]
 
         return CWRFile(file_name, transmission)
 
