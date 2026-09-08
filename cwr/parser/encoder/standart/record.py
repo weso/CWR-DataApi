@@ -222,4 +222,3 @@ class CwrRecordEncoderFactory(object):
             return TransmissionTrailerCwrRecordEncoder(record_configs, self._field_configs)
         else:
             raise NameError('The encoder not found for entity %s' % entity.__class__.__name__)
-        return encoder

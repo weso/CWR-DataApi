@@ -1008,7 +1008,7 @@ class GroupHeaderDictionaryEncoder(Encoder):
         encoded['record_type'] = record.record_type
         encoded['transaction_type'] = record.transaction_type
         encoded['version_number'] = record.version_number
-
+        encoded['sd_type'] = record._sd_type
         return encoded
 
 

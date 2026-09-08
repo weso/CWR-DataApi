@@ -44,8 +44,9 @@ class GroupHeader(Record):
                  record_type='',
                  group_id=0,
                  transaction_type='',
-                 version_number='02.20',
-                 batch_request_id=0
+                 version_number='02.10',
+                 batch_request_id=0,
+                 sd_type="  "
                  ):
         super(GroupHeader, self).__init__(
             record_type
@@ -54,6 +55,7 @@ class GroupHeader(Record):
         self._transaction_type = transaction_type
         self._version_number = version_number
         self._batch_request_id = batch_request_id
+        self._sd_type = sd_type
 
     def __str__(self):
         return '%s(%s)' % (
@@ -66,7 +68,9 @@ class GroupHeader(Record):
                    'GroupHeader', self._group_id,
                    self._transaction_type,
                    self._version_number,
-                   self._batch_request_id)
+                   self._batch_request_id,
+                   self._sd_type,
+                   )
 
     @property
     def batch_request_id(self):
