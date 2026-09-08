@@ -678,7 +678,7 @@ work_n:
   name: Work Number
 
 work_for_hire:
-  type: flag
+  type: boolean
   size: 1
   name: Work For Hire Indicator
 

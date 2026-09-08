@@ -63,7 +63,7 @@ class TestWriterRecordDictionaryEncoding(unittest.TestCase):
         self.assertEqual(3, encoded['transaction_sequence_n'])
         self.assertEqual(15, encoded['record_sequence_n'])
         self.assertEqual('AD', encoded['writer_designation'])
-        self.assertEqual(True, encoded['work_for_hire'])
+        self.assertEqual('Y', encoded['work_for_hire'])
         self.assertEqual('T', encoded['writer_unknown'])
         self.assertEqual('T', encoded['reversionary'])
         self.assertEqual('T', encoded['first_recording_refusal'])
